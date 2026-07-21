@@ -127,15 +127,43 @@ export function resetBodyLocksForTests() {
  * Escape closes only the topmost registered layer (submenu cone peels one level
  * at a time). Modal/Sheet/Popover push while open and pop on teardown.
  */
-const escapeStack: Array<() => void> = [];
+type EscapeLayer = {
+	close: () => void;
+	element?: Element;
+};
+
+const escapeStack: EscapeLayer[] = [];
 let escapeListenerAttached = false;
+
+function domDepth(element: Element | undefined) {
+	if (!element || !document.contains(element)) return -1;
+
+	let depth = 0;
+	let current: Node | null = element;
+	while (current) {
+		depth += 1;
+		current = current.parentNode;
+	}
+	return depth;
+}
 
 function onDocumentEscape(event: KeyboardEvent) {
 	if (event.key !== 'Escape' || escapeStack.length === 0) return;
 	event.preventDefault();
 	// Stop other document Escape handlers from also firing in the same tick.
 	event.stopImmediatePropagation();
-	escapeStack[escapeStack.length - 1]?.();
+
+	let topIndex = escapeStack.length - 1;
+	let topDepth = domDepth(escapeStack[topIndex]?.element);
+	for (let index = escapeStack.length - 2; index >= 0; index -= 1) {
+		const depth = domDepth(escapeStack[index]?.element);
+		if (depth > topDepth) {
+			topIndex = index;
+			topDepth = depth;
+		}
+	}
+
+	escapeStack[topIndex]?.close();
 }
 
 function ensureEscapeListener() {
@@ -145,12 +173,13 @@ function ensureEscapeListener() {
 }
 
 /** Register a close handler while a layer is open. Returns a disposer. */
-export function pushEscapeLayer(close: () => void) {
+export function pushEscapeLayer(close: () => void, element?: Element) {
 	if (typeof document === 'undefined') return () => {};
 	ensureEscapeListener();
-	escapeStack.push(close);
+	const layer = { close, element };
+	escapeStack.push(layer);
 	return () => {
-		const index = escapeStack.lastIndexOf(close);
+		const index = escapeStack.lastIndexOf(layer);
 		if (index >= 0) escapeStack.splice(index, 1);
 	};
 }

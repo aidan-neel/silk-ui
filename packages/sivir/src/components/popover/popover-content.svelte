@@ -164,7 +164,7 @@
 		if (!popoverState.open) return;
 		return pushEscapeLayer(() => {
 			popoverState.open = false;
-		});
+		}, popover);
 	});
 
 	$effect(() => {
