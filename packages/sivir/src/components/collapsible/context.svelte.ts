@@ -1,23 +1,12 @@
-import { getContext, hasContext, setContext } from 'svelte';
-
+import { createContext } from '@sivir/ui/utils';
 import type { CollapsibleState } from '.';
-
-const COLLAPSIBLE_CONTEXT = Symbol('sivir.collapsible');
 
 export type CollapsibleContext = {
 	id: string;
 	state: CollapsibleState;
 };
 
-export function setCollapsibleContext(context: CollapsibleContext) {
-	setContext(COLLAPSIBLE_CONTEXT, context);
-	return context;
-}
+const { set: setCollapsibleContext, get: getCollapsibleContext } =
+	createContext<CollapsibleContext>('collapsible');
 
-export function getCollapsibleContext() {
-	if (!hasContext(COLLAPSIBLE_CONTEXT)) {
-		throw new Error('Collapsible components must be used within <Collapsible.Root>.');
-	}
-
-	return getContext<CollapsibleContext>(COLLAPSIBLE_CONTEXT);
-}
+export { setCollapsibleContext, getCollapsibleContext };

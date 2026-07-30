@@ -48,14 +48,10 @@ async function collectManifestPaths() {
 /** Resolves a manifest `shared` entry to source files relative to sivir src. */
 function sharedToFiles(entry: string): string[] {
 	if (entry.startsWith('utils.')) return ['utils.ts'];
-	if (entry.startsWith('internals/')) {
-		const module = entry.slice('internals/'.length);
-		for (const candidate of [`internals/${module}.ts`, `internals/${module}.svelte.ts`]) {
-			if (existsSync(path.join(sivirSrc, candidate))) return [candidate];
-		}
-		throw new Error(`shared entry "${entry}" resolves to no file under ${sivirSrc}/internals`);
+	for (const candidate of [`${entry}.ts`, `${entry}.svelte.ts`]) {
+		if (existsSync(path.join(sivirSrc, candidate))) return [candidate];
 	}
-	throw new Error(`unrecognized shared entry "${entry}"`);
+	throw new Error(`shared entry "${entry}" resolves to no file under ${sivirSrc}`);
 }
 
 async function buildThemes(): Promise<RegistryTheme[]> {

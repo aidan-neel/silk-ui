@@ -4,7 +4,7 @@
 	import Toast from './toast.svelte';
 	import { cubicOut, quartOut } from 'svelte/easing';
 	import type { TransitionConfig } from 'svelte/transition';
-	import { getCssDuration } from '@sivir/ui/internals/transition';
+	import { getCssDuration } from '@sivir/ui/transition';
 
 	const { state: toastState, hostId } = setToastUIState();
 	const isPrimary = $derived(getToastPrimaryHostId() === hostId);
@@ -13,9 +13,11 @@
 	let heights = $state<Record<number, number>>({} as Record<number, number>);
 	let portalEl = $state<HTMLDivElement>();
 
-	// Portal to <body> so position:fixed is viewport-relative even when a
-	// Toaster is mounted under transformed / overflow-clipped ancestors
-	// (docs previews, nested page hosts, etc.).
+	/**
+	 * Portal to `<body>` so `position: fixed` stays viewport-relative even when a
+	 * Toaster is mounted under transformed or overflow-clipped ancestors, as in
+	 * docs previews and nested page hosts.
+	 */
 	$effect(() => {
 		if (!portalEl || typeof document === 'undefined') return;
 		document.body.appendChild(portalEl);

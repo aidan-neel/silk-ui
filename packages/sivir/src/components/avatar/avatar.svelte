@@ -12,7 +12,7 @@
 		...rest
 	}: AvatarProps = $props();
 
-	// Shared state lets <Avatar.Image> hide the fallback when its image loads.
+	/** Shared state lets `<Avatar.Image>` hide the fallback when its image loads. */
 	const ctx = $state({ imageLoaded: false });
 	setContext('avatar-state', ctx);
 </script>

@@ -14,8 +14,11 @@
 
 	const hasValue = $derived(state.value !== '');
 	const label = $derived(hasValue ? state.selectedLabel || labels.get(state.value) || '' : '');
-	// Never show placeholder while a value is selected — that caused the trigger to
-	// flash the placeholder again the moment the menu opened and labels resolved.
+	/**
+	 * Never show the placeholder while a value is selected -- doing so made the
+	 * trigger flash the placeholder again the moment the menu opened and labels
+	 * resolved.
+	 */
 	const text = $derived(hasValue ? label : placeholder);
 </script>
 

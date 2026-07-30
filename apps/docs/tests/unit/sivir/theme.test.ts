@@ -10,7 +10,7 @@ describe('DEFAULT_THEME', () => {
 			radius: 'default',
 			density: 'default',
 			motion: 'default',
-			fontSans: "'Inter', sans-serif",
+			fontSans: "Geist, 'Geist Sans', sans-serif",
 			fontMono: "'JetBrains Mono', monospace"
 		});
 	});
@@ -20,7 +20,7 @@ describe('themeToCss', () => {
 	const css = themeToCss(DEFAULT_THEME);
 
 	it('emits fonts, radii, density, brand, motion, and mode-specific neutrals', () => {
-		expect(css).toContain("--font-sans: 'Inter', sans-serif");
+		expect(css).toContain("--font-sans: Geist, 'Geist Sans', sans-serif");
 		expect(css).toContain('--radius-lg: 10px');
 		expect(css).toContain('--color-primary: #1f9be6');
 		expect(css).toContain('--sivir-space-unit: 3.6px');

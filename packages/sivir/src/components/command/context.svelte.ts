@@ -1,22 +1,11 @@
-import { getContext, hasContext, setContext } from 'svelte';
-
+import { createContext } from '@sivir/ui/utils';
 import type { CommandState } from '.';
 
-const COMMAND_CONTEXT = Symbol('sivir.command');
+const { set: setCommandContext, get: getCommandContext } = createContext<CommandState>('command');
 
-export function setCommandContext(state: CommandState) {
-	setContext(COMMAND_CONTEXT, state);
-	return state;
-}
+export { setCommandContext, getCommandContext };
 
-export function getCommandContext() {
-	if (!hasContext(COMMAND_CONTEXT)) {
-		throw new Error('Command components must be used within <Command.Root>.');
-	}
-
-	return getContext<CommandState>(COMMAND_CONTEXT);
-}
-
+/** Items eligible for keyboard navigation: the active result set minus disabled rows. */
 export function getCommandResults(state: CommandState) {
 	const source = state.searchContent.trim() === '' ? state.items : state.results;
 	return source.filter((item) => !item.disabled);

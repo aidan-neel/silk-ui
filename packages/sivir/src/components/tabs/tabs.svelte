@@ -11,12 +11,15 @@
 		...rest
 	}: TabsProps = $props();
 
+	/**
+	 * Seeded from the props so the very first (SSR) render is already correct,
+	 * rather than starting on the defaults and waiting for the effects below to
+	 * sync after hydration.
+	 */
 	const tabsState = $state({
 		id: `tabs-${Math.random().toString(36).slice(2)}`,
 		value: value ?? '',
-		// Seed from the props so the very first (SSR) render is already correct,
-		// rather than starting on the defaults and waiting for the effects below
-		// to sync after hydration.
+
 		orientation: untrack(() => orientation),
 		variant: untrack(() => variant)
 	} as {

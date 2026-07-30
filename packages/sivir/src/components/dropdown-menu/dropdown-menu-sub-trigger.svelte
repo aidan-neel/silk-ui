@@ -3,7 +3,6 @@
 	import { type Snippet } from 'svelte';
 	import { ChevronRight } from '@lucide/svelte';
 	import * as Popover from '@sivir/ui/components/popover';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
 
 	type SubTriggerProps = {
 		class?: string;
@@ -13,7 +12,7 @@
 	let { class: className, children, ...rest }: SubTriggerProps = $props();
 </script>
 
-<Popover.Trigger {...rest} class={cn(className, MENU_ITEM)} variant="ghost">
+<Popover.Trigger {...rest} class={cn(className, 'sivir-menu-item')} unstyled>
 	<span class="min-w-0 flex-1 text-left">
 		{@render children?.()}
 	</span>

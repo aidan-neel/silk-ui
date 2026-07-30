@@ -22,7 +22,7 @@ export const manifest: Manifest = {
 		'components/context-menu/manifest.ts'
 	],
 	components: ['popover', 'button'],
-	shared: ['utils.cn', 'internals/menu'],
+	shared: ['utils.closeMenuLayers', 'utils.cn', 'utils.createContext'],
 	peerDependencies: {
 		'@floating-ui/dom': '^1.0.0',
 		'@lucide/svelte': '^1.0.0',

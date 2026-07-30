@@ -9,7 +9,7 @@
 		pushEscapeLayer,
 		trapFocus
 	} from '@sivir/ui/utils';
-	import { panelIn, panelOut } from '@sivir/ui/internals/transition';
+	import { panelIn, panelOut } from '@sivir/ui/transition';
 	import type { PopoverContentProps } from '.';
 	import { getPopoverContext } from './context.svelte';
 
@@ -86,11 +86,15 @@
 		if (popoverState.buttonRef) ro.observe(popoverState.buttonRef);
 		if (popover) ro.observe(popover);
 
-		// These fire on document focus changes -- including the focusout that the
-		// browser dispatches synchronously while the content is being removed from
-		// the DOM. Defer the state write to a microtask so we never mutate
-		// reactive state in the middle of the Svelte flush that unmounts us
-		// (which throws state_unsafe_mutation). The DOM is read synchronously.
+		/**
+		 * Focus tracking for the open panel.
+		 *
+		 * These fire on document focus changes, including the focusout the browser
+		 * dispatches synchronously while the content is being removed from the DOM.
+		 * The DOM is read synchronously but the state write is deferred to a
+		 * microtask, so reactive state is never mutated in the middle of the Svelte
+		 * flush that unmounts us -- that throws `state_unsafe_mutation`.
+		 */
 		const handleFocusIn = (e: FocusEvent) => {
 			const target = e.target as HTMLElement;
 			if (!target) return;
@@ -138,13 +142,16 @@
 		}
 	}
 
-	// Lock body scroll + inert background siblings whenever the popover is open.
-	// Hoverable popovers (tooltip, hover-card) skip the lock because the
-	// pointer-events-none on body children would kill mouseleave/mouseenter
-	// on the trigger and cause an open/close flicker loop.
-	// Scroll lock is shared with Modal/Sheet so nested teardown cannot clear
-	// another layer's lock. Do not gate on `popover` existing — controlled
-	// open=true must lock even before the wrapper finishes binding.
+	/**
+	 * Locks body scroll and inerts background siblings whenever the popover is open.
+	 *
+	 * Hoverable popovers (tooltip, hover-card) skip the lock: `pointer-events-none`
+	 * on body children would kill mouseleave/mouseenter on the trigger and cause an
+	 * open/close flicker loop. The scroll lock is shared with Modal and Sheet so a
+	 * nested teardown cannot clear another layer's lock. This must not gate on
+	 * `popover` existing -- a controlled `open=true` has to lock even before the
+	 * wrapper finishes binding.
+	 */
 	$effect(() => {
 		if (typeof document === 'undefined') return;
 		if (popoverState.open && !popoverState.hoverable && lockScroll) {
@@ -157,8 +164,10 @@
 		}
 	});
 
-	// Escape peels one layer (submenu cone). Hoverable layers still register so
-	// Escape closes the deepest open submenu before the parent menu.
+	/**
+	 * Escape peels one layer of the submenu cone. Hoverable layers still register,
+	 * so Escape closes the deepest open submenu before the parent menu.
+	 */
 	$effect(() => {
 		if (typeof document === 'undefined') return;
 		if (!popoverState.open) return;
@@ -173,20 +182,26 @@
 		}
 	});
 
-	// Position the panel the moment it opens, before the browser paints. This
-	// sets left/top *and* --popover-trigger-width synchronously, so the panel
-	// never flashes at its (0,0) origin — the cause of the tooltip-swap jitter —
-	// nor at auto width before snapping to the trigger (the combobox jump).
-	// Without this we'd rely on the ResizeObserver firing a frame later.
+	/**
+	 * Positions the panel the moment it opens, before the browser paints.
+	 *
+	 * This sets left/top *and* `--popover-trigger-width` synchronously, so the
+	 * panel never flashes at its (0,0) origin -- the cause of the tooltip-swap
+	 * jitter -- nor at auto width before snapping to the trigger, which was the
+	 * combobox jump. Without it we would rely on the ResizeObserver firing a frame
+	 * later.
+	 */
 	$effect(() => {
 		if (popoverState.open && popover) {
 			updatePosition();
 		}
 	});
 
-	// Trap Tab focus inside the panel while open. Hoverable surfaces (tooltip,
-	// hover-card) are excluded -- they aren't keyboard-modal and stealing focus
-	// would fight their pointer-driven open/close.
+	/**
+	 * Traps Tab focus inside the panel while open. Hoverable surfaces (tooltip,
+	 * hover-card) are excluded: they are not keyboard-modal, and stealing focus
+	 * would fight their pointer-driven open/close.
+	 */
 	$effect(() => {
 		if (popoverState.open && panelEl && !popoverState.hoverable && focusTrap) {
 			const cleanup = trapFocus(panelEl);

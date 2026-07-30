@@ -16,7 +16,7 @@ export type RegistryComponent = {
 	files: string[];
 	/** Other sivir components this one pulls in transitively. */
 	components: string[];
-	/** `utils.<symbol>` or `internals/<module>` shared dependencies. */
+	/** `utils.<symbol>` or `<module>` shared dependencies. */
 	shared: string[];
 	/** `shared` entries resolved to source files at snapshot time. */
 	sharedFiles: string[];

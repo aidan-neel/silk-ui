@@ -2,10 +2,9 @@
 	import { untrack } from 'svelte';
 	import { type ContextMenuCheckboxItemProps } from '.';
 	import { Button } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
+	import { closeMenuLayers, cn } from '@sivir/ui/utils';
 	import Check from '@lucide/svelte/icons/check';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
-	import { dismissContextMenu, getContextMenuContext } from './context.svelte';
+	import { getContextMenuContext } from './context.svelte';
 
 	const { state: contextMenuState, ancestors } = getContextMenuContext();
 
@@ -39,7 +38,7 @@
 
 	function toggle() {
 		internalChecked = !internalChecked;
-		dismissContextMenu(contextMenuState, ancestors);
+		closeMenuLayers(contextMenuState, ancestors);
 		callback?.();
 	}
 </script>
@@ -49,8 +48,8 @@
 	role="menuitemcheckbox"
 	aria-checked={internalChecked}
 	onclick={toggle}
-	class={cn(className, `${MENU_ITEM} relative ${inset ? 'pl-8' : ''}`)}
-	variant="ghost"
+	class={cn(className, 'sivir-menu-item relative', inset && 'pl-8')}
+	unstyled
 >
 	<div class="absolute left-2 h-4 w-4">
 		{#if internalChecked}

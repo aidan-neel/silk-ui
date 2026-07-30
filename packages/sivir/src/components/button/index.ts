@@ -1,7 +1,7 @@
 import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import Button from './button.svelte';
 import type { Snippet } from 'svelte';
-import type { Intent } from '../../internals/variants';
+import type { Intent } from '@sivir/ui/utils';
 
 export type ButtonVariant = Intent | 'panel';
 
@@ -31,6 +31,14 @@ export type ButtonProps = {
 	 * the call site.
 	 */
 	element?: HTMLButtonElement | HTMLAnchorElement | undefined;
+	/**
+	 * Skip the variant/size base classes and render with `class` alone.
+	 *
+	 * Menu rows use this to opt out of the button's sizing utilities so the
+	 * `sivir-menu-item` stylesheet contract governs the surface instead --
+	 * utilities outrank the `components` layer, so the two cannot coexist.
+	 */
+	unstyled?: boolean;
 	onclick?: () => void;
 } & Partial<HTMLButtonAttributes | HTMLAnchorAttributes>;
 

@@ -8,31 +8,79 @@ import {
 	type Placement,
 	type ReferenceElement
 } from '@floating-ui/dom';
-import type { Snippet } from 'svelte';
+import { getContext, hasContext, setContext, type Snippet } from 'svelte';
 
 export type DefaultProps = {
 	class?: string;
 	children?: Snippet;
 } & Partial<Record<`data-${string}`, string | boolean | null>>;
 
-/** Merges class values and resolves Tailwind conflicts via cnfast. Sivir uses
- * the `cn(className,
- * extraClasses)` convention -- consumer's `className` first, library-side
- * classes after. `.reverse()` flips into twMerge so the first argument wins
- * on conflicts (consumer overrides always take precedence). */
+/** The visual intents every interactive surface shares. */
+export type Intent = 'primary' | 'secondary' | 'ghost' | 'outline' | 'destructive';
+
+/**
+ * Merges class values and resolves Tailwind conflicts via cnfast.
+ *
+ * Sivir uses the `cn(className, extraClasses)` convention -- the consumer's
+ * `className` first, library-side classes after. `.reverse()` flips the order
+ * into twMerge so the first argument wins on conflicts, which keeps consumer
+ * overrides ahead of library defaults.
+ */
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs.reverse()));
 }
 
-/** Shared document body scroll lock. Modal/Sheet and Popover both use this so
- * nested overlays cannot clear each other's lock on teardown. */
+/**
+ * Builds a typed Svelte context pair for one component family.
+ *
+ * `name` is the kebab-case component name; it becomes both the context key
+ * and the PascalCase name in the "used outside its root" error, so
+ * `createContext('context-menu')` reports `<ContextMenu.Root>`.
+ */
+export function createContext<T>(name: string) {
+	const key = Symbol(`sivir.${name}`);
+	const label = name.replace(/(^|-)(\w)/g, (_match, _sep, char: string) => char.toUpperCase());
+
+	return {
+		set(value: T) {
+			setContext(key, value);
+			return value;
+		},
+		get(): T {
+			if (!hasContext(key)) {
+				throw new Error(`${label} components must be used within <${label}.Root>.`);
+			}
+			return getContext<T>(key);
+		}
+	};
+}
+
+/**
+ * Closes a menu layer and every ancestor above it (full submenu-cone collapse).
+ *
+ * Shared by context-menu and dropdown-menu, whose state objects differ but
+ * both expose `open`.
+ */
+export function closeMenuLayers(current: { open: boolean }, ancestors: { open: boolean }[]) {
+	current.open = false;
+	for (let index = ancestors.length - 1; index >= 0; index -= 1) {
+		ancestors[index]!.open = false;
+	}
+}
+
 let bodyScrollLocks = 0;
 let savedBodyOverflow = '';
 let savedBodyPaddingRight = '';
 let bodyInertLocks = 0;
 
+/**
+ * Whether an element is (or contains) a floating overlay root.
+ *
+ * Modal and sheet portal wrappers do not always carry an id on the outer node,
+ * so this checks the marker attributes, then a descendant query, then the id
+ * prefixes each overlay assigns.
+ */
 function isFloatingOverlayElement(el: Element) {
-	// Popover wrappers, modal/sheet portals, and any labeled overlay root.
 	if (
 		el.hasAttribute('data-floating-content') ||
 		el.hasAttribute('data-overlay-root') ||
@@ -41,7 +89,6 @@ function isFloatingOverlayElement(el: Element) {
 	) {
 		return true;
 	}
-	// Modal/Sheet portal wrappers don't always carry an id on the outer node.
 	if (
 		el.querySelector?.(
 			'[data-floating-content], [data-overlay-root], [role="dialog"], [role="alertdialog"], [data-ui="modal-overlay"], [data-ui="sheet-overlay"]'
@@ -60,7 +107,13 @@ function isFloatingOverlayElement(el: Element) {
 	);
 }
 
-/** Lock document scrolling. Returns a disposer; only the last active lock restores. */
+/**
+ * Locks document scrolling and returns a disposer.
+ *
+ * The lock is refcounted and shared by modal, sheet, and popover so nested
+ * overlays cannot clear each other's lock on teardown -- only the last active
+ * lock restores the original overflow and scrollbar padding.
+ */
 export function lockBodyScroll() {
 	if (typeof document === 'undefined') return () => {};
 
@@ -86,7 +139,7 @@ export function lockBodyScroll() {
 	};
 }
 
-/** Mark non-overlay body children as non-interactive while a floating layer is open. */
+/** Marks non-overlay body children as non-interactive while a floating layer is open. */
 export function lockBodyBackground() {
 	if (typeof document === 'undefined') return () => {};
 
@@ -123,10 +176,6 @@ export function resetBodyLocksForTests() {
 	}
 }
 
-/**
- * Escape closes only the topmost registered layer (submenu cone peels one level
- * at a time). Modal/Sheet/Popover push while open and pop on teardown.
- */
 type EscapeLayer = {
 	close: () => void;
 	element?: Element;
@@ -135,6 +184,7 @@ type EscapeLayer = {
 const escapeStack: EscapeLayer[] = [];
 let escapeListenerAttached = false;
 
+/** DOM depth of an element, or -1 when it is detached. */
 function domDepth(element: Element | undefined) {
 	if (!element || !document.contains(element)) return -1;
 
@@ -147,10 +197,14 @@ function domDepth(element: Element | undefined) {
 	return depth;
 }
 
+/**
+ * Closes the topmost registered layer only, so a submenu cone peels one level
+ * per keypress. `stopImmediatePropagation` keeps other document-level Escape
+ * handlers from firing in the same tick and closing a second layer.
+ */
 function onDocumentEscape(event: KeyboardEvent) {
 	if (event.key !== 'Escape' || escapeStack.length === 0) return;
 	event.preventDefault();
-	// Stop other document Escape handlers from also firing in the same tick.
 	event.stopImmediatePropagation();
 
 	let topIndex = escapeStack.length - 1;
@@ -172,7 +226,10 @@ function ensureEscapeListener() {
 	escapeListenerAttached = true;
 }
 
-/** Register a close handler while a layer is open. Returns a disposer. */
+/**
+ * Registers a close handler while a layer is open and returns a disposer.
+ * Modal, sheet, and popover push on open and pop on teardown.
+ */
 export function pushEscapeLayer(close: () => void, element?: Element) {
 	if (typeof document === 'undefined') return () => {};
 	ensureEscapeListener();
@@ -217,7 +274,7 @@ export function getFocusableElements(container: HTMLElement) {
 }
 
 /** Focuses the first focusable descendant when one exists. */
-export function focusFirstDescendant(container: HTMLElement) {
+function focusFirstDescendant(container: HTMLElement) {
 	const first = getFocusableElements(container)[0];
 	first?.focus();
 	return first;
@@ -288,7 +345,14 @@ export function trapFocus(
 
 const PRESS_FLOOR = 0.94;
 
-/** Constant-pixel press scale. Sets `--sivir-press-sx/sy` from element size + `--motion-press-px`. */
+/**
+ * Constant-pixel press scale.
+ *
+ * Sets `--sivir-press-sx/sy` from the element's size and `--motion-press-px` so
+ * a small and a large control shrink by the same number of pixels rather than
+ * the same ratio. Listens in the capture phase so the variables are in place
+ * before `:active` paints.
+ */
 export function pressable(node: HTMLElement) {
 	function measure() {
 		const raw = getComputedStyle(node).getPropertyValue('--motion-press-px').trim();
@@ -304,7 +368,6 @@ export function pressable(node: HTMLElement) {
 		if (e.key === ' ' || e.key === 'Enter') measure();
 	}
 
-	// Capture so vars are ready before :active paints.
 	node.addEventListener('pointerdown', measure, true);
 	node.addEventListener('keydown', onKeyDown);
 	return {
@@ -315,7 +378,17 @@ export function pressable(node: HTMLElement) {
 	};
 }
 
-/** Runs a callback when a pointer event lands outside the node and any excluded nodes. */
+/**
+ * Runs a callback when a pointer event lands outside the node and any excluded
+ * nodes.
+ *
+ * Floating layers (select, dropdown-menu, and friends) portal to `<body>` and
+ * carry `data-floating-content`. Clicking one of their items closes that layer,
+ * and Svelte flushes the removal synchronously *before* this document-level
+ * listener runs, so the now-detached node drops out of `composedPath()`. The
+ * target's own ancestor chain stays intact after the wrapper is detached, so it
+ * serves as the fallback and keeps a parent overlay from being dismissed too.
+ */
 export function clickOutside(node: Node, callback: () => void, exclude: Node[] = []) {
 	let destroyed = false;
 	const handleClick = (event: MouseEvent) => {
@@ -325,12 +398,6 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
 		const isInsideExcluded = exclude.some(
 			(excludeNode) => path.includes(excludeNode) || (target ? excludeNode.contains(target) : false)
 		);
-		// Floating layers (Select, DropdownMenu, etc.) portal to <body> and carry
-		// `data-floating-content`. Clicking one of their items closes that layer,
-		// and Svelte flushes the removal synchronously *before* this document-level
-		// listener runs -- so the now-detached node drops out of composedPath().
-		// Fall back to the target's own ancestor chain, which stays intact after
-		// the wrapper is detached, so a parent overlay (Modal/Sheet) isn't dismissed.
 		const targetEl = target instanceof Element ? target : null;
 		const isInsideFloating =
 			path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
@@ -354,7 +421,13 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
 	};
 }
 
-/** Positions a floating panel while keeping it inside the viewport bounds. */
+/**
+ * Positions a floating panel while keeping it inside the viewport bounds.
+ *
+ * Rejections are swallowed: Floating UI rejects when either element is removed
+ * during an asynchronous layout pass, and teardown is an expected terminal
+ * state rather than an error.
+ */
 export function positionFloatingPanel(
 	reference: ReferenceElement,
 	floating: HTMLElement,
@@ -390,8 +463,5 @@ export function positionFloatingPanel(
 				top: `${y}px`
 			});
 		})
-		.catch(() => {
-			// Floating UI may reject when either element is removed during an
-			// asynchronous layout pass. Teardown is an expected terminal state.
-		});
+		.catch(() => {});
 }

@@ -2,7 +2,7 @@ import { describe, expect, it, afterEach } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
-import { sheetIn, sheetOut } from '@sivir/ui/internals/transition';
+import { sheetIn, sheetOut } from '@sivir/ui/transition';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';
 
 /*

@@ -27,7 +27,7 @@ export const manifest: Manifest = {
 		'components/combobox/manifest.ts'
 	],
 	components: ['popover', 'button'],
-	shared: ['utils.cn', 'internals/menu'],
+	shared: ['utils.cn', 'utils.createContext'],
 	peerDependencies: {
 		'@lucide/svelte': '^1.0.0',
 		'fuse.js': '^7.0.0',

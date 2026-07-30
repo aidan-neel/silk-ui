@@ -3,7 +3,6 @@
 	import { cn } from '@sivir/ui/utils';
 	import { onMount } from 'svelte';
 	import Check from '@lucide/svelte/icons/check';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
 
 	import type { ComboboxItem } from '.';
 	import { getComboboxContext } from './context.svelte';
@@ -50,8 +49,8 @@
 		aria-selected={comboboxState.selected?.value === item.value}
 		{...rest}
 		onclick={close}
-		class={cn(className, MENU_ITEM)}
-		variant="ghost"
+		class={cn(className, 'sivir-menu-item')}
+		unstyled
 	>
 		{label}
 		{#if comboboxState.selected?.value === item.value}

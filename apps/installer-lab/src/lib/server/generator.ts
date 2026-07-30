@@ -90,16 +90,16 @@ export function rootCss(installPath: InstallPath) {
 		installPath === 'cli'
 			? '@source "../lib/sivir/**/*.{svelte,ts}";'
 			: '@source "../../node_modules/@sivir/ui/src/**/*.{svelte,ts}";';
-	return `@import '@fontsource/inter/latin-400.css';
-@import '@fontsource/inter/latin-500.css';
-@import '@fontsource/inter/latin-600.css';
-@import '@fontsource/inter/latin-700.css';
+	return `@import '@fontsource/geist-sans/latin-400.css';
+@import '@fontsource/geist-sans/latin-500.css';
+@import '@fontsource/geist-sans/latin-600.css';
+@import '@fontsource/geist-sans/latin-700.css';
 @import 'tailwindcss';
 @import '${uiImport}';
 ${source}
 
 :root {
-	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family: Geist, 'Geist Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	color: var(--color-foreground);
 	background: var(--color-background);
 	font-synthesis-weight: none;

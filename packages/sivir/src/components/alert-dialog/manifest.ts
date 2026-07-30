@@ -21,7 +21,7 @@ export const manifest: Manifest = {
 		'components/alert-dialog/manifest.ts'
 	],
 	components: ['modal', 'button'],
-	shared: ['utils.cn', 'internals/is-dark'],
+	shared: ['utils.cn', 'is-dark'],
 	peerDependencies: {
 		cnfast: '^0.0.8',
 		svelte: '^5.0.0'

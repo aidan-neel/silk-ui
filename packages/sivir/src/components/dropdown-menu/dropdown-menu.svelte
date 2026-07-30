@@ -11,8 +11,10 @@
 
 	let { children, inverted = false }: Props = $props();
 
-	// Must run during init: Content reads this via getContext() while it
-	// initializes, which happens before any $effect fires.
+	/**
+	 * Must run during init: Content reads this via `getContext()` while it
+	 * initializes, which happens before any `$effect` fires.
+	 */
 	setDropdownMenuContext({ inverted: untrack(() => inverted), ancestors: [] });
 </script>
 

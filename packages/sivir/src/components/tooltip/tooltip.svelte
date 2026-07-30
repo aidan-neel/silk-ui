@@ -15,8 +15,10 @@
 		placement?: Placement;
 	} = $props();
 
-	// Shared config + the live label, read by Trigger and written by Content.
-	// (Reactive so a changing label morphs the active bubble in place.)
+	/**
+	 * Shared config plus the live label, read by Trigger and written by Content.
+	 * Reactive, so a changing label morphs the active bubble in place.
+	 */
 	const tip = $state<{ text: string; placement: Placement; delay: number; closeDelay: number }>(
 		untrack(() => ({ text: '', placement, delay, closeDelay }))
 	);

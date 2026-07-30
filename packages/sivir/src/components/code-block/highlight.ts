@@ -1,7 +1,9 @@
 import hljs from 'highlight.js/lib/core';
 
-// Curated language set — keeps the bundle lean while covering the common cases
-// (and every language shown in the component's reference design).
+/**
+ * Curated language set. Keeps the bundle lean while covering the common cases,
+ * including every language shown in the component's reference design.
+ */
 import javascript from 'highlight.js/lib/languages/javascript';
 import typescript from 'highlight.js/lib/languages/typescript';
 import python from 'highlight.js/lib/languages/python';
@@ -46,7 +48,13 @@ function ensureRegistered() {
 	hljs.registerLanguage('markdown', markdown);
 }
 
-// Friendly aliases → the canonical name registered above.
+/**
+ * Friendly aliases mapped onto the canonical names registered above.
+ *
+ * Svelte and Vue have no dedicated grammar in this bundle. TypeScript (with
+ * JSX) colours both their import lines and their component markup well, which
+ * covers the snippets these docs show.
+ */
 const ALIASES: Record<string, string> = {
 	js: 'javascript',
 	jsx: 'javascript',
@@ -54,8 +62,6 @@ const ALIASES: Record<string, string> = {
 	cjs: 'javascript',
 	ts: 'typescript',
 	tsx: 'typescript',
-	// Svelte/Vue have no dedicated grammar here; TypeScript (with JSX) colours the
-	// import lines AND the component markup well, which covers their snippets.
 	svelte: 'typescript',
 	vue: 'typescript',
 	py: 'python',

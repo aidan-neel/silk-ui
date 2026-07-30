@@ -32,7 +32,7 @@ export const manifest: Manifest = {
 		'components/sheet/manifest.ts'
 	],
 	components: ['button', '_internal/overlay'],
-	shared: ['utils.cn', 'internals/transition'],
+	shared: ['utils.cn', 'utils.createContext', 'transition'],
 	peerDependencies: {
 		'@lucide/svelte': '^1.0.0',
 		cnfast: '^0.0.8',

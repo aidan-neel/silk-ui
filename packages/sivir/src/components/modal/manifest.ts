@@ -36,7 +36,7 @@ export const manifest: Manifest = {
 		'components/modal/manifest.ts'
 	],
 	components: ['button', '_internal/overlay'],
-	shared: ['utils.cn', 'internals/transition', 'internals/is-dark'],
+	shared: ['utils.cn', 'utils.createContext', 'is-dark', 'transition'],
 	peerDependencies: {
 		'@lucide/svelte': '^1.0.0',
 		cnfast: '^0.0.8',

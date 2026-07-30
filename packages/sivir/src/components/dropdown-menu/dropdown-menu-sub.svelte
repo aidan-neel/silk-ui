@@ -6,7 +6,7 @@
 
 	const { state: parentState } = getPopoverContext();
 	const parentMenu = getDropdownMenuContext();
-	// Extend the cone: ancestors = path from root through this sub's parent.
+	/** Extend the cone: ancestors are the path from root through this sub's parent. */
 	setDropdownMenuContext({
 		inverted: parentMenu.inverted,
 		ancestors: [...parentMenu.ancestors, parentState]

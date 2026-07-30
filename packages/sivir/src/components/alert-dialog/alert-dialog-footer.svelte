@@ -5,6 +5,6 @@
 	let { class: className, children, ...rest }: DefaultProps = $props();
 </script>
 
-<Modal.Footer class={cn(className, 'mt-1 flex justify-between')} {...rest}>
+<Modal.Footer class={cn(className, 'mt-1')} {...rest}>
 	{@render children?.()}
 </Modal.Footer>

@@ -11,9 +11,12 @@
 		class: classProp,
 		size = 'md',
 		element = $bindable(),
+		unstyled = false,
 		onclick,
 		...rest
 	}: ButtonProps = $props();
+
+	const classes = $derived(cn(classProp, unstyled ? undefined : button({ variant, size })));
 </script>
 
 {#if href}
@@ -24,7 +27,7 @@
 		data-ui="button"
 		data-variant={variant}
 		data-size={size}
-		class={cn(classProp, button({ variant, size }))}
+		class={classes}
 		aria-disabled={(rest as HTMLAnchorAttributes)['aria-disabled']}
 		onclick={() => onclick?.()}
 		onkeydown={(e) => {
@@ -45,7 +48,7 @@
 		data-ui="button"
 		data-variant={variant}
 		data-size={size}
-		class={cn(classProp, button({ variant, size }))}
+		class={classes}
 		onclick={() => onclick?.()}
 		onkeydown={(e) => {
 			if ((e.code === 'Space' || e.key === ' ') && e.currentTarget.matches(':focus-visible')) {

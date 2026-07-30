@@ -14,7 +14,7 @@
 	const registry = getContext<CodeBlockRegistry>('code-block');
 	const tabs = getContext<TabsState>('tabs');
 
-	// Copy the active tab's raw (un-highlighted) source.
+	/** Copy the active tab's raw, un-highlighted source. */
 	const text = $derived(registry?.codes[tabs?.value] ?? '');
 </script>
 

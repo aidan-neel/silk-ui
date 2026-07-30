@@ -3,7 +3,6 @@
 	import { cn } from '@sivir/ui/utils';
 	import { setContext, untrack } from 'svelte';
 	import * as Tabs from '@sivir/ui/components/tabs';
-	import { CARD_PANEL_FRAME, CARD_PANEL_SURFACE } from '../card/surface';
 	import type { CodeBlockProps, CodeBlockRegistry, CodeBlockTab } from '.';
 	import Header from './code-block-header.svelte';
 	import List from './code-block-list.svelte';
@@ -26,8 +25,10 @@
 
 	const SINGLE = '__single__';
 
-	// High-level when `tabs` (multi-language) or `code` (single snippet) is given;
-	// otherwise the caller composes the subparts as children.
+	/**
+	 * High-level when `tabs` (multi-language) or `code` (single snippet) is given.
+	 * Otherwise the caller composes the subparts as children.
+	 */
 	const resolvedTabs = $derived<CodeBlockTab[]>(
 		(tabs ?? []).map((t) => ({ ...t, value: t.value ?? t.lang }))
 	);
@@ -37,16 +38,20 @@
 		copy === 'actionbar' ? undefined : copy
 	);
 
-	// Seed the active tab before the first render (from raw props, since the
-	// derived above isn't ready during init).
+	/**
+	 * Seeds the active tab before the first render, reading the raw props because
+	 * the derived above is not ready during init.
+	 */
 	const initialValue = untrack(() => {
 		const firstTab = tabs?.[0];
 		return firstTab ? (firstTab.value ?? firstTab.lang) : code != null ? SINGLE : '';
 	});
 	value ??= initialValue;
 
-	// Raw code per tab (Copy reads the active one) + active/order tracking that
-	// drives the directional slide between tabs.
+	/**
+	 * Raw code per tab -- Copy reads the active one -- plus the active/order
+	 * tracking that drives the directional slide between tabs.
+	 */
 	const registry = $state({
 		codes: {},
 		active: untrack(() => value ?? ''),
@@ -65,8 +70,7 @@
 	data-ui="code-block"
 	class={cn(
 		className,
-		CARD_PANEL_FRAME,
-		'flex w-full flex-col overflow-hidden text-foreground',
+		'sivir-card-frame flex w-full flex-col overflow-hidden text-foreground',
 		'[--code-block-gutter:var(--color-foreground-muted)] [--code-block-padding-x:1.1rem] [--code-block-padding-y:0.9rem] [--code-block-line-height:1.7] [--code-block-slide:1.25rem]',
 		'[--code-block-token-comment:#b0b0b0] [--code-block-token-keyword:#565656] [--code-block-token-string:#565656] [--code-block-token-number:#868686] [--code-block-token-function:#565656] [--code-block-token-property:#868686] [--code-block-token-builtin:#868686] [--code-block-token-meta:#868686]',
 		'dark:[--code-block-token-comment:#a0a0a0] dark:[--code-block-token-keyword:#7ec4ff] dark:[--code-block-token-string:#ffc966] dark:[--code-block-token-number:#ffc966] dark:[--code-block-token-function:#7ec4ff] dark:[--code-block-token-property:#7ec4ff] dark:[--code-block-token-builtin:#7ec4ff] dark:[--code-block-token-meta:#a0a0a0]'
@@ -92,7 +96,7 @@
 			{#if hasTabRow || code != null}
 				<!-- The static card: holds the background/ring while only the text
 				     panels slide inside it (and clips the slide). -->
-				<div class={cn(CARD_PANEL_SURFACE, 'relative w-full overflow-hidden')}>
+				<div class={cn('sivir-card-surface relative w-full overflow-hidden')}>
 					{#if hasTabRow}
 						{#each resolvedTabs as t (t.value)}
 							<Content

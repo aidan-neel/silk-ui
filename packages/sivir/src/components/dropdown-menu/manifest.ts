@@ -29,7 +29,7 @@ export const manifest: Manifest = {
 		'components/dropdown-menu/manifest.ts'
 	],
 	components: ['popover', 'button'],
-	shared: ['utils.cn', 'internals/menu'],
+	shared: ['utils.closeMenuLayers', 'utils.cn', 'utils.createContext'],
 	peerDependencies: {
 		'@lucide/svelte': '^1.0.0',
 		cnfast: '^0.0.8',

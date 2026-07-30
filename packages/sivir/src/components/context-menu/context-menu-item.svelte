@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { ContextMenuItemProps } from '.';
 	import { Button } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
-	import { dismissContextMenu, getContextMenuContext } from './context.svelte';
+	import { closeMenuLayers, cn } from '@sivir/ui/utils';
+	import { getContextMenuContext } from './context.svelte';
 
 	const { state: contextMenuState, ancestors } = getContextMenuContext();
 
@@ -20,11 +19,11 @@
 	role="menuitem"
 	{...rest}
 	onclick={() => {
-		dismissContextMenu(contextMenuState, ancestors);
+		closeMenuLayers(contextMenuState, ancestors);
 		callback?.();
 	}}
-	class={cn(className, `${MENU_ITEM} ${inset ? 'pl-8' : ''}`)}
-	variant="ghost"
+	class={cn(className, 'sivir-menu-item', inset && 'pl-8')}
+	unstyled
 >
 	{@render children?.()}
 </Button>

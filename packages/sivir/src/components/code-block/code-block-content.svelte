@@ -24,8 +24,10 @@
 	const registry = getContext<CodeBlockRegistry>('code-block');
 	const tabs = getContext<TabsState>('tabs');
 
-	// Register raw code (Copy reads the active one) and record source order so the
-	// slide direction can be derived from tab position.
+	/**
+	 * Registers the raw code -- Copy reads the active one -- and records source
+	 * order so the slide direction can be derived from tab position.
+	 */
 	$effect(() => {
 		if (!registry) return;
 		registry.codes[value] = code;
@@ -42,9 +44,11 @@
 	const isActive = $derived(activeValue === value);
 	const myIndex = $derived(registry ? registry.order.indexOf(value) : 0);
 	const activeIndex = $derived(registry ? registry.order.indexOf(activeValue) : 0);
-	// Panels left of the active one rest off to the LEFT, panels to the right rest
-	// off to the RIGHT. Switching tabs slides the incoming text in from its side
-	// while the outgoing text slides out the opposite way.
+	/**
+	 * Panels left of the active one rest off to the left, panels to its right rest
+	 * off to the right. Switching tabs slides the incoming text in from its own
+	 * side while the outgoing text slides out the opposite way.
+	 */
 	const shift = $derived(isActive ? 0 : myIndex < activeIndex ? -1 : 1);
 	const newline = '\n';
 

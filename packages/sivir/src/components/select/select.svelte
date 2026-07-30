@@ -12,8 +12,10 @@
 
 	let { children, value = $bindable('') }: Props = $props();
 
-	// Plain Maps/Sets live on context, NOT inside $state — item registration
-	// mutates them freely without invalidating reactive effects.
+	/**
+	 * Plain Maps and Sets live on context, never inside `$state`, so item
+	 * registration can mutate them freely without invalidating reactive effects.
+	 */
 	const labels = new Map<string, string>();
 	const values = new Set<string>();
 

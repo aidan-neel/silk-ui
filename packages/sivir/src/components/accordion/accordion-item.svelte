@@ -10,8 +10,10 @@
 		children,
 		...rest
 	}: AccordionItemProps = $props();
-	// Use getters so trigger/content see the current prop values reactively
-	// instead of the initial-mount snapshot.
+	/**
+	 * Getters, so trigger and content see the current prop values reactively
+	 * instead of the initial-mount snapshot.
+	 */
 	setContext('accordion-item', {
 		get value() {
 			return value;

@@ -14,7 +14,7 @@ export const manifest: Manifest = {
 		'components/collapsible/manifest.ts'
 	],
 	components: [],
-	shared: ['utils.cn', 'internals/transition'],
+	shared: ['utils.cn', 'utils.createContext', 'transition'],
 	peerDependencies: {
 		cnfast: '^0.0.8',
 		svelte: '^5.0.0'

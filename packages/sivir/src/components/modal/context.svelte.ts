@@ -1,8 +1,5 @@
-import { getContext, hasContext, setContext } from 'svelte';
-
+import { createContext } from '@sivir/ui/utils';
 import type { ModalState } from '.';
-
-const MODAL_CONTEXT = Symbol('sivir.modal');
 
 export type ModalContext = {
 	id: string;
@@ -11,15 +8,6 @@ export type ModalContext = {
 	state: ModalState;
 };
 
-export function setModalContext(context: ModalContext) {
-	setContext(MODAL_CONTEXT, context);
-	return context;
-}
+const { set: setModalContext, get: getModalContext } = createContext<ModalContext>('modal');
 
-export function getModalContext() {
-	if (!hasContext(MODAL_CONTEXT)) {
-		throw new Error('Modal components must be used within <Modal.Root>.');
-	}
-
-	return getContext<ModalContext>(MODAL_CONTEXT);
-}
+export { setModalContext, getModalContext };

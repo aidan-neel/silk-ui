@@ -85,40 +85,37 @@
 				Examples
 			</h2>
 			<p class="mt-2 text-sm text-foreground-muted">
-				Right-click each surface below. Each one ships a different context menu.
+				Right-click each target. Menus stay simple — different action sets only.
 			</p>
 		</div>
 
-		<!-- File row -->
 		<div id="file-row" class="scroll-mt-20 flex flex-col gap-3">
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				File row
+				File actions
 			</h3>
 			<ComponentPreview code={FileRowSrc}>
 				<FileRow />
 			</ComponentPreview>
 		</div>
 
-		<!-- Image -->
 		<div id="image" class="scroll-mt-20 flex flex-col gap-3">
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Image
+				Image actions
 			</h3>
 			<ComponentPreview code={ImageSrc}>
 				<Image />
 			</ComponentPreview>
 		</div>
 
-		<!-- Task card -->
 		<div id="task-card" class="scroll-mt-20 flex flex-col gap-3">
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Task card
+				Task actions
 			</h3>
 			<ComponentPreview code={TaskCardSrc}>
 				<TaskCard />

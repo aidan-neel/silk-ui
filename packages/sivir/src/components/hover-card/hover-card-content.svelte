@@ -3,13 +3,14 @@
 	import { cn } from '@sivir/ui/utils';
 	import type { HoverCardContentProps } from '.';
 
-	// Note: in 2.0.0 hover-card collapses to a popover wrapper, and popover
-	// owns placement at the Root level. The `side` and `align` props on
-	// HoverCardContentProps are preserved for type-API stability but are
-	// not currently consumed -- placement is set via the Root prop on
-	// Popover.Root (HoverCard.Root forwards no placement today; defaults to
-	// 'bottom'). A future minor release can either wire these through or
-	// deprecate them in docs.
+	/**
+	 * As of 2.0.0 hover-card collapses to a popover wrapper and popover owns
+	 * placement at the Root level. `side` and `align` on HoverCardContentProps
+	 * are kept for type-API stability but are not consumed: placement comes from
+	 * the Root prop on Popover.Root, and HoverCard.Root forwards none today, so
+	 * it defaults to `bottom`. A future minor release can wire them through or
+	 * deprecate them.
+	 */
 	let {
 		class: className,
 		children,

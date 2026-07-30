@@ -1,8 +1,5 @@
-import { getContext, hasContext, setContext } from 'svelte';
-
+import { createContext } from '@sivir/ui/utils';
 import type { ComboboxState } from '.';
-
-const COMBOBOX_CONTEXT = Symbol('sivir.combobox');
 
 export type ComboboxContext = {
 	id: string;
@@ -10,15 +7,7 @@ export type ComboboxContext = {
 	state: ComboboxState;
 };
 
-export function setComboboxContext(context: ComboboxContext) {
-	setContext(COMBOBOX_CONTEXT, context);
-	return context;
-}
+const { set: setComboboxContext, get: getComboboxContext } =
+	createContext<ComboboxContext>('combobox');
 
-export function getComboboxContext() {
-	if (!hasContext(COMBOBOX_CONTEXT)) {
-		throw new Error('Combobox components must be used within <Combobox.Root>.');
-	}
-
-	return getContext<ComboboxContext>(COMBOBOX_CONTEXT);
-}
+export { setComboboxContext, getComboboxContext };

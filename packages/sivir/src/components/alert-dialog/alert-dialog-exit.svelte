@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Button, type ButtonProps } from '@sivir/ui/components/button';
 	import { cn, type DefaultProps } from '@sivir/ui/utils';
-	import { useIsDark } from '@sivir/ui/internals/is-dark.svelte.ts';
+	import { useIsDark } from '@sivir/ui/is-dark.svelte.ts';
 	import { getModalContext } from '../modal/context.svelte';
 
 	type Props = {
@@ -15,7 +15,7 @@
 	const modal = getModalContext();
 	let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>(undefined);
 
-	// Cancel reads as outline in light, ghost in dark.
+	/** Cancel reads as outline in light, ghost in dark. */
 	const isDark = useIsDark();
 	const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
 

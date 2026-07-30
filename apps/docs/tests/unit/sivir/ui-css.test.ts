@@ -80,8 +80,21 @@ describe('ui.css Tier 3 + structure', () => {
 		expect(css).not.toContain('@keyframes');
 		expect(css).toContain('prefers-reduced-motion: reduce');
 	});
+	/** Mirrors the budget in packages/sivir/release.test.ts -- keep the two in step. */
 	it('stays within the release size budget', () => {
-		expect(css.split('\n').length).toBeLessThanOrEqual(175);
-		expect(Buffer.byteLength(css)).toBeLessThanOrEqual(8 * 1024);
+		expect(css.split('\n').length).toBeLessThanOrEqual(340);
+		expect(Buffer.byteLength(css)).toBeLessThanOrEqual(12 * 1024);
+	});
+
+	it('declares the shared surface contracts in the components layer', () => {
+		expect(css).toContain('@layer components');
+		for (const contract of [
+			'.sivir-menu-item',
+			'.sivir-card-frame',
+			'.sivir-card-surface',
+			'.sivir-tooltip'
+		]) {
+			expect(css).toContain(contract);
+		}
 	});
 });

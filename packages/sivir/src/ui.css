@@ -4,7 +4,7 @@
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-	--font-sans: 'Inter', sans-serif;
+	--font-sans: Geist, 'Geist Sans', sans-serif;
 	--font-mono: 'JetBrains Mono', monospace;
 	--font-header: var(--font-sans);
 
@@ -146,8 +146,151 @@
 		inset 0 1px 0 0 rgb(255 255 255 / 0.05);
 }
 
+/*
+ * Multi-component surface contracts.
+ *
+ * These live in CSS rather than as shared Tailwind strings in TypeScript so a
+ * component only ever names the contract (`class="sivir-menu-item"`) instead of
+ * re-declaring it. The `components` layer sits below `utilities`, so a consumer
+ * passing `class="h-10 bg-red-500"` still wins on every property it names.
+ */
+@layer components {
+	/* Option/menu row shared by select, combobox, command, dropdown-menu, and
+	   context-menu items. Rendered on an unstyled Button, so it carries the
+	   focus, disabled, and icon rules the button base would otherwise supply. */
+	.sivir-menu-item {
+		pointer-events: auto;
+		display: flex;
+		width: 100%;
+		height: calc(var(--spacing) * 8);
+		align-items: center;
+		justify-content: space-between;
+		border: var(--border-size) solid transparent;
+		border-radius: var(--radius-lg);
+		padding-inline: calc(var(--spacing) * 2);
+		padding-block: 0;
+		text-align: left;
+		font-size: var(--font-size-button);
+		font-weight: var(--font-weight-button);
+		letter-spacing: var(--tracking-button);
+		line-height: 1;
+		color: var(--color-foreground);
+		user-select: none;
+		transition-property: background-color, border-color, color, box-shadow, transform, scale;
+		transition-duration:
+			var(--motion-duration-menu), var(--motion-duration-menu), var(--motion-duration-menu),
+			var(--motion-duration-menu), var(--motion-duration-press), var(--motion-duration-press);
+		transition-timing-function: var(--ease-press);
+	}
+
+	.sivir-menu-item:hover {
+		cursor: default;
+		background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
+	}
+
+	.sivir-menu-item[data-active='true'],
+	.sivir-menu-item[data-state='open'] {
+		background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
+	}
+
+	.sivir-menu-item[data-selected='true'] {
+		background-color: var(--color-accent-tint);
+	}
+
+	.sivir-menu-item:where(.dark, .dark *):hover,
+	.sivir-menu-item:where(.dark, .dark *)[data-active='true'],
+	.sivir-menu-item:where(.dark, .dark *)[data-state='open'] {
+		background-color: color-mix(in oklab, var(--color-foreground) 8%, transparent);
+	}
+
+	.sivir-menu-item:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
+	}
+
+	.sivir-menu-item:disabled,
+	.sivir-menu-item[aria-disabled='true'] {
+		pointer-events: none;
+		opacity: 0.4;
+	}
+
+	.sivir-menu-item svg {
+		pointer-events: none;
+		flex-shrink: 0;
+	}
+
+	.sivir-menu-item svg:not([class*='size-']) {
+		width: calc(var(--spacing) * 4);
+		height: calc(var(--spacing) * 4);
+	}
+
+	/* Card/CodeBlock concentric frame: hairline border + foreground-tinted fill. */
+	.sivir-card-frame {
+		padding: calc(var(--spacing) * 0.5);
+		border: var(--border-size) solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background-color: color-mix(in oklab, var(--color-foreground) 3%, var(--color-card));
+	}
+
+	.sivir-card-frame:where(.dark, .dark *) {
+		border-color: color-mix(in oklab, var(--color-border) 40%, transparent);
+	}
+
+	/* Inset surface for the frame above. Radius is the frame radius minus the
+	   2px frame inset so the corners stay concentric. Bring your own padding. */
+	.sivir-card-surface {
+		border-radius: calc(var(--radius-lg) - 2px);
+		background-color: var(--color-card);
+		box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-border) 50%, transparent);
+	}
+
+	/* The single shared tooltip bubble and its off-screen width twin, both built
+	   imperatively in shared-tooltip.ts. */
+	.sivir-tooltip,
+	.sivir-tooltip-measure {
+		pointer-events: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		white-space: nowrap;
+		padding-inline: calc(var(--spacing) * 2);
+		padding-block: calc(var(--spacing) * 1);
+		font-size: var(--font-size-label);
+		font-weight: var(--font-weight-label);
+		letter-spacing: var(--tracking-label);
+		line-height: 1.3;
+	}
+
+	.sivir-tooltip {
+		z-index: 140;
+		max-width: calc(var(--spacing) * 72);
+		transform-origin: center;
+		border-radius: var(--radius-lg);
+		background-color: var(--color-tooltip);
+		color: var(--color-tooltip-foreground);
+		opacity: 0;
+		box-shadow: var(--elevation-float);
+		transition-property: left, top, width, opacity, transform;
+		transition-duration:
+			var(--motion-duration-panel), var(--motion-duration-panel), var(--motion-duration-panel),
+			var(--motion-duration-hover), var(--motion-duration-panel);
+		transition-timing-function: var(--ease-out);
+	}
+
+	.sivir-tooltip-measure {
+		visibility: hidden;
+	}
+
+	.sivir-tooltip-label {
+		display: inline-block;
+		white-space: nowrap;
+	}
+}
+
 /* Constant-pixel press: --sivir-press-sx/sy set by pressable() from --motion-press-px. */
-.sivir-press:active:not(:disabled):not([aria-disabled='true']) {
+.sivir-press:active:not(:disabled):not([aria-disabled='true']),
+.sivir-menu-item:active:not(:disabled):not([aria-disabled='true']) {
 	scale: var(--sivir-press-sx, 0.98) var(--sivir-press-sy, 0.98);
 }
 
@@ -168,7 +311,13 @@
 		--motion-duration-press: 0ms;
 	}
 
-	.sivir-press:active {
+	.sivir-press:active,
+	.sivir-menu-item:active {
 		scale: none;
+	}
+
+	.sivir-menu-item,
+	.sivir-tooltip {
+		transition: none;
 	}
 }

@@ -1,10 +1,16 @@
-// A single shared tooltip surface. Every Tooltip.Trigger drives this one
-// element, so moving from one trigger to another *morphs* the same bubble —
-// the background stays put while it slides and reshapes around the new label.
-//
-// Centering trick: the bubble is anchored by its *center* (left = trigger
-// centre + translateX(-50%)), so its width can change freely without ever
-// drifting off the trigger.
+/**
+ * A single shared tooltip surface.
+ *
+ * Every Tooltip.Trigger drives this one element, so moving from one trigger to
+ * another *morphs* the same bubble -- the background stays put while it slides
+ * and reshapes around the new label.
+ *
+ * Centering trick: the bubble is anchored by its *center* (left = trigger
+ * centre + `translateX(-50%)`), so its width can change freely without ever
+ * drifting off the trigger.
+ *
+ * Presentation lives in `ui.css` under `.sivir-tooltip`.
+ */
 import { computePosition, offset, flip, shift, type Placement } from '@floating-ui/dom';
 
 let bubble: HTMLDivElement | null = null;
@@ -21,27 +27,30 @@ let closeTimer: ReturnType<typeof setTimeout> | undefined;
 const SHOW = 'scale(1)';
 const HIDE = 'scale(0.94)';
 
+/**
+ * Lazily builds the bubble, its label span, and the off-screen measuring twin.
+ *
+ * The twin exists so `applyWidth` can read a target width before the label
+ * swaps, letting the bubble transition its shape instead of snapping when the
+ * new label is a different length.
+ */
 function ensure() {
 	if (bubble || typeof document === 'undefined') return;
 
 	const el = document.createElement('div');
 	el.setAttribute('data-sivir-tooltip', '');
 	el.setAttribute('role', 'tooltip');
-	el.className =
-		'pointer-events-none fixed top-0 left-0 z-[140] box-border max-w-72 origin-center whitespace-nowrap rounded-[var(--radius-lg)] bg-[var(--color-tooltip)] px-2 py-1 [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] leading-[1.3] text-[var(--color-tooltip-foreground)] opacity-0 shadow-[var(--elevation-float)] transition-[left,top,width,opacity,transform] [transition-duration:var(--motion-duration-panel),var(--motion-duration-panel),var(--motion-duration-panel),var(--motion-duration-hover),var(--motion-duration-panel)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none';
+	el.className = 'sivir-tooltip';
 	el.style.transform = `translateX(-50%) ${HIDE}`;
 
 	const span = document.createElement('span');
-	span.className = 'inline-block whitespace-nowrap';
+	span.className = 'sivir-tooltip-label';
 	el.appendChild(span);
 	document.body.appendChild(el);
 
-	// Off-screen twin to measure the target width so the bubble can transition
-	// its shape rather than snapping when the label changes length.
 	const m = document.createElement('span');
 	m.setAttribute('aria-hidden', 'true');
-	m.className =
-		'pointer-events-none invisible fixed top-0 left-0 box-border whitespace-nowrap px-2 py-1 [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] leading-[1.3]';
+	m.className = 'sivir-tooltip-measure';
 	document.body.appendChild(m);
 
 	bubble = el;
@@ -49,17 +58,26 @@ function ensure() {
 	label = span;
 }
 
+/** Sizes the bubble to the measured width of `text` so the change can transition. */
 function applyWidth(text: string) {
 	if (!bubble || !measurer) return;
 	measurer.textContent = text;
 	bubble.style.width = `${measurer.offsetWidth}px`;
 }
 
+/**
+ * Places the bubble against `ref`.
+ *
+ * The `fixed` strategy is required because the bubble is `position: fixed` --
+ * with absolute coordinates it drifts by the page scroll once you scroll down to
+ * a component. The result is anchored by the bubble's centre so width and height
+ * changes never decentre it. Rejections are swallowed: the active trigger can
+ * disappear while Floating UI is measuring it, and a removed trigger needs no
+ * recovery and must not leak an unhandled rejection.
+ */
 function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
 	if (!bubble) return;
 	void computePosition(ref, bubble, {
-		// The bubble is position:fixed, so coords must be viewport-relative —
-		// otherwise it drifts by the page scroll once you scroll to a component.
 		strategy: 'fixed',
 		placement,
 		middleware: [offset(8), flip({ padding: 8 }), shift({ padding: 8 })]
@@ -69,7 +87,6 @@ function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
 			const horizontal = placement === 'top' || placement === 'bottom';
 			const center = horizontal ? 'translateX(-50%)' : 'translateY(-50%)';
 			lastCenter = center;
-			// Anchor by the bubble's centre so width/height changes never decentre it.
 			const left = horizontal ? x + bubble.offsetWidth / 2 : x;
 			const top = horizontal ? y : y + bubble.offsetHeight / 2;
 
@@ -91,16 +108,14 @@ function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
 				bubble.style.transform = `${center} ${SHOW}`;
 			});
 		})
-		.catch(() => {
-			// The active trigger can disappear while Floating UI is measuring it.
-			// A removed trigger needs no recovery and must not leak a rejection.
-		});
+		.catch(() => {});
 }
 
+/** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref: HTMLElement, text: string, placement: Placement) {
 	if (!bubble || !label) return;
 	clearTimeout(closeTimer);
-	const morph = visible; // a tooltip is already up → swap to this trigger's label
+	const morph = visible;
 	activeRef = ref;
 	label.textContent = text;
 	currentText = text;
@@ -132,7 +147,7 @@ export function updateTooltipText(ref: HTMLElement, text: string) {
 	if (!visible || activeRef !== ref || !label || !text || text === currentText) return;
 	label.textContent = text;
 	currentText = text;
-	applyWidth(text); // width transitions; centre-anchor keeps it aligned
+	applyWidth(text);
 }
 
 /** Force the bubble up now and, unless the pointer is over the trigger, auto-hide after `holdMs`. */

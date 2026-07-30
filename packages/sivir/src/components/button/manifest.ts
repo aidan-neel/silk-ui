@@ -41,7 +41,7 @@ export const manifest: Manifest = {
 		'components/button/manifest.ts'
 	],
 	components: [],
-	shared: ['utils.cn', 'internals/variants'],
+	shared: ['utils.cn', 'utils.Intent'],
 	peerDependencies: {
 		cnfast: '^0.0.8',
 		'tailwind-merge': '^3.0.0',

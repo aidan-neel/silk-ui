@@ -201,7 +201,7 @@ const CHECKS: Check[] = [
 				'sivir.json',
 				`${SIVIR}/ui.css`,
 				`${SIVIR}/utils.ts`,
-				`${SIVIR}/internals/transition.ts`
+				`${SIVIR}/transition.ts`
 			]) {
 				if (!exists(file)) f.push(`missing ${file}`);
 			}

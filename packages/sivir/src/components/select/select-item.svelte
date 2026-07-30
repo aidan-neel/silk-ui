@@ -3,7 +3,6 @@
 	import { cn } from '@sivir/ui/utils';
 	import { onMount, type Snippet } from 'svelte';
 	import Check from '@lucide/svelte/icons/check';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
 	import { getSelectContext } from './context.svelte';
 	import { getPopoverContext } from '../popover/context.svelte';
 
@@ -28,12 +27,18 @@
 		return element?.textContent?.trim() ?? '';
 	}
 
+	/**
+	 * Registers the item's value and display label with the Select root.
+	 *
+	 * This records the display label only -- it must never write
+	 * `selectState.selectedLabel`, because doing so on menu open made
+	 * pre-filled triggers jump the moment labels resolved. When the label is not
+	 * in the DOM yet, one animation frame is given for it to appear.
+	 */
 	onMount(() => {
 		const itemValue = value;
 		values.add(itemValue);
 
-		// Register the display label only. Do NOT touch selectedLabel here —
-		// writing it on menu open made pre-filled triggers jump when labels resolved.
 		const resolved = resolveLabel();
 		if (resolved) labels.set(itemValue, resolved);
 		else {
@@ -68,8 +73,8 @@
 		popoverState.buttonRef?.focus();
 		userOnclick?.();
 	}}
-	class={cn(className, MENU_ITEM)}
-	variant="ghost"
+	class={cn(className, 'sivir-menu-item')}
+	unstyled
 >
 	{@render children?.()}
 

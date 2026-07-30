@@ -5,9 +5,11 @@
 
 	const tip = getContext('sivir-tooltip') as { text: string };
 
-	// The shared bubble renders the label itself, so this
-	// just hosts the authored content off-screen and reports its text up to the
-	// context — a MutationObserver keeps dynamic labels (Copy → Copied) current.
+	/**
+	 * The shared bubble renders the label itself, so this only hosts the authored
+	 * content off-screen and reports its text up to the context. A
+	 * MutationObserver keeps dynamic labels (Copy to Copied) current.
+	 */
 	let el = $state<HTMLElement>();
 
 	onMount(() => {

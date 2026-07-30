@@ -13,7 +13,7 @@
 	let { children, class: className, shortcut = '', ontrigger, ...rest }: Props = $props();
 	let element: HTMLElement;
 
-	// Map keybinding tokens to the glyphs people recognise from native menus.
+	/** Maps keybinding tokens to the glyphs people recognise from native menus. */
 	const GLYPHS: Record<string, string> = {
 		cmd: '⌘',
 		command: '⌘',

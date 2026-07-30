@@ -3,131 +3,94 @@
 	import Shortcut from '@sivir/ui/components/shortcut';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Clipboard from '@lucide/svelte/icons/clipboard-paste';
-	import Clone from '@lucide/svelte/icons/copy';
-	import ArrowUp from '@lucide/svelte/icons/arrow-up';
-	import ArrowDown from '@lucide/svelte/icons/arrow-down';
-	import Edit from '@lucide/svelte/icons/edit-2';
+	import Scissors from '@lucide/svelte/icons/scissors';
+	import Clone from '@lucide/svelte/icons/files';
+	import Pencil from '@lucide/svelte/icons/pencil';
+	import ArrowUp from '@lucide/svelte/icons/arrow-up-to-line';
+	import ArrowDown from '@lucide/svelte/icons/arrow-down-to-line';
+	import Eye from '@lucide/svelte/icons/eye';
+	import EyeOff from '@lucide/svelte/icons/eye-off';
+	import Lock from '@lucide/svelte/icons/lock';
 	import Trash from '@lucide/svelte/icons/trash-2';
+
+	let locked = $state(false);
+	let visible = $state(true);
 </script>
 
 <div class="flex items-center justify-center">
 	<ContextMenu.Root>
 		<ContextMenu.Trigger>
 			<div
-				class="relative h-44 w-80 rounded-lg bg-background border border-border/50"
-				style="background-image: linear-gradient(90deg, transparent 24%, rgba(148,113,113,.05) 25%, rgba(148,113,113,.05) 26%, transparent 27%, transparent 74%, rgba(148,113,113,.05) 75%, rgba(148,113,113,.05) 76%, transparent 77%, transparent), linear-gradient(0deg, transparent 24%, rgba(148,113,113,.05) 25%, rgba(148,113,113,.05) 26%, transparent 27%, transparent 74%, rgba(148,113,113,.05) 75%, rgba(148,113,113,.05) 76%, transparent 77%, transparent); background-size: 50px 50px;"
+				class="flex h-28 w-64 items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-secondary/30 text-sm text-foreground-muted"
 			>
-				<!-- Selected layer -->
-				<div class="absolute inset-0 flex items-center justify-center">
-					<div class="relative">
-						<!-- Selection ring -->
-						<div
-							class="absolute inset-0 rounded-md pointer-events-none"
-							style="border: 2px solid #0d99ff; box-shadow: inset 0 0 0 1px #0d99ff;"
-						></div>
-
-						<!-- Corner handles -->
-						<div
-							class="absolute w-2 h-2 rounded-full bg-white border border-[#0d99ff] -top-1 -left-1 pointer-events-none"
-							style="box-shadow: 0 0 0 1px #0d99ff;"
-						></div>
-						<div
-							class="absolute w-2 h-2 rounded-full bg-white border border-[#0d99ff] -top-1 -right-1 pointer-events-none"
-							style="box-shadow: 0 0 0 1px #0d99ff;"
-						></div>
-						<div
-							class="absolute w-2 h-2 rounded-full bg-white border border-[#0d99ff] -bottom-1 -left-1 pointer-events-none"
-							style="box-shadow: 0 0 0 1px #0d99ff;"
-						></div>
-						<div
-							class="absolute w-2 h-2 rounded-full bg-white border border-[#0d99ff] -bottom-1 -right-1 pointer-events-none"
-							style="box-shadow: 0 0 0 1px #0d99ff;"
-						></div>
-
-						<!-- Content box -->
-						<div
-							class="w-24 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-md flex items-center justify-center text-xs font-medium text-foreground"
-						>
-							Hero / Card
-						</div>
-					</div>
-				</div>
+				Right-click here
 			</div>
 		</ContextMenu.Trigger>
 
-		<ContextMenu.Content>
+		<ContextMenu.Content class="min-w-[16rem]">
 			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<Copy size={16} />
-						<span>Copy</span>
-					</div>
-					<Shortcut shortcut="cmd+C" />
-				</div>
+				<span class="flex items-center gap-2"><Scissors size={14} /> Cut</span>
+				<Shortcut shortcut="cmd+X" />
 			</ContextMenu.Item>
-
 			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<Clipboard size={16} />
-						<span>Paste here</span>
-					</div>
-					<Shortcut shortcut="cmd+V" />
-				</div>
+				<span class="flex items-center gap-2"><Copy size={14} /> Copy</span>
+				<Shortcut shortcut="cmd+C" />
 			</ContextMenu.Item>
-
 			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<Clone size={16} />
-						<span>Duplicate</span>
-					</div>
-					<Shortcut shortcut="cmd+D" />
-				</div>
+				<span class="flex items-center gap-2"><Clipboard size={14} /> Paste</span>
+				<Shortcut shortcut="cmd+V" />
+			</ContextMenu.Item>
+			<ContextMenu.Item callback={() => {}}>
+				<span class="flex items-center gap-2"><Clone size={14} /> Duplicate</span>
+				<Shortcut shortcut="cmd+D" />
 			</ContextMenu.Item>
 
 			<ContextMenu.Separator />
 
-			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<ArrowUp size={16} />
-						<span>Bring to front</span>
-					</div>
-					<Shortcut shortcut="cmd+]" />
-				</div>
-			</ContextMenu.Item>
+			<ContextMenu.Sub>
+				<ContextMenu.SubTrigger>
+					<span class="flex items-center gap-2">Arrange</span>
+				</ContextMenu.SubTrigger>
+				<ContextMenu.SubContent class="min-w-[12rem]">
+					<ContextMenu.Item callback={() => {}}>
+						<span class="flex items-center gap-2"><ArrowUp size={14} /> Bring to front</span>
+						<Shortcut shortcut="cmd+]" />
+					</ContextMenu.Item>
+					<ContextMenu.Item callback={() => {}}>
+						<span class="flex items-center gap-2"><ArrowDown size={14} /> Send to back</span>
+						<Shortcut shortcut="cmd+[" />
+					</ContextMenu.Item>
+				</ContextMenu.SubContent>
+			</ContextMenu.Sub>
 
 			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<ArrowDown size={16} />
-						<span>Send to back</span>
-					</div>
-					<Shortcut shortcut="cmd+[" />
-				</div>
+				<span class="flex items-center gap-2"><Pencil size={14} /> Rename</span>
+				<Shortcut shortcut="enter" />
 			</ContextMenu.Item>
 
 			<ContextMenu.Separator />
 
-			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2">
-						<Edit size={16} />
-						<span>Rename</span>
-					</div>
-					<span class="text-foreground-muted text-xs"></span>
-				</div>
-			</ContextMenu.Item>
+			<ContextMenu.CheckboxItem value="visible" bind:checked={visible} inset callback={() => {}}>
+				<span class="flex items-center gap-2">
+					{#if visible}
+						<Eye size={14} />
+					{:else}
+						<EyeOff size={14} />
+					{/if}
+					Show layer
+				</span>
+			</ContextMenu.CheckboxItem>
+			<ContextMenu.CheckboxItem value="locked" bind:checked={locked} inset callback={() => {}}>
+				<span class="flex items-center gap-2"><Lock size={14} /> Lock layer</span>
+			</ContextMenu.CheckboxItem>
+
+			<ContextMenu.Separator />
 
 			<ContextMenu.Item callback={() => {}}>
-				<div class="flex items-center justify-between w-full gap-4">
-					<div class="flex items-center gap-2 text-error">
-						<Trash size={16} />
-						<span>Delete</span>
-					</div>
-					<span class="text-foreground-muted text-xs"></span>
-				</div>
+				<span class="flex items-center gap-2 text-[var(--color-error)]">
+					<Trash size={14} /> Delete
+				</span>
+				<Shortcut shortcut="backspace" />
 			</ContextMenu.Item>
 		</ContextMenu.Content>
 	</ContextMenu.Root>

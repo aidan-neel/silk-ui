@@ -3,7 +3,6 @@
 	import { cn } from '@sivir/ui/utils';
 	import { onMount, type Snippet } from 'svelte';
 	import type { CommandItem } from '.';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
 	import { getModalContext } from '../modal/context.svelte';
 	import { getCommandContext, resetCommand } from './context.svelte';
 
@@ -92,10 +91,10 @@
 	onclick={activate}
 	class={cn(
 		className,
-		`${MENU_ITEM} justify-start gap-2`,
+		'sivir-menu-item justify-start gap-2',
 		command.activeId === itemId && 'bg-secondary text-foreground'
 	)}
-	variant="ghost"
+	unstyled
 >
 	<div class="flex w-full items-center gap-2 text-left">
 		{@render children?.()}

@@ -107,16 +107,7 @@ const NAMESPACED = {
 const DIRECT_PARTS = {
 	...NAMESPACED,
 	'code-block': ['Root', 'Header', 'List', 'Trigger', 'Actions', 'Copy', 'Content', 'CodeBlock'],
-	card: [
-		'Root',
-		'Title',
-		'Header',
-		'Footer',
-		'Description',
-		'Content',
-		'CARD_PANEL_FRAME',
-		'CARD_PANEL_SURFACE'
-	]
+	card: ['Root', 'Title', 'Header', 'Footer', 'Description', 'Content']
 } as const;
 
 const FROZEN = [...Object.keys(NAMED), ...Object.keys(NAMESPACED)].sort((a, b) =>
@@ -251,17 +242,51 @@ describe('public API contract (v1 freeze)', () => {
 		}
 	});
 
-	test('Card keeps the panel surface helpers used by CodeBlock and docs previews', async () => {
-		const cardIndex = await readFile(path.join(componentsDir, 'card/index.ts'), 'utf8');
+	test('the panel surface is a stylesheet contract, not a shared class string', async () => {
+		const css = await readFile(path.join(packageRoot, 'src/ui.css'), 'utf8');
 		const cardRoot = await readFile(path.join(componentsDir, 'card/card.svelte'), 'utf8');
-		const surface = await readFile(path.join(componentsDir, 'card/surface.ts'), 'utf8');
+		const codeBlock = await readFile(
+			path.join(componentsDir, 'code-block/code-block.svelte'),
+			'utf8'
+		);
 
-		expect(cardIndex).toContain('CARD_PANEL_FRAME');
-		expect(cardIndex).toContain('CARD_PANEL_SURFACE');
-		expect(surface).toContain('export const CARD_PANEL_FRAME');
-		expect(surface).toContain('export const CARD_PANEL_SURFACE');
+		expect(css).toContain('.sivir-card-frame');
+		expect(css).toContain('.sivir-card-surface');
+		expect(existsSync(path.join(componentsDir, 'card/surface.ts'))).toBe(false);
+
+		for (const source of [cardRoot, codeBlock]) {
+			expect(source).toContain('sivir-card-frame');
+			expect(source).toContain('sivir-card-surface');
+			expect(source).not.toContain('CARD_PANEL_');
+		}
+
 		expect(cardRoot).toMatch(/variant\s*=\s*['"]default['"]/);
 		expect(cardRoot).toContain("'panel'");
+	});
+
+	test('shared surface contracts live in CSS rather than TypeScript', async () => {
+		const css = await readFile(path.join(packageRoot, 'src/ui.css'), 'utf8');
+		expect(css).toContain('.sivir-menu-item');
+		expect(css).toContain('.sivir-tooltip');
+
+		const menuRows = [
+			'select/select-item.svelte',
+			'combobox/combobox-item.svelte',
+			'command/command-item.svelte',
+			'context-menu/context-menu-item.svelte',
+			'context-menu/context-menu-checkbox-item.svelte',
+			'context-menu/context-menu-sub-trigger.svelte',
+			'dropdown-menu/dropdown-menu-item.svelte',
+			'dropdown-menu/dropdown-menu-sub-trigger.svelte'
+		];
+		for (const file of menuRows) {
+			const source = await readFile(path.join(componentsDir, file), 'utf8');
+			expect(source, file).toContain('sivir-menu-item');
+			expect(source, file).toContain('unstyled');
+			expect(source, file).not.toContain('MENU_ITEM');
+		}
+
+		expect(existsSync(path.join(packageRoot, 'src/internals'))).toBe(false);
 	});
 });
 

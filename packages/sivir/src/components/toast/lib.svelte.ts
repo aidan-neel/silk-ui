@@ -301,11 +301,14 @@ export interface ToastHost {
  * as activeState (P3-F12).
  */
 function setToastUIState(): ToastHost {
-	// $state must be a declaration initializer — always create, then either
-	// keep as the shared client store or discard (SSR / subsequent hosts).
+	/**
+	 * `$state` must be a declaration initializer, so this always creates one and
+	 * then either keeps it as the shared client store or discards it, which is
+	 * what happens under SSR and for subsequent hosts.
+	 */
 	const fresh = $state<ToastState>({ data: { toasts: [] } });
 
-	// SSR / non-DOM: isolated inert state, toast() stays a no-op.
+	/** SSR and other non-DOM hosts get isolated inert state; `toast()` no-ops. */
 	if (typeof document === 'undefined') {
 		setContext(STATE_KEY, fresh);
 		return { state: fresh, hostId: -1 };
@@ -326,9 +329,11 @@ function setToastUIState(): ToastHost {
 		if (primaryHostId === hostId) {
 			primaryHostId = liveHosts[0] ?? null;
 		}
-		// Keep activeState + clientState across host gaps so toast()/dismiss
-		// and in-flight timers survive page Toaster remounts. Nothing renders
-		// until a primary host mounts again.
+		/**
+		 * Keeps `activeState` and `clientState` across host gaps so `toast()`,
+		 * dismiss, and in-flight timers survive page Toaster remounts. Nothing
+		 * renders until a primary host mounts again.
+		 */
 	});
 
 	return { state, hostId };

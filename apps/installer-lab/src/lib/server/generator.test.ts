@@ -51,8 +51,8 @@ describe('showcase generation', () => {
 		'keeps the component typography cascade intact in %s mode',
 		(installPath) => {
 			const css = rootCss(installPath);
-			expect(css).toContain("@import '@fontsource/inter/latin-400.css';");
-			expect(css).toContain("@import '@fontsource/inter/latin-700.css';");
+			expect(css).toContain("@import '@fontsource/geist-sans/latin-400.css';");
+			expect(css).toContain("@import '@fontsource/geist-sans/latin-700.css';");
 			expect(css).toContain('@layer base { button, input { font: inherit; } }');
 			expect(css).toContain(
 				'body { font-size: var(--font-size-body); font-weight: var(--font-weight-body); line-height: 1.5; }'

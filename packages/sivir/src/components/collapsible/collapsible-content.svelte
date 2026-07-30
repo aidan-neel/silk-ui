@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { themedSlide } from '@sivir/ui/internals/transition';
+	import { themedSlide } from '@sivir/ui/transition';
 	import { cn } from '@sivir/ui/utils';
 	import type { CollapsibleContentProps } from '.';
 	import { getCollapsibleContext } from './context.svelte';

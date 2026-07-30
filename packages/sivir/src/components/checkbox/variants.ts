@@ -16,8 +16,10 @@ export const checkbox = tv({
 			false: ''
 		}
 	},
-	// The checked tint is only for the card-style `primary` variant; a plain
-	// `default` checkbox must NOT get a tinted row background when checked.
+	/**
+	 * The checked tint belongs to the card-style `primary` variant only. A plain
+	 * `default` checkbox must not get a tinted row background when checked.
+	 */
 	compoundVariants: [
 		{
 			variant: 'primary',

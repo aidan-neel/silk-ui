@@ -29,9 +29,13 @@
 		}, delay);
 	}
 
+	/**
+	 * Closes after a grace period. The 180ms default matches
+	 * `--motion-duration-panel` so the dismiss lines up with panel motion.
+	 */
 	function close() {
 		clearTimers();
-		// Use --motion-duration-panel (default 180ms) for close delay consistency with panel motion
+
 		const closeDelay = popoverState.closeDelay ?? 180;
 		popoverState.closeTimeout = setTimeout(() => {
 			popoverState.open = false;

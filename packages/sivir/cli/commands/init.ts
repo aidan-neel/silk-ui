@@ -81,7 +81,7 @@ export async function init(options: InitOptions) {
 		await installFile(cwd, dir, file, alias, false);
 	}
 	await saveConfig(cwd, config);
-	spinner.stop(`Installed ${pc.cyan(`${dir}/ui.css`)}, utils, internals, and ${CONFIG_FILE}`);
+	spinner.stop(`Installed ${pc.cyan(`${dir}/ui.css`)}, utils, shared modules, and ${CONFIG_FILE}`);
 
 	const declared = await declaredDependencies(cwd);
 	const missing = BASE_PEER_DEPENDENCIES.filter((dep) => !declared.has(dep));

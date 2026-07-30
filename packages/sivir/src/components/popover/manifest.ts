@@ -39,14 +39,15 @@ export const manifest: Manifest = {
 	],
 	components: ['button'],
 	shared: [
-		'utils.cn',
 		'utils.clickOutside',
+		'utils.cn',
+		'utils.createContext',
 		'utils.lockBodyBackground',
 		'utils.lockBodyScroll',
 		'utils.positionFloatingPanel',
 		'utils.pushEscapeLayer',
 		'utils.trapFocus',
-		'internals/transition'
+		'transition'
 	],
 	peerDependencies: {
 		'@floating-ui/dom': '^1.0.0',

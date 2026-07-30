@@ -45,6 +45,8 @@ export type PopoverTriggerProps = {
 	children?: Snippet;
 	class?: string;
 	element?: HTMLButtonElement | HTMLAnchorElement | undefined;
+	/** Forwarded to Button: render with `class` alone, skipping variant/size. */
+	unstyled?: boolean;
 	onclick?: () => void;
 	style?: string;
 } & Pick<
@@ -64,7 +66,7 @@ export type PopoverTriggerProps = {
 	Partial<Record<`data-${string}`, string | boolean | null>>;
 export type PopoverTitleProps = DefaultProps;
 
-// Mirrors floating-ui's placements: a side, optionally aligned to a corner.
+/** Mirrors floating-ui's placements: a side, optionally aligned to a corner. */
 export type Placement =
 	| 'top'
 	| 'top-start'

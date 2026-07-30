@@ -2,7 +2,7 @@
 	import { cn } from '@sivir/ui/utils';
 	import type { SheetContentProps } from '.';
 	import { useOverlay } from '@sivir/ui/components/_internal/overlay';
-	import { overlayIn, overlayOut, sheetIn, sheetOut } from '@sivir/ui/internals/transition';
+	import { overlayIn, overlayOut, sheetIn, sheetOut } from '@sivir/ui/transition';
 	import { getSheetContext } from './context.svelte';
 
 	let {
@@ -17,8 +17,10 @@
 	let element = $state<HTMLElement>();
 	let portalEl = $state<HTMLDivElement>();
 
-	// Portal to <body> so the sheet escapes ancestor stacking contexts
-	// (same pattern as Modal) and the slide always paints over the page.
+	/**
+	 * Portal to `<body>` so the sheet escapes ancestor stacking contexts, the same
+	 * pattern Modal uses, and the slide always paints over the page.
+	 */
 	$effect(() => {
 		if (!portalEl || typeof document === 'undefined') return;
 		document.body.appendChild(portalEl);
@@ -27,7 +29,7 @@
 		};
 	});
 
-	// Shared overlay behavior -- focus trap, click-outside, Escape, body lock.
+	/** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
 	useOverlay({
 		isOpen: () => sheetState.open,
 		panelEl: () => element,

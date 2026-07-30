@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { themedSlide } from '@sivir/ui/internals/transition';
+	import { themedSlide } from '@sivir/ui/transition';
 	import { cn } from '@sivir/ui/utils';
 	import type { AccordionContentProps, AccordionContext } from '.';
 

@@ -10,8 +10,10 @@
 	type Rect = { left: number; top: number; width: number; height: number };
 
 	const variant = $derived(tabsState.variant);
-	// `default` + `ghost` get the animated hover-highlight pill; the
-	// container-style `segmented` variant doesn't (its pill marks the active tab).
+	/**
+	 * `default` and `ghost` get the animated hover-highlight pill. The
+	 * container-style `segmented` variant does not -- its pill marks the active tab.
+	 */
 	const showHover = $derived(variant !== 'segmented');
 
 	let listEl = $state<HTMLDivElement | undefined>(undefined);
@@ -20,14 +22,14 @@
 	let hovering = $state(false);
 	let ready = $state(false);
 
-	// Ghost: a single fill that rests on the selected tab and slides to whatever
-	// tab the pointer is over, snapping back to the selection on mouse-leave.
+	/**
+	 * Ghost uses a single fill that rests on the selected tab and slides to
+	 * whatever tab the pointer is over, snapping back to the selection on
+	 * mouse-leave.
+	 */
 	const ghostRect = $derived(hovering && hover ? hover : indicator);
 
 	function rectOf(el: HTMLElement): Rect {
-		// offsetLeft/Top are relative to the offsetParent's padding box, which is
-		// exactly where `position:absolute` with `left/top:0` is anchored -- using
-		// getBoundingClientRect diffs is off by the list's border width.
 		return {
 			left: el.offsetLeft,
 			top: el.offsetTop,
@@ -55,10 +57,8 @@
 	}
 
 	$effect(() => {
-		// re-measure whenever the active value changes
 		const _ = tabsState.value;
 		untrack(() => {
-			// allow DOM to update first
 			queueMicrotask(() => {
 				measureIndicator();
 				ready = true;
@@ -137,7 +137,6 @@
 		'relative inline-flex items-center',
 		variant === 'segmented' && 'rounded-[var(--radius-xl)] bg-secondary p-[3px]',
 		variant === 'ghost' && 'gap-1',
-		// bottom padding = the visible gap between the tabs and the underline
 		variant === 'default' && 'gap-1 pb-1'
 	)}
 	onkeydown={handleKeydown}

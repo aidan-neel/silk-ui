@@ -32,9 +32,9 @@ export type Manifest = {
 	 */
 	components: string[];
 	/**
-	 * Shared utilities or internals the CLI installs. Two forms accepted:
-	 * - `utils.<symbol>` -- install the specific symbol from `utils.ts`.
-	 * - `internals/<module>` -- install the named module file.
+	 * Shared modules the CLI installs alongside the component. Two forms:
+	 * - `utils.<symbol>` -- the named symbol from `utils.ts`.
+	 * - `<module>` -- a top-level shared module, e.g. `transition` or `is-dark`.
 	 */
 	shared: string[];
 	/**

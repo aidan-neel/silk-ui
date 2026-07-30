@@ -44,7 +44,7 @@ export function scaffoldCommands(consumerRoot: string): CommandSpec[] {
 			],
 			cwd: consumerRoot
 		},
-		{ bin: 'bun', args: ['add', '@fontsource/inter@5.2.8'], cwd: consumerRoot }
+		{ bin: 'bun', args: ['add', '@fontsource/geist-sans@5.3.0'], cwd: consumerRoot }
 	];
 }
 

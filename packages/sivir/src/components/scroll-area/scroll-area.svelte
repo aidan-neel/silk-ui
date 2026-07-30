@@ -23,8 +23,10 @@
 		clientHeight = scroller.clientHeight;
 	}
 
-	// Measure on mount + whenever content/viewport size changes, so the edge
-	// cues are correct before the first scroll event fires.
+	/**
+	 * Measure on mount and whenever the content or viewport size changes, so the
+	 * edge cues are correct before the first scroll event fires.
+	 */
 	$effect(() => {
 		if (!scroller) return;
 		measure();

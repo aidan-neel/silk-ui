@@ -1,12 +1,16 @@
 import { cubicIn, cubicOut, quintOut } from 'svelte/easing';
 import { fade, type EasingFunction, type TransitionConfig } from 'svelte/transition';
 
-/** Reads a CSS duration variable and normalizes it to milliseconds. */
+/**
+ * Reads a CSS duration variable and normalizes it to milliseconds.
+ *
+ * Each branch tests `Number.isFinite` rather than falling back with `||` so a
+ * legitimate `0ms` -- the "None" motion preset -- survives instead of being
+ * replaced by the fallback.
+ */
 export function getCssDuration(node: Element, variableName: string, fallback: number) {
 	const raw = getComputedStyle(node).getPropertyValue(variableName).trim();
 	if (!raw) return fallback;
-	// Use isFinite over `parsed || fallback` so a legitimate `0ms` (e.g. the
-	// "None" motion preset) survives instead of getting replaced by fallback.
 	if (raw.endsWith('ms')) {
 		const parsed = Number.parseFloat(raw);
 		return Number.isFinite(parsed) ? parsed : fallback;
@@ -20,8 +24,8 @@ export function getCssDuration(node: Element, variableName: string, fallback: nu
 }
 
 /**
- * Unit-interval cubic-bezier easing (CSS-compatible control points).
- * Used for the iOS drawer curve — Svelte's built-ins can't express it.
+ * Unit-interval cubic-bezier easing with CSS-compatible control points.
+ * Used for the iOS drawer curve, which Svelte's built-in easings cannot express.
  */
 export function cubicBezier(x1: number, y1: number, x2: number, y2: number): EasingFunction {
 	return (t: number) => {
@@ -41,8 +45,8 @@ export function cubicBezier(x1: number, y1: number, x2: number, y2: number): Eas
 	};
 }
 
+/** Cubic bezier basis with p0=0 and p3=1: `B(t) = 3(1-t)²t·p1 + 3(1-t)t²·p2 + t³`. */
 function sampleBezier(t: number, p1: number, p2: number) {
-	// B(t) = 3(1-t)²t·p1 + 3(1-t)t²·p2 + t³  (p0=0, p3=1)
 	const u = 1 - t;
 	return 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t;
 }
@@ -128,7 +132,6 @@ function sheetSlide(
 	return {
 		duration: getCssDuration(node, durationVariable, fallbackDuration),
 		easing: drawerEase,
-		// Pure translate — no opacity. A drawer is a physical panel, not a ghost.
 		css: (t) => `transform:${baseTransform} translate3d(${(1 - t) * 100 * dir}%, 0, 0)`
 	};
 }
@@ -178,41 +181,5 @@ export const themedSlide = (node: Element, params: ThemedSlideParams = {}): Tran
 			`margin-bottom: ${t * marginBottom}px;` +
 			`border-top-width: ${t * borderTopWidth}px;` +
 			`border-bottom-width: ${t * borderBottomWidth}px;`
-	};
-};
-
-type ScaleFadeParams = {
-	startScale?: number;
-	duration?: number;
-	durationVar?: string;
-};
-
-/** Combines a small scale-up with a fade-in for compact content. */
-export const scaleFade = (
-	node: Element,
-	params: ScaleFadeParams = { startScale: 0.85, duration: 250 }
-): TransitionConfig => {
-	const styleToString = (style: Record<string, number | string | undefined>): string => {
-		return Object.keys(style).reduce((str, key) => {
-			if (style[key] === undefined) return str;
-			return str + key + ':' + style[key] + ';';
-		}, '');
-	};
-
-	const duration = params.durationVar
-		? getCssDuration(node, params.durationVar, params.duration ?? 250)
-		: (params.duration ?? 250);
-
-	return {
-		duration,
-		delay: 0,
-		easing: cubicOut,
-		css: (t) => {
-			const scale = (params.startScale ?? 0.85) + (1 - (params.startScale ?? 0.85)) * t;
-			return styleToString({
-				transform: `scale(${scale})`,
-				opacity: t
-			});
-		}
 	};
 };

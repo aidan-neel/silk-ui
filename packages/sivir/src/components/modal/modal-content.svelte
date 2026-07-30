@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cn } from '@sivir/ui/utils';
 	import type { ModalContentProps } from '.';
-	import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir/ui/internals/transition';
+	import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir/ui/transition';
 	import { useOverlay } from '@sivir/ui/components/_internal/overlay';
 	import X from '@lucide/svelte/icons/x';
 	import { getModalContext } from './context.svelte';
@@ -23,10 +23,10 @@
 	const maxWidthClass = $derived(
 		(
 			{
-				sm: 'max-w-sm',
-				md: 'max-w-md',
-				lg: 'max-w-xl',
-				xl: 'max-w-3xl'
+				sm: 'max-w-[18rem]',
+				md: 'max-w-xs',
+				lg: 'max-w-md',
+				xl: 'max-w-xl'
 			} as const
 		)[size]
 	);
@@ -40,8 +40,10 @@
 		modal.contentId = contentId;
 	});
 
-	// Portal the modal to <body> so its z-index escapes ancestor stacking
-	// contexts (e.g. flex items with z-index, transformed parents, etc.).
+	/**
+	 * Portal the modal to `<body>` so its z-index escapes ancestor stacking
+	 * contexts such as flex items with a z-index or transformed parents.
+	 */
 	$effect(() => {
 		if (!portalEl || typeof document === 'undefined') return;
 		document.body.appendChild(portalEl);
@@ -50,7 +52,7 @@
 		};
 	});
 
-	// Shared overlay behavior -- focus trap, click-outside, Escape, body lock.
+	/** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
 	useOverlay({
 		isOpen: () => modal.state.open,
 		panelEl: () => element,
@@ -96,14 +98,14 @@
 		>
 			<!-- Experiment: Modal.Content as a Panel. The box is Panel's outer frame;
 			     this is its inset surface, themed with the modal's own tokens. -->
-			<div class={cn(surfaceClass, 'bg-panel', 'relative flex h-full flex-col gap-4 p-6')}>
+			<div class={cn(surfaceClass, 'bg-panel', 'relative flex h-full flex-col gap-4 p-5')}>
 				{#if showClose}
 					<button
 						onclick={() => {
 							modal.state.open = false;
 						}}
 						aria-label="Close"
-						class="absolute top-3 right-3 inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+						class="absolute top-2.5 right-2.5 inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
 					>
 						<X size={16} />
 					</button>

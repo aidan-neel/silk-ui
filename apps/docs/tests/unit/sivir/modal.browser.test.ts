@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
-import { dialogIn, dialogOut } from '@sivir/ui/internals/transition';
+import { dialogIn, dialogOut } from '@sivir/ui/transition';
 
 /*
  * Browser-mode tests for modal. These exercise mount/unmount, focus

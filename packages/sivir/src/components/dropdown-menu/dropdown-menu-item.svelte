@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
+	import { closeMenuLayers, cn } from '@sivir/ui/utils';
 	import { type Snippet } from 'svelte';
-	import { MENU_ITEM } from '@sivir/ui/internals/menu';
 	import { getPopoverContext } from '../popover/context.svelte';
-	import { dismissDropdownMenu, getDropdownMenuContext } from './context.svelte';
+	import { getDropdownMenuContext } from './context.svelte';
 
 	const { state: popoverState } = getPopoverContext();
 	const { ancestors } = getDropdownMenuContext();
@@ -22,12 +21,12 @@
 	role="menuitem"
 	{...rest}
 	onclick={() => {
-		dismissDropdownMenu(popoverState, ancestors);
+		closeMenuLayers(popoverState, ancestors);
 		callback?.();
 		userOnclick?.();
 	}}
-	class={cn(className, `${MENU_ITEM} flex-row gap-3 text-sm`)}
-	variant="ghost"
+	class={cn(className, 'sivir-menu-item flex-row gap-3 text-sm')}
+	unstyled
 >
 	{@render children?.()}
 </Button>

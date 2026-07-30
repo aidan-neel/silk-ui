@@ -1,6 +1,6 @@
 {
 	"name": "@sivir/ui",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
 	"license": "MIT",
 	"repository": {
@@ -41,10 +41,9 @@
 		"./ui.css": "./src/ui.css",
 		"./brand-mark": "./src/brand-mark.svelte",
 		"./utils": "./src/utils.ts",
+		"./transition": "./src/transition.ts",
+		"./is-dark.svelte.ts": "./src/is-dark.svelte.ts",
 		"./_manifest/types": "./src/_manifest/types.ts",
-		"./internals/transition": "./src/internals/transition.ts",
-		"./internals/*": "./src/internals/*",
-		"./themes/presets": "./src/themes/presets.ts",
 		"./themes/*": "./src/themes/*.ts",
 		"./components/input/variants": "./src/components/input/variants.ts",
 		"./components/_internal/overlay": "./src/components/_internal/overlay/index.ts",

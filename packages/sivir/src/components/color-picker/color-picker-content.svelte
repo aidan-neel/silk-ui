@@ -7,8 +7,7 @@
 
 	const ctx = getColorPickerContext();
 
-	// ── Picker state ─────────────────────────────────────────────────
-
+	/** Picker state: the HSV working values plus the raw hex field. */
 	let hue = $state(0);
 	let sat = $state(0);
 	let val = $state(100);
@@ -16,10 +15,12 @@
 	let sbEl = $state<HTMLElement | undefined>(undefined);
 	let hueEl = $state<HTMLElement | undefined>(undefined);
 
-	// HSL slider state -- owned by the sliders themselves so user intent
-	// survives the hex round-trip (low-saturation hexes lose hue precision
-	// and pure-grey hexes have no hue at all, so deriving HSL straight from
-	// the hex would snap the H slider back to 0 mid-drag).
+	/**
+	 * HSL slider state, owned by the sliders themselves so user intent survives
+	 * the hex round-trip. Low-saturation hexes lose hue precision and pure-grey
+	 * hexes have no hue at all, so deriving HSL straight from the hex would snap
+	 * the H slider back to 0 mid-drag.
+	 */
 	let hslH = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[0] : 0);
 	let hslS = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[1] : 0);
 	let hslL = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[2] : 100);
@@ -31,13 +32,17 @@
 		isValidHex(hexInput) ? hexInput : isValidHex(ctx.value) ? ctx.value : '#000000'
 	);
 
+	/**
+	 * Writes one HSL channel and re-derives the hex.
+	 *
+	 * At S=0 every hue maps to the same grey hex, so moving H would feel dead;
+	 * nudging S to a sensible default keeps the chosen hue visible.
+	 */
 	function setHslChannel(channel: 'h' | 's' | 'l', rawValue: string) {
 		const next = Number.parseFloat(rawValue);
 		if (!Number.isFinite(next)) return;
 		if (channel === 'h') {
 			hslH = next;
-			// At S=0 every hue maps to the same grey hex, so moving H feels
-			// dead. Bump S to a sensible default so the chosen hue is visible.
 			if (hslS === 0) hslS = 60;
 		} else if (channel === 's') {
 			hslS = next;
@@ -49,7 +54,12 @@
 		applyHex(newHex);
 	}
 
-	// Sync external value → HSV + hexInput + HSL.
+	/**
+	 * Syncs the external value into HSV, the hex field, and the HSL sliders.
+	 *
+	 * When the incoming hex is achromatic the user's last hue choice is
+	 * preserved, since the round-trip would otherwise snap H back to 0.
+	 */
 	$effect(() => {
 		if (!isValidHex(ctx.value)) return;
 		const lower = ctx.value.toLowerCase();
@@ -68,15 +78,12 @@
 		val = v2;
 		hexInput = lower;
 		const [hh, hs, hl] = hexToHsl(ctx.value);
-		// Preserve the user's last hue choice when the hex is achromatic -- the
-		// roundtrip would otherwise snap H to 0.
 		if (hs > 0) hslH = hh;
 		hslS = hs;
 		hslL = hl;
 	});
 
-	// ── Apply ───────────────────────────────────────────────────────
-
+	/** Commits a hex value to the picker context. */
 	function applyHex(hex: string) {
 		if (!isValidHex(hex)) return;
 		ctx.apply(hex);
@@ -88,10 +95,14 @@
 		ctx.apply(hex);
 	}
 
+	/**
+	 * Accepts typed or pasted hex.
+	 *
+	 * Non-hex characters are stripped first -- pastes carry a `#` prefix, spaces,
+	 * or a fully-qualified `#5e6ad2` -- so `maxlength=6` on the bare-hex input
+	 * cannot chop the last character off a 7-character paste.
+	 */
 	function handleHexInput(raw: string) {
-		// Strip any non-hex chars first (handles pastes with `#` prefix, spaces,
-		// or fully-qualified `#5e6ad2` strings) so `maxlength=6` on the bare-hex
-		// input doesn't chop off the last character of a 7-char paste.
 		const digits = raw.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
 		const cleaned = `#${digits}`;
 		hexInput = cleaned;
@@ -104,8 +115,7 @@
 		}
 	}
 
-	// ── SB drag ─────────────────────────────────────────────────────
-
+	/** Saturation/brightness square drag handling. */
 	let draggingSb = false;
 
 	function sbEventToSV(e: PointerEvent) {
@@ -131,8 +141,7 @@
 		}
 	}
 
-	// ── Hue drag ────────────────────────────────────────────────────
-
+	/** Hue strip drag handling. */
 	let draggingHue = false;
 
 	function hueEventToH(e: PointerEvent) {

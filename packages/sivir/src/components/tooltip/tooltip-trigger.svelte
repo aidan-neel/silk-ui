@@ -41,8 +41,11 @@
 		if (showOnClick && el) flashTooltip(el, tip.text, tip.placement);
 	}
 
-	// Keep the bubble's label in sync while this trigger owns it, so a label that
-	// changes mid-hover (Copy → Copied) morphs in place instead of going stale.
+	/**
+	 * Keeps the bubble's label in sync while this trigger owns it, so a label
+	 * that changes mid-hover (Copy to Copied) morphs in place instead of going
+	 * stale.
+	 */
 	$effect(() => {
 		const text = tip.text;
 		if (el && isActiveTooltip(el)) updateTooltipText(el, text);
