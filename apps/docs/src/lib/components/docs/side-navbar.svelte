@@ -18,9 +18,6 @@
 	];
 
 	function isActive(path: string) {
-		if (path === '/docs/components') {
-			return pageName === path || pageName.startsWith('/docs/components/');
-		}
 		return pageName === path;
 	}
 </script>
@@ -44,7 +41,7 @@
 					class={`h-8 w-fit justify-start gap-2 rounded-lg px-3 text-left text-sm transition-[background-color,color] ${
 						active
 							? 'bg-secondary/85 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
-							: 'hover:bg-secondary/55 hover:text-foreground'
+							: 'hover:bg-secondary hover:text-foreground'
 					}`}
 				>
 					<item.icon size={14} />
@@ -73,7 +70,7 @@
 					class={`h-8.5 w-fit justify-start rounded-lg px-3 text-left text-sm transition-[background-color,color] ${
 						active
 							? 'bg-secondary/85 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
-							: 'hover:bg-secondary/55 hover:text-foreground'
+							: 'hover:bg-secondary hover:text-foreground'
 					}`}
 				>
 					{sanitizeComponent(component)}

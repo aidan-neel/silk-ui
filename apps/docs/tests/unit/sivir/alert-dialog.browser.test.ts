@@ -61,6 +61,9 @@ describe('AlertDialog -- error browser chrome', () => {
 		render(AlertDialogFixture, { open: true, error: true });
 		await flush();
 		expect(themeColor.content).toBe('#dc2626');
+		expect(
+			page.getByRole('button', { name: 'Delete' }).element().getAttribute('data-variant')
+		).toBe('destructive');
 
 		await page.getByText('Cancel').click();
 		await flush();

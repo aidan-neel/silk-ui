@@ -24,6 +24,7 @@
 	{...rest}
 	class={cn(
 		classProp,
+		'min-h-11 md:min-h-0',
 		checkbox({ variant, disabled: disabled ?? false, checked: checked ?? false })
 	)}
 >

@@ -38,5 +38,5 @@ For local full-stack Docker (`docker compose up --build`), the Node adapter is
 selected for docs and an optional registry service is wired over the internal
 network. Registry env vars are documented in
 [`apps/registry/.env.example`](apps/registry/.env.example) and
-[`apps/registry/README.md`](apps/registry/README.md) — that path is post-v1 for
+[`apps/registry/README.md`](apps/registry/README.md). That path is post-v1 for
 the public product.

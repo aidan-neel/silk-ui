@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="flex flex-row items-start gap-2.5">
+<div class="flex min-h-11 flex-row items-start gap-2.5 md:min-h-0">
 	<button
 		bind:this={element}
 		{...rest as HTMLButtonAttributes}

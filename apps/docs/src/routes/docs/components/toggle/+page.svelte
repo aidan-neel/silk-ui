@@ -21,7 +21,7 @@
 
 <svelte:head>
 	<title>Sivir · {TITLE}</title>
-	<meta name="description" content="A two-state button — pressed or unpressed." />
+	<meta name="description" content="A two-state button that is pressed or unpressed." />
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">

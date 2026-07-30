@@ -4,16 +4,18 @@
 	import { cn } from '@sivir/ui/utils';
 	import { getModalContext } from './context.svelte';
 
-	let { class: className, children, onclick, ...rest }: ModalConfirmProps = $props();
 	const modal = getModalContext();
+	let { class: className, children, onclick, variant, ...rest }: ModalConfirmProps = $props();
+	const confirmVariant = $derived(variant ?? (modal.state.error ? 'destructive' : 'primary'));
 </script>
 
 <Button
+	{...rest}
+	variant={confirmVariant}
 	onclick={() => {
 		modal.state.open = false;
 		onclick?.();
 	}}
-	{...rest}
 	class={cn(className, `flex sm:w-fit w-full flex-row gap-2 justify-center items-center`)}
 >
 	{@render children?.()}

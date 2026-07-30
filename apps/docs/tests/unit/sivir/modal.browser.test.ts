@@ -66,6 +66,7 @@ describe('Modal -- error browser chrome', () => {
 		render(ModalFixture, { open: true, error: true });
 		await flush();
 		expect(themeColor.content).toBe('#dc2626');
+		expect(page.getByText('Confirm').element().getAttribute('data-variant')).toBe('destructive');
 
 		await page.getByText('Close').click();
 		await flush();

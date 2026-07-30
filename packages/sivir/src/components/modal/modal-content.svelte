@@ -110,7 +110,7 @@
 							modal.state.open = false;
 						}}
 						aria-label="Close"
-						class="absolute top-2.5 right-2.5 inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+						class="absolute top-1.5 right-1.5 inline-flex size-11 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] md:top-2.5 md:right-2.5 md:size-7"
 					>
 						<X size={16} />
 					</button>

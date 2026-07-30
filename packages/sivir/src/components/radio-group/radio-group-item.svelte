@@ -23,7 +23,7 @@
 	for={inputId}
 	class={cn(
 		className,
-		'flex cursor-[var(--ui-cursor-interactive)] items-start gap-2.5',
+		'flex min-h-11 cursor-[var(--ui-cursor-interactive)] items-start gap-2.5 md:min-h-0',
 		isDisabled && 'cursor-not-allowed opacity-50'
 	)}
 >

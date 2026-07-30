@@ -2,4 +2,4 @@
 	import { Badge } from '@sivir/ui/components/badge';
 </script>
 
-<Badge>New</Badge>
+<Badge variant="outline" dot>Label</Badge>

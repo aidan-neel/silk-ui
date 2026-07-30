@@ -73,6 +73,14 @@ blockquote {
 		font-synthesis-weight: none;
 		text-rendering: optimizeLegibility;
 	}
+
+	[data-docs-page] :where(p, li) > code {
+		border-radius: var(--radius-sm);
+		background-color: var(--color-secondary);
+		padding: 0.1em 0.35em;
+		font-family: var(--font-mono), monospace;
+		font-size: 0.875em;
+	}
 }
 
 .home-page-bg {

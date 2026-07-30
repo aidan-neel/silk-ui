@@ -20,7 +20,7 @@
 	<title>Sivir · Context Menu</title>
 	<meta
 		name="description"
-		content="A right-click menu for actions that apply to whatever the user clicked on. Same item grammar as DropdownMenu — the only difference is what opens it."
+		content="A right-click menu for actions that apply to whatever the user clicked on. It uses the same item grammar as DropdownMenu and opens on right-click."
 	/>
 </svelte:head>
 
@@ -85,7 +85,7 @@
 				Examples
 			</h2>
 			<p class="mt-2 text-sm text-foreground-muted">
-				Right-click each target. Menus stay simple — different action sets only.
+				Right-click each target. Menus remain simple, with different action sets.
 			</p>
 		</div>
 

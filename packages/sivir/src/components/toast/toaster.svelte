@@ -99,7 +99,7 @@
 	<div
 		bind:this={portalEl}
 		use:visualViewportBounds
-		class="pointer-events-none fixed inset-x-0 top-[var(--sivir-viewport-top)] z-200 flex h-[var(--sivir-viewport-height)] items-end justify-center px-4 pb-4 pt-6 sm:justify-end sm:p-6"
+		class="pointer-events-none fixed inset-x-0 top-[var(--sivir-viewport-top)] z-200 flex h-[var(--sivir-viewport-height)] items-end justify-center px-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:justify-end sm:p-6"
 	>
 		<div
 			role="region"

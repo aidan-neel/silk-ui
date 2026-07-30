@@ -39,4 +39,20 @@ describe('CopyButton clipboard behavior', () => {
 		expect(oncopy).not.toHaveBeenCalled();
 		expect(screen.getByRole('button')).toHaveAccessibleName('Copy');
 	});
+
+	it('falls back to the document copy command when clipboard access is denied', async () => {
+		const writeText = vi.fn().mockRejectedValue(new Error('permission denied'));
+		const oncopy = vi.fn();
+		setClipboard(writeText);
+		Object.defineProperty(document, 'execCommand', {
+			configurable: true,
+			value: vi.fn().mockReturnValue(true)
+		});
+
+		render(CopyButton, { props: { text: 'fallback text', oncopy } });
+		await fireEvent.click(screen.getByRole('button', { name: 'Copy' }));
+
+		await waitFor(() => expect(oncopy).toHaveBeenCalledWith('fallback text'));
+		expect(document.execCommand).toHaveBeenCalledWith('copy');
+	});
 });

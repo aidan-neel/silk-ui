@@ -16,7 +16,7 @@
 		onclick={() => {
 			sheetState.open = false;
 		}}
-		class="absolute top-3 right-3 size-8 text-foreground-muted"
+		class="absolute top-1.5 right-1.5 size-11 text-foreground-muted md:top-3 md:right-3 md:size-8"
 		variant="ghost"
 		aria-label="Close"
 	>

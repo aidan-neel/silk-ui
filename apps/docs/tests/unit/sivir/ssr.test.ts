@@ -227,6 +227,13 @@ describe('SSR -- output shape spot checks', () => {
 		expect(result.body.length).toBeGreaterThan(0);
 	});
 
+	it('badge renders an optional dot marker', () => {
+		const result = render(Badge as Component<Record<string, unknown>>, {
+			props: { dot: true }
+		});
+		expect(result.body).toContain('data-badge-dot');
+	});
+
 	it('modal closed produces empty fixture body (the trigger renders, modal content does not)', () => {
 		const result = render(ModalFixture as Component<Record<string, unknown>>, {
 			props: { open: false }

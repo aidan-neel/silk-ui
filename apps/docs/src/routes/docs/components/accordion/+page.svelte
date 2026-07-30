@@ -17,7 +17,10 @@
 
 <svelte:head>
 	<title>Sivir · {TITLE}</title>
-	<meta name="description" content="Stacked collapsible sections — single or multi-open." />
+	<meta
+		name="description"
+		content="Stacked collapsible sections with single- and multi-open modes."
+	/>
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">

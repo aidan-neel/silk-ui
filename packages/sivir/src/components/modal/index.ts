@@ -14,6 +14,7 @@ import type { Snippet } from 'svelte';
 
 export type ModalState = {
 	open: boolean;
+	error: boolean;
 };
 
 export type ModalTriggerProps = ButtonProps;

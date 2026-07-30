@@ -75,7 +75,7 @@
 		</h2>
 		<p class="text-sm text-foreground-muted">Import the Badge and use it in your component:</p>
 		<CodeBlock
-			code={`import { Badge } from '$lib/sivir/components/badge';\n\n<Badge>New</Badge>\n<Badge variant="success">Active</Badge>\n<Badge variant="error">Failed</Badge>`}
+			code={`import { Badge } from '$lib/sivir/components/badge';\n\n<Badge>New</Badge>\n<Badge variant="outline" dot>Label</Badge>\n<Badge variant="success">Active</Badge>\n<Badge variant="error">Failed</Badge>`}
 			lang="svelte"
 			copy="overlay"
 		/>

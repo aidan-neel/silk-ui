@@ -44,7 +44,7 @@ bunx --package @sivir/ui sivir list`;
 			<p
 				class="mt-2 text-[1rem] text-foreground leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
 			>
-				Pick one path: install the package, or copy component source with the CLI.
+				Install Sivir UI into your project.
 			</p>
 		</div>
 	</header>
@@ -67,7 +67,7 @@ bunx --package @sivir/ui sivir list`;
 		<h2
 			class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
 		>
-			Option A — Package import
+			Option A: Package import
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
 			Install the library and import components from
@@ -93,7 +93,7 @@ bunx --package @sivir/ui sivir list`;
 		<h2
 			class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
 		>
-			Option B — CLI source copy
+			Option B: CLI source copy
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
 			The CLI copies source into your project. The package name is

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { untrack, type Snippet } from 'svelte';
 	import * as Modal from '@sivir/ui/components/modal';
 	import type { CommandState } from '.';
 	import { resetCommand, setCommandContext } from './context.svelte';
@@ -24,7 +24,7 @@
 	setCommandContext(command);
 
 	$effect(() => {
-		if (open) resetCommand(command);
+		if (open) untrack(() => resetCommand(command));
 	});
 </script>
 

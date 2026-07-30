@@ -42,7 +42,7 @@
 	let { open = $bindable(false), error = false, children }: ModalProps = $props();
 	const id = $props.id();
 
-	const modalState = $state<ModalState>({ open });
+	const modalState = $state<ModalState>({ open, error: false });
 	const modalContext = $state({
 		id,
 		contentId: `modal-${id}`,
@@ -67,6 +67,7 @@
 	});
 
 	$effect(() => {
+		modalState.error = error;
 		if (open !== syncedOpen) {
 			syncedOpen = open;
 			modalState.open = open;

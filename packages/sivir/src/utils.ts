@@ -417,7 +417,9 @@ export function pressable(node: HTMLElement) {
  */
 export function clickOutside(node: Node, callback: () => void, exclude: Node[] = []) {
 	let destroyed = false;
-	const handleClick = (event: MouseEvent) => {
+	let dismissedByPointer = false;
+
+	function isOutside(event: Event) {
 		const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
 		const target = event.target as Node | null;
 		const isInsideNode = path.includes(node) || (target ? node.contains(target) : false);
@@ -428,21 +430,46 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
 		const isInsideFloating =
 			path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
 			targetEl?.closest('[data-floating-content]') != null;
+		return !isInsideNode && !isInsideExcluded && !isInsideFloating;
+	}
 
-		if (!isInsideNode && !isInsideExcluded && !isInsideFloating) {
-			callback();
+	function dismiss(event: Event) {
+		event.preventDefault();
+		event.stopImmediatePropagation();
+		callback();
+	}
+
+	const handlePointerDown = (event: PointerEvent) => {
+		if (isOutside(event)) {
+			dismissedByPointer = true;
+			dismiss(event);
+		}
+	};
+
+	const handleClick = (event: MouseEvent) => {
+		if (dismissedByPointer) {
+			dismissedByPointer = false;
+			dismiss(event);
+			return;
+		}
+		if (isOutside(event)) {
+			dismiss(event);
 		}
 	};
 
 	const installTimeout = setTimeout(() => {
-		if (!destroyed) document.addEventListener('click', handleClick);
+		if (!destroyed) {
+			document.addEventListener('pointerdown', handlePointerDown, true);
+			document.addEventListener('click', handleClick, true);
+		}
 	}, 0);
 
 	return {
 		destroy() {
 			destroyed = true;
 			clearTimeout(installTimeout);
-			document.removeEventListener('click', handleClick);
+			document.removeEventListener('pointerdown', handlePointerDown, true);
+			document.removeEventListener('click', handleClick, true);
 		}
 	};
 }

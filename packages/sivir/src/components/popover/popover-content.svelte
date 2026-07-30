@@ -3,7 +3,6 @@
 	import {
 		clickOutside,
 		cn,
-		lockBodyBackground,
 		lockBodyScroll,
 		positionFloatingPanel,
 		pushEscapeLayer,
@@ -33,7 +32,6 @@
 
 	let popover = $state<HTMLElement | undefined>();
 	let panelEl = $state<HTMLElement | undefined>();
-	let clickOutsideCleanup: (() => void) | undefined;
 	let positionFrame: number | undefined;
 	let mounted = false;
 
@@ -71,17 +69,6 @@
 
 		if (portal && document && popover) {
 			document.body.appendChild(popover);
-		}
-
-		if (allowClickOutside && popover) {
-			const outside = clickOutside(
-				popover,
-				() => {
-					popoverState.open = false;
-				},
-				popoverState.buttonRef ? [popoverState.buttonRef] : []
-			);
-			clickOutsideCleanup = outside.destroy;
 		}
 
 		const ro = new ResizeObserver(schedulePosition);
@@ -130,11 +117,21 @@
 			document.removeEventListener('focusout', handleFocusOut);
 			ro.disconnect();
 			if (positionFrame !== undefined) cancelAnimationFrame(positionFrame);
-			clickOutsideCleanup?.();
-			popoverState.open = false;
 			popoverState.popoverRef?.remove();
 			popover?.remove();
 		});
+	});
+
+	$effect(() => {
+		if (!popoverState.open || !allowClickOutside || !popover) return;
+		const outside = clickOutside(
+			popover,
+			() => {
+				popoverState.open = false;
+			},
+			popoverState.buttonRef ? [popoverState.buttonRef] : []
+		);
+		return outside.destroy;
 	});
 
 	function cancelClose() {
@@ -147,12 +144,11 @@
 	}
 
 	/**
-	 * Locks body scroll and inerts background siblings whenever the popover is open.
+	 * Locks body scroll whenever the popover is open.
 	 *
-	 * Hoverable popovers (tooltip, hover-card) skip the lock: `pointer-events-none`
-	 * on body children would kill mouseleave/mouseenter on the trigger and cause an
-	 * open/close flicker loop. The scroll lock is shared with Modal and Sheet so a
-	 * nested teardown cannot clear another layer's lock. This must not gate on
+	 * Unlike Modal and Sheet, a Popover keeps its trigger and the outside document
+	 * interactive so users can toggle or dismiss it. The scroll lock is shared with
+	 * Modal and Sheet so a nested teardown cannot clear another layer's lock. This must not gate on
 	 * `popover` existing -- a controlled `open=true` has to lock even before the
 	 * wrapper finishes binding.
 	 */
@@ -160,9 +156,7 @@
 		if (typeof document === 'undefined') return;
 		if (popoverState.open && !popoverState.hoverable && lockScroll) {
 			const releaseScroll = lockBodyScroll();
-			const releaseBackground = lockBodyBackground();
 			return () => {
-				releaseBackground();
 				releaseScroll();
 			};
 		}
@@ -258,7 +252,7 @@
 			)}
 		>
 			<!-- The inset surface: children live here, on the panel fill. -->
-			<div class={cn(surfaceClass, 'min-h-0 flex-1 overflow-auto bg-panel p-3')}>
+			<div class={cn(surfaceClass, 'min-h-0 flex-1 overflow-auto overscroll-contain bg-panel p-3')}>
 				{@render children?.()}
 			</div>
 		</div>

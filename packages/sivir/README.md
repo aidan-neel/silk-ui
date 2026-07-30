@@ -4,7 +4,7 @@ SvelteKit component library inspired by shadcn/ui. **Svelte 5 + Tailwind v4.**
 
 This package is the importable library: `bun add @sivir/ui` and import components
 directly. (If you'd rather own the source in your own repo, shadcn-style, use the
-`sivir` CLI's `add` command instead — this package is the "install it" path.)
+`sivir` CLI's `add` command instead. This package is the "install it" path.)
 
 ## Requirements
 
@@ -35,8 +35,8 @@ CSS (e.g. `src/app.css`), import it as the single entry point:
 ```
 
 `ui.css` already pulls in Tailwind itself and registers Sivir's own components as a
-Tailwind source, so **don't add a separate `@import 'tailwindcss';`** — this one
-line covers Tailwind, the Sivir theme variables, and class scanning for every Sivir
+Tailwind source. Do not add a separate `@import 'tailwindcss';`. This one line
+covers Tailwind, the Sivir theme variables, and class scanning for every Sivir
 component. Tailwind v4 auto-detects your own files, so your app classes keep
 working too.
 
@@ -57,7 +57,7 @@ Single-element components are named exports:
 <Switch />
 ```
 
-Compound components are namespace exports — the parts hang off the namespace:
+Compound components are namespace exports; their parts hang off the namespace:
 
 ```svelte
 <script>

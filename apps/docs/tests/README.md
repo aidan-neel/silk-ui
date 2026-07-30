@@ -40,7 +40,7 @@ document-level listeners, and real keyboard/pointer event propagation.
 ## Screenshots
 
 Vitest's browser mode writes a PNG into `__screenshots__/` when a test **fails**,
-to aid debugging. These are failure artifacts, not assertion baselines — no test
+to aid debugging. These are failure artifacts, not assertion baselines. No test
 currently compares against them.
 
 ### Adding pixel-diff visual regression

@@ -8,16 +8,18 @@
 	} & DefaultProps &
 		ButtonProps;
 
-	let { class: className, children, onclick, ...rest }: Props = $props();
 	const modal = getModalContext();
+	let { class: className, children, onclick, variant, ...rest }: Props = $props();
+	const confirmVariant = $derived(variant ?? (modal.state.error ? 'destructive' : 'primary'));
 </script>
 
 <Button
+	{...rest}
+	variant={confirmVariant}
 	onclick={() => {
 		modal.state.open = false;
 		onclick?.();
 	}}
-	{...rest}
 	class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}
 >
 	{@render children?.()}

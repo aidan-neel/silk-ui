@@ -38,7 +38,7 @@
 	<title>Sivir UI · Themed Svelte components</title>
 	<meta
 		name="description"
-		content="38 Svelte 5 components. Restyle all of them from a handful of design tokens — no forks, no overrides."
+		content="38 Svelte 5 components. Restyle all of them from a handful of design tokens, with no forks or overrides."
 	/>
 </svelte:head>
 
@@ -60,10 +60,7 @@
 				: ''}{/each}
 	</h1>
 
-	<p class="hero__subtitle reveal" style="--d: 0.18s">
-		38 Svelte components. Every one of them restyles from the same handful of design tokens — no
-		forks, no overrides.
-	</p>
+	<p class="hero__subtitle reveal" style="--d: 0.18s">Build with easy-to-style UI components.</p>
 
 	<div class="hero__actions reveal" style="--d: 0.26s">
 		<Button href={resolve('/docs/introduction')} size="lg">

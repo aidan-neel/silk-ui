@@ -157,7 +157,7 @@
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Copy placement — overlay
+				Copy placement: overlay
 			</h3>
 			<ComponentPreview code={CopyOverlaySrc}>
 				<CopyOverlay />
@@ -168,7 +168,7 @@
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Copy placement — inline
+				Copy placement: inline
 			</h3>
 			<ComponentPreview code={CopyInlineSrc}>
 				<CopyInline />
