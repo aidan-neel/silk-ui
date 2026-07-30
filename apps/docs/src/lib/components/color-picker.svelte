@@ -3,13 +3,14 @@
 	// the docs app's internal call sites (studio sidebars, fixtures). The
 	// published component is the compound ColorPicker.Root/.Trigger/.Content.
 	import * as ColorPicker from '@sivir/ui/components/color-picker';
-	import type { ColorOption } from '@sivir/ui/components/color-picker';
+	import type { ColorFormat, ColorOption } from '@sivir/ui/components/color-picker';
 
 	type Props = {
 		label?: string;
 		value: string;
 		onValueChange?: (value: string) => void;
 		options?: ColorOption[];
+		format?: ColorFormat;
 		variant?: 'outline' | 'secondary' | 'ghost';
 		class?: string;
 	};
@@ -19,12 +20,13 @@
 		value,
 		onValueChange,
 		options = [],
+		format = 'hsl',
 		variant = 'outline',
 		class: className
 	}: Props = $props();
 </script>
 
-<ColorPicker.Root {label} {value} {onValueChange} {options} class={className}>
+<ColorPicker.Root {label} {value} {onValueChange} {options} {format} class={className}>
 	<ColorPicker.Trigger {variant} />
 	<ColorPicker.Content />
 </ColorPicker.Root>

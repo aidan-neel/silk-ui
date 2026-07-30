@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"dev": "bunx vite dev",
+		"devnet": "bunx vite dev --host 0.0.0.0",
 		"build": "bunx --bun vite build",
 		"preview": "bunx --bun vite preview",
 		"prepare": "svelte-kit sync || echo ''",

@@ -56,6 +56,24 @@ describe('Modal -- open/closed mount in real browser', () => {
 	});
 });
 
+describe('Modal -- error browser chrome', () => {
+	it('sets and restores theme-color while an error modal is open', async () => {
+		const themeColor = document.createElement('meta');
+		themeColor.name = 'theme-color';
+		themeColor.content = '#ffffff';
+		document.head.append(themeColor);
+
+		render(ModalFixture, { open: true, error: true });
+		await flush();
+		expect(themeColor.content).toBe('#dc2626');
+
+		await page.getByText('Close').click();
+		await flush();
+		expect(themeColor.content).toBe('#ffffff');
+		themeColor.remove();
+	});
+});
+
 describe('Modal -- close paths actually unmount (P3-F6 disambiguation)', () => {
 	it('releases body lock across repeated open and close cycles', async () => {
 		render(ModalFixture, { open: false });

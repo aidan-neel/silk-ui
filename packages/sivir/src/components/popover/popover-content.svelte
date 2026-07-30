@@ -64,6 +64,8 @@
 
 		window.addEventListener('resize', schedulePosition);
 		window.addEventListener('scroll', schedulePosition, true);
+		window.visualViewport?.addEventListener('resize', schedulePosition);
+		window.visualViewport?.addEventListener('scroll', schedulePosition);
 
 		popoverState.popoverRef = popover;
 
@@ -122,6 +124,8 @@
 			document.removeEventListener('scroll', schedulePosition);
 			window.removeEventListener('resize', schedulePosition);
 			window.removeEventListener('scroll', schedulePosition, true);
+			window.visualViewport?.removeEventListener('resize', schedulePosition);
+			window.visualViewport?.removeEventListener('scroll', schedulePosition);
 			document.removeEventListener('focusin', handleFocusIn);
 			document.removeEventListener('focusout', handleFocusOut);
 			ro.disconnect();

@@ -12,7 +12,7 @@ export const button = tv({
 			primary:
 				'bg-primary text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] data-[state=open]:bg-[var(--color-primary-hover)]',
 			secondary:
-				'bg-muted text-foreground hover:bg-[color-mix(in_srgb,var(--color-muted)_70%,white)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-muted)_70%,white)]',
+				'bg-secondary text-foreground hover:bg-[var(--color-field-hover)] data-[state=open]:bg-[var(--color-field-hover)]',
 			ghost:
 				'bg-transparent text-foreground hover:bg-foreground/[0.08] data-[state=open]:bg-foreground/[0.08]',
 			/**
@@ -20,7 +20,7 @@ export const button = tv({
 			 * of the lift so the raised look survives focus.
 			 */
 			outline:
-				'bg-card text-foreground shadow-[var(--elevation-control)] hover:bg-muted data-[state=open]:bg-muted focus-visible:shadow-[var(--focus-ring),var(--elevation-control)]',
+				'bg-card text-foreground shadow-[var(--elevation-control)] hover:bg-secondary data-[state=open]:bg-secondary focus-visible:shadow-[var(--focus-ring),var(--elevation-control)]',
 			destructive:
 				'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)]',
 			/**

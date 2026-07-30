@@ -30,7 +30,6 @@
 	function close() {
 		comboboxState.selected = item;
 		comboboxState.open = false;
-		comboboxState.searchContent = '';
 		popoverState.buttonRef?.focus();
 		callback?.();
 	}

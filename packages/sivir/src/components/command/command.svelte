@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import * as Modal from '@sivir/ui/components/modal';
 	import type { CommandState } from '.';
-	import { setCommandContext } from './context.svelte';
+	import { resetCommand, setCommandContext } from './context.svelte';
 
 	let {
 		open = $bindable(false),
@@ -22,6 +22,10 @@
 		itemsVersion: 0
 	});
 	setCommandContext(command);
+
+	$effect(() => {
+		if (open) resetCommand(command);
+	});
 </script>
 
 <Modal.Root bind:open>

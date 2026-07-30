@@ -1,12 +1,12 @@
 <script lang="ts">
 	import * as AlertDialog from '@sivir/ui/components/alert-dialog';
 
-	let { open = $bindable(false), allowClickOutside = false } = $props();
+	let { open = $bindable(false), allowClickOutside = false, error = false } = $props();
 </script>
 
 <button data-testid="trigger" onclick={() => (open = true)}>Open alert dialog</button>
 
-<AlertDialog.Root bind:open>
+<AlertDialog.Root bind:open {error}>
 	<AlertDialog.Content {allowClickOutside}>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete project?</AlertDialog.Title>

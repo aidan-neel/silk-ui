@@ -28,7 +28,7 @@
 	setComboboxContext({ id: key, placeholder: untrack(() => placeholder), state: comboboxState });
 
 	$effect(() => {
-		if (!comboboxState.open) comboboxState.searchContent = '';
+		if (comboboxState.open) comboboxState.searchContent = '';
 	});
 	$effect(() => {
 		if (open !== syncedOpen) {

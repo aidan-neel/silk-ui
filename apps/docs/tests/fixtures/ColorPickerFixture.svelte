@@ -1,15 +1,18 @@
 <script lang="ts">
 	import ColorPicker from '$lib/components/color-picker.svelte';
+	import type { ColorFormat } from '@sivir/ui/components/color-picker';
 
 	let {
 		value = $bindable('#ff0000'),
 		label = 'Color',
+		format = 'hsl',
 		onValueChange = (v: string) => {
 			value = v;
 		}
 	}: {
 		value?: string;
 		label?: string;
+		format?: ColorFormat;
 		onValueChange?: (value: string) => void;
 	} = $props();
 
@@ -21,5 +24,5 @@
 </script>
 
 <div style="padding: 40px;">
-	<ColorPicker {value} {label} {onValueChange} {options} />
+	<ColorPicker {value} {label} {onValueChange} {options} {format} />
 </div>

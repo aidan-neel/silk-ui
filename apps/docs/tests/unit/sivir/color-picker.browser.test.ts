@@ -60,6 +60,32 @@ describe('ColorPicker -- popover open and close', () => {
 	});
 });
 
+describe('ColorPicker -- channel formats', () => {
+	it('uses HSL channels by default', async () => {
+		render(ColorPickerFixture, { value: '#ff0000' });
+		await flush();
+		await openPicker();
+		expect(
+			document.querySelectorAll('[data-ui="popover-content"] input[type="range"]')
+		).toHaveLength(3);
+		expect(
+			document.querySelector<HTMLInputElement>('[data-ui="popover-content"] input[type="range"]')
+				?.max
+		).toBe('360');
+	});
+
+	it('renders RGB channels when format="rgb"', async () => {
+		render(ColorPickerFixture, { value: '#ff0000', format: 'rgb' });
+		await flush();
+		await openPicker();
+		const channels = document.querySelectorAll<HTMLInputElement>(
+			'[data-ui="popover-content"] input[type="range"]'
+		);
+		expect(channels).toHaveLength(3);
+		expect(channels[0]?.max).toBe('255');
+	});
+});
+
 describe('ColorPicker -- preset option selection', () => {
 	it('shows preset option swatches when open', async () => {
 		render(ColorPickerFixture, { value: '#ff0000' });

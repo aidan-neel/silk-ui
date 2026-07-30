@@ -206,6 +206,19 @@ describe('Command -- search input', () => {
 		expect(onLogout).toHaveBeenCalledTimes(1);
 	});
 
+	it('keeps filtered results hidden during the close animation after Enter', async () => {
+		render(CommandFixture, { open: true });
+		await flush();
+
+		await page.getByPlaceholder('Search commands').fill('logout');
+		await flush();
+		await expect.element(page.getByTestId('cmd-profile')).not.toBeVisible();
+		await userEvent.keyboard('{Enter}');
+		await tick();
+
+		await expect.element(page.getByTestId('cmd-profile')).not.toBeVisible();
+	});
+
 	it('matches one-character queries', async () => {
 		render(CommandFixture, { open: true });
 		await flush();

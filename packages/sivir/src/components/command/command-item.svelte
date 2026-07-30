@@ -4,7 +4,7 @@
 	import { onMount, type Snippet } from 'svelte';
 	import type { CommandItem } from '.';
 	import { getModalContext } from '../modal/context.svelte';
-	import { getCommandContext, resetCommand } from './context.svelte';
+	import { getCommandContext } from './context.svelte';
 
 	const command = getCommandContext();
 	const modal = getModalContext();
@@ -66,7 +66,6 @@
 	function activate() {
 		if (disabled) return;
 		modal.state.open = false;
-		resetCommand(command);
 		callback?.();
 		onclick?.();
 	}

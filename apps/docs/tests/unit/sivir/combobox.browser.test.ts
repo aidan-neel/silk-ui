@@ -74,6 +74,19 @@ describe('Combobox -- item activation', () => {
 		await flush();
 		expect(onBanana).toHaveBeenCalledTimes(1);
 	});
+
+	it('keeps the filtered results visible during the close animation after Enter', async () => {
+		render(ComboboxFixture, {});
+		await flush();
+		await openCombobox();
+
+		await page.getByPlaceholder('Search fruits').fill('cherry');
+		await expect.element(page.getByText('Apple')).not.toBeInTheDocument();
+		await userEvent.keyboard('{Enter}');
+		await tick();
+
+		await expect.element(page.getByText('Apple')).not.toBeInTheDocument();
+	});
 });
 
 describe('Combobox -- search input', () => {

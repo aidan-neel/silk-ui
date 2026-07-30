@@ -4,13 +4,14 @@
 	let {
 		open = $bindable(false),
 		allowClickOutside = true,
+		error = false,
 		role = 'dialog' as 'dialog' | 'alertdialog'
 	} = $props();
 </script>
 
 <button data-testid="trigger" onclick={() => (open = true)}>Open</button>
 
-<Modal.Root bind:open>
+<Modal.Root bind:open {error}>
 	<Modal.Content {allowClickOutside} {role}>
 		<Modal.Title>Modal Title</Modal.Title>
 		<Modal.Description>Modal Description</Modal.Description>

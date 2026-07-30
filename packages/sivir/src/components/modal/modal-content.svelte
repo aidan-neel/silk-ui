@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn, visualViewportBounds } from '@sivir/ui/utils';
 	import type { ModalContentProps } from '.';
 	import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir/ui/transition';
 	import { useOverlay } from '@sivir/ui/components/_internal/overlay';
@@ -23,10 +23,10 @@
 	const maxWidthClass = $derived(
 		(
 			{
-				sm: 'max-w-[18rem]',
-				md: 'max-w-xs',
-				lg: 'max-w-md',
-				xl: 'max-w-xl'
+				sm: 'md:max-w-[18rem]',
+				md: 'md:max-w-xs',
+				lg: 'md:max-w-md',
+				xl: 'md:max-w-xl'
 			} as const
 		)[size]
 	);
@@ -65,7 +65,12 @@
 </script>
 
 {#if modal.state.open}
-	<div bind:this={portalEl} data-overlay-root class="fixed inset-0 z-[115]">
+	<div
+		bind:this={portalEl}
+		use:visualViewportBounds
+		data-overlay-root
+		class="fixed inset-x-0 top-[var(--sivir-viewport-top)] z-[115] h-[var(--sivir-viewport-height)]"
+	>
 		<div
 			in:overlayIn
 			out:overlayOut
@@ -85,7 +90,7 @@
 				className, // token-lint-disable-next-line no-literal-length
 				'origin-center bg-panel text-foreground shadow-[var(--elevation-float)]',
 				'rounded-[var(--radius-lg)] border border-border',
-				'fixed top-[45%] left-1/2 z-[120] m-auto min-h-20 w-[calc(100%-3rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain md:w-full max-h-[calc(100dvh-2rem)]', // token-lint-disable-line no-literal-length
+				'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
 				maxWidthClass
 			)}
 			{role}

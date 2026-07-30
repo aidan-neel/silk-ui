@@ -3,7 +3,7 @@
 </script>
 
 <div class="grid place-items-center">
-	<AlertDialog.Root>
+	<AlertDialog.Root error>
 		<AlertDialog.Trigger variant="destructive">Delete project</AlertDialog.Trigger>
 		<AlertDialog.Content class="max-w-[26rem]">
 			<AlertDialog.Header>

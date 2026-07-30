@@ -87,7 +87,7 @@
 	--ease-press: cubic-bezier(0.22, 1, 0.36, 1);
 	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 	--border-size: 1px;
-	--ui-cursor-interactive: pointer;
+	--ui-cursor-interactive: default;
 
 	--color-background: var(--sivir-neutral-10);
 	--color-card: var(--sivir-neutral-0);
@@ -292,6 +292,22 @@
 .sivir-press:active:not(:disabled):not([aria-disabled='true']),
 .sivir-menu-item:active:not(:disabled):not([aria-disabled='true']) {
 	scale: var(--sivir-press-sx, 0.98) var(--sivir-press-sy, 0.98);
+}
+
+/* iOS Safari zooms focused text-entry controls below 16px. Preserve page zoom while preventing that jump. */
+@media (max-width: 767px) {
+	input:not([type]),
+	input[type='text'],
+	input[type='search'],
+	input[type='email'],
+	input[type='password'],
+	input[type='url'],
+	input[type='tel'],
+	input[type='number'],
+	textarea,
+	select {
+		font-size: 16px;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

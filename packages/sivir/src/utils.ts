@@ -30,6 +30,32 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs.reverse()));
 }
 
+/** Keeps fixed overlays within the browser's visual viewport, including above an on-screen keyboard. */
+export function visualViewportBounds(node: HTMLElement) {
+	const update = () => {
+		const viewport = window.visualViewport;
+		const top = viewport?.offsetTop ?? 0;
+		const height = viewport?.height ?? window.innerHeight;
+
+		node.style.setProperty('--sivir-viewport-top', `${top}px`);
+		node.style.setProperty('--sivir-viewport-height', `${height}px`);
+		node.style.setProperty('--sivir-viewport-center', `${top + height / 2}px`);
+	};
+
+	update();
+	window.visualViewport?.addEventListener('resize', update);
+	window.visualViewport?.addEventListener('scroll', update);
+	window.addEventListener('resize', update);
+
+	return {
+		destroy() {
+			window.visualViewport?.removeEventListener('resize', update);
+			window.visualViewport?.removeEventListener('scroll', update);
+			window.removeEventListener('resize', update);
+		}
+	};
+}
+
 /**
  * Builds a typed Svelte context pair for one component family.
  *

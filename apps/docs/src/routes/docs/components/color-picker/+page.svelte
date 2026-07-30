@@ -8,6 +8,8 @@
 	import DefaultSrc from './examples/default.svelte?raw';
 	import WithPresets from './examples/with-presets.svelte';
 	import WithPresetsSrc from './examples/with-presets.svelte?raw';
+	import Formats from './examples/formats.svelte';
+	import FormatsSrc from './examples/formats.svelte?raw';
 
 	const TITLE = 'Color Picker';
 	const SLUG = 'color-picker';
@@ -33,7 +35,7 @@
 			<p
 				class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
 			>
-				A hex color picker with optional preset swatches.
+				A hex color picker with HSL, RGB, or HSV channel controls and optional preset swatches.
 			</p>
 		</div>
 	</header>
@@ -68,7 +70,7 @@
 			<code class="font-mono text-foreground">Content</code> parts:
 		</p>
 		<CodeBlock
-			code={`import * as ColorPicker from '$lib/sivir/components/color-picker';\n\nlet value = $state('#5e6ad2');\n\n<ColorPicker.Root value={value} onValueChange={(v) => (value = v)}>\n\t<ColorPicker.Trigger />\n\t<ColorPicker.Content />\n</ColorPicker.Root>`}
+			code={`import * as ColorPicker from '$lib/sivir/components/color-picker';\n\nlet value = $state('#5e6ad2');\n\n<ColorPicker.Root value={value} onValueChange={(v) => (value = v)} format="hsl">\n\t<ColorPicker.Trigger />\n\t<ColorPicker.Content />\n</ColorPicker.Root>`}
 			lang="svelte"
 			copy="overlay"
 		/>
@@ -93,6 +95,18 @@
 			</h3>
 			<ComponentPreview code={DefaultSrc}>
 				<Default />
+			</ComponentPreview>
+		</div>
+
+		<!-- Channel formats -->
+		<div id="formats" class="scroll-mt-20 flex flex-col gap-3">
+			<h3
+				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+			>
+				Channel formats
+			</h3>
+			<ComponentPreview code={FormatsSrc}>
+				<Formats />
 			</ComponentPreview>
 		</div>
 

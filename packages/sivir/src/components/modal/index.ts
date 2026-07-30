@@ -40,6 +40,8 @@ export type ModalContentProps = {
 
 export type ModalProps = {
 	open?: boolean;
+	/** Sets supported browser chrome to red while the modal is open. */
+	error?: boolean;
 	children?: Snippet;
 };
 

@@ -18,7 +18,7 @@
 		onclick?.();
 	}}
 	{...rest}
-	class={cn(className, `flex sm:w-fit w-full flex-row gap-2 justify-center items-center`)}
+	class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}
 >
 	{@render children?.()}
 </Button>

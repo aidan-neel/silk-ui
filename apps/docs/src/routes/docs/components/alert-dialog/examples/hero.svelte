@@ -4,7 +4,7 @@
 </script>
 
 <div class="grid place-items-center">
-	<AlertDialog.Root>
+	<AlertDialog.Root error>
 		<AlertDialog.Trigger variant="destructive">
 			<Trash size={14} />
 			Delete workspace

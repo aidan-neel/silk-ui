@@ -39,7 +39,6 @@
 			if (firstResult) {
 				comboboxState.selected = firstResult;
 				comboboxState.open = false;
-				comboboxState.searchContent = '';
 				firstResult.callback?.();
 			}
 		}

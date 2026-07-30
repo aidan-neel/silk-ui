@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Modal from '@sivir/ui/components/modal';
-	import type { DefaultProps } from '@sivir/ui/utils';
+	import { cn, type DefaultProps } from '@sivir/ui/utils';
 
 	type Props = {
 		allowClickOutside?: boolean;
@@ -27,7 +27,7 @@
 	role="alertdialog"
 	panelIdPrefix="alert-dialog"
 	data-ui="alert-dialog-content"
-	class={className}
+	class={cn(className, 'rounded-[var(--radius-xl)]')}
 	{...rest}
 >
 	{@render children?.()}

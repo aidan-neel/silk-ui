@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn, visualViewportBounds } from '@sivir/ui/utils';
 	import type { SheetContentProps } from '.';
 	import { useOverlay } from '@sivir/ui/components/_internal/overlay';
 	import { overlayIn, overlayOut, sheetIn, sheetOut } from '@sivir/ui/transition';
@@ -44,8 +44,9 @@
 {#if sheetState.open}
 	<div
 		bind:this={portalEl}
+		use:visualViewportBounds
 		data-overlay-root
-		class="pointer-events-none fixed inset-0 z-40 [&>*]:pointer-events-auto"
+		class="pointer-events-none fixed inset-x-0 top-[var(--sivir-viewport-top)] z-40 h-[var(--sivir-viewport-height)] [&>*]:pointer-events-auto"
 	>
 		<div
 			in:overlayIn
@@ -67,7 +68,7 @@
 			class={cn(
 				className,
 				// token-lint-disable-next-line no-literal-length
-				`fixed top-2 bottom-2 z-50 flex w-[calc(100%-1rem)] max-w-sm flex-col overflow-hidden text-foreground shadow-[var(--elevation-float)] will-change-transform [backface-visibility:hidden] ${
+				`fixed top-[calc(var(--sivir-viewport-top)+0.5rem)] bottom-auto z-50 flex h-[calc(var(--sivir-viewport-height)-1rem)] w-[calc(100%-1rem)] max-w-sm flex-col overflow-hidden text-foreground shadow-[var(--elevation-float)] will-change-transform [backface-visibility:hidden] ${
 					side === 'left' ? 'left-2' : 'right-2'
 				}`,
 				'rounded-[var(--radius-lg)] border border-border bg-panel'
