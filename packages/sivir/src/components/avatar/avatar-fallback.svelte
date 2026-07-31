@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { AvatarFallbackProps } from '.';
 
 	let { class: className, children, ...rest }: AvatarFallbackProps = $props();

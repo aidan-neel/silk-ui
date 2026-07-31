@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import { Input } from '@sivir/ui/components/input';
-	import { Label } from '@sivir/ui/components/label';
-	import { Textarea } from '@sivir/ui/components/textarea';
-	import * as Avatar from '@sivir/ui/components/avatar';
-	import * as Select from '@sivir/ui/components/select';
-	import * as Sheet from '@sivir/ui/components/sheet';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { Input } from '@sivir-ui/svelte/components/input';
+	import { Label } from '@sivir-ui/svelte/components/label';
+	import { Textarea } from '@sivir-ui/svelte/components/textarea';
+	import * as Avatar from '@sivir-ui/svelte/components/avatar';
+	import * as Select from '@sivir-ui/svelte/components/select';
+	import * as Sheet from '@sivir-ui/svelte/components/sheet';
 	import SquarePen from '@lucide/svelte/icons/square-pen';
 	import Circle from '@lucide/svelte/icons/circle';
 	import SignalHigh from '@lucide/svelte/icons/signal-high';

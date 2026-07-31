@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge } from '@sivir/ui/components/badge';
+	import { Badge } from '@sivir-ui/svelte/components/badge';
 </script>
 
-<Badge>New</Badge>
+<Badge variant="outline">Label</Badge>

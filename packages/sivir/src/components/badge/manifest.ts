@@ -1,11 +1,11 @@
-import type { Manifest } from '@sivir/ui/_manifest/types';
+import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
 	name: 'badge',
 	version: '1.0.0',
 	visibility: 'public',
 	description:
-		'Inline status pill. 9 variants (5 intents + 4 statuses). Optionally renders as anchor when href is provided.',
+		'Inline status pill with optional dot marker. 9 variants (5 intents + 4 statuses). Optionally renders as anchor when href is provided.',
 	files: [
 		'components/badge/badge.svelte',
 		'components/badge/variants.ts',

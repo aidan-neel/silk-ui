@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Pagination } from '@sivir/ui/components/pagination';
+	import { Pagination } from '@sivir-ui/svelte/components/pagination';
 
 	let page = $state(8);
 </script>

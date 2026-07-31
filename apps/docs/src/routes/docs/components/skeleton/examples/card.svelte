@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Skeleton } from '@sivir/ui/components/skeleton';
+	import { Skeleton } from '@sivir-ui/svelte/components/skeleton';
 </script>
 
 <div class="flex flex-col gap-3">

@@ -5,7 +5,7 @@ import {
 	pushEscapeLayer,
 	resetBodyLocksForTests,
 	resetEscapeStackForTests
-} from '@sivir/ui/utils';
+} from '@sivir-ui/svelte/utils';
 
 afterEach(() => {
 	resetBodyLocksForTests();

@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { tick } from 'svelte';
 import TooltipSwapFixture from '../../fixtures/TooltipSwapFixture.svelte';
-import { resetSharedTooltipForTests } from '@sivir/ui/components/tooltip/shared-tooltip';
+import { resetSharedTooltipForTests } from '@sivir-ui/svelte/components/tooltip/shared-tooltip';
 
 /*
  * When a tooltip is already open and the pointer moves to another trigger, the

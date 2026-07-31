@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import type { SwitchProps } from '.';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 
 	let {
 		switched = $bindable(false),
@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="flex flex-row items-start gap-2.5">
+<div class="flex min-h-11 flex-row items-start gap-2.5 md:min-h-0">
 	<button
 		bind:this={element}
 		{...rest as HTMLButtonAttributes}

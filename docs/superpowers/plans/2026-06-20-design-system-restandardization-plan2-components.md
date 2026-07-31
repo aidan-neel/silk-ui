@@ -14,7 +14,7 @@
 
 ## Carried context from Plan 1
 
-- **Test location:** ALL `@sivir/ui` tests live under `apps/docs/tests/unit/sivir/` and run via `cd apps/docs && bunx vitest run --project unit`. Tests under `packages/sivir/src/**` are NOT collected.
+- **Test location:** ALL `@sivir-ui/svelte` tests live under `apps/docs/tests/unit/sivir/` and run via `cd apps/docs && bunx vitest run --project unit`. Tests under `packages/sivir/src/**` are NOT collected.
 - **Build-safety baseline:** `bun run check` has **3 pre-existing errors** from the user's WIP removing the input `primary` variant. Plan 2 MIGRATES input, which should RESOLVE these (input loses `primary` legitimately, and the tests referencing it get updated). Target by end of Plan 2: **0 check errors**. Intermediate tasks must not exceed 3.
 - **Unit suite:** currently 527 pass / 1 fail (the input `primary` default test — user WIP). Each task must keep the suite green except known-in-progress items it is actively fixing.
 - **Available Tier-2/3 tokens** (the contract — components consume these, never `--sivir-*` primitives directly): see `packages/sivir/src/ui.css`. Key ones: `--color-{background,card,panel,muted,secondary,border,border-strong,input,foreground,foreground-muted,foreground-opposite,primary,primary-hover,on-primary,accent-tint,ring,success,warning,error,overlay}`, `--radius-{sm,md,lg,xl}`, `--button-*`, `--field-*`, `--menu-*`, `--panel-*`, `--card-*`, `--tooltip-*`, `--elevation-{0,1,float}`, `--sivir-space-*` (spacing scale — allowed for sizing) , `--tabs-indicator-height`, `--progress-height`, `--toast-progress-height`, `--separator-thickness`, `--color-picker-area-height`, etc.

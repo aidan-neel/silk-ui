@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, pressable } from '@sivir/ui/utils';
+	import { cn, pressable } from '@sivir-ui/svelte/utils';
 	import { checkbox, checkboxBox, checkboxText } from './variants';
 
 	let {
@@ -24,6 +24,7 @@
 	{...rest}
 	class={cn(
 		classProp,
+		'min-h-11 md:min-h-0',
 		checkbox({ variant, disabled: disabled ?? false, checked: checked ?? false })
 	)}
 >
@@ -38,7 +39,7 @@
 		/>
 	{/if}
 
-	<!-- Single box: fill crossfades; Lucide check path stroke-draws in. -->
+	<!-- Single box: fill crossfades; the check path stroke-draws in. -->
 	<span
 		use:pressable
 		data-ui="checkbox-box"
@@ -59,7 +60,7 @@
 				checked ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
 			)}
 		>
-			<!-- Lucide `check` path (viewBox 0 0 24 24). -->
+			<!-- Check path (viewBox 0 0 24 24). -->
 			<path
 				d="M20 6 9 17l-5-5"
 				pathLength="1"

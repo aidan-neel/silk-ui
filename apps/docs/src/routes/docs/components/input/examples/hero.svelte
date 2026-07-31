@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Input } from '@sivir/ui/components/input';
-	import { Button } from '@sivir/ui/components/button';
+	import { Input } from '@sivir-ui/svelte/components/input';
+	import { Button } from '@sivir-ui/svelte/components/button';
 
 	let projectName = $state('sivir-ui');
 	let rootDirectory = $state('./');

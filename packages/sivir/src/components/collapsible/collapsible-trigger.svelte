@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, pressable } from '@sivir/ui/utils';
+	import { cn, pressable } from '@sivir-ui/svelte/utils';
 	import type { CollapsibleTriggerProps } from '.';
 	import { getCollapsibleContext } from './context.svelte';
 

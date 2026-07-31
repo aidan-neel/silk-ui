@@ -51,6 +51,16 @@ describe('Command -- open and close', () => {
 		expect(className).toContain('origin-center');
 	});
 
+	it('contains scrolling within the results surface', async () => {
+		render(CommandFixture, {});
+		await flush();
+		await openCommand();
+
+		const results = document.querySelector('[role="listbox"]') as HTMLElement;
+		expect(results.className).toContain('overflow-y-auto');
+		expect(results.className).toContain('overscroll-contain');
+	});
+
 	it('closes on Escape', async () => {
 		render(CommandFixture, {});
 		await flush();
@@ -204,6 +214,19 @@ describe('Command -- search input', () => {
 		await userEvent.keyboard('{Enter}');
 		await flush();
 		expect(onLogout).toHaveBeenCalledTimes(1);
+	});
+
+	it('keeps filtered results hidden during the close animation after Enter', async () => {
+		render(CommandFixture, { open: true });
+		await flush();
+
+		await page.getByPlaceholder('Search commands').fill('logout');
+		await flush();
+		await expect.element(page.getByTestId('cmd-profile')).not.toBeVisible();
+		await userEvent.keyboard('{Enter}');
+		await tick();
+
+		await expect.element(page.getByTestId('cmd-profile')).not.toBeVisible();
 	});
 
 	it('matches one-character queries', async () => {

@@ -1,4 +1,4 @@
-import type { Manifest } from '@sivir/ui/_manifest/types';
+import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 /**
  * HoverCard -- thin popover wrapper for hover-revealed rich content

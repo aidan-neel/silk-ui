@@ -74,6 +74,48 @@ describe('Combobox -- item activation', () => {
 		await flush();
 		expect(onBanana).toHaveBeenCalledTimes(1);
 	});
+
+	it('keeps the filtered results visible during the close animation after Enter', async () => {
+		render(ComboboxFixture, {});
+		await flush();
+		await openCombobox();
+
+		await page.getByPlaceholder('Search fruits').fill('cherry');
+		await expect.element(page.getByText('Apple')).not.toBeInTheDocument();
+		await userEvent.keyboard('{Enter}');
+		await tick();
+
+		await expect.element(page.getByText('Apple')).not.toBeInTheDocument();
+	});
+
+	it('reopens immediately after selecting with Enter', async () => {
+		render(ComboboxFixture, {});
+		await flush();
+		await openCombobox();
+
+		await page.getByPlaceholder('Search fruits').fill('cherry');
+		await userEvent.keyboard('{Enter}');
+		await page.getByTestId('combobox-trigger').click();
+		await new Promise((r) => setTimeout(r, 200));
+
+		await expect.element(page.getByPlaceholder('Search fruits')).toBeInTheDocument();
+		await expect.element(page.getByText('Apple')).toBeInTheDocument();
+	});
+
+	it('reopens immediately after selecting with a click', async () => {
+		render(ComboboxFixture, {});
+		await flush();
+		await openCombobox();
+
+		await page.getByText('Cherry').click();
+		expect(document.body.style.overflow).not.toBe('hidden');
+		expect(page.getByTestId('combobox-trigger').element()).not.toHaveClass('pointer-events-none');
+		await page.getByTestId('combobox-trigger').click();
+		await new Promise((r) => setTimeout(r, 200));
+
+		await expect.element(page.getByPlaceholder('Search fruits')).toBeInTheDocument();
+		await expect.element(page.getByText('Apple')).toBeInTheDocument();
+	});
 });
 
 describe('Combobox -- search input', () => {

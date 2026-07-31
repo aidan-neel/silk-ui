@@ -3,9 +3,9 @@ import Trigger from './popover-trigger.svelte';
 import Content from './popover-content.svelte';
 import Title from './popover-title.svelte';
 
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
-import type { ButtonVariant } from '@sivir/ui/components/button';
+import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
 import type { VirtualElement } from '@floating-ui/dom';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 

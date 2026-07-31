@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	const overrideCss = `@theme {
   --color-primary: #155eef;
   --color-background: #fcfcfd;
   --color-foreground: #101828;
   --radius-lg: 0.55rem;
-  --font-sans: Geist, 'Geist Sans', sans-serif;
+   --font-sans: 'DM Sans', sans-serif;
 }
 
 .dark {
@@ -29,7 +29,7 @@
   text-transform: uppercase;
 }`;
 
-	const sourceExample = `# after: bunx --package @sivir/ui sivir add button
+	const sourceExample = `# after: bunx --package @sivir-ui/svelte sivir add button
 src/lib/sivir/components/button/
 ├── button.svelte
 └── index.ts`;
@@ -68,7 +68,7 @@ src/lib/sivir/components/button/
 			Where tokens live
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
-			Package installs use <code class="font-mono">@sivir/ui/ui.css</code>. CLI installs use
+			Package installs use <code class="font-mono">@sivir-ui/svelte/ui.css</code>. CLI installs use
 			<code class="font-mono">src/lib/sivir/ui.css</code>. Both define the same public axes: color,
 			type, radius, and motion.
 		</p>
@@ -134,7 +134,7 @@ src/lib/sivir/components/button/
 			<code class="font-mono">theme.css</code>:
 		</p>
 		<CodeBlock
-			code="bunx --package @sivir/ui sivir add theme default"
+			code="bunx --package @sivir-ui/svelte sivir add theme default"
 			lang="shell"
 			copy="overlay"
 		/>

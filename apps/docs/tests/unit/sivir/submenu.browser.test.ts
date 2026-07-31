@@ -76,6 +76,100 @@ describe('DropdownMenu submenu cone', () => {
 		await expect.element(page.getByTestId('dd-share')).not.toBeInTheDocument();
 	});
 
+	it('closes after leaving even when a submenu item still has focus', async () => {
+		render(DropdownMenuSubFixture, {});
+		await flush();
+		await openDropdown();
+		await hover('dd-share');
+		await expect.element(page.getByTestId('dd-social')).toBeInTheDocument();
+
+		const social = page.getByTestId('dd-social').element();
+		const panel = social.closest('[data-ui="popover-content"]') as HTMLElement;
+		const floating = panel.parentElement as HTMLElement;
+		panel.focus();
+		floating.dispatchEvent(new MouseEvent('mouseleave', { bubbles: false }));
+		await new Promise((r) => setTimeout(r, 250));
+		await flush();
+
+		await expect.element(page.getByTestId('dd-social')).not.toBeInTheDocument();
+	});
+
+	it('closes immediately when the pointer leaves the submenu contact triangle', async () => {
+		render(DropdownMenuSubFixture, {});
+		await flush();
+		await openDropdown();
+		await hover('dd-share');
+		await expect.element(page.getByTestId('dd-social')).toBeInTheDocument();
+
+		const social = page.getByTestId('dd-social').element();
+		const panel = social.closest('[data-ui="popover-content"]') as HTMLElement;
+		const floating = panel.parentElement as HTMLElement;
+		floating.dispatchEvent(
+			new MouseEvent('mouseleave', { bubbles: false, clientX: -1000, clientY: -1000 })
+		);
+		await new Promise((r) => setTimeout(r, 30));
+		await flush();
+
+		expect(page.getByTestId('dd-share').element().closest('button')).toHaveAttribute(
+			'data-state',
+			'closed'
+		);
+	});
+
+	it('keeps the submenu open briefly while crossing slowly to its content', async () => {
+		render(DropdownMenuSubFixture, {});
+		await flush();
+		await openDropdown();
+		await hover('dd-share');
+
+		const trigger = page.getByTestId('dd-share').element().closest('button') as HTMLElement;
+		const panel = page
+			.getByTestId('dd-social')
+			.element()
+			.closest('[data-ui="popover-content"]') as HTMLElement;
+		const triggerBounds = trigger.getBoundingClientRect();
+		const panelBounds = panel.getBoundingClientRect();
+		trigger.dispatchEvent(
+			new MouseEvent('mouseleave', {
+				bubbles: false,
+				clientX: (triggerBounds.right + panelBounds.left) / 2,
+				clientY: (triggerBounds.top + triggerBounds.bottom) / 2
+			})
+		);
+
+		await new Promise((resolve) => setTimeout(resolve, 200));
+		await flush();
+		await expect.element(page.getByTestId('dd-social')).toBeInTheDocument();
+
+		await new Promise((resolve) => setTimeout(resolve, 150));
+		await flush();
+		await expect.element(page.getByTestId('dd-social')).not.toBeInTheDocument();
+	});
+
+	it('closes immediately when moving to another dropdown item', async () => {
+		render(DropdownMenuSubFixture, {});
+		await flush();
+		await openDropdown();
+		await hover('dd-share');
+
+		const social = page.getByTestId('dd-social').element();
+		const panel = social.closest('[data-ui="popover-content"]') as HTMLElement;
+		const floating = panel.parentElement as HTMLElement;
+		const rootItem = page.getByTestId('dd-root-item').element();
+		const rootBounds = rootItem.getBoundingClientRect();
+		floating.dispatchEvent(
+			new MouseEvent('mouseleave', {
+				bubbles: false,
+				clientX: rootBounds.left + rootBounds.width / 2,
+				clientY: rootBounds.top + rootBounds.height / 2
+			})
+		);
+
+		await new Promise((resolve) => setTimeout(resolve, 30));
+		await flush();
+		await expect.element(page.getByTestId('dd-social')).not.toBeInTheDocument();
+	});
+
 	it('activates a leaf deep in the cone', async () => {
 		const onTwitter = vi.fn();
 		render(DropdownMenuSubFixture, { onTwitter });

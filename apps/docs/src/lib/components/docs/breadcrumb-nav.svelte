@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Breadcrumb from '@sivir/ui/components/breadcrumb';
+	import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
 
 	let {
 		items = [],

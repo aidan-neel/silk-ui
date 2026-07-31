@@ -1,4 +1,4 @@
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Pagination from './pagination.svelte';
 
 export type PaginationProps = {

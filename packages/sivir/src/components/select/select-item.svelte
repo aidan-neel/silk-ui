@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
+	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { onMount, type Snippet } from 'svelte';
 	import Check from '@lucide/svelte/icons/check';
 	import { getSelectContext } from './context.svelte';
@@ -64,14 +64,14 @@
 	role="option"
 	aria-selected={selectState.value === value}
 	{...rest}
-	onclick={() => {
+	onclick={(event: MouseEvent) => {
 		const resolved = resolveLabel() || labels.get(value) || value;
 		labels.set(value, resolved);
 		selectState.value = value;
 		selectState.selectedLabel = resolved;
 		selectState.open = false;
 		popoverState.buttonRef?.focus();
-		userOnclick?.();
+		userOnclick?.(event);
 	}}
 	class={cn(className, 'sivir-menu-item')}
 	unstyled

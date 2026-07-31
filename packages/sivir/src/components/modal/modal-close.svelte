@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { ModalCloseProps } from '.';
-	import { Button } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
-	import { useIsDark } from '@sivir/ui/is-dark.svelte.ts';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { cn } from '@sivir-ui/svelte/utils';
+	import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
 	import { getModalContext } from './context.svelte';
 
 	let { class: className, children, onclick, ...rest }: ModalCloseProps = $props();
@@ -22,9 +22,9 @@
 
 <Button
 	bind:element
-	onclick={() => {
+	onclick={(event: MouseEvent) => {
 		modal.state.open = false;
-		onclick?.();
+		onclick?.(event);
 	}}
 	variant={cancelVariant}
 	{...rest}

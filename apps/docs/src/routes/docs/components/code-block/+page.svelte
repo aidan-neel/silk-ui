@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -19,7 +19,7 @@
 	import CopyInline from './examples/copy-inline.svelte';
 	import CopyInlineSrc from './examples/copy-inline.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add code-block';
+	const installCommand = 'bunx @sivir-ui/svelte add code-block';
 
 	const usageSnippet = `import { CodeBlock } from '$lib/sivir/components/code-block';
 
@@ -157,7 +157,7 @@
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Copy placement — overlay
+				Copy placement: overlay
 			</h3>
 			<ComponentPreview code={CopyOverlaySrc}>
 				<CopyOverlay />
@@ -168,7 +168,7 @@
 			<h3
 				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
 			>
-				Copy placement — inline
+				Copy placement: inline
 			</h3>
 			<ComponentPreview code={CopyInlineSrc}>
 				<CopyInline />

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import type { ComboboxState } from '.';
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 	import { setComboboxContext } from './context.svelte';
 
 	interface Props extends Popover.PopoverProps {
@@ -28,7 +28,7 @@
 	setComboboxContext({ id: key, placeholder: untrack(() => placeholder), state: comboboxState });
 
 	$effect(() => {
-		if (!comboboxState.open) comboboxState.searchContent = '';
+		if (comboboxState.open) comboboxState.searchContent = '';
 	});
 	$effect(() => {
 		if (open !== syncedOpen) {

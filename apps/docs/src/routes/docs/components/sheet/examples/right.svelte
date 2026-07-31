@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import { Checkbox } from '@sivir/ui/components/checkbox';
-	import { Label } from '@sivir/ui/components/label';
-	import { Switch } from '@sivir/ui/components/switch';
-	import * as Select from '@sivir/ui/components/select';
-	import * as Sheet from '@sivir/ui/components/sheet';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
+	import { Label } from '@sivir-ui/svelte/components/label';
+	import { Switch } from '@sivir-ui/svelte/components/switch';
+	import * as Select from '@sivir-ui/svelte/components/select';
+	import * as Sheet from '@sivir-ui/svelte/components/sheet';
 	import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
 
 	let status = $state('all');

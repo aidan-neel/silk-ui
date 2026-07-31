@@ -62,7 +62,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
 					build: 'vite build'
 				},
 				dependencies: {
-					'@sivir/ui': `file:${tarball}`,
+					'@sivir-ui/svelte': `file:${tarball}`,
 					svelte: versions.svelte,
 					tailwindcss: versions.tailwindcss,
 					'@floating-ui/dom': '^1.7.6',

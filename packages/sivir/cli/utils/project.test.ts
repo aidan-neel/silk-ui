@@ -79,7 +79,7 @@ describe('installFile', () => {
 
 		expect(result).toBe('created');
 		expect(source).toContain('$lib/sivir');
-		expect(source).not.toContain('@sivir/ui');
+		expect(source).not.toContain('@sivir-ui/svelte');
 	});
 
 	test('leaves an existing file untouched unless overwrite is enabled', async () => {

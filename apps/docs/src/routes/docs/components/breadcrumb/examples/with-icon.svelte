@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Breadcrumb from '@sivir/ui/components/breadcrumb';
+	import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Home from '@lucide/svelte/icons/home';
 </script>

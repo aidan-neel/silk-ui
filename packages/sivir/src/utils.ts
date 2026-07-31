@@ -30,6 +30,32 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs.reverse()));
 }
 
+/** Keeps fixed overlays within the browser's visual viewport, including above an on-screen keyboard. */
+export function visualViewportBounds(node: HTMLElement) {
+	const update = () => {
+		const viewport = window.visualViewport;
+		const top = viewport?.offsetTop ?? 0;
+		const height = viewport?.height ?? window.innerHeight;
+
+		node.style.setProperty('--sivir-viewport-top', `${top}px`);
+		node.style.setProperty('--sivir-viewport-height', `${height}px`);
+		node.style.setProperty('--sivir-viewport-center', `${top + height / 2}px`);
+	};
+
+	update();
+	window.visualViewport?.addEventListener('resize', update);
+	window.visualViewport?.addEventListener('scroll', update);
+	window.addEventListener('resize', update);
+
+	return {
+		destroy() {
+			window.visualViewport?.removeEventListener('resize', update);
+			window.visualViewport?.removeEventListener('scroll', update);
+			window.removeEventListener('resize', update);
+		}
+	};
+}
+
 /**
  * Builds a typed Svelte context pair for one component family.
  *
@@ -65,6 +91,69 @@ export function closeMenuLayers(current: { open: boolean }, ancestors: { open: b
 	current.open = false;
 	for (let index = ancestors.length - 1; index >= 0; index -= 1) {
 		ancestors[index]!.open = false;
+	}
+}
+
+function pointInTriangle(
+	point: { x: number; y: number },
+	a: { x: number; y: number },
+	b: { x: number; y: number },
+	c: { x: number; y: number }
+) {
+	const sign = (p1: typeof point, p2: typeof point, p3: typeof point) =>
+		(p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+	const first = sign(point, a, b);
+	const second = sign(point, b, c);
+	const third = sign(point, c, a);
+	const hasNegative = first < 0 || second < 0 || third < 0;
+	const hasPositive = first > 0 || second > 0 || third > 0;
+
+	return !(hasNegative && hasPositive);
+}
+
+/** Whether a pointer is in the contact triangle between a floating trigger and panel. */
+export function isPointInSubmenuTriangle(
+	point: { x: number; y: number },
+	trigger: DOMRect,
+	panel: DOMRect,
+	placement: Placement
+) {
+	const contactMargin = 8;
+	const triggerCenter = {
+		x: (trigger.left + trigger.right) / 2,
+		y: (trigger.top + trigger.bottom) / 2
+	};
+
+	switch (placement.split('-')[0]) {
+		case 'left':
+			return pointInTriangle(
+				point,
+				{ x: trigger.left - contactMargin, y: triggerCenter.y },
+				{ x: panel.right + contactMargin, y: panel.top },
+				{ x: panel.right + contactMargin, y: panel.bottom }
+			);
+		case 'top':
+			return pointInTriangle(
+				point,
+				{ x: triggerCenter.x, y: trigger.top - contactMargin },
+				{ x: panel.left, y: panel.bottom + contactMargin },
+				{ x: panel.right, y: panel.bottom + contactMargin }
+			);
+		case 'bottom':
+			return pointInTriangle(
+				point,
+				{ x: triggerCenter.x, y: trigger.bottom + contactMargin },
+				{ x: panel.left, y: panel.top - contactMargin },
+				{ x: panel.right, y: panel.top - contactMargin }
+			);
+		case 'right':
+		default:
+			return pointInTriangle(
+				point,
+				{ x: trigger.right + contactMargin, y: triggerCenter.y },
+				{ x: panel.left - contactMargin, y: panel.top },
+				{ x: panel.left - contactMargin, y: panel.bottom }
+			);
 	}
 }
 
@@ -391,7 +480,9 @@ export function pressable(node: HTMLElement) {
  */
 export function clickOutside(node: Node, callback: () => void, exclude: Node[] = []) {
 	let destroyed = false;
-	const handleClick = (event: MouseEvent) => {
+	let dismissedByPointer = false;
+
+	function isOutside(event: Event) {
 		const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
 		const target = event.target as Node | null;
 		const isInsideNode = path.includes(node) || (target ? node.contains(target) : false);
@@ -402,21 +493,46 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
 		const isInsideFloating =
 			path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
 			targetEl?.closest('[data-floating-content]') != null;
+		return !isInsideNode && !isInsideExcluded && !isInsideFloating;
+	}
 
-		if (!isInsideNode && !isInsideExcluded && !isInsideFloating) {
-			callback();
+	function dismiss(event: Event) {
+		event.preventDefault();
+		event.stopImmediatePropagation();
+		callback();
+	}
+
+	const handlePointerDown = (event: PointerEvent) => {
+		if (isOutside(event)) {
+			dismissedByPointer = true;
+			dismiss(event);
+		}
+	};
+
+	const handleClick = (event: MouseEvent) => {
+		if (dismissedByPointer) {
+			dismissedByPointer = false;
+			dismiss(event);
+			return;
+		}
+		if (isOutside(event)) {
+			dismiss(event);
 		}
 	};
 
 	const installTimeout = setTimeout(() => {
-		if (!destroyed) document.addEventListener('click', handleClick);
+		if (!destroyed) {
+			document.addEventListener('pointerdown', handlePointerDown, true);
+			document.addEventListener('click', handleClick, true);
+		}
 	}, 0);
 
 	return {
 		destroy() {
 			destroyed = true;
 			clearTimeout(installTimeout);
-			document.removeEventListener('click', handleClick);
+			document.removeEventListener('pointerdown', handlePointerDown, true);
+			document.removeEventListener('click', handleClick, true);
 		}
 	};
 }
@@ -438,7 +554,7 @@ export function positionFloatingPanel(
 		placement,
 		middleware: [
 			offset(8),
-			flip({ padding: 8 }),
+			flip({ padding: 8, fallbackAxisSideDirection: 'end', fallbackStrategy: 'bestFit' }),
 			shift({ padding: 8, crossAxis: true }),
 			size({
 				padding: 8,

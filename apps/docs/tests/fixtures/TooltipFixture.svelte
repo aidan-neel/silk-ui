@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Tooltip from '@sivir/ui/components/tooltip';
+	import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 
 	let {
 		delay,

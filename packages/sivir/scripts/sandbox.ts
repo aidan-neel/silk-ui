@@ -238,7 +238,7 @@ const CHECKS: Check[] = [
 			if (exists(`${SIVIR}/components/button/button.svelte`)) {
 				const src = read(`${SIVIR}/components/button/button.svelte`);
 				if (!src.includes('$lib/sivir')) f.push('imports not rewritten to alias');
-				if (src.includes('@sivir/ui')) f.push('stale @sivir/ui import remains');
+				if (src.includes('@sivir-ui/svelte')) f.push('stale @sivir-ui/svelte import remains');
 			}
 			if (!config().components?.button) f.push('sivir.json did not record button');
 			return f;

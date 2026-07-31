@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './collapsible.svelte';
 import Trigger from './collapsible-trigger.svelte';
 import Content from './collapsible-content.svelte';

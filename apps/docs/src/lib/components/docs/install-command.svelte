@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	// The canonical command is the `bunx …` form (every page passes that). Other
 	// package managers are derived by swapping the leading runner, so call sites

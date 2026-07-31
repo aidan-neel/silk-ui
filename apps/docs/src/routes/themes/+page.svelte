@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { builtInThemePresets } from '@sivir/ui/themes/builtin-presets';
-	import { themeToCss, type Theme } from '@sivir/ui/themes/theme';
-	import { Button } from '@sivir/ui/components/button';
-	import { Input } from '@sivir/ui/components/input';
-	import { toast } from '@sivir/ui/components/toast';
-	import { applyLiveThemeCss } from '@sivir/ui/themes/live';
+	import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
+	import { themeToCss, type Theme } from '@sivir-ui/svelte/themes/theme';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { Input } from '@sivir-ui/svelte/components/input';
+	import { toast } from '@sivir-ui/svelte/components/toast';
+	import { applyLiveThemeCss } from '@sivir-ui/svelte/themes/live';
 	import type { PageData } from './$types';
 
 	import Search from '@lucide/svelte/icons/search';

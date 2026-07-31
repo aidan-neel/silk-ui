@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { tick } from 'svelte';
 import TooltipFixture from '../../fixtures/TooltipFixture.svelte';
-import { resetSharedTooltipForTests } from '@sivir/ui/components/tooltip/shared-tooltip';
+import { resetSharedTooltipForTests } from '@sivir-ui/svelte/components/tooltip/shared-tooltip';
 
 /*
  * Tooltip uses a shared body-level bubble. Tests assert its public surface:

@@ -16,6 +16,8 @@ export type AlertDialogState = {
 
 export type AlertDialogProps = {
 	open?: boolean;
+	/** Sets supported browser chrome to red while the alert dialog is open. */
+	error?: boolean;
 	children?: Snippet;
 };
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import * as AlertDialog from '@sivir/ui/components/alert-dialog';
+	import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 </script>
 
 <div class="grid place-items-center">
-	<AlertDialog.Root>
+	<AlertDialog.Root error>
 		<AlertDialog.Trigger variant="destructive">Delete project</AlertDialog.Trigger>
 		<AlertDialog.Content class="max-w-[26rem]">
 			<AlertDialog.Header>

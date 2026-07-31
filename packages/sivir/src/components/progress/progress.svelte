@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { ProgressProps } from '.';
 
 	let {
@@ -21,7 +21,7 @@
 	aria-valuemin={0}
 	aria-valuemax={safeMax}
 	aria-valuenow={indeterminate ? undefined : clamped}
-	class={cn(className, 'relative h-2 w-full overflow-hidden rounded-full bg-secondary')}
+	class={cn(className, 'relative h-1.5 w-full overflow-hidden rounded-full bg-secondary')}
 	{...rest}
 >
 	{#if indeterminate}

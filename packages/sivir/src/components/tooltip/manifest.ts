@@ -1,4 +1,4 @@
-import type { Manifest } from '@sivir/ui/_manifest/types';
+import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 /**
  * Tooltip uses one shared floating surface per document, so every instance

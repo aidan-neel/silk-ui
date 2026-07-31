@@ -1,4 +1,4 @@
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Progress from './progress.svelte';
 
 export type ProgressProps = {

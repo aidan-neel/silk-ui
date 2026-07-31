@@ -1,7 +1,7 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { getColorPickerContext } from './context';
 	import { isValidHex } from './conversions';
 

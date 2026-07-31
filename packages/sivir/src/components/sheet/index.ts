@@ -7,7 +7,7 @@ import Description from './sheet-description.svelte';
 import Content from './sheet-content.svelte';
 import Close from './sheet-close.svelte';
 
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { ButtonProps } from '../button';
 import type { Snippet } from 'svelte';
 

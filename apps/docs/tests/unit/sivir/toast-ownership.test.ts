@@ -4,7 +4,7 @@ import {
 	toast,
 	__setActiveToastStateForTests,
 	__getActiveToastStateForTests
-} from '@sivir/ui/components/toast/lib.svelte.ts';
+} from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
 import NestedToasterFixture from '../../fixtures/NestedToasterFixture.svelte';
 import ToasterFixture from '../../fixtures/ToasterFixture.svelte';
 

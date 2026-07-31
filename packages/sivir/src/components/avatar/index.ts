@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLImgAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './avatar.svelte';
 import Image from './avatar-image.svelte';
 import Fallback from './avatar-fallback.svelte';

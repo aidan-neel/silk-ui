@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-22
 **Status:** Approved (pending spec review)
-**Component:** `@sivir/ui/components/code-block`
+**Component:** `@sivir-ui/svelte/components/code-block`
 
 ## Summary
 
@@ -14,7 +14,7 @@ syntax-highlighted code surface below.
 
 ## Decisions
 
-- **Highlighting:** bundle `highlight.js` as a dependency of `@sivir/ui`.
+- **Highlighting:** bundle `highlight.js` as a dependency of `@sivir-ui/svelte`.
   Lightweight, synchronous, supports all required languages. Token classes
   (`hljs-*`) styled via CSS variables so colors follow Sivir theming.
   - Rationale: keeps highlighting self-contained (true drop-in `<CodeBlock>`)
@@ -158,7 +158,7 @@ export type { CodeBlockProps, CodeBlockTab } from './types';
     `ComponentPreview`): single snippet, multi-language tabs, compound usage,
     custom actions, line numbers.
   - **Props tables** for each exported part + `InstallCommand`.
-- The docs page consumes the library component directly (`@sivir/ui/components/code-block`).
+- The docs page consumes the library component directly (`@sivir-ui/svelte/components/code-block`).
 
 ## Out of scope
 
@@ -176,4 +176,4 @@ export type { CodeBlockProps, CodeBlockTab } from './types';
 - Single-snippet form renders without a tab row.
 - Docs page builds; component appears in sidebar; all examples render and show
   source.
-- Type-check / build passes for both `@sivir/ui` and `apps/docs`.
+- Type-check / build passes for both `@sivir-ui/svelte` and `apps/docs`.

@@ -1,7 +1,7 @@
 # Sivir UI v1 Scope
 
 **Status:** Approved release contract  
-**Target:** `@sivir/ui` 1.0.0 / tag `v1.0.0`  
+**Target:** `@sivir-ui/svelte` 1.0.0 / tag `v1.0.0`
 **Updated:** 2026-07-19
 
 ## Decision
@@ -17,7 +17,7 @@ theming, and documentation on `sivir.dev`.
 
 ## Launch Promise
 
-A Svelte 5 + Tailwind v4 user can install `@sivir/ui` from npm **or** copy
+A Svelte 5 + Tailwind v4 user can install `@sivir-ui/svelte` from npm **or** copy
 source with the `sivir` CLI, follow the docs, customize documented tokens, and
 use every advertised component in a production build.
 
@@ -32,15 +32,15 @@ pagination, popover, progress, radio-group, scroll-area, select, sheet,
 shortcut, skeleton, slider, switch, tabs, textarea, toast, toggle,
 toggle-group, tooltip
 
-- Named and namespaced imports from `@sivir/ui`
-- Direct `@sivir/ui/components/<name>` imports
+- Named and namespaced imports from `@sivir-ui/svelte`
+- Direct `@sivir-ui/svelte/components/<name>` imports
 - Public `ui.css`, tokens, variants, utilities
 - Keyboard, focus, pointer, reduced-motion, SSR behavior
 
 ### Distribution
 
-- `bun add @sivir/ui` / npm / pnpm
-- CLI: `bunx --package @sivir/ui sivir {init,add,list}` and
+- `bun add @sivir-ui/svelte` / npm / pnpm
+- CLI: `bunx --package @sivir-ui/svelte sivir {init,add,list}` and
   `sivir add theme <built-in-slug>`
 - Isolated manifests + publish workflow with provenance and exact-artifact
   checks (`verify:artifact`, `verify:cli-artifact`)
@@ -70,7 +70,7 @@ toggle-group, tooltip
 | Item          | Value                                              |
 | ------------- | -------------------------------------------------- |
 | Docs          | `https://sivir.dev`                                |
-| npm           | `@sivir/ui`                                        |
+| npm           | `@sivir-ui/svelte`                                 |
 | Version / tag | `1.0.0` / `v1.0.0` (bump at Phase 4 freeze)        |
 | GitHub        | `aidan-neel/sivir-ui`                              |
 | Registry host | Not a v1 product surface (code may stay for later) |

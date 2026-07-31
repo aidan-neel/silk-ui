@@ -4,8 +4,10 @@ import {
 	hsvToHex,
 	hexToHsl,
 	hslToHex,
+	hexToRgb,
+	rgbToHex,
 	isValidHex
-} from '@sivir/ui/components/color-picker/conversions';
+} from '@sivir-ui/svelte/components/color-picker/conversions';
 
 /*
  * P3-F3 resolution: color-conversion helpers extracted from
@@ -93,6 +95,16 @@ describe('hsvToHex', () => {
 			const result = hsvToHex(hue, 50, 50);
 			expect(result).toMatch(/^#[0-9a-f]{6}$/);
 		}
+	});
+});
+
+describe('RGB conversion', () => {
+	it('converts hex to RGB channels', () => {
+		expect(hexToRgb('#5e6ad2')).toEqual([94, 106, 210]);
+	});
+
+	it('converts RGB channels to hex', () => {
+		expect(rgbToHex(94, 106, 210)).toBe('#5e6ad2');
 	});
 });
 

@@ -51,6 +51,27 @@ describe('AlertDialog -- open/closed mount', () => {
 	});
 });
 
+describe('AlertDialog -- error browser chrome', () => {
+	it('passes error through to the modal root', async () => {
+		const themeColor = document.createElement('meta');
+		themeColor.name = 'theme-color';
+		themeColor.content = '#ffffff';
+		document.head.append(themeColor);
+
+		render(AlertDialogFixture, { open: true, error: true });
+		await flush();
+		expect(themeColor.content).toBe('#dc2626');
+		expect(
+			page.getByRole('button', { name: 'Delete' }).element().getAttribute('data-variant')
+		).toBe('destructive');
+
+		await page.getByText('Cancel').click();
+		await flush();
+		expect(themeColor.content).toBe('#ffffff');
+		themeColor.remove();
+	});
+});
+
 describe('AlertDialog -- distinctive ARIA contract (role="alertdialog")', () => {
 	it('renders role="alertdialog", not role="dialog"', async () => {
 		render(AlertDialogFixture, { open: true });

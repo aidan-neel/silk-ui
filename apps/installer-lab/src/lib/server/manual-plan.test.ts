@@ -13,7 +13,7 @@ describe('manual command plan', () => {
 				expect(plan.workspace).toBe(manualConsumerRoot);
 				expect(new Set(plan.steps.map((step) => step.id)).size).toBe(plan.steps.length);
 				expect(commands.some((value) => value.includes('sv create'))).toBe(false);
-				expect(commands.some((value) => value.includes('@fontsource/geist-sans'))).toBe(false);
+				expect(commands.some((value) => value.includes('@fontsource/dm-sans'))).toBe(false);
 				expect(commands.some((value) => value.startsWith('cd '))).toBe(false);
 				for (const value of commands) expect(value).not.toContain(manualRoot);
 				expect(commands).toContain('bunx svelte-check --tsconfig ./tsconfig.json');
@@ -30,7 +30,7 @@ describe('manual command plan', () => {
 					expect(commands.join('\n')).not.toContain('../staging');
 				} else {
 					expect(commands).toHaveLength(4);
-					expect(commands[0]).toBe('bun add @sivir/ui@latest');
+					expect(commands[0]).toBe('bun add @sivir-ui/svelte@latest');
 				}
 			});
 		}

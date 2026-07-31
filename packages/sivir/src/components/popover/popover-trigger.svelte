@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import { positionFloatingPanel } from '@sivir/ui/utils';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { isPointInSubmenuTriangle, positionFloatingPanel } from '@sivir-ui/svelte/utils';
 	import { onMount, tick } from 'svelte';
 	import type { PopoverTriggerProps } from '.';
 	import { getPopoverContext } from './context.svelte';
@@ -74,13 +74,25 @@
 		}
 	}
 
-	function handleLeave() {
+	function handleLeave(event: MouseEvent | FocusEvent) {
 		if (popoverState.hoverable) {
 			if (popoverState.hoverTimeout) {
 				clearTimeout(popoverState.hoverTimeout);
 				popoverState.hoverTimeout = undefined;
 			}
-			closePopover(popoverState.closeDelay ?? 180);
+			const pointerEvent = event.type === 'mouseleave' ? (event as MouseEvent) : undefined;
+			const inContactTriangle =
+				event.type !== 'mouseleave' ||
+				(pointerEvent &&
+					element &&
+					popoverState.popoverRef &&
+					isPointInSubmenuTriangle(
+						{ x: pointerEvent.clientX, y: pointerEvent.clientY },
+						element.getBoundingClientRect(),
+						popoverState.popoverRef.getBoundingClientRect(),
+						popoverState.placement
+					));
+			closePopover(inContactTriangle ? (popoverState.closeDelay ?? 180) : 0);
 			popoverState.hovering = false;
 		}
 	}

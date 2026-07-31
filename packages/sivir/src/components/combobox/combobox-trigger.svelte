@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 	import type { ComboboxState, ComboboxItem } from '.';
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import Fuse from 'fuse.js';
 	import { getComboboxContext } from './context.svelte';
@@ -39,7 +39,6 @@
 			if (firstResult) {
 				comboboxState.selected = firstResult;
 				comboboxState.open = false;
-				comboboxState.searchContent = '';
 				firstResult.callback?.();
 			}
 		}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { builtInThemePresets } from '@sivir/ui/themes/builtin-presets';
-import { parseTheme } from '@sivir/ui/themes/theme';
+import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
+import { parseTheme } from '@sivir-ui/svelte/themes/theme';
 
 describe('builtInThemePresets', () => {
 	it('ships a valid, unique version-2 catalog led by the default theme', () => {

@@ -14,8 +14,8 @@
 | Styling page     | **Merge into Theming** (remove duplicate Styling page)                           |
 | Components entry | Under **Getting Started** sidebar (not top-nav primary)                          |
 | Theme registry   | **Not in v1** — code kept; sitemap/env/README do not require it                  |
-| CLI docs         | `bunx --package @sivir/ui sivir …`                                               |
-| Package docs     | `bun add @sivir/ui` + `@import '@sivir/ui/ui.css'`                               |
+| CLI docs         | `bunx --package @sivir-ui/svelte sivir …`                                        |
+| Package docs     | `bun add @sivir-ui/svelte` + `@import '@sivir-ui/svelte/ui.css'`                 |
 | Component docs   | Untouched except shared nav                                                      |
 | `1.0.0` bump     | Phase 4 freeze only                                                              |
 

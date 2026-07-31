@@ -1,9 +1,17 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 	import Check from '@lucide/svelte/icons/check';
 	import { getColorPickerContext } from './context';
-	import { hexToHsv, hsvToHex, hexToHsl, hslToHex, isValidHex } from './conversions';
+	import {
+		hexToHsv,
+		hsvToHex,
+		hexToHsl,
+		hslToHex,
+		hexToRgb,
+		rgbToHex,
+		isValidHex
+	} from './conversions';
 
 	const ctx = getColorPickerContext();
 
@@ -24,6 +32,9 @@
 	let hslH = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[0] : 0);
 	let hslS = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[1] : 0);
 	let hslL = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[2] : 100);
+	let rgbR = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[0] : 255);
+	let rgbG = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[1] : 255);
+	let rgbB = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[2] : 255);
 	let skipNextSync = false;
 
 	const hasOptions = $derived(ctx.options.length > 0);
@@ -54,6 +65,15 @@
 		applyHex(newHex);
 	}
 
+	function setRgbChannel(channel: 'r' | 'g' | 'b', rawValue: string) {
+		const next = Number.parseFloat(rawValue);
+		if (!Number.isFinite(next)) return;
+		if (channel === 'r') rgbR = next;
+		else if (channel === 'g') rgbG = next;
+		else rgbB = next;
+		applyHex(rgbToHex(rgbR, rgbG, rgbB));
+	}
+
 	/**
 	 * Syncs the external value into HSV, the hex field, and the HSL sliders.
 	 *
@@ -70,6 +90,7 @@
 			hue = hh;
 			sat = ss;
 			val = vv;
+			[rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
 			return;
 		}
 		const [h, s, v2] = hexToHsv(ctx.value);
@@ -81,6 +102,7 @@
 		if (hs > 0) hslH = hh;
 		hslS = hs;
 		hslL = hl;
+		[rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
 	});
 
 	/** Commits a hex value to the picker context. */
@@ -117,6 +139,30 @@
 
 	/** Saturation/brightness square drag handling. */
 	let draggingSb = false;
+	let draggingHue = false;
+	let draggingSlider = false;
+
+	function suppressReleaseClick() {
+		let timeout: ReturnType<typeof setTimeout> | undefined;
+		const preventClose = (event: MouseEvent) => {
+			event.stopImmediatePropagation();
+			document.removeEventListener('click', preventClose, true);
+			if (timeout) clearTimeout(timeout);
+		};
+		document.addEventListener('click', preventClose, true);
+		timeout = setTimeout(() => document.removeEventListener('click', preventClose, true), 0);
+	}
+
+	function finishDrag(e: PointerEvent, suppressClick = true) {
+		if (!draggingSb && !draggingHue && !draggingSlider) return;
+		if (draggingSb && sbEl?.hasPointerCapture(e.pointerId)) sbEl.releasePointerCapture(e.pointerId);
+		if (draggingHue && hueEl?.hasPointerCapture(e.pointerId))
+			hueEl.releasePointerCapture(e.pointerId);
+		draggingSb = false;
+		draggingHue = false;
+		draggingSlider = false;
+		if (suppressClick) suppressReleaseClick();
+	}
 
 	function sbEventToSV(e: PointerEvent) {
 		if (!sbEl) return;
@@ -134,16 +180,7 @@
 	function onSbMove(e: PointerEvent) {
 		if (draggingSb) sbEventToSV(e);
 	}
-	function onSbUp(e: PointerEvent) {
-		if (draggingSb) {
-			draggingSb = false;
-			sbEl?.releasePointerCapture(e.pointerId);
-		}
-	}
-
 	/** Hue strip drag handling. */
-	let draggingHue = false;
-
 	function hueEventToH(e: PointerEvent) {
 		if (!hueEl) return;
 		const rect = hueEl.getBoundingClientRect();
@@ -159,13 +196,12 @@
 	function onHueMove(e: PointerEvent) {
 		if (draggingHue) hueEventToH(e);
 	}
-	function onHueUp(e: PointerEvent) {
-		if (draggingHue) {
-			draggingHue = false;
-			hueEl?.releasePointerCapture(e.pointerId);
-		}
+	function startSliderDrag() {
+		draggingSlider = true;
 	}
 </script>
+
+<svelte:window onpointerup={(e) => finishDrag(e)} onpointercancel={(e) => finishDrag(e, false)} />
 
 <Popover.Content class="w-[244px]" surfaceClass="overflow-hidden !p-0">
 	<!-- SB picker (large) -->
@@ -175,7 +211,6 @@
 		style:--picker-hue={hueColor}
 		onpointerdown={onSbDown}
 		onpointermove={onSbMove}
-		onpointerup={onSbUp}
 		role="presentation"
 	>
 		<div
@@ -199,7 +234,6 @@
 				class="relative h-2.5 w-full cursor-ew-resize overflow-hidden rounded-full bg-[linear-gradient(to_right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)]"
 				onpointerdown={onHueDown}
 				onpointermove={onHueMove}
-				onpointerup={onHueUp}
 				role="presentation"
 			>
 				<div
@@ -227,40 +261,103 @@
 		</div>
 	</div>
 
-	<!-- HSL sliders -->
+	<!-- Format channel sliders -->
 	<div class="flex flex-col gap-1.5 border-b border-border/60 p-2">
-		{#each [{ key: 'h', label: 'H', max: 360, value: hslH, unit: '°' }, { key: 's', label: 'S', max: 100, value: hslS, unit: '%' }, { key: 'l', label: 'L', max: 100, value: hslL, unit: '%' }] as channel (channel.key)}
-			{@const thumbBg =
-				channel.key === 'h'
-					? `hsl(${channel.value}, ${hslS}%, ${hslL}%)`
-					: channel.key === 's'
-						? `hsl(${hslH}, ${channel.value}%, ${hslL}%)`
-						: `hsl(${hslH}, ${hslS}%, ${channel.value}%)`}
-			<div class="flex items-center gap-2">
-				<span
-					class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
-				>
-					{channel.label}
-				</span>
-				<input
-					type="range"
-					min="0"
-					max={channel.max}
-					step="1"
-					value={channel.value}
-					style:--thumb-bg={thumbBg}
-					oninput={(e) =>
-						setHslChannel(
-							channel.key as 'h' | 's' | 'l',
-							(e.currentTarget as HTMLInputElement).value
-						)}
-					class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-secondary outline-none dark:bg-[var(--color-border-strong)] focus-visible:shadow-[0_0_0_3px_var(--color-ring)] [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[var(--color-background)] [&::-webkit-slider-thumb]:[background:var(--thumb-bg)] [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[var(--color-background)] [&::-moz-range-thumb]:[background:var(--thumb-bg)] [&::-moz-range-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)]"
-				/>
-				<span class="w-9 shrink-0 text-right font-mono text-[0.66rem] tabular-nums text-foreground">
-					{channel.value}{channel.unit}
-				</span>
-			</div>
-		{/each}
+		{#if ctx.format === 'hsl'}
+			{#each [{ key: 'h', label: 'H', max: 360, value: hslH, unit: '°' }, { key: 's', label: 'S', max: 100, value: hslS, unit: '%' }, { key: 'l', label: 'L', max: 100, value: hslL, unit: '%' }] as channel (channel.key)}
+				{@const thumbBg =
+					channel.key === 'h'
+						? `hsl(${channel.value}, ${hslS}%, ${hslL}%)`
+						: channel.key === 's'
+							? `hsl(${hslH}, ${channel.value}%, ${hslL}%)`
+							: `hsl(${hslH}, ${hslS}%, ${channel.value}%)`}
+				<div class="flex items-center gap-2">
+					<span
+						class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+					>
+						{channel.label}
+					</span>
+					<input
+						type="range"
+						min="0"
+						max={channel.max}
+						step="1"
+						value={channel.value}
+						style:--thumb-bg={thumbBg}
+						onpointerdown={startSliderDrag}
+						oninput={(e) =>
+							setHslChannel(
+								channel.key as 'h' | 's' | 'l',
+								(e.currentTarget as HTMLInputElement).value
+							)}
+						class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-secondary outline-none dark:bg-[var(--color-border-strong)] focus-visible:shadow-[0_0_0_3px_var(--color-ring)] [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[var(--color-background)] [&::-webkit-slider-thumb]:[background:var(--thumb-bg)] [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[var(--color-background)] [&::-moz-range-thumb]:[background:var(--thumb-bg)] [&::-moz-range-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)]"
+					/>
+					<span
+						class="w-9 shrink-0 text-right font-mono text-[0.66rem] tabular-nums text-foreground"
+					>
+						{channel.value}{channel.unit}
+					</span>
+				</div>
+			{/each}
+		{:else if ctx.format === 'rgb'}
+			{#each [{ key: 'r', label: 'R', value: rgbR }, { key: 'g', label: 'G', value: rgbG }, { key: 'b', label: 'B', value: rgbB }] as channel (channel.key)}
+				<div class="flex items-center gap-2">
+					<span
+						class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+						>{channel.label}</span
+					>
+					<input
+						type="range"
+						min="0"
+						max="255"
+						step="1"
+						value={channel.value}
+						style:--thumb-bg={`rgb(${rgbR}, ${rgbG}, ${rgbB})`}
+						onpointerdown={startSliderDrag}
+						oninput={(e) =>
+							setRgbChannel(
+								channel.key as 'r' | 'g' | 'b',
+								(e.currentTarget as HTMLInputElement).value
+							)}
+						class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-secondary outline-none dark:bg-[var(--color-border-strong)] focus-visible:shadow-[0_0_0_3px_var(--color-ring)] [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[var(--color-background)] [&::-webkit-slider-thumb]:[background:var(--thumb-bg)] [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[var(--color-background)] [&::-moz-range-thumb]:[background:var(--thumb-bg)] [&::-moz-range-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)]"
+					/>
+					<span
+						class="w-9 shrink-0 text-right font-mono text-[0.66rem] tabular-nums text-foreground"
+						>{channel.value}</span
+					>
+				</div>
+			{/each}
+		{:else}
+			{#each [{ key: 'h', label: 'H', max: 360, value: hue, unit: '°' }, { key: 's', label: 'S', max: 100, value: sat, unit: '%' }, { key: 'v', label: 'V', max: 100, value: val, unit: '%' }] as channel (channel.key)}
+				<div class="flex items-center gap-2">
+					<span
+						class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+						>{channel.label}</span
+					>
+					<input
+						type="range"
+						min="0"
+						max={channel.max}
+						step="1"
+						value={channel.value}
+						style:--thumb-bg={hueColor}
+						onpointerdown={startSliderDrag}
+						oninput={(e) => {
+							const next = Number((e.currentTarget as HTMLInputElement).value);
+							if (channel.key === 'h') hue = next;
+							else if (channel.key === 's') sat = next;
+							else val = next;
+							applyHsv();
+						}}
+						class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-secondary outline-none dark:bg-[var(--color-border-strong)] focus-visible:shadow-[0_0_0_3px_var(--color-ring)] [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[var(--color-background)] [&::-webkit-slider-thumb]:[background:var(--thumb-bg)] [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[var(--color-background)] [&::-moz-range-thumb]:[background:var(--thumb-bg)] [&::-moz-range-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)]"
+					/>
+					<span
+						class="w-9 shrink-0 text-right font-mono text-[0.66rem] tabular-nums text-foreground"
+						>{channel.value}{channel.unit}</span
+					>
+				</div>
+			{/each}
+		{/if}
 	</div>
 
 	<!-- Swatch grid -->

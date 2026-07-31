@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -16,12 +16,12 @@
 	const TITLE = 'Toggle';
 	const SLUG = 'toggle';
 
-	const installCommand = `bunx @sivir/ui add ${SLUG}`;
+	const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>
 	<title>Sivir · {TITLE}</title>
-	<meta name="description" content="A two-state button — pressed or unpressed." />
+	<meta name="description" content="A two-state button that is pressed or unpressed." />
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">

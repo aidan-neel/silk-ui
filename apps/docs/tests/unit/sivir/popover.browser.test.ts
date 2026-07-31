@@ -53,6 +53,28 @@ describe('Popover -- mount and unmount', () => {
 });
 
 describe('Popover -- close paths', () => {
+	it('locks scrolling while open and restores it after closing', async () => {
+		render(PopoverFixture, { open: false });
+		await flush();
+		await openViaTrigger();
+		expect(document.body.style.overflow).toBe('hidden');
+
+		await userEvent.keyboard('{Escape}');
+		await flush();
+		expect(document.body.style.overflow).not.toBe('hidden');
+	});
+
+	it('restores the page lock when closed from its trigger', async () => {
+		render(PopoverFixture, { open: false });
+		await flush();
+		await openViaTrigger();
+		expect(document.body.style.overflow).toBe('hidden');
+
+		await page.getByTestId('popover-trigger-label').click();
+		await flush();
+		expect(document.body.style.overflow).not.toBe('hidden');
+	});
+
 	it('closes on Escape', async () => {
 		render(PopoverFixture, { open: false });
 		await flush();
@@ -77,11 +99,16 @@ describe('Popover -- close paths', () => {
 		outside.style.left = '400px';
 		outside.style.width = '100px';
 		outside.style.height = '50px';
+		let clicked = false;
+		outside.onclick = () => {
+			clicked = true;
+		};
 		document.body.appendChild(outside);
 
 		outside.click();
 		await flush();
 		await expect.element(page.getByText('Popover Title')).not.toBeInTheDocument();
+		expect(clicked).toBe(false);
 		outside.remove();
 	});
 

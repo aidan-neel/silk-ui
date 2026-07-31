@@ -1,4 +1,4 @@
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Slider from './slider.svelte';
 
 export type SliderProps = {

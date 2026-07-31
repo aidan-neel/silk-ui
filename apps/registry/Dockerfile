@@ -29,7 +29,7 @@ COPY packages/sivir/package.json ./packages/sivir/
 
 ENV LEFTHOOK=0
 RUN bun install --frozen-lockfile --production --ignore-scripts \
-	--filter='registry' --filter='@sivir/ui'
+	--filter='registry' --filter='@sivir-ui/svelte'
 
 COPY apps/registry ./apps/registry
 COPY packages/sivir ./packages/sivir

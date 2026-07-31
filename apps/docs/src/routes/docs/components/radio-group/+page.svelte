@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -11,7 +11,7 @@
 
 	const _TITLE = 'Radio Group';
 
-	const installCommand = 'bunx @sivir/ui add radio-group';
+	const installCommand = 'bunx @sivir-ui/svelte add radio-group';
 </script>
 
 <svelte:head>

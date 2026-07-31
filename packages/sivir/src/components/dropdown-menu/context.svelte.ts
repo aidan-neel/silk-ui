@@ -1,5 +1,5 @@
-import { createContext } from '@sivir/ui/utils';
-import type { PopoverState } from '@sivir/ui/components/popover';
+import { createContext } from '@sivir-ui/svelte/utils';
+import type { PopoverState } from '@sivir-ui/svelte/components/popover';
 
 export type DropdownMenuContext = {
 	inverted: boolean;

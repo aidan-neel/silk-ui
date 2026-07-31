@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { cn, pressable } from '@sivir/ui/utils';
+	import { cn, pressable } from '@sivir-ui/svelte/utils';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import type { AccordionTriggerProps, AccordionContext } from '.';
 

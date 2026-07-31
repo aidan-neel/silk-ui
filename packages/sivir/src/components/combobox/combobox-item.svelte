@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
+	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { onMount } from 'svelte';
 	import Check from '@lucide/svelte/icons/check';
 
@@ -30,7 +30,6 @@
 	function close() {
 		comboboxState.selected = item;
 		comboboxState.open = false;
-		comboboxState.searchContent = '';
 		popoverState.buttonRef?.focus();
 		callback?.();
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Collapsible from '@sivir/ui/components/collapsible';
+	import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 
 	let open = $state(true);
@@ -11,7 +11,7 @@
 			<Collapsible.Trigger
 				class="-mx-2 flex w-[calc(100%+1rem)] items-center justify-between rounded-[var(--radius-md)] px-2 py-2 text-left text-foreground transition-colors hover:bg-secondary"
 			>
-				<span class="[font-weight:var(--font-weight-label,500)]">Weekly sync — June 18</span>
+				<span class="[font-weight:var(--font-weight-label,500)]">Weekly sync, June 18</span>
 				<ChevronDown
 					size={18}
 					class="transition-transform duration-200 {open ? '' : '-rotate-90'}"

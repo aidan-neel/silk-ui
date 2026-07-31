@@ -1,7 +1,7 @@
 import Root from './breadcrumb.svelte';
 import Item from './breadcrumb-item.svelte';
 import Separator from './breadcrumb-separator.svelte';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 
 export type BreadcrumbProps = DefaultProps;
 export type BreadcrumbItemProps = {

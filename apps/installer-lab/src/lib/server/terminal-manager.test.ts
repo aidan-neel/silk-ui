@@ -3,10 +3,10 @@ import { parseCommandLine } from './terminal-manager';
 
 describe('manual terminal command parsing', () => {
 	test('parses plain, quoted, empty, and escaped arguments', () => {
-		expect(parseCommandLine('bun add @sivir/ui@latest')).toEqual([
+		expect(parseCommandLine('bun add @sivir-ui/svelte@latest')).toEqual([
 			'bun',
 			'add',
-			'@sivir/ui@latest'
+			'@sivir-ui/svelte@latest'
 		]);
 		expect(parseCommandLine(`tool "two words" '' escaped\\ value`)).toEqual([
 			'tool',

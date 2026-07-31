@@ -69,16 +69,16 @@ describe('docs release contracts', () => {
 		for (const page of pages) {
 			const source = readFileSync(resolve(root, page), 'utf8');
 			expect(source, page).not.toMatch(/Theme Studio|theme studio|\/themes\/studio/i);
-			expect(source, page).not.toContain('bunx @sivir/ui init');
-			expect(source, page).not.toContain('bunx @sivir/ui add');
+			expect(source, page).not.toContain('bunx @sivir-ui/svelte init');
+			expect(source, page).not.toContain('bunx @sivir-ui/svelte add');
 			expect(source, page).not.toContain('/docs/styling');
 		}
 		const install = readFileSync(
 			resolve(root, 'apps/docs/src/routes/docs/installation/+page.svelte'),
 			'utf8'
 		);
-		expect(install).toContain('bunx --package @sivir/ui sivir init');
-		expect(install).toContain('bun add @sivir/ui');
+		expect(install).toContain('bunx --package @sivir-ui/svelte sivir init');
+		expect(install).toContain('bun add @sivir-ui/svelte');
 		const stylingRedirect = readFileSync(
 			resolve(root, 'apps/docs/src/routes/docs/styling/+page.ts'),
 			'utf8'
@@ -107,7 +107,7 @@ describe('docs release contracts', () => {
 		expect(registryDockerfile).toContain('FROM oven/bun:1.3.11');
 		expect(registryDockerfile).toContain('ENV LEFTHOOK=0');
 		expect(registryDockerfile).toContain('bun install --frozen-lockfile --ignore-scripts');
-		expect(registryDockerfile).toContain("--filter='registry' --filter='@sivir/ui'");
+		expect(registryDockerfile).toContain("--filter='registry' --filter='@sivir-ui/svelte'");
 		expect(registryDockerfile).toContain('COPY --from=build');
 		expect(registryDockerfile).toContain('COPY apps/installer-lab/package.json');
 	});

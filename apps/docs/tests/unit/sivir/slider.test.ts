@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Slider from '@sivir/ui/components/slider/slider.svelte';
+import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
 
 describe('Slider -- rendering', () => {
 	it('renders a range input', () => {
@@ -65,6 +65,28 @@ describe('Slider -- onValueChange callback', () => {
 		range.dispatchEvent(new Event('input', { bubbles: true }));
 
 		expect(onValueChange).toHaveBeenCalledWith(37);
+	});
+});
+
+describe('Slider -- interaction feedback', () => {
+	it('keeps the dragging state until the pointer is released', () => {
+		const { container } = render(Slider, { props: { value: 0 } });
+		const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+
+		range.dispatchEvent(new Event('pointerdown', { bubbles: true }));
+		expect(range).toHaveAttribute('data-dragging');
+
+		range.dispatchEvent(new Event('pointerup', { bubbles: true }));
+		expect(range).not.toHaveAttribute('data-dragging');
+	});
+
+	it('does not enter the dragging state when disabled', () => {
+		const { container } = render(Slider, { props: { value: 0, disabled: true } });
+		const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+
+		range.dispatchEvent(new Event('pointerdown', { bubbles: true }));
+
+		expect(range).not.toHaveAttribute('data-dragging');
 	});
 });
 

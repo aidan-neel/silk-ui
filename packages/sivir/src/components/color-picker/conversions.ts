@@ -68,6 +68,20 @@ export function hsvToHex(hue: number, sat: number, val: number): string {
 	return `#${toH(r)}${toH(g)}${toH(b)}`;
 }
 
+export function hexToRgb(hex: string): [number, number, number] {
+	const h = hex.replace('#', '');
+	if (h.length !== 6) return [255, 255, 255];
+	return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+export function rgbToHex(red: number, green: number, blue: number): string {
+	const toHex = (value: number) =>
+		Math.round(Math.max(0, Math.min(255, value)))
+			.toString(16)
+			.padStart(2, '0');
+	return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+}
+
 /**
  * HSL gives the user direct lightness control (instead of HSV's "value"),
  * which is what you reach for when tweaking neutrals / dark variants.

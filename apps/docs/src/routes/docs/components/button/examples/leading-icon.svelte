@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import Plus from '@lucide/svelte/icons/plus';
 </script>
 

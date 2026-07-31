@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Switch from '@sivir/ui/components/switch/switch.svelte';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
 
 describe('Switch -- rendering', () => {
 	it('renders a button with role="switch"', () => {

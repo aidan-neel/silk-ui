@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Command from '@sivir/ui/components/command';
+	import * as Command from '@sivir-ui/svelte/components/command';
 
 	let {
 		open = $bindable(false),

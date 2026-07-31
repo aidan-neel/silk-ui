@@ -4,8 +4,8 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
-	server: { host: '127.0.0.1' },
-	preview: { host: '127.0.0.1' },
+	server: { host: '127.0.0.1', port: 5174 },
+	preview: { host: '127.0.0.1', port: 5174 },
 	test: {
 		include: ['src/**/*.test.ts'],
 		testTimeout: 15_000

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Tabs from '@sivir/ui/components/tabs';
-	import type { TabsVariant } from '@sivir/ui/components/tabs';
+	import * as Tabs from '@sivir-ui/svelte/components/tabs';
+	import type { TabsVariant } from '@sivir-ui/svelte/components/tabs';
 
 	let {
 		value = $bindable('one'),

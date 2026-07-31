@@ -20,7 +20,7 @@ Execution index for [v1-scope.md](v1-scope.md).
 | 2     | Public API locked; overlay/submenu blockers closed; package + CLI artifact gates |
 | 3     | Getting-started docs rewritten; registry not required for v1 docs                |
 | 4     | One immutable SHA + tarball passes full gates + manual QA                        |
-| 5     | `@sivir/ui@1.0.0` on npm; docs live on `sivir.dev`                               |
+| 5     | `@sivir-ui/svelte@1.0.0` on npm; docs live on `sivir.dev`                        |
 
 ## Open before Phase 4 freeze
 

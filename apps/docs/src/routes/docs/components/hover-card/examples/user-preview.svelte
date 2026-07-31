@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as HoverCard from '@sivir/ui/components/hover-card';
-	import * as Avatar from '@sivir/ui/components/avatar';
-	import { Button } from '@sivir/ui/components/button';
+	import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
+	import * as Avatar from '@sivir-ui/svelte/components/avatar';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import Users from '@lucide/svelte/icons/users';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import Building from '@lucide/svelte/icons/building';
@@ -27,7 +27,7 @@
 
 					<!-- Bio -->
 					<HoverCard.Description class="text-sm leading-relaxed text-pretty">
-						Building Sivir — a themeable Svelte component library. Type-driven design & animation
+						Building Sivir, a themeable Svelte component library. Type-driven design & animation
 						polish.
 					</HoverCard.Description>
 

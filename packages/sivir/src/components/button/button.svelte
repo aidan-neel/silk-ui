@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { button } from './variants';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
-	import { cn, pressable } from '@sivir/ui/utils';
+	import { cn, pressable } from '@sivir-ui/svelte/utils';
 	import type { ButtonProps } from '.';
 
 	let {
@@ -29,11 +29,11 @@
 		data-size={size}
 		class={classes}
 		aria-disabled={(rest as HTMLAnchorAttributes)['aria-disabled']}
-		onclick={() => onclick?.()}
+		onclick={(event) => onclick?.(event)}
 		onkeydown={(e) => {
 			if ((e.code === 'Space' || e.key === ' ') && e.currentTarget.matches(':focus-visible')) {
 				e.preventDefault();
-				onclick?.();
+				e.currentTarget.click();
 			}
 		}}
 		{...rest as HTMLAnchorAttributes}
@@ -49,13 +49,7 @@
 		data-variant={variant}
 		data-size={size}
 		class={classes}
-		onclick={() => onclick?.()}
-		onkeydown={(e) => {
-			if ((e.code === 'Space' || e.key === ' ') && e.currentTarget.matches(':focus-visible')) {
-				e.preventDefault();
-				onclick?.();
-			}
-		}}
+		onclick={(event) => onclick?.(event)}
 		{...rest as HTMLButtonAttributes}
 	>
 		{@render children?.()}

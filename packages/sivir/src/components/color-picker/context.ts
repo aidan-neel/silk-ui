@@ -5,6 +5,8 @@ export type ColorOption = {
 	value: string;
 };
 
+export type ColorFormat = 'hsl' | 'rgb' | 'hsv';
+
 const CONTEXT_KEY = Symbol('sivir-color-picker');
 
 /** Shared between ColorPicker.Root, .Trigger, and .Content. Root owns the
@@ -12,6 +14,7 @@ const CONTEXT_KEY = Symbol('sivir-color-picker');
 export type ColorPickerContext = {
 	readonly value: string;
 	readonly options: ColorOption[];
+	readonly format: ColorFormat;
 	apply: (hex: string) => void;
 };
 

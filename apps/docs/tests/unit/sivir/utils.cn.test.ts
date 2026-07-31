@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cn } from '@sivir/ui/utils';
+import { cn } from '@sivir-ui/svelte/utils';
 
 /*
  * Sivir's `cn` is `twMerge(clsx(inputs.reverse()))` -- the `.reverse()`

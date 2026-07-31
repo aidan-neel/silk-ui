@@ -39,6 +39,19 @@ describe('ContextMenu -- open via right-click', () => {
 		await expect.element(page.getByTestId('ctx-delete')).toBeInTheDocument();
 	});
 
+	it('opens from a touch pointer interaction', async () => {
+		render(ContextMenuFixture, {});
+		await flush();
+
+		const trigger = document.querySelector('[data-testid="ctx-trigger"]') as HTMLElement;
+		trigger.dispatchEvent(
+			new PointerEvent('pointerup', { bubbles: true, button: 0, pointerType: 'touch' })
+		);
+		await flush();
+
+		await expect.element(page.getByTestId('ctx-copy')).toBeInTheDocument();
+	});
+
 	it('closes on Escape', async () => {
 		render(ContextMenuFixture, {});
 		await flush();

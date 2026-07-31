@@ -5,8 +5,8 @@ import {
 	toast,
 	__setActiveToastStateForTests,
 	__getActiveToastStateForTests
-} from '@sivir/ui/components/toast/lib.svelte.ts';
-import type { ToastState } from '@sivir/ui/components/toast/lib.svelte.ts';
+} from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
+import type { ToastState } from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
 
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';

@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './radio-group.svelte';
 import Item from './radio-group-item.svelte';
 

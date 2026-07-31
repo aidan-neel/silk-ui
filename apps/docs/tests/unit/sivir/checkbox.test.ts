@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Checkbox from '@sivir/ui/components/checkbox/checkbox.svelte';
+import Checkbox from '@sivir-ui/svelte/components/checkbox/checkbox.svelte';
 
 describe('Checkbox -- rendering', () => {
 	it('renders a native checkbox input', () => {

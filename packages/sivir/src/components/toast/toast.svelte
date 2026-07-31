@@ -1,6 +1,6 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import Check from '@lucide/svelte/icons/circle-check';
 	import X from '@lucide/svelte/icons/x';
 	import Warning from '@lucide/svelte/icons/triangle-alert';
@@ -9,7 +9,7 @@
 	import Loader from '@lucide/svelte/icons/loader-circle';
 	import type { Toast } from './lib.svelte';
 	import { dismissToast, pauseToast, resumeToast } from './lib.svelte';
-	import Button from '@sivir/ui/components/button';
+	import Button from '@sivir-ui/svelte/components/button';
 	import { toastIcon, toastProgress } from './variants';
 
 	const { toast }: { toast: Toast } = $props();

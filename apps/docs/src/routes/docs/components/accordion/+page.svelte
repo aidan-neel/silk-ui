@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -12,12 +12,15 @@
 	const TITLE = 'Accordion';
 	const SLUG = 'accordion';
 
-	const installCommand = `bunx @sivir/ui add ${SLUG}`;
+	const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>
 	<title>Sivir · {TITLE}</title>
-	<meta name="description" content="Stacked collapsible sections — single or multi-open." />
+	<meta
+		name="description"
+		content="Stacked collapsible sections with single- and multi-open modes."
+	/>
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">

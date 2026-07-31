@@ -1,19 +1,29 @@
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { Snippet } from 'svelte';
-	import { setColorPickerContext, type ColorOption } from './context';
+	import { setColorPickerContext, type ColorFormat, type ColorOption } from './context';
 
 	type Props = {
 		label?: string;
 		value: string;
 		onValueChange?: (value: string) => void;
 		options?: ColorOption[];
+		/** Channel controls shown in the picker. Defaults to HSL. */
+		format?: ColorFormat;
 		class?: string;
 		children: Snippet;
 	};
 
-	let { label, value, onValueChange, options = [], class: className, children }: Props = $props();
+	let {
+		label,
+		value,
+		onValueChange,
+		options = [],
+		format = 'hsl',
+		class: className,
+		children
+	}: Props = $props();
 
 	setColorPickerContext({
 		get value() {
@@ -21,6 +31,9 @@
 		},
 		get options() {
 			return options;
+		},
+		get format() {
+			return format;
 		},
 		apply: (hex) => onValueChange?.(hex.toLowerCase())
 	});

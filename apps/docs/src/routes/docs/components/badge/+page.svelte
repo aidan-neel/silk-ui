@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -23,7 +23,7 @@
 	import VariantError from './examples/variant-error.svelte';
 	import VariantErrorSrc from './examples/variant-error.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add badge';
+	const installCommand = 'bunx @sivir-ui/svelte add badge';
 </script>
 
 <svelte:head>
@@ -75,7 +75,7 @@
 		</h2>
 		<p class="text-sm text-foreground-muted">Import the Badge and use it in your component:</p>
 		<CodeBlock
-			code={`import { Badge } from '$lib/sivir/components/badge';\n\n<Badge>New</Badge>\n<Badge variant="success">Active</Badge>\n<Badge variant="error">Failed</Badge>`}
+			code={`import { Badge } from '$lib/sivir/components/badge';\n\n<Badge>New</Badge>\n<Badge variant="outline" dot>Label</Badge>\n<Badge variant="success">Active</Badge>\n<Badge variant="error">Failed</Badge>`}
 			lang="svelte"
 			copy="overlay"
 		/>

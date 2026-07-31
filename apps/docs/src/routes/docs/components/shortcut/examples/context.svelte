@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Shortcut from '@sivir/ui/components/shortcut';
-	import { Button } from '@sivir/ui/components/button';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
+	import { Button } from '@sivir-ui/svelte/components/button';
 </script>
 
 <Button variant="outline">

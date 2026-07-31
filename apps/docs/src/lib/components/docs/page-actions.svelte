@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import * as Breadcrumb from '@sivir/ui/components/breadcrumb';
-	import { Badge } from '@sivir/ui/components/badge';
+	import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
+	import { Badge } from '@sivir-ui/svelte/components/badge';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import FileCode from '@lucide/svelte/icons/file-code';
 	import Accessibility from '@lucide/svelte/icons/accessibility';

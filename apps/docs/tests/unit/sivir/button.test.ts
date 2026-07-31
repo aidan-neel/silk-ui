@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { createRawSnippet } from 'svelte';
-import Button from '@sivir/ui/components/button/button.svelte';
+import Button from '@sivir-ui/svelte/components/button/button.svelte';
 
 function textSnippet(text: string) {
 	return createRawSnippet(() => ({

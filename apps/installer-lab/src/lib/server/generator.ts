@@ -81,25 +81,25 @@ async function copyFixtureAssets(sourceDirectory: string, targetDirectory: strin
 
 export function rewriteFixtureImports(source: string, installPath: InstallPath) {
 	if (installPath === 'package') return source;
-	return source.replaceAll('@sivir/ui/components/', '$lib/sivir/components/');
+	return source.replaceAll('@sivir-ui/svelte/components/', '$lib/sivir/components/');
 }
 
 export function rootCss(installPath: InstallPath) {
-	const uiImport = installPath === 'cli' ? '$lib/sivir/ui.css' : '@sivir/ui/ui.css';
+	const uiImport = installPath === 'cli' ? '$lib/sivir/ui.css' : '@sivir-ui/svelte/ui.css';
 	const source =
 		installPath === 'cli'
 			? '@source "../lib/sivir/**/*.{svelte,ts}";'
-			: '@source "../../node_modules/@sivir/ui/src/**/*.{svelte,ts}";';
-	return `@import '@fontsource/geist-sans/latin-400.css';
-@import '@fontsource/geist-sans/latin-500.css';
-@import '@fontsource/geist-sans/latin-600.css';
-@import '@fontsource/geist-sans/latin-700.css';
+			: '@source "../../node_modules/@sivir-ui/svelte/src/**/*.{svelte,ts}";';
+	return `@import '@fontsource/dm-sans/latin-400.css';
+@import '@fontsource/dm-sans/latin-500.css';
+@import '@fontsource/dm-sans/latin-600.css';
+@import '@fontsource/dm-sans/latin-700.css';
 @import 'tailwindcss';
 @import '${uiImport}';
 ${source}
 
 :root {
-	font-family: Geist, 'Geist Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	color: var(--color-foreground);
 	background: var(--color-background);
 	font-synthesis-weight: none;
@@ -232,7 +232,8 @@ export async function generateShowcase(options: {
 
 		const routeDirectory = path.join(consumerRoot, 'src', 'routes', 'components', component.name);
 		await mkdir(routeDirectory, { recursive: true });
-		const importPrefix = installPath === 'cli' ? '$lib/sivir/components' : '@sivir/ui/components';
+		const importPrefix =
+			installPath === 'cli' ? '$lib/sivir/components' : '@sivir-ui/svelte/components';
 		await writeFile(
 			path.join(routeDirectory, '+page.svelte'),
 			routeSource(component, toaster, importPrefix)

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -11,7 +11,7 @@
 
 	const _TITLE = 'Copy Button';
 
-	const installCommand = 'bunx @sivir/ui add copy-button';
+	const installCommand = 'bunx @sivir-ui/svelte add copy-button';
 </script>
 
 <svelte:head>
@@ -66,7 +66,7 @@
 		</h2>
 		<p class="text-sm text-foreground-muted">Import Copy Button and pass the text to copy:</p>
 		<CodeBlock
-			code={`import { CopyButton } from '$lib/sivir/components/copy-button';\n\n<CopyButton text="bun add @sivir/ui" />\n<CopyButton text={apiKey} label="Copy key" variant="outline" />`}
+			code={`import { CopyButton } from '$lib/sivir/components/copy-button';\n\n<CopyButton text="bun add @sivir-ui/svelte" />\n<CopyButton text={apiKey} label="Copy key" variant="outline" />`}
 			lang="svelte"
 			copy="overlay"
 		/>

@@ -1,13 +1,19 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
 	import Basic from './examples/basic.svelte';
 	import BasicSrc from './examples/basic.svelte?raw';
+	import Compact from './examples/size-compact.svelte';
+	import CompactSrc from './examples/size-compact.svelte?raw';
+	import Large from './examples/size-large.svelte';
+	import LargeSrc from './examples/size-large.svelte?raw';
+	import Wide from './examples/size-wide.svelte';
+	import WideSrc from './examples/size-wide.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add modal';
+	const installCommand = 'bunx @sivir-ui/svelte add modal';
 </script>
 
 <svelte:head>
@@ -87,6 +93,39 @@
 			</h3>
 			<ComponentPreview code={BasicSrc}>
 				<Basic />
+			</ComponentPreview>
+		</div>
+
+		<div id="size-compact" class="scroll-mt-20 flex flex-col gap-3">
+			<h3
+				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+			>
+				Compact
+			</h3>
+			<ComponentPreview code={CompactSrc}>
+				<Compact />
+			</ComponentPreview>
+		</div>
+
+		<div id="size-large" class="scroll-mt-20 flex flex-col gap-3">
+			<h3
+				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+			>
+				Large
+			</h3>
+			<ComponentPreview code={LargeSrc}>
+				<Large />
+			</ComponentPreview>
+		</div>
+
+		<div id="size-wide" class="scroll-mt-20 flex flex-col gap-3">
+			<h3
+				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+			>
+				Wide
+			</h3>
+			<ComponentPreview code={WideSrc}>
+				<Wide />
 			</ComponentPreview>
 		</div>
 	</section>

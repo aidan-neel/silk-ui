@@ -1,7 +1,7 @@
 import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import Button from './button.svelte';
 import type { Snippet } from 'svelte';
-import type { Intent } from '@sivir/ui/utils';
+import type { Intent } from '@sivir-ui/svelte/utils';
 
 export type ButtonVariant = Intent | 'panel';
 
@@ -39,7 +39,7 @@ export type ButtonProps = {
 	 * utilities outrank the `components` layer, so the two cannot coexist.
 	 */
 	unstyled?: boolean;
-	onclick?: () => void;
+	onclick?: (event: MouseEvent) => void;
 } & Partial<HTMLButtonAttributes | HTMLAnchorAttributes>;
 
 export { Button };

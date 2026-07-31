@@ -28,7 +28,7 @@ Final go/no-go evidence. Detail lives in [phase plans](v1-implementation.md).
 - [x] Package metadata, license, exports, files correct
 - [x] Package-import path: `verify:artifact`
 - [x] CLI path: sandbox + `verify:cli-artifact`
-- [x] Documented invocation: `bunx --package @sivir/ui sivir ...`
+- [x] Documented invocation: `bunx --package @sivir-ui/svelte sivir ...`
 - [x] Built-in `sivir add theme <slug>` works offline
 - [x] CI/publish run artifact + cli-artifact gates
 
@@ -50,13 +50,13 @@ Final go/no-go evidence. Detail lives in [phase plans](v1-implementation.md).
 - [ ] `bun run check`
 - [ ] `bun --filter='docs' run test:ci`
 - [ ] `bun --filter='registry' run test` (in-tree service tests; not a v1 product)
-- [ ] `bun --filter='@sivir/ui' run test`
+- [ ] `bun --filter='@sivir-ui/svelte' run test`
 - [ ] `bun --filter='docs' run test:browser`
 - [ ] `bun run build`
 - [ ] `DOCS_ADAPTER=node bun --filter='docs' run build`
-- [ ] `bun --filter='@sivir/ui' run sandbox`
-- [ ] `bun --filter='@sivir/ui' run verify:artifact`
-- [ ] `bun --filter='@sivir/ui' run verify:cli-artifact`
+- [ ] `bun --filter='@sivir-ui/svelte' run sandbox`
+- [ ] `bun --filter='@sivir-ui/svelte' run verify:artifact`
+- [ ] `bun --filter='@sivir-ui/svelte' run verify:cli-artifact`
 - [ ] `bun --cwd apps/installer-lab test`
 
 ## Production Readiness
@@ -72,7 +72,7 @@ Final go/no-go evidence. Detail lives in [phase plans](v1-implementation.md).
 - [ ] Release commit == validated candidate
 - [ ] GitHub release notes (scope, install, limitations: no Studio/registry)
 - [ ] Publish workflow green + npm provenance
-- [ ] `npm view @sivir/ui@1.0.0` and `dist-tags.latest` == `1.0.0`
+- [ ] `npm view @sivir-ui/svelte@1.0.0` and `dist-tags.latest` == `1.0.0`
 - [ ] Clean consumer installs from npm (package + CLI)
 - [ ] Production docs from release commit
 

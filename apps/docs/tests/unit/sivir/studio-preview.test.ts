@@ -6,7 +6,7 @@ import {
 	neutralTemperatures,
 	radiusScales,
 	themeToCss
-} from '@sivir/ui/themes/theme';
+} from '@sivir-ui/svelte/themes/theme';
 
 describe('Theme engine public-axis coverage', () => {
 	it('generates non-empty declarations for every supported axis value', () => {

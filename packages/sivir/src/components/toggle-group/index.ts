@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './toggle-group.svelte';
 import Item from './toggle-group-item.svelte';
 

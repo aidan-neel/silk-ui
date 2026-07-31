@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as DropdownMenu from '@sivir/ui/components/dropdown-menu';
+	import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 	import Settings from '@lucide/svelte/icons/settings';
 	import LogOut from '@lucide/svelte/icons/log-out';
 	import LifeBuoy from '@lucide/svelte/icons/life-buoy';

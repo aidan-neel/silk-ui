@@ -80,9 +80,14 @@ describe('ui.css Tier 3 + structure', () => {
 		expect(css).not.toContain('@keyframes');
 		expect(css).toContain('prefers-reduced-motion: reduce');
 	});
+	it('prevents iOS input zoom without disabling page zoom', () => {
+		expect(css).toContain('@media (max-width: 767px)');
+		expect(css).toContain('font-size: 16px;');
+		expect(css).not.toContain('user-scalable=no');
+	});
 	/** Mirrors the budget in packages/sivir/release.test.ts -- keep the two in step. */
 	it('stays within the release size budget', () => {
-		expect(css.split('\n').length).toBeLessThanOrEqual(340);
+		expect(css.split('\n').length).toBeLessThanOrEqual(350);
 		expect(Buffer.byteLength(css)).toBeLessThanOrEqual(12 * 1024);
 	});
 

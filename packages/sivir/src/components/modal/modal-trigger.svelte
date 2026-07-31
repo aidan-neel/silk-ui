@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ModalTriggerProps } from '.';
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import { getModalContext } from './context.svelte';
 
 	let {
@@ -19,10 +19,10 @@
 	aria-haspopup="dialog"
 	aria-expanded={modal.state.open}
 	aria-controls={modal.contentId}
-	onclick={() => {
+	onclick={(event: MouseEvent) => {
 		modal.returnFocusEl = element;
 		modal.state.open = true;
-		onclick?.();
+		onclick?.(event);
 	}}
 	class={className}
 	{...rest}

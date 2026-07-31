@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -13,14 +13,14 @@
 
 	const _TITLE = 'Context Menu';
 
-	const installCommand = 'bunx @sivir/ui add context-menu';
+	const installCommand = 'bunx @sivir-ui/svelte add context-menu';
 </script>
 
 <svelte:head>
 	<title>Sivir · Context Menu</title>
 	<meta
 		name="description"
-		content="A right-click menu for actions that apply to whatever the user clicked on. Same item grammar as DropdownMenu — the only difference is what opens it."
+		content="A right-click menu for actions that apply to whatever the user clicked on. It uses the same item grammar as DropdownMenu and opens on right-click."
 	/>
 </svelte:head>
 
@@ -85,7 +85,7 @@
 				Examples
 			</h2>
 			<p class="mt-2 text-sm text-foreground-muted">
-				Right-click each target. Menus stay simple — different action sets only.
+				Right-click each target. Menus remain simple, with different action sets.
 			</p>
 		</div>
 

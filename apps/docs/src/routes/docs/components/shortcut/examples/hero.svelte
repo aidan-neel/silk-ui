@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Shortcut from '@sivir/ui/components/shortcut';
-	import { toast } from '@sivir/ui/components/toast';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
+	import { toast } from '@sivir-ui/svelte/components/toast';
 
 	function ontrigger() {
 		toast({

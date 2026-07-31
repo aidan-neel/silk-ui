@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Modal from '@sivir/ui/components/modal';
-	import { Input } from '@sivir/ui/components/input';
+	import * as Modal from '@sivir-ui/svelte/components/modal';
+	import { Input } from '@sivir-ui/svelte/components/input';
 
 	let open = $state(false);
 	let domain = $state('');
@@ -8,7 +8,7 @@
 
 <Modal.Root bind:open>
 	<Modal.Trigger>Add Domain</Modal.Trigger>
-	<Modal.Content class="max-w-[26rem]">
+	<Modal.Content>
 		<Modal.Header>
 			<Modal.Title>Add a domain</Modal.Title>
 			<Modal.Description>Add an existing domain to your sivir-ui project.</Modal.Description>

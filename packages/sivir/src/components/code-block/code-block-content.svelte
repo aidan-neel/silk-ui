@@ -1,8 +1,8 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { getContext } from 'svelte';
-	import type { TabsState } from '@sivir/ui/components/tabs';
+	import type { TabsState } from '@sivir-ui/svelte/components/tabs';
 	import type { CodeBlockContentProps, CodeBlockRegistry } from '.';
 	import { highlight } from './highlight';
 	import Copy from './code-block-copy.svelte';
@@ -66,10 +66,10 @@
 	inert={!isActive}
 	class={cn(
 		className,
-		'overflow-hidden rounded-[var(--radius-md)] bg-card font-mono font-medium text-foreground shadow-[var(--elevation-1)] ring-1 ring-[color-mix(in_oklab,var(--color-border)_50%,transparent)]',
+		'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto rounded-[var(--radius-md)] bg-card font-mono font-medium text-foreground shadow-[var(--elevation-1)] ring-1 ring-[color-mix(in_oklab,var(--color-border)_50%,transparent)]',
 		!isActive && !registry?.contained && 'hidden',
 		registry?.contained &&
-			'overflow-visible rounded-none bg-transparent shadow-none transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none will-change-[transform,opacity]',
+			'max-h-none overflow-visible rounded-none bg-transparent shadow-none transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none will-change-[transform,opacity]',
 		registry?.contained && isActive && 'relative z-[1]',
 		registry?.contained && !isActive && 'pointer-events-none absolute inset-0 block'
 	)}
@@ -80,7 +80,7 @@
 	<div class="relative w-full overflow-x-auto">
 		<!-- Keep the highlighted markup on this element so the descendant Tailwind selectors apply. -->
 		{#if copyPlacement === 'inline'}
-			<div class={cn(CODE_SURFACE, 'items-center')}>
+			<div class={cn(CODE_SURFACE, 'w-full items-center')}>
 				<pre
 					class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"><code
 						>{@html html}</code
@@ -88,7 +88,7 @@
 				<Copy class="mr-1.5 shrink-0" />
 			</div>
 		{:else}
-			<div class={CODE_SURFACE}>
+			<div class={cn(CODE_SURFACE, 'w-full')}>
 				{#if showLineNumbers}
 					<pre
 						aria-hidden="true"
@@ -102,7 +102,7 @@
 			</div>
 		{/if}
 		{#if copyPlacement === 'overlay'}
-			<Copy class="absolute right-2 top-2 z-10" />
+			<Copy class="absolute right-2 top-2 z-10 bg-card" />
 		{/if}
 	</div>
 </div>

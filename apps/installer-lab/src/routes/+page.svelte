@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import BrandMark from '@sivir/ui/brand-mark';
-	import * as Alert from '@sivir/ui/components/alert';
-	import { Badge } from '@sivir/ui/components/badge';
-	import { Button } from '@sivir/ui/components/button';
-	import { Input } from '@sivir/ui/components/input';
-	import * as Card from '@sivir/ui/components/card';
-	import { Progress } from '@sivir/ui/components/progress';
-	import { ScrollArea } from '@sivir/ui/components/scroll-area';
+	import BrandMark from '@sivir-ui/svelte/brand-mark';
+	import * as Alert from '@sivir-ui/svelte/components/alert';
+	import { Badge } from '@sivir-ui/svelte/components/badge';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { Input } from '@sivir-ui/svelte/components/input';
+	import * as Card from '@sivir-ui/svelte/components/card';
+	import { Progress } from '@sivir-ui/svelte/components/progress';
+	import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
 	import {
 		isActivePhase,
 		type InstallPath,
@@ -51,7 +51,7 @@
 			title: 'Component usage',
 			language: 'Svelte',
 			code: `\u003Cscript lang="ts">
-\timport { Button } from '@sivir/ui/components/button';
+\timport { Button } from '@sivir-ui/svelte/components/button';
 \n\tfunction saveChanges() {
 \t\t// Persist the form.
 \t}
@@ -73,7 +73,7 @@
 		{
 			title: 'CSS entrypoint',
 			language: 'CSS',
-			code: `@import '@sivir/ui/ui.css';
+			code: `@import '@sivir-ui/svelte/ui.css';
 @source '../lib/**/*.{svelte,ts}';
 \n.settings-card {
 \tpadding: var(--card-padding);
@@ -584,7 +584,7 @@
 					<h2 id="developer-preview-title">Developer view</h2>
 					<p>Representative source, contracts, and styling surfaces from the published package.</p>
 				</div>
-				<Badge variant="secondary">@sivir/ui</Badge>
+				<Badge variant="secondary">@sivir-ui/svelte</Badge>
 			</div>
 			<div class="developer-sample-grid">
 				{#each developerSamples as sample (sample.title)}

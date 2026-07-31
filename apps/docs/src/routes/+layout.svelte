@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { Toaster } from '@sivir/ui/components/toast';
+	import { Toaster } from '@sivir-ui/svelte/components/toast';
 	import Navbar from '$lib/components/navbar.svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import '@sivir/ui/ui.css';
+	import '@sivir-ui/svelte/ui.css';
 	import '../app.css';
 	import type { Snippet } from 'svelte';
 	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
 
 	import type { LayoutData } from './$types';
 
@@ -16,6 +17,17 @@
 	const { children, data }: { children: Snippet; data: LayoutData } = $props();
 
 	const isHome = $derived($page.url.pathname === '/');
+
+	// Apply the typeface chosen on /fonts to the whole docs site. `--font-header`
+	// defaults to `var(--font-sans)`, so one custom property re-skins every page.
+	$effect(() => {
+		const font = fonts.find((entry) => entry.name === selectedFont.current);
+		if (!font || font.name === DEFAULT_FONT) {
+			document.documentElement.style.removeProperty('--font-sans');
+		} else {
+			document.documentElement.style.setProperty('--font-sans', font.family);
+		}
+	});
 
 	// NOTE: the global docs no longer re-apply a persisted Studio theme on load.
 	// That override (stored as `sivir-live-theme-css`) was masking the baked
@@ -29,9 +41,9 @@
 	<meta property="og:site_name" content="Sivir UI" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={`${data.origin}${$page.url.pathname}`} />
-	<meta property="og:image" content={`${data.origin}/og-default.svg`} />
-	<meta property="og:image:secure_url" content={`${data.origin}/og-default.svg`} />
-	<meta property="og:image:type" content="image/svg+xml" />
+	<meta property="og:image" content={`${data.origin}/og-default.png`} />
+	<meta property="og:image:secure_url" content={`${data.origin}/og-default.png`} />
+	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta
@@ -39,7 +51,7 @@
 		content="Sivir UI social card showing a polished component library preview."
 	/>
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:image" content={`${data.origin}/og-default.svg`} />
+	<meta name="twitter:image" content={`${data.origin}/og-default.png`} />
 	<meta
 		name="twitter:image:alt"
 		content="Sivir UI social card showing a polished component library preview."

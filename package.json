@@ -20,6 +20,7 @@
 	},
 	"scripts": {
 		"dev": "turbo run dev",
+		"devnet": "turbo run devnet --filter=docs --filter=installer-lab",
 		"build": "turbo run build",
 		"generate": "turbo run generate",
 		"check": "turbo run check",

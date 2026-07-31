@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import CopyButton from '@sivir/ui/components/copy-button/copy-button.svelte';
+import CopyButton from '@sivir-ui/svelte/components/copy-button/copy-button.svelte';
 
 function setClipboard(writeText: (text: string) => Promise<void>) {
 	Object.defineProperty(navigator, 'clipboard', {
@@ -38,5 +38,21 @@ describe('CopyButton clipboard behavior', () => {
 		await waitFor(() => expect(writeText).toHaveBeenCalledWith('secret'));
 		expect(oncopy).not.toHaveBeenCalled();
 		expect(screen.getByRole('button')).toHaveAccessibleName('Copy');
+	});
+
+	it('falls back to the document copy command when clipboard access is denied', async () => {
+		const writeText = vi.fn().mockRejectedValue(new Error('permission denied'));
+		const oncopy = vi.fn();
+		setClipboard(writeText);
+		Object.defineProperty(document, 'execCommand', {
+			configurable: true,
+			value: vi.fn().mockReturnValue(true)
+		});
+
+		render(CopyButton, { props: { text: 'fallback text', oncopy } });
+		await fireEvent.click(screen.getByRole('button', { name: 'Copy' }));
+
+		await waitFor(() => expect(oncopy).toHaveBeenCalledWith('fallback text'));
+		expect(document.execCommand).toHaveBeenCalledWith('copy');
 	});
 });

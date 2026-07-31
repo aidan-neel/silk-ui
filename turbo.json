@@ -6,6 +6,10 @@
 			"cache": false,
 			"persistent": true
 		},
+		"devnet": {
+			"cache": false,
+			"persistent": true
+		},
 		"build": {
 			"dependsOn": ["^build", "check"],
 			"outputs": [

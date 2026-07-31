@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Command from '@sivir/ui/components/command';
+	import * as Command from '@sivir-ui/svelte/components/command';
 	import Search from '@lucide/svelte/icons/search';
 	import Plus from '@lucide/svelte/icons/plus';
 	import Settings from '@lucide/svelte/icons/settings';

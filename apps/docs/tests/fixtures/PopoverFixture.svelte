@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 
 	let {
 		open = $bindable(false),

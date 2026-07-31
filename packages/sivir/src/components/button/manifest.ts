@@ -1,4 +1,4 @@
-import type { Manifest } from '@sivir/ui/_manifest/types';
+import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 /**
  * Button is the stability anchor of the sivir library.

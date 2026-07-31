@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { closeMenuLayers, cn } from '@sivir/ui/utils';
+	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+	import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
 	import { type Snippet } from 'svelte';
 	import { getPopoverContext } from '../popover/context.svelte';
 	import { getDropdownMenuContext } from './context.svelte';
@@ -20,10 +20,10 @@
 <Button
 	role="menuitem"
 	{...rest}
-	onclick={() => {
+	onclick={(event: MouseEvent) => {
 		closeMenuLayers(popoverState, ancestors);
 		callback?.();
-		userOnclick?.();
+		userOnclick?.(event);
 	}}
 	class={cn(className, 'sivir-menu-item flex-row gap-3 text-sm')}
 	unstyled

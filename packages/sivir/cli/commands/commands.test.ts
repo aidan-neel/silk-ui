@@ -69,7 +69,7 @@ describe('add command', () => {
 		);
 		const config = await loadConfig(cwd);
 		expect(source).toContain('$lib/sivir');
-		expect(source).not.toContain('@sivir/ui');
+		expect(source).not.toContain('@sivir-ui/svelte');
 		expect(config?.components.button).toMatch(/^\d+\.\d+\.\d+$/);
 	});
 

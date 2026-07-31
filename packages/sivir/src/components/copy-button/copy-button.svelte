@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import * as Tooltip from '@sivir/ui/components/tooltip';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Check from '@lucide/svelte/icons/check';
 	import { onDestroy } from 'svelte';
@@ -21,13 +21,34 @@
 	let copied = $state(false);
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
+	function fallbackCopy() {
+		if (typeof document === 'undefined' || typeof document.execCommand !== 'function') return false;
+
+		const textarea = document.createElement('textarea');
+		textarea.value = text;
+		textarea.style.position = 'fixed';
+		textarea.style.opacity = '0';
+		document.body.appendChild(textarea);
+		textarea.select();
+		const copied = document.execCommand('copy');
+		textarea.remove();
+		return copied;
+	}
+
 	async function copy() {
-		if (typeof navigator === 'undefined' || !navigator.clipboard) return;
-		try {
-			await navigator.clipboard.writeText(text);
-		} catch {
-			return;
+		let didCopy = false;
+		if (typeof navigator !== 'undefined' && navigator.clipboard) {
+			try {
+				await navigator.clipboard.writeText(text);
+				didCopy = true;
+			} catch {
+				didCopy = fallbackCopy();
+			}
+		} else {
+			didCopy = fallbackCopy();
 		}
+		if (!didCopy) return;
+
 		copied = true;
 		oncopy?.(text);
 		clearTimeout(timer);

@@ -3,13 +3,13 @@
 	import {
 		clickOutside,
 		cn,
-		lockBodyBackground,
 		lockBodyScroll,
+		isPointInSubmenuTriangle,
 		positionFloatingPanel,
 		pushEscapeLayer,
 		trapFocus
-	} from '@sivir/ui/utils';
-	import { panelIn, panelOut } from '@sivir/ui/transition';
+	} from '@sivir-ui/svelte/utils';
+	import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
 	import type { PopoverContentProps } from '.';
 	import { getPopoverContext } from './context.svelte';
 
@@ -33,7 +33,6 @@
 
 	let popover = $state<HTMLElement | undefined>();
 	let panelEl = $state<HTMLElement | undefined>();
-	let clickOutsideCleanup: (() => void) | undefined;
 	let positionFrame: number | undefined;
 	let mounted = false;
 
@@ -64,22 +63,13 @@
 
 		window.addEventListener('resize', schedulePosition);
 		window.addEventListener('scroll', schedulePosition, true);
+		window.visualViewport?.addEventListener('resize', schedulePosition);
+		window.visualViewport?.addEventListener('scroll', schedulePosition);
 
 		popoverState.popoverRef = popover;
 
 		if (portal && document && popover) {
 			document.body.appendChild(popover);
-		}
-
-		if (allowClickOutside && popover) {
-			const outside = clickOutside(
-				popover,
-				() => {
-					popoverState.open = false;
-				},
-				popoverState.buttonRef ? [popoverState.buttonRef] : []
-			);
-			clickOutsideCleanup = outside.destroy;
 		}
 
 		const ro = new ResizeObserver(schedulePosition);
@@ -122,15 +112,27 @@
 			document.removeEventListener('scroll', schedulePosition);
 			window.removeEventListener('resize', schedulePosition);
 			window.removeEventListener('scroll', schedulePosition, true);
+			window.visualViewport?.removeEventListener('resize', schedulePosition);
+			window.visualViewport?.removeEventListener('scroll', schedulePosition);
 			document.removeEventListener('focusin', handleFocusIn);
 			document.removeEventListener('focusout', handleFocusOut);
 			ro.disconnect();
 			if (positionFrame !== undefined) cancelAnimationFrame(positionFrame);
-			clickOutsideCleanup?.();
-			popoverState.open = false;
 			popoverState.popoverRef?.remove();
 			popover?.remove();
 		});
+	});
+
+	$effect(() => {
+		if (!popoverState.open || !allowClickOutside || !popover) return;
+		const outside = clickOutside(
+			popover,
+			() => {
+				popoverState.open = false;
+			},
+			popoverState.buttonRef ? [popoverState.buttonRef] : []
+		);
+		return outside.destroy;
 	});
 
 	function cancelClose() {
@@ -142,13 +144,38 @@
 		}
 	}
 
+	function scheduleClose(event: MouseEvent) {
+		if (!popoverState.hoverable) return;
+		if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
+
+		const inContactTriangle =
+			popoverState.buttonRef &&
+			popover &&
+			isPointInSubmenuTriangle(
+				{ x: event.clientX, y: event.clientY },
+				popoverState.buttonRef.getBoundingClientRect(),
+				popover.getBoundingClientRect(),
+				popoverState.placement
+			);
+		const delay = inContactTriangle ? (popoverState.closeDelay ?? 180) : 0;
+		if (delay <= 0) {
+			popoverState.open = false;
+			popoverState.closeTimeout = undefined;
+			return;
+		}
+
+		popoverState.closeTimeout = setTimeout(() => {
+			popoverState.open = false;
+			popoverState.closeTimeout = undefined;
+		}, delay);
+	}
+
 	/**
-	 * Locks body scroll and inerts background siblings whenever the popover is open.
+	 * Locks body scroll whenever the popover is open.
 	 *
-	 * Hoverable popovers (tooltip, hover-card) skip the lock: `pointer-events-none`
-	 * on body children would kill mouseleave/mouseenter on the trigger and cause an
-	 * open/close flicker loop. The scroll lock is shared with Modal and Sheet so a
-	 * nested teardown cannot clear another layer's lock. This must not gate on
+	 * Unlike Modal and Sheet, a Popover keeps its trigger and the outside document
+	 * interactive so users can toggle or dismiss it. The scroll lock is shared with
+	 * Modal and Sheet so a nested teardown cannot clear another layer's lock. This must not gate on
 	 * `popover` existing -- a controlled `open=true` has to lock even before the
 	 * wrapper finishes binding.
 	 */
@@ -156,9 +183,7 @@
 		if (typeof document === 'undefined') return;
 		if (popoverState.open && !popoverState.hoverable && lockScroll) {
 			const releaseScroll = lockBodyScroll();
-			const releaseBackground = lockBodyBackground();
 			return () => {
-				releaseBackground();
 				releaseScroll();
 			};
 		}
@@ -174,12 +199,6 @@
 		return pushEscapeLayer(() => {
 			popoverState.open = false;
 		}, popover);
-	});
-
-	$effect(() => {
-		if (!popoverState.hovering && !popoverState.focusedInside) {
-			cancelClose();
-		}
 	});
 
 	/**
@@ -218,14 +237,7 @@
 	)}
 	bind:this={popover as HTMLElement}
 	onmouseenter={cancelClose}
-	onmouseleave={() => {
-		if (popoverState.hoverable) {
-			if (popover && popover.contains(document.activeElement)) {
-				return;
-			}
-			popoverState.open = false;
-		}
-	}}
+	onmouseleave={scheduleClose}
 >
 	{#if popoverState.open}
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -254,7 +266,7 @@
 			)}
 		>
 			<!-- The inset surface: children live here, on the panel fill. -->
-			<div class={cn(surfaceClass, 'min-h-0 flex-1 overflow-auto bg-panel p-3')}>
+			<div class={cn(surfaceClass, 'min-h-0 flex-1 overflow-auto overscroll-contain bg-panel p-3')}>
 				{@render children?.()}
 			</div>
 		</div>

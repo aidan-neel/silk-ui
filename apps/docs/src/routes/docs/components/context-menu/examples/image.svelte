@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as ContextMenu from '@sivir/ui/components/context-menu';
+	import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 	import Download from '@lucide/svelte/icons/download';
 	import Copy from '@lucide/svelte/icons/copy';
 </script>

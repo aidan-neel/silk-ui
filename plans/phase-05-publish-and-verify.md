@@ -6,7 +6,7 @@
 
 ## Objective
 
-Publish `@sivir/ui@1.0.0` with provenance, deploy docs from the same commit to
+Publish `@sivir-ui/svelte@1.0.0` with provenance, deploy docs from the same commit to
 `sivir.dev`, smoke-test real user paths.
 
 ## Entry criteria
@@ -37,15 +37,15 @@ Publish `@sivir/ui@1.0.0` with provenance, deploy docs from the same commit to
 ### 3. Verify npm
 
 ```sh
-npm view @sivir/ui@1.0.0 version
-npm view @sivir/ui dist-tags.latest
-bunx --package @sivir/ui@1.0.0 sivir --help
+npm view @sivir-ui/svelte@1.0.0 version
+npm view @sivir-ui/svelte dist-tags.latest
+bunx --package @sivir-ui/svelte@1.0.0 sivir --help
 ```
 
 Clean apps:
 
-- Package: `bun add @sivir/ui` → import `ui.css` + components → check/build
-- CLI: `bunx --package @sivir/ui sivir init -y` → `add button` → check/build
+- Package: `bun add @sivir-ui/svelte` → import `ui.css` + components → check/build
+- CLI: `bunx --package @sivir-ui/svelte sivir init -y` → `add button` → check/build
 
 ### 4. Deploy docs
 
@@ -63,7 +63,7 @@ Clean apps:
 
 ## Exit criteria
 
-- [ ] `@sivir/ui@1.0.0` on npm with provenance; `latest` points at it
+- [ ] `@sivir-ui/svelte@1.0.0` on npm with provenance; `latest` points at it
 - [ ] Package + CLI work from public npm
 - [ ] Docs live on `sivir.dev` from release commit
 - [ ] No Studio / no registry product dependency

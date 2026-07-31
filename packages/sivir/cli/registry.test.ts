@@ -108,9 +108,9 @@ describe('installableFiles', () => {
 describe('rewriteImports', () => {
 	test('rewrites subpath and bare imports', () => {
 		const source = [
-			"import { cn } from '@sivir/ui/utils';",
-			"import { getPopoverContext } from '@sivir/ui/components/popover/context.svelte.ts';",
-			"import Button from '@sivir/ui';"
+			"import { cn } from '@sivir-ui/svelte/utils';",
+			"import { getPopoverContext } from '@sivir-ui/svelte/components/popover/context.svelte.ts';",
+			"import Button from '@sivir-ui/svelte';"
 		].join('\n');
 		expect(rewriteImports(source, '$lib/sivir')).toBe(
 			[
@@ -154,7 +154,10 @@ describe('registry snapshot', () => {
 			.filter((c) => c.visibility === 'public')
 			.map((c) => c.name);
 		const plan = resolveInstallPlan(snapshot, publicNames);
-		expect(plan.components.length).toBe(snapshot.components.length);
+		expect(plan.components.map((component) => component.name)).toEqual(
+			expect.arrayContaining(publicNames)
+		);
+		expect(plan.components.some((component) => component.name === 'toolbar')).toBe(false);
 	});
 
 	test('every isolated install declares its external imports', async () => {
@@ -185,7 +188,7 @@ describe('registry snapshot', () => {
 						if (
 							specifier.startsWith('.') ||
 							specifier.startsWith('$') ||
-							specifier.startsWith('@sivir/ui')
+							specifier.startsWith('@sivir-ui/svelte')
 						)
 							continue;
 						imported.add(packageName(specifier));

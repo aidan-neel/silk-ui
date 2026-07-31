@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type Snippet } from 'svelte';
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 	import { getPopoverContext } from '../popover/context.svelte';
 	import { getDropdownMenuContext, setDropdownMenuContext } from './context.svelte';
 
@@ -19,6 +19,6 @@
 	let { children }: Props = $props();
 </script>
 
-<Popover.Root hoverable={true} placement="right">
+<Popover.Root hoverable={true} closeDelay={300} placement="right">
 	{@render children?.()}
 </Popover.Root>

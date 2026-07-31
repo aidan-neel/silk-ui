@@ -4,7 +4,8 @@
 	import Toast from './toast.svelte';
 	import { cubicOut, quartOut } from 'svelte/easing';
 	import type { TransitionConfig } from 'svelte/transition';
-	import { getCssDuration } from '@sivir/ui/transition';
+	import { getCssDuration } from '@sivir-ui/svelte/transition';
+	import { visualViewportBounds } from '@sivir-ui/svelte/utils';
 
 	const { state: toastState, hostId } = setToastUIState();
 	const isPrimary = $derived(getToastPrimaryHostId() === hostId);
@@ -97,7 +98,8 @@
 {#if isPrimary && toastState.data}
 	<div
 		bind:this={portalEl}
-		class="pointer-events-none fixed inset-x-0 bottom-0 z-200 flex justify-center px-4 pb-4 pt-6 sm:justify-end sm:p-6"
+		use:visualViewportBounds
+		class="pointer-events-none fixed inset-x-0 top-[var(--sivir-viewport-top)] z-200 flex h-[var(--sivir-viewport-height)] items-end justify-center px-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:justify-end sm:p-6"
 	>
 		<div
 			role="region"

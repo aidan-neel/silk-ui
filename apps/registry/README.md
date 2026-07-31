@@ -1,15 +1,15 @@
 # Sivir registry
 
 Elysia + Bun service that backs the theme registry. Persists themes in
-Postgres via Prisma. Database lives on **Supabase** — there's no local pg
+Postgres via Prisma. The database runs on **Supabase**; there is no local pg
 container.
 
 ## Setup
 
 1. Create a free project at <https://supabase.com>.
 2. Open **Project Settings → Database → Connection string** and grab two URLs:
-   - **Transaction pooler** (port 6543) → `DATABASE_URL` — used at runtime.
-   - **Session pooler** or **Direct connection** (port 5432) → `DIRECT_URL` — used by Prisma migrations.
+   - **Transaction pooler** (port 6543) → `DATABASE_URL`, used at runtime.
+   - **Session pooler** or **Direct connection** (port 5432) → `DIRECT_URL`, used by Prisma migrations.
 3. Copy `.env.example` to `.env` and paste both URLs. Append `?sslmode=require` if not already present.
 4. Apply migrations:
 
@@ -29,7 +29,7 @@ container.
 
 Supabase's transaction pooler (port 6543) gives us serverless-friendly
 connection pooling, but pgbouncer transaction mode can't run DDL or prepared
-statements — so migrations need a session connection on port 5432. Prisma's
+statements, so migrations need a session connection on port 5432. Prisma's
 schema declares both via `url` + `directUrl` so each command uses the right
 one automatically.
 
@@ -43,7 +43,7 @@ docker compose up -d db
 docker compose exec db pg_dump -U app -d app --no-owner --no-privileges \
   --data-only --inserts > /tmp/themes-dump.sql
 
-# Restore against Supabase (use the DIRECT_URL — session mode)
+# Restore against Supabase (use the DIRECT_URL in session mode)
 psql "$DIRECT_URL" -f /tmp/themes-dump.sql
 ```
 

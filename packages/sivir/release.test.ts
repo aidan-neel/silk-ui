@@ -5,7 +5,7 @@ import packageJson from './package.json';
 
 describe('publishable package contract', () => {
 	test('declares the public package metadata used by npm', () => {
-		expect(packageJson.name).toBe('@sivir/ui');
+		expect(packageJson.name).toBe('@sivir-ui/svelte');
 		expect(packageJson.license).toBe('MIT');
 		expect(packageJson.sideEffects).toEqual(['**/*.css']);
 		expect(packageJson.files).toEqual(expect.arrayContaining(['src', 'dist', 'registry']));
@@ -45,7 +45,7 @@ describe('publishable package contract', () => {
 		const privatePrefix =
 			/^\s*--(?:button|badge|field|panel|card|menu|command|tooltip|switch|checkbox|toast|tabs|progress|modal|sheet|textarea|breadcrumb|toggle|shortcut|slider)-/m;
 
-		expect(css.split('\n').length).toBeLessThanOrEqual(340);
+		expect(css.split('\n').length).toBeLessThanOrEqual(350);
 		expect(Buffer.byteLength(css)).toBeLessThanOrEqual(12 * 1024);
 		expect(css).not.toMatch(privatePrefix);
 		expect(css).not.toMatch(/(^|})\s*\*\s*\{/);
@@ -112,11 +112,11 @@ describe('publishable package contract', () => {
 				files.map((file) => readFile(new URL(`./src/${file}`, import.meta.url), 'utf8'))
 			)
 		).join('\n');
-		const selfReferences = [...source.matchAll(/['"](@sivir\/ui(?:\/[^'"]+)?)['"]/g)].map(
+		const selfReferences = [...source.matchAll(/['"](@sivir-ui\/svelte(?:\/[^'"]+)?)['"]/g)].map(
 			([, specifier]) => specifier
 		);
 		const exportedPath =
-			/^@sivir\/ui(?:\/(?:ui\.css|brand-mark|utils|transition|is-dark\.svelte\.ts|_manifest\/types|themes\/[^/]+|components\/(?:input\/variants|_internal\/overlay|[^/]+)))?$/;
+			/^@sivir-ui\/svelte(?:\/(?:ui\.css|brand-mark|utils|transition|is-dark\.svelte\.ts|_manifest\/types|themes\/[^/]+|components\/(?:input\/variants|_internal\/overlay|[^/]+)))?$/;
 
 		expect(selfReferences.length).toBeGreaterThan(0);
 		for (const specifier of selfReferences) expect(specifier).toMatch(exportedPath);

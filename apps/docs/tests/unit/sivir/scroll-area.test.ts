@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
 import { createRawSnippet } from 'svelte';
-import ScrollArea from '@sivir/ui/components/scroll-area/scroll-area.svelte';
+import ScrollArea from '@sivir-ui/svelte/components/scroll-area/scroll-area.svelte';
 
 /*
  * Scroll-area is a pure presentational wrapper -- it sets overflow rules

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Component, Snippet } from 'svelte';
 	import { badge } from './variants';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 
 	let {
 		variant = 'secondary',
@@ -10,6 +10,7 @@
 		href,
 		icon: Icon,
 		iconSize = 13,
+		dot = false,
 		...rest
 	}: {
 		variant?:
@@ -27,12 +28,20 @@
 		href?: string;
 		icon?: Component<{ size?: number | string; class?: string }>;
 		iconSize?: number | string;
+		dot?: boolean;
 	} & Record<string, unknown> = $props();
 </script>
 
 {#snippet inner()}
 	{#if Icon}
 		<Icon size={iconSize} class="text-foreground-muted" />
+	{/if}
+	{#if dot}
+		<span
+			data-badge-dot
+			aria-hidden="true"
+			class="size-1.5 shrink-0 rounded-full bg-current opacity-60"
+		></span>
 	{/if}
 	{@render children?.()}
 {/snippet}

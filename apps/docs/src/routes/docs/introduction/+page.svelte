@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
-	const packageQuick = `bun add @sivir/ui
+	const packageQuick = `bun add @sivir-ui/svelte
 # then in your CSS:
-# @import '@sivir/ui/ui.css';`;
+# @import '@sivir-ui/svelte/ui.css';`;
 
-	const cliQuick = `bunx --package @sivir/ui sivir init -y
-bunx --package @sivir/ui sivir add button`;
+	const cliQuick = `bunx --package @sivir-ui/svelte sivir init -y
+bunx --package @sivir-ui/svelte sivir add button`;
 </script>
 
 <svelte:head>
@@ -41,7 +41,7 @@ bunx --package @sivir/ui sivir add button`;
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
 			<strong>Package import.</strong> Install
-			<code class="font-mono text-foreground">@sivir/ui</code> and import components from the package.
+			<code class="font-mono text-foreground">@sivir-ui/svelte</code> and import components from the package.
 			Fastest path when you want a dependency, not source ownership.
 		</p>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">

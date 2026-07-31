@@ -1,38 +1,53 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import { components, sanitizeComponent } from '$lib/components';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 
-	const slug = $derived($page.url.pathname.split('/docs/components/')[1]?.split('/')[0] ?? '');
-	const curIndex = $derived(components.findIndex((component) => component === slug));
-	const prevComponent = $derived(curIndex > 0 ? components[curIndex - 1] : undefined);
-	const nextComponent = $derived(curIndex !== -1 ? components[curIndex + 1] : undefined);
+	type Page = { href: string; label: string };
+
+	const docsPages: Page[] = [
+		{ href: '/docs/introduction', label: 'Introduction' },
+		{ href: '/docs/installation', label: 'Installation' },
+		{ href: '/docs/theming', label: 'Theming' },
+		{ href: '/docs/components', label: 'Components' }
+	];
+
+	const pages = $derived([
+		...docsPages,
+		...components.map((component) => ({
+			href: `/docs/components/${component}`,
+			label: sanitizeComponent(component)
+		}))
+	]);
+	const pageIndex = $derived(pages.findIndex((item) => item.href === $page.url.pathname));
+	const prevPage = $derived<Page | undefined>(pageIndex > 0 ? pages[pageIndex - 1] : undefined);
+	const nextPage = $derived<Page | undefined>(pageIndex >= 0 ? pages[pageIndex + 1] : undefined);
 </script>
 
-{#if prevComponent || nextComponent}
+{#if prevPage || nextPage}
 	<nav class="flex items-center gap-1.5">
-		{#if prevComponent}
+		{#if prevPage}
 			<Button
-				href={`/docs/components/${prevComponent}`}
+				href={prevPage.href}
 				variant="outline"
 				size="icon"
 				class="size-8"
-				aria-label={`Previous: ${sanitizeComponent(prevComponent)}`}
-				title={`Previous: ${sanitizeComponent(prevComponent)}`}
+				aria-label={`Previous: ${prevPage.label}`}
+				title={`Previous: ${prevPage.label}`}
 			>
 				<ChevronLeft size={16} />
 			</Button>
 		{/if}
-		{#if nextComponent}
+		{#if nextPage}
 			<Button
-				href={`/docs/components/${nextComponent}`}
+				href={nextPage.href}
 				variant="outline"
 				size="icon"
 				class="size-8"
-				aria-label={`Next: ${sanitizeComponent(nextComponent)}`}
-				title={`Next: ${sanitizeComponent(nextComponent)}`}
+				aria-label={`Next: ${nextPage.label}`}
+				title={`Next: ${nextPage.label}`}
 			>
 				<ChevronRight size={16} />
 			</Button>

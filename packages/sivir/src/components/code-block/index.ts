@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 
 import Root from './code-block.svelte';
 import Header from './code-block-header.svelte';

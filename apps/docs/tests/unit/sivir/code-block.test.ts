@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { highlight } from '@sivir/ui/components/code-block/highlight';
+import { highlight } from '@sivir-ui/svelte/components/code-block/highlight';
 
 describe('CodeBlock highlighting safety', () => {
 	it('escapes markup for an unknown language', () => {

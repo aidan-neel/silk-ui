@@ -40,6 +40,17 @@
 		contextMenuState.virtualElement = makeVirtualEl(rect.left, rect.bottom);
 		contextMenuState.open = true;
 	}
+
+	function onPointerup(e: PointerEvent) {
+		if (e.pointerType !== 'touch') return;
+		const target = e.currentTarget as HTMLElement;
+		const rect = target.getBoundingClientRect();
+		contextMenuState.virtualElement = makeVirtualEl(
+			e.clientX || rect.left + rect.width / 2,
+			e.clientY || rect.top + rect.height / 2
+		);
+		contextMenuState.open = true;
+	}
 </script>
 
 <div
@@ -51,6 +62,7 @@
 	aria-expanded={contextMenuState.open}
 	oncontextmenu={onContextMenu}
 	onkeydown={onKeydown}
+	onpointerup={onPointerup}
 >
 	{@render children?.()}
 </div>

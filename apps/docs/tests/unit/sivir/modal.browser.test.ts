@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
-import { dialogIn, dialogOut } from '@sivir/ui/transition';
+import { dialogIn, dialogOut } from '@sivir-ui/svelte/transition';
 
 /*
  * Browser-mode tests for modal. These exercise mount/unmount, focus
@@ -53,6 +53,25 @@ describe('Modal -- open/closed mount in real browser', () => {
 		await page.getByTestId('trigger').click();
 		await flush();
 		await expect.element(page.getByText('Modal Title')).toBeInTheDocument();
+	});
+});
+
+describe('Modal -- error browser chrome', () => {
+	it('sets and restores theme-color while an error modal is open', async () => {
+		const themeColor = document.createElement('meta');
+		themeColor.name = 'theme-color';
+		themeColor.content = '#ffffff';
+		document.head.append(themeColor);
+
+		render(ModalFixture, { open: true, error: true });
+		await flush();
+		expect(themeColor.content).toBe('#dc2626');
+		expect(page.getByText('Confirm').element().getAttribute('data-variant')).toBe('destructive');
+
+		await page.getByText('Close').click();
+		await flush();
+		expect(themeColor.content).toBe('#ffffff');
+		themeColor.remove();
 	});
 });
 
@@ -198,6 +217,17 @@ describe('Modal -- ARIA contract in browser', () => {
 });
 
 describe('Modal -- body scroll lock in browser', () => {
+	it('keeps the modal content surface scrollable while the page is locked', async () => {
+		render(ModalFixture, { open: true });
+		await flush();
+
+		const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+		const surface = dialog.firstElementChild as HTMLElement;
+		expect(document.body.style.overflow).toBe('hidden');
+		expect(surface.className).toContain('overflow-y-auto');
+		expect(surface.className).toContain('overscroll-contain');
+	});
+
 	it('locks body scroll when open', async () => {
 		render(ModalFixture, { open: true });
 		await flush();

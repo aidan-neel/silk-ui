@@ -1,6 +1,6 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { onMount, type Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -166,21 +166,14 @@
 <kbd
 	bind:this={element}
 	{...rest}
-	class={cn(className, 'inline-flex select-none items-center gap-0.5 align-middle')}
+	class={cn(
+		className,
+		'inline select-none align-middle font-mono text-[0.875em] leading-none text-foreground-muted [letter-spacing:0.04em]'
+	)}
 >
 	{#if children}
-		<span
-			class="inline-flex min-w-[0.9em] items-center justify-center font-mono text-[11px] font-medium leading-none text-foreground-muted"
-		>
-			{@render children()}
-		</span>
+		{@render children()}
 	{:else}
-		{#each caps as cap, i (i)}
-			<span
-				class="inline-flex min-w-[0.9em] items-center justify-center font-mono text-[11px] font-medium leading-none text-foreground-muted"
-			>
-				{cap}
-			</span>
-		{/each}
+		{caps.join('')}
 	{/if}
 </kbd>
