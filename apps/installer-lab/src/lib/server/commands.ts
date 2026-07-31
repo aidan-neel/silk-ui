@@ -44,14 +44,14 @@ export function scaffoldCommands(consumerRoot: string): CommandSpec[] {
 			],
 			cwd: consumerRoot
 		},
-		{ bin: 'bun', args: ['add', '@fontsource/geist-sans@5.3.0'], cwd: consumerRoot }
+		{ bin: 'bun', args: ['add', '@fontsource/dm-sans@5.3.0'], cwd: consumerRoot }
 	];
 }
 
 export function stagingInstallCommand(source: RunSource, stagingRoot: string, tarballPath: string) {
 	return {
 		bin: 'bun',
-		args: ['add', source === 'local' ? tarballPath : '@sivir/ui@latest'],
+		args: ['add', source === 'local' ? tarballPath : '@sivir-ui/svelte@latest'],
 		cwd: stagingRoot
 	} satisfies CommandSpec;
 }
@@ -64,7 +64,7 @@ export function consumerInstallCommand(
 ) {
 	return {
 		bin: 'bun',
-		args: ['add', source === 'local' ? tarballPath : `@sivir/ui@${version}`],
+		args: ['add', source === 'local' ? tarballPath : `@sivir-ui/svelte@${version}`],
 		cwd: consumerRoot
 	} satisfies CommandSpec;
 }

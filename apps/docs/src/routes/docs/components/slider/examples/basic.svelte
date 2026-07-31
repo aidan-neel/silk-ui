@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Slider } from '@sivir/ui/components/slider';
+	import { Slider } from '@sivir-ui/svelte/components/slider';
 </script>
 
 <div class="w-full max-w-sm">

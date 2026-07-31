@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { tick, type Snippet } from 'svelte';
 	import { getSelectContext } from './context.svelte';
 	import { getPopoverContext } from '../popover/context.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Slider } from '@sivir/ui/components/slider';
+	import { Slider } from '@sivir-ui/svelte/components/slider';
 
 	let volume = $state(64);
 </script>

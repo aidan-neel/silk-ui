@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount, type Snippet } from 'svelte';
-	import * as CodeBlock from '@sivir/ui/components/code-block';
-	import * as Card from '@sivir/ui/components/card';
-	import { cn } from '@sivir/ui/utils';
-	import * as Tabs from '@sivir/ui/components/tabs';
+	import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+	import * as Card from '@sivir-ui/svelte/components/card';
+	import { cn } from '@sivir-ui/svelte/utils';
+	import * as Tabs from '@sivir-ui/svelte/components/tabs';
 
 	let {
 		children,
@@ -51,7 +51,7 @@
 			<div
 				bind:this={previewBody}
 				tabindex="-1"
-				class="flex min-h-[20rem] w-full items-center justify-center overflow-hidden p-10 focus:outline-none"
+				class="flex min-h-[20rem] w-full items-center justify-center overflow-hidden p-6 sm:p-10 focus:outline-none"
 			>
 				{@render children?.()}
 			</div>

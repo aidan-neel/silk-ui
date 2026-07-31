@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -13,7 +13,7 @@
 
 	const TITLE = 'Textarea';
 
-	const installCommand = 'bunx @sivir/ui add textarea';
+	const installCommand = 'bunx @sivir-ui/svelte add textarea';
 </script>
 
 <svelte:head>
@@ -63,9 +63,12 @@
 		>
 			Usage
 		</h2>
-		<p class="text-sm text-foreground-muted">Import Textarea and bind its value:</p>
+		<p class="text-sm text-foreground-muted">
+			Import Textarea and bind its value. Add <code>autoresize</code> for message composers that grow
+			with their content.
+		</p>
 		<CodeBlock
-			code={`import { Textarea } from '$lib/sivir/components/textarea';\n\n<Textarea bind:value label="Message" rows={4} />`}
+			code={`import { Textarea } from '$lib/sivir/components/textarea';\n\n<Textarea bind:value autoresize label="Message" />`}
 			lang="svelte"
 			copy="overlay"
 		/>

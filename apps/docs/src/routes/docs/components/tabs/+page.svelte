@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -11,7 +11,7 @@
 	import VariantSegmented from './examples/variant-segmented.svelte';
 	import VariantSegmentedSrc from './examples/variant-segmented.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add tabs';
+	const installCommand = 'bunx @sivir-ui/svelte add tabs';
 </script>
 
 <svelte:head>

@@ -3,20 +3,20 @@ import { render } from 'svelte/server';
 import type { Component } from 'svelte';
 
 // Tier 1 + Tier 2 components and fixtures, imported by name.
-import Button from '@sivir/ui/components/button/button.svelte';
-import Alert from '@sivir/ui/components/alert/alert.svelte';
-import Badge from '@sivir/ui/components/badge/badge.svelte';
-import Input from '@sivir/ui/components/input/input.svelte';
-import Textarea from '@sivir/ui/components/textarea/textarea.svelte';
-import Checkbox from '@sivir/ui/components/checkbox/checkbox.svelte';
-import Switch from '@sivir/ui/components/switch/switch.svelte';
-import Slider from '@sivir/ui/components/slider/slider.svelte';
-import Toggle from '@sivir/ui/components/toggle/toggle.svelte';
-import Progress from '@sivir/ui/components/progress/progress.svelte';
-import Pagination from '@sivir/ui/components/pagination/pagination.svelte';
-import Skeleton from '@sivir/ui/components/skeleton/skeleton.svelte';
-import Label from '@sivir/ui/components/label/label.svelte';
-import Shortcut from '@sivir/ui/components/shortcut/shortcut.svelte';
+import Button from '@sivir-ui/svelte/components/button/button.svelte';
+import Alert from '@sivir-ui/svelte/components/alert/alert.svelte';
+import Badge from '@sivir-ui/svelte/components/badge/badge.svelte';
+import Input from '@sivir-ui/svelte/components/input/input.svelte';
+import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
+import Checkbox from '@sivir-ui/svelte/components/checkbox/checkbox.svelte';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
+import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
+import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
+import Progress from '@sivir-ui/svelte/components/progress/progress.svelte';
+import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
+import Skeleton from '@sivir-ui/svelte/components/skeleton/skeleton.svelte';
+import Label from '@sivir-ui/svelte/components/label/label.svelte';
+import Shortcut from '@sivir-ui/svelte/components/shortcut/shortcut.svelte';
 
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';

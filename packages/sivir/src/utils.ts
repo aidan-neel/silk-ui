@@ -94,6 +94,69 @@ export function closeMenuLayers(current: { open: boolean }, ancestors: { open: b
 	}
 }
 
+function pointInTriangle(
+	point: { x: number; y: number },
+	a: { x: number; y: number },
+	b: { x: number; y: number },
+	c: { x: number; y: number }
+) {
+	const sign = (p1: typeof point, p2: typeof point, p3: typeof point) =>
+		(p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+	const first = sign(point, a, b);
+	const second = sign(point, b, c);
+	const third = sign(point, c, a);
+	const hasNegative = first < 0 || second < 0 || third < 0;
+	const hasPositive = first > 0 || second > 0 || third > 0;
+
+	return !(hasNegative && hasPositive);
+}
+
+/** Whether a pointer is in the contact triangle between a floating trigger and panel. */
+export function isPointInSubmenuTriangle(
+	point: { x: number; y: number },
+	trigger: DOMRect,
+	panel: DOMRect,
+	placement: Placement
+) {
+	const contactMargin = 8;
+	const triggerCenter = {
+		x: (trigger.left + trigger.right) / 2,
+		y: (trigger.top + trigger.bottom) / 2
+	};
+
+	switch (placement.split('-')[0]) {
+		case 'left':
+			return pointInTriangle(
+				point,
+				{ x: trigger.left - contactMargin, y: triggerCenter.y },
+				{ x: panel.right + contactMargin, y: panel.top },
+				{ x: panel.right + contactMargin, y: panel.bottom }
+			);
+		case 'top':
+			return pointInTriangle(
+				point,
+				{ x: triggerCenter.x, y: trigger.top - contactMargin },
+				{ x: panel.left, y: panel.bottom + contactMargin },
+				{ x: panel.right, y: panel.bottom + contactMargin }
+			);
+		case 'bottom':
+			return pointInTriangle(
+				point,
+				{ x: triggerCenter.x, y: trigger.bottom + contactMargin },
+				{ x: panel.left, y: panel.top - contactMargin },
+				{ x: panel.right, y: panel.top - contactMargin }
+			);
+		case 'right':
+		default:
+			return pointInTriangle(
+				point,
+				{ x: trigger.right + contactMargin, y: triggerCenter.y },
+				{ x: panel.left - contactMargin, y: panel.top },
+				{ x: panel.left - contactMargin, y: panel.bottom }
+			);
+	}
+}
+
 let bodyScrollLocks = 0;
 let savedBodyOverflow = '';
 let savedBodyPaddingRight = '';
@@ -491,7 +554,7 @@ export function positionFloatingPanel(
 		placement,
 		middleware: [
 			offset(8),
-			flip({ padding: 8 }),
+			flip({ padding: 8, fallbackAxisSideDirection: 'end', fallbackStrategy: 'bestFit' }),
 			shift({ padding: 8, crossAxis: true }),
 			size({
 				padding: 8,

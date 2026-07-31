@@ -1,4 +1,4 @@
-import { builtInThemePresets } from '@sivir/ui/themes/builtin-presets';
+import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
 import type { Theme, ThemeRecord } from './model';
 
 const DEFAULT_THEME_TIMESTAMP = '2026-07-14T00:00:00.000Z';

@@ -1,4 +1,4 @@
-import type { Manifest } from '@sivir/ui/_manifest/types';
+import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 /**
  * Sheet -- side-anchored slide-in panel. Composes `_internal/overlay` for

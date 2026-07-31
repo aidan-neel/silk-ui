@@ -7,8 +7,8 @@ import {
 	updateToast,
 	__setActiveToastStateForTests,
 	__getActiveToastStateForTests
-} from '@sivir/ui/components/toast/lib.svelte.ts';
-import type { ToastState } from '@sivir/ui/components/toast/lib.svelte.ts';
+} from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
+import type { ToastState } from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
 
 /*
  * Toast tests use fake timers. The library's lifecycle is timer-driven

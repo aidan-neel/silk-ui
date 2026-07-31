@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SheetTriggerProps } from '.';
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import { getSheetContext } from './context.svelte';
 
 	let { class: className, children, element = $bindable(), ...rest }: SheetTriggerProps = $props();

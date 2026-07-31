@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { ModalBodyProps } from '.';
 
 	let { class: className, children, ...rest }: ModalBodyProps = $props();

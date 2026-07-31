@@ -25,7 +25,7 @@ export type RegistryComponent = {
 };
 
 export type RegistryIndex = {
-	/** Version of the @sivir/ui package the snapshot was built with. */
+	/** Version of the @sivir-ui/svelte package the snapshot was built with. */
 	cliVersion: string;
 	builtAt: string;
 	components: RegistryComponent[];
@@ -43,7 +43,7 @@ export type SivirConfig = {
 	$schema?: string;
 	/** Directory sivir source is installed into, relative to project root. */
 	dir: string;
-	/** Import alias that replaces `@sivir/ui` in installed files. */
+	/** Import alias that replaces `@sivir-ui/svelte` in installed files. */
 	alias: string;
 	/** Theme registry API base URL used by `sivir add theme <slug>`. */
 	registry: string;

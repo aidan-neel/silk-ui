@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SheetCloseProps } from '.';
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import { getSheetContext } from './context.svelte';
 
 	let { class: className, children, ...rest }: SheetCloseProps = $props();

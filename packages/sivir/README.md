@@ -1,8 +1,8 @@
-# @sivir/ui
+# @sivir-ui/svelte
 
 SvelteKit component library inspired by shadcn/ui. **Svelte 5 + Tailwind v4.**
 
-This package is the importable library: `bun add @sivir/ui` and import components
+This package is the importable library: `bun add @sivir-ui/svelte` and import components
 directly. (If you'd rather own the source in your own repo, shadcn-style, use the
 `sivir` CLI's `add` command instead. This package is the "install it" path.)
 
@@ -18,8 +18,8 @@ directly. (If you'd rather own the source in your own repo, shadcn-style, use th
 ## Install
 
 ```sh
-bun add @sivir/ui
-# or: npm i @sivir/ui / pnpm add @sivir/ui
+bun add @sivir-ui/svelte
+# or: npm i @sivir-ui/svelte / pnpm add @sivir-ui/svelte
 ```
 
 Runtime dependencies (`@floating-ui/dom`, `@lucide/svelte`, `cnfast`,
@@ -31,7 +31,7 @@ Sivir ships its Tailwind theme and design tokens in one stylesheet. In your app'
 CSS (e.g. `src/app.css`), import it as the single entry point:
 
 ```css
-@import '@sivir/ui/ui.css';
+@import '@sivir-ui/svelte/ui.css';
 ```
 
 `ui.css` already pulls in Tailwind itself and registers Sivir's own components as a
@@ -49,7 +49,7 @@ Single-element components are named exports:
 
 ```svelte
 <script>
-	import { Button, Input, Switch } from '@sivir/ui';
+	import { Button, Input, Switch } from '@sivir-ui/svelte';
 </script>
 
 <Button>Get started</Button>
@@ -61,7 +61,7 @@ Compound components are namespace exports; their parts hang off the namespace:
 
 ```svelte
 <script>
-	import { AlertDialog, Tabs } from '@sivir/ui';
+	import { AlertDialog, Tabs } from '@sivir-ui/svelte';
 </script>
 
 <AlertDialog.Root>
@@ -89,19 +89,21 @@ Compound components are namespace exports; their parts hang off the namespace:
 Every component is also reachable directly if you prefer narrower imports:
 
 ```svelte
-import {Button} from '@sivir/ui/components/button'; import * as AlertDialog from '@sivir/ui/components/alert-dialog';
+import {Button} from '@sivir-ui/svelte/components/button'; import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 ```
 
 ## What's exported
 
-- **Named:** `Badge`, `Button`, `Checkbox`, `CodeBlock`, `CopyButton`, `Input`,
-  `Label`, `Pagination`, `Progress`, `ScrollArea`, `Shortcut`, `Skeleton`,
-  `Slider`, `Switch`, `Textarea`, `Toggle`, and the toast API (`Toast`,
-  `Toaster`, `toast`, `getToastUIState`).
-- **Namespaced:** `Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Breadcrumb`,
-  `Card` (includes `variant="panel"`), `Collapsible`, `ColorPicker`, `Combobox`,
-  `Command`, `ContextMenu`, `DropdownMenu`, `HoverCard`, `Modal`, `Popover`,
-  `RadioGroup`, `Select`, `Sheet`, `Tabs`, `ToggleGroup`, `Tooltip`.
+- **Named:** `ApprovalRequest`, `Badge`, `Button`, `Checkbox`, `CodeBlock`,
+  `CopyButton`, `Input`, `Label`, `Markdown`, `Pagination`, `Progress`, `Reasoning`,
+  `ResponseStream`, `ScrollArea`, `Shortcut`, `Skeleton`, `Slider`, `Spinner`,
+  `Switch`, `Textarea`, `Toggle`, `Toolbar`, and the toast API (`Toast`, `Toaster`,
+  `toast`, `getToastUIState`).
+- **Namespaced:** `Accordion`, `Alert`, `AlertDialog`, `Attachment`, `Avatar`,
+  `Breadcrumb`, `Card` (includes `variant="panel"`), `Collapsible`, `ColorPicker`,
+  `Combobox`, `Command`, `ContextMenu`, `Conversation`, `DropdownMenu`,
+  `FullscreenNav`, `HoverCard`, `Message`, `Modal`, `Popover`, `PromptComposer`,
+  `RadioGroup`, `Select`, `Sheet`, `Tabs`, `ToggleGroup`, `Tool`, `Tooltip`.
 
 ## License
 

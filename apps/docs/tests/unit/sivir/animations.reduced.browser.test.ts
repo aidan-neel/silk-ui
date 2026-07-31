@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { tick } from 'svelte';
-import { toast } from '@sivir/ui/components/toast';
+import { toast } from '@sivir-ui/svelte/components/toast';
 import MotionFixture from '../../fixtures/MotionFixture.svelte';
 
 async function settle() {

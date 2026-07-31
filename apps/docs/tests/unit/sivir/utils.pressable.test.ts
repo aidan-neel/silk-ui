@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pressable } from '@sivir/ui/utils';
+import { pressable } from '@sivir-ui/svelte/utils';
 
 describe('pressable', () => {
 	it('sets constant-pixel scale vars from element size', () => {

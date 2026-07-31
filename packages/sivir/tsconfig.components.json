@@ -13,8 +13,8 @@
 		"verbatimModuleSyntax": true,
 		"baseUrl": ".",
 		"paths": {
-			"@sivir/ui": ["./src/index.ts"],
-			"@sivir/ui/*": ["./src/*"]
+			"@sivir-ui/svelte": ["./src/index.ts"],
+			"@sivir-ui/svelte/*": ["./src/*"]
 		}
 	},
 	"include": ["check.d.ts", "src/**/*.ts", "src/**/*.svelte"]

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Avatar from '@sivir/ui/components/avatar';
+	import * as Avatar from '@sivir-ui/svelte/components/avatar';
 </script>
 
 <div class="flex items-center justify-center">

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { cn, type DefaultProps } from '@sivir/ui/utils';
-	import { useIsDark } from '@sivir/ui/is-dark.svelte.ts';
+	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+	import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+	import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
 	import { getModalContext } from '../modal/context.svelte';
 
 	type Props = {

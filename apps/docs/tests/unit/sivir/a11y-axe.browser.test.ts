@@ -5,10 +5,10 @@ import { tick } from 'svelte';
 import axe from 'axe-core';
 
 import { createRawSnippet } from 'svelte';
-import Button from '@sivir/ui/components/button/button.svelte';
-import Switch from '@sivir/ui/components/switch/switch.svelte';
-import Slider from '@sivir/ui/components/slider/slider.svelte';
-import Toggle from '@sivir/ui/components/toggle/toggle.svelte';
+import Button from '@sivir-ui/svelte/components/button/button.svelte';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
+import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
+import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
 
 function textSnippet(text: string) {
 	return createRawSnippet(() => ({

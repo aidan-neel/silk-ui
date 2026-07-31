@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { CopyButton } from '@sivir/ui/components/copy-button';
-	import type { TabsState } from '@sivir/ui/components/tabs';
+	import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
+	import type { TabsState } from '@sivir-ui/svelte/components/tabs';
 	import type { CodeBlockCopyProps, CodeBlockRegistry } from '.';
 
 	let {

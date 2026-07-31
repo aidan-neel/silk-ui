@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { components, sanitizeComponent } from '$lib/components';
-	import { Button } from '@sivir/ui/components/button';
+	import { Button } from '@sivir-ui/svelte/components/button';
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import Download from '@lucide/svelte/icons/download';
 	import Palette from '@lucide/svelte/icons/palette';

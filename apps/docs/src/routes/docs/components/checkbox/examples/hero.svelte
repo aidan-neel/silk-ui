@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Checkbox } from '@sivir/ui/components/checkbox';
+	import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
 
 	let finalizePricing = $state(true);
 	let writeChangelog = $state(true);

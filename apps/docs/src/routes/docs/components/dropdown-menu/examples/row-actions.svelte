@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as DropdownMenu from '@sivir/ui/components/dropdown-menu';
-	import Shortcut from '@sivir/ui/components/shortcut';
+	import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
 	import Pencil from '@lucide/svelte/icons/pencil';
 	import Copy2 from '@lucide/svelte/icons/files';
 	import Archive from '@lucide/svelte/icons/archive';

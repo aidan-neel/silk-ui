@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
-	const packageInstall = `bun add @sivir/ui
-# npm i @sivir/ui
-# pnpm add @sivir/ui`;
+	const packageInstall = `bun add @sivir-ui/svelte
+# npm i @sivir-ui/svelte
+# pnpm add @sivir-ui/svelte`;
 
-	const packageCss = `@import '@sivir/ui/ui.css';`;
+	const packageCss = `@import '@sivir-ui/svelte/ui.css';`;
 
 	const packageUse = `<script>
-  import { Button } from '@sivir/ui';
+  import { Button } from '@sivir-ui/svelte';
 <${'/'}script>
 
 <Button>Get started</Button>`;
@@ -17,8 +17,8 @@
 	const cliCss = `/* src/app.css */
 @import './lib/sivir/ui.css';`;
 
-	const cliAdd = `bunx --package @sivir/ui sivir add button
-bunx --package @sivir/ui sivir list`;
+	const cliAdd = `bunx --package @sivir-ui/svelte sivir add button
+bunx --package @sivir-ui/svelte sivir list`;
 
 	const cliUse = `<script>
   import { Button } from '$lib/sivir/components/button';
@@ -71,7 +71,7 @@ bunx --package @sivir/ui sivir list`;
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
 			Install the library and import components from
-			<code class="font-mono">@sivir/ui</code>.
+			<code class="font-mono">@sivir-ui/svelte</code>.
 		</p>
 		<CodeBlock code={packageInstall} lang="shell" copy="overlay" />
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
@@ -97,7 +97,7 @@ bunx --package @sivir/ui sivir list`;
 		</h2>
 		<p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
 			The CLI copies source into your project. The package name is
-			<code class="font-mono">@sivir/ui</code>; the binary is
+			<code class="font-mono">@sivir-ui/svelte</code>; the binary is
 			<code class="font-mono">sivir</code>.
 		</p>
 
@@ -124,7 +124,7 @@ bunx --package @sivir/ui sivir list`;
 			Creates <code class="font-mono">src/lib/sivir/</code> (tokens + utilities) and
 			<code class="font-mono">sivir.json</code>.
 		</p>
-		<CodeBlock code="bunx --package @sivir/ui sivir init -y" lang="shell" copy="overlay" />
+		<CodeBlock code="bunx --package @sivir-ui/svelte sivir init -y" lang="shell" copy="overlay" />
 
 		<h3
 			class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
@@ -168,7 +168,7 @@ bunx --package @sivir/ui sivir list`;
 			</li>
 			<li>
 				Built-in theme presets install with
-				<code class="font-mono">bunx --package @sivir/ui sivir add theme &lt;slug&gt;</code>
+				<code class="font-mono">bunx --package @sivir-ui/svelte sivir add theme &lt;slug&gt;</code>
 				(for example <code class="font-mono">default</code>).
 			</li>
 		</ul>

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Modal from '@sivir/ui/components/modal';
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Modal from '@sivir-ui/svelte/components/modal';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 
 	let {
 		modalOpen = $bindable(false),

@@ -4,11 +4,12 @@
 		clickOutside,
 		cn,
 		lockBodyScroll,
+		isPointInSubmenuTriangle,
 		positionFloatingPanel,
 		pushEscapeLayer,
 		trapFocus
-	} from '@sivir/ui/utils';
-	import { panelIn, panelOut } from '@sivir/ui/transition';
+	} from '@sivir-ui/svelte/utils';
+	import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
 	import type { PopoverContentProps } from '.';
 	import { getPopoverContext } from './context.svelte';
 
@@ -143,6 +144,32 @@
 		}
 	}
 
+	function scheduleClose(event: MouseEvent) {
+		if (!popoverState.hoverable) return;
+		if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
+
+		const inContactTriangle =
+			popoverState.buttonRef &&
+			popover &&
+			isPointInSubmenuTriangle(
+				{ x: event.clientX, y: event.clientY },
+				popoverState.buttonRef.getBoundingClientRect(),
+				popover.getBoundingClientRect(),
+				popoverState.placement
+			);
+		const delay = inContactTriangle ? (popoverState.closeDelay ?? 180) : 0;
+		if (delay <= 0) {
+			popoverState.open = false;
+			popoverState.closeTimeout = undefined;
+			return;
+		}
+
+		popoverState.closeTimeout = setTimeout(() => {
+			popoverState.open = false;
+			popoverState.closeTimeout = undefined;
+		}, delay);
+	}
+
 	/**
 	 * Locks body scroll whenever the popover is open.
 	 *
@@ -172,12 +199,6 @@
 		return pushEscapeLayer(() => {
 			popoverState.open = false;
 		}, popover);
-	});
-
-	$effect(() => {
-		if (!popoverState.hovering && !popoverState.focusedInside) {
-			cancelClose();
-		}
 	});
 
 	/**
@@ -216,14 +237,7 @@
 	)}
 	bind:this={popover as HTMLElement}
 	onmouseenter={cancelClose}
-	onmouseleave={() => {
-		if (popoverState.hoverable) {
-			if (popover && popover.contains(document.activeElement)) {
-				return;
-			}
-			popoverState.open = false;
-		}
-	}}
+	onmouseleave={scheduleClose}
 >
 	{#if popoverState.open}
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->

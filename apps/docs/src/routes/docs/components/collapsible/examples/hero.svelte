@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Collapsible from '@sivir/ui/components/collapsible';
+	import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 
 	let open = $state(true);

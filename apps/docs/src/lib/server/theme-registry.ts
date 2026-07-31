@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
-import { parseTheme, type Theme, type ThemeRecord } from '@sivir/ui/themes/theme';
+import { parseTheme, type Theme, type ThemeRecord } from '@sivir-ui/svelte/themes/theme';
 
 export type RegistryTheme = ThemeRecord;
 

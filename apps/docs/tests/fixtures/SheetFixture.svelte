@@ -1,10 +1,11 @@
 <script lang="ts">
-	import * as Sheet from '@sivir/ui/components/sheet';
+	import * as Sheet from '@sivir-ui/svelte/components/sheet';
 
 	let {
 		open = $bindable(false),
 		allowClickOutside = true,
-		side = 'right' as 'left' | 'right'
+		side = 'right' as 'left' | 'right',
+		rows = 0
 	} = $props();
 </script>
 
@@ -19,6 +20,9 @@
 		<div>
 			<button data-testid="inside-1">Inside one</button>
 			<button data-testid="inside-2">Inside two</button>
+			{#each Array(rows) as _, index (index)}
+				<div class="h-10">Scrollable row {index + 1}</div>
+			{/each}
 		</div>
 		<Sheet.Footer>
 			<Sheet.Close onclick={() => (open = false)}>Close</Sheet.Close>

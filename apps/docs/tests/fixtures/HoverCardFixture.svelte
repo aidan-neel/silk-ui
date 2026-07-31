@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as HoverCard from '@sivir/ui/components/hover-card';
+	import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
 
 	let {
 		openDelay = 200,

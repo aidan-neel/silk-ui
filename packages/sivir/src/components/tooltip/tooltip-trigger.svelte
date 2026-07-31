@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, onDestroy, type Snippet } from 'svelte';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import {
 		showTooltip,
 		hideTooltip,

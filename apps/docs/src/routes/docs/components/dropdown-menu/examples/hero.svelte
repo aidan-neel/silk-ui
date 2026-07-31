@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as DropdownMenu from '@sivir/ui/components/dropdown-menu';
-	import Shortcut from '@sivir/ui/components/shortcut';
+	import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
 	import User from '@lucide/svelte/icons/user';
 	import Settings from '@lucide/svelte/icons/settings';
 	import LogOut from '@lucide/svelte/icons/log-out';

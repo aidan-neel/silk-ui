@@ -125,9 +125,9 @@ export function resolveInstallPlan(index: RegistryIndex, names: string[]): Insta
 	return { components: [...resolved.values()], peerDependencies };
 }
 
-/** Rewrites `@sivir/ui/...` imports to the consumer's configured alias. */
+/** Rewrites `@sivir-ui/svelte/...` imports to the consumer's configured alias. */
 export function rewriteImports(source: string, alias: string) {
 	return source
-		.replaceAll(/(['"])@sivir\/ui([^'"]*?)\.ts\1/g, `$1${alias}$2$1`)
-		.replaceAll(/@sivir\/ui(?=['/])/g, alias);
+		.replaceAll(/(['"])@sivir-ui\/svelte([^'"]*?)\.ts\1/g, `$1${alias}$2$1`)
+		.replaceAll(/@sivir-ui\/svelte(?=['/])/g, alias);
 }

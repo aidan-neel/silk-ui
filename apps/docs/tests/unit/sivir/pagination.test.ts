@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Pagination from '@sivir/ui/components/pagination/pagination.svelte';
+import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
 
 describe('Pagination -- rendering', () => {
 	it('renders a nav element with aria-label="Pagination"', () => {

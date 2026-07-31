@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ScrollArea } from '@sivir/ui/components/scroll-area';
+	import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
 	import SquarePen from '@lucide/svelte/icons/square-pen';
 
 	let activeChatId = $state(0);

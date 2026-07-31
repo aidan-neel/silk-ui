@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Input } from '@sivir/ui/components/input';
+	import { Input } from '@sivir-ui/svelte/components/input';
 </script>
 
 <div class="w-full max-w-xs">

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ModalConfirmProps } from '.';
-	import { Button } from '@sivir/ui/components/button';
-	import { cn } from '@sivir/ui/utils';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { getModalContext } from './context.svelte';
 
 	const modal = getModalContext();
@@ -12,9 +12,9 @@
 <Button
 	{...rest}
 	variant={confirmVariant}
-	onclick={() => {
+	onclick={(event: MouseEvent) => {
 		modal.state.open = false;
-		onclick?.();
+		onclick?.(event);
 	}}
 	class={cn(className, `flex sm:w-fit w-full flex-row gap-2 justify-center items-center`)}
 >

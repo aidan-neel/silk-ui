@@ -7,9 +7,9 @@ export default {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			'@sivir/ui/brand-mark': '../../packages/sivir/src/brand-mark.svelte',
-			'@sivir/ui': '../../packages/sivir/src',
-			'@sivir/ui/*': '../../packages/sivir/src/*'
+			'@sivir-ui/svelte/brand-mark': '../../packages/sivir/src/brand-mark.svelte',
+			'@sivir-ui/svelte': '../../packages/sivir/src',
+			'@sivir-ui/svelte/*': '../../packages/sivir/src/*'
 		}
 	}
 };

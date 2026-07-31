@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Textarea from '@sivir/ui/components/textarea/textarea.svelte';
+import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
+import TextareaComposerFixture from '../../fixtures/TextareaComposerFixture.svelte';
 
 describe('Textarea -- basic rendering', () => {
 	it('renders a textarea element', () => {
@@ -25,6 +26,16 @@ describe('Textarea -- basic rendering', () => {
 	});
 });
 
+describe('Textarea -- composer', () => {
+	it('creates one shared surface for toolbar content', () => {
+		const { container } = render(TextareaComposerFixture);
+		expect(container.querySelector('[data-ui="textarea-composer"]')).toContainElement(
+			container.querySelector('textarea')
+		);
+		expect(container.querySelector('[role="toolbar"]')).toBeInTheDocument();
+	});
+});
+
 describe('Textarea -- variants', () => {
 	it.each(['outline', 'secondary'] as const)('accepts variant="%s" without throwing', (variant) => {
 		const { container } = render(Textarea, { props: { variant } });
@@ -44,6 +55,15 @@ describe('Textarea -- value binding', () => {
 		const user = userEvent.setup();
 		await user.type(textarea, 'multi\nline');
 		expect(textarea.value).toBe('multi\nline');
+	});
+
+	it('grows to its content when autoresize is enabled', async () => {
+		const { container } = render(Textarea, { props: { autoresize: true } });
+		const textarea = container.querySelector('textarea')!;
+		Object.defineProperty(textarea, 'scrollHeight', { configurable: true, value: 144 });
+		const user = userEvent.setup();
+		await user.type(textarea, 'A longer message');
+		expect(textarea.style.height).toBe('144px');
 	});
 
 	it('does not accept input when disabled', () => {

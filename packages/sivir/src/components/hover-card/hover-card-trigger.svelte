@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { HoverCardTriggerProps } from '.';
 	import { getPopoverContext } from '../popover/context.svelte';
 

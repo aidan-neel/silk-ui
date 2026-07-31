@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -23,7 +23,7 @@
 	import VariantError from './examples/variant-error.svelte';
 	import VariantErrorSrc from './examples/variant-error.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add badge';
+	const installCommand = 'bunx @sivir-ui/svelte add badge';
 </script>
 
 <svelte:head>

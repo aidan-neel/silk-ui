@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { Snippet } from 'svelte';
 	import { setColorPickerContext, type ColorFormat, type ColorOption } from './context';
 

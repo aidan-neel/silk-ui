@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as CodeBlock from '@sivir/ui/components/code-block';
-	import { Button } from '@sivir/ui/components/button';
-	import * as Tooltip from '@sivir/ui/components/tooltip';
+	import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 	import ExternalLink from '@lucide/svelte/icons/external-link';
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 

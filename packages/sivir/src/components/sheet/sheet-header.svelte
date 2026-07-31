@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { SheetHeaderProps } from '.';
-	import Button from '@sivir/ui/components/button';
+	import Button from '@sivir-ui/svelte/components/button';
 	import X from '@lucide/svelte/icons/x';
 	import { getSheetContext } from './context.svelte';
 

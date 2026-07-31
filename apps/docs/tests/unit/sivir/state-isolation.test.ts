@@ -2,14 +2,14 @@ import { cleanup, render } from '@testing-library/svelte';
 import type { Component } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import CollapsibleTrigger from '@sivir/ui/components/collapsible/collapsible-trigger.svelte';
-import ComboboxTrigger from '@sivir/ui/components/combobox/combobox-trigger.svelte';
-import ContextMenuContent from '@sivir/ui/components/context-menu/context-menu-content.svelte';
-import DropdownMenuContent from '@sivir/ui/components/dropdown-menu/dropdown-menu-content.svelte';
-import PopoverTrigger from '@sivir/ui/components/popover/popover-trigger.svelte';
-import SelectTrigger from '@sivir/ui/components/select/select-trigger.svelte';
-import SheetTrigger from '@sivir/ui/components/sheet/sheet-trigger.svelte';
-import { clickOutside } from '@sivir/ui/utils';
+import CollapsibleTrigger from '@sivir-ui/svelte/components/collapsible/collapsible-trigger.svelte';
+import ComboboxTrigger from '@sivir-ui/svelte/components/combobox/combobox-trigger.svelte';
+import ContextMenuContent from '@sivir-ui/svelte/components/context-menu/context-menu-content.svelte';
+import DropdownMenuContent from '@sivir-ui/svelte/components/dropdown-menu/dropdown-menu-content.svelte';
+import PopoverTrigger from '@sivir-ui/svelte/components/popover/popover-trigger.svelte';
+import SelectTrigger from '@sivir-ui/svelte/components/select/select-trigger.svelte';
+import SheetTrigger from '@sivir-ui/svelte/components/sheet/sheet-trigger.svelte';
+import { clickOutside } from '@sivir-ui/svelte/utils';
 import CollapsibleFixture from '../../fixtures/CollapsibleFixture.svelte';
 
 afterEach(() => {

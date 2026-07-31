@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { DEFAULT_THEME, neutralTemperatures, themeToCss } from '@sivir/ui/themes/theme';
+import { DEFAULT_THEME, neutralTemperatures, themeToCss } from '@sivir-ui/svelte/themes/theme';
 
 const PARITY_PROPERTIES = [
 	'--font-sans',

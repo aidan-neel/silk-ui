@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as ColorPicker from '@sivir/ui/components/color-picker';
+	import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
 
 	let hslValue = $state('#5e6ad2');
 	let rgbValue = $state('#5e6ad2');

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { getFocusableElements, trapFocus, clickOutside } from '@sivir/ui/utils';
+import { getFocusableElements, trapFocus, clickOutside } from '@sivir-ui/svelte/utils';
 
 // offsetParent and element.animate are stubbed globally in tests/setup.ts.
 // See that file for the rationale.

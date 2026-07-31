@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as ToggleGroup from '@sivir/ui/components/toggle-group';
+	import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
 </script>
 
 <ToggleGroup.Root type="multiple" value={['left', 'center']}>

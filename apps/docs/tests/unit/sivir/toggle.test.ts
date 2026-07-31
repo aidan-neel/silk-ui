@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { createRawSnippet } from 'svelte';
-import Toggle from '@sivir/ui/components/toggle/toggle.svelte';
+import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
 
 function textSnippet(text: string) {
 	return createRawSnippet(() => ({

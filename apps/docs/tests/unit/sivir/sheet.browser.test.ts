@@ -2,7 +2,7 @@ import { describe, expect, it, afterEach } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
-import { sheetIn, sheetOut } from '@sivir/ui/transition';
+import { sheetIn, sheetOut } from '@sivir-ui/svelte/transition';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';
 
 /*
@@ -154,6 +154,19 @@ describe('Sheet -- ARIA', () => {
 });
 
 describe('Sheet -- body scroll lock', () => {
+	it('scrolls overflowing sheet content without unlocking the page', async () => {
+		render(SheetFixture, { open: true, rows: 100 });
+		await flush();
+
+		const panel = document.querySelector('[data-ui="sheet-content"]') as HTMLElement;
+		const surface = panel.firstElementChild as HTMLElement;
+		expect(surface.scrollHeight).toBeGreaterThan(surface.clientHeight);
+
+		surface.scrollTo({ top: 200 });
+		expect(surface.scrollTop).toBe(200);
+		expect(document.body.style.overflow).toBe('hidden');
+	});
+
 	it('locks body scroll when open', async () => {
 		render(SheetFixture, { open: true });
 		await flush();

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -13,7 +13,7 @@
 	import Panel from './examples/panel.svelte';
 	import PanelSrc from './examples/panel.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add card';
+	const installCommand = 'bunx @sivir-ui/svelte add card';
 </script>
 
 <svelte:head>

@@ -1,4 +1,4 @@
-import type { ButtonVariant } from '@sivir/ui/components/button';
+import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
 import type { HTMLButtonAttributes } from 'svelte/elements';
 import CopyButton from './copy-button.svelte';
 

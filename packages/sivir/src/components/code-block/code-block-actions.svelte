@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { CodeBlockActionsProps } from '.';
 	import Copy from './code-block-copy.svelte';
 

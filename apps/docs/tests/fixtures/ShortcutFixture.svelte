@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '@sivir/ui/components/button';
-	import * as Command from '@sivir/ui/components/command';
-	import Shortcut from '@sivir/ui/components/shortcut';
+	import Button from '@sivir-ui/svelte/components/button';
+	import * as Command from '@sivir-ui/svelte/components/command';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
 
 	let {
 		mode = 'button',

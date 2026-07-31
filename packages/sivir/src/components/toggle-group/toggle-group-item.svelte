@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, pressable } from '@sivir/ui/utils';
+	import { cn, pressable } from '@sivir-ui/svelte/utils';
 	import { getContext } from 'svelte';
 	import type { ToggleGroupItemProps, ToggleGroupContext } from '.';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ColorPicker from '$lib/components/color-picker.svelte';
-	import type { ColorFormat } from '@sivir/ui/components/color-picker';
+	import type { ColorFormat } from '@sivir-ui/svelte/components/color-picker';
 
 	let {
 		value = $bindable('#ff0000'),

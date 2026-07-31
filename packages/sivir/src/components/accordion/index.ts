@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './accordion.svelte';
 import Item from './accordion-item.svelte';
 import Trigger from './accordion-trigger.svelte';

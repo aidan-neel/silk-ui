@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import * as Tooltip from '@sivir/ui/components/tooltip';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Check from '@lucide/svelte/icons/check';
 	import { onDestroy } from 'svelte';

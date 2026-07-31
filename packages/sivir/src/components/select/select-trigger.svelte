@@ -1,9 +1,9 @@
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
-	import { cn } from '@sivir/ui/utils';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { type Snippet } from 'svelte';
 	import { ChevronDown } from '@lucide/svelte';
-	import type { ButtonVariant } from '@sivir/ui/components/button';
+	import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
 	import { getSelectContext } from './context.svelte';
 	import { getPopoverContext } from '../popover/context.svelte';
 

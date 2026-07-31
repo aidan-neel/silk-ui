@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as ContextMenu from '@sivir/ui/components/context-menu';
-	import Shortcut from '@sivir/ui/components/shortcut';
+	import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <div class="flex items-center justify-center">
@@ -9,7 +9,7 @@
 			<div
 				class="flex h-28 w-64 items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-secondary/30 text-sm text-foreground-muted"
 			>
-				Right-click here
+				Right-click or tap here
 			</div>
 		</ContextMenu.Trigger>
 

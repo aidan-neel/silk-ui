@@ -1,4 +1,4 @@
-import { createContext } from '@sivir/ui/utils';
+import { createContext } from '@sivir-ui/svelte/utils';
 import type { PopoverState } from '.';
 
 export type PopoverContext = {

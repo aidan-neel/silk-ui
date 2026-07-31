@@ -32,7 +32,7 @@ async function writeDocsFixtures(docs: string) {
 	await mkdir(path.join(docs, 'button', 'examples', 'snippets'), { recursive: true });
 	await writeFile(
 		path.join(docs, 'button', 'examples', 'hero.svelte'),
-		`<script lang="ts">\nimport { Button } from '@sivir/ui/components/button';\nimport snippet from './snippets/example.txt?raw';\n</script>\n<Button>{snippet}</Button>\n`
+		`<script lang="ts">\nimport { Button } from '@sivir-ui/svelte/components/button';\nimport snippet from './snippets/example.txt?raw';\n</script>\n<Button>{snippet}</Button>\n`
 	);
 	await writeFile(path.join(docs, 'button', 'examples', 'snippets', 'example.txt'), 'hello');
 	await mkdir(path.join(docs, 'toast', 'examples'), { recursive: true });
@@ -42,7 +42,7 @@ async function writeDocsFixtures(docs: string) {
 	);
 	await writeFile(
 		path.join(docs, 'toast', 'examples', 'first.svelte'),
-		`<script>import { toast } from '@sivir/ui/components/toast';</script><button onclick={() => toast.success('ok')}>Toast</button>`
+		`<script>import { toast } from '@sivir-ui/svelte/components/toast';</script><button onclick={() => toast.success('ok')}>Toast</button>`
 	);
 }
 
@@ -51,8 +51,8 @@ describe('showcase generation', () => {
 		'keeps the component typography cascade intact in %s mode',
 		(installPath) => {
 			const css = rootCss(installPath);
-			expect(css).toContain("@import '@fontsource/geist-sans/latin-400.css';");
-			expect(css).toContain("@import '@fontsource/geist-sans/latin-700.css';");
+			expect(css).toContain("@import '@fontsource/dm-sans/latin-400.css';");
+			expect(css).toContain("@import '@fontsource/dm-sans/latin-700.css';");
 			expect(css).toContain('@layer base { button, input { font: inherit; } }');
 			expect(css).toContain(
 				'body { font-size: var(--font-size-body); font-weight: var(--font-weight-body); line-height: 1.5; }'
@@ -84,7 +84,7 @@ describe('showcase generation', () => {
 				path.join(consumer, 'src/lib/showcase/button/Example.svelte'),
 				'utf8'
 			);
-			const expectedPrefix = installPath === 'cli' ? '$lib/sivir' : '@sivir/ui';
+			const expectedPrefix = installPath === 'cli' ? '$lib/sivir' : '@sivir-ui/svelte';
 			expect(example).toContain(`${expectedPrefix}/components/button`);
 			const toastPage = await readFile(
 				path.join(consumer, 'src/routes/components/toast/+page.svelte'),

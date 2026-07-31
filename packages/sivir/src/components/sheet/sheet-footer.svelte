@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { SheetFooterProps } from '.';
 
 	let { class: className, children, ...rest }: SheetFooterProps = $props();

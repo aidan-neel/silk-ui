@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Progress } from '@sivir/ui/components/progress';
+	import { Progress } from '@sivir-ui/svelte/components/progress';
 	import { onMount } from 'svelte';
 
 	let val = $state(28);

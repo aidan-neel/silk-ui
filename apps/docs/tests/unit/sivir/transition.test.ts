@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest';
-import { cubicBezier, getCssDuration, sheetIn, sheetOut } from '@sivir/ui/transition';
+import { cubicBezier, getCssDuration, sheetIn, sheetOut } from '@sivir-ui/svelte/transition';
 
 /*
  * getCssDuration reads CSS custom properties via getComputedStyle.

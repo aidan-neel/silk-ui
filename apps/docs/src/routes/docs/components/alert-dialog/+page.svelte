@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -9,7 +9,7 @@
 	import SignOut from './examples/sign-out.svelte';
 	import SignOutSrc from './examples/sign-out.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add alert-dialog';
+	const installCommand = 'bunx @sivir-ui/svelte add alert-dialog';
 </script>
 
 <svelte:head>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { BreadcrumbSeparatorProps } from '.';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 

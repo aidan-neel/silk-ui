@@ -1,5 +1,5 @@
 <script module lang="ts">
-	const ERROR_THEME_COLOR = '#dc2626';
+	const ERROR_THEME_COLOR = '#dc2626'; // token-lint-disable-line no-literal-color: browser theme-color fallback
 	let errorThemeCount = 0;
 	let savedThemeColors: Array<{ element: HTMLMetaElement; content: string | null }> | undefined;
 	let createdThemeColor: HTMLMetaElement | undefined;

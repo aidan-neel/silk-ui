@@ -9,7 +9,7 @@
 | Decision             | Value                                                         |
 | -------------------- | ------------------------------------------------------------- |
 | Docs host            | `https://sivir.dev`                                           |
-| npm package          | `@sivir/ui`                                                   |
+| npm package          | `@sivir-ui/svelte`                                            |
 | Target version / tag | `1.0.0` / `v1.0.0`                                            |
 | GitHub               | `aidan-neel/sivir-ui`                                         |
 | Catalog              | **38** components                                             |

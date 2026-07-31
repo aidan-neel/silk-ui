@@ -39,7 +39,7 @@ export type CopyResult = 'created' | 'overwritten' | 'skipped';
 
 /**
  * Copies one registry file into the consumer project, rewriting
- * `@sivir/ui` imports to the configured alias. Existing files are left
+ * `@sivir-ui/svelte` imports to the configured alias. Existing files are left
  * alone unless `overwrite` is set.
  */
 export async function installFile(

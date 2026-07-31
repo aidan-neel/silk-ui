@@ -37,7 +37,7 @@ export async function buildManualPlan(
 				'package-install',
 				'Install Sivir',
 				'Exercise package subpath imports.',
-				command('bun', 'add', '@sivir/ui@latest')
+				command('bun', 'add', '@sivir-ui/svelte@latest')
 			)
 		);
 	}

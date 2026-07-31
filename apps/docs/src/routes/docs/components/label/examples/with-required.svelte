@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Label } from '@sivir/ui/components/label';
-	import { Input } from '@sivir/ui/components/input';
+	import { Label } from '@sivir-ui/svelte/components/label';
+	import { Input } from '@sivir-ui/svelte/components/input';
 </script>
 
 <div class="flex flex-col gap-1.5">

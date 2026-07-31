@@ -1,4 +1,4 @@
-import { builtInThemePresets } from '@sivir/ui/themes/builtin-presets';
+import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
 import { listRegistryThemes } from '$lib/server/theme-registry';
 import type { PageServerLoad } from './$types';
 

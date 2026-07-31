@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Input from '@sivir/ui/components/input/input.svelte';
+import Input from '@sivir-ui/svelte/components/input/input.svelte';
 
 describe('Input -- basic rendering', () => {
 	it('renders a text input by default', () => {

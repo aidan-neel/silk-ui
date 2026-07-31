@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '@sivir/ui/components/button';
-	import * as Card from '@sivir/ui/components/card';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import * as Card from '@sivir-ui/svelte/components/card';
 	import GitBranch from '@lucide/svelte/icons/git-branch';
 </script>
 
@@ -41,8 +41,8 @@
 			</div>
 		</div>
 	</Card.Content>
-	<Card.Footer>
-		<Button variant="outline" size="sm">Visit</Button>
-		<Button size="sm">View Deployment</Button>
+	<Card.Footer class="flex-col sm:flex-row">
+		<Button variant="outline" class="w-full sm:w-auto">Visit</Button>
+		<Button class="w-full sm:w-auto">View Deployment</Button>
 	</Card.Footer>
 </Card.Root>

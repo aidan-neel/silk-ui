@@ -30,7 +30,7 @@ export const terminalSnapshotPath = path.join(manualRoot, 'terminal.json');
 export const terminalLogPath = path.join(manualRoot, 'terminal.log');
 export const consumerRoot = path.join(currentRoot, 'consumer');
 export const stagingRoot = path.join(currentRoot, 'staging');
-export const artifactRoot = path.join(stagingRoot, 'node_modules', '@sivir', 'ui');
+export const artifactRoot = path.join(stagingRoot, 'node_modules', '@sivir-ui', 'svelte');
 export const docsComponentsRoot = path.join(
 	repoRoot,
 	'apps',

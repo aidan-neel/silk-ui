@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as DropdownMenu from '@sivir/ui/components/dropdown-menu';
+	import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 	import User from '@lucide/svelte/icons/user';
 	import Folder from '@lucide/svelte/icons/folder-git-2';
 	import CreditCard from '@lucide/svelte/icons/credit-card';

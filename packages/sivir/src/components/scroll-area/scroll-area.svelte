@@ -1,12 +1,19 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import ChevronUp from '@lucide/svelte/icons/chevron-up';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import type { ScrollAreaProps } from '.';
 
-	let { class: className, children, orientation = 'vertical', ...rest }: ScrollAreaProps = $props();
+	let {
+		class: className,
+		children,
+		orientation = 'vertical',
+		showCues = true,
+		element = $bindable(),
+		onscroll,
+		...rest
+	}: ScrollAreaProps = $props();
 
-	let scroller = $state<HTMLDivElement | undefined>();
 	let scrollTop = $state(0);
 	let scrollHeight = $state(0);
 	let clientHeight = $state(0);
@@ -14,13 +21,13 @@
 	const atTop = $derived(scrollTop <= 1);
 	const atBottom = $derived(scrollTop + clientHeight >= scrollHeight - 1);
 	const overflows = $derived(scrollHeight - clientHeight > 1);
-	const showCues = $derived(orientation === 'vertical' && overflows);
+	const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
 
 	function measure() {
-		if (!scroller) return;
-		scrollTop = scroller.scrollTop;
-		scrollHeight = scroller.scrollHeight;
-		clientHeight = scroller.clientHeight;
+		if (!element) return;
+		scrollTop = element.scrollTop;
+		scrollHeight = element.scrollHeight;
+		clientHeight = element.clientHeight;
 	}
 
 	/**
@@ -28,17 +35,17 @@
 	 * edge cues are correct before the first scroll event fires.
 	 */
 	$effect(() => {
-		if (!scroller) return;
+		if (!element) return;
 		measure();
 		const ro = new ResizeObserver(measure);
-		ro.observe(scroller);
-		for (const child of Array.from(scroller.children)) ro.observe(child);
+		ro.observe(element);
+		for (const child of Array.from(element.children)) ro.observe(child);
 		return () => ro.disconnect();
 	});
 </script>
 
 <div
-	bind:this={scroller}
+	bind:this={element}
 	data-ui="scroll-area"
 	data-orientation={orientation}
 	class={cn(
@@ -53,10 +60,13 @@
 				? 'overflow-y-auto overflow-x-hidden'
 				: 'overflow-auto'
 	)}
-	onscroll={measure}
+	onscroll={(event) => {
+		measure();
+		onscroll?.(event);
+	}}
 	{...rest}
 >
-	{#if showCues}
+	{#if cuesVisible}
 		<!-- Top edge cue: sticky so it pins to the top of the scrollport. -->
 		<div aria-hidden="true" class="sticky top-0 z-10 h-0">
 			<div
@@ -72,7 +82,7 @@
 
 	{@render children?.()}
 
-	{#if showCues}
+	{#if cuesVisible}
 		<!-- Bottom edge cue: sticky so it pins to the bottom of the scrollport. -->
 		<div aria-hidden="true" class="sticky bottom-0 z-10 h-0">
 			<div

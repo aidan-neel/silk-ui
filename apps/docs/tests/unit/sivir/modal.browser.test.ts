@@ -3,7 +3,7 @@ import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
-import { dialogIn, dialogOut } from '@sivir/ui/transition';
+import { dialogIn, dialogOut } from '@sivir-ui/svelte/transition';
 
 /*
  * Browser-mode tests for modal. These exercise mount/unmount, focus
@@ -217,6 +217,17 @@ describe('Modal -- ARIA contract in browser', () => {
 });
 
 describe('Modal -- body scroll lock in browser', () => {
+	it('keeps the modal content surface scrollable while the page is locked', async () => {
+		render(ModalFixture, { open: true });
+		await flush();
+
+		const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+		const surface = dialog.firstElementChild as HTMLElement;
+		expect(document.body.style.overflow).toBe('hidden');
+		expect(surface.className).toContain('overflow-y-auto');
+		expect(surface.className).toContain('overscroll-contain');
+	});
+
 	it('locks body scroll when open', async () => {
 		render(ModalFixture, { open: true });
 		await flush();

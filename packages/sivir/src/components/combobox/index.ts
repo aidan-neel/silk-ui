@@ -4,7 +4,7 @@ import Trigger from './combobox-trigger.svelte';
 import Results from './combobox-results.svelte';
 import Item from './combobox-item.svelte';
 import Label from './combobox-label.svelte';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 
 export type ComboboxItem = {
 	value: string;

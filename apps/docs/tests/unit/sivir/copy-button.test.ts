@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import CopyButton from '@sivir/ui/components/copy-button/copy-button.svelte';
+import CopyButton from '@sivir-ui/svelte/components/copy-button/copy-button.svelte';
 
 function setClipboard(writeText: (text: string) => Promise<void>) {
 	Object.defineProperty(navigator, 'clipboard', {

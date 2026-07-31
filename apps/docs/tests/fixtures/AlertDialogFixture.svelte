@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as AlertDialog from '@sivir/ui/components/alert-dialog';
+	import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 
 	let { open = $bindable(false), allowClickOutside = false, error = false } = $props();
 </script>

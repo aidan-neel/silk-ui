@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-	import { CodeBlock } from '@sivir/ui/components/code-block';
+	import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
 	import Hero from './examples/hero.svelte';
 	import HeroSrc from './examples/hero.svelte?raw';
@@ -9,7 +9,7 @@
 	import Disabled from './examples/disabled.svelte';
 	import DisabledSrc from './examples/disabled.svelte?raw';
 
-	const installCommand = 'bunx @sivir/ui add label';
+	const installCommand = 'bunx @sivir-ui/svelte add label';
 </script>
 
 <svelte:head>

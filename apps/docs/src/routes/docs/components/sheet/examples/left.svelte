@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Badge } from '@sivir/ui/components/badge';
-	import { Button } from '@sivir/ui/components/button';
-	import * as Avatar from '@sivir/ui/components/avatar';
-	import * as Sheet from '@sivir/ui/components/sheet';
+	import { Badge } from '@sivir-ui/svelte/components/badge';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import * as Avatar from '@sivir-ui/svelte/components/avatar';
+	import * as Sheet from '@sivir-ui/svelte/components/sheet';
 	import Menu from '@lucide/svelte/icons/menu';
 	import Home from '@lucide/svelte/icons/home';
 	import Inbox from '@lucide/svelte/icons/inbox';

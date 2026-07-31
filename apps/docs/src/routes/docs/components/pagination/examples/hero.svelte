@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Pagination } from '@sivir/ui/components/pagination';
+	import { Pagination } from '@sivir-ui/svelte/components/pagination';
 
 	const pageSize = 5;
 	const items = Array.from({ length: 48 }, (_, i) => `Result ${i + 1}`);

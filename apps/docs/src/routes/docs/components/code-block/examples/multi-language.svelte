@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as CodeBlock from '@sivir/ui/components/code-block';
+	import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
 	const ts = `export async function getUser(id: string) {
   const res = await fetch(\`/api/users/\${id}\`);

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/svelte';
-import Slider from '@sivir/ui/components/slider/slider.svelte';
+import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
 
 describe('Slider -- rendering', () => {
 	it('renders a range input', () => {

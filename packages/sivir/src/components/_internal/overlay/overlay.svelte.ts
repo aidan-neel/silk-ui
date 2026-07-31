@@ -4,7 +4,7 @@ import {
 	lockBodyScroll,
 	pushEscapeLayer,
 	trapFocus
-} from '@sivir/ui/utils';
+} from '@sivir-ui/svelte/utils';
 
 /**
  * Shared overlay primitive for modal-content and sheet-content.

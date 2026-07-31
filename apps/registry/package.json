@@ -11,7 +11,7 @@
 		"lint": "prettier --check ."
 	},
 	"dependencies": {
-		"@sivir/ui": "workspace:*",
+		"@sivir-ui/svelte": "workspace:*",
 		"@elysiajs/openapi": "^1.4.14",
 		"@prisma/adapter-pg": "^7.6.0",
 		"@prisma/client": "^7.6.0",

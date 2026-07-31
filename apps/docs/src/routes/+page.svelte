@@ -6,18 +6,18 @@
 	import AlignRight from '@lucide/svelte/icons/align-right';
 
 	import { resolve } from '$app/paths';
-	import { Button } from '@sivir/ui/components/button';
-	import { Input } from '@sivir/ui/components/input';
-	import { Checkbox } from '@sivir/ui/components/checkbox';
-	import { Switch } from '@sivir/ui/components/switch';
-	import { Badge } from '@sivir/ui/components/badge';
-	import { Slider } from '@sivir/ui/components/slider';
-	import { Progress } from '@sivir/ui/components/progress';
-	import * as Card from '@sivir/ui/components/card';
-	import * as Tabs from '@sivir/ui/components/tabs';
-	import * as Avatar from '@sivir/ui/components/avatar';
-	import * as Alert from '@sivir/ui/components/alert';
-	import * as ToggleGroup from '@sivir/ui/components/toggle-group';
+	import { Button } from '@sivir-ui/svelte/components/button';
+	import { Input } from '@sivir-ui/svelte/components/input';
+	import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
+	import { Switch } from '@sivir-ui/svelte/components/switch';
+	import { Badge } from '@sivir-ui/svelte/components/badge';
+	import { Slider } from '@sivir-ui/svelte/components/slider';
+	import { Progress } from '@sivir-ui/svelte/components/progress';
+	import * as Card from '@sivir-ui/svelte/components/card';
+	import * as Tabs from '@sivir-ui/svelte/components/tabs';
+	import * as Avatar from '@sivir-ui/svelte/components/avatar';
+	import * as Alert from '@sivir-ui/svelte/components/alert';
+	import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
 	import type { Snippet } from 'svelte';
 
 	const titleWords = ['Restyle', 'everything', 'from', 'a', 'few', 'tokens.'];
@@ -38,7 +38,7 @@
 	<title>Sivir UI · Themed Svelte components</title>
 	<meta
 		name="description"
-		content="38 Svelte 5 components. Restyle all of them from a handful of design tokens, with no forks or overrides."
+		content="50 Svelte 5 components. Restyle all of them from a handful of design tokens, with no forks or overrides."
 	/>
 </svelte:head>
 
@@ -60,7 +60,7 @@
 				: ''}{/each}
 	</h1>
 
-	<p class="hero__subtitle reveal" style="--d: 0.18s">Build with easy-to-style UI components.</p>
+	<p class="hero__subtitle reveal" style="--d: 0.18s">Build with 50 Svelte 5 components.</p>
 
 	<div class="hero__actions reveal" style="--d: 0.26s">
 		<Button href={resolve('/docs/introduction')} size="lg">
@@ -296,7 +296,7 @@
 
 	<div class="gallery__more">
 		<Button href={resolve('/docs/components')} variant="outline">
-			Browse all 38 components
+			Browse all 50 components
 			<ArrowRight size={15} />
 		</Button>
 	</div>

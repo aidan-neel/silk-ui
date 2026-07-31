@@ -37,7 +37,7 @@
 
 > `ui.css` stays a single file (matches the existing pattern; splitting `@theme` across `@import`ed files adds Tailwind-v4 build risk for no real gain here). Tiers are delineated by comment banners inside it.
 
-> **TEST LOCATION (corrected 2026-06-20):** All Vitest tests for `@sivir/ui` MUST live under `apps/docs/tests/unit/sivir/` — that's the only path the vitest `unit` project scans (`tests/unit/**/*.test.ts`, cwd = `apps/docs`). Tests placed under `packages/sivir/src/**` are silently NOT collected. So: `ui-css.test.ts` → `apps/docs/tests/unit/sivir/ui-css.test.ts`; `theme.test.ts` → `apps/docs/tests/unit/sivir/theme.test.ts`; `builtin-presets.test.ts` → `apps/docs/tests/unit/sivir/builtin-presets.test.ts`. Tests that read a source file as text resolve it via `resolve(process.cwd(), '../../packages/sivir/src/<file>')`; tests that import code use the `@sivir/ui/...` alias (e.g. `@sivir/ui/themes/theme`). Run with `cd apps/docs && bunx vitest run --project unit`.
+> **TEST LOCATION (corrected 2026-06-20):** All Vitest tests for `@sivir-ui/svelte` MUST live under `apps/docs/tests/unit/sivir/` — that's the only path the vitest `unit` project scans (`tests/unit/**/*.test.ts`, cwd = `apps/docs`). Tests placed under `packages/sivir/src/**` are silently NOT collected. So: `ui-css.test.ts` → `apps/docs/tests/unit/sivir/ui-css.test.ts`; `theme.test.ts` → `apps/docs/tests/unit/sivir/theme.test.ts`; `builtin-presets.test.ts` → `apps/docs/tests/unit/sivir/builtin-presets.test.ts`. Tests that read a source file as text resolve it via `resolve(process.cwd(), '../../packages/sivir/src/<file>')`; tests that import code use the `@sivir-ui/svelte/...` alias (e.g. `@sivir-ui/svelte/themes/theme`). Run with `cd apps/docs && bunx vitest run --project unit`.
 
 ---
 
@@ -712,7 +712,7 @@ The ~10-field `Theme` type + `themeToCss` v2 that emits _override_ CSS from the 
 ```ts
 // apps/docs/tests/unit/sivir/theme.test.ts
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_THEME, themeToCss } from '@sivir/ui/themes/theme';
+import { DEFAULT_THEME, themeToCss } from '@sivir-ui/svelte/themes/theme';
 
 describe('DEFAULT_THEME', () => {
 	it('uses Inter, soft blue brand, default scales', () => {
@@ -991,7 +991,7 @@ export const themesV2: Theme[] = [DEFAULT_THEME];
 ```ts
 // apps/docs/tests/unit/sivir/builtin-presets.test.ts  (create)
 import { describe, expect, it } from 'vitest';
-import { themesV2 } from '@sivir/ui/themes/builtin-presets';
+import { themesV2 } from '@sivir-ui/svelte/themes/builtin-presets';
 
 describe('themesV2', () => {
 	it('ships exactly one default theme', () => {
@@ -1011,8 +1011,8 @@ Expected: PASS.
 In `apps/docs/src/routes/themes/[name].css/+server.ts`, import the v2 `themeToCss` and use it for the default slug. Minimal change — add at the top:
 
 ```ts
-import { themeToCss as themeToCssV2 } from '@sivir/ui/themes/theme';
-import { defaultTheme } from '@sivir/ui/themes/builtin-presets';
+import { themeToCss as themeToCssV2 } from '@sivir-ui/svelte/themes/theme';
+import { defaultTheme } from '@sivir-ui/svelte/themes/builtin-presets';
 ```
 
 and in the handler, before the existing lookup:
@@ -1030,7 +1030,7 @@ if (params.name === 'default') {
 - [ ] **Step 6: Type-check the whole repo**
 
 Run: `cd /home/aidan/silk && bun run check 2>&1 | tail -25`
-Expected: green (no TS errors). If the route file’s `@sivir/ui/themes/theme` import isn’t resolved, confirm the package `exports` map includes `./themes/*`; add it if missing (check `packages/sivir/package.json` — note it currently has no `exports` field, so subpaths resolve via the workspace `src` paths used elsewhere; mirror however `@sivir/ui/themes/presets` is already imported).
+Expected: green (no TS errors). If the route file’s `@sivir-ui/svelte/themes/theme` import isn’t resolved, confirm the package `exports` map includes `./themes/*`; add it if missing (check `packages/sivir/package.json` — note it currently has no `exports` field, so subpaths resolve via the workspace `src` paths used elsewhere; mirror however `@sivir-ui/svelte/themes/presets` is already imported).
 
 - [ ] **Step 7: Commit**
 

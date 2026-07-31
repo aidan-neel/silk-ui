@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Card from '@sivir/ui/components/card';
+	import * as Card from '@sivir-ui/svelte/components/card';
 </script>
 
 <Card.Root class="w-full max-w-[28rem]">

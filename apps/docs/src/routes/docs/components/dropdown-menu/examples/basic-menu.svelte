@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as DropdownMenu from '@sivir/ui/components/dropdown-menu';
+	import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 </script>
 
 <DropdownMenu.Root>

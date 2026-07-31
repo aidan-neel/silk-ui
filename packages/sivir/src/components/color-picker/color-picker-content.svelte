@@ -1,6 +1,6 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 	import Check from '@lucide/svelte/icons/check';
 	import { getColorPickerContext } from './context';
 	import {

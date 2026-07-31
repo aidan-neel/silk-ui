@@ -1,0 +1,9 @@
+{
+	"name": "Sivir UI Library Generator — Complete",
+	"id": "1549090135784190124",
+	"api": "1.0.0",
+	"main": "code.js",
+	"editorType": ["figma"],
+	"documentAccess": "dynamic-page",
+	"networkAccess": { "allowedDomains": ["none"] }
+}

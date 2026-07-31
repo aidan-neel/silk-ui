@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Combobox from '@sivir/ui/components/combobox';
+	import * as Combobox from '@sivir-ui/svelte/components/combobox';
 
 	const frameworks = [
 		{ value: 'nextjs', label: 'Next.js' },

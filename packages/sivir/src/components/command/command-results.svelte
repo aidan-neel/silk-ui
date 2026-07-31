@@ -16,7 +16,7 @@
 	id={`${command.id}-listbox`}
 	role="listbox"
 	aria-label="Command results"
-	class="max-h-full overflow-y-auto px-1 pt-1"
+	class="max-h-full overflow-y-auto overscroll-contain px-1 pt-1"
 >
 	{@render children?.()}
 	{#if command.searchContent !== '' && command.results.length === 0}

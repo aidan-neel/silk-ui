@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '@sivir/ui/components/button';
-	import { cn, type DefaultProps } from '@sivir/ui/utils';
+	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+	import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
 	import { getModalContext } from '../modal/context.svelte';
 
 	type Props = {

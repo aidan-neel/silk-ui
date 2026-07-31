@@ -38,13 +38,13 @@ bun run lint
 bun run check
 bun --filter='docs' run test:ci
 bun --filter='registry' run test   # in-tree only; not a v1 public service
-bun --filter='@sivir/ui' run test
+bun --filter='@sivir-ui/svelte' run test
 bun --filter='docs' run test:browser
 bun run build
 DOCS_ADAPTER=node bun --filter='docs' run build
-bun --filter='@sivir/ui' run sandbox
-bun --filter='@sivir/ui' run verify:artifact
-bun --filter='@sivir/ui' run verify:cli-artifact
+bun --filter='@sivir-ui/svelte' run sandbox
+bun --filter='@sivir-ui/svelte' run verify:artifact
+bun --filter='@sivir-ui/svelte' run verify:cli-artifact
 bun --cwd apps/installer-lab test
 ```
 

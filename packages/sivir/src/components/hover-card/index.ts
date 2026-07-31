@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './hover-card.svelte';
 import Trigger from './hover-card-trigger.svelte';
 import Content from './hover-card-content.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Toggle } from '@sivir/ui/components/toggle';
+	import { Toggle } from '@sivir-ui/svelte/components/toggle';
 	import Bold from '@lucide/svelte/icons/bold';
 
 	let bold = $state(true);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Tooltip from '@sivir/ui/components/tooltip';
+	import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 	import MousePointer2 from '@lucide/svelte/icons/mouse-pointer-2';
 	import Frame from '@lucide/svelte/icons/frame';
 	import Square from '@lucide/svelte/icons/square';

@@ -4,8 +4,8 @@
 	import Toast from './toast.svelte';
 	import { cubicOut, quartOut } from 'svelte/easing';
 	import type { TransitionConfig } from 'svelte/transition';
-	import { getCssDuration } from '@sivir/ui/transition';
-	import { visualViewportBounds } from '@sivir/ui/utils';
+	import { getCssDuration } from '@sivir-ui/svelte/transition';
+	import { visualViewportBounds } from '@sivir-ui/svelte/utils';
 
 	const { state: toastState, hostId } = setToastUIState();
 	const isPrimary = $derived(getToastPrimaryHostId() === hostId);

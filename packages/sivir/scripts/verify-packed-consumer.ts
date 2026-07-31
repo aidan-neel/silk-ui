@@ -52,7 +52,7 @@ async function writeConsumer(cwd: string, tarball: string) {
 					build: 'vite build'
 				},
 				dependencies: {
-					'@sivir/ui': `file:${tarball}`,
+					'@sivir-ui/svelte': `file:${tarball}`,
 					svelte: versions.svelte,
 					tailwindcss: versions.tailwindcss
 				},
@@ -105,12 +105,12 @@ async function writeConsumer(cwd: string, tarball: string) {
 	);
 	await writeFile(
 		path.join(cwd, 'src/routes/+layout.svelte'),
-		'<script lang="ts">\n\timport \'@sivir/ui/ui.css\';\n\tlet { children } = $props();\n</script>\n\n{@render children()}\n'
+		'<script lang="ts">\n\timport \'@sivir-ui/svelte/ui.css\';\n\tlet { children } = $props();\n</script>\n\n{@render children()}\n'
 	);
 	await writeFile(
 		path.join(cwd, 'src/routes/+page.svelte'),
 		`<script lang="ts">
-	import { Button, Input, Modal, Select, Toaster } from '@sivir/ui';
+	import { Button, Input, Modal, Select, Toaster } from '@sivir-ui/svelte';
 	let selected = $state('alpha');
 </script>
 

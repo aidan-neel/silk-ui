@@ -1,6 +1,6 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { onMount, type Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -168,7 +168,7 @@
 	{...rest}
 	class={cn(
 		className,
-		'inline select-none align-middle font-mono text-[0.875em] leading-none text-foreground-muted'
+		'inline select-none align-middle font-mono text-[0.875em] leading-none text-foreground-muted [letter-spacing:0.04em]'
 	)}
 >
 	{#if children}

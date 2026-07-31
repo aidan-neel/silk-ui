@@ -51,6 +51,16 @@ describe('Command -- open and close', () => {
 		expect(className).toContain('origin-center');
 	});
 
+	it('contains scrolling within the results surface', async () => {
+		render(CommandFixture, {});
+		await flush();
+		await openCommand();
+
+		const results = document.querySelector('[role="listbox"]') as HTMLElement;
+		expect(results.className).toContain('overflow-y-auto');
+		expect(results.className).toContain('overscroll-contain');
+	});
+
 	it('closes on Escape', async () => {
 		render(CommandFixture, {});
 		await flush();

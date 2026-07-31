@@ -1,4 +1,4 @@
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './modal.svelte';
 import Trigger from './modal-trigger.svelte';
 import Content from './modal-content.svelte';
@@ -30,12 +30,14 @@ export type ModalContentProps = {
 	allowClickOutside?: boolean;
 	role?: 'dialog' | 'alertdialog';
 	contentClass?: string;
+	/** Optional explicit max-width class. Overrides the selected size preset. */
+	maxWidthClass?: string;
 	overlayClass?: string;
 	surfaceClass?: string;
 	panelIdPrefix?: string;
 	showClose?: boolean;
 	/** Max-width preset. Defaults to `md`. */
-	size?: 'sm' | 'md' | 'lg' | 'xl';
+	size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 } & DefaultProps &
 	Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
 

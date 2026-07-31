@@ -1,9 +1,9 @@
 /**
  * Phase 2 §1 — lock the public API.
  *
- * Frozen v1 catalog: 38 components. Named exports hang off the package root as
+ * Frozen v1 catalog: 50 components. Named exports hang off the package root as
  * identifiers; namespace exports hang off a PascalCase object (AlertDialog.Root).
- * Every public component is also reachable at @sivir/ui/components/<slug>.
+ * Every public component is also reachable at @sivir-ui/svelte/components/<slug>.
  */
 import { describe, expect, test } from 'bun:test';
 import { existsSync } from 'node:fs';
@@ -16,7 +16,7 @@ import { loadRegistryIndex } from './cli/registry';
 const packageRoot = path.dirname(fileURLToPath(import.meta.url));
 const componentsDir = path.join(packageRoot, 'src/components');
 
-/** Single-element components: `import { Button } from '@sivir/ui'`. */
+/** Single-element components: `import { Button } from '@sivir-ui/svelte'`. */
 const NAMED = {
 	badge: ['Badge'],
 	button: ['Button'],
@@ -25,19 +25,23 @@ const NAMED = {
 	'copy-button': ['CopyButton'],
 	input: ['Input'],
 	label: ['Label'],
+	markdown: ['Markdown'],
 	pagination: ['Pagination'],
 	progress: ['Progress'],
 	'scroll-area': ['ScrollArea'],
 	shortcut: ['Shortcut'],
 	skeleton: ['Skeleton'],
 	slider: ['Slider'],
+	spinner: ['Spinner'],
 	switch: ['Switch'],
 	textarea: ['Textarea'],
+	'response-stream': ['ResponseStream'],
 	toast: ['Toast', 'Toaster', 'toast', 'getToastUIState'],
-	toggle: ['Toggle']
+	toggle: ['Toggle'],
+	toolbar: ['Toolbar']
 } as const;
 
-/** Compound components: `import { Modal } from '@sivir/ui'` then `<Modal.Root>`. */
+/** Compound components: `import { Modal } from '@sivir-ui/svelte'` then `<Modal.Root>`. */
 const NAMESPACED = {
 	accordion: ['Root', 'Item', 'Trigger', 'Content'],
 	alert: ['Root', 'Title', 'Description'],
@@ -52,6 +56,21 @@ const NAMESPACED = {
 		'Footer',
 		'Confirm'
 	],
+	'approval-request': [
+		'Root',
+		'Content',
+		'Header',
+		'Status',
+		'Icon',
+		'Risk',
+		'Title',
+		'Description',
+		'Details',
+		'Footer',
+		'Cancel',
+		'Confirm'
+	],
+	attachment: ['Root', 'Trigger', 'List', 'Item'],
 	avatar: ['Root', 'Image', 'Fallback'],
 	breadcrumb: ['Root', 'Item', 'Separator'],
 	card: ['Root', 'Title', 'Header', 'Footer', 'Description', 'Content'],
@@ -59,6 +78,7 @@ const NAMESPACED = {
 	'color-picker': ['Root', 'Trigger', 'Content'],
 	combobox: ['Root', 'Content', 'Trigger', 'Results', 'Item', 'Label'],
 	command: ['Root', 'Content', 'Trigger', 'Separator', 'Results', 'Search', 'Item', 'Group'],
+	conversation: ['Root', 'Content', 'Empty', 'ScrollButton'],
 	'context-menu': [
 		'Root',
 		'Content',
@@ -81,7 +101,9 @@ const NAMESPACED = {
 		'SubContent',
 		'SubTrigger'
 	], // cone: Root → Sub → nested Sub
+	'fullscreen-nav': ['Root', 'Trigger', 'Content', 'Close', 'Group', 'Link'],
 	'hover-card': ['Root', 'Trigger', 'Content', 'Title', 'Description'],
+	message: ['Root', 'Content', 'Actions'],
 	modal: [
 		'Root',
 		'Trigger',
@@ -95,10 +117,13 @@ const NAMESPACED = {
 		'Confirm'
 	],
 	popover: ['Root', 'Trigger', 'Content', 'Title'],
+	'prompt-composer': ['Root', 'Input', 'Toolbar', 'Actions', 'Submit'],
 	'radio-group': ['Root', 'Item'],
+	reasoning: ['Root', 'Trigger', 'Content'],
 	select: ['Root', 'Trigger', 'Value', 'Label', 'Item', 'Content'],
 	sheet: ['Root', 'Trigger', 'Title', 'Header', 'Footer', 'Description', 'Content', 'Close'],
 	tabs: ['Root', 'List', 'Trigger', 'Content'],
+	tool: ['Root', 'Item', 'Input', 'Output'],
 	'toggle-group': ['Root', 'Item'],
 	tooltip: ['Root', 'Content', 'Trigger']
 } as const;
@@ -113,6 +138,8 @@ const DIRECT_PARTS = {
 const FROZEN = [...Object.keys(NAMED), ...Object.keys(NAMESPACED)].sort((a, b) =>
 	a.localeCompare(b)
 );
+const NON_INSTALLABLE = ['toolbar'];
+const INSTALLABLE = FROZEN.filter((name) => !NON_INSTALLABLE.includes(name));
 
 const REMOVED = ['marquee', 'panel', 'separator'] as const;
 
@@ -151,9 +178,9 @@ function parseExportedNames(source: string): string[] {
 }
 
 describe('public API contract (v1 freeze)', () => {
-	test('frozen catalog is exactly 38 components with no overlap', () => {
-		expect(FROZEN).toHaveLength(38);
-		expect(new Set(FROZEN).size).toBe(38);
+	test('frozen catalog is exactly 50 components with no overlap', () => {
+		expect(FROZEN).toHaveLength(50);
+		expect(new Set(FROZEN).size).toBe(50);
 		for (const slug of Object.keys(NAMED)) {
 			expect(NAMESPACED).not.toHaveProperty(slug);
 		}
@@ -231,12 +258,12 @@ describe('public API contract (v1 freeze)', () => {
 			.map((component) => component.name)
 			.sort((a, b) => a.localeCompare(b));
 
-		expect(publicNames).toEqual(FROZEN);
+		expect(publicNames).toEqual(FROZEN.filter((name) => !NON_INSTALLABLE.includes(name)));
 		for (const removed of REMOVED) {
 			expect(publicNames).not.toContain(removed);
 		}
 
-		for (const slug of FROZEN) {
+		for (const slug of FROZEN.filter((name) => !NON_INSTALLABLE.includes(name))) {
 			const plan = resolveInstallable(snapshot, slug);
 			expect(plan).toBe(slug);
 		}

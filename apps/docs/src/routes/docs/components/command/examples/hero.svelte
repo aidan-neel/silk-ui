@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Command from '@sivir/ui/components/command';
-	import Shortcut from '@sivir/ui/components/shortcut';
+	import * as Command from '@sivir-ui/svelte/components/command';
+	import Shortcut from '@sivir-ui/svelte/components/shortcut';
 	import Search from '@lucide/svelte/icons/search';
 	import Inbox from '@lucide/svelte/icons/inbox';
 	import CircleDot from '@lucide/svelte/icons/circle-dot';
@@ -13,12 +13,15 @@
 
 <div class="flex items-center justify-center">
 	<Command.Root>
-		<Command.Trigger variant="outline" class="w-64 justify-between px-4 py-2 text-muted-foreground">
-			<div class="flex items-center gap-2">
+		<Command.Trigger
+			variant="outline"
+			class="w-full max-w-lg justify-between gap-2 px-3 py-2 text-muted-foreground"
+		>
+			<div class="flex min-w-0 items-center gap-2">
 				<Search size={16} />
-				<span>Search or jump to…</span>
+				<span class="truncate">Search or jump to…</span>
 			</div>
-			<Shortcut shortcut="cmd+K" />
+			<Shortcut shortcut="cmd+K" class="shrink-0" />
 		</Command.Trigger>
 		<Command.Content>
 			<Command.Search placeholder="Type a command or search…" />

@@ -7,7 +7,7 @@ import {
 	hexToRgb,
 	rgbToHex,
 	isValidHex
-} from '@sivir/ui/components/color-picker/conversions';
+} from '@sivir-ui/svelte/components/color-picker/conversions';
 
 /*
  * P3-F3 resolution: color-conversion helpers extracted from

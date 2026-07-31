@@ -1,12 +1,12 @@
 <script lang="ts">
-	import * as Modal from '@sivir/ui/components/modal';
+	import * as Modal from '@sivir-ui/svelte/components/modal';
 
 	let open = $state(false);
 </script>
 
 <Modal.Root bind:open>
 	<Modal.Trigger>Open modal</Modal.Trigger>
-	<Modal.Content class="max-w-[26rem]">
+	<Modal.Content>
 		<Modal.Header>
 			<Modal.Title>Modal title</Modal.Title>
 			<Modal.Description>Describe what happens here.</Modal.Description>

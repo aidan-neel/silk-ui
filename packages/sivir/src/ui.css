@@ -4,7 +4,7 @@
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-	--font-sans: Geist, 'Geist Sans', sans-serif;
+	--font-sans: 'DM Sans', sans-serif;
 	--font-mono: 'JetBrains Mono', monospace;
 	--font-header: var(--font-sans);
 

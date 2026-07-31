@@ -8,7 +8,7 @@ import SubTrigger from './context-menu-sub-trigger.svelte';
 import Sub from './context-menu-sub.svelte';
 import Trigger from './context-menu-trigger.svelte';
 
-import type { DefaultProps } from '@sivir/ui/utils';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { VirtualElement } from '@floating-ui/dom';
 import type { ButtonProps } from '../button';

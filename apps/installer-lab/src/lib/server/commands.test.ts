@@ -19,7 +19,7 @@ describe('installer command construction', () => {
 		expect(staging.bin).toBe('bun');
 		expect(staging.args).toEqual([
 			'add',
-			source === 'local' ? '/tmp/sivir.tgz' : '@sivir/ui@latest'
+			source === 'local' ? '/tmp/sivir.tgz' : '@sivir-ui/svelte@latest'
 		]);
 		if (installPath === 'cli') {
 			const commands = cliCommands('/tmp/stage/node_modules/.bin/sivir', '/tmp/app');
@@ -28,7 +28,7 @@ describe('installer command construction', () => {
 		} else {
 			expect(consumerInstallCommand(source, '/tmp/app', '/tmp/sivir.tgz', '1.2.3').args).toEqual([
 				'add',
-				source === 'local' ? '/tmp/sivir.tgz' : '@sivir/ui@1.2.3'
+				source === 'local' ? '/tmp/sivir.tgz' : '@sivir-ui/svelte@1.2.3'
 			]);
 		}
 	});
@@ -42,7 +42,7 @@ describe('installer command construction', () => {
 		expect(commands[1].args).toContain('--no-install');
 		expect(commands[2]).toMatchObject({
 			bin: 'bun',
-			args: ['add', '@fontsource/geist-sans@5.3.0']
+			args: ['add', '@fontsource/dm-sans@5.3.0']
 		});
 	});
 });

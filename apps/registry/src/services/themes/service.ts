@@ -1,6 +1,6 @@
 import { status } from 'elysia';
 import { prisma } from '@lib/prisma';
-import { parseTheme } from '@sivir/ui/themes/theme';
+import { parseTheme } from '@sivir-ui/svelte/themes/theme';
 import type { Theme, ThemeRecord } from './model';
 import { defaultThemeRecord, defaultThemes, findDefaultTheme, isDefaultSlug } from './defaults';
 

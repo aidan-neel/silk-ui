@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as RadioGroup from '@sivir/ui/components/radio-group';
+	import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
 
 	let { value = $bindable(''), name = 'rg', disabled = false } = $props();
 </script>

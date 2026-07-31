@@ -1,4 +1,4 @@
-name: Publish @sivir/ui
+name: Publish @sivir-ui/svelte
 
 on:
   release:
@@ -82,7 +82,7 @@ jobs:
         run: bun --filter='registry' run test
 
       - name: Test (sivir package)
-        run: bun --filter='@sivir/ui' run test
+        run: bun --filter='@sivir-ui/svelte' run test
 
       - name: Test (browser)
         run: bun --filter='docs' run test:browser
@@ -102,13 +102,13 @@ jobs:
           node -e "import('./build/handler.js')"
 
       - name: Test CLI in a fresh consumer
-        run: bun --filter='@sivir/ui' run sandbox
+        run: bun --filter='@sivir-ui/svelte' run sandbox
 
       - name: Pack and verify fresh SvelteKit consumer
-        run: bun --filter='@sivir/ui' run verify:artifact
+        run: bun --filter='@sivir-ui/svelte' run verify:artifact
 
       - name: Verify CLI source-copy from retained tarball
-        run: bun --filter='@sivir/ui' run verify:cli-artifact
+        run: bun --filter='@sivir-ui/svelte' run verify:cli-artifact
 
       - name: Publish verified tarball
         run: npm publish packages/sivir/.release/*.tgz --access public --provenance --ignore-scripts

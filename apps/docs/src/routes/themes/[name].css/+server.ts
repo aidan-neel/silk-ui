@@ -1,5 +1,5 @@
-import { themeToCss } from '@sivir/ui/themes/theme';
-import { builtInThemePresets } from '@sivir/ui/themes/builtin-presets';
+import { themeToCss } from '@sivir-ui/svelte/themes/theme';
+import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

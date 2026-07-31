@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import type { SheetTitleProps } from '.';
 	import { getSheetContext } from './context.svelte';
 

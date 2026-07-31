@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, type DefaultProps } from '@sivir/ui/utils';
+	import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
 
 	let { class: className, children, ...rest }: DefaultProps = $props();
 </script>

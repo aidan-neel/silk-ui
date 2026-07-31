@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import { type Snippet } from 'svelte';
 	import { ChevronRight } from '@lucide/svelte';
-	import * as Popover from '@sivir/ui/components/popover';
+	import * as Popover from '@sivir-ui/svelte/components/popover';
 
 	type SubTriggerProps = {
 		class?: string;

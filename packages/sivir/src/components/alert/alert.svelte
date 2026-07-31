@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { alert, alertIcon } from './variants';
-	import { cn } from '@sivir/ui/utils';
+	import { cn } from '@sivir-ui/svelte/utils';
 	import Check from '@lucide/svelte/icons/circle-check';
 	import X from '@lucide/svelte/icons/circle-x';
 	import Warning from '@lucide/svelte/icons/triangle-alert';
