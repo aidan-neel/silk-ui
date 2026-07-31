@@ -13,12 +13,12 @@
 	"dependencies": {
 		"@sivir-ui/svelte": "workspace:*",
 		"@elysiajs/openapi": "^1.4.14",
-		"@prisma/adapter-pg": "^7.6.0",
-		"@prisma/client": "^7.6.0",
+		"@prisma/adapter-pg": "^7.9.1",
+		"@prisma/client": "^7.9.1",
 		"dotenv": "^17.4.0",
 		"elysia": "^1.4.29",
 		"pg": "^8.20.0",
-		"prisma": "^7.6.0"
+		"prisma": "^7.9.1"
 	},
 	"devDependencies": {
 		"@types/pg": "^8.20.0",

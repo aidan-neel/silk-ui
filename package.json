@@ -11,11 +11,12 @@
 		"packages/*"
 	],
 	"overrides": {
-		"@hono/node-server": "1.19.13",
-		"brace-expansion": "5.0.7",
+		"brace-expansion": "5.0.9",
 		"cookie": "1.1.1",
-		"hono": "4.12.25",
-		"tar": "7.5.20",
+		"fast-uri": "3.1.5",
+		"postcss": "8.5.25",
+		"prettier": "3.8.3",
+		"tar": "7.5.22",
 		"undici": "7.28.0"
 	},
 	"scripts": {
