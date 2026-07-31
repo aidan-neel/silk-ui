@@ -283,6 +283,9 @@ describe('Keyboard nav -- focus management (Playwright)', () => {
  * ENABLED and assert zero violations, locking in the fix.
  */
 async function runAxeWithContrast(): Promise<axe.Result[]> {
+	// Measure settled colors, not the temporary alpha/color interpolation used
+	// while panels and their triggers enter the page.
+	await new Promise((resolve) => setTimeout(resolve, 220));
 	const result = await axe.run(document.body, {
 		rules: {
 			region: { enabled: false },

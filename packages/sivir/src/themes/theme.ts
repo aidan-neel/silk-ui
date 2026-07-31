@@ -126,7 +126,7 @@ const NEUTRALS: Record<NeutralTemp, { light: NeutralRamp; dark: NeutralRamp }> =
 			100: 'hsl(60 6.2% 93.7%)',
 			150: 'hsl(60 4.2% 90.6%)',
 			300: 'hsl(60 4.4% 82.4%)',
-			500: 'hsl(60 3% 42%)',
+			500: 'hsl(60 3% 41.5%)',
 			900: 'hsl(60 5.7% 10.4%)'
 		},
 		dark: {
