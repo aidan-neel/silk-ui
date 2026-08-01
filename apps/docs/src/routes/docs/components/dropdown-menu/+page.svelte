@@ -16,6 +16,8 @@
 	import SortMenuSrc from './examples/sort-menu.svelte?raw';
 	import Inverted from './examples/inverted.svelte';
 	import InvertedSrc from './examples/inverted.svelte?raw';
+	import Configuration from './examples/configuration.svelte';
+	import ConfigurationSrc from './examples/configuration.svelte?raw';
 
 	const _TITLE = 'Dropdown Menu';
 
@@ -152,6 +154,21 @@
 			</h3>
 			<ComponentPreview code={SortMenuSrc}>
 				<SortMenu />
+			</ComponentPreview>
+		</div>
+
+		<!-- Inverted menu -->
+		<div id="configuration-menu" class="scroll-mt-20 flex flex-col gap-3">
+			<h3
+				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+			>
+				Configuration submenu
+			</h3>
+			<p class="text-sm text-foreground-muted">
+				Nested choices for configuring a model, effort level, and response speed.
+			</p>
+			<ComponentPreview code={ConfigurationSrc}>
+				<Configuration />
 			</ComponentPreview>
 		</div>
 
