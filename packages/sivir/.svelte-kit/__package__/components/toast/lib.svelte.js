@@ -24,20 +24,24 @@ let primaryHostId = $state(null);
 /** Clears the pending timeout for a toast when one exists. */
 function clearToastTimeout(id) {
     const entry = toastTimeouts.get(id);
-    if (!entry)
+    if (!entry) {
         return;
+    }
     clearTimeout(entry.timeout);
     toastTimeouts.delete(id);
 }
 /** Starts the exit lifecycle for a toast and removes it after the exit duration. */
 function dismissToastForState(state, id) {
-    if (!state?.data)
+    if (!state?.data) {
         return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current)
+    if (!current) {
         return;
-    if (current.leaving)
+    }
+    if (current.leaving) {
         return;
+    }
     current.leaving = true;
     clearToastTimeout(id);
     toastTimeouts.set(id, {
@@ -53,8 +57,9 @@ function dismissToast(id) {
 }
 /** Schedules automatic dismissal for a toast after the provided duration. */
 function scheduleToastRemoval(id, duration, state = activeState) {
-    if (!state)
+    if (!state) {
         return;
+    }
     clearToastTimeout(id);
     toastTimeouts.set(id, {
         state,
@@ -64,11 +69,13 @@ function scheduleToastRemoval(id, duration, state = activeState) {
 /** Pauses a toast timer while the user is interacting with it. */
 function pauseToast(id) {
     const state = activeState;
-    if (!state?.data)
+    if (!state?.data) {
         return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current || current.persistent || current.paused || current.leaving)
+    if (!current || current.persistent || current.paused || current.leaving) {
         return;
+    }
     current.paused = true;
     const elapsed = Date.now() - (current.createdAt ?? Date.now());
     current.remaining = Math.max((current.remaining ?? current.duration ?? 5600) - elapsed, 0);
@@ -77,22 +84,26 @@ function pauseToast(id) {
 /** Resumes a paused toast timer using its remaining duration. */
 function resumeToast(id) {
     const state = activeState;
-    if (!state?.data)
+    if (!state?.data) {
         return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current || current.persistent || !current.paused || current.leaving)
+    if (!current || current.persistent || !current.paused || current.leaving) {
         return;
+    }
     current.paused = false;
     current.createdAt = Date.now();
     scheduleToastRemoval(id, current.remaining ?? current.duration ?? 4200);
 }
 /** Updates a toast in place and reschedules dismissal when needed. */
 function updateToastForState(state, id, updates) {
-    if (!state?.data)
+    if (!state?.data) {
         return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current)
+    if (!current) {
         return;
+    }
     Object.assign(current, updates);
     if (updates.leaving === false) {
         current.leaving = false;
@@ -106,8 +117,9 @@ function updateToast(id, updates) {
 }
 /** Creates a toast instance, registers its actions, and returns the live object. */
 function createToast(toastData, state = activeState) {
-    if (!state?.data)
+    if (!state?.data) {
         return toastData;
+    }
     const toastId = (nextToastId += 1);
     const duration = toastData.duration ?? 5600;
     const nextToast = {
@@ -125,8 +137,9 @@ function createToast(toastData, state = activeState) {
     nextToast.update = (updates) => updateToastForState(state, toastId, updates);
     if (state.data.toasts.length >= 5) {
         const oldest = state.data.toasts[0];
-        if (oldest?.id !== undefined)
+        if (oldest?.id !== undefined) {
             dismissToastForState(state, oldest.id);
+        }
     }
     state.data.toasts = [...state.data.toasts, nextToast];
     if (!nextToast.persistent) {
@@ -146,8 +159,9 @@ function toastPromise(promise, messages) {
     }, state);
     promise
         .then((data) => {
-        if (t.id === undefined)
+        if (t.id === undefined) {
             return;
+        }
         const title = typeof messages.success === 'function' ? messages.success(data) : messages.success;
         const description = messages.successDescription
             ? typeof messages.successDescription === 'function'
@@ -169,8 +183,9 @@ function toastPromise(promise, messages) {
         scheduleToastRemoval(t.id, 4200, state);
     })
         .catch((err) => {
-        if (t.id === undefined)
+        if (t.id === undefined) {
             return;
+        }
         const title = typeof messages.error === 'function' ? messages.error(err) : messages.error;
         const description = messages.errorDescription
             ? typeof messages.errorDescription === 'function'
@@ -206,11 +221,13 @@ toast.dismiss = (id) => {
         return;
     }
     const state = activeState;
-    if (!state?.data)
+    if (!state?.data) {
         return;
+    }
     [...state.data.toasts].forEach((t) => {
-        if (t.id !== undefined)
+        if (t.id !== undefined) {
             dismissToast(t.id);
+        }
     });
 };
 function getToastUIState() {
@@ -235,19 +252,22 @@ function setToastUIState() {
         setContext(STATE_KEY, fresh);
         return { state: fresh, hostId: -1 };
     }
-    if (!clientState)
+    if (!clientState) {
         clientState = fresh;
+    }
     const state = clientState;
     const hostId = (nextHostId += 1);
     liveHosts.push(hostId);
-    if (primaryHostId === null)
+    if (primaryHostId === null) {
         primaryHostId = hostId;
+    }
     activeState = state;
     setContext(STATE_KEY, state);
     onDestroy(() => {
         const idx = liveHosts.indexOf(hostId);
-        if (idx !== -1)
+        if (idx !== -1) {
             liveHosts.splice(idx, 1);
+        }
         if (primaryHostId === hostId) {
             primaryHostId = liveHosts[0] ?? null;
         }

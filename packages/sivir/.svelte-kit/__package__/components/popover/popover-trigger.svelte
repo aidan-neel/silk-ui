@@ -44,7 +44,9 @@
     }
 
     function closePopover(delay = 180) {
-        if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
+        if (popoverState.closeTimeout) {
+            clearTimeout(popoverState.closeTimeout);
+        }
 
         if (delay <= 0) {
             popoverState.open = false;
@@ -108,8 +110,11 @@
     class={classProp}
     {style}
     onclick={() => {
-        if (popoverState.open) closePopover(0);
-        else openPopover();
+        if (popoverState.open) {
+            closePopover(0);
+        } else {
+            openPopover();
+        }
         onclick?.();
     }}
     onmouseenter={handleEnter}

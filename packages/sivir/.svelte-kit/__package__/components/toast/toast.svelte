@@ -15,11 +15,26 @@
     const { toast }: { toast: Toast } = $props();
 
     const Icon = $derived.by(() => {
-        if (toast.type === 'success') return Check;
-        if (toast.type === 'error') return CircleX;
-        if (toast.type === 'warning') return Warning;
-        if (toast.type === 'loading') return Loader;
-        if (toast.type === 'info') return Info;
+        if (toast.type === 'success') {
+            return Check;
+        }
+
+        if (toast.type === 'error') {
+            return CircleX;
+        }
+
+        if (toast.type === 'warning') {
+            return Warning;
+        }
+
+        if (toast.type === 'loading') {
+            return Loader;
+        }
+
+        if (toast.type === 'info') {
+            return Info;
+        }
+
         return null;
     });
 
@@ -39,8 +54,16 @@
         'ring-1 ring-black/4 sm:ring-0',
         'text-foreground'
     )}
-    onmouseenter={() => toast.id !== undefined && pauseToast(toast.id)}
-    onmouseleave={() => toast.id !== undefined && resumeToast(toast.id)}
+    onmouseenter={() => {
+        if (toast.id !== undefined) {
+            pauseToast(toast.id);
+        }
+    }}
+    onmouseleave={() => {
+        if (toast.id !== undefined) {
+            resumeToast(toast.id);
+        }
+    }}
 >
     <div class="flex items-start gap-3 p-4">
         {#if Icon}
@@ -87,7 +110,9 @@
                             )}
                             onclick={() => {
                                 action.callback();
-                                if (toast.id !== undefined) dismissToast(toast.id);
+                                if (toast.id !== undefined) {
+                                    dismissToast(toast.id);
+                                }
                             }}
                         >
                             {action.label}

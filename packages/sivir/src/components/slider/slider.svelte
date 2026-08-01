@@ -26,7 +26,9 @@
 
     function startDrag(event: PointerEvent) {
         const input = event.currentTarget as HTMLInputElement;
-        if (input.disabled) return;
+        if (input.disabled) {
+            return;
+        }
         input.dataset.dragging = '';
     }
 

@@ -14,7 +14,9 @@
     }: AccordionProps = $props();
 
     function isOpen(itemValue: string) {
-        if (type === 'multiple') return Array.isArray(value) && value.includes(itemValue);
+        if (type === 'multiple') {
+            return Array.isArray(value) && value.includes(itemValue);
+        }
         return value === itemValue;
     }
 
@@ -22,8 +24,11 @@
         if (type === 'multiple') {
             const arr = Array.isArray(value) ? [...value] : [];
             const idx = arr.indexOf(itemValue);
-            if (idx === -1) arr.push(itemValue);
-            else arr.splice(idx, 1);
+            if (idx === -1) {
+                arr.push(itemValue);
+            } else {
+                arr.splice(idx, 1);
+            }
             value = arr;
             onValueChange?.(arr);
         } else {

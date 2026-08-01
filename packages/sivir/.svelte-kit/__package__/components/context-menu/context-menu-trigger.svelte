@@ -33,7 +33,9 @@
     }
 
     function onKeydown(e: KeyboardEvent) {
-        if (e.key !== 'ContextMenu' && !(e.shiftKey && e.key === 'F10')) return;
+        if (e.key !== 'ContextMenu' && !(e.shiftKey && e.key === 'F10')) {
+            return;
+        }
         e.preventDefault();
         const target = e.currentTarget as HTMLElement;
         const rect = target.getBoundingClientRect();
@@ -42,7 +44,9 @@
     }
 
     function onPointerup(e: PointerEvent) {
-        if (e.pointerType !== 'touch') return;
+        if (e.pointerType !== 'touch') {
+            return;
+        }
         const target = e.currentTarget as HTMLElement;
         const rect = target.getBoundingClientRect();
         contextMenuState.virtualElement = makeVirtualEl(

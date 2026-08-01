@@ -58,6 +58,12 @@ describe('publishable package contract', () => {
         expect(css).not.toContain('@layer base');
     });
 
+    test('scans compiled component modules in published consumer installations', async () => {
+        const css = await readFile(new URL('./src/ui.css', import.meta.url), 'utf8');
+
+        expect(css).toContain('@source "./**/*.{svelte,ts,js}";');
+    });
+
     test('keeps component animations colocated and reduced-motion safe', async () => {
         const animationFiles = [
             './src/components/button/button.svelte',

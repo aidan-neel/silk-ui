@@ -26,7 +26,9 @@ import markdown from 'highlight.js/lib/languages/markdown';
 let registered = false;
 
 function ensureRegistered() {
-    if (registered) return;
+    if (registered) {
+        return;
+    }
     registered = true;
     hljs.registerLanguage('javascript', javascript);
     hljs.registerLanguage('typescript', typescript);

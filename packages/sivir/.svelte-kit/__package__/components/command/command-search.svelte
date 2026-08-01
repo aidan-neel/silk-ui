@@ -30,7 +30,9 @@
         }
 
         return () => {
-            if (searchTimeout) clearTimeout(searchTimeout);
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
             resultsAnimation?.cancel();
         };
     });
@@ -49,13 +51,18 @@
         }
         command.activeId = getCommandResults(command)[0]?.id;
 
-        if (!resultsElement || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+        if (!resultsElement || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
+        }
         await tick();
-        if (!resultsElement.isConnected) return;
+        if (!resultsElement.isConnected) {
+            return;
+        }
 
         const endHeight = resultsElement.getBoundingClientRect().height;
-        if (startHeight === undefined || startHeight === endHeight) return;
+        if (startHeight === undefined || startHeight === endHeight) {
+            return;
+        }
 
         const animation = resultsElement.animate(
             [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
@@ -63,24 +70,32 @@
         );
         resultsAnimation = animation;
         animation.onfinish = animation.oncancel = () => {
-            if (resultsAnimation === animation) resultsAnimation = undefined;
+            if (resultsAnimation === animation) {
+                resultsAnimation = undefined;
+            }
         };
     }
 
     function handleInput() {
-        if (searchTimeout) clearTimeout(searchTimeout);
+        if (searchTimeout) {
+            clearTimeout(searchTimeout);
+        }
         searchTimeout = setTimeout(() => void updateResults(command.searchContent), 50);
     }
 
     function flushSearch() {
-        if (!searchTimeout) return;
+        if (!searchTimeout) {
+            return;
+        }
         clearTimeout(searchTimeout);
         void updateResults(command.searchContent);
     }
 
     function setActive(index: number) {
         const results = getCommandResults(command);
-        if (results.length === 0) return;
+        if (results.length === 0) {
+            return;
+        }
 
         const item = results[(index + results.length) % results.length];
         command.activeId = item.id;
@@ -88,7 +103,9 @@
     }
 
     function handleKeydown(event: KeyboardEvent) {
-        if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter'].includes(event.key)) flushSearch();
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter'].includes(event.key)) {
+            flushSearch();
+        }
         const results = getCommandResults(command);
         const activeIndex = results.findIndex((item) => item.id === command.activeId);
 
@@ -111,7 +128,9 @@
                 break;
             case 'Enter': {
                 const active = results.find((item) => item.id === command.activeId) ?? results[0];
-                if (!active) return;
+                if (!active) {
+                    return;
+                }
                 event.preventDefault();
                 active.ref?.click();
                 break;

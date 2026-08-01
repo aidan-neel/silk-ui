@@ -24,7 +24,9 @@
     const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
 
     function measure() {
-        if (!element) return;
+        if (!element) {
+            return;
+        }
         scrollTop = element.scrollTop;
         scrollHeight = element.scrollHeight;
         clientHeight = element.clientHeight;
@@ -35,11 +37,15 @@
      * edge cues are correct before the first scroll event fires.
      */
     $effect(() => {
-        if (!element) return;
+        if (!element) {
+            return;
+        }
         measure();
         const ro = new ResizeObserver(measure);
         ro.observe(element);
-        for (const child of Array.from(element.children)) ro.observe(child);
+        for (const child of Array.from(element.children)) {
+            ro.observe(child);
+        }
         return () => ro.disconnect();
     });
 </script>

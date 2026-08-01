@@ -134,7 +134,9 @@ export function isPointInSubmenuTriangle(
     panel: DOMRect,
     placement: Placement
 ) {
-    if (pointInRect(point, trigger) || pointInRect(point, panel)) return true;
+    if (pointInRect(point, trigger) || pointInRect(point, panel)) {
+        return true;
+    }
 
     const contactMargin = 8;
     const triggerCenter = {
@@ -222,7 +224,9 @@ function isFloatingOverlayElement(el: Element) {
  * lock restores the original overflow and scrollbar padding.
  */
 export function lockBodyScroll() {
-    if (typeof document === 'undefined') return () => {};
+    if (typeof document === 'undefined') {
+        return () => {};
+    }
 
     if (bodyScrollLocks === 0) {
         savedBodyOverflow = document.body.style.overflow;
@@ -248,11 +252,15 @@ export function lockBodyScroll() {
 
 /** Marks non-overlay body children as non-interactive while a floating layer is open. */
 export function lockBodyBackground() {
-    if (typeof document === 'undefined') return () => {};
+    if (typeof document === 'undefined') {
+        return () => {};
+    }
 
     if (bodyInertLocks === 0) {
         for (const el of Array.from(document.body.children) as HTMLElement[]) {
-            if (isFloatingOverlayElement(el)) continue;
+            if (isFloatingOverlayElement(el)) {
+                continue;
+            }
             el.classList.add('pointer-events-none');
         }
     }
@@ -293,7 +301,9 @@ let escapeListenerAttached = false;
 
 /** DOM depth of an element, or -1 when it is detached. */
 function domDepth(element: Element | undefined) {
-    if (!element || !document.contains(element)) return -1;
+    if (!element || !document.contains(element)) {
+        return -1;
+    }
 
     let depth = 0;
     let current: Node | null = element;
@@ -310,7 +320,9 @@ function domDepth(element: Element | undefined) {
  * handlers from firing in the same tick and closing a second layer.
  */
 function onDocumentEscape(event: KeyboardEvent) {
-    if (event.key !== 'Escape' || escapeStack.length === 0) return;
+    if (event.key !== 'Escape' || escapeStack.length === 0) {
+        return;
+    }
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -328,7 +340,9 @@ function onDocumentEscape(event: KeyboardEvent) {
 }
 
 function ensureEscapeListener() {
-    if (typeof document === 'undefined' || escapeListenerAttached) return;
+    if (typeof document === 'undefined' || escapeListenerAttached) {
+        return;
+    }
     document.addEventListener('keydown', onDocumentEscape, true);
     escapeListenerAttached = true;
 }
@@ -338,13 +352,17 @@ function ensureEscapeListener() {
  * Modal, sheet, and popover push on open and pop on teardown.
  */
 export function pushEscapeLayer(close: () => void, element?: Element) {
-    if (typeof document === 'undefined') return () => {};
+    if (typeof document === 'undefined') {
+        return () => {};
+    }
     ensureEscapeListener();
     const layer = { close, element };
     escapeStack.push(layer);
     return () => {
         const index = escapeStack.lastIndexOf(layer);
-        if (index >= 0) escapeStack.splice(index, 1);
+        if (index >= 0) {
+            escapeStack.splice(index, 1);
+        }
     };
 }
 
@@ -370,8 +388,12 @@ const FOCUSABLE_SELECTOR = [
 /** Returns the visible, interactive descendants inside a container. */
 export function getFocusableElements(container: HTMLElement) {
     return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter((el) => {
-        if (el.hasAttribute('disabled')) return false;
-        if (el.getAttribute('aria-hidden') === 'true') return false;
+        if (el.hasAttribute('disabled')) {
+            return false;
+        }
+        if (el.getAttribute('aria-hidden') === 'true') {
+            return false;
+        }
         return !(
             el.offsetParent === null &&
             getComputedStyle(el).position !== 'fixed' &&
@@ -392,18 +414,24 @@ export function trapFocus(
     dialogEl: HTMLElement,
     options?: { initialFocus?: HTMLElement | null; returnFocus?: HTMLElement | null }
 ) {
-    if (!dialogEl) return;
+    if (!dialogEl) {
+        return;
+    }
 
     const previouslyFocused =
         options?.returnFocus ??
         (document.activeElement instanceof HTMLElement ? document.activeElement : null);
 
     const handleKeydown = (e: KeyboardEvent) => {
-        if (e.key !== 'Tab') return;
+        if (e.key !== 'Tab') {
+            return;
+        }
 
         const focusable = getFocusableElements(dialogEl);
 
-        if (focusable.length === 0) return;
+        if (focusable.length === 0) {
+            return;
+        }
 
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
@@ -424,7 +452,9 @@ export function trapFocus(
 
     const handleFocusIn = (e: FocusEvent) => {
         const target = e.target as Node | null;
-        if (!target || dialogEl.contains(target)) return;
+        if (!target || dialogEl.contains(target)) {
+            return;
+        }
         if (options?.initialFocus) {
             options.initialFocus.focus();
         } else if (!focusFirstDescendant(dialogEl)) {
@@ -472,7 +502,9 @@ export function pressable(node: HTMLElement) {
     }
 
     function onKeyDown(e: KeyboardEvent) {
-        if (e.key === ' ' || e.key === 'Enter') measure();
+        if (e.key === ' ' || e.key === 'Enter') {
+            measure();
+        }
     }
 
     node.addEventListener('pointerdown', measure, true);
@@ -514,11 +546,19 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     resizeObserver.observe(node);
 
     function usableItem(target: EventTarget | null) {
-        if (!(target instanceof Element)) return;
+        if (!(target instanceof Element)) {
+            return;
+        }
         const item = target.closest<HTMLElement>(itemSelector);
-        if (!item || !node.contains(item)) return;
-        if (item.closest('.sivir-collection-surface') !== node) return;
-        if (item.matches(':disabled, [aria-disabled="true"]') || item.hidden) return;
+        if (!item || !node.contains(item)) {
+            return;
+        }
+        if (item.closest('.sivir-collection-surface') !== node) {
+            return;
+        }
+        if (item.matches(':disabled, [aria-disabled="true"]') || item.hidden) {
+            return;
+        }
         return item;
     }
 
@@ -527,7 +567,9 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
             const target = Array.from(node.querySelectorAll<HTMLElement>(selector)).find(
                 (item) => item.closest('.sivir-collection-surface') === node
             );
-            if (target) return target;
+            if (target) {
+                return target;
+            }
         }
         return undefined;
     }
@@ -554,7 +596,9 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
         highlight.style.opacity = '1';
 
         if (observedTarget !== target) {
-            if (observedTarget) resizeObserver.unobserve(observedTarget);
+            if (observedTarget) {
+                resizeObserver.unobserve(observedTarget);
+            }
             observedTarget = target;
             resizeObserver.observe(target);
         }
@@ -574,7 +618,9 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
 
     function onPointerMove(event: PointerEvent) {
         const item = usableItem(event.target);
-        if (item && item !== current) schedule(item);
+        if (item && item !== current) {
+            schedule(item);
+        }
     }
 
     function onPointerLeave() {
@@ -583,11 +629,15 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
 
     function onFocusIn(event: FocusEvent) {
         const item = usableItem(event.target);
-        if (item) schedule(item);
+        if (item) {
+            schedule(item);
+        }
     }
 
     function onFocusOut(event: FocusEvent) {
-        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) return;
+        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) {
+            return;
+        }
         schedule(restingTarget());
     }
 

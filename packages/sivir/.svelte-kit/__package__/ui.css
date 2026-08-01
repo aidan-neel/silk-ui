@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source "./**/*.{svelte,ts}";
+@source "./**/*.{svelte,ts,js}";
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */

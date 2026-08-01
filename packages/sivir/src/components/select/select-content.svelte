@@ -16,11 +16,15 @@
     let props: Props = $props();
 
     $effect(() => {
-        if (!state.open) return;
+        if (!state.open) {
+            return;
+        }
 
         void tick().then(() => {
             const content = popoverState.popoverRef;
-            if (!content) return;
+            if (!content) {
+                return;
+            }
 
             const selected =
                 content.querySelector<HTMLElement>('[role="option"][aria-selected="true"]') ??
@@ -41,9 +45,13 @@
 
     function handleKeydown(event: KeyboardEvent) {
         const target = event.target;
-        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'option') return;
+        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'option') {
+            return;
+        }
         const listbox = target.closest('[role="listbox"]');
-        if (!listbox) return;
+        if (!listbox) {
+            return;
+        }
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
             moveFocus(target, event.key === 'ArrowDown' ? 1 : -1);

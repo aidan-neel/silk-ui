@@ -52,7 +52,9 @@
         segmented && 'inline-flex items-center justify-center min-h-[32px]'
     )}
     onclick={() => {
-        if (!disabled) tabsState.value = value;
+        if (!disabled) {
+            tabsState.value = value;
+        }
     }}
     {...rest}
 >

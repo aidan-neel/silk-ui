@@ -46,7 +46,9 @@
     const veiled = $derived(expandable && (!open || scrollable));
 
     function measure() {
-        if (!content) return;
+        if (!content) {
+            return;
+        }
         const styles = getComputedStyle(content);
         const parsedLineHeight = Number.parseFloat(styles.lineHeight);
         const parsedFontSize = Number.parseFloat(styles.fontSize);
@@ -55,14 +57,18 @@
     }
 
     function toggle() {
-        if (open) region?.scrollTo({ top: 0 });
+        if (open) {
+            region?.scrollTo({ top: 0 });
+        }
         expanded = !expanded;
         onExpandedChange?.(expanded);
     }
 
     onMount(() => {
         measure();
-        if (!content) return;
+        if (!content) {
+            return;
+        }
         const observer = new ResizeObserver(measure);
         observer.observe(content);
         return () => observer.disconnect();

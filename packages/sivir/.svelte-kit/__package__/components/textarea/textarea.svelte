@@ -29,7 +29,9 @@
     } & HTMLTextareaAttributes = $props();
 
     function resize() {
-        if (!autoresize || !element) return;
+        if (!autoresize || !element) {
+            return;
+        }
         element.style.height = 'auto';
         element.style.height = `${element.scrollHeight}px`;
     }

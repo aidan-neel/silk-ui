@@ -68,11 +68,16 @@
             '[data-ui="conversation-transcript"]'
         );
         const observer = new ResizeObserver(() => {
-            if (conversation.follow) conversation.scrollToBottom('auto');
-            else measure(viewport);
+            if (conversation.follow) {
+                conversation.scrollToBottom('auto');
+            } else {
+                measure(viewport);
+            }
         });
         observer.observe(viewport);
-        if (transcript) observer.observe(transcript);
+        if (transcript) {
+            observer.observe(transcript);
+        }
 
         $effect(() => {
             if (conversation.follow && !conversation.scrollingToBottom) {
@@ -82,12 +87,16 @@
 
         return () => {
             observer.disconnect();
-            if (conversation.viewport === viewport) conversation.viewport = undefined;
+            if (conversation.viewport === viewport) {
+                conversation.viewport = undefined;
+            }
         };
     }
 
     $effect(() => {
-        if (viewport) return observeViewport(viewport);
+        if (viewport) {
+            return observeViewport(viewport);
+        }
     });
 </script>
 

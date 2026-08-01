@@ -32,13 +32,17 @@
     let el = $state<HTMLElement>();
 
     function open() {
-        if (el) showTooltip(el, tip.text, tip.placement, tip.delay);
+        if (el) {
+            showTooltip(el, tip.text, tip.placement, tip.delay);
+        }
     }
     function close() {
         hideTooltip(el ?? null, tip.closeDelay);
     }
     function clickOpen() {
-        if (showOnClick && el) flashTooltip(el, tip.text, tip.placement);
+        if (showOnClick && el) {
+            flashTooltip(el, tip.text, tip.placement);
+        }
     }
 
     /**
@@ -48,7 +52,9 @@
      */
     $effect(() => {
         const text = tip.text;
-        if (el && isActiveTooltip(el)) updateTooltipText(el, text);
+        if (el && isActiveTooltip(el)) {
+            updateTooltipText(el, text);
+        }
     });
 
     onDestroy(() => hideTooltip(el ?? null, 0));

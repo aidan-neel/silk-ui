@@ -221,7 +221,9 @@ function brandDeclarations(brand: string, mode: 'light' | 'dark') {
 /** Scales a `Nms` motion token (keeps `0ms` as-is). */
 function scaleMotionMs(value: string, factor: number): string {
     const n = Number.parseFloat(value);
-    if (!Number.isFinite(n) || n === 0) return value;
+    if (!Number.isFinite(n) || n === 0) {
+        return value;
+    }
     return `${Math.round(n * factor)}ms`;
 }
 
@@ -282,7 +284,9 @@ function enumValue<T extends string>(value: unknown, field: string, values: read
 
 /** Validates untrusted registry/local-storage JSON and returns a normalized theme. */
 export function parseTheme(value: unknown): Theme {
-    if (!isRecord(value)) throw new TypeError('Invalid theme: expected an object.');
+    if (!isRecord(value)) {
+        throw new TypeError('Invalid theme: expected an object.');
+    }
     if (value.version !== THEME_VERSION) {
         throw new TypeError(`Invalid theme: version must be ${THEME_VERSION}.`);
     }

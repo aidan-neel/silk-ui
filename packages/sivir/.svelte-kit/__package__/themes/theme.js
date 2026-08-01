@@ -165,8 +165,9 @@ function brandDeclarations(brand, mode) {
 /** Scales a `Nms` motion token (keeps `0ms` as-is). */
 function scaleMotionMs(value, factor) {
     const n = Number.parseFloat(value);
-    if (!Number.isFinite(n) || n === 0)
+    if (!Number.isFinite(n) || n === 0) {
         return value;
+    }
     return `${Math.round(n * factor)}ms`;
 }
 /** Generates complete, acyclic overrides for every public theme axis. */
@@ -219,8 +220,9 @@ function enumValue(value, field, values) {
 }
 /** Validates untrusted registry/local-storage JSON and returns a normalized theme. */
 export function parseTheme(value) {
-    if (!isRecord(value))
+    if (!isRecord(value)) {
         throw new TypeError('Invalid theme: expected an object.');
+    }
     if (value.version !== THEME_VERSION) {
         throw new TypeError(`Invalid theme: version must be ${THEME_VERSION}.`);
     }

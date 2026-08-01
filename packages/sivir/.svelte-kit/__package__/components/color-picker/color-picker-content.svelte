@@ -51,10 +51,14 @@
      */
     function setHslChannel(channel: 'h' | 's' | 'l', rawValue: string) {
         const next = Number.parseFloat(rawValue);
-        if (!Number.isFinite(next)) return;
+        if (!Number.isFinite(next)) {
+            return;
+        }
         if (channel === 'h') {
             hslH = next;
-            if (hslS === 0) hslS = 60;
+            if (hslS === 0) {
+                hslS = 60;
+            }
         } else if (channel === 's') {
             hslS = next;
         } else {
@@ -67,10 +71,16 @@
 
     function setRgbChannel(channel: 'r' | 'g' | 'b', rawValue: string) {
         const next = Number.parseFloat(rawValue);
-        if (!Number.isFinite(next)) return;
-        if (channel === 'r') rgbR = next;
-        else if (channel === 'g') rgbG = next;
-        else rgbB = next;
+        if (!Number.isFinite(next)) {
+            return;
+        }
+        if (channel === 'r') {
+            rgbR = next;
+        } else if (channel === 'g') {
+            rgbG = next;
+        } else {
+            rgbB = next;
+        }
         applyHex(rgbToHex(rgbR, rgbG, rgbB));
     }
 
@@ -81,7 +91,9 @@
      * preserved, since the round-trip would otherwise snap H back to 0.
      */
     $effect(() => {
-        if (!isValidHex(ctx.value)) return;
+        if (!isValidHex(ctx.value)) {
+            return;
+        }
         const lower = ctx.value.toLowerCase();
         if (skipNextSync) {
             skipNextSync = false;
@@ -99,7 +111,9 @@
         val = v2;
         hexInput = lower;
         const [hh, hs, hl] = hexToHsl(ctx.value);
-        if (hs > 0) hslH = hh;
+        if (hs > 0) {
+            hslH = hh;
+        }
         hslS = hs;
         hslL = hl;
         [rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
@@ -107,7 +121,9 @@
 
     /** Commits a hex value to the picker context. */
     function applyHex(hex: string) {
-        if (!isValidHex(hex)) return;
+        if (!isValidHex(hex)) {
+            return;
+        }
         ctx.apply(hex);
     }
 
@@ -147,26 +163,36 @@
         const preventClose = (event: MouseEvent) => {
             event.stopImmediatePropagation();
             document.removeEventListener('click', preventClose, true);
-            if (timeout) clearTimeout(timeout);
+            if (timeout) {
+                clearTimeout(timeout);
+            }
         };
         document.addEventListener('click', preventClose, true);
         timeout = setTimeout(() => document.removeEventListener('click', preventClose, true), 0);
     }
 
     function finishDrag(e: PointerEvent, suppressClick = true) {
-        if (!draggingSb && !draggingHue && !draggingSlider) return;
-        if (draggingSb && sbEl?.hasPointerCapture(e.pointerId))
+        if (!draggingSb && !draggingHue && !draggingSlider) {
+            return;
+        }
+        if (draggingSb && sbEl?.hasPointerCapture(e.pointerId)) {
             sbEl.releasePointerCapture(e.pointerId);
-        if (draggingHue && hueEl?.hasPointerCapture(e.pointerId))
+        }
+        if (draggingHue && hueEl?.hasPointerCapture(e.pointerId)) {
             hueEl.releasePointerCapture(e.pointerId);
+        }
         draggingSb = false;
         draggingHue = false;
         draggingSlider = false;
-        if (suppressClick) suppressReleaseClick();
+        if (suppressClick) {
+            suppressReleaseClick();
+        }
     }
 
     function sbEventToSV(e: PointerEvent) {
-        if (!sbEl) return;
+        if (!sbEl) {
+            return;
+        }
         const rect = sbEl.getBoundingClientRect();
         sat = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 100);
         val = Math.round(Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height)) * 100);
@@ -179,11 +205,15 @@
         sbEventToSV(e);
     }
     function onSbMove(e: PointerEvent) {
-        if (draggingSb) sbEventToSV(e);
+        if (draggingSb) {
+            sbEventToSV(e);
+        }
     }
     /** Hue strip drag handling. */
     function hueEventToH(e: PointerEvent) {
-        if (!hueEl) return;
+        if (!hueEl) {
+            return;
+        }
         const rect = hueEl.getBoundingClientRect();
         hue = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 360);
         applyHsv();
@@ -195,7 +225,9 @@
         hueEventToH(e);
     }
     function onHueMove(e: PointerEvent) {
-        if (draggingHue) hueEventToH(e);
+        if (draggingHue) {
+            hueEventToH(e);
+        }
     }
     function startSliderDrag() {
         draggingSlider = true;
@@ -255,7 +287,9 @@
                     autocomplete="off"
                     oninput={(e) => handleHexInput((e.currentTarget as HTMLInputElement).value)}
                     onkeydown={(e) => {
-                        if (e.key === 'Enter') applyHex(hexInput);
+                        if (e.key === 'Enter') {
+                            applyHex(hexInput);
+                        }
                     }}
                 />
             </div>
@@ -345,9 +379,13 @@
                         onpointerdown={startSliderDrag}
                         oninput={(e) => {
                             const next = Number((e.currentTarget as HTMLInputElement).value);
-                            if (channel.key === 'h') hue = next;
-                            else if (channel.key === 's') sat = next;
-                            else val = next;
+                            if (channel.key === 'h') {
+                                hue = next;
+                            } else if (channel.key === 's') {
+                                sat = next;
+                            } else {
+                                val = next;
+                            }
                             applyHsv();
                         }}
                         class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-secondary outline-none dark:bg-[var(--color-border-strong)] focus-visible:shadow-[0_0_0_3px_var(--color-ring)] [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[var(--color-background)] [&::-webkit-slider-thumb]:[background:var(--thumb-bg)] [&::-webkit-slider-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[var(--color-background)] [&::-moz-range-thumb]:[background:var(--thumb-bg)] [&::-moz-range-thumb]:shadow-[0_1px_3px_rgb(0_0_0_/_0.2)]"

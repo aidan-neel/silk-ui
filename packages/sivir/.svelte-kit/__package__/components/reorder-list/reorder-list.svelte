@@ -40,7 +40,9 @@
     const dragThreshold = 5;
 
     $effect(() => {
-        if (typeof window.matchMedia !== 'function') return;
+        if (typeof window.matchMedia !== 'function') {
+            return;
+        }
         const query = window.matchMedia('(prefers-reduced-motion: reduce)');
         const update = () => {
             reduced = query.matches;
@@ -51,7 +53,9 @@
     });
 
     $effect(() => {
-        if (disabled) untrack(cancelInterruptedGesture);
+        if (disabled) {
+            untrack(cancelInterruptedGesture);
+        }
     });
 
     function moveItem(list: T[], from: number, to: number) {
@@ -72,24 +76,32 @@
 
     function announcePosition(id: string) {
         const index = indexOf(id);
-        if (index < 0) return;
+        if (index < 0) {
+            return;
+        }
         const item = items[index];
         spoken = `${getLabel(item)}, position ${index + 1} of ${items.length}.`;
     }
 
     function announceDrop(id: string) {
         const index = indexOf(id);
-        if (index < 0) return;
+        if (index < 0) {
+            return;
+        }
         const item = items[index];
         spoken = `${getLabel(item)} dropped at position ${index + 1}.`;
     }
 
     function grab(id: string) {
-        if (disabled || pointerSession) return;
+        if (disabled || pointerSession) {
+            return;
+        }
         snapshot = [...items];
         grabbed = id;
         const index = indexOf(id);
-        if (index < 0) return;
+        if (index < 0) {
+            return;
+        }
         const item = items[index];
         spoken = `${getLabel(item)} grabbed, position ${index + 1} of ${items.length}.`;
     }
@@ -104,7 +116,9 @@
     function clearPointerSession() {
         const session = pointerSession;
         pointerSession = undefined;
-        if (!session) return;
+        if (!session) {
+            return;
+        }
         if (listElement?.hasPointerCapture?.(session.pointerId)) {
             listElement.releasePointerCapture?.(session.pointerId);
         }
@@ -113,7 +127,9 @@
     }
 
     function cancel() {
-        if (!snapshot) return;
+        if (!snapshot) {
+            return;
+        }
         const original = snapshot;
         const active = Boolean(dragging || grabbed);
         snapshot = undefined;
@@ -129,7 +145,9 @@
     function step(id: string, delta: -1 | 1) {
         const from = indexOf(id);
         const to = from + delta;
-        if (from < 0 || to < 0 || to >= items.length) return;
+        if (from < 0 || to < 0 || to >= items.length) {
+            return;
+        }
         emit(moveItem(items, from, to));
         announcePosition(id);
         void tick().then(() => {
@@ -141,12 +159,17 @@
     }
 
     function onRowKeydown(event: KeyboardEvent, id: string) {
-        if (disabled || event.target !== event.currentTarget) return;
+        if (disabled || event.target !== event.currentTarget) {
+            return;
+        }
         const held = grabbed === id;
         if (event.key === ' ' || event.key === 'Enter') {
             event.preventDefault();
-            if (held) drop(id);
-            else grab(id);
+            if (held) {
+                drop(id);
+            } else {
+                grab(id);
+            }
             return;
         }
         if (held && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
@@ -161,7 +184,9 @@
     }
 
     function startPointer(event: PointerEvent, id: string) {
-        if (disabled || grabbed || pointerSession || event.button !== 0) return;
+        if (disabled || grabbed || pointerSession || event.button !== 0) {
+            return;
+        }
         const node = event.currentTarget as HTMLButtonElement;
         snapshot = [...items];
         const rect = node.getBoundingClientRect();
@@ -194,17 +219,23 @@
 
     function movePointer(event: PointerEvent) {
         const session = pointerSession;
-        if (!session || session.pointerId !== event.pointerId || !listElement) return;
+        if (!session || session.pointerId !== event.pointerId || !listElement) {
+            return;
+        }
         if (disabled) {
             cancel();
             return;
         }
         if (!dragging) {
-            if (Math.abs(event.clientY - session.startY) < dragThreshold) return;
+            if (Math.abs(event.clientY - session.startY) < dragThreshold) {
+                return;
+            }
             dragging = session.id;
             session.node.style.setProperty('will-change', 'translate');
         }
-        if (dragging !== session.id) return;
+        if (dragging !== session.id) {
+            return;
+        }
         session.currentY = event.clientY;
         positionDraggedRow(session);
 
@@ -216,14 +247,18 @@
         if (from >= 0 && to !== from) {
             emit(moveItem(items, from, to));
             void tick().then(() => {
-                if (pointerSession === session) positionDraggedRow(session);
+                if (pointerSession === session) {
+                    positionDraggedRow(session);
+                }
             });
         }
     }
 
     function finishPointer(event: PointerEvent) {
         const session = pointerSession;
-        if (!session || session.pointerId !== event.pointerId) return;
+        if (!session || session.pointerId !== event.pointerId) {
+            return;
+        }
         if (disabled) {
             cancel();
             return;
@@ -239,11 +274,15 @@
     }
 
     function cancelPointer(event: PointerEvent) {
-        if (pointerSession?.pointerId === event.pointerId) cancel();
+        if (pointerSession?.pointerId === event.pointerId) {
+            cancel();
+        }
     }
 
     function cancelInterruptedGesture() {
-        if (pointerSession || dragging || grabbed) cancel();
+        if (pointerSession || dragging || grabbed) {
+            cancel();
+        }
     }
 </script>
 
@@ -255,7 +294,9 @@
 />
 <svelte:document
     onvisibilitychange={() => {
-        if (document.hidden) cancelInterruptedGesture();
+        if (document.hidden) {
+            cancelInterruptedGesture();
+        }
     }}
 />
 
@@ -281,7 +322,9 @@
                     onkeydown={(event) => onRowKeydown(event, id)}
                     onpointerdown={(event) => startPointer(event, id)}
                     onblur={() => {
-                        if (held) cancel();
+                        if (held) {
+                            cancel();
+                        }
                     }}
                     class={cn(
                         'relative flex w-full touch-pan-x select-none items-center gap-2.5 rounded-[var(--radius-lg)] border border-border bg-card px-3 py-2.5 text-left text-foreground outline-none transition-[background-color,border-color,box-shadow,translate] [transition-duration:var(--motion-duration-item)] ease-[var(--ease-out)]',

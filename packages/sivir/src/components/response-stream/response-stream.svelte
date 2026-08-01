@@ -26,19 +26,25 @@
     let abortController: AbortController | undefined;
 
     function getChunkSize() {
-        if (typeof characterChunkSize === 'number') return Math.max(1, characterChunkSize);
+        if (typeof characterChunkSize === 'number') {
+            return Math.max(1, characterChunkSize);
+        }
         return speed < 25
             ? 1
             : Math.max(1, Math.round((Math.min(100, Math.max(1, speed)) - 25) / 10));
     }
 
     function getProcessingDelay() {
-        if (typeof segmentDelay === 'number') return Math.max(0, segmentDelay);
+        if (typeof segmentDelay === 'number') {
+            return Math.max(0, segmentDelay);
+        }
         return Math.max(1, Math.round(100 / Math.sqrt(Math.min(100, Math.max(1, speed)))));
     }
 
     function getFadeDuration() {
-        if (typeof fadeDuration === 'number') return Math.max(10, fadeDuration);
+        if (typeof fadeDuration === 'number') {
+            return Math.max(10, fadeDuration);
+        }
         return Math.round(1000 / Math.sqrt(Math.min(100, Math.max(1, speed))));
     }
 
@@ -47,7 +53,9 @@
     }
 
     function updateSegments(text: string) {
-        if (mode !== 'fade') return;
+        if (mode !== 'fade') {
+            return;
+        }
         try {
             const segmenter = new Intl.Segmenter(navigator.language, { granularity: 'word' });
             segments = Array.from(segmenter.segment(text), (segment, index) => ({
@@ -64,13 +72,17 @@
     }
 
     function complete() {
-        if (isComplete) return;
+        if (isComplete) {
+            return;
+        }
         isComplete = true;
         onComplete?.();
     }
 
     function stopStreaming() {
-        if (animationFrame) cancelAnimationFrame(animationFrame);
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+        }
         animationFrame = undefined;
         abortController?.abort();
         abortController = undefined;
@@ -88,7 +100,9 @@
         let lastFrameTime = 0;
 
         const nextFrame = (timestamp: number) => {
-            if (id !== streamId) return;
+            if (id !== streamId) {
+                return;
+            }
             if (timestamp - lastFrameTime < getProcessingDelay()) {
                 animationFrame = requestAnimationFrame(nextFrame);
                 return;
@@ -116,7 +130,9 @@
 
         try {
             for await (const chunk of stream) {
-                if (controller.signal.aborted || id !== streamId) return;
+                if (controller.signal.aborted || id !== streamId) {
+                    return;
+                }
                 displayedText += chunk;
                 updateSegments(displayedText);
             }

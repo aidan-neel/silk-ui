@@ -22,8 +22,9 @@
     let timer: ReturnType<typeof setTimeout> | undefined;
 
     function fallbackCopy() {
-        if (typeof document === 'undefined' || typeof document.execCommand !== 'function')
+        if (typeof document === 'undefined' || typeof document.execCommand !== 'function') {
             return false;
+        }
 
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -48,7 +49,9 @@
         } else {
             didCopy = fallbackCopy();
         }
-        if (!didCopy) return;
+        if (!didCopy) {
+            return;
+        }
 
         copied = true;
         oncopy?.(text);

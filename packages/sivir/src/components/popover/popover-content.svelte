@@ -37,9 +37,13 @@
     let mounted = false;
 
     function updatePosition() {
-        if (!popover) return;
+        if (!popover) {
+            return;
+        }
         const reference = refElement ?? popoverState.buttonRef;
-        if (!reference) return;
+        if (!reference) {
+            return;
+        }
 
         const triggerWidth = popoverState.buttonRef?.getBoundingClientRect().width;
         if (triggerWidth) {
@@ -54,7 +58,9 @@
     }
 
     function schedulePosition() {
-        if (positionFrame !== undefined) return;
+        if (positionFrame !== undefined) {
+            return;
+        }
         positionFrame = requestAnimationFrame(() => {
             positionFrame = undefined;
             updatePosition();
@@ -77,8 +83,12 @@
         }
 
         const ro = new ResizeObserver(schedulePosition);
-        if (popoverState.buttonRef) ro.observe(popoverState.buttonRef);
-        if (popover) ro.observe(popover);
+        if (popoverState.buttonRef) {
+            ro.observe(popoverState.buttonRef);
+        }
+        if (popover) {
+            ro.observe(popover);
+        }
 
         /**
          * Focus tracking for the open panel.
@@ -91,20 +101,26 @@
          */
         const handleFocusIn = (e: FocusEvent) => {
             const target = e.target as HTMLElement;
-            if (!target) return;
+            if (!target) {
+                return;
+            }
 
             const openPopovers = Array.from(
                 document.querySelectorAll<HTMLElement>('[data-floating-content]')
             );
             const inside = openPopovers.some((el) => el.contains(target));
             queueMicrotask(() => {
-                if (mounted) popoverState.focusedInside = inside;
+                if (mounted) {
+                    popoverState.focusedInside = inside;
+                }
             });
         };
 
         const handleFocusOut = () => {
             queueMicrotask(() => {
-                if (mounted) popoverState.focusedInside = false;
+                if (mounted) {
+                    popoverState.focusedInside = false;
+                }
             });
         };
 
@@ -121,14 +137,18 @@
             document.removeEventListener('focusin', handleFocusIn);
             document.removeEventListener('focusout', handleFocusOut);
             ro.disconnect();
-            if (positionFrame !== undefined) cancelAnimationFrame(positionFrame);
+            if (positionFrame !== undefined) {
+                cancelAnimationFrame(positionFrame);
+            }
             popoverState.popoverRef?.remove();
             popover?.remove();
         });
     });
 
     $effect(() => {
-        if (!popoverState.open || !allowClickOutside || !popover) return;
+        if (!popoverState.open || !allowClickOutside || !popover) {
+            return;
+        }
         const outside = clickOutside(
             popover,
             () => {
@@ -149,8 +169,12 @@
     }
 
     function scheduleClose(event: MouseEvent) {
-        if (!popoverState.hoverable) return;
-        if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
+        if (!popoverState.hoverable) {
+            return;
+        }
+        if (popoverState.closeTimeout) {
+            clearTimeout(popoverState.closeTimeout);
+        }
         const resolvedPlacement = (popover?.dataset.placement ??
             popoverState.placement) as Placement;
 
@@ -186,7 +210,9 @@
      * wrapper finishes binding.
      */
     $effect(() => {
-        if (typeof document === 'undefined') return;
+        if (typeof document === 'undefined') {
+            return;
+        }
         if (popoverState.open && !popoverState.hoverable && lockScroll) {
             const releaseScroll = lockBodyScroll();
             return () => {
@@ -200,8 +226,12 @@
      * so Escape closes the deepest open submenu before the parent menu.
      */
     $effect(() => {
-        if (typeof document === 'undefined') return;
-        if (!popoverState.open) return;
+        if (typeof document === 'undefined') {
+            return;
+        }
+        if (!popoverState.open) {
+            return;
+        }
         return pushEscapeLayer(() => {
             popoverState.open = false;
         }, popover);

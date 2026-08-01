@@ -22,7 +22,9 @@
         'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[0.55]';
 
     function toggle(event: Event) {
-        if (disabled) return;
+        if (disabled) {
+            return;
+        }
         switched = !switched;
         userOnclick?.(event as MouseEvent);
     }
@@ -65,7 +67,9 @@
             class={`flex min-w-0 flex-col gap-0.5 pt-px select-none ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-[var(--ui-cursor-interactive)]'}`}
             onclick={toggle}
             onkeydown={(e) => {
-                if (disabled) return;
+                if (disabled) {
+                    return;
+                }
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     toggle(e);

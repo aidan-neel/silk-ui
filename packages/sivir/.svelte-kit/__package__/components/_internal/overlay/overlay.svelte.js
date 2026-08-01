@@ -1,13 +1,16 @@
 import { clickOutside, getFocusableElements, lockBodyScroll, pushEscapeLayer, trapFocus } from '@sivir-ui/svelte/utils';
 export function useOverlay(opts) {
     $effect(() => {
-        if (!opts.isOpen())
+        if (!opts.isOpen()) {
             return;
+        }
         const panel = opts.panelEl();
-        if (!panel)
+        if (!panel) {
             return;
-        if (typeof document === 'undefined')
+        }
+        if (typeof document === 'undefined') {
             return;
+        }
         const lockScroll = opts.lockScroll !== false;
         const cleanupTrap = trapFocus(panel, {
             initialFocus: getFocusableElements(panel)[0] ?? null,

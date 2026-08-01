@@ -87,17 +87,25 @@ export interface ToastFn {
 /** Clears the pending timeout for a toast when one exists. */
 function clearToastTimeout(id: number) {
     const entry = toastTimeouts.get(id);
-    if (!entry) return;
+    if (!entry) {
+        return;
+    }
     clearTimeout(entry.timeout);
     toastTimeouts.delete(id);
 }
 
 /** Starts the exit lifecycle for a toast and removes it after the exit duration. */
 function dismissToastForState(state: ToastState | undefined, id: number) {
-    if (!state?.data) return;
+    if (!state?.data) {
+        return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current) return;
-    if (current.leaving) return;
+    if (!current) {
+        return;
+    }
+    if (current.leaving) {
+        return;
+    }
     current.leaving = true;
     clearToastTimeout(id);
     toastTimeouts.set(id, {
@@ -115,7 +123,9 @@ function dismissToast(id: number) {
 
 /** Schedules automatic dismissal for a toast after the provided duration. */
 function scheduleToastRemoval(id: number, duration: number, state = activeState) {
-    if (!state) return;
+    if (!state) {
+        return;
+    }
     clearToastTimeout(id);
     toastTimeouts.set(id, {
         state,
@@ -126,9 +136,13 @@ function scheduleToastRemoval(id: number, duration: number, state = activeState)
 /** Pauses a toast timer while the user is interacting with it. */
 function pauseToast(id: number) {
     const state = activeState;
-    if (!state?.data) return;
+    if (!state?.data) {
+        return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current || current.persistent || current.paused || current.leaving) return;
+    if (!current || current.persistent || current.paused || current.leaving) {
+        return;
+    }
     current.paused = true;
     const elapsed = Date.now() - (current.createdAt ?? Date.now());
     current.remaining = Math.max((current.remaining ?? current.duration ?? 5600) - elapsed, 0);
@@ -138,9 +152,13 @@ function pauseToast(id: number) {
 /** Resumes a paused toast timer using its remaining duration. */
 function resumeToast(id: number) {
     const state = activeState;
-    if (!state?.data) return;
+    if (!state?.data) {
+        return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current || current.persistent || !current.paused || current.leaving) return;
+    if (!current || current.persistent || !current.paused || current.leaving) {
+        return;
+    }
     current.paused = false;
     current.createdAt = Date.now();
     scheduleToastRemoval(id, current.remaining ?? current.duration ?? 4200);
@@ -148,9 +166,13 @@ function resumeToast(id: number) {
 
 /** Updates a toast in place and reschedules dismissal when needed. */
 function updateToastForState(state: ToastState | undefined, id: number, updates: Partial<Toast>) {
-    if (!state?.data) return;
+    if (!state?.data) {
+        return;
+    }
     const current = state.data.toasts.find((t) => t.id === id);
-    if (!current) return;
+    if (!current) {
+        return;
+    }
     Object.assign(current, updates);
     if (updates.leaving === false) {
         current.leaving = false;
@@ -166,7 +188,9 @@ function updateToast(id: number, updates: Partial<Toast>) {
 
 /** Creates a toast instance, registers its actions, and returns the live object. */
 function createToast(toastData: ToastInput, state = activeState): Toast {
-    if (!state?.data) return toastData as Toast;
+    if (!state?.data) {
+        return toastData as Toast;
+    }
 
     const toastId = (nextToastId += 1);
     const duration = toastData.duration ?? 5600;
@@ -188,7 +212,9 @@ function createToast(toastData: ToastInput, state = activeState): Toast {
 
     if (state.data.toasts.length >= 5) {
         const oldest = state.data.toasts[0];
-        if (oldest?.id !== undefined) dismissToastForState(state, oldest.id);
+        if (oldest?.id !== undefined) {
+            dismissToastForState(state, oldest.id);
+        }
     }
 
     state.data.toasts = [...state.data.toasts, nextToast];
@@ -216,7 +242,9 @@ function toastPromise<T>(promise: Promise<T>, messages: PromiseMessages<T>): Toa
 
     promise
         .then((data) => {
-            if (t.id === undefined) return;
+            if (t.id === undefined) {
+                return;
+            }
             const title =
                 typeof messages.success === 'function' ? messages.success(data) : messages.success;
             const description = messages.successDescription
@@ -239,7 +267,9 @@ function toastPromise<T>(promise: Promise<T>, messages: PromiseMessages<T>): Toa
             scheduleToastRemoval(t.id, 4200, state);
         })
         .catch((err) => {
-            if (t.id === undefined) return;
+            if (t.id === undefined) {
+                return;
+            }
             const title =
                 typeof messages.error === 'function' ? messages.error(err) : messages.error;
             const description = messages.errorDescription
@@ -279,9 +309,13 @@ toast.dismiss = (id?: number) => {
         return;
     }
     const state = activeState;
-    if (!state?.data) return;
+    if (!state?.data) {
+        return;
+    }
     [...state.data.toasts].forEach((t) => {
-        if (t.id !== undefined) dismissToast(t.id);
+        if (t.id !== undefined) {
+            dismissToast(t.id);
+        }
     });
 };
 
@@ -315,17 +349,23 @@ function setToastUIState(): ToastHost {
         return { state: fresh, hostId: -1 };
     }
 
-    if (!clientState) clientState = fresh;
+    if (!clientState) {
+        clientState = fresh;
+    }
     const state = clientState;
     const hostId = (nextHostId += 1);
     liveHosts.push(hostId);
-    if (primaryHostId === null) primaryHostId = hostId;
+    if (primaryHostId === null) {
+        primaryHostId = hostId;
+    }
     activeState = state;
     setContext(STATE_KEY, state);
 
     onDestroy(() => {
         const idx = liveHosts.indexOf(hostId);
-        if (idx !== -1) liveHosts.splice(idx, 1);
+        if (idx !== -1) {
+            liveHosts.splice(idx, 1);
+        }
 
         if (primaryHostId === hostId) {
             primaryHostId = liveHosts[0] ?? null;

@@ -30,7 +30,12 @@
      * Otherwise the caller composes the subparts as children.
      */
     const resolvedTabs = $derived<CodeBlockTab[]>(
-        (tabs ?? []).map((t) => ({ ...t, value: t.value ?? t.lang }))
+        (tabs ?? []).map((t) => {
+            return {
+                ...t,
+                value: t.value ?? t.lang
+            };
+        })
     );
     const isHighLevel = $derived(tabs != null || code != null);
     const hasTabRow = $derived(resolvedTabs.length > 0);

@@ -29,7 +29,9 @@
     });
 
     $effect(() => {
-        if (!navState.open) navState.animationIndex = 0;
+        if (!navState.open) {
+            navState.animationIndex = 0;
+        }
     });
 </script>
 

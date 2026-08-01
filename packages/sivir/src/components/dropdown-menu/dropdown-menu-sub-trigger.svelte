@@ -19,13 +19,19 @@
     menu.parentSubmenus?.push(state);
     onDestroy(() => {
         const index = menu.parentSubmenus?.indexOf(state) ?? -1;
-        if (index !== -1) menu.parentSubmenus?.splice(index, 1);
+        if (index !== -1) {
+            menu.parentSubmenus?.splice(index, 1);
+        }
     });
 
     function closeSiblings() {
         for (const sibling of menu.parentSubmenus ?? []) {
-            if (sibling === state) continue;
-            if (sibling.closeTimeout) clearTimeout(sibling.closeTimeout);
+            if (sibling === state) {
+                continue;
+            }
+            if (sibling.closeTimeout) {
+                clearTimeout(sibling.closeTimeout);
+            }
             sibling.closeTimeout = undefined;
             sibling.open = false;
         }

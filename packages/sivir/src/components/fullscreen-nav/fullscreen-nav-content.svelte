@@ -17,7 +17,9 @@
     let portalEl = $state<HTMLDivElement>();
 
     $effect(() => {
-        if (!portalEl || typeof document === 'undefined') return;
+        if (!portalEl || typeof document === 'undefined') {
+            return;
+        }
         document.body.appendChild(portalEl);
         return () => portalEl?.remove();
     });

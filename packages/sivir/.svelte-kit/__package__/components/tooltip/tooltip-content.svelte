@@ -13,7 +13,9 @@
     let el = $state<HTMLElement>();
 
     onMount(() => {
-        if (!el) return;
+        if (!el) {
+            return;
+        }
         const sync = () => {
             tip.text = (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
         };

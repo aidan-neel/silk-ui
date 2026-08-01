@@ -15,7 +15,9 @@
     }: ToggleProps = $props();
 
     function togglePressed() {
-        if (disabled) return;
+        if (disabled) {
+            return;
+        }
         pressed = !pressed;
         onPressedChange?.(pressed);
     }

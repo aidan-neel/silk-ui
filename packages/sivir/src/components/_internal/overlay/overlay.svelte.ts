@@ -40,10 +40,16 @@ export type OverlayOptions = {
 
 export function useOverlay(opts: OverlayOptions) {
     $effect(() => {
-        if (!opts.isOpen()) return;
+        if (!opts.isOpen()) {
+            return;
+        }
         const panel = opts.panelEl();
-        if (!panel) return;
-        if (typeof document === 'undefined') return;
+        if (!panel) {
+            return;
+        }
+        if (typeof document === 'undefined') {
+            return;
+        }
 
         const lockScroll = opts.lockScroll !== false;
 

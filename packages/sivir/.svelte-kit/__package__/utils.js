@@ -89,8 +89,9 @@ function pointInRect(point, rect) {
 }
 /** Whether a pointer is in the contact triangle between a floating trigger and panel. */
 export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
-    if (pointInRect(point, trigger) || pointInRect(point, panel))
+    if (pointInRect(point, trigger) || pointInRect(point, panel)) {
         return true;
+    }
     const contactMargin = 8;
     const triggerCenter = {
         x: (trigger.left + trigger.right) / 2,
@@ -145,8 +146,9 @@ function isFloatingOverlayElement(el) {
  * lock restores the original overflow and scrollbar padding.
  */
 export function lockBodyScroll() {
-    if (typeof document === 'undefined')
+    if (typeof document === 'undefined') {
         return () => { };
+    }
     if (bodyScrollLocks === 0) {
         savedBodyOverflow = document.body.style.overflow;
         const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -169,12 +171,14 @@ export function lockBodyScroll() {
 }
 /** Marks non-overlay body children as non-interactive while a floating layer is open. */
 export function lockBodyBackground() {
-    if (typeof document === 'undefined')
+    if (typeof document === 'undefined') {
         return () => { };
+    }
     if (bodyInertLocks === 0) {
         for (const el of Array.from(document.body.children)) {
-            if (isFloatingOverlayElement(el))
+            if (isFloatingOverlayElement(el)) {
                 continue;
+            }
             el.classList.add('pointer-events-none');
         }
     }
@@ -206,8 +210,9 @@ const escapeStack = [];
 let escapeListenerAttached = false;
 /** DOM depth of an element, or -1 when it is detached. */
 function domDepth(element) {
-    if (!element || !document.contains(element))
+    if (!element || !document.contains(element)) {
         return -1;
+    }
     let depth = 0;
     let current = element;
     while (current) {
@@ -222,8 +227,9 @@ function domDepth(element) {
  * handlers from firing in the same tick and closing a second layer.
  */
 function onDocumentEscape(event) {
-    if (event.key !== 'Escape' || escapeStack.length === 0)
+    if (event.key !== 'Escape' || escapeStack.length === 0) {
         return;
+    }
     event.preventDefault();
     event.stopImmediatePropagation();
     let topIndex = escapeStack.length - 1;
@@ -238,8 +244,9 @@ function onDocumentEscape(event) {
     escapeStack[topIndex]?.close();
 }
 function ensureEscapeListener() {
-    if (typeof document === 'undefined' || escapeListenerAttached)
+    if (typeof document === 'undefined' || escapeListenerAttached) {
         return;
+    }
     document.addEventListener('keydown', onDocumentEscape, true);
     escapeListenerAttached = true;
 }
@@ -248,15 +255,17 @@ function ensureEscapeListener() {
  * Modal, sheet, and popover push on open and pop on teardown.
  */
 export function pushEscapeLayer(close, element) {
-    if (typeof document === 'undefined')
+    if (typeof document === 'undefined') {
         return () => { };
+    }
     ensureEscapeListener();
     const layer = { close, element };
     escapeStack.push(layer);
     return () => {
         const index = escapeStack.lastIndexOf(layer);
-        if (index >= 0)
+        if (index >= 0) {
             escapeStack.splice(index, 1);
+        }
     };
 }
 /** Test isolation for the escape stack. */
@@ -279,10 +288,12 @@ const FOCUSABLE_SELECTOR = [
 /** Returns the visible, interactive descendants inside a container. */
 export function getFocusableElements(container) {
     return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR)).filter((el) => {
-        if (el.hasAttribute('disabled'))
+        if (el.hasAttribute('disabled')) {
             return false;
-        if (el.getAttribute('aria-hidden') === 'true')
+        }
+        if (el.getAttribute('aria-hidden') === 'true') {
             return false;
+        }
         return !(el.offsetParent === null &&
             getComputedStyle(el).position !== 'fixed' &&
             getComputedStyle(el).position !== 'sticky');
@@ -296,16 +307,19 @@ function focusFirstDescendant(container) {
 }
 /** Keeps keyboard focus inside a container and restores the previous focus on cleanup. */
 export function trapFocus(dialogEl, options) {
-    if (!dialogEl)
+    if (!dialogEl) {
         return;
+    }
     const previouslyFocused = options?.returnFocus ??
         (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     const handleKeydown = (e) => {
-        if (e.key !== 'Tab')
+        if (e.key !== 'Tab') {
             return;
+        }
         const focusable = getFocusableElements(dialogEl);
-        if (focusable.length === 0)
+        if (focusable.length === 0) {
             return;
+        }
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
         const active = document.activeElement;
@@ -324,8 +338,9 @@ export function trapFocus(dialogEl, options) {
     };
     const handleFocusIn = (e) => {
         const target = e.target;
-        if (!target || dialogEl.contains(target))
+        if (!target || dialogEl.contains(target)) {
             return;
+        }
         if (options?.initialFocus) {
             options.initialFocus.focus();
         }
@@ -369,8 +384,9 @@ export function pressable(node) {
         node.style.setProperty('--sivir-press-sy', sy.toFixed(4));
     }
     function onKeyDown(e) {
-        if (e.key === ' ' || e.key === 'Enter')
+        if (e.key === ' ' || e.key === 'Enter') {
             measure();
+        }
     }
     node.addEventListener('pointerdown', measure, true);
     node.addEventListener('keydown', onKeyDown);
@@ -402,22 +418,27 @@ export function travelingHighlight(node, options = {}) {
     const resizeObserver = new ResizeObserver(() => schedule(current ?? restingTarget()));
     resizeObserver.observe(node);
     function usableItem(target) {
-        if (!(target instanceof Element))
+        if (!(target instanceof Element)) {
             return;
+        }
         const item = target.closest(itemSelector);
-        if (!item || !node.contains(item))
+        if (!item || !node.contains(item)) {
             return;
-        if (item.closest('.sivir-collection-surface') !== node)
+        }
+        if (item.closest('.sivir-collection-surface') !== node) {
             return;
-        if (item.matches(':disabled, [aria-disabled="true"]') || item.hidden)
+        }
+        if (item.matches(':disabled, [aria-disabled="true"]') || item.hidden) {
             return;
+        }
         return item;
     }
     function restingTarget() {
         for (const selector of restingSelector.split(',').map((part) => part.trim())) {
             const target = Array.from(node.querySelectorAll(selector)).find((item) => item.closest('.sivir-collection-surface') === node);
-            if (target)
+            if (target) {
                 return target;
+            }
         }
         return undefined;
     }
@@ -441,8 +462,9 @@ export function travelingHighlight(node, options = {}) {
         highlight.style.transform = `translate3d(${x}px, ${y}px, 0)`;
         highlight.style.opacity = '1';
         if (observedTarget !== target) {
-            if (observedTarget)
+            if (observedTarget) {
                 resizeObserver.unobserve(observedTarget);
+            }
             observedTarget = target;
             resizeObserver.observe(target);
         }
@@ -460,20 +482,23 @@ export function travelingHighlight(node, options = {}) {
     }
     function onPointerMove(event) {
         const item = usableItem(event.target);
-        if (item && item !== current)
+        if (item && item !== current) {
             schedule(item);
+        }
     }
     function onPointerLeave() {
         schedule(restingTarget());
     }
     function onFocusIn(event) {
         const item = usableItem(event.target);
-        if (item)
+        if (item) {
             schedule(item);
+        }
     }
     function onFocusOut(event) {
-        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget))
+        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) {
             return;
+        }
         schedule(restingTarget());
     }
     const mutationObserver = new MutationObserver(() => {

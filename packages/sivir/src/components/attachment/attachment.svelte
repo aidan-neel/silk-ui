@@ -30,7 +30,9 @@
     }
 
     function formatBytes(bytes: number) {
-        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024) {
+            return `${bytes} B`;
+        }
         const units = ['KB', 'MB', 'GB', 'TB'];
         let value = bytes / 1024;
         let unit = 0;
@@ -46,19 +48,27 @@
             ?.split(',')
             .map((rule) => rule.trim().toLowerCase())
             .filter(Boolean);
-        if (!rules?.length) return true;
+        if (!rules?.length) {
+            return true;
+        }
 
         const name = file.name.toLowerCase();
         const type = file.type.toLowerCase();
         return rules.some((rule) => {
-            if (rule.startsWith('.')) return name.endsWith(rule);
-            if (rule.endsWith('/*')) return type.startsWith(rule.slice(0, -1));
+            if (rule.startsWith('.')) {
+                return name.endsWith(rule);
+            }
+            if (rule.endsWith('/*')) {
+                return type.startsWith(rule.slice(0, -1));
+            }
             return type === rule;
         });
     }
 
     function addFiles(incoming: Iterable<File>) {
-        if (disabled) return;
+        if (disabled) {
+            return;
+        }
 
         const accepted: File[] = [];
         const rejections: AttachmentRejection[] = [];
@@ -104,8 +114,12 @@
             accepted.push(file);
         }
 
-        if (accepted.length) files = [...files, ...accepted];
-        if (rejections.length) onReject?.(rejections);
+        if (accepted.length) {
+            files = [...files, ...accepted];
+        }
+        if (rejections.length) {
+            onReject?.(rejections);
+        }
     }
 
     function hasDraggedFiles(event: DragEvent) {
@@ -123,10 +137,14 @@
             return disabled;
         },
         open() {
-            if (!disabled) input?.click();
+            if (!disabled) {
+                input?.click();
+            }
         },
         remove(file: File) {
-            if (!disabled) files = files.filter((candidate) => candidate !== file);
+            if (!disabled) {
+                files = files.filter((candidate) => candidate !== file);
+            }
         }
     });
 </script>
@@ -138,7 +156,9 @@
     data-disabled={disabled || undefined}
     ondragenter={(event) => {
         ondragenter?.(event);
-        if (event.defaultPrevented || !hasDraggedFiles(event)) return;
+        if (event.defaultPrevented || !hasDraggedFiles(event)) {
+            return;
+        }
         event.preventDefault();
         if (!disabled) {
             dragDepth += 1;
@@ -147,15 +167,23 @@
     }}
     ondragover={(event) => {
         ondragover?.(event);
-        if (event.defaultPrevented || !hasDraggedFiles(event)) return;
+        if (event.defaultPrevented || !hasDraggedFiles(event)) {
+            return;
+        }
         event.preventDefault();
-        if (event.dataTransfer) event.dataTransfer.dropEffect = disabled ? 'none' : 'copy';
+        if (event.dataTransfer) {
+            event.dataTransfer.dropEffect = disabled ? 'none' : 'copy';
+        }
     }}
     ondragleave={(event) => {
         ondragleave?.(event);
-        if (disabled || !dragging) return;
+        if (disabled || !dragging) {
+            return;
+        }
         dragDepth = Math.max(0, dragDepth - 1);
-        if (dragDepth === 0) dragging = false;
+        if (dragDepth === 0) {
+            dragging = false;
+        }
     }}
     ondrop={(event) => {
         ondrop?.(event);
@@ -164,8 +192,9 @@
         event.preventDefault();
         dragDepth = 0;
         dragging = false;
-        if (!handled && hasFiles && !disabled && event.dataTransfer)
+        if (!handled && hasFiles && !disabled && event.dataTransfer) {
             addFiles(event.dataTransfer.files);
+        }
     }}
     class={cn(className, 'relative min-w-0')}
 >
@@ -178,7 +207,9 @@
         {multiple}
         {disabled}
         onchange={(event) => {
-            if (event.currentTarget.files) addFiles(event.currentTarget.files);
+            if (event.currentTarget.files) {
+                addFiles(event.currentTarget.files);
+            }
             event.currentTarget.value = '';
         }}
     />

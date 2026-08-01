@@ -32,7 +32,9 @@
     disabled={context.disabled || disabled}
     onclick={(event: MouseEvent) => {
         onclick?.(event);
-        if (!event.defaultPrevented) context.open();
+        if (!event.defaultPrevented) {
+            context.open();
+        }
     }}
     class={cn(className, 'rounded-[var(--radius-md)] text-foreground-muted hover:text-foreground')}
 >

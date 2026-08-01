@@ -24,7 +24,9 @@
     style={`--fullscreen-nav-link-delay:${animationDelay}ms;${styleName ?? ''}`}
     onclick={(event) => {
         userOnclick?.(event);
-        if (!event.defaultPrevented) state.open = false;
+        if (!event.defaultPrevented) {
+            state.open = false;
+        }
     }}
     {...rest}
 >

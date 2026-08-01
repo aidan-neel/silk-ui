@@ -13,28 +13,35 @@
 
     const complete = $derived(!failed && current >= steps.length);
     const rows = $derived(
-        steps.map((step, index) => ({
-            ...step,
-            status: (index < current
-                ? 'done'
-                : index === current && failed
-                  ? 'error'
-                  : index === current && !complete
-                    ? 'active'
-                    : 'pending') as TaskStepStatus
-        }))
+        steps.map((step, index) => {
+            return {
+                ...step,
+                status: (index < current
+                    ? 'done'
+                    : index === current && failed
+                      ? 'error'
+                      : index === current && !complete
+                        ? 'active'
+                        : 'pending') as TaskStepStatus
+            };
+        })
     );
     const sentence = $derived.by(() => {
-        if (failed)
+        if (failed) {
             return `Failed at ${steps[Math.min(current, steps.length - 1)]?.label ?? 'step'}.`;
-        if (complete) return `All ${steps.length} steps complete.`;
+        }
+        if (complete) {
+            return `All ${steps.length} steps complete.`;
+        }
         const active = rows.find((row) => row.status === 'active');
         return active ? `${active.label}, step ${current + 1} of ${steps.length}.` : '';
     });
     let spoken = $state('');
 
     $effect(() => {
-        if (!sentence) return;
+        if (!sentence) {
+            return;
+        }
         const timer = setTimeout(() => {
             spoken = sentence;
         }, 500);

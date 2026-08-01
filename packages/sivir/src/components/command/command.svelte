@@ -24,7 +24,9 @@
     setCommandContext(command);
 
     $effect(() => {
-        if (open) untrack(() => resetCommand(command));
+        if (open) {
+            untrack(() => resetCommand(command));
+        }
     });
 </script>
 

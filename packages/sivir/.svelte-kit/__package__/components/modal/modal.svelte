@@ -5,7 +5,9 @@
     let createdThemeColor: HTMLMetaElement | undefined;
 
     function applyErrorThemeColor() {
-        if (errorThemeCount++ > 0) return;
+        if (errorThemeCount++ > 0) {
+            return;
+        }
 
         const themeColors = Array.from(
             document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')
@@ -20,14 +22,21 @@
             element,
             content: element.getAttribute('content')
         }));
-        for (const { element } of savedThemeColors) element.content = ERROR_THEME_COLOR;
+        for (const { element } of savedThemeColors) {
+            element.content = ERROR_THEME_COLOR;
+        }
     }
 
     function restoreThemeColor() {
-        if (--errorThemeCount > 0) return;
+        if (--errorThemeCount > 0) {
+            return;
+        }
         for (const { element, content } of savedThemeColors ?? []) {
-            if (content === null) element.removeAttribute('content');
-            else element.content = content;
+            if (content === null) {
+                element.removeAttribute('content');
+            } else {
+                element.content = content;
+            }
         }
         createdThemeColor?.remove();
         createdThemeColor = undefined;
@@ -82,7 +91,9 @@
     });
 
     $effect(() => {
-        if (!error || !modalState.open || typeof document === 'undefined') return;
+        if (!error || !modalState.open || typeof document === 'undefined') {
+            return;
+        }
         applyErrorThemeColor();
         return restoreThemeColor;
     });

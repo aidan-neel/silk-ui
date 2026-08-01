@@ -60,7 +60,9 @@
     }
 
     function open() {
-        if (disabled || comboboxState.open) return;
+        if (disabled || comboboxState.open) {
+            return;
+        }
         onopen?.();
         comboboxState.open = true;
         onclick?.();
@@ -75,7 +77,9 @@
             event.key === 'End'
         ) {
             event.preventDefault();
-            if (!comboboxState.open) open();
+            if (!comboboxState.open) {
+                open();
+            }
             const index =
                 event.key === 'Home'
                     ? 0
@@ -104,7 +108,9 @@
     }
 
     $effect(() => {
-        if (!comboboxState.open) return;
+        if (!comboboxState.open) {
+            return;
+        }
         void tick().then(() => {
             inputElement?.focus({ preventScroll: true });
             inputElement?.select();

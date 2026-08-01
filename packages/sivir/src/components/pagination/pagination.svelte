@@ -16,7 +16,9 @@
 
     function go(next: number) {
         const clamped = Math.min(Math.max(next, 1), total);
-        if (clamped === page) return;
+        if (clamped === page) {
+            return;
+        }
         page = clamped;
         onPageChange?.(clamped);
     }
@@ -27,10 +29,18 @@
         const end = Math.min(total - 1, page + siblings);
 
         result.push(1);
-        if (start > 2) result.push('ellipsis');
-        for (let i = start; i <= end; i++) result.push(i);
-        if (end < total - 1) result.push('ellipsis');
-        if (total > 1) result.push(total);
+        if (start > 2) {
+            result.push('ellipsis');
+        }
+        for (let i = start; i <= end; i++) {
+            result.push(i);
+        }
+        if (end < total - 1) {
+            result.push('ellipsis');
+        }
+        if (total > 1) {
+            result.push(total);
+        }
         return result;
     });
 </script>

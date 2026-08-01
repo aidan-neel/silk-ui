@@ -35,7 +35,9 @@ const HIDE = 'scale(0.94)';
  * new label is a different length.
  */
 function ensure() {
-    if (bubble || typeof document === 'undefined') return;
+    if (bubble || typeof document === 'undefined') {
+        return;
+    }
 
     const el = document.createElement('div');
     el.setAttribute('data-sivir-tooltip', '');
@@ -60,7 +62,9 @@ function ensure() {
 
 /** Sizes the bubble to the measured width of `text` so the change can transition. */
 function applyWidth(text: string) {
-    if (!bubble || !measurer) return;
+    if (!bubble || !measurer) {
+        return;
+    }
     measurer.textContent = text;
     bubble.style.width = `${measurer.offsetWidth}px`;
 }
@@ -76,14 +80,18 @@ function applyWidth(text: string) {
  * recovery and must not leak an unhandled rejection.
  */
 function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
-    if (!bubble) return;
+    if (!bubble) {
+        return;
+    }
     void computePosition(ref, bubble, {
         strategy: 'fixed',
         placement,
         middleware: [offset(8), flip({ padding: 8 }), shift({ padding: 8 })]
     })
         .then(({ x, y }) => {
-            if (!bubble || activeRef !== ref) return;
+            if (!bubble || activeRef !== ref) {
+                return;
+            }
             const horizontal = placement === 'top' || placement === 'bottom';
             const center = horizontal ? 'translateX(-50%)' : 'translateY(-50%)';
             lastCenter = center;
@@ -103,7 +111,9 @@ function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
                 bubble.style.transition = prev;
             }
             requestAnimationFrame(() => {
-                if (!bubble || activeRef !== ref) return;
+                if (!bubble || activeRef !== ref) {
+                    return;
+                }
                 bubble.style.opacity = '1';
                 bubble.style.transform = `${center} ${SHOW}`;
             });
@@ -113,7 +123,9 @@ function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
 
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref: HTMLElement, text: string, placement: Placement) {
-    if (!bubble || !label) return;
+    if (!bubble || !label) {
+        return;
+    }
     clearTimeout(closeTimer);
     const morph = visible;
     activeRef = ref;
@@ -131,7 +143,9 @@ export function showTooltip(
     placement: Placement = 'top',
     delay = 125
 ) {
-    if (typeof document === 'undefined' || !text) return;
+    if (typeof document === 'undefined' || !text) {
+        return;
+    }
     ensure();
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
@@ -144,7 +158,9 @@ export function showTooltip(
 
 /** Re-label the active bubble in place (for example, a Copy→Copied flip). */
 export function updateTooltipText(ref: HTMLElement, text: string) {
-    if (!visible || activeRef !== ref || !label || !text || text === currentText) return;
+    if (!visible || activeRef !== ref || !label || !text || text === currentText) {
+        return;
+    }
     label.textContent = text;
     currentText = text;
     applyWidth(text);
@@ -157,7 +173,9 @@ export function flashTooltip(
     placement: Placement = 'top',
     holdMs = 1500
 ) {
-    if (typeof document === 'undefined' || !text) return;
+    if (typeof document === 'undefined' || !text) {
+        return;
+    }
     ensure();
     clearTimeout(openTimer);
     present(ref, text, placement);
@@ -169,7 +187,9 @@ export function flashTooltip(
 }
 
 function dismiss() {
-    if (!bubble) return;
+    if (!bubble) {
+        return;
+    }
     visible = false;
     activeRef = null;
     bubble.style.opacity = '0';
@@ -179,7 +199,9 @@ function dismiss() {
 /** Leave/blur a trigger: schedule a hide, ignored if a different trigger took over. */
 export function hideTooltip(ref: HTMLElement | null, closeDelay = 100) {
     clearTimeout(openTimer);
-    if (ref && activeRef && ref !== activeRef) return;
+    if (ref && activeRef && ref !== activeRef) {
+        return;
+    }
     clearTimeout(closeTimer);
     closeTimer = setTimeout(dismiss, closeDelay);
 }

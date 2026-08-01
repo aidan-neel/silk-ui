@@ -20,7 +20,9 @@
      * docs previews and nested page hosts.
      */
     $effect(() => {
-        if (!portalEl || typeof document === 'undefined') return;
+        if (!portalEl || typeof document === 'undefined') {
+            return;
+        }
         document.body.appendChild(portalEl);
         return () => {
             portalEl?.remove();
@@ -51,14 +53,20 @@
     }
 
     function getOpacity(index: number): number {
-        if (expanded) return 1;
-        if (index >= MAX_VISIBLE) return 0;
+        if (expanded) {
+            return 1;
+        }
+        if (index >= MAX_VISIBLE) {
+            return 0;
+        }
         return Math.max(1 - index * COLLAPSED_OPACITY_STEP, 0);
     }
 
     const containerHeight = $derived.by(() => {
         const n = reversedToasts.length;
-        if (n === 0) return 0;
+        if (n === 0) {
+            return 0;
+        }
         if (expanded) {
             return reversedToasts.reduce((sum, t, i) => {
                 const h = t?.id !== undefined ? (heights[t.id] ?? 72) : 72;
@@ -75,10 +83,12 @@
         return {
             duration,
             easing: quartOut,
-            css: (t: number) => `
-				opacity: ${t};
-				transform: translateY(${(1 - t) * 16}px) scale(${0.985 + t * 0.015});
-			`
+            css: (t: number) => {
+                return `
+					opacity: ${t};
+					transform: translateY(${(1 - t) * 16}px) scale(${0.985 + t * 0.015});
+				`;
+            }
         };
     }
 
@@ -87,10 +97,12 @@
         return {
             duration,
             easing: cubicOut,
-            css: (t: number) => `
-				opacity: ${t};
-				transform: translateY(${(1 - t) * 12}px) scale(${0.985 + t * 0.015});
-			`
+            css: (t: number) => {
+                return `
+					opacity: ${t};
+					transform: translateY(${(1 - t) * 12}px) scale(${0.985 + t * 0.015});
+				`;
+            }
         };
     }
 </script>

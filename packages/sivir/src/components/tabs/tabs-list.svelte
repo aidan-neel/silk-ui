@@ -39,15 +39,21 @@
     }
 
     function measureIndicator() {
-        if (!listEl) return;
+        if (!listEl) {
+            return;
+        }
         const active = listEl.querySelector<HTMLElement>('[role="tab"][data-state="active"]');
         indicator = active ? rectOf(active) : null;
     }
 
     function handleMouseOver(event: Event) {
-        if (!showHover || !listEl) return;
+        if (!showHover || !listEl) {
+            return;
+        }
         const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
-        if (!target || target.hasAttribute('disabled') || !listEl.contains(target)) return;
+        if (!target || target.hasAttribute('disabled') || !listEl.contains(target)) {
+            return;
+        }
         hover = rectOf(target);
         hovering = true;
     }
@@ -67,7 +73,9 @@
     });
 
     $effect(() => {
-        if (!listEl) return;
+        if (!listEl) {
+            return;
+        }
         const ro = new ResizeObserver(() => measureIndicator());
         ro.observe(listEl);
         const triggers = listEl.querySelectorAll<HTMLElement>('[role="tab"]');
@@ -81,10 +89,14 @@
 
     function moveFocus(current: HTMLElement, direction: 1 | -1) {
         const list = current.closest('[role="tablist"]');
-        if (!list) return;
+        if (!list) {
+            return;
+        }
         const tabs = Array.from(list.querySelectorAll<HTMLElement>('[role="tab"]:not([disabled])'));
         const index = tabs.indexOf(current);
-        if (index === -1) return;
+        if (index === -1) {
+            return;
+        }
         const next = tabs[(index + direction + tabs.length) % tabs.length];
         next?.focus();
         next?.click();
@@ -92,7 +104,9 @@
 
     function handleKeydown(event: KeyboardEvent) {
         const target = event.target;
-        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'tab') return;
+        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'tab') {
+            return;
+        }
         const isHorizontal = tabsState.orientation === 'horizontal';
         if (event.key === 'Home') {
             event.preventDefault();

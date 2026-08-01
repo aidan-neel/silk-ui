@@ -37,7 +37,9 @@
     aria-label={submitting ? stopLabel : label}
     onclick={(event: MouseEvent) => {
         onclick?.(event);
-        if (!event.defaultPrevented && submitting) context.stop();
+        if (!event.defaultPrevented && submitting) {
+            context.stop();
+        }
     }}
     class={cn(className, 'aspect-square shrink-0 rounded-[var(--radius-md)] px-0')}
 >

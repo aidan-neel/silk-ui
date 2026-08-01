@@ -14,13 +14,15 @@
     }: PopoverProps = $props();
 
     const generatedKey = $props.id();
-    const initial = untrack(() => ({
-        key: state_key ?? generatedKey,
-        placement,
-        hoverable: hoverable ?? false,
-        delay,
-        closeDelay
-    }));
+    const initial = untrack(() => {
+        return {
+            key: state_key ?? generatedKey,
+            placement,
+            hoverable: hoverable ?? false,
+            delay,
+            closeDelay
+        };
+    });
     const popoverState = $state<PopoverState>({
         open,
         trigger: null,
@@ -65,8 +67,12 @@
     });
 
     onDestroy(() => {
-        if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
-        if (popoverState.hoverTimeout) clearTimeout(popoverState.hoverTimeout);
+        if (popoverState.closeTimeout) {
+            clearTimeout(popoverState.closeTimeout);
+        }
+        if (popoverState.hoverTimeout) {
+            clearTimeout(popoverState.hoverTimeout);
+        }
     });
 </script>
 

@@ -8,7 +8,9 @@
 
     function safeUrl(value?: string) {
         const url = value?.trim();
-        if (!url) return undefined;
+        if (!url) {
+            return undefined;
+        }
 
         const compact = url.replace(/[\u0000-\u0020]/g, '');
         const scheme = compact.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
@@ -25,7 +27,9 @@
 
     function safeImageUrl(value?: string) {
         const url = safeUrl(value);
-        if (!url) return undefined;
+        if (!url) {
+            return undefined;
+        }
         try {
             const base = new URL('https://sivir.invalid/');
             return new URL(url, base).origin === base.origin ? url : undefined;

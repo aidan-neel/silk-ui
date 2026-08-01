@@ -17,7 +17,9 @@
         return value === itemValue;
     }
     function setValue(itemValue: string) {
-        if (disabled) return;
+        if (disabled) {
+            return;
+        }
         value = itemValue;
         onValueChange?.(itemValue);
     }

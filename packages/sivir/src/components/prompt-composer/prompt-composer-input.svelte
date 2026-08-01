@@ -23,7 +23,9 @@
     let composing = false;
 
     function resize(target = element) {
-        if (!target) return;
+        if (!target) {
+            return;
+        }
         target.style.height = 'auto';
         const maxHeight = Number.parseFloat(getComputedStyle(target).maxHeight);
         const height = Number.isFinite(maxHeight)
@@ -37,7 +39,9 @@
         let width = target.clientWidth;
         const observer = new ResizeObserver(() => {
             const nextWidth = target.clientWidth;
-            if (nextWidth === width) return;
+            if (nextWidth === width) {
+                return;
+            }
             width = nextWidth;
             resize(target);
         });

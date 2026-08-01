@@ -15,7 +15,9 @@ export function isValidHex(h: string): boolean {
 
 export function hexToHsv(hex: string): [number, number, number] {
     const h = hex.replace('#', '');
-    if (h.length !== 6) return [0, 0, 100];
+    if (h.length !== 6) {
+        return [0, 0, 100];
+    }
     const r = parseInt(h.slice(0, 2), 16) / 255;
     const g = parseInt(h.slice(2, 4), 16) / 255;
     const b = parseInt(h.slice(4, 6), 16) / 255;
@@ -24,11 +26,17 @@ export function hexToHsv(hex: string): [number, number, number] {
     const delta = max - min;
     let hue = 0;
     if (delta !== 0) {
-        if (max === r) hue = ((g - b) / delta) % 6;
-        else if (max === g) hue = (b - r) / delta + 2;
-        else hue = (r - g) / delta + 4;
+        if (max === r) {
+            hue = ((g - b) / delta) % 6;
+        } else if (max === g) {
+            hue = (b - r) / delta + 2;
+        } else {
+            hue = (r - g) / delta + 4;
+        }
         hue = hue * 60;
-        if (hue < 0) hue += 360;
+        if (hue < 0) {
+            hue += 360;
+        }
     }
     return [
         Math.round(hue),
@@ -74,7 +82,9 @@ export function hsvToHex(hue: number, sat: number, val: number): string {
 
 export function hexToRgb(hex: string): [number, number, number] {
     const h = hex.replace('#', '');
-    if (h.length !== 6) return [255, 255, 255];
+    if (h.length !== 6) {
+        return [255, 255, 255];
+    }
     return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
 
@@ -92,7 +102,9 @@ export function rgbToHex(red: number, green: number, blue: number): string {
  */
 export function hexToHsl(hex: string): [number, number, number] {
     const h = hex.replace('#', '');
-    if (h.length !== 6) return [0, 0, 100];
+    if (h.length !== 6) {
+        return [0, 0, 100];
+    }
     const r = parseInt(h.slice(0, 2), 16) / 255;
     const g = parseInt(h.slice(2, 4), 16) / 255;
     const b = parseInt(h.slice(4, 6), 16) / 255;
@@ -104,11 +116,17 @@ export function hexToHsl(hex: string): [number, number, number] {
     let sat = 0;
     if (delta !== 0) {
         sat = delta / (1 - Math.abs(2 * l - 1));
-        if (max === r) hue = ((g - b) / delta) % 6;
-        else if (max === g) hue = (b - r) / delta + 2;
-        else hue = (r - g) / delta + 4;
+        if (max === r) {
+            hue = ((g - b) / delta) % 6;
+        } else if (max === g) {
+            hue = (b - r) / delta + 2;
+        } else {
+            hue = (r - g) / delta + 4;
+        }
         hue *= 60;
-        if (hue < 0) hue += 360;
+        if (hue < 0) {
+            hue += 360;
+        }
     }
     return [Math.round(hue), Math.round(sat * 100), Math.round(l * 100)];
 }

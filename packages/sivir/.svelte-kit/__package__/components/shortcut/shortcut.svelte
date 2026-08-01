@@ -82,7 +82,9 @@
             .map((token) => token.trim().toLowerCase())
             .filter(Boolean);
 
-        if (tokens.length === 0) return undefined;
+        if (tokens.length === 0) {
+            return undefined;
+        }
 
         const parsed: ParsedShortcut = {
             meta: false,
@@ -102,7 +104,9 @@
             }
 
             const key = NAMED_KEYS[token] ?? (token.length === 1 ? token : undefined);
-            if (!key || parsed.key) return undefined;
+            if (!key || parsed.key) {
+                return undefined;
+            }
 
             parsed.key = key;
             parsed.caps.push(GLYPHS[token] ?? token.toUpperCase());
@@ -115,7 +119,9 @@
     const caps = $derived(parsed?.caps ?? []);
 
     function isEditableTarget(target: EventTarget | null) {
-        if (!(target instanceof HTMLElement)) return false;
+        if (!(target instanceof HTMLElement)) {
+            return false;
+        }
         return (
             target.matches('input, textarea, select') ||
             target.isContentEditable ||
@@ -125,7 +131,9 @@
 
     function getOwner() {
         const owner = element.closest<HTMLElement>('button, a[href], [role="button"]');
-        if (!owner) return undefined;
+        if (!owner) {
+            return undefined;
+        }
         if (
             (owner instanceof HTMLButtonElement && owner.disabled) ||
             owner.hasAttribute('disabled') ||
@@ -137,7 +145,9 @@
     }
 
     function handleKey(event: KeyboardEvent) {
-        if (!parsed || event.repeat || isEditableTarget(event.target)) return;
+        if (!parsed || event.repeat || isEditableTarget(event.target)) {
+            return;
+        }
 
         if (
             event.key.toLowerCase() !== parsed.key ||
@@ -150,11 +160,16 @@
         }
 
         const owner = ontrigger ? undefined : getOwner();
-        if (!ontrigger && !owner) return;
+        if (!ontrigger && !owner) {
+            return;
+        }
 
         event.preventDefault();
-        if (ontrigger) ontrigger(event);
-        else owner?.click();
+        if (ontrigger) {
+            ontrigger(event);
+        } else {
+            owner?.click();
+        }
     }
 
     onMount(() => {

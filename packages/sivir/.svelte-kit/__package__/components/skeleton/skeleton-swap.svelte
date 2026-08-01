@@ -27,13 +27,17 @@
     const contentVisible = $derived(ready && !showSkeleton);
 
     function widthFor(index: number) {
-        if (lines > 1 && index === lines - 1) return 62;
+        if (lines > 1 && index === lines - 1) {
+            return 62;
+        }
         return widths[(index * 7 + 3) % widths.length];
     }
 
     $effect(() => {
         if (!ready) {
-            if (showSkeleton) return;
+            if (showSkeleton) {
+                return;
+            }
             const timer = setTimeout(() => {
                 shownAt = performance.now();
                 showSkeleton = true;
@@ -41,7 +45,9 @@
             return () => clearTimeout(timer);
         }
 
-        if (!showSkeleton) return;
+        if (!showSkeleton) {
+            return;
+        }
         const remaining = Math.max(0, minVisible - (performance.now() - shownAt));
         const timer = setTimeout(() => {
             showSkeleton = false;
@@ -50,14 +56,20 @@
     });
 
     $effect(() => {
-        if (!shell) return;
+        if (!shell) {
+            return;
+        }
         const measure = () => {
             const next = shell ? shell.scrollHeight - shell.clientHeight > 1 : false;
-            if (next !== scrollable) scrollable = next;
+            if (next !== scrollable) {
+                scrollable = next;
+            }
         };
         const observer = new ResizeObserver(measure);
         observer.observe(shell);
-        if (body) observer.observe(body);
+        if (body) {
+            observer.observe(body);
+        }
         measure();
         return () => observer.disconnect();
     });

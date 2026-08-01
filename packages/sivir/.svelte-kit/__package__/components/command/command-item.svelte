@@ -64,7 +64,9 @@
     });
 
     function activate() {
-        if (disabled) return;
+        if (disabled) {
+            return;
+        }
         modal.state.open = false;
         callback?.();
         onclick?.();
@@ -87,7 +89,9 @@
     {href}
     hidden={filteredOut}
     onmouseenter={() => {
-        if (!disabled) command.activeId = itemId;
+        if (!disabled) {
+            command.activeId = itemId;
+        }
     }}
     onclick={activate}
     class={cn(className, 'sivir-menu-item justify-start gap-2')}

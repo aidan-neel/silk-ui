@@ -26,11 +26,15 @@
     let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>();
 
     function resolveLabel() {
-        if (label) return label;
+        if (label) {
+            return label;
+        }
         const fromAttr = element
             ?.querySelector<HTMLElement>('[data-select-label]')
             ?.textContent?.trim();
-        if (fromAttr) return fromAttr;
+        if (fromAttr) {
+            return fromAttr;
+        }
         return element?.textContent?.trim() ?? '';
     }
 
@@ -47,11 +51,14 @@
         values.add(itemValue);
 
         const resolved = resolveLabel();
-        if (resolved) labels.set(itemValue, resolved);
-        else {
+        if (resolved) {
+            labels.set(itemValue, resolved);
+        } else {
             const raf = requestAnimationFrame(() => {
                 const again = resolveLabel();
-                if (again) labels.set(itemValue, again);
+                if (again) {
+                    labels.set(itemValue, again);
+                }
             });
             return () => {
                 cancelAnimationFrame(raf);

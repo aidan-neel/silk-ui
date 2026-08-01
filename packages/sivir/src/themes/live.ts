@@ -10,9 +10,13 @@ const LEGACY_KEYS = ['sivir-theme-studio-state', 'sivir-saved-themes'];
 export type SavedTheme = Theme & { id: string; savedAt: string };
 
 function getStyleTag() {
-    if (!browser) return null;
+    if (!browser) {
+        return null;
+    }
     let tag = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
-    if (tag) return tag;
+    if (tag) {
+        return tag;
+    }
     tag = document.createElement('style');
     tag.id = STYLE_ID;
     document.head.appendChild(tag);
@@ -20,19 +24,29 @@ function getStyleTag() {
 }
 
 export function applyLiveThemeCss(css: string) {
-    if (!browser) return;
+    if (!browser) {
+        return;
+    }
     const tag = getStyleTag();
-    if (!tag) return;
+    if (!tag) {
+        return;
+    }
     tag.textContent = css;
     localStorage.setItem(STORAGE_KEY, css);
 }
 
 export function hydrateLiveThemeCss() {
-    if (!browser) return;
+    if (!browser) {
+        return;
+    }
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return;
+    if (!stored) {
+        return;
+    }
     const tag = getStyleTag();
-    if (tag) tag.textContent = stored;
+    if (tag) {
+        tag.textContent = stored;
+    }
 }
 
 export function getStoredLiveThemeCss() {
@@ -40,7 +54,9 @@ export function getStoredLiveThemeCss() {
 }
 
 export function clearLiveThemeCss() {
-    if (!browser) return;
+    if (!browser) {
+        return;
+    }
     localStorage.removeItem(STORAGE_KEY);
     document.getElementById(STYLE_ID)?.remove();
 }
@@ -53,15 +69,23 @@ function randomId() {
 }
 
 export function saveStudioTheme(theme: Theme) {
-    if (!browser) return;
+    if (!browser) {
+        return;
+    }
     localStorage.setItem(STUDIO_THEME_KEY, JSON.stringify(parseTheme(theme)));
 }
 
 export function loadStudioTheme(): Theme | null {
-    if (!browser) return null;
-    for (const key of LEGACY_KEYS) localStorage.removeItem(key);
+    if (!browser) {
+        return null;
+    }
+    for (const key of LEGACY_KEYS) {
+        localStorage.removeItem(key);
+    }
     const stored = localStorage.getItem(STUDIO_THEME_KEY);
-    if (!stored) return null;
+    if (!stored) {
+        return null;
+    }
     try {
         return parseTheme(JSON.parse(stored));
     } catch {
@@ -71,16 +95,23 @@ export function loadStudioTheme(): Theme | null {
 }
 
 export function getSavedThemes(): SavedTheme[] {
-    if (!browser) return [];
+    if (!browser) {
+        return [];
+    }
     const stored = localStorage.getItem(SAVED_THEMES_KEY);
-    if (!stored) return [];
+    if (!stored) {
+        return [];
+    }
     try {
         const values: unknown = JSON.parse(stored);
-        if (!Array.isArray(values)) throw new TypeError('Expected a theme list.');
+        if (!Array.isArray(values)) {
+            throw new TypeError('Expected a theme list.');
+        }
         return values
             .map((value) => {
-                if (typeof value !== 'object' || value === null)
+                if (typeof value !== 'object' || value === null) {
                     throw new TypeError('Invalid theme.');
+                }
                 const record = value as Record<string, unknown>;
                 return {
                     ...parseTheme(record),
@@ -104,14 +135,18 @@ export function saveLocalTheme(theme: Theme, existingId?: string): SavedTheme {
         id: existingId ?? randomId(),
         savedAt: new Date().toISOString()
     };
-    if (!browser) return entry;
+    if (!browser) {
+        return entry;
+    }
     const next = [entry, ...getSavedThemes().filter((candidate) => candidate.id !== entry.id)];
     localStorage.setItem(SAVED_THEMES_KEY, JSON.stringify(next));
     return entry;
 }
 
 export function deleteLocalTheme(id: string) {
-    if (!browser) return;
+    if (!browser) {
+        return;
+    }
     const next = getSavedThemes().filter((theme) => theme.id !== id);
     localStorage.setItem(SAVED_THEMES_KEY, JSON.stringify(next));
 }

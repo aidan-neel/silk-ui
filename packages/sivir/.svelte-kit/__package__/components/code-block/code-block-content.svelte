@@ -29,9 +29,13 @@
      * order so the slide direction can be derived from tab position.
      */
     $effect(() => {
-        if (!registry) return;
+        if (!registry) {
+            return;
+        }
         registry.codes[value] = code;
-        if (!registry.order.includes(value)) registry.order = [...registry.order, value];
+        if (!registry.order.includes(value)) {
+            registry.order = [...registry.order, value];
+        }
         return () => {
             delete registry.codes[value];
         };

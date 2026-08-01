@@ -39,10 +39,14 @@
             return allowEmpty;
         },
         submit() {
-            if (!disabled && effectiveStatus !== 'submitting') form?.requestSubmit();
+            if (!disabled && effectiveStatus !== 'submitting') {
+                form?.requestSubmit();
+            }
         },
         stop() {
-            if (!disabled && effectiveStatus === 'submitting') onStop?.();
+            if (!disabled && effectiveStatus === 'submitting') {
+                onStop?.();
+            }
         }
     });
 
