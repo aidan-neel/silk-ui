@@ -242,9 +242,13 @@ describe('public API contract (v1 freeze)', () => {
 			await readFile(path.join(packageRoot, 'package.json'), 'utf8')
 		) as { exports: Record<string, unknown> };
 
-		expect(packageJson.exports['./components/*']).toBe('./src/components/*/index.ts');
+		expect(packageJson.exports['./components/*']).toMatchObject({
+			types: './dist/svelte/components/*/index.d.ts',
+			svelte: './dist/svelte/components/*/index.js',
+			default: './dist/svelte/components/*/index.js'
+		});
 		expect(packageJson.exports['.']).toBeTruthy();
-		expect(packageJson.exports['./ui.css']).toBe('./src/ui.css');
+		expect(packageJson.exports['./ui.css']).toBe('./dist/svelte/ui.css');
 
 		for (const slug of FROZEN) {
 			expect(existsSync(path.join(componentsDir, slug, 'index.ts'))).toBe(true);

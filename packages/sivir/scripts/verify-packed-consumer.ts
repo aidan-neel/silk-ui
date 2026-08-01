@@ -49,7 +49,8 @@ async function writeConsumer(cwd: string, tarball: string) {
 				type: 'module',
 				scripts: {
 					check: 'svelte-kit sync && svelte-check --tsconfig ./tsconfig.json',
-					build: 'vite build'
+					build: 'vite build',
+					optimize: 'vite optimize --force'
 				},
 				dependencies: {
 					'@sivir-ui/svelte': `file:${tarball}`,
@@ -162,8 +163,9 @@ const required = [
 	'dist/index.js',
 	'registry/index.json',
 	'registry/themes.json',
-	'src/index.ts',
-	'src/ui.css'
+	'dist/svelte/index.js',
+	'dist/svelte/index.d.ts',
+	'dist/svelte/ui.css'
 ];
 for (const file of required) {
 	if (!paths.includes(file)) throw new Error(`packed artifact is missing ${file}`);
@@ -172,7 +174,7 @@ if (!paths.some((file) => file.startsWith('registry/files/'))) {
 	throw new Error('packed artifact has no installable registry files');
 }
 for (const file of paths) {
-	if (!/^(?:LICENSE|README\.md|package\.json|dist\/|registry\/|src\/)/.test(file)) {
+	if (!/^(?:LICENSE|README\.md|package\.json|dist\/|registry\/)/.test(file)) {
 		throw new Error(`packed artifact contains unexpected file: ${file}`);
 	}
 	if (/(?:^|\/)\.env(?:\.|$)/.test(file)) {
@@ -185,6 +187,7 @@ try {
 	await writeConsumer(consumer, tarball);
 	run('bun', ['install', '--ignore-scripts'], consumer);
 	run('bun', ['run', 'check'], consumer);
+	run('bun', ['run', 'optimize'], consumer);
 	run('bun', ['run', 'build'], consumer);
 } finally {
 	await rm(consumer, { recursive: true, force: true });

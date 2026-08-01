@@ -2,6 +2,8 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { components } from '$lib/components';
+import { componentMarkdown } from '$lib/llms';
+import { GET as getLlms } from '../../../src/routes/llms.txt/+server';
 import { GET as getRobots } from '../../../src/routes/robots.txt/+server';
 import { GET as getSitemap } from '../../../src/routes/sitemap.xml/+server';
 
@@ -58,6 +60,23 @@ describe('docs release contracts', () => {
 		expect(body).not.toContain('/themes</loc>');
 		expect(body).not.toContain('/themes/studio');
 		expect(body).not.toContain('/docs/styling');
+	});
+
+	it('provides complete Markdown references for agents', async () => {
+		const response = (await getLlms({
+			url: new URL('https://preview.example/llms.txt')
+		} as Parameters<typeof getLlms>[0])) as Response;
+		const index = await response.text();
+
+		expect(response.headers.get('content-type')).toContain('text/markdown');
+		expect(index).toContain('https://preview.example/docs/introduction.md');
+		for (const component of components) {
+			expect(index).toContain(`https://preview.example/docs/components/${component}.md`);
+			const reference = componentMarkdown(component);
+			expect(reference).toMatch(/^# .+/);
+			expect(reference).toContain('## API');
+			expect(reference).toContain('## Install');
+		}
 	});
 
 	it('keeps getting-started docs free of Theme Studio and wrong CLI invocations', () => {

@@ -1,6 +1,6 @@
 {
 	"name": "@sivir-ui/svelte",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
 	"license": "MIT",
 	"repository": {
@@ -23,38 +23,66 @@
 		"**/*.css"
 	],
 	"files": [
-		"src",
 		"dist",
 		"registry"
 	],
 	"bin": {
 		"sivir": "dist/index.js"
 	},
-	"svelte": "./src/index.ts",
-	"types": "./src/index.ts",
+	"svelte": "./dist/svelte/index.js",
+	"types": "./dist/svelte/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./src/index.ts",
-			"svelte": "./src/index.ts",
-			"default": "./src/index.ts"
+			"types": "./dist/svelte/index.d.ts",
+			"svelte": "./dist/svelte/index.js",
+			"default": "./dist/svelte/index.js"
 		},
-		"./ui.css": "./src/ui.css",
-		"./brand-mark": "./src/brand-mark.svelte",
-		"./utils": "./src/utils.ts",
-		"./transition": "./src/transition.ts",
-		"./is-dark.svelte.ts": "./src/is-dark.svelte.ts",
-		"./_manifest/types": "./src/_manifest/types.ts",
-		"./themes/*": "./src/themes/*.ts",
-		"./components/input/variants": "./src/components/input/variants.ts",
-		"./components/_internal/overlay": "./src/components/_internal/overlay/index.ts",
-		"./components/*": "./src/components/*/index.ts"
+		"./ui.css": "./dist/svelte/ui.css",
+		"./brand-mark": {
+			"types": "./dist/svelte/brand-mark.svelte.d.ts",
+			"svelte": "./dist/svelte/brand-mark.svelte",
+			"default": "./dist/svelte/brand-mark.svelte"
+		},
+		"./utils": {
+			"types": "./dist/svelte/utils.d.ts",
+			"default": "./dist/svelte/utils.js"
+		},
+		"./transition": {
+			"types": "./dist/svelte/transition.d.ts",
+			"default": "./dist/svelte/transition.js"
+		},
+		"./is-dark.svelte.ts": {
+			"types": "./dist/svelte/is-dark.svelte.d.ts",
+			"default": "./dist/svelte/is-dark.svelte.js"
+		},
+		"./_manifest/types": {
+			"types": "./dist/svelte/_manifest/types.d.ts",
+			"default": "./dist/svelte/_manifest/types.js"
+		},
+		"./themes/*": {
+			"types": "./dist/svelte/themes/*.d.ts",
+			"default": "./dist/svelte/themes/*.js"
+		},
+		"./components/input/variants": {
+			"types": "./dist/svelte/components/input/variants.d.ts",
+			"default": "./dist/svelte/components/input/variants.js"
+		},
+		"./components/_internal/overlay": {
+			"types": "./dist/svelte/components/_internal/overlay/index.d.ts",
+			"default": "./dist/svelte/components/_internal/overlay/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/svelte/components/*/index.d.ts",
+			"svelte": "./dist/svelte/components/*/index.js",
+			"default": "./dist/svelte/components/*/index.js"
+		}
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"scripts": {
 		"build:registry": "bun scripts/build-registry.ts",
-		"build": "bun run build:registry && bun build cli/index.ts --outdir dist --target node --banner '#!/usr/bin/env node'",
+		"build": "svelte-package --input src --output dist/svelte --tsconfig tsconfig.package.json && bun run build:registry && bun build cli/index.ts --outdir dist --target node --banner '#!/usr/bin/env node'",
 		"verify:artifact": "bun scripts/verify-packed-consumer.ts",
 		"verify:cli-artifact": "bun scripts/verify-cli-artifact.ts",
 		"prepublishOnly": "bun run build",
@@ -76,11 +104,13 @@
 		"tailwind-variants": "^3.2.2"
 	},
 	"peerDependencies": {
+		"@sveltejs/kit": "^2.0.0",
 		"svelte": "^5.0.0",
 		"tailwindcss": "^4.0.0"
 	},
 	"devDependencies": {
 		"@clack/prompts": "^0.11.0",
+		"@sveltejs/package": "^2.5.8",
 		"bun-types": "^1.3.14",
 		"commander": "^14.0.2",
 		"picocolors": "^1.1.1",
