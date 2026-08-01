@@ -73,7 +73,7 @@
     </svg>
     <span
         aria-hidden="true"
-                class="relative text-[length:var(--font-size-badge)] leading-none text-foreground-muted tabular-nums [font-weight:var(--font-weight-label)]"
+        class="relative text-[length:var(--font-size-badge)] leading-none text-foreground-muted tabular-nums [font-weight:var(--font-weight-label)]"
     >
         {#if children}
             {@render children()}

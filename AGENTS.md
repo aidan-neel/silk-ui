@@ -18,3 +18,11 @@ artifact. For a published Sivir package, also run:
 bun --cwd=packages/sivir run verify:artifact
 bun --cwd=packages/sivir run verify:cli-artifact
 ```
+
+# Formatting
+
+Keep code formatting clean and cohesive. Use intentional spacing between
+logical sections, group related constants and functions together, and follow
+the surrounding file's ordering and formatting conventions. Apply formatting
+changes consistently everywhere they are needed, rather than only at the first
+occurrence.

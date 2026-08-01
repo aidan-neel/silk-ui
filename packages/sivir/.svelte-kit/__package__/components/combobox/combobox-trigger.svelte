@@ -118,7 +118,7 @@
     class={cn(
         className,
         button({ variant, size }),
-        'relative p-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
+        'relative px-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
         disabled && 'pointer-events-none opacity-40'
     )}
 >
