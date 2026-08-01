@@ -6,6 +6,7 @@ import Item from './combobox-item.svelte';
 import Label from './combobox-label.svelte';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 export type ComboboxItem = {
+    id: string;
     value: string;
     label: string;
     callback?: () => void;
@@ -16,6 +17,7 @@ export type ComboboxState = {
     items: Set<ComboboxItem>;
     results: Set<ComboboxItem>;
     searchContent: string;
+    activeValue?: string;
     selected?: ComboboxItem;
 };
 export type ComboboxRootProps = {

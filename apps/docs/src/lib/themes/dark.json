@@ -1,81 +1,81 @@
 {
-	"name": "ui-dark",
-	"type": "dark",
-	"semanticHighlighting": true,
-	"colors": {
-		"editor.background": "#11151c",
-		"editor.foreground": "#d7deea",
-		"editorLineNumber.foreground": "#66758b",
-		"editorLineNumber.activeForeground": "#a7b4c8",
-		"editor.selectionBackground": "#23314a",
-		"editor.inactiveSelectionBackground": "#1b2637",
-		"editor.lineHighlightBackground": "#161d28",
-		"editorCursor.foreground": "#7fb0ff",
-		"editorIndentGuide.background": "#253042",
-		"editorWidget.background": "#11151c",
-		"editor.findMatchBackground": "#28416e",
-		"editor.findMatchHighlightBackground": "#1f2d45"
-	},
-	"tokenColors": [
-		{
-			"scope": ["comment", "punctuation.definition.comment"],
-			"settings": {
-				"foreground": "#7f8ca1",
-				"fontStyle": "italic"
-			}
-		},
-		{
-			"scope": ["keyword", "storage", "keyword.control", "keyword.operator.new"],
-			"settings": {
-				"foreground": "#8fb4ff"
-			}
-		},
-		{
-			"scope": ["entity.name.tag", "support.class.component", "entity.name.type"],
-			"settings": {
-				"foreground": "#67d4c5"
-			}
-		},
-		{
-			"scope": ["entity.name.function", "support.function", "meta.function-call"],
-			"settings": {
-				"foreground": "#8fb4ff"
-			}
-		},
-		{
-			"scope": ["variable", "meta.object-literal.key", "support.variable"],
-			"settings": {
-				"foreground": "#e4e9f2"
-			}
-		},
-		{
-			"scope": ["string", "string.template", "markup.inline.raw"],
-			"settings": {
-				"foreground": "#f1b47a"
-			}
-		},
-		{
-			"scope": ["constant.numeric", "constant.language", "constant.character.escape"],
-			"settings": {
-				"foreground": "#c4a0ff"
-			}
-		},
-		{
-			"scope": [
-				"entity.name.type.class",
-				"support.type",
-				"storage.type",
-				"entity.other.attribute-name"
-			],
-			"settings": {
-				"foreground": "#e0a9ff"
-			}
-		},
-		{
-			"scope": ["punctuation", "meta.brace", "meta.delimiter"],
-			"settings": {
-				"foreground": "#9aa7ba"
-			}
-		}
-	]
+    "name": "ui-dark",
+    "type": "dark",
+    "semanticHighlighting": true,
+    "colors": {
+        "editor.background": "#11151c",
+        "editor.foreground": "#d7deea",
+        "editorLineNumber.foreground": "#66758b",
+        "editorLineNumber.activeForeground": "#a7b4c8",
+        "editor.selectionBackground": "#23314a",
+        "editor.inactiveSelectionBackground": "#1b2637",
+        "editor.lineHighlightBackground": "#161d28",
+        "editorCursor.foreground": "#7fb0ff",
+        "editorIndentGuide.background": "#253042",
+        "editorWidget.background": "#11151c",
+        "editor.findMatchBackground": "#28416e",
+        "editor.findMatchHighlightBackground": "#1f2d45"
+    },
+    "tokenColors": [
+        {
+            "scope": ["comment", "punctuation.definition.comment"],
+            "settings": {
+                "foreground": "#7f8ca1",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "scope": ["keyword", "storage", "keyword.control", "keyword.operator.new"],
+            "settings": {
+                "foreground": "#8fb4ff"
+            }
+        },
+        {
+            "scope": ["entity.name.tag", "support.class.component", "entity.name.type"],
+            "settings": {
+                "foreground": "#67d4c5"
+            }
+        },
+        {
+            "scope": ["entity.name.function", "support.function", "meta.function-call"],
+            "settings": {
+                "foreground": "#8fb4ff"
+            }
+        },
+        {
+            "scope": ["variable", "meta.object-literal.key", "support.variable"],
+            "settings": {
+                "foreground": "#e4e9f2"
+            }
+        },
+        {
+            "scope": ["string", "string.template", "markup.inline.raw"],
+            "settings": {
+                "foreground": "#f1b47a"
+            }
+        },
+        {
+            "scope": ["constant.numeric", "constant.language", "constant.character.escape"],
+            "settings": {
+                "foreground": "#c4a0ff"
+            }
+        },
+        {
+            "scope": [
+                "entity.name.type.class",
+                "support.type",
+                "storage.type",
+                "entity.other.attribute-name"
+            ],
+            "settings": {
+                "foreground": "#e0a9ff"
+            }
+        },
+        {
+            "scope": ["punctuation", "meta.brace", "meta.delimiter"],
+            "settings": {
+                "foreground": "#9aa7ba"
+            }
+        }
+    ]
 }

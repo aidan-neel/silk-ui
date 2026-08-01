@@ -9,33 +9,33 @@ import Output from './tool-output.svelte';
 export type ToolState = 'running' | 'complete' | 'error';
 
 export type ToolProps = {
-	/** A concise summary of the work completed by this task group. */
-	name: string;
-	state?: ToolState;
-	/** A compact summary of how long the task took, such as 6s. */
-	duration?: string;
-	/** Whether the individual tool calls are visible. */
-	open?: boolean;
-	children?: Snippet;
+    /** A concise summary of the work completed by this task group. */
+    name: string;
+    state?: ToolState;
+    /** A compact summary of how long the task took, such as 6s. */
+    duration?: string;
+    /** Whether the individual tool calls are visible. */
+    open?: boolean;
+    children?: Snippet;
 } & DefaultProps &
-	Omit<HTMLAttributes<HTMLElement>, 'children'>;
+    Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
 export type ToolItemProps = {
-	name: string;
-	detail?: string;
-	kind?: 'command' | 'search' | 'read';
+    name: string;
+    detail?: string;
+    kind?: 'command' | 'search' | 'read';
 } & DefaultProps;
 
 export type ToolInputProps = {
-	label?: string;
-	children?: Snippet;
+    label?: string;
+    children?: Snippet;
 } & DefaultProps &
-	Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 export type ToolOutputProps = {
-	label?: string;
-	children?: Snippet;
+    label?: string;
+    children?: Snippet;
 } & DefaultProps &
-	Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 export { Root, Item, Input, Output };

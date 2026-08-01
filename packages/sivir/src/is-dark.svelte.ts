@@ -7,24 +7,24 @@
  * corrects on hydration.
  */
 export function useIsDark() {
-	let dark = $state(
-		typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
-	);
+    let dark = $state(
+        typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
+    );
 
-	$effect(() => {
-		const root = document.documentElement;
-		const update = () => {
-			dark = root.classList.contains('dark');
-		};
-		update();
-		const mo = new MutationObserver(update);
-		mo.observe(root, { attributes: true, attributeFilter: ['class'] });
-		return () => mo.disconnect();
-	});
+    $effect(() => {
+        const root = document.documentElement;
+        const update = () => {
+            dark = root.classList.contains('dark');
+        };
+        update();
+        const mo = new MutationObserver(update);
+        mo.observe(root, { attributes: true, attributeFilter: ['class'] });
+        return () => mo.disconnect();
+    });
 
-	return {
-		get current() {
-			return dark;
-		}
-	};
+    return {
+        get current() {
+            return dark;
+        }
+    };
 }

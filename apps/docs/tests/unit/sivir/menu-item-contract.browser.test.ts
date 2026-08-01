@@ -15,46 +15,46 @@ import MenuItemContractFixture from '../../fixtures/MenuItemContractFixture.svel
  */
 
 async function flush() {
-	await tick();
-	await tick();
-	await new Promise((r) => setTimeout(r, 20));
+    await tick();
+    await tick();
+    await new Promise((r) => setTimeout(r, 20));
 }
 
 async function openMenu() {
-	await page.getByTestId('contract-trigger').click();
-	await flush();
+    await page.getByTestId('contract-trigger').click();
+    await flush();
 }
 
 function rowFor(testId: string) {
-	const label = document.querySelector<HTMLElement>(`[data-testid="${testId}"]`);
-	const row = label?.closest<HTMLElement>('.sivir-menu-item');
-	if (!row) throw new Error(`no .sivir-menu-item ancestor for ${testId}`);
-	return row;
+    const label = document.querySelector<HTMLElement>(`[data-testid="${testId}"]`);
+    const row = label?.closest<HTMLElement>('.sivir-menu-item');
+    if (!row) throw new Error(`no .sivir-menu-item ancestor for ${testId}`);
+    return row;
 }
 
 describe('menu-item stylesheet contract', () => {
-	it('applies the contract from ui.css rather than the button variant base', async () => {
-		render(MenuItemContractFixture, {});
-		await flush();
-		await openMenu();
+    it('applies the contract from ui.css rather than the button variant base', async () => {
+        render(MenuItemContractFixture, {});
+        await flush();
+        await openMenu();
 
-		const style = getComputedStyle(rowFor('plain-item'));
-		expect(style.display).toBe('flex');
-		expect(style.justifyContent).toBe('space-between');
-		expect(style.textAlign).toBe('left');
-		expect(style.height).toBe('32px');
-	});
+        const style = getComputedStyle(rowFor('plain-item'));
+        expect(style.display).toBe('flex');
+        expect(style.justifyContent).toBe('space-between');
+        expect(style.textAlign).toBe('left');
+        expect(style.height).toBe('32px');
+    });
 
-	it('lets a consumer utility class win over the contract', async () => {
-		render(MenuItemContractFixture, { overrideClass: 'h-16 justify-start' });
-		await flush();
-		await openMenu();
+    it('lets a consumer utility class win over the contract', async () => {
+        render(MenuItemContractFixture, { overrideClass: 'h-16 justify-start' });
+        await flush();
+        await openMenu();
 
-		const plain = getComputedStyle(rowFor('plain-item'));
-		const overridden = getComputedStyle(rowFor('override-item'));
+        const plain = getComputedStyle(rowFor('plain-item'));
+        const overridden = getComputedStyle(rowFor('override-item'));
 
-		expect(plain.height).toBe('32px');
-		expect(overridden.height).toBe('64px');
-		expect(overridden.justifyContent).toBe('flex-start');
-	});
+        expect(plain.height).toBe('32px');
+        expect(overridden.height).toBe('64px');
+        expect(overridden.justifyContent).toBe('flex-start');
+    });
 });

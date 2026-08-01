@@ -150,7 +150,11 @@ function brandDeclarations(brand, mode) {
         // Keep default hover in lockstep with baked ui.css and WCAG AA on white labels.
         `--color-primary-hover: ${isDefault ? '#1270ad' : `color-mix(in srgb, ${brand} 78%, black)`};`,
         `--color-ring: color-mix(in srgb, ${brand} 30%, transparent);`,
-        `--sivir-blue-500: ${isDefault ? (mode === 'light' ? 'hsl(212.2 100% 64.5%)' : 'hsl(216.6 100% 67.8%)') : brand};`,
+        `--sivir-blue-500: ${isDefault
+            ? mode === 'light'
+                ? 'hsl(212.2 100% 64.5%)'
+                : 'hsl(216.6 100% 67.8%)'
+            : brand};`,
         `--sivir-blue-50: ${isDefault
             ? mode === 'light'
                 ? 'hsl(218.8 100% 96.7%)'

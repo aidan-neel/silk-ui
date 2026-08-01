@@ -10,12 +10,12 @@ import { PrismaClient } from '@root/prisma/generated/prisma/client';
 // Supabase CA path; once every deployment does, remove the fallback branch.
 const caPath = process.env.DATABASE_CA_CERT_PATH;
 const ssl = caPath
-	? { ca: readFileSync(caPath, 'utf8'), rejectUnauthorized: true }
-	: { rejectUnauthorized: false };
+    ? { ca: readFileSync(caPath, 'utf8'), rejectUnauthorized: true }
+    : { rejectUnauthorized: false };
 
 const pool = new pg.Pool({
-	connectionString: process.env.DATABASE_URL,
-	ssl
+    connectionString: process.env.DATABASE_URL,
+    ssl
 });
 
 const adapter = new PrismaPg(pool);

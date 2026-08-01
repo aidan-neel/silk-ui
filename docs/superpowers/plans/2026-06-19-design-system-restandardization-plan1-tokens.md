@@ -58,32 +58,35 @@ import { describe, expect, it } from 'vitest';
 import { lintSource } from './index';
 
 describe('lintSource', () => {
-	it('flags a hardcoded hex color', () => {
-		const v = lintSource('a.svelte', 'class="bg-[#ff0000]"');
-		expect(v).toHaveLength(1);
-		expect(v[0].rule).toBe('no-literal-color');
-	});
+    it('flags a hardcoded hex color', () => {
+        const v = lintSource('a.svelte', 'class="bg-[#ff0000]"');
+        expect(v).toHaveLength(1);
+        expect(v[0].rule).toBe('no-literal-color');
+    });
 
-	it('flags a hardcoded px length in an arbitrary value', () => {
-		const v = lintSource('a.svelte', 'class="h-[2px]"');
-		expect(v.map((x) => x.rule)).toContain('no-literal-length');
-	});
+    it('flags a hardcoded px length in an arbitrary value', () => {
+        const v = lintSource('a.svelte', 'class="h-[2px]"');
+        expect(v.map((x) => x.rule)).toContain('no-literal-length');
+    });
 
-	it('flags direct use of a Tier-1 primitive', () => {
-		const v = lintSource('a.svelte', 'class="text-[var(--sivir-neutral-900)]"');
-		expect(v.map((x) => x.rule)).toContain('no-primitive-leak');
-	});
+    it('flags direct use of a Tier-1 primitive', () => {
+        const v = lintSource('a.svelte', 'class="text-[var(--sivir-neutral-900)]"');
+        expect(v.map((x) => x.rule)).toContain('no-primitive-leak');
+    });
 
-	it('passes clean token-only usage', () => {
-		const v = lintSource('a.svelte', 'class="bg-[var(--color-card)] rounded-[var(--radius-lg)]"');
-		expect(v).toEqual([]);
-	});
+    it('passes clean token-only usage', () => {
+        const v = lintSource(
+            'a.svelte',
+            'class="bg-[var(--color-card)] rounded-[var(--radius-lg)]"'
+        );
+        expect(v).toEqual([]);
+    });
 
-	it('reports the correct line number for a violation on a later line', () => {
-		// only scans the text it is handed; reports 1-based line numbers
-		const v = lintSource('a.svelte', 'line1\nclass="h-[8px]"');
-		expect(v[0].line).toBe(2);
-	});
+    it('reports the correct line number for a violation on a later line', () => {
+        // only scans the text it is handed; reports 1-based line numbers
+        const v = lintSource('a.svelte', 'line1\nclass="h-[8px]"');
+        expect(v[0].line).toBe(2);
+    });
 });
 ```
 
@@ -99,22 +102,22 @@ Expected: FAIL — `Cannot find module './index'`.
 export type Violation = { file: string; line: number; rule: string; text: string };
 
 const RULES: { rule: string; re: RegExp }[] = [
-	// hex colors anywhere
-	{ rule: 'no-literal-color', re: /#[0-9a-fA-F]{3,8}\b/ },
-	// px/rem/em literals inside a Tailwind arbitrary value: [...2px...] / [...0.5rem...]
-	{ rule: 'no-literal-length', re: /\[[^\]]*\d+(?:\.\d+)?(?:px|rem|em)[^\]]*\]/ },
-	// direct Tier-1 primitive reference
-	{ rule: 'no-primitive-leak', re: /var\(\s*--sivir-[a-z0-9-]+/ }
+    // hex colors anywhere
+    { rule: 'no-literal-color', re: /#[0-9a-fA-F]{3,8}\b/ },
+    // px/rem/em literals inside a Tailwind arbitrary value: [...2px...] / [...0.5rem...]
+    { rule: 'no-literal-length', re: /\[[^\]]*\d+(?:\.\d+)?(?:px|rem|em)[^\]]*\]/ },
+    // direct Tier-1 primitive reference
+    { rule: 'no-primitive-leak', re: /var\(\s*--sivir-[a-z0-9-]+/ }
 ];
 
 export function lintSource(file: string, source: string): Violation[] {
-	const out: Violation[] = [];
-	source.split('\n').forEach((text, i) => {
-		for (const { rule, re } of RULES) {
-			if (re.test(text)) out.push({ file, line: i + 1, rule, text: text.trim() });
-		}
-	});
-	return out;
+    const out: Violation[] = [];
+    source.split('\n').forEach((text, i) => {
+        for (const { rule, re } of RULES) {
+            if (re.test(text)) out.push({ file, line: i + 1, rule, text: text.trim() });
+        }
+    });
+    return out;
 }
 ```
 
@@ -131,24 +134,24 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 function walk(dir: string, acc: string[] = []): string[] {
-	for (const name of readdirSync(dir)) {
-		const p = join(dir, name);
-		if (statSync(p).isDirectory()) walk(p, acc);
-		else if (/\.(svelte|ts)$/.test(name) && !name.endsWith('.test.ts')) acc.push(p);
-	}
-	return acc;
+    for (const name of readdirSync(dir)) {
+        const p = join(dir, name);
+        if (statSync(p).isDirectory()) walk(p, acc);
+        else if (/\.(svelte|ts)$/.test(name) && !name.endsWith('.test.ts')) acc.push(p);
+    }
+    return acc;
 }
 
 export function lintTree(root: string): Violation[] {
-	return walk(root).flatMap((f) => lintSource(f, readFileSync(f, 'utf8')));
+    return walk(root).flatMap((f) => lintSource(f, readFileSync(f, 'utf8')));
 }
 
 // `bun tools/token-lint/index.ts <root>` prints violations; exits 0 in report mode.
 if (import.meta.main) {
-	const root = process.argv[2] ?? 'packages/sivir/src/components';
-	const v = lintTree(root);
-	for (const x of v) console.log(`${x.file}:${x.line} [${x.rule}] ${x.text}`);
-	console.log(`\n${v.length} violations (report mode — enforced in Plan 2)`);
+    const root = process.argv[2] ?? 'packages/sivir/src/components';
+    const v = lintTree(root);
+    for (const x of v) console.log(`${x.file}:${x.line} [${x.rule}] ${x.text}`);
+    console.log(`\n${v.length} violations (report mode — enforced in Plan 2)`);
 }
 ```
 
@@ -187,19 +190,19 @@ import { fileURLToPath } from 'node:url';
 const css = readFileSync(fileURLToPath(new URL('../ui.css', import.meta.url)), 'utf8');
 
 describe('ui.css Tier 1 primitives', () => {
-	it('defines the 13-step neutral ramp', () => {
-		for (const step of [0, 25, 50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900]) {
-			expect(css).toContain(`--sivir-neutral-${step}:`);
-		}
-	});
-	it('defines the blue ramp and the 4px space unit', () => {
-		expect(css).toContain('--sivir-blue-500:');
-		expect(css).toContain('--sivir-space-unit: 4px');
-	});
-	it('overrides the neutral ramp under .dark', () => {
-		const darkBlock = css.slice(css.indexOf('.dark'));
-		expect(darkBlock).toContain('--sivir-neutral-0: #0d0d0d');
-	});
+    it('defines the 13-step neutral ramp', () => {
+        for (const step of [0, 25, 50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900]) {
+            expect(css).toContain(`--sivir-neutral-${step}:`);
+        }
+    });
+    it('defines the blue ramp and the 4px space unit', () => {
+        expect(css).toContain('--sivir-blue-500:');
+        expect(css).toContain('--sivir-space-unit: 4px');
+    });
+    it('overrides the neutral ramp under .dark', () => {
+        const darkBlock = css.slice(css.indexOf('.dark'));
+        expect(darkBlock).toContain('--sivir-neutral-0: #0d0d0d');
+    });
 });
 ```
 
@@ -383,17 +386,17 @@ Map the existing **public** token names (`--color-*`, etc.) to Tier-1 steps, mod
 ```ts
 // append inside packages/sivir/src/themes/ui-css.test.ts
 describe('ui.css Tier 2 semantic', () => {
-	it('maps semantic color tokens to neutral/blue primitives', () => {
-		expect(css).toContain('--color-background: var(--sivir-neutral-25)');
-		expect(css).toContain('--color-card: var(--sivir-neutral-0)');
-		expect(css).toContain('--color-primary: var(--sivir-blue-500)');
-		expect(css).toContain('--color-ring: var(--sivir-blue-ring)');
-	});
-	it('aliases retired names to their replacements', () => {
-		expect(css).toContain('--color-destructive: var(--color-error)');
-		expect(css).toContain('--color-modal: var(--color-panel)');
-		expect(css).toContain('--color-info: var(--color-primary)');
-	});
+    it('maps semantic color tokens to neutral/blue primitives', () => {
+        expect(css).toContain('--color-background: var(--sivir-neutral-25)');
+        expect(css).toContain('--color-card: var(--sivir-neutral-0)');
+        expect(css).toContain('--color-primary: var(--sivir-blue-500)');
+        expect(css).toContain('--color-ring: var(--sivir-blue-ring)');
+    });
+    it('aliases retired names to their replacements', () => {
+        expect(css).toContain('--color-destructive: var(--color-error)');
+        expect(css).toContain('--color-modal: var(--color-panel)');
+        expect(css).toContain('--color-info: var(--color-primary)');
+    });
 });
 ```
 
@@ -504,21 +507,21 @@ Derive every component token from Tier 2 by recipe (no hand-authored per-variant
 ```ts
 // append inside packages/sivir/src/themes/ui-css.test.ts
 describe('ui.css Tier 3 + structure', () => {
-	it('derives button tokens from semantic tokens (no fancy shadow tokens)', () => {
-		expect(css).toContain('--button-primary-bg: var(--color-primary)');
-		expect(css).toContain('--button-secondary-bg: var(--color-secondary)');
-		expect(css).not.toContain('--button-primary-shadow');
-		expect(css).not.toContain('--button-fancy-highlight');
-	});
-	it('sizes controls from the spacing scale', () => {
-		expect(css).toContain('--size-control-md: var(--sivir-space-');
-		expect(css).toContain('--button-height: var(--size-control-md)');
-	});
-	it('keeps base layer, keyframes and reduced-motion', () => {
-		expect(css).toContain('@layer base');
-		expect(css).toContain('@keyframes skeleton-loading');
-		expect(css).toContain('prefers-reduced-motion: reduce');
-	});
+    it('derives button tokens from semantic tokens (no fancy shadow tokens)', () => {
+        expect(css).toContain('--button-primary-bg: var(--color-primary)');
+        expect(css).toContain('--button-secondary-bg: var(--color-secondary)');
+        expect(css).not.toContain('--button-primary-shadow');
+        expect(css).not.toContain('--button-fancy-highlight');
+    });
+    it('sizes controls from the spacing scale', () => {
+        expect(css).toContain('--size-control-md: var(--sivir-space-');
+        expect(css).toContain('--button-height: var(--size-control-md)');
+    });
+    it('keeps base layer, keyframes and reduced-motion', () => {
+        expect(css).toContain('@layer base');
+        expect(css).toContain('@keyframes skeleton-loading');
+        expect(css).toContain('prefers-reduced-motion: reduce');
+    });
 });
 ```
 
@@ -715,48 +718,48 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_THEME, themeToCss } from '@sivir-ui/svelte/themes/theme';
 
 describe('DEFAULT_THEME', () => {
-	it('uses Inter, soft blue brand, default scales', () => {
-		expect(DEFAULT_THEME.fontSans).toBe('Inter');
-		expect(DEFAULT_THEME.brand).toBe('#4a8cff');
-		expect(DEFAULT_THEME.radius).toBe('default');
-		expect(DEFAULT_THEME.density).toBe('default');
-		expect(DEFAULT_THEME.motion).toBe('default');
-	});
+    it('uses Inter, soft blue brand, default scales', () => {
+        expect(DEFAULT_THEME.fontSans).toBe('Inter');
+        expect(DEFAULT_THEME.brand).toBe('#4a8cff');
+        expect(DEFAULT_THEME.radius).toBe('default');
+        expect(DEFAULT_THEME.density).toBe('default');
+        expect(DEFAULT_THEME.motion).toBe('default');
+    });
 });
 
 describe('themeToCss', () => {
-	const css = themeToCss(DEFAULT_THEME);
-	it('emits a :root, .dark shared block with fonts, radii, brand ramp, motion', () => {
-		expect(css).toContain('--font-sans: Inter');
-		expect(css).toContain('--radius-lg: 8px');
-		expect(css).toContain('--sivir-blue-500: #4a8cff');
-		expect(css).toContain('--sivir-space-unit: 4px');
-		expect(css).toContain('--motion-duration-panel: 180ms');
-	});
-	it('derives the brand ramp via oklch from the brand hex', () => {
-		const c = themeToCss({ ...DEFAULT_THEME, brand: '#22cc88' });
-		expect(c).toContain('--sivir-blue-500: #22cc88');
-		expect(c).toContain('--sivir-blue-600: oklch(from #22cc88');
-		expect(c).toContain('--sivir-blue-ring: oklch(from #22cc88 l c h / 0.4)');
-	});
-	it('maps radius preset "sharp" to the sharp scale', () => {
-		expect(themeToCss({ ...DEFAULT_THEME, radius: 'sharp' })).toContain('--radius-lg: 4px');
-	});
-	it('maps density "compact" to a smaller space unit', () => {
-		expect(themeToCss({ ...DEFAULT_THEME, density: 'compact' })).toContain(
-			'--sivir-space-unit: 3.5px'
-		);
-	});
-	it('maps motion "none" to zeroed durations', () => {
-		expect(themeToCss({ ...DEFAULT_THEME, motion: 'none' })).toContain(
-			'--motion-duration-panel: 0ms'
-		);
-	});
-	it('emits a true-gray neutral override only for non-cool temperatures', () => {
-		expect(themeToCss(DEFAULT_THEME)).not.toContain('color-mix(in srgb, #e2e2df'); // cool => no override
-		const warm = themeToCss({ ...DEFAULT_THEME, neutral: 'warm' });
-		expect(warm).toContain('--sivir-neutral-200:');
-	});
+    const css = themeToCss(DEFAULT_THEME);
+    it('emits a :root, .dark shared block with fonts, radii, brand ramp, motion', () => {
+        expect(css).toContain('--font-sans: Inter');
+        expect(css).toContain('--radius-lg: 8px');
+        expect(css).toContain('--sivir-blue-500: #4a8cff');
+        expect(css).toContain('--sivir-space-unit: 4px');
+        expect(css).toContain('--motion-duration-panel: 180ms');
+    });
+    it('derives the brand ramp via oklch from the brand hex', () => {
+        const c = themeToCss({ ...DEFAULT_THEME, brand: '#22cc88' });
+        expect(c).toContain('--sivir-blue-500: #22cc88');
+        expect(c).toContain('--sivir-blue-600: oklch(from #22cc88');
+        expect(c).toContain('--sivir-blue-ring: oklch(from #22cc88 l c h / 0.4)');
+    });
+    it('maps radius preset "sharp" to the sharp scale', () => {
+        expect(themeToCss({ ...DEFAULT_THEME, radius: 'sharp' })).toContain('--radius-lg: 4px');
+    });
+    it('maps density "compact" to a smaller space unit', () => {
+        expect(themeToCss({ ...DEFAULT_THEME, density: 'compact' })).toContain(
+            '--sivir-space-unit: 3.5px'
+        );
+    });
+    it('maps motion "none" to zeroed durations', () => {
+        expect(themeToCss({ ...DEFAULT_THEME, motion: 'none' })).toContain(
+            '--motion-duration-panel: 0ms'
+        );
+    });
+    it('emits a true-gray neutral override only for non-cool temperatures', () => {
+        expect(themeToCss(DEFAULT_THEME)).not.toContain('color-mix(in srgb, #e2e2df'); // cool => no override
+        const warm = themeToCss({ ...DEFAULT_THEME, neutral: 'warm' });
+        expect(warm).toContain('--sivir-neutral-200:');
+    });
 });
 ```
 
@@ -777,136 +780,136 @@ export type MotionFeel = 'none' | 'subtle' | 'default' | 'expressive';
 
 /** The constrained theme contract — ~10 fields. Replaces the ~91-field ThemeDraft. */
 export type Theme = {
-	slug: string;
-	name: string;
-	description: string;
-	publisher?: string;
-	/** Primary/accent color as hex; the full blue ramp is derived from it. */
-	brand: string;
-	neutral: NeutralTemp;
-	radius: RadiusScale;
-	density: Density;
-	motion: MotionFeel;
-	fontSans: string;
-	fontMono: string;
-	fontHeader: string;
+    slug: string;
+    name: string;
+    description: string;
+    publisher?: string;
+    /** Primary/accent color as hex; the full blue ramp is derived from it. */
+    brand: string;
+    neutral: NeutralTemp;
+    radius: RadiusScale;
+    density: Density;
+    motion: MotionFeel;
+    fontSans: string;
+    fontMono: string;
+    fontHeader: string;
 };
 
 export const DEFAULT_THEME: Theme = {
-	slug: 'default',
-	name: 'Default',
-	description: 'Sivir default — a calm, neutral, Notion-like system.',
-	publisher: 'Sivir UI',
-	brand: '#4a8cff',
-	neutral: 'cool',
-	radius: 'default',
-	density: 'default',
-	motion: 'default',
-	fontSans: 'Inter',
-	fontMono: 'Geist Mono',
-	fontHeader: 'Inter'
+    slug: 'default',
+    name: 'Default',
+    description: 'Sivir default — a calm, neutral, Notion-like system.',
+    publisher: 'Sivir UI',
+    brand: '#4a8cff',
+    neutral: 'cool',
+    radius: 'default',
+    density: 'default',
+    motion: 'default',
+    fontSans: 'Inter',
+    fontMono: 'Geist Mono',
+    fontHeader: 'Inter'
 };
 
 const RADII: Record<RadiusScale, [string, string, string, string]> = {
-	sharp: ['2px', '3px', '4px', '6px'],
-	default: ['4px', '6px', '8px', '12px'],
-	rounded: ['6px', '10px', '14px', '20px']
+    sharp: ['2px', '3px', '4px', '6px'],
+    default: ['4px', '6px', '8px', '12px'],
+    rounded: ['6px', '10px', '14px', '20px']
 };
 
 const DENSITY_UNIT: Record<Density, string> = {
-	compact: '3.5px',
-	default: '4px',
-	comfortable: '4.5px'
+    compact: '3.5px',
+    default: '4px',
+    comfortable: '4.5px'
 };
 
 type MotionSet = {
-	hover: string;
-	menu: string;
-	panel: string;
-	sheet: string;
-	overlay: string;
-	tooltip: string;
-	toastIn: string;
-	toastOut: string;
-	easing: string;
+    hover: string;
+    menu: string;
+    panel: string;
+    sheet: string;
+    overlay: string;
+    tooltip: string;
+    toastIn: string;
+    toastOut: string;
+    easing: string;
 };
 const MOTION: Record<MotionFeel, MotionSet> = {
-	none: {
-		hover: '0ms',
-		menu: '0ms',
-		panel: '0ms',
-		sheet: '0ms',
-		overlay: '0ms',
-		tooltip: '0ms',
-		toastIn: '0ms',
-		toastOut: '0ms',
-		easing: 'linear'
-	},
-	subtle: {
-		hover: '100ms',
-		menu: '80ms',
-		panel: '130ms',
-		sheet: '160ms',
-		overlay: '90ms',
-		tooltip: '80ms',
-		toastIn: '240ms',
-		toastOut: '180ms',
-		easing: 'cubic-bezier(0.25,0.1,0.25,1)'
-	},
-	default: {
-		hover: '140ms',
-		menu: '120ms',
-		panel: '180ms',
-		sheet: '220ms',
-		overlay: '120ms',
-		tooltip: '120ms',
-		toastIn: '320ms',
-		toastOut: '240ms',
-		easing: 'cubic-bezier(0.22,1,0.36,1)'
-	},
-	expressive: {
-		hover: '200ms',
-		menu: '160ms',
-		panel: '260ms',
-		sheet: '300ms',
-		overlay: '160ms',
-		tooltip: '160ms',
-		toastIn: '400ms',
-		toastOut: '300ms',
-		easing: 'cubic-bezier(0.34,1.2,0.64,1)'
-	}
+    none: {
+        hover: '0ms',
+        menu: '0ms',
+        panel: '0ms',
+        sheet: '0ms',
+        overlay: '0ms',
+        tooltip: '0ms',
+        toastIn: '0ms',
+        toastOut: '0ms',
+        easing: 'linear'
+    },
+    subtle: {
+        hover: '100ms',
+        menu: '80ms',
+        panel: '130ms',
+        sheet: '160ms',
+        overlay: '90ms',
+        tooltip: '80ms',
+        toastIn: '240ms',
+        toastOut: '180ms',
+        easing: 'cubic-bezier(0.25,0.1,0.25,1)'
+    },
+    default: {
+        hover: '140ms',
+        menu: '120ms',
+        panel: '180ms',
+        sheet: '220ms',
+        overlay: '120ms',
+        tooltip: '120ms',
+        toastIn: '320ms',
+        toastOut: '240ms',
+        easing: 'cubic-bezier(0.22,1,0.36,1)'
+    },
+    expressive: {
+        hover: '200ms',
+        menu: '160ms',
+        panel: '260ms',
+        sheet: '300ms',
+        overlay: '160ms',
+        tooltip: '160ms',
+        toastIn: '400ms',
+        toastOut: '300ms',
+        easing: 'cubic-bezier(0.34,1.2,0.64,1)'
+    }
 };
 
 /** Neutral tint applied via color-mix over the baked cool ramp. 'cool' is the baked default (no override). */
 const NEUTRAL_TINT: Record<NeutralTemp, string | null> = {
-	cool: null,
-	true: '#808080', // pull toward pure gray
-	warm: '#8a5a2b' // pull toward warm
+    cool: null,
+    true: '#808080', // pull toward pure gray
+    warm: '#8a5a2b' // pull toward warm
 };
 const NEUTRAL_STEPS = [0, 25, 50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900];
 
 function brandRamp(hex: string): string[] {
-	return [
-		`--sivir-blue-500: ${hex};`,
-		`--sivir-blue-600: oklch(from ${hex} calc(l - 0.06) c h);`,
-		`--sivir-blue-100: oklch(from ${hex} calc(l + 0.28) calc(c * 0.5) h);`,
-		`--sivir-blue-50: oklch(from ${hex} calc(l + 0.36) calc(c * 0.35) h);`,
-		`--sivir-blue-ring: oklch(from ${hex} l c h / 0.4);`
-	];
+    return [
+        `--sivir-blue-500: ${hex};`,
+        `--sivir-blue-600: oklch(from ${hex} calc(l - 0.06) c h);`,
+        `--sivir-blue-100: oklch(from ${hex} calc(l + 0.28) calc(c * 0.5) h);`,
+        `--sivir-blue-50: oklch(from ${hex} calc(l + 0.36) calc(c * 0.35) h);`,
+        `--sivir-blue-ring: oklch(from ${hex} l c h / 0.4);`
+    ];
 }
 
 function neutralOverride(temp: NeutralTemp): string[] {
-	const tint = NEUTRAL_TINT[temp];
-	if (!tint) return [];
-	// Re-tint each step relative to itself; the baked value is read via the var.
-	return NEUTRAL_STEPS.map(
-		(n) => `--sivir-neutral-${n}: color-mix(in srgb, var(--sivir-neutral-${n}) 94%, ${tint});`
-	);
+    const tint = NEUTRAL_TINT[temp];
+    if (!tint) return [];
+    // Re-tint each step relative to itself; the baked value is read via the var.
+    return NEUTRAL_STEPS.map(
+        (n) => `--sivir-neutral-${n}: color-mix(in srgb, var(--sivir-neutral-${n}) 94%, ${tint});`
+    );
 }
 
 function block(selector: string, decls: string[]): string {
-	if (decls.length === 0) return '';
-	return `${selector} {\n${decls.map((d) => `\t${d}`).join('\n')}\n}\n`;
+    if (decls.length === 0) return '';
+    return `${selector} {\n${decls.map((d) => `\t${d}`).join('\n')}\n}\n`;
 }
 
 /**
@@ -914,34 +917,34 @@ function block(selector: string, decls: string[]): string {
  * an unmodified DEFAULT_THEME still emits a (harmless, identical) override block.
  */
 export function themeToCss(theme: Theme): string {
-	const [rsm, rmd, rlg, rxl] = RADII[theme.radius];
-	const m = MOTION[theme.motion];
-	const shared = [
-		`--font-sans: ${theme.fontSans};`,
-		`--font-mono: ${theme.fontMono};`,
-		`--font-header: ${theme.fontHeader};`,
-		`--radius-sm: ${rsm};`,
-		`--radius-md: ${rmd};`,
-		`--radius-lg: ${rlg};`,
-		`--radius-xl: ${rxl};`,
-		`--sivir-space-unit: ${DENSITY_UNIT[theme.density]};`,
-		`--motion-duration-hover: ${m.hover};`,
-		`--motion-duration-menu: ${m.menu};`,
-		`--motion-duration-panel: ${m.panel};`,
-		`--motion-duration-sheet: ${m.sheet};`,
-		`--motion-duration-overlay: ${m.overlay};`,
-		`--motion-duration-tooltip: ${m.tooltip};`,
-		`--motion-duration-toast-in: ${m.toastIn};`,
-		`--motion-duration-toast-out: ${m.toastOut};`,
-		`--motion-panel-easing: ${m.easing};`,
-		`--motion-easing-hover: ${m.easing};`,
-		...brandRamp(theme.brand)
-	];
-	return (
-		block(':root,\n.dark', shared) +
-		block(':root', neutralOverride(theme.neutral)) +
-		block('.dark', neutralOverride(theme.neutral))
-	);
+    const [rsm, rmd, rlg, rxl] = RADII[theme.radius];
+    const m = MOTION[theme.motion];
+    const shared = [
+        `--font-sans: ${theme.fontSans};`,
+        `--font-mono: ${theme.fontMono};`,
+        `--font-header: ${theme.fontHeader};`,
+        `--radius-sm: ${rsm};`,
+        `--radius-md: ${rmd};`,
+        `--radius-lg: ${rlg};`,
+        `--radius-xl: ${rxl};`,
+        `--sivir-space-unit: ${DENSITY_UNIT[theme.density]};`,
+        `--motion-duration-hover: ${m.hover};`,
+        `--motion-duration-menu: ${m.menu};`,
+        `--motion-duration-panel: ${m.panel};`,
+        `--motion-duration-sheet: ${m.sheet};`,
+        `--motion-duration-overlay: ${m.overlay};`,
+        `--motion-duration-tooltip: ${m.tooltip};`,
+        `--motion-duration-toast-in: ${m.toastIn};`,
+        `--motion-duration-toast-out: ${m.toastOut};`,
+        `--motion-panel-easing: ${m.easing};`,
+        `--motion-easing-hover: ${m.easing};`,
+        ...brandRamp(theme.brand)
+    ];
+    return (
+        block(':root,\n.dark', shared) +
+        block(':root', neutralOverride(theme.neutral)) +
+        block('.dark', neutralOverride(theme.neutral))
+    );
 }
 ```
 
@@ -994,10 +997,10 @@ import { describe, expect, it } from 'vitest';
 import { themesV2 } from '@sivir-ui/svelte/themes/builtin-presets';
 
 describe('themesV2', () => {
-	it('ships exactly one default theme', () => {
-		expect(themesV2).toHaveLength(1);
-		expect(themesV2[0].slug).toBe('default');
-	});
+    it('ships exactly one default theme', () => {
+        expect(themesV2).toHaveLength(1);
+        expect(themesV2[0].slug).toBe('default');
+    });
 });
 ```
 
@@ -1019,9 +1022,9 @@ and in the handler, before the existing lookup:
 
 ```ts
 if (params.name === 'default') {
-	return new Response(themeToCssV2(defaultTheme), {
-		headers: { 'content-type': 'text/css' }
-	});
+    return new Response(themeToCssV2(defaultTheme), {
+        headers: { 'content-type': 'text/css' }
+    });
 }
 ```
 

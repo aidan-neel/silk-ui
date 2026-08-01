@@ -8,7 +8,7 @@
  */
 export const manifest = {
     name: 'dropdown-menu',
-    version: '2.0.0',
+    version: '2.1.0',
     visibility: 'public',
     description: 'Click-triggered menu popover with items, labels, separators, and nested submenus.',
     role: 'menu',
@@ -27,7 +27,12 @@ export const manifest = {
         'components/dropdown-menu/manifest.ts'
     ],
     components: ['popover', 'button'],
-    shared: ['utils.closeMenuLayers', 'utils.cn', 'utils.createContext'],
+    shared: [
+        'utils.closeMenuLayers',
+        'utils.cn',
+        'utils.createContext',
+        'utils.travelingHighlight'
+    ],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

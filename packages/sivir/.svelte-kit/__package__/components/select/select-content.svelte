@@ -1,41 +1,73 @@
 <script lang="ts">
-	import * as Popover from '@sivir-ui/svelte/components/popover';
-	import { cn } from '@sivir-ui/svelte/utils';
-	import { tick, type Snippet } from 'svelte';
-	import { getSelectContext } from './context.svelte';
-	import { getPopoverContext } from '../popover/context.svelte';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
+    import { tick, type Snippet } from 'svelte';
+    import { getSelectContext } from './context.svelte';
+    import { getPopoverContext } from '../popover/context.svelte';
 
-	const { state } = getSelectContext();
-	const { state: popoverState } = getPopoverContext();
+    const { state } = getSelectContext();
+    const { state: popoverState } = getPopoverContext();
 
-	type Props = {
-		children: Snippet;
-		class?: string;
-	};
+    type Props = {
+        children: Snippet;
+        class?: string;
+    };
 
-	let props: Props = $props();
+    let props: Props = $props();
 
-	$effect(() => {
-		if (!state.open) return;
+    $effect(() => {
+        if (!state.open) return;
 
-		void tick().then(() => {
-			const content = popoverState.popoverRef;
-			if (!content) return;
+        void tick().then(() => {
+            const content = popoverState.popoverRef;
+            if (!content) return;
 
-			const selected =
-				content.querySelector<HTMLElement>('[role="option"][aria-selected="true"]') ??
-				content.querySelector<HTMLElement>('[role="option"]');
-			selected?.focus();
-		});
-	});
+            const selected =
+                content.querySelector<HTMLElement>('[role="option"][aria-selected="true"]') ??
+                content.querySelector<HTMLElement>('[role="option"]');
+            selected?.focus();
+        });
+    });
+
+    function moveFocus(current: HTMLElement, direction: 1 | -1) {
+        const options = Array.from(
+            current
+                .closest('[role="listbox"]')
+                ?.querySelectorAll<HTMLElement>('[role="option"]:not(:disabled)') ?? []
+        );
+        const index = options.indexOf(current);
+        options[(index + direction + options.length) % options.length]?.focus();
+    }
+
+    function handleKeydown(event: KeyboardEvent) {
+        const target = event.target;
+        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'option') return;
+        const listbox = target.closest('[role="listbox"]');
+        if (!listbox) return;
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            moveFocus(target, event.key === 'ArrowDown' ? 1 : -1);
+        } else if (event.key === 'Home' || event.key === 'End') {
+            event.preventDefault();
+            const options = listbox.querySelectorAll<HTMLElement>('[role="option"]:not(:disabled)');
+            options[event.key === 'Home' ? 0 : options.length - 1]?.focus();
+        }
+    }
 </script>
 
 <Popover.Content
-	role="listbox"
-	tabindex={-1}
-	data-ui="select-content"
-	class={cn(props.class, 'min-w-[var(--popover-trigger-width)] w-max')}
-	surfaceClass="flex flex-col gap-0 p-1"
+    role="listbox"
+    tabindex={-1}
+    data-ui="select-content"
+    class={cn(props.class, 'min-w-[var(--popover-trigger-width)] w-max')}
+    surfaceClass="p-0"
 >
-	{@render props.children?.()}
+    <div
+        use:travelingHighlight
+        role="presentation"
+        class="flex flex-col gap-0 p-1"
+        onkeydown={handleKeydown}
+    >
+        {@render props.children?.()}
+    </div>
 </Popover.Content>

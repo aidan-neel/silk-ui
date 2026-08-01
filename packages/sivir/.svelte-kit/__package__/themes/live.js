@@ -89,7 +89,9 @@ export function getSavedThemes() {
             return {
                 ...parseTheme(record),
                 id: typeof record.id === 'string' ? record.id : randomId(),
-                savedAt: typeof record.savedAt === 'string' ? record.savedAt : new Date().toISOString()
+                savedAt: typeof record.savedAt === 'string'
+                    ? record.savedAt
+                    : new Date().toISOString()
             };
         })
             .sort((a, b) => b.savedAt.localeCompare(a.savedAt));

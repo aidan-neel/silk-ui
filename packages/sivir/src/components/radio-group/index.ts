@@ -5,27 +5,27 @@ import Root from './radio-group.svelte';
 import Item from './radio-group-item.svelte';
 
 export type RadioGroupProps = {
-	value?: string;
-	name?: string;
-	disabled?: boolean;
-	onValueChange?: (value: string) => void;
-	children?: Snippet;
+    value?: string;
+    name?: string;
+    disabled?: boolean;
+    onValueChange?: (value: string) => void;
+    children?: Snippet;
 } & DefaultProps;
 
 export type RadioGroupItemProps = {
-	value: string;
-	disabled?: boolean;
-	label?: string;
-	description?: string;
-	id?: string;
+    value: string;
+    disabled?: boolean;
+    label?: string;
+    description?: string;
+    id?: string;
 } & DefaultProps &
-	Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked'>;
+    Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked'>;
 
 export type RadioGroupContext = {
-	readonly name: string | undefined;
-	readonly disabled: boolean;
-	isSelected: (value: string) => boolean;
-	setValue: (value: string) => void;
+    readonly name: string | undefined;
+    readonly disabled: boolean;
+    isSelected: (value: string) => boolean;
+    setValue: (value: string) => void;
 };
 
 export { Root, Item };

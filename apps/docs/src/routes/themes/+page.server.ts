@@ -3,9 +3,9 @@ import { listRegistryThemes } from '$lib/server/theme-registry';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	try {
-		return { themes: await listRegistryThemes(fetch) };
-	} catch {
-		return { themes: builtInThemePresets };
-	}
+    try {
+        return { themes: await listRegistryThemes(fetch) };
+    } catch {
+        return { themes: builtInThemePresets };
+    }
 };

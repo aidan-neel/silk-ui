@@ -1,121 +1,121 @@
 {
-	"name": "@sivir-ui/svelte",
-	"version": "0.1.9",
-	"description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/aidan-neel/sivir-ui.git",
-		"directory": "packages/sivir"
-	},
-	"homepage": "https://github.com/aidan-neel/sivir-ui#readme",
-	"bugs": "https://github.com/aidan-neel/sivir-ui/issues",
-	"keywords": [
-		"svelte",
-		"sveltekit",
-		"components",
-		"ui",
-		"tailwind",
-		"shadcn"
-	],
-	"type": "module",
-	"sideEffects": [
-		"**/*.css"
-	],
-	"files": [
-		"dist",
-		"registry"
-	],
-	"bin": {
-		"sivir": "dist/index.js"
-	},
-	"svelte": "./dist/svelte/index.js",
-	"types": "./dist/svelte/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/svelte/index.d.ts",
-			"svelte": "./dist/svelte/index.js",
-			"default": "./dist/svelte/index.js"
-		},
-		"./ui.css": "./dist/svelte/ui.css",
-		"./brand-mark": {
-			"types": "./dist/svelte/brand-mark.svelte.d.ts",
-			"svelte": "./dist/svelte/brand-mark.svelte",
-			"default": "./dist/svelte/brand-mark.svelte"
-		},
-		"./utils": {
-			"types": "./dist/svelte/utils.d.ts",
-			"default": "./dist/svelte/utils.js"
-		},
-		"./transition": {
-			"types": "./dist/svelte/transition.d.ts",
-			"default": "./dist/svelte/transition.js"
-		},
-		"./is-dark.svelte.ts": {
-			"types": "./dist/svelte/is-dark.svelte.d.ts",
-			"default": "./dist/svelte/is-dark.svelte.js"
-		},
-		"./_manifest/types": {
-			"types": "./dist/svelte/_manifest/types.d.ts",
-			"default": "./dist/svelte/_manifest/types.js"
-		},
-		"./themes/*": {
-			"types": "./dist/svelte/themes/*.d.ts",
-			"default": "./dist/svelte/themes/*.js"
-		},
-		"./components/input/variants": {
-			"types": "./dist/svelte/components/input/variants.d.ts",
-			"default": "./dist/svelte/components/input/variants.js"
-		},
-		"./components/_internal/overlay": {
-			"types": "./dist/svelte/components/_internal/overlay/index.d.ts",
-			"default": "./dist/svelte/components/_internal/overlay/index.js"
-		},
-		"./components/*": {
-			"types": "./dist/svelte/components/*/index.d.ts",
-			"svelte": "./dist/svelte/components/*/index.js",
-			"default": "./dist/svelte/components/*/index.js"
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"scripts": {
-		"build:registry": "bun scripts/build-registry.ts",
-		"build": "svelte-package --input src --output dist/svelte --tsconfig tsconfig.package.json && bun run build:registry && bun build cli/index.ts --outdir dist --target node --banner '#!/usr/bin/env node'",
-		"verify:artifact": "bun scripts/verify-packed-consumer.ts",
-		"verify:cli-artifact": "bun scripts/verify-cli-artifact.ts",
-		"prepublishOnly": "bun run build",
-		"check": "bun run check:cli && bun run check:components",
-		"check:cli": "tsc --noEmit -p tsconfig.cli.json",
-		"check:components": "svelte-check --tsconfig ./tsconfig.components.json",
-		"test": "bun run build:registry && bun test",
-		"sandbox": "bun scripts/sandbox.ts",
-		"lint": "prettier --check ."
-	},
-	"dependencies": {
-		"@floating-ui/dom": "^1.7.6",
-		"@lucide/svelte": "^1.7.0",
-		"cnfast": "^0.0.8",
-		"fuse.js": "^7.1.0",
-		"highlight.js": "^11.11.1",
-		"marked": "^18.0.7",
-		"tailwind-merge": "^3.6.0",
-		"tailwind-variants": "^3.2.2"
-	},
-	"peerDependencies": {
-		"@sveltejs/kit": "^2.0.0",
-		"svelte": "^5.0.0",
-		"tailwindcss": "^4.0.0"
-	},
-	"devDependencies": {
-		"@clack/prompts": "^0.11.0",
-		"@sveltejs/package": "^2.5.8",
-		"bun-types": "^1.3.14",
-		"commander": "^14.0.2",
-		"picocolors": "^1.1.1",
-		"svelte-check": "^4.4.6",
-		"tailwindcss": "^4.2.2",
-		"typescript": "^5.9.3"
-	}
+    "name": "@sivir-ui/svelte",
+    "version": "0.1.9",
+    "description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aidan-neel/sivir-ui.git",
+        "directory": "packages/sivir"
+    },
+    "homepage": "https://github.com/aidan-neel/sivir-ui#readme",
+    "bugs": "https://github.com/aidan-neel/sivir-ui/issues",
+    "keywords": [
+        "svelte",
+        "sveltekit",
+        "components",
+        "ui",
+        "tailwind",
+        "shadcn"
+    ],
+    "type": "module",
+    "sideEffects": [
+        "**/*.css"
+    ],
+    "files": [
+        "dist",
+        "registry"
+    ],
+    "bin": {
+        "sivir": "dist/index.js"
+    },
+    "svelte": "./dist/svelte/index.js",
+    "types": "./dist/svelte/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/svelte/index.d.ts",
+            "svelte": "./dist/svelte/index.js",
+            "default": "./dist/svelte/index.js"
+        },
+        "./ui.css": "./dist/svelte/ui.css",
+        "./brand-mark": {
+            "types": "./dist/svelte/brand-mark.svelte.d.ts",
+            "svelte": "./dist/svelte/brand-mark.svelte",
+            "default": "./dist/svelte/brand-mark.svelte"
+        },
+        "./utils": {
+            "types": "./dist/svelte/utils.d.ts",
+            "default": "./dist/svelte/utils.js"
+        },
+        "./transition": {
+            "types": "./dist/svelte/transition.d.ts",
+            "default": "./dist/svelte/transition.js"
+        },
+        "./is-dark.svelte.ts": {
+            "types": "./dist/svelte/is-dark.svelte.d.ts",
+            "default": "./dist/svelte/is-dark.svelte.js"
+        },
+        "./_manifest/types": {
+            "types": "./dist/svelte/_manifest/types.d.ts",
+            "default": "./dist/svelte/_manifest/types.js"
+        },
+        "./themes/*": {
+            "types": "./dist/svelte/themes/*.d.ts",
+            "default": "./dist/svelte/themes/*.js"
+        },
+        "./components/input/variants": {
+            "types": "./dist/svelte/components/input/variants.d.ts",
+            "default": "./dist/svelte/components/input/variants.js"
+        },
+        "./components/_internal/overlay": {
+            "types": "./dist/svelte/components/_internal/overlay/index.d.ts",
+            "default": "./dist/svelte/components/_internal/overlay/index.js"
+        },
+        "./components/*": {
+            "types": "./dist/svelte/components/*/index.d.ts",
+            "svelte": "./dist/svelte/components/*/index.js",
+            "default": "./dist/svelte/components/*/index.js"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build:registry": "bun scripts/build-registry.ts",
+        "build": "svelte-package --input src --output dist/svelte --tsconfig tsconfig.package.json && bun run build:registry && bun build cli/index.ts --outdir dist --target node --banner '#!/usr/bin/env node'",
+        "verify:artifact": "bun scripts/verify-packed-consumer.ts",
+        "verify:cli-artifact": "bun scripts/verify-cli-artifact.ts",
+        "prepublishOnly": "bun run build",
+        "check": "bun run check:cli && bun run check:components",
+        "check:cli": "tsc --noEmit -p tsconfig.cli.json",
+        "check:components": "svelte-check --tsconfig ./tsconfig.components.json",
+        "test": "bun run build:registry && bun test",
+        "sandbox": "bun scripts/sandbox.ts",
+        "lint": "prettier --check ."
+    },
+    "dependencies": {
+        "@floating-ui/dom": "^1.7.6",
+        "@lucide/svelte": "^1.7.0",
+        "cnfast": "^0.0.8",
+        "fuse.js": "^7.1.0",
+        "highlight.js": "^11.11.1",
+        "marked": "^18.0.7",
+        "tailwind-merge": "^3.6.0",
+        "tailwind-variants": "^3.2.2"
+    },
+    "peerDependencies": {
+        "@sveltejs/kit": "^2.0.0",
+        "svelte": "^5.0.0",
+        "tailwindcss": "^4.0.0"
+    },
+    "devDependencies": {
+        "@clack/prompts": "^0.11.0",
+        "@sveltejs/package": "^2.5.8",
+        "bun-types": "^1.3.14",
+        "commander": "^14.0.2",
+        "picocolors": "^1.1.1",
+        "svelte-check": "^4.4.6",
+        "tailwindcss": "^4.2.2",
+        "typescript": "^5.9.3"
+    }
 }

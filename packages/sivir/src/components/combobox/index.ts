@@ -7,27 +7,29 @@ import Label from './combobox-label.svelte';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 
 export type ComboboxItem = {
-	value: string;
-	label: string;
-	callback?: () => void;
-	ref: HTMLButtonElement | HTMLAnchorElement | undefined;
+    id: string;
+    value: string;
+    label: string;
+    callback?: () => void;
+    ref: HTMLButtonElement | HTMLAnchorElement | undefined;
 };
 
 export type ComboboxState = {
-	open: boolean;
-	items: Set<ComboboxItem>;
-	results: Set<ComboboxItem>;
-	searchContent: string;
-	selected?: ComboboxItem;
+    open: boolean;
+    items: Set<ComboboxItem>;
+    results: Set<ComboboxItem>;
+    searchContent: string;
+    activeValue?: string;
+    selected?: ComboboxItem;
 };
 
 export type ComboboxRootProps = {
-	placeholder?: string;
+    placeholder?: string;
 } & DefaultProps;
 
 export type ComboboxTriggerProps = {
-	class?: string;
-	threshold?: number;
+    class?: string;
+    threshold?: number;
 } & DefaultProps;
 
 export { Root, Content, Trigger, Results, Item, Label };

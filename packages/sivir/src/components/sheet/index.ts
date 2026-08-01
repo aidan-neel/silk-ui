@@ -12,8 +12,8 @@ import type { ButtonProps } from '../button';
 import type { Snippet } from 'svelte';
 
 export type SheetProps = {
-	open?: boolean;
-	children?: Snippet;
+    open?: boolean;
+    children?: Snippet;
 };
 
 export type SheetTriggerProps = ButtonProps;
@@ -22,15 +22,15 @@ export type SheetHeaderProps = DefaultProps;
 export type SheetFooterProps = DefaultProps;
 export type SheetDescriptionProps = DefaultProps;
 export type SheetContentProps = {
-	allowClickOutside?: boolean;
-	side?: 'left' | 'right';
+    allowClickOutside?: boolean;
+    side?: 'left' | 'right';
 } & DefaultProps;
 
 export type SheetCloseProps = ButtonProps;
 
 export type SheetState = {
-	open: boolean;
-	triggerRef?: HTMLElement | null;
+    open: boolean;
+    triggerRef?: HTMLElement | null;
 };
 
 export { Root, Trigger, Title, Header, Footer, Description, Content, Close };

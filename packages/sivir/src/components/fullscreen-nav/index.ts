@@ -10,27 +10,27 @@ import Group from './fullscreen-nav-group.svelte';
 import Link from './fullscreen-nav-link.svelte';
 
 export type FullscreenNavProps = {
-	open?: boolean;
-	children?: Snippet;
+    open?: boolean;
+    children?: Snippet;
 };
 
 export type FullscreenNavTriggerProps = ButtonProps;
 export type FullscreenNavContentProps = {
-	label?: string;
+    label?: string;
 } & DefaultProps;
 export type FullscreenNavCloseProps = ButtonProps;
 export type FullscreenNavGroupProps = {
-	heading: string;
+    heading: string;
 } & DefaultProps;
 export type FullscreenNavLinkProps = Omit<HTMLAnchorAttributes, 'class' | 'children'> & {
-	class?: string;
-	children?: Snippet;
+    class?: string;
+    children?: Snippet;
 };
 
 export type FullscreenNavState = {
-	open: boolean;
-	animationIndex: number;
-	triggerRef?: HTMLElement | null;
+    open: boolean;
+    animationIndex: number;
+    triggerRef?: HTMLElement | null;
 };
 
 export { Root, Trigger, Content, Close, Group, Link };

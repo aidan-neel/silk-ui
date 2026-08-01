@@ -33,7 +33,11 @@ export function hexToHsv(hex) {
         if (hue < 0)
             hue += 360;
     }
-    return [Math.round(hue), max === 0 ? 0 : Math.round((delta / max) * 100), Math.round(max * 100)];
+    return [
+        Math.round(hue),
+        max === 0 ? 0 : Math.round((delta / max) * 100),
+        Math.round(max * 100)
+    ];
 }
 export function hsvToHex(hue, sat, val) {
     const s = sat / 100;

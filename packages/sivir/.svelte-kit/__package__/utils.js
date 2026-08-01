@@ -65,8 +65,11 @@ export function createContext(name) {
  */
 export function closeMenuLayers(current, ancestors) {
     current.open = false;
+    // Let the selected submenu begin its normal exit before its parents follow.
     for (let index = ancestors.length - 1; index >= 0; index -= 1) {
-        ancestors[index].open = false;
+        setTimeout(() => {
+            ancestors[index].open = false;
+        }, (ancestors.length - 1 - index) * 16 + 16);
     }
 }
 function pointInTriangle(point, a, b, c) {
@@ -79,7 +82,10 @@ function pointInTriangle(point, a, b, c) {
     return !(hasNegative && hasPositive);
 }
 function pointInRect(point, rect) {
-    return (point.x >= rect.left && point.x <= rect.right && point.y >= rect.top && point.y <= rect.bottom);
+    return (point.x >= rect.left &&
+        point.x <= rect.right &&
+        point.y >= rect.top &&
+        point.y <= rect.bottom);
 }
 /** Whether a pointer is in the contact triangle between a floating trigger and panel. */
 export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
@@ -372,6 +378,136 @@ export function pressable(node) {
         destroy() {
             node.removeEventListener('pointerdown', measure, true);
             node.removeEventListener('keydown', onKeyDown);
+        }
+    };
+}
+/**
+ * Draws one highlight that travels between the active items in a collection.
+ * Geometry is written directly so pointer movement never causes a component render.
+ */
+export function travelingHighlight(node, options = {}) {
+    const itemSelector = options.itemSelector ?? '[data-collection-item]';
+    const restingSelector = options.restingSelector ??
+        `${itemSelector}[data-collection-active="true"], ${itemSelector}[aria-selected="true"], ${itemSelector}[data-state="open"]`;
+    const highlight = document.createElement('span');
+    highlight.className = 'sivir-item-highlight';
+    highlight.setAttribute('aria-hidden', 'true');
+    node.classList.add('sivir-collection-surface');
+    node.prepend(highlight);
+    let current;
+    let frame = 0;
+    let readyFrame = 0;
+    let ready = false;
+    let observedTarget;
+    const resizeObserver = new ResizeObserver(() => schedule(current ?? restingTarget()));
+    resizeObserver.observe(node);
+    function usableItem(target) {
+        if (!(target instanceof Element))
+            return;
+        const item = target.closest(itemSelector);
+        if (!item || !node.contains(item))
+            return;
+        if (item.closest('.sivir-collection-surface') !== node)
+            return;
+        if (item.matches(':disabled, [aria-disabled="true"]') || item.hidden)
+            return;
+        return item;
+    }
+    function restingTarget() {
+        for (const selector of restingSelector.split(',').map((part) => part.trim())) {
+            const target = Array.from(node.querySelectorAll(selector)).find((item) => item.closest('.sivir-collection-surface') === node);
+            if (target)
+                return target;
+        }
+        return undefined;
+    }
+    function measure(target) {
+        cancelAnimationFrame(frame);
+        current = target;
+        if (!target || !target.isConnected || target.hidden) {
+            if (observedTarget) {
+                resizeObserver.unobserve(observedTarget);
+                observedTarget = undefined;
+            }
+            highlight.style.opacity = '0';
+            return;
+        }
+        const container = node.getBoundingClientRect();
+        const rect = target.getBoundingClientRect();
+        const x = rect.left - container.left - node.clientLeft + node.scrollLeft;
+        const y = rect.top - container.top - node.clientTop + node.scrollTop;
+        highlight.style.width = `${rect.width}px`;
+        highlight.style.height = `${rect.height}px`;
+        highlight.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        highlight.style.opacity = '1';
+        if (observedTarget !== target) {
+            if (observedTarget)
+                resizeObserver.unobserve(observedTarget);
+            observedTarget = target;
+            resizeObserver.observe(target);
+        }
+        if (!ready) {
+            cancelAnimationFrame(readyFrame);
+            readyFrame = requestAnimationFrame(() => {
+                ready = true;
+                highlight.setAttribute('data-ready', 'true');
+            });
+        }
+    }
+    function schedule(target) {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => measure(target));
+    }
+    function onPointerMove(event) {
+        const item = usableItem(event.target);
+        if (item && item !== current)
+            schedule(item);
+    }
+    function onPointerLeave() {
+        schedule(restingTarget());
+    }
+    function onFocusIn(event) {
+        const item = usableItem(event.target);
+        if (item)
+            schedule(item);
+    }
+    function onFocusOut(event) {
+        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget))
+            return;
+        schedule(restingTarget());
+    }
+    const mutationObserver = new MutationObserver(() => {
+        schedule(restingTarget());
+    });
+    mutationObserver.observe(node, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: [
+            'aria-selected',
+            'data-collection-active',
+            'data-state',
+            'disabled',
+            'hidden'
+        ]
+    });
+    node.addEventListener('pointermove', onPointerMove);
+    node.addEventListener('pointerleave', onPointerLeave);
+    node.addEventListener('focusin', onFocusIn);
+    node.addEventListener('focusout', onFocusOut);
+    queueMicrotask(() => schedule(restingTarget()));
+    return {
+        destroy() {
+            cancelAnimationFrame(frame);
+            cancelAnimationFrame(readyFrame);
+            resizeObserver.disconnect();
+            mutationObserver.disconnect();
+            node.removeEventListener('pointermove', onPointerMove);
+            node.removeEventListener('pointerleave', onPointerLeave);
+            node.removeEventListener('focusin', onFocusIn);
+            node.removeEventListener('focusout', onFocusOut);
+            highlight.remove();
+            node.classList.remove('sivir-collection-surface');
         }
     };
 }

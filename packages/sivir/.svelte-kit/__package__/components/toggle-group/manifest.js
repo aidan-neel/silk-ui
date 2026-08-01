@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'toggle-group',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Single or multiple-select toggle group with bindable value (string or string[]).',
     files: [
@@ -10,7 +10,7 @@ export const manifest = {
         'components/toggle-group/manifest.ts'
     ],
     components: [],
-    shared: ['utils.cn'],
+    shared: ['utils.cn', 'utils.travelingHighlight'],
     peerDependencies: {
         cnfast: '^0.0.8',
         svelte: '^5.0.0'

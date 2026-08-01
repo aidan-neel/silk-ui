@@ -1,32 +1,32 @@
 {
-	"name": "installer-lab",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite dev --host 127.0.0.1",
-		"devnet": "vite dev --host 0.0.0.0",
-		"build": "vite build",
-		"preview": "vite preview --host 127.0.0.1",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"test": "vitest run",
-		"test:watch": "vitest"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-node": "^5.3.2",
-		"@sveltejs/kit": "^2.70.2",
-		"@sveltejs/vite-plugin-svelte": "^7.0.0",
-		"@tailwindcss/vite": "^4.2.2",
-		"@types/node": "^22.0.0",
-		"svelte": "^5.55.1",
-		"svelte-check": "^4.4.6",
-		"tailwindcss": "^4.2.2",
-		"typescript": "^5.9.3",
-		"vite": "^8.0.3",
-		"vitest": "^4.1.7"
-	},
-	"dependencies": {
-		"@fontsource/dm-sans": "^5.3.0",
-		"@sivir-ui/svelte": "workspace:*"
-	}
+    "name": "installer-lab",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite dev --host 127.0.0.1",
+        "devnet": "vite dev --host 0.0.0.0",
+        "build": "vite build",
+        "preview": "vite preview --host 127.0.0.1",
+        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "devDependencies": {
+        "@sveltejs/adapter-node": "^5.3.2",
+        "@sveltejs/kit": "^2.70.2",
+        "@sveltejs/vite-plugin-svelte": "^7.0.0",
+        "@tailwindcss/vite": "^4.2.2",
+        "@types/node": "^22.0.0",
+        "svelte": "^5.55.1",
+        "svelte-check": "^4.4.6",
+        "tailwindcss": "^4.2.2",
+        "typescript": "^5.9.3",
+        "vite": "^8.0.3",
+        "vitest": "^4.1.7"
+    },
+    "dependencies": {
+        "@fontsource/dm-sans": "^5.3.0",
+        "@sivir-ui/svelte": "workspace:*"
+    }
 }

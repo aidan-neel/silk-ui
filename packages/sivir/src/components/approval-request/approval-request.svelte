@@ -1,17 +1,17 @@
 <script lang="ts">
-	import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
-	import type { ApprovalRequestRootProps } from '.';
-	import { setApprovalRequestContext } from './context.svelte';
+    import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
+    import type { ApprovalRequestRootProps } from '.';
+    import { setApprovalRequestContext } from './context.svelte';
 
-	let { open = $bindable(false), risk = 'medium', children }: ApprovalRequestRootProps = $props();
+    let { open = $bindable(false), risk = 'medium', children }: ApprovalRequestRootProps = $props();
 
-	setApprovalRequestContext({
-		get risk() {
-			return risk;
-		}
-	});
+    setApprovalRequestContext({
+        get risk() {
+            return risk;
+        }
+    });
 </script>
 
 <AlertDialog.Root bind:open error={risk === 'high'}>
-	{@render children?.()}
+    {@render children?.()}
 </AlertDialog.Root>

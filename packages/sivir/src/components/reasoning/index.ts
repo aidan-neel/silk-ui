@@ -6,21 +6,21 @@ import Trigger from './reasoning-trigger.svelte';
 import Content from './reasoning-content.svelte';
 
 export type ReasoningRootProps = {
-	streaming?: boolean;
-	/** Whether the reasoning content is visible. */
-	open?: boolean;
-	children?: Snippet;
+    streaming?: boolean;
+    /** Whether the reasoning content is visible. */
+    open?: boolean;
+    children?: Snippet;
 } & DefaultProps &
-	Omit<HTMLAttributes<HTMLElement>, 'children'>;
+    Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
 export type ReasoningTriggerProps = {
-	title?: string;
-	/** A compact summary of the completed reasoning time, such as 2.4s. */
-	duration?: string;
+    title?: string;
+    /** A compact summary of the completed reasoning time, such as 2.4s. */
+    duration?: string;
 } & DefaultProps &
-	Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'title'>;
+    Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'title'>;
 
 export type ReasoningContentProps = DefaultProps &
-	Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'id'>;
+    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'id'>;
 
 export { Root, Trigger, Content };

@@ -1,2 +1,3 @@
 import Skeleton from './skeleton.svelte';
-export { Skeleton };
+import SkeletonSwap from './skeleton-swap.svelte';
+export { Skeleton, SkeletonSwap };

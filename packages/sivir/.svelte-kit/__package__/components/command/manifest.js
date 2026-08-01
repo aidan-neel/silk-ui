@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'command',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Modal command palette with search, grouped items, and separators.',
     files: [
@@ -18,7 +18,7 @@ export const manifest = {
         'components/command/manifest.ts'
     ],
     components: ['modal', 'button'],
-    shared: ['utils.cn', 'utils.createContext'],
+    shared: ['utils.cn', 'utils.createContext', 'utils.travelingHighlight'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

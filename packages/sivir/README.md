@@ -10,10 +10,10 @@ directly. (If you'd rather own the source in your own repo, shadcn-style, use th
 
 - **Svelte 5** and **Tailwind v4** (peer dependencies). The easiest base is a
   SvelteKit app with Tailwind already set up:
-  ```sh
-  bunx sv create my-app          # pick Skeleton + TypeScript
-  cd my-app && bunx sv add tailwindcss
-  ```
+    ```sh
+    bunx sv create my-app          # pick Skeleton + TypeScript
+    cd my-app && bunx sv add tailwindcss
+    ```
 
 ## Install
 
@@ -49,7 +49,7 @@ Single-element components are named exports:
 
 ```svelte
 <script>
-	import { Button, Input, Switch } from '@sivir-ui/svelte';
+    import { Button, Input, Switch } from '@sivir-ui/svelte';
 </script>
 
 <Button>Get started</Button>
@@ -61,28 +61,28 @@ Compound components are namespace exports; their parts hang off the namespace:
 
 ```svelte
 <script>
-	import { AlertDialog, Tabs } from '@sivir-ui/svelte';
+    import { AlertDialog, Tabs } from '@sivir-ui/svelte';
 </script>
 
 <AlertDialog.Root>
-	<AlertDialog.Trigger>Delete</AlertDialog.Trigger>
-	<AlertDialog.Content>
-		<AlertDialog.Title>Are you sure?</AlertDialog.Title>
-		<AlertDialog.Description>This can't be undone.</AlertDialog.Description>
-		<AlertDialog.Footer>
-			<AlertDialog.Exit>Cancel</AlertDialog.Exit>
-			<AlertDialog.Confirm>Delete</AlertDialog.Confirm>
-		</AlertDialog.Footer>
-	</AlertDialog.Content>
+    <AlertDialog.Trigger>Delete</AlertDialog.Trigger>
+    <AlertDialog.Content>
+        <AlertDialog.Title>Are you sure?</AlertDialog.Title>
+        <AlertDialog.Description>This can't be undone.</AlertDialog.Description>
+        <AlertDialog.Footer>
+            <AlertDialog.Exit>Cancel</AlertDialog.Exit>
+            <AlertDialog.Confirm>Delete</AlertDialog.Confirm>
+        </AlertDialog.Footer>
+    </AlertDialog.Content>
 </AlertDialog.Root>
 
 <Tabs.Root value="one">
-	<Tabs.List>
-		<Tabs.Trigger value="one">One</Tabs.Trigger>
-		<Tabs.Trigger value="two">Two</Tabs.Trigger>
-	</Tabs.List>
-	<Tabs.Content value="one">First panel</Tabs.Content>
-	<Tabs.Content value="two">Second panel</Tabs.Content>
+    <Tabs.List>
+        <Tabs.Trigger value="one">One</Tabs.Trigger>
+        <Tabs.Trigger value="two">Two</Tabs.Trigger>
+    </Tabs.List>
+    <Tabs.Content value="one">First panel</Tabs.Content>
+    <Tabs.Content value="two">Second panel</Tabs.Content>
 </Tabs.Root>
 ```
 
@@ -96,8 +96,8 @@ import {Button} from '@sivir-ui/svelte/components/button'; import * as AlertDial
 
 - **Named:** `ApprovalRequest`, `Badge`, `Button`, `Checkbox`, `CodeBlock`,
   `CopyButton`, `Input`, `Label`, `Markdown`, `Pagination`, `Progress`, `Reasoning`,
-  `ResponseStream`, `ScrollArea`, `Shortcut`, `Skeleton`, `Slider`, `Spinner`,
-  `Switch`, `Textarea`, `Toggle`, `Toolbar`, and the toast API (`Toast`, `Toaster`,
+  `ReorderList`, `ResponseStream`, `ScrollArea`, `Shortcut`, `Skeleton`, `SkeletonSwap`,
+  `Slider`, `Spinner`, `Switch`, `TaskSteps`, `Textarea`, `Toggle`, `Toolbar`, and the toast API (`Toast`, `Toaster`,
   `toast`, `getToastUIState`).
 - **Namespaced:** `Accordion`, `Alert`, `AlertDialog`, `Attachment`, `Avatar`,
   `Breadcrumb`, `Card` (includes `variant="panel"`), `Collapsible`, `ColorPicker`,

@@ -10,7 +10,7 @@
  */
 export const manifest = {
     name: 'combobox',
-    version: '2.0.0',
+    version: '2.1.0',
     visibility: 'public',
     description: 'Searchable popover-based picker with fuzzy results via fuse.js.',
     files: [
@@ -25,7 +25,7 @@ export const manifest = {
         'components/combobox/manifest.ts'
     ],
     components: ['popover', 'button'],
-    shared: ['utils.cn', 'utils.createContext'],
+    shared: ['utils.cn', 'utils.createContext', 'utils.travelingHighlight'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         'fuse.js': '^7.0.0',

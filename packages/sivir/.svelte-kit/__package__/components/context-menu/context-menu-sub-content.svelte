@@ -1,17 +1,21 @@
 <script lang="ts">
-	import * as Popover from '@sivir-ui/svelte/components/popover';
-	import { cn } from '@sivir-ui/svelte/utils';
-	import type { ContextMenuSubContentProps } from '.';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
+    import type { ContextMenuSubContentProps } from '.';
 
-	let { class: className, children, ...rest }: ContextMenuSubContentProps = $props();
+    let { class: className, children, ...rest }: ContextMenuSubContentProps = $props();
 </script>
 
 <Popover.Content
-	{...rest}
-	portal={false}
-	data-ui="context-submenu-content"
-	class={cn(className, 'min-w-44')}
-	surfaceClass="flex flex-col gap-0 p-1"
+    {...rest}
+    role="menu"
+    tabindex={-1}
+    portal={false}
+    data-ui="context-submenu-content"
+    class={cn(className, 'min-w-44')}
+    surfaceClass="p-0"
 >
-	{@render children?.()}
+    <div use:travelingHighlight class="flex flex-col gap-0 p-1">
+        {@render children?.()}
+    </div>
 </Popover.Content>

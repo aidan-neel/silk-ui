@@ -4,93 +4,93 @@ import path from 'node:path';
 import type { InstallPath } from '$lib/run-types';
 
 export type RegistryComponent = {
-	name: string;
-	version: string;
-	visibility: 'public' | 'internal';
-	description?: string;
+    name: string;
+    version: string;
+    visibility: 'public' | 'internal';
+    description?: string;
 };
 
 export type RegistryIndex = {
-	cliVersion: string;
-	builtAt: string;
-	components: RegistryComponent[];
+    cliVersion: string;
+    builtAt: string;
+    components: RegistryComponent[];
 };
 
 export type GeneratedExample = {
-	name: string;
-	description: string;
-	fixture: string;
-	route: string;
-	toaster: boolean;
+    name: string;
+    description: string;
+    fixture: string;
+    route: string;
+    toaster: boolean;
 };
 
 function titleCase(value: string) {
-	return value
-		.split('-')
-		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-		.join(' ');
+    return value
+        .split('-')
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
 }
 
 function htmlEscape(value: string) {
-	return value
-		.replaceAll('&', '&amp;')
-		.replaceAll('<', '&lt;')
-		.replaceAll('>', '&gt;')
-		.replaceAll('"', '&quot;');
+    return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
 }
 
 async function selectFixture(componentDirectory: string) {
-	const examplesDirectory = path.join(componentDirectory, 'examples');
-	const hero = path.join(examplesDirectory, 'hero.svelte');
-	if (existsSync(hero)) return hero;
+    const examplesDirectory = path.join(componentDirectory, 'examples');
+    const hero = path.join(examplesDirectory, 'hero.svelte');
+    if (existsSync(hero)) return hero;
 
-	const page = path.join(componentDirectory, '+page.svelte');
-	if (existsSync(page)) {
-		const pageSource = await readFile(page, 'utf8');
-		const match = pageSource.match(/from\s+['"]\.\/examples\/([^'"]+\.svelte)['"]/);
-		if (match) {
-			const documented = path.join(examplesDirectory, match[1]);
-			if (existsSync(documented)) return documented;
-		}
-	}
+    const page = path.join(componentDirectory, '+page.svelte');
+    if (existsSync(page)) {
+        const pageSource = await readFile(page, 'utf8');
+        const match = pageSource.match(/from\s+['"]\.\/examples\/([^'"]+\.svelte)['"]/);
+        if (match) {
+            const documented = path.join(examplesDirectory, match[1]);
+            if (existsSync(documented)) return documented;
+        }
+    }
 
-	if (existsSync(examplesDirectory)) {
-		const first = (await readdir(examplesDirectory))
-			.filter((entry) => entry.endsWith('.svelte'))
-			.sort()[0];
-		if (first) return path.join(examplesDirectory, first);
-	}
+    if (existsSync(examplesDirectory)) {
+        const first = (await readdir(examplesDirectory))
+            .filter((entry) => entry.endsWith('.svelte'))
+            .sort()[0];
+        if (first) return path.join(examplesDirectory, first);
+    }
 
-	throw new Error(`No usable example fixture found under ${examplesDirectory}`);
+    throw new Error(`No usable example fixture found under ${examplesDirectory}`);
 }
 
 async function copyFixtureAssets(sourceDirectory: string, targetDirectory: string) {
-	for (const entry of await readdir(sourceDirectory, { withFileTypes: true })) {
-		if (entry.name.endsWith('.svelte')) continue;
-		const source = path.join(sourceDirectory, entry.name);
-		const target = path.join(targetDirectory, entry.name);
-		if (entry.isDirectory()) {
-			await mkdir(target, { recursive: true });
-			await copyFixtureAssets(source, target);
-		} else if (entry.isFile()) {
-			await mkdir(path.dirname(target), { recursive: true });
-			await copyFile(source, target);
-		}
-	}
+    for (const entry of await readdir(sourceDirectory, { withFileTypes: true })) {
+        if (entry.name.endsWith('.svelte')) continue;
+        const source = path.join(sourceDirectory, entry.name);
+        const target = path.join(targetDirectory, entry.name);
+        if (entry.isDirectory()) {
+            await mkdir(target, { recursive: true });
+            await copyFixtureAssets(source, target);
+        } else if (entry.isFile()) {
+            await mkdir(path.dirname(target), { recursive: true });
+            await copyFile(source, target);
+        }
+    }
 }
 
 export function rewriteFixtureImports(source: string, installPath: InstallPath) {
-	if (installPath === 'package') return source;
-	return source.replaceAll('@sivir-ui/svelte/components/', '$lib/sivir/components/');
+    if (installPath === 'package') return source;
+    return source.replaceAll('@sivir-ui/svelte/components/', '$lib/sivir/components/');
 }
 
 export function rootCss(installPath: InstallPath) {
-	const uiImport = installPath === 'cli' ? '$lib/sivir/ui.css' : '@sivir-ui/svelte/ui.css';
-	const source =
-		installPath === 'cli'
-			? '@source "../lib/sivir/**/*.{svelte,ts}";'
-			: '@source "../../node_modules/@sivir-ui/svelte/src/**/*.{svelte,ts}";';
-	return `@import '@fontsource/dm-sans/latin-400.css';
+    const uiImport = installPath === 'cli' ? '$lib/sivir/ui.css' : '@sivir-ui/svelte/ui.css';
+    const source =
+        installPath === 'cli'
+            ? '@source "../lib/sivir/**/*.{svelte,ts}";'
+            : '@source "../../node_modules/@sivir-ui/svelte/src/**/*.{svelte,ts}";';
+    return `@import '@fontsource/dm-sans/latin-400.css';
 @import '@fontsource/dm-sans/latin-500.css';
 @import '@fontsource/dm-sans/latin-600.css';
 @import '@fontsource/dm-sans/latin-700.css';
@@ -138,7 +138,7 @@ body { font-size: var(--font-size-body); font-weight: var(--font-weight-body); l
 }
 
 function shellSource() {
-	return `<script lang="ts">
+    return `<script lang="ts">
 	import { page } from '$app/stores';
 	import type { Snippet } from 'svelte';
 	import { catalog } from '$lib/catalog';
@@ -167,11 +167,11 @@ function shellSource() {
 }
 
 function routeSource(component: RegistryComponent, toaster: boolean, importPrefix: string) {
-	const title = titleCase(component.name);
-	const description = component.description ?? `Installed ${title} component example.`;
-	const toasterImport = toaster ? `\n\timport { Toaster } from '${importPrefix}/toast';` : '';
-	const toasterMarkup = toaster ? '\n<Toaster />' : '';
-	return `<script lang="ts">
+    const title = titleCase(component.name);
+    const description = component.description ?? `Installed ${title} component example.`;
+    const toasterImport = toaster ? `\n\timport { Toaster } from '${importPrefix}/toast';` : '';
+    const toasterMarkup = toaster ? '\n<Toaster />' : '';
+    return `<script lang="ts">
 	import Example from '$lib/showcase/${component.name}/Example.svelte';${toasterImport}
 </script>
 
@@ -189,84 +189,90 @@ function routeSource(component: RegistryComponent, toaster: boolean, importPrefi
 }
 
 export async function generateShowcase(options: {
-	consumerRoot: string;
-	docsComponentsRoot: string;
-	registry: RegistryIndex;
-	installPath: InstallPath;
+    consumerRoot: string;
+    docsComponentsRoot: string;
+    registry: RegistryIndex;
+    installPath: InstallPath;
 }) {
-	const { consumerRoot, docsComponentsRoot, registry, installPath } = options;
-	const publicComponents = registry.components
-		.filter((component) => component.visibility === 'public')
-		.sort((a, b) => a.name.localeCompare(b.name));
-	if (publicComponents.length === 0)
-		throw new Error('The staged registry has no public components');
+    const { consumerRoot, docsComponentsRoot, registry, installPath } = options;
+    const publicComponents = registry.components
+        .filter((component) => component.visibility === 'public')
+        .sort((a, b) => a.name.localeCompare(b.name));
+    if (publicComponents.length === 0)
+        throw new Error('The staged registry has no public components');
 
-	const tsconfigPath = path.join(consumerRoot, 'tsconfig.json');
-	if (existsSync(tsconfigPath)) {
-		const tsconfig = await readFile(tsconfigPath, 'utf8');
-		if (!tsconfig.includes('"allowImportingTsExtensions"')) {
-			await writeFile(
-				tsconfigPath,
-				tsconfig.replace(
-					'"compilerOptions": {',
-					'"compilerOptions": {\n\t\t"allowImportingTsExtensions": true,'
-				)
-			);
-		}
-	}
+    const tsconfigPath = path.join(consumerRoot, 'tsconfig.json');
+    if (existsSync(tsconfigPath)) {
+        const tsconfig = await readFile(tsconfigPath, 'utf8');
+        if (!tsconfig.includes('"allowImportingTsExtensions"')) {
+            await writeFile(
+                tsconfigPath,
+                tsconfig.replace(
+                    '"compilerOptions": {',
+                    '"compilerOptions": {\n\t\t"allowImportingTsExtensions": true,'
+                )
+            );
+        }
+    }
 
-	const generated: GeneratedExample[] = [];
-	for (const component of publicComponents) {
-		const componentDirectory = path.join(docsComponentsRoot, component.name);
-		if (!existsSync(componentDirectory)) {
-			throw new Error(`Public component "${component.name}" has no docs fixture directory`);
-		}
-		const fixture = await selectFixture(componentDirectory);
-		const fixtureSource = await readFile(fixture, 'utf8');
-		const rewritten = rewriteFixtureImports(fixtureSource, installPath);
-		const toaster = /import\s*\{[^}]*\btoast\b[^}]*\}\s*from/.test(fixtureSource);
-		const exampleDirectory = path.join(consumerRoot, 'src', 'lib', 'showcase', component.name);
-		await mkdir(exampleDirectory, { recursive: true });
-		await writeFile(path.join(exampleDirectory, 'Example.svelte'), rewritten);
-		await copyFixtureAssets(path.dirname(fixture), exampleDirectory);
+    const generated: GeneratedExample[] = [];
+    for (const component of publicComponents) {
+        const componentDirectory = path.join(docsComponentsRoot, component.name);
+        if (!existsSync(componentDirectory)) {
+            throw new Error(`Public component "${component.name}" has no docs fixture directory`);
+        }
+        const fixture = await selectFixture(componentDirectory);
+        const fixtureSource = await readFile(fixture, 'utf8');
+        const rewritten = rewriteFixtureImports(fixtureSource, installPath);
+        const toaster = /import\s*\{[^}]*\btoast\b[^}]*\}\s*from/.test(fixtureSource);
+        const exampleDirectory = path.join(consumerRoot, 'src', 'lib', 'showcase', component.name);
+        await mkdir(exampleDirectory, { recursive: true });
+        await writeFile(path.join(exampleDirectory, 'Example.svelte'), rewritten);
+        await copyFixtureAssets(path.dirname(fixture), exampleDirectory);
 
-		const routeDirectory = path.join(consumerRoot, 'src', 'routes', 'components', component.name);
-		await mkdir(routeDirectory, { recursive: true });
-		const importPrefix =
-			installPath === 'cli' ? '$lib/sivir/components' : '@sivir-ui/svelte/components';
-		await writeFile(
-			path.join(routeDirectory, '+page.svelte'),
-			routeSource(component, toaster, importPrefix)
-		);
-		generated.push({
-			name: component.name,
-			description: component.description ?? '',
-			fixture,
-			route: `/components/${component.name}`,
-			toaster
-		});
-	}
+        const routeDirectory = path.join(
+            consumerRoot,
+            'src',
+            'routes',
+            'components',
+            component.name
+        );
+        await mkdir(routeDirectory, { recursive: true });
+        const importPrefix =
+            installPath === 'cli' ? '$lib/sivir/components' : '@sivir-ui/svelte/components';
+        await writeFile(
+            path.join(routeDirectory, '+page.svelte'),
+            routeSource(component, toaster, importPrefix)
+        );
+        generated.push({
+            name: component.name,
+            description: component.description ?? '',
+            fixture,
+            route: `/components/${component.name}`,
+            toaster
+        });
+    }
 
-	const catalog = publicComponents.map((component) => ({
-		name: component.name,
-		title: titleCase(component.name),
-		description: component.description ?? ''
-	}));
-	await mkdir(path.join(consumerRoot, 'src', 'lib'), { recursive: true });
-	await writeFile(
-		path.join(consumerRoot, 'src', 'lib', 'catalog.ts'),
-		`export const catalog = ${JSON.stringify(catalog, null, '\t')} as const;\n`
-	);
-	await writeFile(path.join(consumerRoot, 'src', 'lib', 'ShowcaseShell.svelte'), shellSource());
-	await writeFile(path.join(consumerRoot, 'src', 'routes', 'layout.css'), rootCss(installPath));
-	await writeFile(
-		path.join(consumerRoot, 'src', 'routes', '+layout.svelte'),
-		`<script lang="ts">\n\timport '../routes/layout.css';\n\timport ShowcaseShell from '$lib/ShowcaseShell.svelte';\n\timport type { Snippet } from 'svelte';\n\tconst { children }: { children: Snippet } = $props();\n</script>\n\n<ShowcaseShell>{@render children()}</ShowcaseShell>\n`
-	);
-	await writeFile(
-		path.join(consumerRoot, 'src', 'routes', '+page.ts'),
-		`import { redirect } from '@sveltejs/kit';\nexport const load = () => redirect(307, '/components/${publicComponents[0].name}');\n`
-	);
+    const catalog = publicComponents.map((component) => ({
+        name: component.name,
+        title: titleCase(component.name),
+        description: component.description ?? ''
+    }));
+    await mkdir(path.join(consumerRoot, 'src', 'lib'), { recursive: true });
+    await writeFile(
+        path.join(consumerRoot, 'src', 'lib', 'catalog.ts'),
+        `export const catalog = ${JSON.stringify(catalog, null, '\t')} as const;\n`
+    );
+    await writeFile(path.join(consumerRoot, 'src', 'lib', 'ShowcaseShell.svelte'), shellSource());
+    await writeFile(path.join(consumerRoot, 'src', 'routes', 'layout.css'), rootCss(installPath));
+    await writeFile(
+        path.join(consumerRoot, 'src', 'routes', '+layout.svelte'),
+        `<script lang="ts">\n\timport '../routes/layout.css';\n\timport ShowcaseShell from '$lib/ShowcaseShell.svelte';\n\timport type { Snippet } from 'svelte';\n\tconst { children }: { children: Snippet } = $props();\n</script>\n\n<ShowcaseShell>{@render children()}</ShowcaseShell>\n`
+    );
+    await writeFile(
+        path.join(consumerRoot, 'src', 'routes', '+page.ts'),
+        `import { redirect } from '@sveltejs/kit';\nexport const load = () => redirect(307, '/components/${publicComponents[0].name}');\n`
+    );
 
-	return generated;
+    return generated;
 }

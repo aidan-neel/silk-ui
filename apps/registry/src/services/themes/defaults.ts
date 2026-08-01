@@ -8,18 +8,18 @@ export const defaultThemes: readonly Theme[] = builtInThemePresets;
 const DEFAULT_SLUGS: ReadonlySet<string> = new Set(defaultThemes.map((theme) => theme.slug));
 
 export function isDefaultSlug(slug: string): boolean {
-	return DEFAULT_SLUGS.has(slug);
+    return DEFAULT_SLUGS.has(slug);
 }
 
 export function findDefaultTheme(slug: string): Theme | undefined {
-	return defaultThemes.find((theme) => theme.slug === slug);
+    return defaultThemes.find((theme) => theme.slug === slug);
 }
 
 export function defaultThemeRecord(theme: Theme): ThemeRecord {
-	return {
-		...theme,
-		id: `default:${theme.slug}`,
-		createdAt: DEFAULT_THEME_TIMESTAMP,
-		updatedAt: DEFAULT_THEME_TIMESTAMP
-	};
+    return {
+        ...theme,
+        id: `default:${theme.slug}`,
+        createdAt: DEFAULT_THEME_TIMESTAMP,
+        updatedAt: DEFAULT_THEME_TIMESTAMP
+    };
 }

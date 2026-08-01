@@ -15,23 +15,23 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *        Default remains `outline`.
  */
 export const manifest: Manifest = {
-	name: 'input',
-	version: '4.0.0',
-	visibility: 'public',
-	description:
-		'Text input wrapping a native <input>. 2 variants. Forwards file/checkbox/text/number/etc. types.',
-	files: [
-		'components/input/input.svelte',
-		'components/input/variants.ts',
-		'components/input/index.ts',
-		'components/input/manifest.ts'
-	],
-	components: [],
-	shared: ['utils.cn'],
-	peerDependencies: {
-		cnfast: '^0.0.8',
-		'tailwind-merge': '^3.0.0',
-		'tailwind-variants': '^3.0.0',
-		svelte: '^5.0.0'
-	}
+    name: 'input',
+    version: '4.0.0',
+    visibility: 'public',
+    description:
+        'Text input wrapping a native <input>. 2 variants. Forwards file/checkbox/text/number/etc. types.',
+    files: [
+        'components/input/input.svelte',
+        'components/input/variants.ts',
+        'components/input/index.ts',
+        'components/input/manifest.ts'
+    ],
+    components: [],
+    shared: ['utils.cn'],
+    peerDependencies: {
+        cnfast: '^0.0.8',
+        'tailwind-merge': '^3.0.0',
+        'tailwind-variants': '^3.0.0',
+        svelte: '^5.0.0'
+    }
 };

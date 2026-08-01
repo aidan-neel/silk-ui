@@ -11,38 +11,38 @@ import ApprovalRequestFixture from '../../fixtures/ApprovalRequestFixture.svelte
  */
 
 async function flush() {
-	await tick();
-	await tick();
+    await tick();
+    await tick();
 }
 
 beforeEach(() => {
-	document.body.style.overflow = '';
+    document.body.style.overflow = '';
 });
 
 afterEach(() => {
-	document.body.style.overflow = '';
+    document.body.style.overflow = '';
 });
 
 describe('ApprovalRequest -- decision closes the modal', () => {
-	it('approves and closes immediately', async () => {
-		render(ApprovalRequestFixture, { open: true });
-		await flush();
+    it('approves and closes immediately', async () => {
+        render(ApprovalRequestFixture, { open: true });
+        await flush();
 
-		await page.getByRole('button', { name: 'Deploy' }).click();
-		await flush();
+        await page.getByRole('button', { name: 'Deploy' }).click();
+        await flush();
 
-		await expect.element(page.getByTestId('approval-callback')).toHaveTextContent('approve');
-		await expect.element(page.getByRole('alertdialog')).not.toBeInTheDocument();
-	});
+        await expect.element(page.getByTestId('approval-callback')).toHaveTextContent('approve');
+        await expect.element(page.getByRole('alertdialog')).not.toBeInTheDocument();
+    });
 
-	it('denies and closes immediately', async () => {
-		render(ApprovalRequestFixture, { open: true });
-		await flush();
+    it('denies and closes immediately', async () => {
+        render(ApprovalRequestFixture, { open: true });
+        await flush();
 
-		await page.getByRole('button', { name: 'Cancel' }).click();
-		await flush();
+        await page.getByRole('button', { name: 'Cancel' }).click();
+        await flush();
 
-		await expect.element(page.getByTestId('approval-callback')).toHaveTextContent('deny');
-		await expect.element(page.getByRole('alertdialog')).not.toBeInTheDocument();
-	});
+        await expect.element(page.getByTestId('approval-callback')).toHaveTextContent('deny');
+        await expect.element(page.getByRole('alertdialog')).not.toBeInTheDocument();
+    });
 });

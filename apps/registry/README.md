@@ -8,22 +8,22 @@ container.
 
 1. Create a free project at <https://supabase.com>.
 2. Open **Project Settings → Database → Connection string** and grab two URLs:
-   - **Transaction pooler** (port 6543) → `DATABASE_URL`, used at runtime.
-   - **Session pooler** or **Direct connection** (port 5432) → `DIRECT_URL`, used by Prisma migrations.
+    - **Transaction pooler** (port 6543) → `DATABASE_URL`, used at runtime.
+    - **Session pooler** or **Direct connection** (port 5432) → `DIRECT_URL`, used by Prisma migrations.
 3. Copy `.env.example` to `.env` and paste both URLs. Append `?sslmode=require` if not already present.
 4. Apply migrations:
 
-   ```bash
-   bun --bun run prisma migrate deploy
-   ```
+    ```bash
+    bun --bun run prisma migrate deploy
+    ```
 
 5. Start the dev server:
 
-   ```bash
-   bun run dev
-   ```
+    ```bash
+    bun run dev
+    ```
 
-   The service listens on `PORT` (default `4100` in docker-compose).
+    The service listens on `PORT` (default `4100` in docker-compose).
 
 ## Why two URLs?
 

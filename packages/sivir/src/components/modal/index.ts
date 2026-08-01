@@ -13,8 +13,8 @@ import type { ButtonProps } from '../button';
 import type { Snippet } from 'svelte';
 
 export type ModalState = {
-	open: boolean;
-	error: boolean;
+    open: boolean;
+    error: boolean;
 };
 
 export type ModalTriggerProps = ButtonProps;
@@ -27,25 +27,25 @@ export type ModalCloseProps = ButtonProps;
 export type ModalDescriptionProps = DefaultProps;
 
 export type ModalContentProps = {
-	allowClickOutside?: boolean;
-	role?: 'dialog' | 'alertdialog';
-	contentClass?: string;
-	/** Optional explicit max-width class. Overrides the selected size preset. */
-	maxWidthClass?: string;
-	overlayClass?: string;
-	surfaceClass?: string;
-	panelIdPrefix?: string;
-	showClose?: boolean;
-	/** Max-width preset. Defaults to `md`. */
-	size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    allowClickOutside?: boolean;
+    role?: 'dialog' | 'alertdialog';
+    contentClass?: string;
+    /** Optional explicit max-width class. Overrides the selected size preset. */
+    maxWidthClass?: string;
+    overlayClass?: string;
+    surfaceClass?: string;
+    panelIdPrefix?: string;
+    showClose?: boolean;
+    /** Max-width preset. Defaults to `md`. */
+    size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 } & DefaultProps &
-	Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
+    Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
 
 export type ModalProps = {
-	open?: boolean;
-	/** Sets supported browser chrome to red while the modal is open. */
-	error?: boolean;
-	children?: Snippet;
+    open?: boolean;
+    /** Sets supported browser chrome to red while the modal is open. */
+    error?: boolean;
+    children?: Snippet;
 };
 
 export { Root, Trigger, Content, Title, Description, Header, Body, Close, Footer, Confirm };

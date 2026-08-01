@@ -26,26 +26,26 @@ import markdown from 'highlight.js/lib/languages/markdown';
 let registered = false;
 
 function ensureRegistered() {
-	if (registered) return;
-	registered = true;
-	hljs.registerLanguage('javascript', javascript);
-	hljs.registerLanguage('typescript', typescript);
-	hljs.registerLanguage('python', python);
-	hljs.registerLanguage('java', java);
-	hljs.registerLanguage('go', go);
-	hljs.registerLanguage('csharp', csharp);
-	hljs.registerLanguage('c', c);
-	hljs.registerLanguage('cpp', cpp);
-	hljs.registerLanguage('rust', rust);
-	hljs.registerLanguage('ruby', ruby);
-	hljs.registerLanguage('php', php);
-	hljs.registerLanguage('bash', bash);
-	hljs.registerLanguage('json', json);
-	hljs.registerLanguage('yaml', yaml);
-	hljs.registerLanguage('css', css);
-	hljs.registerLanguage('xml', xml);
-	hljs.registerLanguage('sql', sql);
-	hljs.registerLanguage('markdown', markdown);
+    if (registered) return;
+    registered = true;
+    hljs.registerLanguage('javascript', javascript);
+    hljs.registerLanguage('typescript', typescript);
+    hljs.registerLanguage('python', python);
+    hljs.registerLanguage('java', java);
+    hljs.registerLanguage('go', go);
+    hljs.registerLanguage('csharp', csharp);
+    hljs.registerLanguage('c', c);
+    hljs.registerLanguage('cpp', cpp);
+    hljs.registerLanguage('rust', rust);
+    hljs.registerLanguage('ruby', ruby);
+    hljs.registerLanguage('php', php);
+    hljs.registerLanguage('bash', bash);
+    hljs.registerLanguage('json', json);
+    hljs.registerLanguage('yaml', yaml);
+    hljs.registerLanguage('css', css);
+    hljs.registerLanguage('xml', xml);
+    hljs.registerLanguage('sql', sql);
+    hljs.registerLanguage('markdown', markdown);
 }
 
 /**
@@ -56,32 +56,32 @@ function ensureRegistered() {
  * covers the snippets these docs show.
  */
 const ALIASES: Record<string, string> = {
-	js: 'javascript',
-	jsx: 'javascript',
-	mjs: 'javascript',
-	cjs: 'javascript',
-	ts: 'typescript',
-	tsx: 'typescript',
-	svelte: 'typescript',
-	vue: 'typescript',
-	py: 'python',
-	rb: 'ruby',
-	'c#': 'csharp',
-	cs: 'csharp',
-	'c++': 'cpp',
-	golang: 'go',
-	rs: 'rust',
-	sh: 'bash',
-	shell: 'bash',
-	zsh: 'bash',
-	yml: 'yaml',
-	html: 'xml',
-	svg: 'xml',
-	md: 'markdown'
+    js: 'javascript',
+    jsx: 'javascript',
+    mjs: 'javascript',
+    cjs: 'javascript',
+    ts: 'typescript',
+    tsx: 'typescript',
+    svelte: 'typescript',
+    vue: 'typescript',
+    py: 'python',
+    rb: 'ruby',
+    'c#': 'csharp',
+    cs: 'csharp',
+    'c++': 'cpp',
+    golang: 'go',
+    rs: 'rust',
+    sh: 'bash',
+    shell: 'bash',
+    zsh: 'bash',
+    yml: 'yaml',
+    html: 'xml',
+    svg: 'xml',
+    md: 'markdown'
 };
 
 function escapeHtml(input: string): string {
-	return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /**
@@ -90,15 +90,15 @@ function escapeHtml(input: string): string {
  * escaped plain text so nothing ever throws or renders raw markup.
  */
 export function highlight(code: string, lang?: string): string {
-	ensureRegistered();
-	const key = (lang ?? '').toLowerCase().trim();
-	const resolved = ALIASES[key] ?? key;
-	if (resolved && hljs.getLanguage(resolved)) {
-		try {
-			return hljs.highlight(code, { language: resolved, ignoreIllegals: true }).value;
-		} catch {
-			return escapeHtml(code);
-		}
-	}
-	return escapeHtml(code);
+    ensureRegistered();
+    const key = (lang ?? '').toLowerCase().trim();
+    const resolved = ALIASES[key] ?? key;
+    if (resolved && hljs.getLanguage(resolved)) {
+        try {
+            return hljs.highlight(code, { language: resolved, ignoreIllegals: true }).value;
+        } catch {
+            return escapeHtml(code);
+        }
+    }
+    return escapeHtml(code);
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Input } from '@sivir-ui/svelte/components/input';
+    import { Input } from '@sivir-ui/svelte/components/input';
 </script>
 
 <div class="w-full max-w-xs">
-	<Input variant="secondary" label="Secondary" placeholder="Placeholder text" />
+    <Input variant="secondary" label="Secondary" placeholder="Placeholder text" />
 </div>
