@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
-
 	let open = $state(false);
 </script>
 

@@ -6,8 +6,6 @@
 	import HeroSrc from './examples/hero.svelte?raw';
 	import Default from './examples/default.svelte';
 	import DefaultSrc from './examples/default.svelte?raw';
-	import StartsOpen from './examples/starts-open.svelte';
-	import StartsOpenSrc from './examples/starts-open.svelte?raw';
 
 	const TITLE = 'Collapsible';
 	const SLUG = 'collapsible';
@@ -89,18 +87,6 @@
 			</h3>
 			<ComponentPreview code={DefaultSrc}>
 				<Default />
-			</ComponentPreview>
-		</div>
-
-		<!-- Starts open -->
-		<div id="starts-open" class="scroll-mt-20 flex flex-col gap-3">
-			<h3
-				class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-			>
-				Starts open
-			</h3>
-			<ComponentPreview code={StartsOpenSrc}>
-				<StartsOpen />
 			</ComponentPreview>
 		</div>
 	</section>

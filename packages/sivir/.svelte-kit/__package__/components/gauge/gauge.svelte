@@ -71,10 +71,7 @@
 			)}
 		/>
 	</svg>
-	<span
-		aria-hidden="true"
-		class="relative text-xs leading-none text-foreground-muted tabular-nums"
-	>
+	<span aria-hidden="true" class="relative text-xs leading-none text-foreground-muted tabular-nums">
 		{#if children}
 			{@render children()}
 		{:else}

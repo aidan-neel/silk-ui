@@ -20,7 +20,6 @@
 	import Rocket from '@lucide/svelte/icons/rocket';
 	import Globe from '@lucide/svelte/icons/globe';
 	import Palette from '@lucide/svelte/icons/palette';
-	import Type from '@lucide/svelte/icons/type';
 	import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
 	import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
 	import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
@@ -45,8 +44,7 @@
 
 	const navItems = [
 		{ href: '/', label: 'Home' },
-		{ href: '/docs/introduction', label: 'Docs' },
-		{ href: '/fonts', label: 'Fonts' }
+		{ href: '/docs/introduction', label: 'Docs' }
 	];
 
 	const docsPages = [
@@ -67,12 +65,6 @@
 			href: resolve('/docs/theming'),
 			icon: Palette,
 			name: 'Theming tokens colors styling'
-		},
-		{
-			title: 'Fonts',
-			href: resolve('/fonts'),
-			icon: Type,
-			name: 'Fonts typography typeface playground'
 		},
 		{
 			title: 'Components',

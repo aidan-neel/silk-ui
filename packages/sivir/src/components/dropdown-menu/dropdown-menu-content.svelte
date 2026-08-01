@@ -19,6 +19,8 @@
 <Popover.Content
 	role="menu"
 	tabindex={-1}
+	focusTrap={false}
+	lockScroll={false}
 	data-ui="dropdown-menu-content"
 	class={cn(props.class, 'min-w-[var(--popover-trigger-width)] w-max', inverted && INVERTED_MENU)}
 	surfaceClass="flex flex-col gap-0 p-1"

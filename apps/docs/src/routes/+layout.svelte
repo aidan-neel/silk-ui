@@ -18,15 +18,12 @@
 
 	const isHome = $derived($page.url.pathname === '/');
 
-	// Apply the typeface chosen on /fonts to the whole docs site. `--font-header`
-	// defaults to `var(--font-sans)`, so one custom property re-skins every page.
+	// `--font-header` defaults to `var(--font-sans)`, so one custom property re-skins every page.
 	$effect(() => {
-		const font = fonts.find((entry) => entry.name === selectedFont.current);
-		if (!font || font.name === DEFAULT_FONT) {
-			document.documentElement.style.removeProperty('--font-sans');
-		} else {
-			document.documentElement.style.setProperty('--font-sans', font.family);
-		}
+		const font =
+			fonts.find((entry) => entry.name === selectedFont.current) ??
+			fonts.find((entry) => entry.name === DEFAULT_FONT);
+		if (font) document.documentElement.style.setProperty('--font-sans', font.family);
 	});
 
 	// NOTE: the global docs no longer re-apply a persisted Studio theme on load.

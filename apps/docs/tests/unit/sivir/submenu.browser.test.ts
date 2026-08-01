@@ -47,6 +47,7 @@ describe('DropdownMenu submenu cone', () => {
 		await openDropdown();
 
 		await expect.element(page.getByTestId('dd-share')).toBeInTheDocument();
+		await expect.element(page.getByTestId('dd-social')).not.toBeInTheDocument();
 		await expect.element(page.getByTestId('dd-twitter')).not.toBeInTheDocument();
 
 		await hover('dd-share');

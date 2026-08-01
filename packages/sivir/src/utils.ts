@@ -89,8 +89,15 @@ export function createContext<T>(name: string) {
  */
 export function closeMenuLayers(current: { open: boolean }, ancestors: { open: boolean }[]) {
 	current.open = false;
+
+	// Let the selected submenu begin its normal exit before its parents follow.
 	for (let index = ancestors.length - 1; index >= 0; index -= 1) {
-		ancestors[index]!.open = false;
+		setTimeout(
+			() => {
+				ancestors[index]!.open = false;
+			},
+			(ancestors.length - 1 - index) * 16 + 16
+		);
 	}
 }
 

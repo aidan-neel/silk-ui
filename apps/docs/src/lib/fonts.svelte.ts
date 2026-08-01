@@ -3,7 +3,7 @@ import { persistedState } from 'svelte-persisted-state';
 export type FontCategory = 'Sans serif' | 'Serif' | 'Monospace';
 export type DocsFont = { name: string; category: FontCategory; family: string };
 
-export const DEFAULT_FONT = 'DM Sans';
+export const DEFAULT_FONT = 'Inter';
 
 /**
  * Every family imported by app.css from Google Fonts. Only these can be
