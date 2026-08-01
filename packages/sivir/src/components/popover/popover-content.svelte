@@ -10,7 +10,7 @@
 		trapFocus
 	} from '@sivir-ui/svelte/utils';
 	import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
-	import type { PopoverContentProps } from '.';
+	import type { Placement, PopoverContentProps } from '.';
 	import { getPopoverContext } from './context.svelte';
 
 	const {
@@ -147,6 +147,7 @@
 	function scheduleClose(event: MouseEvent) {
 		if (!popoverState.hoverable) return;
 		if (popoverState.closeTimeout) clearTimeout(popoverState.closeTimeout);
+		const resolvedPlacement = (popover?.dataset.placement ?? popoverState.placement) as Placement;
 
 		const inContactTriangle =
 			popoverState.buttonRef &&
@@ -155,7 +156,7 @@
 				{ x: event.clientX, y: event.clientY },
 				popoverState.buttonRef.getBoundingClientRect(),
 				popover.getBoundingClientRect(),
-				popoverState.placement
+				resolvedPlacement
 			);
 		const delay = inContactTriangle ? (popoverState.closeDelay ?? 180) : 0;
 		if (delay <= 0) {

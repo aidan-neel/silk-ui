@@ -111,6 +111,12 @@ function pointInTriangle(
 	return !(hasNegative && hasPositive);
 }
 
+function pointInRect(point: { x: number; y: number }, rect: DOMRect) {
+	return (
+		point.x >= rect.left && point.x <= rect.right && point.y >= rect.top && point.y <= rect.bottom
+	);
+}
+
 /** Whether a pointer is in the contact triangle between a floating trigger and panel. */
 export function isPointInSubmenuTriangle(
 	point: { x: number; y: number },
@@ -118,6 +124,8 @@ export function isPointInSubmenuTriangle(
 	panel: DOMRect,
 	placement: Placement
 ) {
+	if (pointInRect(point, trigger) || pointInRect(point, panel)) return true;
+
 	const contactMargin = 8;
 	const triggerCenter = {
 		x: (trigger.left + trigger.right) / 2,
@@ -549,6 +557,7 @@ export function positionFloatingPanel(
 	floating: HTMLElement,
 	placement: Placement
 ) {
+	floating.dataset.placement ??= placement;
 	return computePosition(reference, floating, {
 		strategy: 'fixed',
 		placement,
@@ -573,11 +582,12 @@ export function positionFloatingPanel(
 			})
 		]
 	})
-		.then(({ x, y }) => {
+		.then(({ x, y, placement: resolvedPlacement }) => {
 			Object.assign(floating.style, {
 				left: `${x}px`,
 				top: `${y}px`
 			});
+			floating.dataset.placement = resolvedPlacement;
 		})
 		.catch(() => {});
 }

@@ -2,7 +2,7 @@
 	import { Button } from '@sivir-ui/svelte/components/button';
 	import { isPointInSubmenuTriangle, positionFloatingPanel } from '@sivir-ui/svelte/utils';
 	import { onMount, tick } from 'svelte';
-	import type { PopoverTriggerProps } from '.';
+	import type { Placement, PopoverTriggerProps } from '.';
 	import { getPopoverContext } from './context.svelte';
 
 	const { id: key, state: popoverState } = getPopoverContext();
@@ -81,6 +81,8 @@
 				popoverState.hoverTimeout = undefined;
 			}
 			const pointerEvent = event.type === 'mouseleave' ? (event as MouseEvent) : undefined;
+			const resolvedPlacement = (popoverState.popoverRef?.dataset.placement ??
+				popoverState.placement) as Placement;
 			const inContactTriangle =
 				event.type !== 'mouseleave' ||
 				(pointerEvent &&
@@ -90,7 +92,7 @@
 						{ x: pointerEvent.clientX, y: pointerEvent.clientY },
 						element.getBoundingClientRect(),
 						popoverState.popoverRef.getBoundingClientRect(),
-						popoverState.placement
+						resolvedPlacement
 					));
 			closePopover(inContactTriangle ? (popoverState.closeDelay ?? 180) : 0);
 			popoverState.hovering = false;

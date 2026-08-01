@@ -11,18 +11,24 @@ async function flush() {
 	await new Promise((r) => setTimeout(r, 30));
 }
 
+async function settleAnimations() {
+	await Promise.all(
+		document.getAnimations().map((animation) => animation.finished.catch(() => {}))
+	);
+}
+
 async function hover(testId: string) {
-	// mouseenter does not bubble — fire on the trigger button itself.
 	const el = page.getByTestId(testId).element() as HTMLElement;
 	const target = (el.closest('button') as HTMLElement | null) ?? el;
-	target.dispatchEvent(new MouseEvent('mouseenter', { bubbles: false }));
-	target.dispatchEvent(new FocusEvent('focus', { bubbles: false }));
+	await userEvent.hover(target);
 	await flush();
+	await settleAnimations();
 }
 
 async function openDropdown() {
 	await page.getByTestId('dd-trigger').click();
 	await flush();
+	await settleAnimations();
 }
 
 async function openContext() {
@@ -31,6 +37,7 @@ async function openContext() {
 		new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 80, clientY: 80 })
 	);
 	await flush();
+	await settleAnimations();
 }
 
 describe('DropdownMenu submenu cone', () => {
