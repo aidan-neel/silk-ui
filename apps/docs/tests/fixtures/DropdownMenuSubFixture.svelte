@@ -53,5 +53,15 @@
 				</DropdownMenu.Item>
 			</DropdownMenu.SubContent>
 		</DropdownMenu.Sub>
+		<DropdownMenu.Sub>
+			<DropdownMenu.SubTrigger>
+				<span data-testid="dd-more">More</span>
+			</DropdownMenu.SubTrigger>
+			<DropdownMenu.SubContent>
+				<DropdownMenu.Item>
+					<span data-testid="dd-more-item">More item</span>
+				</DropdownMenu.Item>
+			</DropdownMenu.SubContent>
+		</DropdownMenu.Sub>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

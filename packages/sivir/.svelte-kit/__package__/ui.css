@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+@source "./**/*.{svelte,ts}";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
+@theme {
+	--font-sans: 'DM Sans', sans-serif;
+	--font-mono: 'JetBrains Mono', monospace;
+	--font-header: var(--font-sans);
+
+	--sivir-neutral-0: hsl(0 0% 100%);
+	--sivir-neutral-10: hsl(60 11.1% 99.2%);
+	--sivir-neutral-50: hsl(60 11.1% 96.5%);
+	--sivir-neutral-100: hsl(60 6.2% 93.7%);
+	--sivir-neutral-150: hsl(60 4.2% 90.6%);
+	--sivir-neutral-300: hsl(60 4.4% 82.4%);
+	--sivir-neutral-500: hsl(60 3% 41.5%);
+	--sivir-neutral-900: hsl(60 5.7% 10.4%);
+	--sivir-blue-50: hsl(218.8 100% 96.7%);
+	--sivir-blue-500: hsl(212.2 100% 64.5%);
+	--sivir-success: hsl(148.7 42.2% 42.7%);
+	--sivir-warning: hsl(36.1 64.8% 47.8%);
+	--sivir-error: hsl(0 57.7% 56.5%);
+
+	--sivir-space-unit: 3.6px;
+	--sivir-space-1: calc(var(--sivir-space-unit) * 1);
+	--sivir-space-2: calc(var(--sivir-space-unit) * 2);
+	--sivir-space-3: calc(var(--sivir-space-unit) * 3);
+	--sivir-space-4: calc(var(--sivir-space-unit) * 4);
+	--sivir-space-5: calc(var(--sivir-space-unit) * 5);
+	--sivir-space-6: calc(var(--sivir-space-unit) * 6);
+	--sivir-space-8: calc(var(--sivir-space-unit) * 8);
+	--sivir-space-10: calc(var(--sivir-space-unit) * 10);
+	--size-control-sm: var(--sivir-space-8);
+	--size-control-md: calc(var(--sivir-space-8) + var(--sivir-space-2));
+	--size-control-lg: var(--sivir-space-10);
+	--size-icon-md: var(--sivir-space-8);
+
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 10px;
+	--radius-xl: 14px;
+	--text-xs: 12px;
+	--text-sm: 14px;
+	--text-base: 14px;
+	--font-size-header: 16px;
+	--font-size-body: 14px;
+	--font-size-label: 13px;
+	--font-size-button: 14px;
+	--font-size-badge: 12px;
+	--font-weight-header: 600;
+	--font-weight-body: 400;
+	--font-weight-label: 500;
+	--font-weight-button: 500;
+	--font-weight-badge: 500;
+	--font-weight-description: 400;
+	--tracking-header: -0.015em;
+	--tracking-body: 0em;
+	--tracking-label: 0em;
+	--tracking-button: 0em;
+	--tracking-badge: 0em;
+
+	--elevation-1: 0 4px 2px rgb(0 0 0 / 0.04);
+	--elevation-float: 0 8px 24px -8px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+	--elevation-control:
+		inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(15 15 16 / 0.08),
+		inset 0 1px 0 0 rgb(255 255 255 / 0.4);
+	--focus-ring: 0 0 0 3px var(--color-ring);
+
+	--motion-duration-hover: 120ms;
+	--motion-duration-menu: 40ms;
+	--motion-duration-panel: 180ms;
+	--motion-duration-sheet: 320ms;
+	--motion-duration-sheet-out: 220ms;
+	--motion-duration-overlay: 120ms;
+	--motion-duration-toast-in: 320ms;
+	--motion-duration-toast-out: 240ms;
+	--motion-panel-y: 2px;
+	--motion-panel-scale-start: 0.97;
+	--motion-duration-panel-in: 110ms;
+	--motion-duration-panel-out: 150ms;
+	--motion-duration-modal-in: 180ms;
+	--motion-duration-modal-out: 110ms;
+	--motion-press-px: 2px;
+	--motion-duration-press: 160ms;
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-press: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--border-size: 1px;
+	--ui-cursor-interactive: default;
+
+	--color-background: var(--sivir-neutral-10);
+	--color-card: var(--sivir-neutral-0);
+	--color-panel: var(--sivir-neutral-0);
+	--color-muted: var(--sivir-neutral-50);
+	--color-secondary: var(--sivir-neutral-100);
+	--color-border: var(--sivir-neutral-150);
+	--color-border-strong: var(--sivir-neutral-300);
+	--color-input: var(--sivir-neutral-300);
+	--color-foreground: var(--sivir-neutral-900);
+	--color-foreground-muted: var(--sivir-neutral-500);
+	--color-primary: #1f9be6;
+	--color-primary-hover: #1270ad;
+	--color-on-primary: hsl(0 0% 100%);
+	--color-accent-tint: var(--sivir-blue-50);
+	--color-ring: color-mix(in srgb, var(--color-primary) 30%, transparent);
+	--color-overlay: rgb(0 0 0 / 0.18);
+	--color-success: var(--sivir-success);
+	--color-warning: var(--sivir-warning);
+	--color-error: var(--sivir-error);
+	--color-info: var(--sivir-blue-500);
+	--color-tooltip: var(--sivir-neutral-900);
+	--color-tooltip-foreground: var(--sivir-neutral-0);
+	--color-field: var(--color-card);
+	--color-field-hover: var(--color-muted);
+	--color-field-foreground: var(--color-foreground);
+}
+
+.dark {
+	--sivir-neutral-0: hsl(0 0% 5%);
+	--sivir-neutral-50: hsl(0 0% 10%);
+	--sivir-neutral-100: hsl(0 0% 13%);
+	--sivir-neutral-150: hsl(0 0% 15.7%);
+	--sivir-neutral-300: hsl(0 0% 22.7%);
+	--sivir-neutral-500: hsl(0 0% 65%);
+	--sivir-neutral-900: hsl(0 0% 93%);
+	--sivir-blue-50: hsl(217.1 52.5% 15.7%);
+	--sivir-blue-500: hsl(216.6 100% 67.8%);
+	--sivir-success: hsl(149.7 39.4% 49.2%);
+	--sivir-warning: hsl(37.3 72.6% 55.7%);
+	--sivir-error: hsl(0 66.7% 63.5%);
+	--color-background: hsl(0 0% 4%);
+	--color-muted: hsl(0 0% 7%);
+	--color-card: hsl(0 0% 9%);
+	--color-panel: hsl(0 0% 11.5%);
+	--color-secondary: hsl(0 0% 14.5%);
+	--color-border: hsl(0 0% 16.5%);
+	--color-border-strong: hsl(0 0% 26%);
+	--color-input: hsl(0 0% 24%);
+	--color-overlay: rgb(0 0 0 / 0.55);
+	--color-field: var(--color-secondary);
+	--color-field-hover: hsl(0 0% 17.5%);
+	--elevation-1: 0 1px 2px rgb(0 0 0 / 0.4);
+	--elevation-control:
+		inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(0 0 0 / 0.32),
+		inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+}
+
+/*
+ * Multi-component surface contracts.
+ *
+ * These live in CSS rather than as shared Tailwind strings in TypeScript so a
+ * component only ever names the contract (`class="sivir-menu-item"`) instead of
+ * re-declaring it. The `components` layer sits below `utilities`, so a consumer
+ * passing `class="h-10 bg-red-500"` still wins on every property it names.
+ */
+@layer components {
+	/* Option/menu row shared by select, combobox, command, dropdown-menu, and
+	   context-menu items. Rendered on an unstyled Button, so it carries the
+	   focus, disabled, and icon rules the button base would otherwise supply. */
+	.sivir-menu-item {
+		pointer-events: auto;
+		display: flex;
+		width: 100%;
+		height: calc(var(--spacing) * 8);
+		align-items: center;
+		justify-content: space-between;
+		border: var(--border-size) solid transparent;
+		border-radius: var(--radius-lg);
+		padding-inline: calc(var(--spacing) * 2);
+		padding-block: 0;
+		text-align: left;
+		font-size: var(--font-size-button);
+		font-weight: var(--font-weight-button);
+		letter-spacing: var(--tracking-button);
+		line-height: 1;
+		color: var(--color-foreground);
+		user-select: none;
+		transition-property: background-color, border-color, color, box-shadow, transform, scale;
+		transition-duration:
+			var(--motion-duration-menu), var(--motion-duration-menu), var(--motion-duration-menu),
+			var(--motion-duration-menu), var(--motion-duration-press), var(--motion-duration-press);
+		transition-timing-function: var(--ease-press);
+	}
+
+	.sivir-menu-item:hover {
+		cursor: default;
+		background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
+	}
+
+	.sivir-menu-item[data-active='true'],
+	.sivir-menu-item[data-state='open'] {
+		background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
+	}
+
+	.sivir-menu-item[data-selected='true'] {
+		background-color: var(--color-accent-tint);
+	}
+
+	.sivir-menu-item:where(.dark, .dark *):hover,
+	.sivir-menu-item:where(.dark, .dark *)[data-active='true'],
+	.sivir-menu-item:where(.dark, .dark *)[data-state='open'] {
+		background-color: color-mix(in oklab, var(--color-foreground) 8%, transparent);
+	}
+
+	.sivir-menu-item:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
+	}
+
+	.sivir-menu-item:disabled,
+	.sivir-menu-item[aria-disabled='true'] {
+		pointer-events: none;
+		opacity: 0.4;
+	}
+
+	.sivir-menu-item svg {
+		pointer-events: none;
+		flex-shrink: 0;
+	}
+
+	.sivir-menu-item svg:not([class*='size-']) {
+		width: calc(var(--spacing) * 4);
+		height: calc(var(--spacing) * 4);
+	}
+
+	/* Card/CodeBlock concentric frame: hairline border + foreground-tinted fill. */
+	.sivir-card-frame {
+		padding: calc(var(--spacing) * 0.5);
+		border: var(--border-size) solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background-color: color-mix(in oklab, var(--color-foreground) 3%, var(--color-card));
+	}
+
+	.sivir-card-frame:where(.dark, .dark *) {
+		border-color: color-mix(in oklab, var(--color-border) 40%, transparent);
+	}
+
+	/* Inset surface for the frame above. Radius is the frame radius minus the
+	   2px frame inset so the corners stay concentric. Bring your own padding. */
+	.sivir-card-surface {
+		border-radius: calc(var(--radius-lg) - 2px);
+		background-color: var(--color-card);
+		box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-border) 50%, transparent);
+	}
+
+	/* The single shared tooltip bubble and its off-screen width twin, both built
+	   imperatively in shared-tooltip.ts. */
+	.sivir-tooltip,
+	.sivir-tooltip-measure {
+		pointer-events: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		white-space: nowrap;
+		padding-inline: calc(var(--spacing) * 2);
+		padding-block: calc(var(--spacing) * 1);
+		font-size: var(--font-size-label);
+		font-weight: var(--font-weight-label);
+		letter-spacing: var(--tracking-label);
+		line-height: 1.3;
+	}
+
+	.sivir-tooltip {
+		z-index: 140;
+		max-width: calc(var(--spacing) * 72);
+		transform-origin: center;
+		border-radius: var(--radius-lg);
+		background-color: var(--color-tooltip);
+		color: var(--color-tooltip-foreground);
+		opacity: 0;
+		box-shadow: var(--elevation-float);
+		transition-property: left, top, width, opacity, transform;
+		transition-duration:
+			var(--motion-duration-panel), var(--motion-duration-panel), var(--motion-duration-panel),
+			var(--motion-duration-hover), var(--motion-duration-panel);
+		transition-timing-function: var(--ease-out);
+	}
+
+	.sivir-tooltip-measure {
+		visibility: hidden;
+	}
+
+	.sivir-tooltip-label {
+		display: inline-block;
+		white-space: nowrap;
+	}
+}
+
+/* Constant-pixel press: --sivir-press-sx/sy set by pressable() from --motion-press-px. */
+.sivir-press:active:not(:disabled):not([aria-disabled='true']),
+.sivir-menu-item:active:not(:disabled):not([aria-disabled='true']) {
+	scale: var(--sivir-press-sx, 0.98) var(--sivir-press-sy, 0.98);
+}
+
+/* iOS Safari zooms focused text-entry controls below 16px. Preserve page zoom while preventing that jump. */
+@media (max-width: 767px) {
+	input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not(
+			[type='button']
+		):not([type='submit']):not([type='reset']),
+	textarea,
+	select {
+		font-size: 16px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--motion-duration-hover: 0ms;
+		--motion-duration-menu: 0ms;
+		--motion-duration-panel: 0ms;
+		--motion-duration-panel-in: 0ms;
+		--motion-duration-panel-out: 0ms;
+		--motion-duration-modal-in: 0ms;
+		--motion-duration-modal-out: 0ms;
+		--motion-duration-sheet: 0ms;
+		--motion-duration-sheet-out: 0ms;
+		--motion-duration-overlay: 0ms;
+		--motion-duration-toast-in: 0ms;
+		--motion-duration-toast-out: 0ms;
+		--motion-duration-press: 0ms;
+	}
+
+	.sivir-press:active,
+	.sivir-menu-item:active {
+		scale: none;
+	}
+
+	.sivir-menu-item,
+	.sivir-tooltip {
+		transition: none;
+	}
+}

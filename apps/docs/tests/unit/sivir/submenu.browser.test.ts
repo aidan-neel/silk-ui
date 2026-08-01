@@ -57,6 +57,18 @@ describe('DropdownMenu submenu cone', () => {
 		await expect.element(page.getByTestId('dd-twitter')).toBeInTheDocument();
 	});
 
+	it('closes an open sibling submenu before opening another', async () => {
+		render(DropdownMenuSubFixture, {});
+		await flush();
+		await openDropdown();
+		await hover('dd-share');
+		await expect.element(page.getByTestId('dd-social')).toBeInTheDocument();
+
+		await hover('dd-more');
+		await expect.element(page.getByTestId('dd-social')).not.toBeInTheDocument();
+		await expect.element(page.getByTestId('dd-more-item')).toBeInTheDocument();
+	});
+
 	it('Escape peels one level at a time from the tip of the cone', async () => {
 		render(DropdownMenuSubFixture, {});
 		await flush();

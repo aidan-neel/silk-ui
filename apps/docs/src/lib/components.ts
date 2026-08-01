@@ -20,6 +20,7 @@ export const components = [
 	'copy-button',
 	'dropdown-menu',
 	'fullscreen-nav',
+	'gauge',
 	'hover-card',
 	'input',
 	'label',

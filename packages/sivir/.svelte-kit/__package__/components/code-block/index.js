@@ -1,0 +1,10 @@
+import Root from './code-block.svelte';
+import Header from './code-block-header.svelte';
+import List from './code-block-list.svelte';
+import Trigger from './code-block-trigger.svelte';
+import Actions from './code-block-actions.svelte';
+import Copy from './code-block-copy.svelte';
+import Content from './code-block-content.svelte';
+export { Root, Header, List, Trigger, Actions, Copy, Content };
+export { default as CodeBlock } from './code-block.svelte';
+export default Root;

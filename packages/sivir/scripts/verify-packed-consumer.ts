@@ -111,7 +111,7 @@ async function writeConsumer(cwd: string, tarball: string) {
 	await writeFile(
 		path.join(cwd, 'src/routes/+page.svelte'),
 		`<script lang="ts">
-	import { Button, Input, Modal, Select, Toaster } from '@sivir-ui/svelte';
+	import { Button, CodeBlock, Input, Modal, Select, Toaster } from '@sivir-ui/svelte';
 	let selected = $state('alpha');
 </script>
 
@@ -120,6 +120,7 @@ async function writeConsumer(cwd: string, tarball: string) {
 <main>
 	<h1>Verified consumer</h1>
 	<Button>Primary action</Button>
+	<CodeBlock code="const value = 1;" lang="ts" />
 	<Input label="Email" type="email" />
 	<Modal.Root>
 		<Modal.Trigger>Open dialog</Modal.Trigger>

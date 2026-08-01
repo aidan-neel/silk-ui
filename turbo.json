@@ -22,7 +22,7 @@
 			]
 		},
 		"check": {
-			"dependsOn": ["^check"]
+			"dependsOn": ["^check", "^build"]
 		},
 		"generate": {
 			"inputs": ["prisma/schema.prisma", "prisma.config.ts"],

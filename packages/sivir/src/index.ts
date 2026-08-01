@@ -20,6 +20,7 @@ export { Button } from './components/button';
 export { Checkbox } from './components/checkbox';
 export { CodeBlock } from './components/code-block';
 export { CopyButton } from './components/copy-button';
+export { Gauge } from './components/gauge';
 export { Input } from './components/input';
 export { Label } from './components/label';
 export { Markdown } from './components/markdown';

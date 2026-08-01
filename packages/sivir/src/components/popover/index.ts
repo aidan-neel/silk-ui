@@ -48,6 +48,8 @@ export type PopoverTriggerProps = {
 	/** Forwarded to Button: render with `class` alone, skipping variant/size. */
 	unstyled?: boolean;
 	onclick?: () => void;
+	/** Called immediately before this trigger opens its popover. */
+	onopen?: () => void;
 	style?: string;
 } & Pick<
 	HTMLButtonAttributes,

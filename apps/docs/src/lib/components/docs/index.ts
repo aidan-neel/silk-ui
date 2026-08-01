@@ -6,6 +6,7 @@ import APIReference from './api-reference.svelte';
 import BreadcrumbNav from './breadcrumb-nav.svelte';
 import Steps from './steps.svelte';
 import InstallCommand from './install-command.svelte';
+import Anatomy from './anatomy.svelte';
 
 export {
 	ComponentPreview,
@@ -15,5 +16,6 @@ export {
 	APIReference,
 	BreadcrumbNav,
 	Steps,
-	InstallCommand
+	InstallCommand,
+	Anatomy
 };

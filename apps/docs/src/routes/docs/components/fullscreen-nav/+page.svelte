@@ -79,40 +79,6 @@
 		/>
 	</section>
 
-	<section id="anatomy" class="scroll-mt-20 flex flex-col gap-4">
-		<h2
-			class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-		>
-			Anatomy
-		</h2>
-		<dl class="grid gap-4 text-sm sm:grid-cols-2">
-			<div class="flex flex-col gap-1">
-				<dt class="font-medium text-foreground">Root</dt>
-				<dd class="m-0 text-foreground-muted">
-					Owns the bindable <code class="font-mono text-foreground">open</code> state.
-				</dd>
-			</div>
-			<div class="flex flex-col gap-1">
-				<dt class="font-medium text-foreground">Trigger</dt>
-				<dd class="m-0 text-foreground-muted">
-					Renders a hamburger button by default and returns focus when the menu closes.
-				</dd>
-			</div>
-			<div class="flex flex-col gap-1">
-				<dt class="font-medium text-foreground">Content</dt>
-				<dd class="m-0 text-foreground-muted">
-					Portals a labelled, full-viewport dialog to the document body.
-				</dd>
-			</div>
-			<div class="flex flex-col gap-1">
-				<dt class="font-medium text-foreground">Group and Link</dt>
-				<dd class="m-0 text-foreground-muted">
-					Use a heading to organize links. Links dismiss the menu after navigation.
-				</dd>
-			</div>
-		</dl>
-	</section>
-
 	<section id="behavior" class="scroll-mt-20 flex flex-col gap-3">
 		<h2
 			class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
