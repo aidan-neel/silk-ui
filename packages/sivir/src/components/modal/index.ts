@@ -28,6 +28,7 @@ export type ModalDescriptionProps = DefaultProps;
 
 export type ModalContentProps = {
     allowClickOutside?: boolean;
+    allowEscape?: boolean;
     role?: 'dialog' | 'alertdialog';
     contentClass?: string;
     /** Optional explicit max-width class. Overrides the selected size preset. */

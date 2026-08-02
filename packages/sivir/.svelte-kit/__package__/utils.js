@@ -486,6 +486,12 @@ export function travelingHighlight(node, options = {}) {
             schedule(item);
         }
     }
+    function onPointerOver(event) {
+        const item = usableItem(event.target);
+        if (item && item !== current) {
+            schedule(item);
+        }
+    }
     function onPointerLeave() {
         schedule(restingTarget());
     }
@@ -517,6 +523,7 @@ export function travelingHighlight(node, options = {}) {
         ]
     });
     node.addEventListener('pointermove', onPointerMove);
+    node.addEventListener('pointerover', onPointerOver);
     node.addEventListener('pointerleave', onPointerLeave);
     node.addEventListener('focusin', onFocusIn);
     node.addEventListener('focusout', onFocusOut);
@@ -528,6 +535,7 @@ export function travelingHighlight(node, options = {}) {
             resizeObserver.disconnect();
             mutationObserver.disconnect();
             node.removeEventListener('pointermove', onPointerMove);
+            node.removeEventListener('pointerover', onPointerOver);
             node.removeEventListener('pointerleave', onPointerLeave);
             node.removeEventListener('focusin', onFocusIn);
             node.removeEventListener('focusout', onFocusOut);

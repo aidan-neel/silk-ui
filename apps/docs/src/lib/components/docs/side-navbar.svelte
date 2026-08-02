@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
     import { components, sanitizeComponent } from '$lib/components';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import { travelingHighlight } from '@sivir-ui/svelte/utils';
     import BookOpen from '@lucide/svelte/icons/book-open';
     import Download from '@lucide/svelte/icons/download';
     import Palette from '@lucide/svelte/icons/palette';
@@ -24,9 +25,10 @@
 </script>
 
 <aside
+    use:travelingHighlight
     class={`${classProp} sivir-docs-sidebar hide-scrollbar-all flex flex-col gap-5 overflow-y-auto pb-8 pr-4`}
 >
-    <section class="flex flex-col gap-1.5">
+    <section class="relative z-10 flex flex-col gap-1.5">
         <h3
             class="px-2 text-[12px] text-foreground-muted [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
         >
@@ -36,13 +38,16 @@
             {#each gettingStartedItems as item (item.href)}
                 {@const active = isActive(item.href)}
                 <Button
-                    variant="ghost"
+                    variant="quiet"
                     href={item.href}
                     onclick={onNavigate}
-                    class={`h-8 w-fit justify-start gap-2 rounded-lg px-3 text-left text-sm transition-[background-color,color] ${
+                    data-collection-item
+                    data-collection-active={active}
+                    aria-current={active ? 'page' : undefined}
+                    class={`relative z-10 h-8 w-fit justify-start gap-2 rounded-lg px-3 text-left text-sm ${
                         active
-                            ? 'bg-secondary/85 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
-                            : 'hover:bg-secondary hover:text-foreground'
+                            ? '[font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
+                            : 'hover:text-foreground'
                     }`}
                 >
                     <item.icon size={14} />
@@ -52,7 +57,7 @@
         </div>
     </section>
 
-    <section class="flex flex-col gap-1.5">
+    <section class="relative z-10 flex flex-col gap-1.5">
         <div class="flex items-center justify-between px-2">
             <h3
                 class="text-[12px] text-foreground-muted [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
@@ -65,13 +70,16 @@
             {#each components as component (component)}
                 {@const active = pageName === `/docs/components/${component}`}
                 <Button
-                    variant="ghost"
+                    variant="quiet"
                     href={`/docs/components/${component}`}
                     onclick={onNavigate}
-                    class={`h-8.5 w-fit justify-start rounded-lg px-3 text-left text-sm transition-[background-color,color] ${
+                    data-collection-item
+                    data-collection-active={active}
+                    aria-current={active ? 'page' : undefined}
+                    class={`relative z-10 h-8.5 w-fit justify-start rounded-lg px-3 text-left text-sm ${
                         active
-                            ? 'bg-secondary/85 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
-                            : 'hover:bg-secondary hover:text-foreground'
+                            ? '[font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]'
+                            : 'hover:text-foreground'
                     }`}
                 >
                     {sanitizeComponent(component)}
@@ -102,5 +110,8 @@
     .sivir-docs-sidebar:hover::-webkit-scrollbar-thumb {
         background: color-mix(in srgb, var(--color-foreground) 26%, transparent);
         background-clip: padding-box;
+    }
+    :global(.sivir-docs-sidebar > .sivir-item-highlight) {
+        background-color: color-mix(in srgb, var(--color-secondary) 70%, transparent);
     }
 </style>

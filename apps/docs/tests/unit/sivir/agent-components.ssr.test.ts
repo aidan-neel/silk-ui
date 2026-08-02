@@ -7,6 +7,7 @@ import AttachmentFixture from '../../fixtures/AttachmentFixture.svelte';
 import ConversationFixture from '../../fixtures/ConversationFixture.svelte';
 import MessageFixture from '../../fixtures/MessageFixture.svelte';
 import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
+import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 
 function renderBody(component: unknown, props: Record<string, unknown> = {}) {
     return render(component as Component<Record<string, unknown>>, { props }).body;
@@ -34,6 +35,13 @@ describe('Sivir agent components SSR', () => {
         expect(() => renderBody(PromptComposerFixture, { value: 'Server prompt' })).not.toThrow();
         expect(renderBody(PromptComposerFixture, { value: 'Server prompt' })).toContain(
             'Server prompt'
+        );
+    });
+
+    it('renders Question without browser globals', () => {
+        expect(() => renderBody(QuestionFixture, { value: 'safe' })).not.toThrow();
+        expect(renderBody(QuestionFixture, { value: 'safe' })).toContain(
+            'How should the release be prepared?'
         );
     });
 

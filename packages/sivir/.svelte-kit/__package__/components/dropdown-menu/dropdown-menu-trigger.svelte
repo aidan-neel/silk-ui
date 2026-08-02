@@ -12,6 +12,6 @@
     let { children, class: className, variant, ...rest }: Props = $props();
 </script>
 
-<Popover.Trigger class={className} {variant} {...rest}>
+<Popover.Trigger aria-haspopup="menu" class={className} {variant} {...rest}>
     {@render children?.()}
 </Popover.Trigger>

@@ -1,6 +1,8 @@
 import { type DefaultProps } from '@sivir-ui/svelte/utils';
 type Props = {
     allowClickOutside?: boolean;
+    allowEscape?: boolean;
+    ariaBusy?: boolean;
     /** Max-width preset. Defaults to `md`. */
     size?: 'sm' | 'md' | 'lg' | 'xl';
     /** Show the top-right close (X) button. Defaults to `true`. */

@@ -36,7 +36,15 @@ describe('Button -- rendering and DOM element selection', () => {
 });
 
 describe('Button -- variant prop wiring', () => {
-    const variants = ['primary', 'secondary', 'ghost', 'outline', 'destructive', 'panel'] as const;
+    const variants = [
+        'primary',
+        'secondary',
+        'ghost',
+        'quiet',
+        'outline',
+        'destructive',
+        'panel'
+    ] as const;
 
     for (const variant of variants) {
         it(`renders the "${variant}" variant without throwing`, () => {

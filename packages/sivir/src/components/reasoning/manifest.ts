@@ -2,9 +2,10 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'reasoning',
-    version: '1.0.0',
+    version: '1.2.0',
     visibility: 'public',
-    description: 'Expandable model reasoning status and trace for AI responses.',
+    description:
+        'Expandable model reasoning status and trace for AI responses. Its trigger uses the Button quiet variant for a low-emphasis, no-hover-fill control.',
     files: [
         'components/reasoning/reasoning.svelte',
         'components/reasoning/reasoning-trigger.svelte',
@@ -13,8 +14,8 @@ export const manifest: Manifest = {
         'components/reasoning/index.ts',
         'components/reasoning/manifest.ts'
     ],
-    components: [],
-    shared: ['utils.cn', 'utils.createContext', 'utils.pressable', 'transition'],
+    components: ['button'],
+    shared: ['utils.cn', 'utils.createContext', 'transition'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

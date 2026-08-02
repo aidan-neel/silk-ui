@@ -6,6 +6,8 @@
     import HeroSrc from './examples/hero.svelte?raw';
     import ToolStates from './examples/tool-states.svelte';
     import ToolStatesSrc from './examples/tool-states.svelte?raw';
+    import Quiet from './examples/quiet.svelte';
+    import QuietSrc from './examples/quiet.svelte?raw';
 
     const TITLE = 'Tool';
     const SLUG = 'tool';
@@ -61,7 +63,7 @@
             Use <code>Item</code> to list the commands, searches, and reads completed within a task.
         </p>
         <CodeBlock
-            code={`import * as Tool from '@sivir-ui/svelte/components/tool';\n\n<Tool.Root name="1 file, 1 search, and 1 command" state="complete" duration="6s">\n  <Tool.Item name="Bash" detail="pnpm lint" />\n  <Tool.Item name="Grep" detail="InputBar" kind="search" />\n  <Tool.Item name="Read" detail="/lib/input-bar.tsx" kind="read" />\n</Tool.Root>`}
+            code={`import * as Tool from '@sivir-ui/svelte/components/tool';\n\n<Tool.Root name="1 file, 1 search, and 1 command" state="complete" duration="6s" variant="quiet">\n  <Tool.Item name="Bash" detail="pnpm lint" />\n  <Tool.Item name="Grep" detail="InputBar" kind="search" />\n  <Tool.Item name="Read" detail="/lib/input-bar.tsx" kind="read" />\n</Tool.Root>`}
             lang="svelte"
             copy="overlay"
         />
@@ -90,6 +92,18 @@
                 Tool states in a support flow
             </h3>
             <ComponentPreview code={ToolStatesSrc}><ToolStates /></ComponentPreview>
+        </div>
+        <div id="quiet" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Quiet
+            </h3>
+            <p class="text-sm text-foreground-muted">
+                Use <code>variant="quiet"</code> when tool details should stay visually secondary to the
+                response.
+            </p>
+            <ComponentPreview code={QuietSrc}><Quiet /></ComponentPreview>
         </div>
     </section>
 </div>

@@ -29,6 +29,7 @@ describe('Select -- open and close', () => {
         await expect.element(page.getByTestId('opt-apple')).toBeInTheDocument();
         await expect.element(page.getByTestId('opt-banana')).toBeInTheDocument();
         await expect.element(page.getByTestId('opt-cherry')).toBeInTheDocument();
+        await expect.element(page.getByText('Fruits')).toBeInTheDocument();
         expect(document.querySelectorAll('[role="listbox"] .sivir-item-highlight')).toHaveLength(1);
     });
 

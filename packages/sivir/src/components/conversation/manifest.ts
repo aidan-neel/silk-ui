@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'conversation',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Auto-following conversation transcript with empty and jump-to-latest states.',
     files: [

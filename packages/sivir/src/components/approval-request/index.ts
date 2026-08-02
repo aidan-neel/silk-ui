@@ -13,13 +13,17 @@ import Details from './approval-request-details.svelte';
 import Footer from './approval-request-footer.svelte';
 import Cancel from './approval-request-cancel.svelte';
 import Confirm from './approval-request-confirm.svelte';
+import Error from './approval-request-error.svelte';
 
 export type ApprovalRisk = 'low' | 'medium' | 'high';
+export type ApprovalRequestActionName = 'cancel' | 'confirm';
 
 export type ApprovalRequestRootProps = {
-    /** Controls modal visibility. Cancel and Confirm close it automatically. */
+    /** Controls modal visibility. Successful actions close it automatically. */
     open?: boolean;
     risk?: ApprovalRisk;
+    pending?: ApprovalRequestActionName | null;
+    error?: string | null;
     children?: Snippet;
 };
 
@@ -35,10 +39,12 @@ export type ApprovalRequestDescriptionProps = DefaultProps;
 export type ApprovalRequestDetailsProps = ApprovalRequestHeaderProps;
 export type ApprovalRequestFooterProps = ApprovalRequestHeaderProps;
 export type ApprovalRequestActionProps = {
-    onclick?: () => void;
+    onclick?: (event: MouseEvent) => unknown | Promise<unknown>;
+    pendingLabel?: string;
+    failureMessage?: string;
     children?: Snippet;
 } & DefaultProps &
-    Omit<HTMLButtonAttributes, 'children' | 'onclick'>;
+    Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'status' | 'loading' | 'loadingLabel'>;
 
 export {
     Root,
@@ -52,5 +58,6 @@ export {
     Details,
     Footer,
     Cancel,
-    Confirm
+    Confirm,
+    Error
 };

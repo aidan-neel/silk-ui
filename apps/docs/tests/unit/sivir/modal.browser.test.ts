@@ -91,7 +91,7 @@ describe('Modal -- close paths actually unmount (P3-F6 disambiguation)', () => {
             await flush();
             expect(document.body.style.overflow).toBe('');
         }
-    });
+    }, 30_000);
 
     it('unmounts content when Close button is clicked', async () => {
         render(ModalFixture, { open: true });

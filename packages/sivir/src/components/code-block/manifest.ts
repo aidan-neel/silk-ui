@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'code-block',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description:
         'Syntax-highlighted code block with a multi-language tab switcher, built-in copy button, and an actions slot. Highlighting via highlight.js.',

@@ -10,6 +10,8 @@
     import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
     import VariantSegmented from './examples/variant-segmented.svelte';
     import VariantSegmentedSrc from './examples/variant-segmented.svelte?raw';
+    import Vertical from './examples/vertical.svelte';
+    import VerticalSrc from './examples/vertical.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add tabs';
 </script>
@@ -18,7 +20,7 @@
     <title>Sivir · Tabs</title>
     <meta
         name="description"
-        content="Switch between mutually-exclusive views with a sliding indicator."
+        content="Switch between mutually-exclusive views with horizontal or vertical tabs and a sliding indicator."
     />
 </svelte:head>
 
@@ -35,7 +37,8 @@
             <p
                 class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
             >
-                A switcher for views that share a context. Comes in three variants.
+                A horizontal or vertical switcher for views that share a context. Comes in three
+                variants.
             </p>
         </div>
     </header>
@@ -80,7 +83,9 @@
             >
                 Examples
             </h2>
-            <p class="mt-2 text-sm text-foreground-muted">Explore Tabs in different variants.</p>
+            <p class="mt-2 text-sm text-foreground-muted">
+                Explore Tabs in different variants and orientations.
+            </p>
         </div>
 
         <div id="variant-default" class="scroll-mt-20 flex flex-col gap-3">
@@ -113,6 +118,23 @@
             </h3>
             <ComponentPreview code={VariantSegmentedSrc}>
                 <VariantSegmented />
+            </ComponentPreview>
+        </div>
+
+        <div id="orientation-vertical" class="scroll-mt-20 flex flex-col gap-3">
+            <div>
+                <h3
+                    class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+                >
+                    Vertical
+                </h3>
+                <p class="mt-2 text-sm text-foreground-muted">
+                    Set <code>orientation="vertical"</code> for a side-by-side layout. Use Up and Down
+                    Arrow to move between tabs; Home and End jump to the first and last tab.
+                </p>
+            </div>
+            <ComponentPreview code={VerticalSrc}>
+                <Vertical />
             </ComponentPreview>
         </div>
     </section>

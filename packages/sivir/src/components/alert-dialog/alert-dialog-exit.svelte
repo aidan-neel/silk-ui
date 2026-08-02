@@ -6,11 +6,12 @@
     import { getModalContext } from '../modal/context.svelte';
 
     type Props = {
-        onclick?: () => void;
+        closeOnClick?: boolean;
+        onclick?: (event: MouseEvent) => void;
     } & DefaultProps &
         ButtonProps;
 
-    let { class: className, children, onclick, ...rest }: Props = $props();
+    let { class: className, children, onclick, closeOnClick = true, ...rest }: Props = $props();
 
     const modal = getModalContext();
     let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>(undefined);
@@ -19,6 +20,13 @@
     const isDark = useIsDark();
     const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
 
+    function handleClick(event: MouseEvent) {
+        if (closeOnClick) {
+            modal.state.open = false;
+        }
+        onclick?.(event);
+    }
+
     onMount(() => {
         element?.focus();
     });
@@ -26,10 +34,7 @@
 
 <Button
     bind:element
-    onclick={() => {
-        modal.state.open = false;
-        onclick?.();
-    }}
+    onclick={handleClick}
     variant={cancelVariant}
     {...rest}
     class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}

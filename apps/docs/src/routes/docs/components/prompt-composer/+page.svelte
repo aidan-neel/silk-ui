@@ -4,8 +4,12 @@
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
-    import StatusVariants from './examples/status-variants.svelte';
-    import StatusVariantsSrc from './examples/status-variants.svelte?raw';
+    import Error from './examples/state-error.svelte';
+    import ErrorSrc from './examples/state-error.svelte?raw';
+    import Idle from './examples/idle.svelte';
+    import IdleSrc from './examples/idle.svelte?raw';
+    import Submitting from './examples/submitting.svelte';
+    import SubmittingSrc from './examples/submitting.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add prompt-composer';
 </script>
@@ -100,13 +104,31 @@ async function sendPrompt(prompt: string) {
             </p>
         </div>
 
-        <div id="status-variants" class="scroll-mt-20 flex flex-col gap-3">
+        <div id="idle" class="scroll-mt-20 flex flex-col gap-3">
             <h3
                 class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
             >
-                Status variants
+                Idle
             </h3>
-            <ComponentPreview code={StatusVariantsSrc}><StatusVariants /></ComponentPreview>
+            <ComponentPreview code={IdleSrc}><Idle /></ComponentPreview>
+        </div>
+
+        <div id="submitting" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Submitting
+            </h3>
+            <ComponentPreview code={SubmittingSrc}><Submitting /></ComponentPreview>
+        </div>
+
+        <div id="error" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Error
+            </h3>
+            <ComponentPreview code={ErrorSrc} refreshable><Error /></ComponentPreview>
         </div>
     </section>
 </div>

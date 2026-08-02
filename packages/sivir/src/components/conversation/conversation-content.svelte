@@ -8,6 +8,7 @@
     let {
         children,
         class: className,
+        transcriptClass,
         'aria-label': ariaLabel = 'Conversation',
         tabindex,
         onscroll,
@@ -140,7 +141,10 @@
 >
     <div
         data-ui="conversation-transcript"
-        class="mx-auto flex min-h-full w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6"
+        class={cn(
+            transcriptClass,
+            'mx-auto flex min-h-full w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6'
+        )}
     >
         {@render children?.()}
     </div>

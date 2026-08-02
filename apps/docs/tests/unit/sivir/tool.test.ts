@@ -20,4 +20,15 @@ describe('Tool', () => {
         expect(container.querySelector('[data-ui="spinner"]')).not.toBeInTheDocument();
         expect(container.querySelector('[data-ui="tool"]')).toHaveAttribute('aria-busy', 'false');
     });
+
+    it('uses the quiet variant for low-emphasis transcript details', () => {
+        const { container } = render(ToolFixture, {
+            props: { state: 'complete', variant: 'quiet' }
+        });
+        expect(container.querySelector('[data-ui="tool"]')).toHaveAttribute(
+            'data-variant',
+            'quiet'
+        );
+        expect(container.querySelector('button')).toHaveClass('text-foreground', 'px-0');
+    });
 });

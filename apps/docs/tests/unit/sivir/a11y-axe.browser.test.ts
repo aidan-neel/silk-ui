@@ -26,6 +26,7 @@ import TabsFixture from '../../fixtures/TabsFixture.svelte';
 import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
 import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
 import CommandFixture from '../../fixtures/CommandFixture.svelte';
+import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 
 /*
  * A11y tier -- strategy Sec.14.1.
@@ -188,6 +189,11 @@ describe('A11y -- floating components (axe, open state)', () => {
 
         const { violationsFiltered } = await runAxe();
         expectNoViolations('combobox (open)', violationsFiltered);
+
+        await page.getByPlaceholder('Search fruits').fill('cherry');
+        await flush();
+        const filtered = await runAxe();
+        expectNoViolations('combobox (filtered)', filtered.violationsFiltered);
     });
 });
 
@@ -211,6 +217,27 @@ describe('A11y -- navigational compound components (axe)', () => {
         await flush();
         const { violationsFiltered } = await runAxe();
         expectNoViolations('radio-group', violationsFiltered);
+    });
+
+    it('question -- no violations', async () => {
+        render(QuestionFixture, { value: 'safe' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('question', violationsFiltered);
+    });
+
+    it('multiple-answer question -- no violations', async () => {
+        render(QuestionFixture, { type: 'multiple', value: ['safe'] });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('multiple-answer question', violationsFiltered);
+    });
+
+    it('free-text question -- no violations', async () => {
+        render(QuestionFixture, { type: 'text', value: 'Use preview' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('free-text question', violationsFiltered);
     });
 });
 

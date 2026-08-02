@@ -24,6 +24,8 @@ export type OverlayOptions = {
     onClose: () => void;
     /** Reactive getter -- when false, click-outside does not call onClose. */
     allowClickOutside?: () => boolean;
+    /** Reactive getter -- when false, Escape does not call onClose. */
+    allowEscape?: () => boolean;
     /** Element that receives focus again after the overlay closes. */
     returnFocus?: () => HTMLElement | undefined;
     /** Lock body scroll while open. Defaults to true. */

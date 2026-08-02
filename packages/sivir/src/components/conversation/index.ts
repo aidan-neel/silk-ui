@@ -15,7 +15,10 @@ export type ConversationRootProps = {
 } & DefaultProps &
     Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-export type ConversationContentProps = DefaultProps &
+export type ConversationContentProps = {
+    /** Classes applied to the inner transcript stack rather than the scroll viewport. */
+    transcriptClass?: string;
+} & DefaultProps &
     Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role' | 'aria-live' | 'aria-relevant'>;
 
 export type ConversationEmptyProps = {

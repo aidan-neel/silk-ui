@@ -6,6 +6,8 @@ export type PromptComposerContext = {
     readonly status: PromptComposerStatus;
     readonly disabled: boolean;
     readonly allowEmpty: boolean;
+    readonly generating: boolean | undefined;
+    readonly pending: boolean;
     submit: () => void;
     stop: () => void;
 };

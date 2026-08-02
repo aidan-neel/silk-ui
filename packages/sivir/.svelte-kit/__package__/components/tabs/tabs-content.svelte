@@ -28,7 +28,11 @@
         data-state={active ? 'active' : 'inactive'}
         hidden={!active}
         tabindex="0"
-        class={cn(className, 'focus-visible:outline-none')}
+        class={cn(
+            className,
+            tabsState.orientation === 'vertical' && 'min-w-0 flex-1',
+            'focus-visible:outline-none'
+        )}
         {...rest}
     >
         {@render children?.()}

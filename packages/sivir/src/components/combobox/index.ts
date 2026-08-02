@@ -19,16 +19,18 @@ export type ComboboxState = {
     items: Set<ComboboxItem>;
     results: Set<ComboboxItem>;
     searchContent: string;
+    searchPlacement: 'trigger' | 'menu';
+    threshold: number;
     activeValue?: string;
     selected?: ComboboxItem;
 };
 
-export type ComboboxRootProps = {
-    placeholder?: string;
-} & DefaultProps;
+export type ComboboxRootProps = DefaultProps;
 
 export type ComboboxTriggerProps = {
     class?: string;
+    placeholder?: string;
+    searchPlacement?: 'trigger' | 'menu';
     threshold?: number;
 } & DefaultProps;
 

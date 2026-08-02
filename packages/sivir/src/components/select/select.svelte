@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import type { Snippet } from 'svelte';
     import { setSelectContext } from './context.svelte';
 
@@ -20,7 +20,6 @@
     const values = new Set<string>();
 
     const selectState = $state({
-        open: false,
         value: value ?? '',
         selectedLabel: ''
     });
@@ -49,6 +48,6 @@
     });
 </script>
 
-<Popover.Root bind:open={selectState.open} state_key={key}>
+<DropdownMenu.Root>
     {@render children?.()}
-</Popover.Root>
+</DropdownMenu.Root>

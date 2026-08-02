@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type {
     HTMLAttributes,
     HTMLButtonAttributes,
@@ -16,6 +17,8 @@ export type PromptComposerStatus = 'idle' | 'submitting' | 'error';
 export type PromptComposerProps = {
     value?: string;
     status?: PromptComposerStatus;
+    /** Whether a response is being generated independently of submission state. */
+    generating?: boolean;
     disabled?: boolean;
     allowEmpty?: boolean;
     onSubmit: (value: string, event: SubmitEvent) => void | Promise<void>;
@@ -45,10 +48,21 @@ export type PromptComposerActionsProps = {
 
 export type PromptComposerSubmitProps = {
     label?: string;
+    queueLabel?: string;
     stopLabel?: string;
+    children?: Snippet<[PromptComposerSubmitState]>;
     element?: HTMLButtonElement | HTMLAnchorElement;
     onclick?: (event: MouseEvent) => void;
     class?: string;
-} & Omit<HTMLButtonAttributes, 'children' | 'class' | 'type' | 'onclick'>;
+} & Omit<DefaultProps, 'children'> &
+    Omit<HTMLButtonAttributes, 'children' | 'class' | 'type' | 'onclick'>;
+
+export type PromptComposerSubmitAction = 'send' | 'queue' | 'stop' | 'pending';
+
+export type PromptComposerSubmitState = Readonly<{
+    action: PromptComposerSubmitAction;
+    generating: boolean;
+    empty: boolean;
+}>;
 
 export { Root, Input, Toolbar, Actions, Submit };

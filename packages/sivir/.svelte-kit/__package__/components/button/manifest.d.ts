@@ -32,5 +32,8 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *   3.4.0:
  *           - Give success and error their own tonal surfaces so semantic text
  *             never clashes with the original Button variant background.
+ *   3.5.0:
+ *           - Add the `quiet` variant for low-emphasis foreground actions without
+ *             a background fill or underlined hover treatment.
  */
 export declare const manifest: Manifest;

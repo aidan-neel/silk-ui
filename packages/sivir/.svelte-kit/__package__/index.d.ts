@@ -59,6 +59,7 @@ export * as Message from './components/message';
 export * as Modal from './components/modal';
 export * as Popover from './components/popover';
 export * as PromptComposer from './components/prompt-composer';
+export * as Question from './components/question';
 export * as RadioGroup from './components/radio-group';
 export * as Reasoning from './components/reasoning';
 export * as Select from './components/select';

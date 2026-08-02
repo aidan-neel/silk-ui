@@ -81,6 +81,18 @@ describe('docs release contracts', () => {
         }
     });
 
+    it('derives LLM references from current component manifests, APIs, and examples', () => {
+        const buttonReference = componentMarkdown('button');
+        const toolReference = componentMarkdown('tool');
+        const reasoningReference = componentMarkdown('reasoning');
+
+        expect(buttonReference).toContain('Quiet matches ghost text color without a hover fill.');
+        expect(toolReference).toContain('variant="quiet"');
+        expect(toolReference).toContain('### Quiet');
+        expect(reasoningReference).toContain('Button quiet variant');
+        expect(buttonReference).toContain('Changes to those source files are reflected here');
+    });
+
     it('keeps getting-started docs free of Theme Studio and wrong CLI invocations', () => {
         const pages = [
             'apps/docs/src/routes/docs/introduction/+page.svelte',

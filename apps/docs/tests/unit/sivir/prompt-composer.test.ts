@@ -58,6 +58,19 @@ describe('PromptComposer', () => {
         expect(screen.getByTestId('stop-count')).toHaveTextContent('1');
     });
 
+    it('shows the error alert above the composer', () => {
+        render(PromptComposerFixture, { props: { status: 'error' } });
+
+        const alert = screen.getByRole('alert');
+        const composer = alert.parentElement?.parentElement;
+        const form = composer?.querySelector('form');
+
+        expect(alert).toHaveTextContent('Message could not be sent.');
+        expect(alert).not.toHaveClass('blur-[4px]');
+        expect(form).not.toBeNull();
+        expect(alert.compareDocumentPosition(form!)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+
     it('does not duplicate an unresolved async submission', async () => {
         render(PromptComposerFixture, { props: { value: 'Ship it', asyncSubmit: true } });
         const input = screen.getByRole('textbox', { name: 'Prompt' });

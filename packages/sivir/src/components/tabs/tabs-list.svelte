@@ -10,6 +10,7 @@
     type Rect = { left: number; top: number; width: number; height: number };
 
     const variant = $derived(tabsState.variant);
+    const vertical = $derived(tabsState.orientation === 'vertical');
     /**
      * `default` and `ghost` get the animated hover-highlight pill. The
      * container-style `segmented` variant does not -- its pill marks the active tab.
@@ -21,6 +22,7 @@
     let hover = $state<Rect | null>(null);
     let hovering = $state(false);
     let ready = $state(false);
+    let hoverTarget: HTMLElement | undefined;
 
     /**
      * Ghost uses a single fill that rests on the selected tab and slides to
@@ -46,6 +48,13 @@
         indicator = active ? rectOf(active) : null;
     }
 
+    function measureHover() {
+        if (!listEl || !hoverTarget || !listEl.contains(hoverTarget)) {
+            return;
+        }
+        hover = rectOf(hoverTarget);
+    }
+
     function handleMouseOver(event: Event) {
         if (!showHover || !listEl) {
             return;
@@ -54,19 +63,23 @@
         if (!target || target.hasAttribute('disabled') || !listEl.contains(target)) {
             return;
         }
+        hoverTarget = target;
         hover = rectOf(target);
         hovering = true;
     }
 
     function handleMouseLeave() {
+        hoverTarget = undefined;
         hovering = false;
     }
 
     $effect(() => {
-        const _ = tabsState.value;
+        const _value = tabsState.value;
+        const _orientation = tabsState.orientation;
         untrack(() => {
             queueMicrotask(() => {
                 measureIndicator();
+                measureHover();
                 ready = true;
             });
         });
@@ -76,7 +89,10 @@
         if (!listEl) {
             return;
         }
-        const ro = new ResizeObserver(() => measureIndicator());
+        const ro = new ResizeObserver(() => {
+            measureIndicator();
+            measureHover();
+        });
         ro.observe(listEl);
         const triggers = listEl.querySelectorAll<HTMLElement>('[role="tab"]');
         triggers.forEach((el) => ro.observe(el));
@@ -151,10 +167,11 @@
     data-variant={variant}
     class={cn(
         className,
-        'relative inline-flex items-center',
+        'relative inline-flex',
+        vertical ? 'flex-col items-stretch' : 'items-center',
         variant === 'segmented' && 'rounded-[var(--radius-xl)] bg-secondary p-[3px]',
         variant === 'ghost' && 'gap-1',
-        variant === 'default' && 'gap-1 pb-1'
+        variant === 'default' && (vertical ? 'gap-1 pe-1' : 'gap-1 pb-1')
     )}
     onkeydown={handleKeydown}
     onmouseover={handleMouseOver}
@@ -194,13 +211,20 @@
     <!-- Active indicator -->
     {#if indicator}
         {#if variant === 'default'}
-            <!-- 2px underline anchored to the bottom of the list; the gap below the tabs
-			     is the list's bottom padding (pb-3 below), so it reads as a real underline -->
+            <!-- The active line sits beside the content: below horizontal tabs and at the
+			     inline-end edge of vertical tabs. -->
             <div
                 aria-hidden="true"
-                class="pointer-events-none absolute bottom-0 h-0.5 rounded-full bg-foreground transition-[left,width] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none"
-                style:left={`${indicator.left}px`}
-                style:width={`${indicator.width}px`}
+                class={cn(
+                    'pointer-events-none absolute rounded-full bg-foreground [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none',
+                    vertical
+                        ? 'end-0 w-0.5 transition-[top,height]'
+                        : 'bottom-0 h-0.5 transition-[left,width]'
+                )}
+                style:left={vertical ? undefined : `${indicator.left}px`}
+                style:top={vertical ? `${indicator.top}px` : undefined}
+                style:width={vertical ? undefined : `${indicator.width}px`}
+                style:height={vertical ? `${indicator.height}px` : undefined}
                 style:transition={ready ? undefined : 'none'}
             ></div>
         {:else if variant === 'segmented'}

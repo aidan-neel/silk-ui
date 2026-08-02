@@ -9,12 +9,18 @@
     import { getComboboxContext } from './context.svelte';
     import { getPopoverContext } from '../popover/context.svelte';
 
-    const { id, placeholder, state: comboboxState } = getComboboxContext();
+    const { id, state: comboboxState } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
 
-    type Props = Omit<PopoverTriggerProps, 'children'> & { threshold?: number };
+    type Props = Omit<PopoverTriggerProps, 'children'> & {
+        placeholder?: string;
+        searchPlacement?: 'trigger' | 'menu';
+        threshold?: number;
+    };
     let {
         class: className,
+        placeholder = 'Select…',
+        searchPlacement = 'trigger',
         threshold = 0.28,
         variant = 'outline',
         size = 'md',
@@ -27,6 +33,11 @@
 
     let triggerElement = $state<HTMLDivElement>();
     let inputElement = $state<HTMLInputElement>();
+
+    $effect(() => {
+        comboboxState.searchPlacement = searchPlacement;
+        comboboxState.threshold = threshold;
+    });
     const fuse = $derived(
         new Fuse(Array.from(comboboxState.items), {
             keys: ['value', 'label'],
@@ -44,7 +55,9 @@
         available.find((item) => item.value === comboboxState.activeValue)?.id
     );
     const displayValue = $derived(
-        comboboxState.open ? comboboxState.searchContent : (comboboxState.selected?.label ?? '')
+        searchPlacement === 'trigger' && comboboxState.open
+            ? comboboxState.searchContent
+            : (comboboxState.selected?.label ?? '')
     );
 
     onMount(() => {
@@ -52,6 +65,9 @@
     });
 
     function handleInput(event: Event) {
+        if (searchPlacement === 'menu') {
+            return;
+        }
         comboboxState.searchContent = (event.currentTarget as HTMLInputElement).value;
         comboboxState.results = new Set<ComboboxItem>(
             fuse.search(comboboxState.searchContent).map((result) => result.item)
@@ -111,6 +127,9 @@
         if (!comboboxState.open) {
             return;
         }
+        if (searchPlacement === 'menu') {
+            return;
+        }
         void tick().then(() => {
             inputElement?.focus({ preventScroll: true });
             inputElement?.select();
@@ -134,7 +153,7 @@
         type="text"
         role="combobox"
         value={displayValue}
-        readonly={!comboboxState.open}
+        readonly={searchPlacement === 'menu' || !comboboxState.open}
         {disabled}
         placeholder={comboboxState.open || !comboboxState.selected ? placeholder : undefined}
         autocomplete="off"
@@ -150,7 +169,7 @@
         onclick={open}
         oninput={handleInput}
         onkeydown={handleInputKeydown}
-        class="h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent px-[calc(var(--size-control-lg)/3)] pr-[var(--size-control-lg)] text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted"
+        class="h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted"
     />
     <ChevronDown
         size={18}

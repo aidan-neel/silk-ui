@@ -22,7 +22,11 @@ export function useOverlay(opts) {
                 opts.onClose();
             }
         });
-        const releaseEscape = pushEscapeLayer(() => opts.onClose());
+        const releaseEscape = pushEscapeLayer(() => {
+            if (opts.allowEscape?.() ?? true) {
+                opts.onClose();
+            }
+        });
         return () => {
             cleanupTrap?.();
             co.destroy();
