@@ -6,30 +6,30 @@ import Trigger from './accordion-trigger.svelte';
 import Content from './accordion-content.svelte';
 
 export type AccordionProps = {
-	type?: 'single' | 'multiple';
-	value?: string | string[];
-	collapsible?: boolean;
-	onValueChange?: (value: string | string[] | undefined) => void;
-	children?: Snippet;
+    type?: 'single' | 'multiple';
+    value?: string | string[];
+    collapsible?: boolean;
+    onValueChange?: (value: string | string[] | undefined) => void;
+    children?: Snippet;
 } & DefaultProps;
 
 export type AccordionItemProps = {
-	value: string;
-	disabled?: boolean;
-	children?: Snippet;
+    value: string;
+    disabled?: boolean;
+    children?: Snippet;
 } & DefaultProps;
 
 export type AccordionTriggerProps = {
-	children?: Snippet;
+    children?: Snippet;
 } & DefaultProps;
 
 export type AccordionContentProps = {
-	children?: Snippet;
+    children?: Snippet;
 } & DefaultProps;
 
 export type AccordionContext = {
-	isOpen: (value: string) => boolean;
-	toggle: (value: string) => void;
+    isOpen: (value: string) => boolean;
+    toggle: (value: string) => void;
 };
 
 export { Root, Item, Trigger, Content };

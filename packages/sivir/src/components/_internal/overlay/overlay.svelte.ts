@@ -1,9 +1,9 @@
 import {
-	clickOutside,
-	getFocusableElements,
-	lockBodyScroll,
-	pushEscapeLayer,
-	trapFocus
+    clickOutside,
+    getFocusableElements,
+    lockBodyScroll,
+    pushEscapeLayer,
+    trapFocus
 } from '@sivir-ui/svelte/utils';
 
 /**
@@ -24,49 +24,61 @@ import {
  * Modal and sheet auto-pull this; consumers cannot `npx sivir add overlay`.
  */
 export type OverlayOptions = {
-	/** Reactive getter for the open state. */
-	isOpen: () => boolean;
-	/** Reactive getter for the panel element to trap focus inside. */
-	panelEl: () => HTMLElement | undefined;
-	/** Fires when the user dismisses (Escape or click-outside). */
-	onClose: () => void;
-	/** Reactive getter -- when false, click-outside does not call onClose. */
-	allowClickOutside?: () => boolean;
-	/** Element that receives focus again after the overlay closes. */
-	returnFocus?: () => HTMLElement | undefined;
-	/** Lock body scroll while open. Defaults to true. */
-	lockScroll?: boolean;
+    /** Reactive getter for the open state. */
+    isOpen: () => boolean;
+    /** Reactive getter for the panel element to trap focus inside. */
+    panelEl: () => HTMLElement | undefined;
+    /** Fires when the user dismisses (Escape or click-outside). */
+    onClose: () => void;
+    /** Reactive getter -- when false, click-outside does not call onClose. */
+    allowClickOutside?: () => boolean;
+    /** Reactive getter -- when false, Escape does not call onClose. */
+    allowEscape?: () => boolean;
+    /** Element that receives focus again after the overlay closes. */
+    returnFocus?: () => HTMLElement | undefined;
+    /** Lock body scroll while open. Defaults to true. */
+    lockScroll?: boolean;
 };
 
 export function useOverlay(opts: OverlayOptions) {
-	$effect(() => {
-		if (!opts.isOpen()) return;
-		const panel = opts.panelEl();
-		if (!panel) return;
-		if (typeof document === 'undefined') return;
+    $effect(() => {
+        if (!opts.isOpen()) {
+            return;
+        }
+        const panel = opts.panelEl();
+        if (!panel) {
+            return;
+        }
+        if (typeof document === 'undefined') {
+            return;
+        }
 
-		const lockScroll = opts.lockScroll !== false;
+        const lockScroll = opts.lockScroll !== false;
 
-		const cleanupTrap = trapFocus(panel, {
-			initialFocus: getFocusableElements(panel)[0] ?? null,
-			returnFocus: opts.returnFocus?.()
-		});
+        const cleanupTrap = trapFocus(panel, {
+            initialFocus: getFocusableElements(panel)[0] ?? null,
+            returnFocus: opts.returnFocus?.()
+        });
 
-		const releaseScroll = lockScroll ? lockBodyScroll() : undefined;
+        const releaseScroll = lockScroll ? lockBodyScroll() : undefined;
 
-		const co = clickOutside(panel, () => {
-			if (opts.allowClickOutside?.() ?? true) {
-				opts.onClose();
-			}
-		});
+        const co = clickOutside(panel, () => {
+            if (opts.allowClickOutside?.() ?? true) {
+                opts.onClose();
+            }
+        });
 
-		const releaseEscape = pushEscapeLayer(() => opts.onClose());
+        const releaseEscape = pushEscapeLayer(() => {
+            if (opts.allowEscape?.() ?? true) {
+                opts.onClose();
+            }
+        });
 
-		return () => {
-			cleanupTrap?.();
-			co.destroy();
-			releaseEscape();
-			releaseScroll?.();
-		};
-	});
+        return () => {
+            cleanupTrap?.();
+            co.destroy();
+            releaseEscape();
+            releaseScroll?.();
+        };
+    });
 }

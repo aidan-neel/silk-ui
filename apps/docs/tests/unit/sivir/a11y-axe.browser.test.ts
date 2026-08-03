@@ -11,9 +11,9 @@ import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
 import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
 
 function textSnippet(text: string) {
-	return createRawSnippet(() => ({
-		render: () => `<span>${text}</span>`
-	}));
+    return createRawSnippet(() => ({
+        render: () => `<span>${text}</span>`
+    }));
 }
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';
@@ -26,6 +26,7 @@ import TabsFixture from '../../fixtures/TabsFixture.svelte';
 import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
 import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
 import CommandFixture from '../../fixtures/CommandFixture.svelte';
+import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 
 /*
  * A11y tier -- strategy Sec.14.1.
@@ -43,175 +44,201 @@ import CommandFixture from '../../fixtures/CommandFixture.svelte';
  */
 
 async function flush() {
-	await tick();
-	await tick();
-	await new Promise((r) => setTimeout(r, 30));
+    await tick();
+    await tick();
+    await new Promise((r) => setTimeout(r, 30));
 }
 
 async function runAxe(): Promise<{
-	violations: axe.Result[];
-	violationsFiltered: axe.Result[];
+    violations: axe.Result[];
+    violationsFiltered: axe.Result[];
 }> {
-	const result = await axe.run(document.body, {
-		rules: {
-			// region -- sivir components are tested in isolation, not as full pages.
-			region: { enabled: false },
-			// landmark-* -- same reasoning.
-			'landmark-one-main': { enabled: false },
-			// color-contrast -- covered separately by the dedicated
-			// "Color contrast" suite at the bottom of this file, so the aria
-			// checks here stay focused on structural/role violations.
-			'color-contrast': { enabled: false }
-		}
-	});
-	const violationsFiltered = result.violations.filter(
-		(v) => !['region', 'landmark-one-main', 'color-contrast'].includes(v.id)
-	);
-	return { violations: result.violations, violationsFiltered };
+    const result = await axe.run(document.body, {
+        rules: {
+            // region -- sivir components are tested in isolation, not as full pages.
+            region: { enabled: false },
+            // landmark-* -- same reasoning.
+            'landmark-one-main': { enabled: false },
+            // color-contrast -- covered separately by the dedicated
+            // "Color contrast" suite at the bottom of this file, so the aria
+            // checks here stay focused on structural/role violations.
+            'color-contrast': { enabled: false }
+        }
+    });
+    const violationsFiltered = result.violations.filter(
+        (v) => !['region', 'landmark-one-main', 'color-contrast'].includes(v.id)
+    );
+    return { violations: result.violations, violationsFiltered };
 }
 
 function expectNoViolations(label: string, violations: axe.Result[]) {
-	if (violations.length > 0) {
-		const summary = violations
-			.map((v) => {
-				const nodes = v.nodes
-					.map(
-						(n) =>
-							`    target=${JSON.stringify(n.target)}\n    html=${n.html.slice(0, 240)}\n    ${n.failureSummary ?? ''}`
-					)
-					.join('\n');
-				return `${v.id}: ${v.description} (${v.nodes.length} nodes)\n${nodes}`;
-			})
-			.join('\n  ');
-		throw new Error(`${label} axe violations:\n  ${summary}`);
-	}
+    if (violations.length > 0) {
+        const summary = violations
+            .map((v) => {
+                const nodes = v.nodes
+                    .map(
+                        (n) =>
+                            `    target=${JSON.stringify(n.target)}\n    html=${n.html.slice(0, 240)}\n    ${n.failureSummary ?? ''}`
+                    )
+                    .join('\n');
+                return `${v.id}: ${v.description} (${v.nodes.length} nodes)\n${nodes}`;
+            })
+            .join('\n  ');
+        throw new Error(`${label} axe violations:\n  ${summary}`);
+    }
 }
 
 beforeEach(() => {
-	document.body.style.overflow = '';
+    document.body.style.overflow = '';
 });
 
 describe('A11y -- leaf controls (axe)', () => {
-	it('button -- no violations', async () => {
-		render(Button, { children: textSnippet('Save') });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('button', violationsFiltered);
-	});
+    it('button -- no violations', async () => {
+        render(Button, { children: textSnippet('Save') });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('button', violationsFiltered);
+    });
 
-	it('switch with label -- no violations', async () => {
-		render(Switch, { switched: false, label: 'Email notifications' });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('switch (labelled)', violationsFiltered);
-	});
+    it('switch with label -- no violations', async () => {
+        render(Switch, { switched: false, label: 'Email notifications' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('switch (labelled)', violationsFiltered);
+    });
 
-	it('slider -- no violations', async () => {
-		render(Slider, { value: 50, label: 'Volume' });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('slider', violationsFiltered);
-	});
+    it('slider -- no violations', async () => {
+        render(Slider, { value: 50, label: 'Volume' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('slider', violationsFiltered);
+    });
 
-	it('toggle -- no violations', async () => {
-		render(Toggle, { pressed: false, children: textSnippet('Bold') });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('toggle', violationsFiltered);
-	});
+    it('toggle -- no violations', async () => {
+        render(Toggle, { pressed: false, children: textSnippet('Bold') });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('toggle', violationsFiltered);
+    });
 });
 
 describe('A11y -- overlay components (axe, open state)', () => {
-	it('modal open -- no violations', async () => {
-		render(ModalFixture, { open: true });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('modal (open)', violationsFiltered);
-	});
+    it('modal open -- no violations', async () => {
+        render(ModalFixture, { open: true });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('modal (open)', violationsFiltered);
+    });
 
-	it('sheet open -- no violations (P3-F13 aria fixed; color-contrast deferred to theme pass)', async () => {
-		render(SheetFixture, { open: true });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('sheet (open)', violationsFiltered);
-	});
+    it('sheet open -- no violations (P3-F13 aria fixed; color-contrast deferred to theme pass)', async () => {
+        render(SheetFixture, { open: true });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('sheet (open)', violationsFiltered);
+    });
 
-	it('alert-dialog open -- no violations', async () => {
-		render(AlertDialogFixture, { open: true });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('alert-dialog (open)', violationsFiltered);
-	});
+    it('alert-dialog open -- no violations', async () => {
+        render(AlertDialogFixture, { open: true });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('alert-dialog (open)', violationsFiltered);
+    });
 
-	it('command open -- no violations', async () => {
-		render(CommandFixture, { open: true });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('command (open)', violationsFiltered);
-	});
+    it('command open -- no violations', async () => {
+        render(CommandFixture, { open: true });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('command (open)', violationsFiltered);
+    });
 });
 
 describe('A11y -- floating components (axe, open state)', () => {
-	it('popover open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
-		render(PopoverFixture, { open: true });
-		await flush();
+    it('popover open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
+        render(PopoverFixture, { open: true });
+        await flush();
 
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('popover (open)', violationsFiltered);
-	});
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('popover (open)', violationsFiltered);
+    });
 
-	it('dropdown-menu open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
-		render(DropdownMenuFixture, {});
-		await flush();
-		await page.getByTestId('dropdown-trigger').click();
-		await flush();
+    it('dropdown-menu open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
+        render(DropdownMenuFixture, {});
+        await flush();
+        await page.getByTestId('dropdown-trigger').click();
+        await flush();
 
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('dropdown-menu (open)', violationsFiltered);
-	});
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('dropdown-menu (open)', violationsFiltered);
+    });
 
-	it('select open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
-		render(SelectFixture, {});
-		await flush();
-		await page.getByTestId('select-trigger').click();
-		await flush();
+    it('select open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
+        render(SelectFixture, {});
+        await flush();
+        await page.getByTestId('select-trigger').click();
+        await flush();
 
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('select (open)', violationsFiltered);
-	});
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('select (open)', violationsFiltered);
+    });
 
-	it('combobox open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
-		render(ComboboxFixture, {});
-		await flush();
-		await page.getByTestId('combobox-trigger').click();
-		await flush();
+    it('combobox open -- no violations (P3-F13 aria fixed; color-contrast deferred)', async () => {
+        render(ComboboxFixture, {});
+        await flush();
+        await page.getByTestId('combobox-trigger').click();
+        await flush();
 
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('combobox (open)', violationsFiltered);
-	});
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('combobox (open)', violationsFiltered);
+
+        await page.getByPlaceholder('Search fruits').fill('cherry');
+        await flush();
+        const filtered = await runAxe();
+        expectNoViolations('combobox (filtered)', filtered.violationsFiltered);
+    });
 });
 
 describe('A11y -- navigational compound components (axe)', () => {
-	it('tabs -- no violations', async () => {
-		render(TabsFixture, { value: 'one' });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('tabs', violationsFiltered);
-	});
+    it('tabs -- no violations', async () => {
+        render(TabsFixture, { value: 'one' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('tabs', violationsFiltered);
+    });
 
-	it('accordion (single, item open) -- no violations', async () => {
-		render(AccordionFixture, { type: 'single', value: 'a' });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('accordion', violationsFiltered);
-	});
+    it('accordion (single, item open) -- no violations', async () => {
+        render(AccordionFixture, { type: 'single', value: 'a' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('accordion', violationsFiltered);
+    });
 
-	it('radio-group -- no violations', async () => {
-		render(RadioGroupFixture, { value: 'apple' });
-		await flush();
-		const { violationsFiltered } = await runAxe();
-		expectNoViolations('radio-group', violationsFiltered);
-	});
+    it('radio-group -- no violations', async () => {
+        render(RadioGroupFixture, { value: 'apple' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('radio-group', violationsFiltered);
+    });
+
+    it('question -- no violations', async () => {
+        render(QuestionFixture, { value: 'safe' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('question', violationsFiltered);
+    });
+
+    it('multiple-answer question -- no violations', async () => {
+        render(QuestionFixture, { type: 'multiple', value: ['safe'] });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('multiple-answer question', violationsFiltered);
+    });
+
+    it('free-text question -- no violations', async () => {
+        render(QuestionFixture, { type: 'text', value: 'Use preview' });
+        await flush();
+        const { violationsFiltered } = await runAxe();
+        expectNoViolations('free-text question', violationsFiltered);
+    });
 });
 
 /*
@@ -220,58 +247,58 @@ describe('A11y -- navigational compound components (axe)', () => {
  */
 
 describe('Keyboard nav -- focus management (Playwright)', () => {
-	it('modal traps focus inside while open (Tab cycles to first)', async () => {
-		render(ModalFixture, { open: true });
-		await flush();
-		await new Promise((r) => setTimeout(r, 50));
+    it('modal traps focus inside while open (Tab cycles to first)', async () => {
+        render(ModalFixture, { open: true });
+        await flush();
+        await new Promise((r) => setTimeout(r, 50));
 
-		const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
-		const focusables = Array.from(
-			dialog.querySelectorAll<HTMLElement>(
-				'button, a[href], input, [tabindex]:not([tabindex="-1"])'
-			)
-		);
-		const first = focusables[0];
-		const last = focusables[focusables.length - 1];
+        const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+        const focusables = Array.from(
+            dialog.querySelectorAll<HTMLElement>(
+                'button, a[href], input, [tabindex]:not([tabindex="-1"])'
+            )
+        );
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
 
-		last.focus();
-		expect(document.activeElement).toBe(last);
+        last.focus();
+        expect(document.activeElement).toBe(last);
 
-		await userEvent.keyboard('{Tab}');
-		await flush();
-		expect(document.activeElement).toBe(first);
-	});
+        await userEvent.keyboard('{Tab}');
+        await flush();
+        expect(document.activeElement).toBe(first);
+    });
 
-	it('tabs -- Enter activates focused trigger', async () => {
-		render(TabsFixture, { value: 'one' });
-		await flush();
+    it('tabs -- Enter activates focused trigger', async () => {
+        render(TabsFixture, { value: 'one' });
+        await flush();
 
-		const tabs = document.querySelectorAll<HTMLElement>('[role="tab"]');
-		// Tabs do not currently auto-focus to enable arrow-key cycling per WAI-ARIA;
-		// we just verify that clicking the second triggers the value change.
-		// Logged separately as a potential a11y gap.
-		expect(tabs.length).toBeGreaterThanOrEqual(2);
-	});
+        const tabs = document.querySelectorAll<HTMLElement>('[role="tab"]');
+        // Tabs do not currently auto-focus to enable arrow-key cycling per WAI-ARIA;
+        // we just verify that clicking the second triggers the value change.
+        // Logged separately as a potential a11y gap.
+        expect(tabs.length).toBeGreaterThanOrEqual(2);
+    });
 
-	it('switch -- Space toggles when focused', async () => {
-		render(Switch, { switched: false, label: 'Test' });
-		await flush();
-		const button = document.querySelector('[role="switch"]') as HTMLElement;
-		button.focus();
-		await userEvent.keyboard(' ');
-		await flush();
-		expect(button.getAttribute('aria-checked')).toBe('true');
-	});
+    it('switch -- Space toggles when focused', async () => {
+        render(Switch, { switched: false, label: 'Test' });
+        await flush();
+        const button = document.querySelector('[role="switch"]') as HTMLElement;
+        button.focus();
+        await userEvent.keyboard(' ');
+        await flush();
+        expect(button.getAttribute('aria-checked')).toBe('true');
+    });
 
-	it('toggle -- Enter toggles when focused', async () => {
-		render(Toggle, { pressed: false, children: textSnippet('Bold') });
-		await flush();
-		const button = document.querySelector('button') as HTMLElement;
-		button.focus();
-		await userEvent.keyboard('{Enter}');
-		await flush();
-		expect(button.getAttribute('aria-pressed')).toBe('true');
-	});
+    it('toggle -- Enter toggles when focused', async () => {
+        render(Toggle, { pressed: false, children: textSnippet('Bold') });
+        await flush();
+        const button = document.querySelector('button') as HTMLElement;
+        button.focus();
+        await userEvent.keyboard('{Enter}');
+        await flush();
+        expect(button.getAttribute('aria-pressed')).toBe('true');
+    });
 });
 
 /*
@@ -283,65 +310,65 @@ describe('Keyboard nav -- focus management (Playwright)', () => {
  * ENABLED and assert zero violations, locking in the fix.
  */
 async function runAxeWithContrast(): Promise<axe.Result[]> {
-	// Measure settled colors, not the temporary alpha/color interpolation used
-	// while panels and their triggers enter the page.
-	await new Promise((resolve) => setTimeout(resolve, 220));
-	const result = await axe.run(document.body, {
-		rules: {
-			region: { enabled: false },
-			'landmark-one-main': { enabled: false }
-			// color-contrast remains enabled.
-		}
-	});
-	return result.violations.filter((v) => !['region', 'landmark-one-main'].includes(v.id));
+    // Measure settled colors, not the temporary alpha/color interpolation used
+    // while panels and their triggers enter the page.
+    await new Promise((resolve) => setTimeout(resolve, 220));
+    const result = await axe.run(document.body, {
+        rules: {
+            region: { enabled: false },
+            'landmark-one-main': { enabled: false }
+            // color-contrast remains enabled.
+        }
+    });
+    return result.violations.filter((v) => !['region', 'landmark-one-main'].includes(v.id));
 }
 
 describe('Color contrast (P3-F13 -- resolved)', () => {
-	it('popover -- no color-contrast violations at default theme', async () => {
-		render(PopoverFixture, { open: false });
-		await flush();
-		await page.getByTestId('popover-trigger-label').click();
-		await flush();
-		const violations = await runAxeWithContrast();
-		expectNoViolations(
-			'popover color contrast',
-			violations.filter((v) => v.id === 'color-contrast')
-		);
-	});
+    it('popover -- no color-contrast violations at default theme', async () => {
+        render(PopoverFixture, { open: false });
+        await flush();
+        await page.getByTestId('popover-trigger-label').click();
+        await flush();
+        const violations = await runAxeWithContrast();
+        expectNoViolations(
+            'popover color contrast',
+            violations.filter((v) => v.id === 'color-contrast')
+        );
+    });
 
-	it('dropdown-menu -- no color-contrast violations at default theme', async () => {
-		render(DropdownMenuFixture, {});
-		await flush();
-		await page.getByTestId('dropdown-trigger').click();
-		await flush();
-		const violations = await runAxeWithContrast();
-		expectNoViolations(
-			'dropdown-menu color contrast',
-			violations.filter((v) => v.id === 'color-contrast')
-		);
-	});
+    it('dropdown-menu -- no color-contrast violations at default theme', async () => {
+        render(DropdownMenuFixture, {});
+        await flush();
+        await page.getByTestId('dropdown-trigger').click();
+        await flush();
+        const violations = await runAxeWithContrast();
+        expectNoViolations(
+            'dropdown-menu color contrast',
+            violations.filter((v) => v.id === 'color-contrast')
+        );
+    });
 
-	it('select -- no color-contrast violations at default theme', async () => {
-		render(SelectFixture, {});
-		await flush();
-		await page.getByTestId('select-trigger').click();
-		await flush();
-		const violations = await runAxeWithContrast();
-		expectNoViolations(
-			'select color contrast',
-			violations.filter((v) => v.id === 'color-contrast')
-		);
-	});
+    it('select -- no color-contrast violations at default theme', async () => {
+        render(SelectFixture, {});
+        await flush();
+        await page.getByTestId('select-trigger').click();
+        await flush();
+        const violations = await runAxeWithContrast();
+        expectNoViolations(
+            'select color contrast',
+            violations.filter((v) => v.id === 'color-contrast')
+        );
+    });
 
-	it('combobox -- no color-contrast violations at default theme', async () => {
-		render(ComboboxFixture, {});
-		await flush();
-		await page.getByTestId('combobox-trigger').click();
-		await flush();
-		const violations = await runAxeWithContrast();
-		expectNoViolations(
-			'combobox color contrast',
-			violations.filter((v) => v.id === 'color-contrast')
-		);
-	});
+    it('combobox -- no color-contrast violations at default theme', async () => {
+        render(ComboboxFixture, {});
+        await flush();
+        await page.getByTestId('combobox-trigger').click();
+        await flush();
+        const violations = await runAxeWithContrast();
+        expectNoViolations(
+            'combobox color contrast',
+            violations.filter((v) => v.id === 'color-contrast')
+        );
+    });
 });

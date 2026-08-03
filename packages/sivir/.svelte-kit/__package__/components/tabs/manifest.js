@@ -1,8 +1,8 @@
 export const manifest = {
     name: 'tabs',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
-    description: 'Tabbed interface with List, Trigger, and Content subparts. Bindable active value.',
+    description: 'Horizontal or vertical tabbed interface with List, Trigger, and Content subparts. Supports three visual variants and a bindable active value.',
     role: 'tablist',
     files: [
         'components/tabs/tabs.svelte',
@@ -14,7 +14,7 @@ export const manifest = {
         'components/tabs/manifest.ts'
     ],
     components: [],
-    shared: ['utils.cn'],
+    shared: ['utils.cn', 'utils.pressable'],
     peerDependencies: {
         cnfast: '^0.0.8',
         svelte: '^5.0.0'

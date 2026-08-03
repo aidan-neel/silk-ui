@@ -5,7 +5,7 @@ import type { DefaultProps } from '@sivir-ui/svelte/utils';
 
 export type BreadcrumbProps = DefaultProps;
 export type BreadcrumbItemProps = {
-	href?: string;
+    href?: string;
 } & DefaultProps;
 export type BreadcrumbSeparatorProps = DefaultProps;
 

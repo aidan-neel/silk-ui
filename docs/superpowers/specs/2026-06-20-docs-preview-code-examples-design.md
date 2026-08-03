@@ -18,11 +18,11 @@ Single source of truth per example via Vite `?raw`:
 - Each `ComponentPreview` gets a real example component:
   `src/routes/docs/components/<name>/examples/<example>.svelte`.
 - The page imports it twice — once to render the preview, once as raw source:
-  ```svelte
-  import Basic from './examples/basic.svelte'; import BasicSrc from './examples/basic.svelte?raw';
-  ...
-  <ComponentPreview code={BasicSrc}><Basic /></ComponentPreview>
-  ```
+    ```svelte
+    import Basic from './examples/basic.svelte'; import BasicSrc from './examples/basic.svelte?raw';
+    ...
+    <ComponentPreview code={BasicSrc}><Basic /></ComponentPreview>
+    ```
 - `ComponentPreview` and `CodeBlock` are UNCHANGED (already take `code` + `children`;
   `CodeBlock` highlights `lang="svelte"` by default).
 

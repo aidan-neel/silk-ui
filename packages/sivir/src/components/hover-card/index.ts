@@ -7,21 +7,21 @@ import Title from './hover-card-title.svelte';
 import Description from './hover-card-description.svelte';
 
 export type HoverCardProps = {
-	open?: boolean;
-	openDelay?: number;
-	closeDelay?: number;
-	children?: Snippet;
+    open?: boolean;
+    openDelay?: number;
+    closeDelay?: number;
+    children?: Snippet;
 };
 
 export type HoverCardTriggerProps = {
-	href?: string;
-	children?: Snippet;
+    href?: string;
+    children?: Snippet;
 } & DefaultProps;
 
 export type HoverCardContentProps = {
-	side?: 'top' | 'bottom' | 'left' | 'right';
-	align?: 'start' | 'center' | 'end';
-	children?: Snippet;
+    side?: 'top' | 'bottom' | 'left' | 'right';
+    align?: 'start' | 'center' | 'end';
+    children?: Snippet;
 } & DefaultProps;
 
 export { Root, Trigger, Content, Title, Description };

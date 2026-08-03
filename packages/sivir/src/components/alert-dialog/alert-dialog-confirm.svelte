@@ -1,26 +1,38 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
-	import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
-	import { getModalContext } from '../modal/context.svelte';
+    import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+    import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+    import { getModalContext } from '../modal/context.svelte';
 
-	type Props = {
-		onclick?: () => void;
-	} & DefaultProps &
-		ButtonProps;
+    type Props = {
+        closeOnClick?: boolean;
+        onclick?: (event: MouseEvent) => void;
+    } & DefaultProps &
+        ButtonProps;
 
-	const modal = getModalContext();
-	let { class: className, children, onclick, variant, ...rest }: Props = $props();
-	const confirmVariant = $derived(variant ?? (modal.state.error ? 'destructive' : 'primary'));
+    const modal = getModalContext();
+    let {
+        class: className,
+        children,
+        onclick,
+        closeOnClick = true,
+        variant,
+        ...rest
+    }: Props = $props();
+    const confirmVariant = $derived(variant ?? (modal.state.error ? 'destructive' : 'primary'));
+
+    function handleClick(event: MouseEvent) {
+        if (closeOnClick) {
+            modal.state.open = false;
+        }
+        onclick?.(event);
+    }
 </script>
 
 <Button
-	{...rest}
-	variant={confirmVariant}
-	onclick={() => {
-		modal.state.open = false;
-		onclick?.();
-	}}
-	class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}
+    {...rest}
+    variant={confirmVariant}
+    onclick={handleClick}
+    class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}
 >
-	{@render children?.()}
+    {@render children?.()}
 </Button>

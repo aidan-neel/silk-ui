@@ -17,10 +17,10 @@ syntax-highlighted code surface below.
 - **Highlighting:** bundle `highlight.js` as a dependency of `@sivir-ui/svelte`.
   Lightweight, synchronous, supports all required languages. Token classes
   (`hljs-*`) styled via CSS variables so colors follow Sivir theming.
-  - Rationale: keeps highlighting self-contained (true drop-in `<CodeBlock>`)
-    without Shiki's async loading and bundle weight. The library's existing
-    custom tokenizer (`apps/docs/src/lib/highlight.ts`) does not cover Python /
-    Java / Go / C#.
+    - Rationale: keeps highlighting self-contained (true drop-in `<CodeBlock>`)
+      without Shiki's async loading and bundle weight. The library's existing
+      custom tokenizer (`apps/docs/src/lib/highlight.ts`) does not cover Python /
+      Java / Go / C#.
 - **Actions:** copy button built in (reuses Sivir's `CopyButton`); info / AI
   sparkle and any other buttons are caller-supplied via an `actions` snippet.
 - **API:** both a high-level form (single tag) and a compound form
@@ -57,11 +57,11 @@ State flows through Svelte context (`setContext`/`getContext`), same pattern as
 
 ```svelte
 <CodeBlock
-	tabs={[
-		{ label: 'Python', lang: 'python', code: pyCode },
-		{ label: 'JavaScript', lang: 'javascript', code: jsCode },
-		{ label: 'Java', lang: 'java', code: javaCode }
-	]}
+    tabs={[
+        { label: 'Python', lang: 'python', code: pyCode },
+        { label: 'JavaScript', lang: 'javascript', code: jsCode },
+        { label: 'Java', lang: 'java', code: javaCode }
+    ]}
 />
 
 <!-- single snippet, no tabs, just copy -->
@@ -83,15 +83,15 @@ High-level props:
 
 ```svelte
 <CodeBlock.Root value="javascript">
-	<CodeBlock.Header>
-		<CodeBlock.Tab value="python" lang="python">Python</CodeBlock.Tab>
-		<CodeBlock.Tab value="javascript" lang="javascript">JavaScript</CodeBlock.Tab>
-		<CodeBlock.Actions>
-			{#snippet children()}<InfoButton /><AiButton />{/snippet}
-		</CodeBlock.Actions>
-	</CodeBlock.Header>
-	<CodeBlock.Body value="python" code={pyCode} lang="python" />
-	<CodeBlock.Body value="javascript" code={jsCode} lang="javascript" />
+    <CodeBlock.Header>
+        <CodeBlock.Tab value="python" lang="python">Python</CodeBlock.Tab>
+        <CodeBlock.Tab value="javascript" lang="javascript">JavaScript</CodeBlock.Tab>
+        <CodeBlock.Actions>
+            {#snippet children()}<InfoButton /><AiButton />{/snippet}
+        </CodeBlock.Actions>
+    </CodeBlock.Header>
+    <CodeBlock.Body value="python" code={pyCode} lang="python" />
+    <CodeBlock.Body value="javascript" code={jsCode} lang="javascript" />
 </CodeBlock.Root>
 ```
 
@@ -152,12 +152,12 @@ export type { CodeBlockProps, CodeBlockTab } from './types';
 
 - Add `'code-block'` to `apps/docs/src/lib/components.ts` (drives sidebar nav).
 - New page `apps/docs/src/routes/docs/components/code-block/+page.svelte`:
-  - **Hero:** the exact multi-language tabbed example from the image, including
-    a demo info button + AI-sparkle button in the actions slot.
-  - **Examples** (each `examples/*.svelte` + `?raw` source via
-    `ComponentPreview`): single snippet, multi-language tabs, compound usage,
-    custom actions, line numbers.
-  - **Props tables** for each exported part + `InstallCommand`.
+    - **Hero:** the exact multi-language tabbed example from the image, including
+      a demo info button + AI-sparkle button in the actions slot.
+    - **Examples** (each `examples/*.svelte` + `?raw` source via
+      `ComponentPreview`): single snippet, multi-language tabs, compound usage,
+      custom actions, line numbers.
+    - **Props tables** for each exported part + `InstallCommand`.
 - The docs page consumes the library component directly (`@sivir-ui/svelte/components/code-block`).
 
 ## Out of scope

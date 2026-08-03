@@ -10,4 +10,5 @@ import Details from './approval-request-details.svelte';
 import Footer from './approval-request-footer.svelte';
 import Cancel from './approval-request-cancel.svelte';
 import Confirm from './approval-request-confirm.svelte';
-export { Root, Content, Header, Status, Icon, Risk, Title, Description, Details, Footer, Cancel, Confirm };
+import Error from './approval-request-error.svelte';
+export { Root, Content, Header, Status, Icon, Risk, Title, Description, Details, Footer, Cancel, Confirm, Error };

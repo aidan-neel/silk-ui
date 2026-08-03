@@ -84,6 +84,17 @@ export declare function trapFocus(dialogEl: HTMLElement, options?: {
 export declare function pressable(node: HTMLElement): {
     destroy(): void;
 };
+type TravelingHighlightOptions = {
+    itemSelector?: string;
+    restingSelector?: string;
+};
+/**
+ * Draws one highlight that travels between the active items in a collection.
+ * Geometry is written directly so pointer movement never causes a component render.
+ */
+export declare function travelingHighlight(node: HTMLElement, options?: TravelingHighlightOptions): {
+    destroy(): void;
+};
 /**
  * Runs a callback when a pointer event lands outside the node and any excluded
  * nodes.
@@ -106,3 +117,4 @@ export declare function clickOutside(node: Node, callback: () => void, exclude?:
  * state rather than an error.
  */
 export declare function positionFloatingPanel(reference: ReferenceElement, floating: HTMLElement, placement: Placement): Promise<void>;
+export {};

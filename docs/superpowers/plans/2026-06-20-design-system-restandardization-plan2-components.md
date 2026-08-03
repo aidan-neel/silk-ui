@@ -55,64 +55,64 @@ The Plan-1 linter over-flags. Fix it so it can be an enforcement gate.
 ```ts
 // add to tools/token-lint/index.test.ts
 it('does NOT flag component-scoped --sivir-<name>- vars (only primitive families)', () => {
-	const v = lintSource('a.svelte', 'animation: x var(--sivir-marquee-duration) linear;');
-	expect(v).toEqual([]);
+    const v = lintSource('a.svelte', 'animation: x var(--sivir-marquee-duration) linear;');
+    expect(v).toEqual([]);
 });
 it('DOES flag real primitive families', () => {
-	for (const p of ['--sivir-neutral-200', '--sivir-blue-500', '--sivir-space-4']) {
-		expect(lintSource('a.svelte', `x: var(${p})`).some((y) => y.rule === 'no-primitive-leak')).toBe(
-			true
-		);
-	}
+    for (const p of ['--sivir-neutral-200', '--sivir-blue-500', '--sivir-space-4']) {
+        expect(
+            lintSource('a.svelte', `x: var(${p})`).some((y) => y.rule === 'no-primitive-leak')
+        ).toBe(true);
+    }
 });
 it('honors an inline disable directive on the same line', () => {
-	const v = lintSource(
-		'a.svelte',
-		'style="background:#000000" /* token-lint-disable-line no-literal-color */'
-	);
-	expect(v).toEqual([]);
+    const v = lintSource(
+        'a.svelte',
+        'style="background:#000000" /* token-lint-disable-line no-literal-color */'
+    );
+    expect(v).toEqual([]);
 });
 it('honors a disable-next-line directive', () => {
-	const v = lintSource(
-		'a.svelte',
-		'<!-- token-lint-disable-next-line -->\nstyle="background:#000"'
-	);
-	expect(v).toEqual([]);
+    const v = lintSource(
+        'a.svelte',
+        '<!-- token-lint-disable-next-line -->\nstyle="background:#000"'
+    );
+    expect(v).toEqual([]);
 });
 ```
 
 - [ ] **Step 2: Run — expect the new cases to FAIL.** `cd /home/aidan/silk/apps/docs && bunx vitest run ../../tools/token-lint/index.test.ts`
 
 - [ ] **Step 3: Implement the refinements in `index.ts`:**
-  - Narrow `no-primitive-leak` regex to real primitive families only:
-    `re: /var\(\s*--sivir-(?:neutral|blue|space|success|warning|error)\b/`
-  - In `lintSource`, support directives:
-    - If a line contains `token-lint-disable-line` optionally followed by rule name(s), skip those rules (or all) on that line.
-    - If the PREVIOUS line contains `token-lint-disable-next-line` (optionally with rule names), skip those rules on the current line.
-  - Keep `no-literal-color` and `no-literal-length` regexes as-is.
+    - Narrow `no-primitive-leak` regex to real primitive families only:
+      `re: /var\(\s*--sivir-(?:neutral|blue|space|success|warning|error)\b/`
+    - In `lintSource`, support directives:
+        - If a line contains `token-lint-disable-line` optionally followed by rule name(s), skip those rules (or all) on that line.
+        - If the PREVIOUS line contains `token-lint-disable-next-line` (optionally with rule names), skip those rules on the current line.
+    - Keep `no-literal-color` and `no-literal-length` regexes as-is.
 
 ```ts
 // reference implementation of the directive logic inside lintSource:
 export function lintSource(file: string, source: string): Violation[] {
-	const out: Violation[] = [];
-	const lines = source.split('\n');
-	const disabledFor = (line: string, prev: string, rule: string) => {
-		const onLine = line.includes('token-lint-disable-line');
-		const onPrev = prev.includes('token-lint-disable-next-line');
-		const ruleNamed = (s: string) =>
-			s.includes('token-lint-disable') &&
-			(new RegExp(`token-lint-disable[a-z-]*\\s+[^\\n]*\\b${rule}\\b`).test(s) ||
-				!/token-lint-disable[a-z-]*\s+\S/.test(s));
-		return (onLine && ruleNamed(line)) || (onPrev && ruleNamed(prev));
-	};
-	lines.forEach((text, i) => {
-		const prev = i > 0 ? lines[i - 1] : '';
-		for (const { rule, re } of RULES) {
-			if (re.test(text) && !disabledFor(text, prev, rule))
-				out.push({ file, line: i + 1, rule, text: text.trim() });
-		}
-	});
-	return out;
+    const out: Violation[] = [];
+    const lines = source.split('\n');
+    const disabledFor = (line: string, prev: string, rule: string) => {
+        const onLine = line.includes('token-lint-disable-line');
+        const onPrev = prev.includes('token-lint-disable-next-line');
+        const ruleNamed = (s: string) =>
+            s.includes('token-lint-disable') &&
+            (new RegExp(`token-lint-disable[a-z-]*\\s+[^\\n]*\\b${rule}\\b`).test(s) ||
+                !/token-lint-disable[a-z-]*\s+\S/.test(s));
+        return (onLine && ruleNamed(line)) || (onPrev && ruleNamed(prev));
+    };
+    lines.forEach((text, i) => {
+        const prev = i > 0 ? lines[i - 1] : '';
+        for (const { rule, re } of RULES) {
+            if (re.test(text) && !disabledFor(text, prev, rule))
+                out.push({ file, line: i + 1, rule, text: text.trim() });
+        }
+    });
+    return out;
 }
 ```
 
@@ -218,10 +218,10 @@ import { describe, expect, it } from 'vitest';
 import { resolve } from 'node:path';
 import { lintTree } from '../../../../../tools/token-lint/index';
 describe('token-lint enforcement', () => {
-	it('components contain no un-disabled literal/primitive violations', () => {
-		const v = lintTree(resolve(process.cwd(), '../../packages/sivir/src/components'));
-		expect(v, JSON.stringify(v, null, 2)).toHaveLength(0);
-	});
+    it('components contain no un-disabled literal/primitive violations', () => {
+        const v = lintTree(resolve(process.cwd(), '../../packages/sivir/src/components'));
+        expect(v, JSON.stringify(v, null, 2)).toHaveLength(0);
+    });
 });
 ```
 

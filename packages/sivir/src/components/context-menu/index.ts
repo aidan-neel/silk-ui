@@ -17,36 +17,36 @@ export type ContextMenuProps = { children?: Snippet };
 export type ContextMenuContentProps = DefaultProps;
 
 export type ContextMenuItemProps = {
-	callback?: () => void;
-	inset?: boolean;
+    callback?: () => void;
+    inset?: boolean;
 } & ButtonProps;
 
 export type ContextMenuCheckboxItemProps = {
-	callback?: () => void;
-	value: string;
-	inset?: boolean;
-	checked?: boolean;
+    callback?: () => void;
+    value: string;
+    inset?: boolean;
+    checked?: boolean;
 } & ButtonProps;
 
 export type ContextMenuSeparatorProps = DefaultProps;
 export type ContextMenuSubContentProps = DefaultProps;
 
 export type ContextMenuSubTriggerProps = {
-	inset?: boolean;
+    inset?: boolean;
 } & DefaultProps;
 
 export type ContextMenuSubProps = { children?: Snippet };
 export type ContextMenuTriggerProps = DefaultProps;
 
 export type ContextMenuCheckboxItemState = {
-	checked?: boolean;
-	value: string;
+    checked?: boolean;
+    value: string;
 };
 
 export type ContextMenuState = {
-	open: boolean;
-	virtualElement?: VirtualElement;
-	checkboxItems: Map<string, boolean>;
+    open: boolean;
+    virtualElement?: VirtualElement;
+    checkboxItems: Map<string, boolean>;
 };
 
 export { Root, Content, CheckboxItem, Item, Separator, SubContent, SubTrigger, Sub, Trigger };

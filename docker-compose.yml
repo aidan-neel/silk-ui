@@ -3,28 +3,28 @@
 # Both services build from the repo root so they can see the workspace lockfile.
 
 services:
-  registry:
-    build:
-      context: .
-      dockerfile: apps/registry/Dockerfile
-    restart: unless-stopped
-    env_file:
-      - apps/registry/.env
-    environment:
-      PORT: '4100'
-    ports:
-      - '4100:4100'
+    registry:
+        build:
+            context: .
+            dockerfile: apps/registry/Dockerfile
+        restart: unless-stopped
+        env_file:
+            - apps/registry/.env
+        environment:
+            PORT: '4100'
+        ports:
+            - '4100:4100'
 
-  docs:
-    build:
-      context: .
-      dockerfile: apps/docs/Dockerfile
-    restart: unless-stopped
-    depends_on:
-      - registry
-    environment:
-      PORT: '3000'
-      HOST: '0.0.0.0'
-      THEME_REGISTRY_URL: 'http://registry:4100'
-    ports:
-      - '3000:3000'
+    docs:
+        build:
+            context: .
+            dockerfile: apps/docs/Dockerfile
+        restart: unless-stopped
+        depends_on:
+            - registry
+        environment:
+            PORT: '3000'
+            HOST: '0.0.0.0'
+            THEME_REGISTRY_URL: 'http://registry:4100'
+        ports:
+            - '3000:3000'

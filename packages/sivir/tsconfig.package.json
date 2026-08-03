@@ -1,20 +1,20 @@
 {
-	"compilerOptions": {
-		"target": "ES2022",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"strict": true,
-		"skipLibCheck": true,
-		"allowJs": true,
-		"checkJs": true,
-		"allowImportingTsExtensions": true,
-		"verbatimModuleSyntax": true,
-		"baseUrl": ".",
-		"paths": {
-			"@sivir-ui/svelte": ["./src/index.ts"],
-			"@sivir-ui/svelte/*": ["./src/*"]
-		}
-	},
-	"include": ["check.d.ts", "src/**/*.ts", "src/**/*.svelte"]
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "strict": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "checkJs": true,
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "baseUrl": ".",
+        "paths": {
+            "@sivir-ui/svelte": ["./src/index.ts"],
+            "@sivir-ui/svelte/*": ["./src/*"]
+        }
+    },
+    "include": ["check.d.ts", "src/**/*.ts", "src/**/*.svelte"]
 }

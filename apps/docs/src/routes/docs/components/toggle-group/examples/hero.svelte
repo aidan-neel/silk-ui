@@ -1,20 +1,20 @@
 <script lang="ts">
-	import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
-	import AlignLeft from '@lucide/svelte/icons/align-left';
-	import AlignCenter from '@lucide/svelte/icons/align-center';
-	import AlignRight from '@lucide/svelte/icons/align-right';
+    import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
+    import AlignLeft from '@lucide/svelte/icons/align-left';
+    import AlignCenter from '@lucide/svelte/icons/align-center';
+    import AlignRight from '@lucide/svelte/icons/align-right';
 
-	let alignment = $state('center');
+    let alignment = $state('center');
 </script>
 
 <ToggleGroup.Root type="single" bind:value={alignment}>
-	<ToggleGroup.Item value="left" aria-label="Align left">
-		<AlignLeft size={14} />
-	</ToggleGroup.Item>
-	<ToggleGroup.Item value="center" aria-label="Align center">
-		<AlignCenter size={14} />
-	</ToggleGroup.Item>
-	<ToggleGroup.Item value="right" aria-label="Align right">
-		<AlignRight size={14} />
-	</ToggleGroup.Item>
+    <ToggleGroup.Item value="left" aria-label="Align left">
+        <AlignLeft size={14} />
+    </ToggleGroup.Item>
+    <ToggleGroup.Item value="center" aria-label="Align center">
+        <AlignCenter size={14} />
+    </ToggleGroup.Item>
+    <ToggleGroup.Item value="right" aria-label="Align right">
+        <AlignRight size={14} />
+    </ToggleGroup.Item>
 </ToggleGroup.Root>

@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'context-menu',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Right-click contextual menu with sub-menus and checkbox items. Positioned via @floating-ui virtual element.',
     role: 'menu',
@@ -19,7 +19,12 @@ export const manifest = {
         'components/context-menu/manifest.ts'
     ],
     components: ['popover', 'button'],
-    shared: ['utils.closeMenuLayers', 'utils.cn', 'utils.createContext'],
+    shared: [
+        'utils.closeMenuLayers',
+        'utils.cn',
+        'utils.createContext',
+        'utils.travelingHighlight'
+    ],
     peerDependencies: {
         '@floating-ui/dom': '^1.0.0',
         '@lucide/svelte': '^1.0.0',

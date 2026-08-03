@@ -2,7 +2,8 @@ import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements
 import Button from './button.svelte';
 import type { Snippet } from 'svelte';
 import type { Intent } from '@sivir-ui/svelte/utils';
-export type ButtonVariant = Intent | 'panel';
+export type ButtonVariant = Intent | 'panel' | 'quiet';
+export type ButtonStatus = 'idle' | 'loading' | 'success' | 'error';
 export type ButtonProps = {
     href?: string;
     variant?: ButtonVariant;
@@ -37,6 +38,13 @@ export type ButtonProps = {
      * utilities outrank the `components` layer, so the two cannot coexist.
      */
     unstyled?: boolean;
+    /** Controlled visual state. Loading remains focusable and refuses activation. */
+    status?: ButtonStatus;
+    /** Convenience alias for `status="loading"`. */
+    loading?: boolean;
+    loadingLabel?: string;
+    successLabel?: string;
+    errorLabel?: string;
     onclick?: (event: MouseEvent) => void;
 } & Partial<HTMLButtonAttributes | HTMLAnchorAttributes>;
 export { Button };

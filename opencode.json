@@ -1,12 +1,22 @@
 {
-	"$schema": "https://opencode.ai/config.json",
-	"mcp": {
-		"21st": {
-			"type": "remote",
-			"url": "https://21st.dev/api/mcp",
-			"headers": {
-				"x-api-key": "{env:TWENTY_FIRST_API_KEY}"
-			}
-		}
-	}
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+        "21st": {
+            "type": "remote",
+            "url": "https://21st.dev/api/mcp",
+            "headers": {
+                "x-api-key": "{env:TWENTY_FIRST_API_KEY}"
+            }
+        }
+    },
+    "lsp": {
+        "typescript": {
+            "command": ["typescript-language-server", "--stdio"],
+            "extensions": [".ts", ".tsx", ".js", ".jsx"]
+        },
+        "svelte": {
+            "command": ["bunx", "--bun", "svelte-language-server", "--stdio"],
+            "extensions": [".svelte"]
+        }
+    }
 }

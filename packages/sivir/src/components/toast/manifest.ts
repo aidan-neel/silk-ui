@@ -14,26 +14,26 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *        no longer split or mis-position the stack. SSR still no-ops.
  */
 export const manifest: Manifest = {
-	name: 'toast',
-	version: '2.1.0',
-	visibility: 'public',
-	description:
-		'Toast notification system with body-portaled Toaster, free-function toast() API, and a shared client stack (SSR-safe).',
-	files: [
-		'components/toast/lib.svelte.ts',
-		'components/toast/toaster.svelte',
-		'components/toast/toast.svelte',
-		'components/toast/variants.ts',
-		'components/toast/index.ts',
-		'components/toast/manifest.ts'
-	],
-	components: ['button'],
-	shared: ['utils.cn', 'transition'],
-	peerDependencies: {
-		'@lucide/svelte': '^1.0.0',
-		cnfast: '^0.0.8',
-		'tailwind-merge': '^3.0.0',
-		'tailwind-variants': '^3.0.0',
-		svelte: '^5.0.0'
-	}
+    name: 'toast',
+    version: '2.1.0',
+    visibility: 'public',
+    description:
+        'Toast notification system with body-portaled Toaster, free-function toast() API, and a shared client stack (SSR-safe).',
+    files: [
+        'components/toast/lib.svelte.ts',
+        'components/toast/toaster.svelte',
+        'components/toast/toast.svelte',
+        'components/toast/variants.ts',
+        'components/toast/index.ts',
+        'components/toast/manifest.ts'
+    ],
+    components: ['button'],
+    shared: ['utils.cn', 'transition'],
+    peerDependencies: {
+        '@lucide/svelte': '^1.0.0',
+        cnfast: '^0.0.8',
+        'tailwind-merge': '^3.0.0',
+        'tailwind-variants': '^3.0.0',
+        svelte: '^5.0.0'
+    }
 };

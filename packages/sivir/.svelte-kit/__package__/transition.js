@@ -9,8 +9,9 @@ import { fade } from 'svelte/transition';
  */
 export function getCssDuration(node, variableName, fallback) {
     const raw = getComputedStyle(node).getPropertyValue(variableName).trim();
-    if (!raw)
+    if (!raw) {
         return fallback;
+    }
     if (raw.endsWith('ms')) {
         const parsed = Number.parseFloat(raw);
         return Number.isFinite(parsed) ? parsed : fallback;
@@ -28,21 +29,26 @@ export function getCssDuration(node, variableName, fallback) {
  */
 export function cubicBezier(x1, y1, x2, y2) {
     return (t) => {
-        if (t <= 0)
+        if (t <= 0) {
             return 0;
-        if (t >= 1)
+        }
+        if (t >= 1) {
             return 1;
+        }
         let lo = 0;
         let hi = 1;
         let mid = t;
         for (let i = 0; i < 12; i++) {
             const x = sampleBezier(mid, x1, x2);
-            if (Math.abs(x - t) < 1e-4)
+            if (Math.abs(x - t) < 1e-4) {
                 break;
-            if (x < t)
+            }
+            if (x < t) {
                 lo = mid;
-            else
+            }
+            else {
                 hi = mid;
+            }
             mid = (lo + hi) / 2;
         }
         return sampleBezier(mid, y1, y2);
@@ -68,7 +74,9 @@ function panelTransition(node, durationVariable, fallbackDuration, options) {
     return {
         duration: getCssDuration(node, durationVariable, fallbackDuration),
         easing: options?.easing ?? cubicOut,
-        css: (t) => `opacity:${t * opacity};transform:${baseTransform} translateY(${(1 - t) * offsetY}px) scale(${startScale + (1 - startScale) * t})`
+        css: (t) => {
+            return `opacity:${t * opacity};transform:${baseTransform} translateY(${(1 - t) * offsetY}px) scale(${startScale + (1 - startScale) * t})`;
+        }
     };
 }
 export function panelIn(node) {
@@ -106,7 +114,9 @@ function sheetSlide(node, side, durationVariable, fallbackDuration) {
     return {
         duration: getCssDuration(node, durationVariable, fallbackDuration),
         easing: drawerEase,
-        css: (t) => `transform:${baseTransform} translate3d(${(1 - t) * 100 * dir}%, 0, 0)`
+        css: (t) => {
+            return `transform:${baseTransform} translate3d(${(1 - t) * 100 * dir}%, 0, 0)`;
+        }
     };
 }
 /** Sheet enter: slides in from the anchored edge with the drawer curve. */
@@ -133,14 +143,16 @@ export const themedSlide = (node, params = {}) => {
         duration,
         delay: 0,
         easing: cubicOut,
-        css: (t) => `overflow: hidden;` +
-            `opacity: ${Math.min(t * 20, 1) * opacity};` +
-            `height: ${t * height}px;` +
-            `padding-top: ${t * paddingTop}px;` +
-            `padding-bottom: ${t * paddingBottom}px;` +
-            `margin-top: ${t * marginTop}px;` +
-            `margin-bottom: ${t * marginBottom}px;` +
-            `border-top-width: ${t * borderTopWidth}px;` +
-            `border-bottom-width: ${t * borderBottomWidth}px;`
+        css: (t) => {
+            return (`overflow: hidden;` +
+                `opacity: ${Math.min(t * 20, 1) * opacity};` +
+                `height: ${t * height}px;` +
+                `padding-top: ${t * paddingTop}px;` +
+                `padding-bottom: ${t * paddingBottom}px;` +
+                `margin-top: ${t * marginTop}px;` +
+                `margin-bottom: ${t * marginBottom}px;` +
+                `border-top-width: ${t * borderTopWidth}px;` +
+                `border-bottom-width: ${t * borderBottomWidth}px;`);
+        }
     };
 };

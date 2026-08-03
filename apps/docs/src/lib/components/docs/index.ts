@@ -9,13 +9,13 @@ import InstallCommand from './install-command.svelte';
 import Anatomy from './anatomy.svelte';
 
 export {
-	ComponentPreview,
-	CodeBlock,
-	CodeSnippet,
-	ExportItem,
-	APIReference,
-	BreadcrumbNav,
-	Steps,
-	InstallCommand,
-	Anatomy
+    ComponentPreview,
+    CodeBlock,
+    CodeSnippet,
+    ExportItem,
+    APIReference,
+    BreadcrumbNav,
+    Steps,
+    InstallCommand,
+    Anatomy
 };

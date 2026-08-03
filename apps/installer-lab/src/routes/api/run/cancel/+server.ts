@@ -4,6 +4,6 @@ import { assertLocalRequest } from '$lib/server/local-only';
 import { runManager } from '$lib/server/run-manager';
 
 export const POST: RequestHandler = async (event) => {
-	assertLocalRequest(event);
-	return json({ snapshot: await runManager.cancel() });
+    assertLocalRequest(event);
+    return json({ snapshot: await runManager.cancel() });
 };

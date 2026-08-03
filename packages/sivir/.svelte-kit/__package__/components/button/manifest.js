@@ -25,12 +25,21 @@
  *   3.2.0:
  *           - Add the `panel` variant: a clickable Button with Panel-compatible
  *             token fallbacks and no component dependency.
+ *   3.3.0:
+ *           - Add controlled loading, success, and error faces with stable width.
+ *           - Give the outline variant a slightly firmer bottom edge.
+ *   3.4.0:
+ *           - Give success and error their own tonal surfaces so semantic text
+ *             never clashes with the original Button variant background.
+ *   3.5.0:
+ *           - Add the `quiet` variant for low-emphasis foreground actions without
+ *             a background fill or underlined hover treatment.
  */
 export const manifest = {
     name: 'button',
-    version: '3.2.0',
+    version: '3.5.0',
     visibility: 'public',
-    description: 'Click target with 6 intent variants and 4 sizes. Renders as <button> by default; renders as <a> when `href` is provided. Universal trigger primitive -- pulled by every interactive sivir component.',
+    description: 'Click target with seven variants: primary, secondary, ghost, quiet, outline, destructive, and panel. Quiet matches ghost text color without a hover fill. Supports four sizes and stable loading, success, and error states. Renders as <button> by default or <a> when `href` is provided.',
     files: [
         'components/button/button.svelte',
         'components/button/index.ts',

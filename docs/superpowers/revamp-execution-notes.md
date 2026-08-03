@@ -62,9 +62,9 @@ Per-component page structure:
 Goal: replace the old ~91-field `ThemeDraft` engine + 153-knob Studio with the v2 `Theme` (~10 fields) + ~6 controls, and delete the old engine. Execute in build-green phases (verify `bun run build` + `bun run check` + unit tests after each; never commit broken):
 
 - **Phase A — Rebuild Studio/gallery/route on v2 (old engine stays):**
-  - Rewrite `apps/docs/src/routes/themes/studio/+page.svelte` SMALL: ~6 controls → v2 `Theme` (brand color, neutral temp, radius, density, motion, fonts) → `themeToCss(theme)` live preview via `applyLiveThemeCss`. KEEP `studio-preview.svelte` (canvas, no old imports). Replace/retire `studio-sidebar.svelte`, `studio-palette-sidebar.svelte`, `spacing-fields.ts` (old 153-knob model).
-  - Add v2 studio-state helpers to `live.ts` (additively; keep old types until Phase C).
-  - `[name].css/+server.ts` → v2 `themeToCss` only. `/themes` gallery → v2 (`themesV2`). Update/delete studio-related tests.
+    - Rewrite `apps/docs/src/routes/themes/studio/+page.svelte` SMALL: ~6 controls → v2 `Theme` (brand color, neutral temp, radius, density, motion, fonts) → `themeToCss(theme)` live preview via `applyLiveThemeCss`. KEEP `studio-preview.svelte` (canvas, no old imports). Replace/retire `studio-sidebar.svelte`, `studio-palette-sidebar.svelte`, `spacing-fields.ts` (old 153-knob model).
+    - Add v2 studio-state helpers to `live.ts` (additively; keep old types until Phase C).
+    - `[name].css/+server.ts` → v2 `themeToCss` only. `/themes` gallery → v2 (`themesV2`). Update/delete studio-related tests.
 - **Phase B — Registry/built-ins to v2:** `apps/registry/src/services/themes/model.ts` schema → the ~10-field `Theme`; `builtin-presets.ts` exports only v2 `Theme[]` (the single default). Discard old stored themes (user-approved).
 - **Phase C — Cull:** delete `themes/styles/`, `themes/transitions/`, `themes/presets/*.ts`, the old `ThemeDraft`/v1 surface in `presets.ts`, old types in `live.ts`; delete dead tests (`themes.presets`, `themes.density`, `themes.styles`, `themes.transitions`, `studio-spacing-fields`). Keep `theme.test.ts` + `studio-preview.test.ts`.
 

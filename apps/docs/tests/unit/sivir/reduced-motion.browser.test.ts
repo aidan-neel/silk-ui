@@ -36,20 +36,20 @@ import CommandFixture from '../../fixtures/CommandFixture.svelte';
 let originalMatchMedia: typeof window.matchMedia;
 
 async function flush() {
-	await tick();
-	await tick();
-	await new Promise((r) => setTimeout(r, 30));
+    await tick();
+    await tick();
+    await new Promise((r) => setTimeout(r, 30));
 }
 
 describe('Reduced motion -- content visible within 50ms of open action under prefers-reduced-motion: reduce', () => {
-	// Emulate reduced motion via Playwright's CDP media override before each test.
-	beforeEach(async () => {
-		await page.viewport(1024, 768);
-		// vitest-browser's `userEvent` doesn't expose emulateMedia. Apply via
-		// matchMedia override + a style tag that zeroes the sivir motion vars.
-		const style = document.createElement('style');
-		style.id = 'reduced-motion-override';
-		style.textContent = `
+    // Emulate reduced motion via Playwright's CDP media override before each test.
+    beforeEach(async () => {
+        await page.viewport(1024, 768);
+        // vitest-browser's `userEvent` doesn't expose emulateMedia. Apply via
+        // matchMedia override + a style tag that zeroes the sivir motion vars.
+        const style = document.createElement('style');
+        style.id = 'reduced-motion-override';
+        style.textContent = `
 			@media (prefers-reduced-motion: reduce) {
 				:root {
 					--motion-duration-hover: 0ms;
@@ -64,151 +64,155 @@ describe('Reduced motion -- content visible within 50ms of open action under pre
 				}
 			}
 		`;
-		document.head.appendChild(style);
+        document.head.appendChild(style);
 
-		// Override matchMedia to report reduced motion is preferred. The
-		// stylesheet above won't trigger without this in a test env.
-		originalMatchMedia = window.matchMedia;
-		window.matchMedia = (query: string) =>
-			({
-				matches: query.includes('reduce'),
-				media: query,
-				addEventListener: () => {},
-				removeEventListener: () => {},
-				addListener: () => {},
-				removeListener: () => {},
-				onchange: null,
-				dispatchEvent: () => true
-			}) as MediaQueryList;
-	});
+        // Override matchMedia to report reduced motion is preferred. The
+        // stylesheet above won't trigger without this in a test env.
+        originalMatchMedia = window.matchMedia;
+        window.matchMedia = (query: string) =>
+            ({
+                matches: query.includes('reduce'),
+                media: query,
+                addEventListener: () => {},
+                removeEventListener: () => {},
+                addListener: () => {},
+                removeListener: () => {},
+                onchange: null,
+                dispatchEvent: () => true
+            }) as MediaQueryList;
+    });
 
-	afterEach(() => {
-		document.getElementById('reduced-motion-override')?.remove();
-		window.matchMedia = originalMatchMedia;
-	});
+    afterEach(() => {
+        document.getElementById('reduced-motion-override')?.remove();
+        window.matchMedia = originalMatchMedia;
+    });
 
-	it('modal -- content present immediately on open (~no transition)', async () => {
-		const start = performance.now();
-		render(ModalFixture, { open: true });
-		await flush();
+    it('modal -- content present immediately on open (~no transition)', async () => {
+        const start = performance.now();
+        render(ModalFixture, { open: true });
+        await flush();
 
-		const elapsed = performance.now() - start;
-		const title = document.querySelector('h1');
-		expect(title?.textContent).toMatch(/Modal Title/);
+        const elapsed = performance.now() - start;
+        const title = document.querySelector('h1');
+        expect(title?.textContent).toMatch(/Modal Title/);
 
-		// Threshold is permissive -- we want to catch animations that take
-		// hundreds of ms, not micro-jitter from the test setup itself.
-		expect(elapsed).toBeLessThan(500);
-	});
+        // Threshold is permissive -- we want to catch animations that take
+        // hundreds of ms, not micro-jitter from the test setup itself.
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('sheet -- content present immediately on open', async () => {
-		const start = performance.now();
-		render(SheetFixture, { open: true });
-		await flush();
-		const elapsed = performance.now() - start;
+    it('sheet -- content present immediately on open', async () => {
+        const start = performance.now();
+        render(SheetFixture, { open: true });
+        await flush();
+        const elapsed = performance.now() - start;
 
-		// Sheet has an outro `visible` flag tied to animationend, but for the
-		// INTRO with reduced motion the content should be present.
-		const panel = document.querySelector('[data-ui="sheet-content"]');
-		expect(panel).toBeInTheDocument();
-		expect(elapsed).toBeLessThan(500);
-	});
+        // Sheet has an outro `visible` flag tied to animationend, but for the
+        // INTRO with reduced motion the content should be present.
+        const panel = document.querySelector('[data-ui="sheet-content"]');
+        expect(panel).toBeInTheDocument();
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('popover -- content present immediately after trigger click', async () => {
-		render(PopoverFixture, { open: false });
-		await flush();
-		const start = performance.now();
-		(
-			document.querySelector('[data-testid="popover-trigger-label"]')?.closest('button') as
-				| HTMLButtonElement
-				| undefined
-		)?.click();
-		await flush();
-		const elapsed = performance.now() - start;
+    it('popover -- content present immediately after trigger click', async () => {
+        render(PopoverFixture, { open: false });
+        await flush();
+        const start = performance.now();
+        (
+            document.querySelector('[data-testid="popover-trigger-label"]')?.closest('button') as
+                | HTMLButtonElement
+                | undefined
+        )?.click();
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.body.textContent).toMatch(/Popover Title/);
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.body.textContent).toMatch(/Popover Title/);
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('alert-dialog -- content present immediately on open', async () => {
-		const start = performance.now();
-		render(AlertDialogFixture, { open: true });
-		await flush();
-		const elapsed = performance.now() - start;
+    it('alert-dialog -- content present immediately on open', async () => {
+        const start = performance.now();
+        render(AlertDialogFixture, { open: true });
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.body.textContent).toMatch(/Delete project\?/);
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.body.textContent).toMatch(/Delete project\?/);
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('command -- content present immediately on open', async () => {
-		const start = performance.now();
-		render(CommandFixture, { open: true });
-		await flush();
-		const elapsed = performance.now() - start;
+    it('command -- content present immediately on open', async () => {
+        const start = performance.now();
+        render(CommandFixture, { open: true });
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.querySelector('[data-ui="command-content"]')).toBeInTheDocument();
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.querySelector('[data-ui="command-content"]')).toBeInTheDocument();
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('dropdown-menu -- items present immediately after trigger click', async () => {
-		render(DropdownMenuFixture, {});
-		await flush();
-		const start = performance.now();
-		(document.querySelector('[data-testid="dropdown-trigger"]') as HTMLElement | null)?.click();
-		await flush();
-		const elapsed = performance.now() - start;
+    it('dropdown-menu -- items present immediately after trigger click', async () => {
+        render(DropdownMenuFixture, {});
+        await flush();
+        const start = performance.now();
+        (document.querySelector('[data-testid="dropdown-trigger"]') as HTMLElement | null)?.click();
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.body.textContent).toMatch(/Item one/);
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.body.textContent).toMatch(/Item one/);
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('accordion -- opens immediately on trigger click with reduced motion', async () => {
-		render(AccordionFixture, { type: 'single', value: undefined });
-		await flush();
-		const start = performance.now();
-		(document.querySelector('[data-testid="trig-a"]') as HTMLElement | null)?.click();
-		await flush();
-		const elapsed = performance.now() - start;
+    it('accordion -- opens immediately on trigger click with reduced motion', async () => {
+        render(AccordionFixture, { type: 'single', value: undefined });
+        await flush();
+        const start = performance.now();
+        (document.querySelector('[data-testid="trig-a"]') as HTMLElement | null)?.click();
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.body.textContent).toMatch(/Content A/);
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.body.textContent).toMatch(/Content A/);
+        expect(elapsed).toBeLessThan(500);
+    });
 
-	it('collapsible -- opens immediately on trigger click', async () => {
-		render(CollapsibleFixture, { open: false });
-		await flush();
-		const start = performance.now();
-		(document.querySelector('[data-testid="collapsible-trigger"]') as HTMLElement | null)?.click();
-		await flush();
-		const elapsed = performance.now() - start;
+    it('collapsible -- opens immediately on trigger click', async () => {
+        render(CollapsibleFixture, { open: false });
+        await flush();
+        const start = performance.now();
+        (
+            document.querySelector('[data-testid="collapsible-trigger"]') as HTMLElement | null
+        )?.click();
+        await flush();
+        const elapsed = performance.now() - start;
 
-		expect(document.body.textContent).toMatch(/Collapsible content/);
-		expect(elapsed).toBeLessThan(500);
-	});
+        expect(document.body.textContent).toMatch(/Collapsible content/);
+        expect(elapsed).toBeLessThan(500);
+    });
 });
 
 describe('Reduced motion -- sivir DOES auto-zero its motion CSS variables under prefers-reduced-motion (P3-F14 fixed)', () => {
-	it("sivir's ui.css includes a @media (prefers-reduced-motion: reduce) block", async () => {
-		// Inspect the loaded stylesheets. ui.css now includes the block
-		// (P3-F14 fix). At least one rule should match.
-		const sheets = Array.from(document.styleSheets).filter((s) => {
-			try {
-				return s.cssRules && s.href === null;
-			} catch {
-				return false;
-			}
-		});
-		const sheetsText = sheets
-			.flatMap((sheet) => {
-				try {
-					return Array.from(sheet.cssRules ?? []).map((r) => r.cssText);
-				} catch {
-					return [] as string[];
-				}
-			})
-			.join('\n');
+    it("sivir's ui.css includes a @media (prefers-reduced-motion: reduce) block", async () => {
+        // Inspect the loaded stylesheets. ui.css now includes the block
+        // (P3-F14 fix). At least one rule should match.
+        const sheets = Array.from(document.styleSheets).filter((s) => {
+            try {
+                return s.cssRules && s.href === null;
+            } catch {
+                return false;
+            }
+        });
+        const sheetsText = sheets
+            .flatMap((sheet) => {
+                try {
+                    return Array.from(sheet.cssRules ?? []).map((r) => r.cssText);
+                } catch {
+                    return [] as string[];
+                }
+            })
+            .join('\n');
 
-		const reducedMotionDeclarations = sheetsText.match(/@media[^{]*prefers-reduced-motion[^{]*\{/g);
-		expect(reducedMotionDeclarations?.length ?? 0).toBeGreaterThan(0);
-	});
+        const reducedMotionDeclarations = sheetsText.match(
+            /@media[^{]*prefers-reduced-motion[^{]*\{/g
+        );
+        expect(reducedMotionDeclarations?.length ?? 0).toBeGreaterThan(0);
+    });
 });

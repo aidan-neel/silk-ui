@@ -1,96 +1,179 @@
 <script lang="ts">
-	import { tick } from 'svelte';
-	import type { ComboboxState, ComboboxItem } from '.';
-	import * as Popover from '@sivir-ui/svelte/components/popover';
-	import { cn } from '@sivir-ui/svelte/utils';
-	import ChevronDown from '@lucide/svelte/icons/chevron-down';
-	import Fuse from 'fuse.js';
-	import { getComboboxContext } from './context.svelte';
+    import { onMount, tick } from 'svelte';
+    import type { ComboboxItem } from '.';
+    import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
+    import { button } from '../button/variants';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import Fuse from 'fuse.js';
+    import { getComboboxContext } from './context.svelte';
+    import { getPopoverContext } from '../popover/context.svelte';
 
-	const { id, placeholder, state: comboboxState } = getComboboxContext();
+    const { id, state: comboboxState } = getComboboxContext();
+    const { state: popoverState } = getPopoverContext();
 
-	interface Props extends Omit<Popover.PopoverTriggerProps, 'children'> {
-		class?: string;
-		threshold?: number;
-	}
+    type Props = Omit<PopoverTriggerProps, 'children'> & {
+        placeholder?: string;
+        searchPlacement?: 'trigger' | 'menu';
+        threshold?: number;
+    };
+    let {
+        class: className,
+        placeholder = 'Select…',
+        searchPlacement = 'trigger',
+        threshold = 0.28,
+        variant = 'outline',
+        size = 'md',
+        disabled = false,
+        onclick,
+        onopen,
+        'aria-label': ariaLabel,
+        ...rest
+    }: Props = $props();
 
-	const { class: className, threshold = 0.28, variant = 'outline', ...rest }: Props = $props();
+    let triggerElement = $state<HTMLDivElement>();
+    let inputElement = $state<HTMLInputElement>();
 
-	let inputElement: HTMLInputElement | undefined = $state();
-	const fuse = $derived(
-		new Fuse(Array.from(comboboxState.items), {
-			keys: ['value', 'label'],
-			threshold,
-			ignoreLocation: true,
-			minMatchCharLength: 1
-		})
-	);
+    $effect(() => {
+        comboboxState.searchPlacement = searchPlacement;
+        comboboxState.threshold = threshold;
+    });
+    const fuse = $derived(
+        new Fuse(Array.from(comboboxState.items), {
+            keys: ['value', 'label'],
+            threshold,
+            ignoreLocation: true,
+            minMatchCharLength: 1
+        })
+    );
+    const available = $derived(
+        comboboxState.searchContent
+            ? Array.from(comboboxState.results)
+            : Array.from(comboboxState.items)
+    );
+    const activeDescendant = $derived(
+        available.find((item) => item.value === comboboxState.activeValue)?.id
+    );
+    const displayValue = $derived(
+        searchPlacement === 'trigger' && comboboxState.open
+            ? comboboxState.searchContent
+            : (comboboxState.selected?.label ?? '')
+    );
 
-	function handleInput() {
-		comboboxState.results = new Set<ComboboxItem>(
-			fuse.search(comboboxState.searchContent).map((result) => result.item)
-		);
-	}
+    onMount(() => {
+        popoverState.buttonRef = triggerElement ?? null;
+    });
 
-	function handleInputKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			const firstResult = [...comboboxState.results][0];
-			if (firstResult) {
-				comboboxState.selected = firstResult;
-				comboboxState.open = false;
-				firstResult.callback?.();
-			}
-		}
-	}
+    function handleInput(event: Event) {
+        if (searchPlacement === 'menu') {
+            return;
+        }
+        comboboxState.searchContent = (event.currentTarget as HTMLInputElement).value;
+        comboboxState.results = new Set<ComboboxItem>(
+            fuse.search(comboboxState.searchContent).map((result) => result.item)
+        );
+        comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
+    }
 
-	$effect(() => {
-		if (!comboboxState.open) return;
-		void tick().then(() => {
-			inputElement?.focus({ preventScroll: true });
-			inputElement?.select();
-		});
-	});
+    function open() {
+        if (disabled || comboboxState.open) {
+            return;
+        }
+        onopen?.();
+        comboboxState.open = true;
+        onclick?.();
+    }
+
+    function handleInputKeydown(event: KeyboardEvent) {
+        const activeIndex = available.findIndex((item) => item.value === comboboxState.activeValue);
+        if (
+            event.key === 'ArrowDown' ||
+            event.key === 'ArrowUp' ||
+            event.key === 'Home' ||
+            event.key === 'End'
+        ) {
+            event.preventDefault();
+            if (!comboboxState.open) {
+                open();
+            }
+            const index =
+                event.key === 'Home'
+                    ? 0
+                    : event.key === 'End'
+                      ? available.length - 1
+                      : event.key === 'ArrowDown'
+                        ? (activeIndex + 1 + available.length) % available.length
+                        : (activeIndex - 1 + available.length) % available.length;
+            const next = available[index];
+            if (next) {
+                comboboxState.activeValue = next.value;
+                next.ref?.scrollIntoView({ block: 'nearest' });
+            }
+            return;
+        }
+        if (event.key === 'Enter' && comboboxState.open) {
+            event.preventDefault();
+            const active =
+                available.find((item) => item.value === comboboxState.activeValue) ?? available[0];
+            if (active) {
+                comboboxState.selected = active;
+                comboboxState.open = false;
+                active.callback?.();
+            }
+        }
+    }
+
+    $effect(() => {
+        if (!comboboxState.open) {
+            return;
+        }
+        if (searchPlacement === 'menu') {
+            return;
+        }
+        void tick().then(() => {
+            inputElement?.focus({ preventScroll: true });
+            inputElement?.select();
+        });
+    });
 </script>
 
-<Popover.Trigger
-	{...rest}
-	{variant}
-	role="combobox"
-	aria-haspopup="listbox"
-	aria-controls={`combobox-${id}-listbox`}
-	aria-expanded={comboboxState.open}
-	aria-label={comboboxState.selected?.label
-		? `Selected ${comboboxState.selected.label}`
-		: 'Open combobox'}
-	class={cn(
-		className,
-		'flex flex-row items-center justify-between focus-within:shadow-[var(--focus-ring)]',
-		comboboxState.selected?.label ? 'text-foreground' : 'text-foreground-muted'
-	)}
+<div
+    bind:this={triggerElement}
+    data-state={comboboxState.open ? 'open' : 'closed'}
+    class={cn(
+        className,
+        button({ variant, size }),
+        'relative px-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
+        disabled && 'pointer-events-none opacity-40'
+    )}
 >
-	<div class="min-w-0 flex-1 text-left">
-		{#if comboboxState.open}
-			<input
-				bind:this={inputElement}
-				bind:value={comboboxState.searchContent}
-				{placeholder}
-				oninput={handleInput}
-				onkeydown={handleInputKeydown}
-				class="w-full h-full bg-transparent text-foreground [font-size:var(--font-size-button)] [font-weight:var(--font-weight-button,500)] [letter-spacing:var(--tracking-button,0em)] placeholder:text-foreground-muted placeholder:[font-weight:var(--font-weight-button,500)] focus:outline-none"
-				aria-label="Search options"
-			/>
-		{:else if comboboxState.selected?.label}
-			<span class="block truncate text-foreground [font-weight:var(--font-weight-button,500)]">
-				{comboboxState.selected.label}
-			</span>
-		{:else}
-			<span
-				class="block truncate text-foreground-muted [font-weight:var(--font-weight-button,500)]"
-			>
-				{placeholder}
-			</span>
-		{/if}
-	</div>
-	<ChevronDown size={18} class="ml-2 flex-shrink-0 text-foreground-muted" aria-hidden="true" />
-</Popover.Trigger>
+    <input
+        bind:this={inputElement}
+        {...rest}
+        type="text"
+        role="combobox"
+        value={displayValue}
+        readonly={searchPlacement === 'menu' || !comboboxState.open}
+        {disabled}
+        placeholder={comboboxState.open || !comboboxState.selected ? placeholder : undefined}
+        autocomplete="off"
+        aria-label={ariaLabel ??
+            (comboboxState.selected?.label
+                ? `Selected ${comboboxState.selected.label}`
+                : 'Open combobox')}
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        aria-controls={`combobox-${id}-listbox`}
+        aria-expanded={comboboxState.open}
+        aria-activedescendant={activeDescendant}
+        onclick={open}
+        oninput={handleInput}
+        onkeydown={handleInputKeydown}
+        class="h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted"
+    />
+    <ChevronDown
+        size={18}
+        class="pointer-events-none absolute top-1/2 right-3 shrink-0 -translate-y-1/2 text-foreground-muted"
+        aria-hidden="true"
+    />
+</div>

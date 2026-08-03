@@ -1,10 +1,11 @@
 export const manifest = {
     name: 'tool',
-    version: '1.0.0',
+    version: '1.2.0',
     visibility: 'public',
-    description: 'Compact, expandable AI tool calls for chat transcripts.',
+    description: 'Compact, expandable AI tool calls for chat transcripts. Use variant="quiet" for a low-emphasis, no-hover-fill task summary.',
     files: [
         'components/tool/tool.svelte',
+        'components/tool/tool-item.svelte',
         'components/tool/tool-input.svelte',
         'components/tool/tool-output.svelte',
         'components/tool/index.ts',

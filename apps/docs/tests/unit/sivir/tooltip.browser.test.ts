@@ -17,106 +17,106 @@ import { resetSharedTooltipForTests } from '@sivir-ui/svelte/components/tooltip/
  */
 
 async function flush() {
-	await tick();
-	await tick();
-	await new Promise((r) => setTimeout(r, 20));
+    await tick();
+    await tick();
+    await new Promise((r) => setTimeout(r, 20));
 }
 
 // The visible tooltip is the shared, body-level bubble; Tooltip.Content only
 // reports the authored label off-screen (it's always in the DOM).
 function bubble() {
-	return document.querySelector('[data-sivir-tooltip]') as HTMLElement | null;
+    return document.querySelector('[data-sivir-tooltip]') as HTMLElement | null;
 }
 function tooltipShown() {
-	const el = bubble();
-	return !!el && el.style.opacity === '1';
+    const el = bubble();
+    return !!el && el.style.opacity === '1';
 }
 
 beforeEach(() => {
-	resetSharedTooltipForTests();
+    resetSharedTooltipForTests();
 });
 
 describe('Tooltip -- closed initially, no bubble shown', () => {
-	it('the shared bubble is not shown before hover', async () => {
-		render(TooltipFixture, { delay: 10, closeDelay: 10 });
-		await flush();
-		expect(tooltipShown()).toBe(false);
-	});
+    it('the shared bubble is not shown before hover', async () => {
+        render(TooltipFixture, { delay: 10, closeDelay: 10 });
+        await flush();
+        expect(tooltipShown()).toBe(false);
+    });
 });
 
 describe('Tooltip -- hover opens after the configured delay', () => {
-	it('the bubble becomes visible after the pointer enters the trigger', async () => {
-		render(TooltipFixture, { delay: 10, closeDelay: 10 });
-		await flush();
+    it('the bubble becomes visible after the pointer enters the trigger', async () => {
+        render(TooltipFixture, { delay: 10, closeDelay: 10 });
+        await flush();
 
-		await page.getByTestId('tooltip-trigger').hover();
-		// Wait past the open delay + a frame to settle.
-		await new Promise((r) => setTimeout(r, 80));
-		await flush();
+        await page.getByTestId('tooltip-trigger').hover();
+        // Wait past the open delay + a frame to settle.
+        await new Promise((r) => setTimeout(r, 80));
+        await flush();
 
-		expect(tooltipShown()).toBe(true);
-	});
+        expect(tooltipShown()).toBe(true);
+    });
 
-	it('role="tooltip" is set on the rendered content', async () => {
-		render(TooltipFixture, { delay: 10, closeDelay: 10 });
-		await flush();
-		await page.getByTestId('tooltip-trigger').hover();
-		await new Promise((r) => setTimeout(r, 80));
-		await flush();
+    it('role="tooltip" is set on the rendered content', async () => {
+        render(TooltipFixture, { delay: 10, closeDelay: 10 });
+        await flush();
+        await page.getByTestId('tooltip-trigger').hover();
+        await new Promise((r) => setTimeout(r, 80));
+        await flush();
 
-		const tooltipEl = document.querySelector('[role="tooltip"]');
-		expect(tooltipEl).toBeInTheDocument();
-		// Assert the authored label through the off-screen reporter.
-		const body = document.querySelector('[data-testid="tooltip-body"]');
-		expect(body?.textContent).toContain('Tooltip content');
-	});
+        const tooltipEl = document.querySelector('[role="tooltip"]');
+        expect(tooltipEl).toBeInTheDocument();
+        // Assert the authored label through the off-screen reporter.
+        const body = document.querySelector('[data-testid="tooltip-body"]');
+        expect(body?.textContent).toContain('Tooltip content');
+    });
 
-	it('uses the default delay of 125ms when not overridden', async () => {
-		render(TooltipFixture, {});
-		await flush();
-		const trigger = document.querySelector('[data-testid="tooltip-trigger"]')?.parentElement;
-		trigger?.dispatchEvent(new MouseEvent('mouseenter'));
-		await new Promise((r) => setTimeout(r, 20));
-		await flush();
+    it('uses the default delay of 125ms when not overridden', async () => {
+        render(TooltipFixture, {});
+        await flush();
+        const trigger = document.querySelector('[data-testid="tooltip-trigger"]')?.parentElement;
+        trigger?.dispatchEvent(new MouseEvent('mouseenter'));
+        await new Promise((r) => setTimeout(r, 20));
+        await flush();
 
-		// Roughly 40ms after hover, the default 125ms delay has not elapsed.
-		expect(tooltipShown()).toBe(false);
-	});
+        // Roughly 40ms after hover, the default 125ms delay has not elapsed.
+        expect(tooltipShown()).toBe(false);
+    });
 });
 
 describe('Tooltip -- leave closes after closeDelay', () => {
-	it('content goes away after pointer leaves the trigger', async () => {
-		render(TooltipFixture, { delay: 10, closeDelay: 10 });
-		await flush();
+    it('content goes away after pointer leaves the trigger', async () => {
+        render(TooltipFixture, { delay: 10, closeDelay: 10 });
+        await flush();
 
-		await page.getByTestId('tooltip-trigger').hover();
-		await new Promise((r) => setTimeout(r, 80));
-		await flush();
-		expect(tooltipShown()).toBe(true);
+        await page.getByTestId('tooltip-trigger').hover();
+        await new Promise((r) => setTimeout(r, 80));
+        await flush();
+        expect(tooltipShown()).toBe(true);
 
-		// Move pointer away from trigger via synthetic leave events (vitest's
-		// BrowserPage has no positional hover; element-level dispatch covers it).
-		const trigger = document.querySelector('[data-testid="tooltip-trigger"]')?.parentElement;
-		trigger?.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
-		trigger?.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
-		await new Promise((r) => setTimeout(r, 80));
-		await flush();
+        // Move pointer away from trigger via synthetic leave events (vitest's
+        // BrowserPage has no positional hover; element-level dispatch covers it).
+        const trigger = document.querySelector('[data-testid="tooltip-trigger"]')?.parentElement;
+        trigger?.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+        trigger?.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+        await new Promise((r) => setTimeout(r, 80));
+        await flush();
 
-		expect(tooltipShown()).toBe(false);
-	});
+        expect(tooltipShown()).toBe(false);
+    });
 });
 
 describe('Tooltip -- content is not interactive (aria-modal not applied for role="none" wrapper)', () => {
-	it('no aria-modal attribute on the role="tooltip" content', async () => {
-		render(TooltipFixture, { delay: 10, closeDelay: 10 });
-		await flush();
-		await page.getByTestId('tooltip-trigger').hover();
-		await new Promise((r) => setTimeout(r, 80));
-		await flush();
+    it('no aria-modal attribute on the role="tooltip" content', async () => {
+        render(TooltipFixture, { delay: 10, closeDelay: 10 });
+        await flush();
+        await page.getByTestId('tooltip-trigger').hover();
+        await new Promise((r) => setTimeout(r, 80));
+        await flush();
 
-		const tooltipEl = document.querySelector('[role="tooltip"]');
-		expect(tooltipEl).toBeInTheDocument();
-		// role="tooltip" must NOT carry aria-modal -- only dialog/alertdialog do.
-		expect(tooltipEl?.hasAttribute('aria-modal')).toBe(false);
-	});
+        const tooltipEl = document.querySelector('[role="tooltip"]');
+        expect(tooltipEl).toBeInTheDocument();
+        // role="tooltip" must NOT carry aria-modal -- only dialog/alertdialog do.
+        expect(tooltipEl?.hasAttribute('aria-modal')).toBe(false);
+    });
 });

@@ -5,167 +5,207 @@
 @layer theme, base, components, utilities;
 
 @font-face {
-	font-family: 'SF Mono';
-	src: url('/fonts/SFMono-Light.otf') format('opentype');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'SF Mono';
+    src: url('/fonts/SFMono-Light.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html,
 body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
 }
 
 /* Reserve scrollbar space so opening an overlay (which locks body scroll)
    never shifts centered content sideways. */
 html {
-	scrollbar-gutter: stable;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    scrollbar-gutter: stable;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3 {
-	text-wrap: balance;
+    text-wrap: balance;
 }
 
 p,
 li,
 figcaption,
 blockquote {
-	text-wrap: pretty;
+    text-wrap: pretty;
 }
 
 /* Hide scrollbar on the element itself */
 .hide-scrollbar {
-	-ms-overflow-style: none !important;
-	scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-	display: none !important;
+    display: none !important;
 }
 
 /* Hide scrollbar on the element and all descendants */
 .hide-scrollbar-all,
 .hide-scrollbar-all * {
-	-ms-overflow-style: none !important;
-	scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 }
 
 .hide-scrollbar-all::-webkit-scrollbar,
 .hide-scrollbar-all *::-webkit-scrollbar {
-	display: none !important;
+    display: none !important;
 }
 
 @layer base {
-	body {
-		background-color: var(--color-background);
-		color: var(--color-foreground);
-		font-family: var(--font-sans), sans-serif;
-		font-size: var(--font-size-body, 14px);
-		font-weight: var(--font-weight-body, 400);
-		line-height: 1.5;
-		font-synthesis-weight: none;
-		text-rendering: optimizeLegibility;
-	}
+    body {
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        font-family: var(--font-sans), sans-serif;
+        font-size: var(--font-size-body, 14px);
+        font-weight: var(--font-weight-body, 400);
+        line-height: 1.5;
+        font-synthesis-weight: none;
+        text-rendering: optimizeLegibility;
+    }
 
-	[data-docs-page] :where(p, li) > code {
-		border-radius: var(--radius-sm);
-		background-color: var(--color-secondary);
-		padding: 0.1em 0.35em;
-		font-family: var(--font-mono), monospace;
-		font-size: 0.875em;
-	}
+    [data-docs-page] :where(p, li) > code {
+        border-radius: var(--radius-sm);
+        background-color: var(--color-secondary);
+        padding: 0.1em 0.35em;
+        font-family: var(--font-mono), monospace;
+        font-size: 0.875em;
+    }
 }
 
 .home-page-bg {
-	position: fixed;
-	inset: 0;
-	z-index: -10;
-	pointer-events: none;
-	background-image:
-		radial-gradient(
-			circle at 12% 0%,
-			color-mix(in srgb, var(--color-primary) 14%, transparent) 0%,
-			transparent 36%
-		),
-		radial-gradient(
-			circle at 88% 8%,
-			color-mix(in srgb, var(--color-primary) 8%, transparent) 0%,
-			transparent 28%
-		),
-		linear-gradient(
-			180deg,
-			color-mix(in srgb, var(--color-background) 94%, var(--color-primary) 4%) 0%,
-			var(--color-background) 62%
-		);
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    background-image:
+        radial-gradient(
+            circle at 12% 0%,
+            color-mix(in srgb, var(--color-primary) 14%, transparent) 0%,
+            transparent 36%
+        ),
+        radial-gradient(
+            circle at 88% 8%,
+            color-mix(in srgb, var(--color-primary) 8%, transparent) 0%,
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--color-background) 94%, var(--color-primary) 4%) 0%,
+            var(--color-background) 62%
+        );
 }
 
 ::selection {
-	background-color: color-mix(in srgb, var(--color-primary) 32%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 32%, transparent);
 }
 
 pre {
-	background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 .h1 {
-	font-size: 1.3rem;
-	font-weight: var(--font-weight-header, 500);
-	font-family: var(--font-header), sans-serif;
-	letter-spacing: var(--tracking-header, -0.02em);
-	line-height: 1.1;
-	margin-bottom: 0.6rem;
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-header, 500);
+    font-family: var(--font-header), sans-serif;
+    letter-spacing: var(--tracking-header, -0.02em);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
 }
 
 .h2 {
-	font-size: 1rem;
-	font-family: var(--font-header), sans-serif;
-	font-weight: var(--font-weight-header, 600);
-	letter-spacing: var(--tracking-header, -0.02em);
-	line-height: 1.15;
-	margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-family: var(--font-header), sans-serif;
+    font-weight: var(--font-weight-header, 600);
+    letter-spacing: var(--tracking-header, -0.02em);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
 }
 
 .docs-section-heading {
-	font-size: 1.0625rem;
-	font-family: var(--font-header), sans-serif;
-	font-weight: var(--font-weight-header, 600);
-	letter-spacing: var(--tracking-header, -0.015em);
-	line-height: 1.3;
-	color: var(--color-foreground);
+    font-size: 1.0625rem;
+    font-family: var(--font-header), sans-serif;
+    font-weight: var(--font-weight-header, 600);
+    letter-spacing: var(--tracking-header, -0.015em);
+    line-height: 1.3;
+    color: var(--color-foreground);
 }
 
 .docs-subsection-heading {
-	font-size: 1rem;
-	font-family: var(--font-header), sans-serif;
-	font-weight: var(--font-weight-header, 600);
-	letter-spacing: var(--tracking-header, -0.02em);
-	line-height: 1.2;
-	color: var(--color-foreground);
+    font-size: 1rem;
+    font-family: var(--font-header), sans-serif;
+    font-weight: var(--font-weight-header, 600);
+    letter-spacing: var(--tracking-header, -0.02em);
+    line-height: 1.2;
+    color: var(--color-foreground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    [data-docs-page] > :where(header, section) {
+        animation: docs-block-in 280ms var(--ease-out) both;
+        transform-origin: top center;
+    }
+
+    [data-docs-page] > :where(header, section):nth-child(2) {
+        animation-delay: 45ms;
+    }
+
+    [data-docs-page] > :where(header, section):nth-child(3) {
+        animation-delay: 80ms;
+    }
+
+    [data-docs-page] > :where(header, section):nth-child(4) {
+        animation-delay: 115ms;
+    }
+
+    [data-docs-page] > :where(header, section):nth-child(5) {
+        animation-delay: 150ms;
+    }
+
+    [data-docs-page] > :where(header, section):nth-child(n + 6) {
+        animation-delay: 180ms;
+    }
+}
+
+@keyframes docs-block-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.992);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 ::-webkit-scrollbar {
-	width: 0;
-	height: 0;
+    width: 0;
+    height: 0;
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--color-secondary);
-	border-radius: 999px;
+    background: var(--color-secondary);
+    border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--color-border-strong);
+    background: var(--color-border-strong);
 }
 
 /* ─── Syntax highlighting tokens ────────────────────────────────
@@ -173,58 +213,58 @@ pre {
    Dark mode: White base with gray, blue, yellow accents
    ──────────────────────────────────────────────────────────────── */
 .tok-comment {
-	color: #b0b0b0;
-	font-style: italic;
+    color: #b0b0b0;
+    font-style: italic;
 }
 .tok-string {
-	color: #565656;
+    color: #565656;
 }
 .tok-keyword {
-	color: #565656;
+    color: #565656;
 }
 .tok-number {
-	color: #868686;
+    color: #868686;
 }
 .tok-variable {
-	color: #565656;
+    color: #565656;
 }
 .tok-type {
-	color: #868686;
+    color: #868686;
 }
 .tok-tag {
-	color: #868686;
+    color: #868686;
 }
 .tok-attr {
-	color: #868686;
+    color: #868686;
 }
 .tok-fn {
-	color: #565656;
+    color: #565656;
 }
 
 .dark .tok-comment {
-	color: #a0a0a0;
+    color: #a0a0a0;
 }
 .dark .tok-string {
-	color: #ffc966;
+    color: #ffc966;
 }
 .dark .tok-keyword {
-	color: #7ec4ff;
+    color: #7ec4ff;
 }
 .dark .tok-number {
-	color: #ffc966;
+    color: #ffc966;
 }
 .dark .tok-variable {
-	color: #f0f0f0;
+    color: #f0f0f0;
 }
 .dark .tok-type {
-	color: #7ec4ff;
+    color: #7ec4ff;
 }
 .dark .tok-tag {
-	color: #a0a0a0;
+    color: #a0a0a0;
 }
 .dark .tok-attr {
-	color: #7ec4ff;
+    color: #7ec4ff;
 }
 .dark .tok-fn {
-	color: #7ec4ff;
+    color: #7ec4ff;
 }

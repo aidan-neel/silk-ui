@@ -8,20 +8,20 @@ import Item from './command-item.svelte';
 import Group from './command-group.svelte';
 
 export type CommandItem = {
-	id: string;
-	name: string;
-	callback: (() => void) | undefined;
-	ref: HTMLButtonElement | HTMLAnchorElement | undefined;
-	disabled: boolean;
+    id: string;
+    name: string;
+    callback: (() => void) | undefined;
+    ref: HTMLButtonElement | HTMLAnchorElement | undefined;
+    disabled: boolean;
 };
 
 export type CommandState = {
-	id: string;
-	items: CommandItem[];
-	results: CommandItem[];
-	searchContent: string;
-	activeId: string | undefined;
-	itemsVersion: number;
+    id: string;
+    items: CommandItem[];
+    results: CommandItem[];
+    searchContent: string;
+    activeId: string | undefined;
+    itemsVersion: number;
 };
 
 export { Root, Content, Trigger, Separator, Results, Search, Item, Group };

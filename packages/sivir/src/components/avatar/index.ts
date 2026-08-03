@@ -6,19 +6,19 @@ import Image from './avatar-image.svelte';
 import Fallback from './avatar-fallback.svelte';
 
 export type AvatarProps = {
-	size?: 'sm' | 'md' | 'lg' | 'xl';
-	shape?: 'circle' | 'square';
-	children?: Snippet;
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+    shape?: 'circle' | 'square';
+    children?: Snippet;
 } & DefaultProps;
 
 export type AvatarImageProps = {
-	src?: string;
-	alt?: string;
+    src?: string;
+    alt?: string;
 } & DefaultProps &
-	HTMLImgAttributes;
+    HTMLImgAttributes;
 
 export type AvatarFallbackProps = {
-	children?: Snippet;
+    children?: Snippet;
 } & DefaultProps;
 
 export { Root, Image, Fallback };

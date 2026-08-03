@@ -1,9 +1,21 @@
 <script lang="ts">
-	import { Button } from '@sivir-ui/svelte/components/button';
-	import Loader from '@lucide/svelte/icons/loader-circle';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import type { ButtonStatus } from '@sivir-ui/svelte/components/button';
+
+    let status = $state<ButtonStatus>('idle');
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    function publish() {
+        if (status === 'loading') return;
+        clearTimeout(timer);
+        status = 'loading';
+        timer = setTimeout(() => {
+            status = 'success';
+            timer = setTimeout(() => (status = 'idle'), 1200);
+        }, 1100);
+    }
 </script>
 
-<Button disabled>
-	<Loader size={14} class="animate-spin" />
-	Saving…
+<Button {status} loadingLabel="Publishing…" successLabel="Published" onclick={publish}>
+    Publish
 </Button>

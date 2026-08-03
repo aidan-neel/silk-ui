@@ -23,8 +23,9 @@ import sql from 'highlight.js/lib/languages/sql';
 import markdown from 'highlight.js/lib/languages/markdown';
 let registered = false;
 function ensureRegistered() {
-    if (registered)
+    if (registered) {
         return;
+    }
     registered = true;
     hljs.registerLanguage('javascript', javascript);
     hljs.registerLanguage('typescript', typescript);

@@ -26,5 +26,14 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *   3.2.0:
  *           - Add the `panel` variant: a clickable Button with Panel-compatible
  *             token fallbacks and no component dependency.
+ *   3.3.0:
+ *           - Add controlled loading, success, and error faces with stable width.
+ *           - Give the outline variant a slightly firmer bottom edge.
+ *   3.4.0:
+ *           - Give success and error their own tonal surfaces so semantic text
+ *             never clashes with the original Button variant background.
+ *   3.5.0:
+ *           - Add the `quiet` variant for low-emphasis foreground actions without
+ *             a background fill or underlined hover treatment.
  */
 export declare const manifest: Manifest;

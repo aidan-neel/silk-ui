@@ -25,25 +25,25 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *           wire these or formally deprecate them.
  */
 export const manifest: Manifest = {
-	name: 'hover-card',
-	version: '2.0.0',
-	visibility: 'public',
-	description:
-		'Hover-revealed rich content card with delay + close-delay. Thin popover wrapper with role="dialog" aria-modal="false". Composes popover; ships its own Content + Title + Description for rich-content layout.',
-	role: 'dialog',
-	files: [
-		'components/hover-card/hover-card.svelte',
-		'components/hover-card/hover-card-content.svelte',
-		'components/hover-card/hover-card-trigger.svelte',
-		'components/hover-card/hover-card-title.svelte',
-		'components/hover-card/hover-card-description.svelte',
-		'components/hover-card/index.ts',
-		'components/hover-card/manifest.ts'
-	],
-	components: ['popover'],
-	shared: ['utils.cn'],
-	peerDependencies: {
-		cnfast: '^0.0.8',
-		svelte: '^5.0.0'
-	}
+    name: 'hover-card',
+    version: '2.0.0',
+    visibility: 'public',
+    description:
+        'Hover-revealed rich content card with delay + close-delay. Thin popover wrapper with role="dialog" aria-modal="false". Composes popover; ships its own Content + Title + Description for rich-content layout.',
+    role: 'dialog',
+    files: [
+        'components/hover-card/hover-card.svelte',
+        'components/hover-card/hover-card-content.svelte',
+        'components/hover-card/hover-card-trigger.svelte',
+        'components/hover-card/hover-card-title.svelte',
+        'components/hover-card/hover-card-description.svelte',
+        'components/hover-card/index.ts',
+        'components/hover-card/manifest.ts'
+    ],
+    components: ['popover'],
+    shared: ['utils.cn'],
+    peerDependencies: {
+        cnfast: '^0.0.8',
+        svelte: '^5.0.0'
+    }
 };

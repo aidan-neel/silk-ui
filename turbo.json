@@ -1,36 +1,36 @@
 {
-	"$schema": "https://v2-10-0.turborepo.dev/schema.json",
-	"ui": "stream",
-	"tasks": {
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"devnet": {
-			"cache": false,
-			"persistent": true
-		},
-		"build": {
-			"dependsOn": ["^build", "check"],
-			"outputs": [
-				"build/**",
-				".svelte-kit/**",
-				"dist/**",
-				"registry/**",
-				"prisma/generated/**",
-				".vercel/output/**"
-			]
-		},
-		"check": {
-			"dependsOn": ["^check", "^build"]
-		},
-		"generate": {
-			"inputs": ["prisma/schema.prisma", "prisma.config.ts"],
-			"outputs": ["prisma/generated/**", ".vercel/output/**"]
-		},
-		"lint": {},
-		"test": {
-			"dependsOn": ["^build", "build"]
-		}
-	}
+    "$schema": "https://v2-10-0.turborepo.dev/schema.json",
+    "ui": "stream",
+    "tasks": {
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "devnet": {
+            "cache": false,
+            "persistent": true
+        },
+        "build": {
+            "dependsOn": ["^build", "check"],
+            "outputs": [
+                "build/**",
+                ".svelte-kit/**",
+                "dist/**",
+                "registry/**",
+                "prisma/generated/**",
+                ".vercel/output/**"
+            ]
+        },
+        "check": {
+            "dependsOn": ["^check", "^build"]
+        },
+        "generate": {
+            "inputs": ["prisma/schema.prisma", "prisma.config.ts"],
+            "outputs": ["prisma/generated/**", ".vercel/output/**"]
+        },
+        "lint": {},
+        "test": {
+            "dependsOn": ["^build", "build"]
+        }
+    }
 }

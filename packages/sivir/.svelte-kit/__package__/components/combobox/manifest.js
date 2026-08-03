@@ -10,13 +10,14 @@
  */
 export const manifest = {
     name: 'combobox',
-    version: '2.0.0',
+    version: '2.1.0',
     visibility: 'public',
     description: 'Searchable popover-based picker with fuzzy results via fuse.js.',
     files: [
         'components/combobox/combobox.svelte',
         'components/combobox/combobox-trigger.svelte',
         'components/combobox/combobox-content.svelte',
+        'components/combobox/combobox-search.svelte',
         'components/combobox/combobox-results.svelte',
         'components/combobox/combobox-item.svelte',
         'components/combobox/combobox-label.svelte',
