@@ -68,12 +68,12 @@ const KEYWORDS_SVELTE = new Set([
     'debug'
 ]);
 
-function escape(s: string): string {
+function escapeHtml(s: string): string {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function tok(cls: string, text: string): string {
-    return `<span class="tok-${cls}">${escape(text)}</span>`;
+    return `<span class="tok-${cls}">${escapeHtml(text)}</span>`;
 }
 
 type ClassifyFn = (m: RegExpMatchArray) => string | null;
@@ -85,11 +85,11 @@ function scan(code: string, re: RegExp, classify: ClassifyFn): string {
         if (m.index === undefined || m[0].length === 0) continue;
         const cls = classify(m);
         if (cls === null) continue;
-        out += escape(code.slice(last, m.index));
+        out += escapeHtml(code.slice(last, m.index));
         out += tok(cls, m[0]);
         last = m.index + m[0].length;
     }
-    out += escape(code.slice(last));
+    out += escapeHtml(code.slice(last));
     return out;
 }
 
@@ -182,6 +182,6 @@ export function highlight(code: string, lang: string = 'txt'): string {
         case 'json':
             return highlightJson(code);
         default:
-            return escape(code);
+            return escapeHtml(code);
     }
 }

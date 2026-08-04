@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Select from '@sivir-ui/svelte/components/select';
+import * as Select from '@sivir-ui/svelte/components/select';
 </script>
 
 <Select.Root>

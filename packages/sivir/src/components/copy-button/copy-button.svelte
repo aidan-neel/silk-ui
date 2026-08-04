@@ -1,65 +1,65 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
-    import Copy from '@lucide/svelte/icons/copy';
-    import Check from '@lucide/svelte/icons/check';
-    import { onDestroy } from 'svelte';
-    import type { CopyButtonProps } from '.';
+import Check from '@lucide/svelte/icons/check';
+import Copy from '@lucide/svelte/icons/copy';
+import { Button } from '@sivir-ui/svelte/components/button';
+import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
+import { onDestroy } from 'svelte';
+import type { CopyButtonProps } from '.';
 
-    let {
-        text,
-        label = 'Copy',
-        copiedLabel = 'Copied',
-        duration = 2000,
-        variant = 'ghost',
-        size = 'icon',
-        class: className,
-        oncopy,
-        ...rest
-    }: CopyButtonProps = $props();
+let {
+    text,
+    label = 'Copy',
+    copiedLabel = 'Copied',
+    duration = 2000,
+    variant = 'ghost',
+    size = 'icon',
+    class: className,
+    oncopy,
+    ...rest
+}: CopyButtonProps = $props();
 
-    let copied = $state(false);
-    let timer: ReturnType<typeof setTimeout> | undefined;
+let copied = $state(false);
+let timer: ReturnType<typeof setTimeout> | undefined;
 
-    function fallbackCopy() {
-        if (typeof document === 'undefined' || typeof document.execCommand !== 'function') {
-            return false;
-        }
-
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const copied = document.execCommand('copy');
-        textarea.remove();
-        return copied;
+function fallbackCopy() {
+    if (typeof document === 'undefined' || typeof document.execCommand !== 'function') {
+        return false;
     }
 
-    async function copy() {
-        let didCopy = false;
-        if (typeof navigator !== 'undefined' && navigator.clipboard) {
-            try {
-                await navigator.clipboard.writeText(text);
-                didCopy = true;
-            } catch {
-                didCopy = fallbackCopy();
-            }
-        } else {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    return copied;
+}
+
+async function copy() {
+    let didCopy = false;
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        try {
+            await navigator.clipboard.writeText(text);
+            didCopy = true;
+        } catch {
             didCopy = fallbackCopy();
         }
-        if (!didCopy) {
-            return;
-        }
-
-        copied = true;
-        oncopy?.(text);
-        clearTimeout(timer);
-        timer = setTimeout(() => (copied = false), duration);
+    } else {
+        didCopy = fallbackCopy();
+    }
+    if (!didCopy) {
+        return;
     }
 
-    onDestroy(() => clearTimeout(timer));
+    copied = true;
+    oncopy?.(text);
+    clearTimeout(timer);
+    timer = setTimeout(() => (copied = false), duration);
+}
+
+onDestroy(() => clearTimeout(timer));
 </script>
 
 <Tooltip.Root placement="top" delay={125} closeDelay={80}>

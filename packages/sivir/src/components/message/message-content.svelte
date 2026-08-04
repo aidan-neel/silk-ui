@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { MessageContentProps } from '.';
-    import { getMessageContext } from './context.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { MessageContentProps } from '.';
+import { getMessageContext } from './context.svelte';
 
-    let { children, class: className, ...rest }: MessageContentProps = $props();
-    const message = getMessageContext();
+let { children, class: className, ...rest }: MessageContentProps = $props();
+const message = getMessageContext();
 </script>
 
 <div

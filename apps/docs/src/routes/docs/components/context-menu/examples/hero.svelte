@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
-    import Shortcut from '@sivir-ui/svelte/components/shortcut';
+import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <div class="flex items-center justify-center">

@@ -1,78 +1,78 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { ShowMoreProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import { onMount } from 'svelte';
+import type { ShowMoreProps } from '.';
 
-    let {
-        children,
-        lines = 3,
-        maxHeight = 320,
-        defaultExpanded = false,
-        expanded = $bindable(defaultExpanded),
-        moreLabel = 'Show more',
-        lessLabel = 'Show less',
-        label = 'Details',
-        onExpandedChange,
-        class: className,
-        ...rest
-    }: ShowMoreProps = $props();
+let {
+    children,
+    lines = 3,
+    maxHeight = 320,
+    defaultExpanded = false,
+    expanded = $bindable(defaultExpanded),
+    moreLabel = 'Show more',
+    lessLabel = 'Show less',
+    label = 'Details',
+    onExpandedChange,
+    class: className,
+    ...rest
+}: ShowMoreProps = $props();
 
-    let content = $state<HTMLDivElement>();
-    let region = $state<HTMLDivElement>();
-    let lineHeight = $state<number>();
-    let fullHeight = $state<number>();
-    const regionId = $props.id();
+let content = $state<HTMLDivElement>();
+let region = $state<HTMLDivElement>();
+let lineHeight = $state<number>();
+let fullHeight = $state<number>();
+const regionId = $props.id();
 
-    const collapsedHeight = $derived(
-        lineHeight === undefined || fullHeight === undefined
+const collapsedHeight = $derived(
+    lineHeight === undefined || fullHeight === undefined
+        ? undefined
+        : Math.min(lineHeight * lines, fullHeight)
+);
+const capped = $derived(fullHeight !== undefined && fullHeight > maxHeight);
+const expandable = $derived(
+    lineHeight === undefined || fullHeight === undefined
+        ? true
+        : fullHeight - lineHeight * lines > 1
+);
+const open = $derived(expanded && expandable);
+const height = $derived(
+    open
+        ? fullHeight === undefined
             ? undefined
-            : Math.min(lineHeight * lines, fullHeight)
-    );
-    const capped = $derived(fullHeight !== undefined && fullHeight > maxHeight);
-    const expandable = $derived(
-        lineHeight === undefined || fullHeight === undefined
-            ? true
-            : fullHeight - lineHeight * lines > 1
-    );
-    const open = $derived(expanded && expandable);
-    const height = $derived(
-        open
-            ? fullHeight === undefined
-                ? undefined
-                : Math.min(fullHeight, maxHeight)
-            : collapsedHeight
-    );
-    const scrollable = $derived(open && capped);
-    const veiled = $derived(expandable && (!open || scrollable));
+            : Math.min(fullHeight, maxHeight)
+        : collapsedHeight
+);
+const scrollable = $derived(open && capped);
+const veiled = $derived(expandable && (!open || scrollable));
 
-    function measure() {
-        if (!content) {
-            return;
-        }
-        const styles = getComputedStyle(content);
-        const parsedLineHeight = Number.parseFloat(styles.lineHeight);
-        const parsedFontSize = Number.parseFloat(styles.fontSize);
-        lineHeight = Number.isFinite(parsedLineHeight) ? parsedLineHeight : parsedFontSize * 1.5;
-        fullHeight = content.scrollHeight;
+function measure() {
+    if (!content) {
+        return;
     }
+    const styles = getComputedStyle(content);
+    const parsedLineHeight = Number.parseFloat(styles.lineHeight);
+    const parsedFontSize = Number.parseFloat(styles.fontSize);
+    lineHeight = Number.isFinite(parsedLineHeight) ? parsedLineHeight : parsedFontSize * 1.5;
+    fullHeight = content.scrollHeight;
+}
 
-    function toggle() {
-        if (open) {
-            region?.scrollTo({ top: 0 });
-        }
-        expanded = !expanded;
-        onExpandedChange?.(expanded);
+function toggle() {
+    if (open) {
+        region?.scrollTo({ top: 0 });
     }
+    expanded = !expanded;
+    onExpandedChange?.(expanded);
+}
 
-    onMount(() => {
-        measure();
-        if (!content) {
-            return;
-        }
-        const observer = new ResizeObserver(measure);
-        observer.observe(content);
-        return () => observer.disconnect();
-    });
+onMount(() => {
+    measure();
+    if (!content) {
+        return;
+    }
+    const observer = new ResizeObserver(measure);
+    observer.observe(content);
+    return () => observer.disconnect();
+});
 </script>
 
 <div {...rest} data-ui="show-more" class={cn(className, 'text-foreground')}>

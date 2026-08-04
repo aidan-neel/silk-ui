@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
-    let { overrideClass = '' }: { overrideClass?: string } = $props();
+let { overrideClass = '' }: { overrideClass?: string } = $props();
 </script>
 
 <DropdownMenu.Root>

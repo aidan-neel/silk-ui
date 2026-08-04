@@ -1,15 +1,10 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { ChevronRight } from '@lucide/svelte';
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import type { ContextMenuSubTriggerProps } from '.';
+import { ChevronRight } from '@lucide/svelte';
+import * as Popover from '@sivir-ui/svelte/components/popover';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ContextMenuSubTriggerProps } from '.';
 
-    let {
-        class: className,
-        children,
-        inset = false,
-        ...rest
-    }: ContextMenuSubTriggerProps = $props();
+let { class: className, children, inset = false, ...rest }: ContextMenuSubTriggerProps = $props();
 </script>
 
 <Popover.Trigger

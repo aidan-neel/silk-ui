@@ -1,8 +1,10 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { changelogMarkdown, changelogVersions } from '$lib/changelog';
 import { components } from '$lib/components';
 import { componentMarkdown } from '$lib/llms';
+import { GET as getChangelog } from '../../../src/routes/changelog/[version]/+server';
 import { GET as getLlms } from '../../../src/routes/llms.txt/+server';
 import { GET as getRobots } from '../../../src/routes/robots.txt/+server';
 import { GET as getSitemap } from '../../../src/routes/sitemap.xml/+server';
@@ -58,7 +60,10 @@ describe('docs release contracts', () => {
         }
         expect(body).toContain('<loc>https://preview.example/docs/components</loc>');
         // home + intro + install + theming + components index; themes gallery is post-v1.
-        expect(body.match(/<url>/g)).toHaveLength(components.length + 5);
+        expect(body.match(/<url>/g)).toHaveLength(components.length + 5 + changelogVersions.length);
+        for (const version of changelogVersions) {
+            expect(body).toContain(`<loc>https://preview.example/changelog/${version}</loc>`);
+        }
         expect(body).not.toContain('/themes</loc>');
         expect(body).not.toContain('/themes/studio');
         expect(body).not.toContain('/docs/styling');
@@ -72,6 +77,9 @@ describe('docs release contracts', () => {
 
         expect(response.headers.get('content-type')).toContain('text/markdown');
         expect(index).toContain('https://preview.example/docs/introduction.md');
+        for (const version of changelogVersions) {
+            expect(index).toContain(`https://preview.example/changelog/${version}`);
+        }
         for (const component of components) {
             expect(index).toContain(`https://preview.example/docs/components/${component}.md`);
             const reference = componentMarkdown(component);
@@ -79,6 +87,20 @@ describe('docs release contracts', () => {
             expect(reference).toContain('## API');
             expect(reference).toContain('## Install');
         }
+    });
+
+    it('serves every release as compiled Markdown for integrations', async () => {
+        expect(changelogVersions).toContain('0.2.1');
+        expect(changelogMarkdown('missing')).toBeUndefined();
+
+        const response = (await getChangelog({
+            params: { version: '0.2.1' }
+        } as Parameters<typeof getChangelog>[0])) as Response;
+
+        expect(response.headers.get('content-type')).toContain('text/markdown');
+        expect(await response.text()).toContain('# @sivir-ui/svelte 0.2.1 changelog');
+        expect(changelogMarkdown('0.2.1')).toContain('## Feature');
+        expect(changelogMarkdown('0.2.1')).toContain('versioned Markdown changelog');
     });
 
     it('derives LLM references from current component manifests, APIs, and examples', () => {

@@ -1,17 +1,17 @@
 <script lang="ts">
-    import * as Combobox from '@sivir-ui/svelte/components/combobox';
+import * as Combobox from '@sivir-ui/svelte/components/combobox';
 
-    let {
-        onApple = () => {},
-        onBanana = () => {},
-        onCherry = () => {},
-        searchPlacement = 'trigger'
-    }: {
-        onApple?: () => void;
-        onBanana?: () => void;
-        onCherry?: () => void;
-        searchPlacement?: 'trigger' | 'menu';
-    } = $props();
+let {
+    onApple = () => {},
+    onBanana = () => {},
+    onCherry = () => {},
+    searchPlacement = 'trigger'
+}: {
+    onApple?: () => void;
+    onBanana?: () => void;
+    onCherry?: () => void;
+    searchPlacement?: 'trigger' | 'menu';
+} = $props();
 </script>
 
 <Combobox.Root>

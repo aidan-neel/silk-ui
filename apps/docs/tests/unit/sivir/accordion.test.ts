@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
+import { required } from '../../test-utils';
 
 describe('Accordion -- rendering', () => {
     it('renders one trigger per item', () => {
@@ -108,18 +109,18 @@ describe('Accordion -- multiple mode toggle', () => {
 describe('Accordion -- ARIA', () => {
     it('trigger reflects aria-expanded matching open state', () => {
         render(AccordionFixture, { props: { type: 'single', value: 'a' } });
-        const trigA = screen.getByTestId('trig-a').closest('button')!;
-        const trigB = screen.getByTestId('trig-b').closest('button')!;
+        const trigA = required(screen.getByTestId('trig-a').closest('button'));
+        const trigB = required(screen.getByTestId('trig-b').closest('button'));
         expect(trigA.getAttribute('aria-expanded')).toBe('true');
         expect(trigB.getAttribute('aria-expanded')).toBe('false');
     });
 
     it('aria-controls points to a content element when the item is open', () => {
         render(AccordionFixture, { props: { type: 'single', value: 'a' } });
-        const trigA = screen.getByTestId('trig-a').closest('button')!;
+        const trigA = required(screen.getByTestId('trig-a').closest('button'));
         const ariaControls = trigA.getAttribute('aria-controls');
         expect(ariaControls).toBeTruthy();
-        expect(document.getElementById(ariaControls!)).toBeTruthy();
+        expect(document.getElementById(required(ariaControls))).toBeTruthy();
     });
 });
 

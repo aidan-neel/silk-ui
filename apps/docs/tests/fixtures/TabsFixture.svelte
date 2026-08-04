@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
-    import type { TabsVariant } from '@sivir-ui/svelte/components/tabs';
+import type { TabsVariant } from '@sivir-ui/svelte/components/tabs';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
 
-    let {
-        value = $bindable('one'),
-        orientation = 'horizontal' as 'horizontal' | 'vertical',
-        variant = 'default' as TabsVariant
-    } = $props();
+let {
+    value = $bindable('one'),
+    orientation = 'horizontal' as 'horizontal' | 'vertical',
+    variant = 'default' as TabsVariant
+} = $props();
 </script>
 
 <Tabs.Root bind:value {orientation} {variant}>

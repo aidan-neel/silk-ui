@@ -1,14 +1,13 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Capped from './examples/capped.svelte';
+import CappedSrc from './examples/capped.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Capped from './examples/capped.svelte';
-    import CappedSrc from './examples/capped.svelte?raw';
-
-    const TITLE = 'Show More';
-    const installCommand = 'bunx @sivir-ui/svelte add show-more';
+const TITLE = 'Show More';
+const installCommand = 'bunx @sivir-ui/svelte add show-more';
 </script>
 
 <svelte:head>

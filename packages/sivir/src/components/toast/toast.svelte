@@ -1,45 +1,45 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import Check from '@lucide/svelte/icons/circle-check';
-    import X from '@lucide/svelte/icons/x';
-    import Warning from '@lucide/svelte/icons/triangle-alert';
-    import Info from '@lucide/svelte/icons/info';
-    import CircleX from '@lucide/svelte/icons/circle-x';
-    import Loader from '@lucide/svelte/icons/loader-circle';
-    import type { Toast } from './lib.svelte';
-    import { dismissToast, pauseToast, resumeToast } from './lib.svelte';
-    import Button from '@sivir-ui/svelte/components/button';
-    import { toastIcon, toastProgress } from './variants';
+import Check from '@lucide/svelte/icons/circle-check';
+import CircleX from '@lucide/svelte/icons/circle-x';
+import Info from '@lucide/svelte/icons/info';
+import Loader from '@lucide/svelte/icons/loader-circle';
+import Warning from '@lucide/svelte/icons/triangle-alert';
+import X from '@lucide/svelte/icons/x';
+import Button from '@sivir-ui/svelte/components/button';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { Toast } from './lib.svelte';
+import { dismissToast, pauseToast, resumeToast } from './lib.svelte';
+import { toastIcon, toastProgress } from './variants';
 
-    const { toast }: { toast: Toast } = $props();
+const { toast }: { toast: Toast } = $props();
 
-    const Icon = $derived.by(() => {
-        if (toast.type === 'success') {
-            return Check;
-        }
+const Icon = $derived.by(() => {
+    if (toast.type === 'success') {
+        return Check;
+    }
 
-        if (toast.type === 'error') {
-            return CircleX;
-        }
+    if (toast.type === 'error') {
+        return CircleX;
+    }
 
-        if (toast.type === 'warning') {
-            return Warning;
-        }
+    if (toast.type === 'warning') {
+        return Warning;
+    }
 
-        if (toast.type === 'loading') {
-            return Loader;
-        }
+    if (toast.type === 'loading') {
+        return Loader;
+    }
 
-        if (toast.type === 'info') {
-            return Info;
-        }
+    if (toast.type === 'info') {
+        return Info;
+    }
 
-        return null;
-    });
+    return null;
+});
 
-    const iconColorClass = $derived(toastIcon({ type: toast.type }));
-    const progressColorClass = $derived(toastProgress({ type: toast.type }));
+const iconColorClass = $derived(toastIcon({ type: toast.type }));
+const progressColorClass = $derived(toastProgress({ type: toast.type }));
 </script>
 
 <div

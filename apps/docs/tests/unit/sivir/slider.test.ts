@@ -1,6 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render } from '@testing-library/svelte';
 import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
+import { render } from '@testing-library/svelte';
+import { describe, expect, it, vi } from 'vitest';
+import { queryRequired } from '../../test-utils';
 
 describe('Slider -- rendering', () => {
     it('renders a range input', () => {
@@ -20,7 +21,7 @@ describe('Slider -- rendering', () => {
         const { container } = render(Slider, {
             props: { value: 0, min: -10, max: 200 }
         });
-        const range = container.querySelector('input[type="range"]')!;
+        const range = queryRequired(container, 'input[type="range"]');
         expect(range.getAttribute('aria-valuemin')).toBe('-10');
         expect(range.getAttribute('aria-valuemax')).toBe('200');
     });
@@ -40,7 +41,7 @@ describe('Slider -- bounds and step', () => {
         const { container } = render(Slider, {
             props: { value: 5, min: 0, max: 10 }
         });
-        const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+        const range = queryRequired<HTMLInputElement>(container, 'input[type="range"]');
         expect(range.min).toBe('0');
         expect(range.max).toBe('10');
     });
@@ -59,7 +60,7 @@ describe('Slider -- onValueChange callback', () => {
         const { container } = render(Slider, {
             props: { value: 0, min: 0, max: 100, onValueChange }
         });
-        const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+        const range = queryRequired<HTMLInputElement>(container, 'input[type="range"]');
 
         range.value = '37';
         range.dispatchEvent(new Event('input', { bubbles: true }));
@@ -71,7 +72,7 @@ describe('Slider -- onValueChange callback', () => {
 describe('Slider -- interaction feedback', () => {
     it('keeps the dragging state until the pointer is released', () => {
         const { container } = render(Slider, { props: { value: 0 } });
-        const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+        const range = queryRequired<HTMLInputElement>(container, 'input[type="range"]');
 
         range.dispatchEvent(new Event('pointerdown', { bubbles: true }));
         expect(range).toHaveAttribute('data-dragging');
@@ -82,7 +83,7 @@ describe('Slider -- interaction feedback', () => {
 
     it('does not enter the dragging state when disabled', () => {
         const { container } = render(Slider, { props: { value: 0, disabled: true } });
-        const range = container.querySelector<HTMLInputElement>('input[type="range"]')!;
+        const range = queryRequired<HTMLInputElement>(container, 'input[type="range"]');
 
         range.dispatchEvent(new Event('pointerdown', { bubbles: true }));
 

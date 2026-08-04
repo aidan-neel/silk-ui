@@ -1,23 +1,23 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
-    import ArrowRight from '@lucide/svelte/icons/arrow-right';
-    import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+import ArrowRight from '@lucide/svelte/icons/arrow-right';
+import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Markdown } from '@sivir-ui/svelte/components/markdown';
 
-    const chunks = [
-        '### Incident update\n\nThe elevated error rate is isolated to image transformations in `fra1`.',
-        '\n\n- Cache reads remain healthy\n- Origin requests are within baseline',
-        '\n- Transformation workers are exhausting memory',
-        '\n\n**Next step:** reduce worker concurrency from 12 to 8 and observe the next five minutes.'
-    ];
+const chunks = [
+    '### Incident update\n\nThe elevated error rate is isolated to image transformations in `fra1`.',
+    '\n\n- Cache reads remain healthy\n- Origin requests are within baseline',
+    '\n- Transformation workers are exhausting memory',
+    '\n\n**Next step:** reduce worker concurrency from 12 to 8 and observe the next five minutes.'
+];
 
-    let step = $state(0);
-    const content = $derived(chunks.slice(0, step + 1).join(''));
-    const streaming = $derived(step < chunks.length - 1);
+let step = $state(0);
+const content = $derived(chunks.slice(0, step + 1).join(''));
+const streaming = $derived(step < chunks.length - 1);
 
-    function advance() {
-        step = streaming ? step + 1 : 0;
-    }
+function advance() {
+    step = streaming ? step + 1 : 0;
+}
 </script>
 
 <div class="w-full max-w-2xl space-y-4">

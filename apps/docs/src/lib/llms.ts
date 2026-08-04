@@ -1,3 +1,4 @@
+import { changelogVersions } from '$lib/changelog';
 import { components, sanitizeComponent } from '$lib/components';
 
 type ComponentManifest = {
@@ -37,8 +38,7 @@ function fence(language: string, content: string): string {
 
 function titleFromFile(path: string): string {
     return path
-        .split('/')
-        .at(-1)!
+        .slice(path.lastIndexOf('/') + 1)
         .replace(/\.svelte$/, '')
         .split('-')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -161,6 +161,7 @@ export function llmsTxt(origin: string): string {
         ['Installation', '/docs/installation.md'],
         ['Theming', '/docs/theming.md'],
         ['Components index', '/docs/components.md'],
+        ...changelogVersions.map((version) => [`Changelog ${version}`, `/changelog/${version}`]),
         ...components.map((component) => [
             sanitizeComponent(component),
             `/docs/components/${component}.md`
@@ -170,7 +171,7 @@ export function llmsTxt(origin: string): string {
     return [
         '# Sivir UI',
         '',
-        'Svelte 5 and Tailwind CSS v4 component library. Use these Markdown resources for implementation details, public APIs, and runnable examples.',
+        'Svelte 5 and Tailwind CSS v4 component library. Use these Markdown resources for implementation details, public APIs, runnable examples, and version-specific upgrade notes.',
         '',
         '## Documentation',
         '',

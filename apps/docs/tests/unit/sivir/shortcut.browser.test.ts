@@ -1,8 +1,9 @@
+import { tick } from 'svelte';
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { tick } from 'svelte';
 
 import ShortcutFixture from '../../fixtures/ShortcutFixture.svelte';
+import { queryRequired } from '../../test-utils';
 
 type KeyOptions = Pick<KeyboardEventInit, 'metaKey' | 'ctrlKey' | 'shiftKey' | 'altKey' | 'repeat'>;
 
@@ -61,7 +62,7 @@ describe('Shortcut -- activation', () => {
     it('ignores editable targets, repeats, and disabled owners', async () => {
         const editableActivate = vi.fn();
         render(ShortcutFixture, { shortcut: 'k', onactivate: editableActivate });
-        const input = document.querySelector<HTMLInputElement>('[data-testid="editable"]')!;
+        const input = queryRequired<HTMLInputElement>(document, '[data-testid="editable"]');
 
         await press('k', {}, input);
         await press('k', { repeat: true });
@@ -131,7 +132,7 @@ describe('Shortcut -- parsing and display', () => {
                 onactivate
             });
 
-            const shortcut = document.querySelector<HTMLElement>('[data-testid="shortcut"]')!;
+            const shortcut = queryRequired<HTMLElement>(document, '[data-testid="shortcut"]');
             expect(shortcut.textContent).toBe(testCase.label);
             await press(testCase.key, testCase.options);
             expect(onactivate).toHaveBeenCalledOnce();

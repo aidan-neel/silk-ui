@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
 
-    let { open = $bindable(false) } = $props();
+let { open = $bindable(false) } = $props();
 </script>
 
 <FullscreenNav.Root bind:open>

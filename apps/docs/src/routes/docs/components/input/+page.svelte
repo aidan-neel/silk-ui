@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import VariantOutline from './examples/variant-outline.svelte';
-    import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
-    import VariantSecondary from './examples/variant-secondary.svelte';
-    import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import VariantOutline from './examples/variant-outline.svelte';
+import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
+import VariantSecondary from './examples/variant-secondary.svelte';
+import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
 
-    const installCommand = 'bunx @sivir-ui/svelte add input';
+const installCommand = 'bunx @sivir-ui/svelte add input';
 </script>
 
 <svelte:head>

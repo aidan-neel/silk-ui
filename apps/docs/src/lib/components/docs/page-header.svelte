@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { Badge } from '@sivir-ui/svelte/components/badge';
+import { Badge } from '@sivir-ui/svelte/components/badge';
 
-    let {
-        title,
-        description,
-        eyebrow,
-        compact = false
-    }: {
-        title: string;
-        description?: string;
-        eyebrow?: string;
-        compact?: boolean;
-    } = $props();
+let {
+    title,
+    description,
+    eyebrow,
+    compact = false
+}: {
+    title: string;
+    description?: string;
+    eyebrow?: string;
+    compact?: boolean;
+} = $props();
 </script>
 
 <header class="pb-6" data-page-header>

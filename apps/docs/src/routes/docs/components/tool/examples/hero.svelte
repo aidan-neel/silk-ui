@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Tool from '@sivir-ui/svelte/components/tool';
+import * as Tool from '@sivir-ui/svelte/components/tool';
 </script>
 
 <Tool.Root name="1 file, 1 search, and 1 command" state="complete" duration="6s">

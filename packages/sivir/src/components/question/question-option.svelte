@@ -1,29 +1,29 @@
 <script lang="ts">
-    import Check from '@lucide/svelte/icons/check';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { QuestionOptionProps } from '.';
-    import { getQuestionContext } from './context.svelte';
+import Check from '@lucide/svelte/icons/check';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { QuestionOptionProps } from '.';
+import { getQuestionContext } from './context.svelte';
 
-    let {
-        value,
-        label,
-        description,
-        disabled = false,
-        element = $bindable(),
-        class: className,
-        onchange,
-        ...rest
-    }: QuestionOptionProps = $props();
+let {
+    value,
+    label,
+    description,
+    disabled = false,
+    element = $bindable(),
+    class: className,
+    onchange,
+    ...rest
+}: QuestionOptionProps = $props();
 
-    const context = getQuestionContext();
-    const selected = $derived(context.isSelected(value));
-    const isDisabled = $derived(context.disabled || context.busy || disabled);
-    const inputType = $derived(context.type === 'multiple' ? 'checkbox' : 'radio');
+const context = getQuestionContext();
+const selected = $derived(context.isSelected(value));
+const isDisabled = $derived(context.disabled || context.busy || disabled);
+const inputType = $derived(context.type === 'multiple' ? 'checkbox' : 'radio');
 
-    function handleChange(event: Event & { currentTarget: HTMLInputElement }) {
-        context.select(value);
-        onchange?.(event);
-    }
+function handleChange(event: Event & { currentTarget: HTMLInputElement }) {
+    context.select(value);
+    onchange?.(event);
+}
 </script>
 
 {#if context.type !== 'text'}

@@ -1,19 +1,18 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Card from './examples/card.svelte';
+import CardSrc from './examples/card.svelte?raw';
+import Circle from './examples/circle.svelte';
+import CircleSrc from './examples/circle.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Rectangle from './examples/rectangle.svelte';
+import RectangleSrc from './examples/rectangle.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Rectangle from './examples/rectangle.svelte';
-    import RectangleSrc from './examples/rectangle.svelte?raw';
-    import Circle from './examples/circle.svelte';
-    import CircleSrc from './examples/circle.svelte?raw';
-    import Card from './examples/card.svelte';
-    import CardSrc from './examples/card.svelte?raw';
+const TITLE = 'Skeleton';
 
-    const TITLE = 'Skeleton';
-
-    const installCommand = 'bunx @sivir-ui/svelte add skeleton';
+const installCommand = 'bunx @sivir-ui/svelte add skeleton';
 </script>
 
 <svelte:head>

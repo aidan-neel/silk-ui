@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { QuestionDescriptionProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { QuestionDescriptionProps } from '.';
 
-    let { class: className, children, ...rest }: QuestionDescriptionProps = $props();
+let { class: className, children, ...rest }: QuestionDescriptionProps = $props();
 </script>
 
 <p

@@ -1,33 +1,33 @@
 <script lang="ts">
-    import type { HTMLButtonAttributes } from 'svelte/elements';
-    import type { SwitchProps } from '.';
-    import { cn } from '@sivir-ui/svelte/utils';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { HTMLButtonAttributes } from 'svelte/elements';
+import type { SwitchProps } from '.';
 
-    let {
-        switched = $bindable(false),
-        label,
-        description,
-        disabled = false,
-        class: className,
-        element = $bindable<HTMLButtonElement>(),
-        onclick: userOnclick,
-        ...rest
-    }: SwitchProps & { onclick?: (e: MouseEvent) => void } = $props();
+let {
+    switched = $bindable(false),
+    label,
+    description,
+    disabled = false,
+    class: className,
+    element = $bindable<HTMLButtonElement>(),
+    onclick: userOnclick,
+    ...rest
+}: SwitchProps & { onclick?: (e: MouseEvent) => void } = $props();
 
-    const id = $props.id();
-    const labelId = `${id}-label`;
-    const descriptionId = `${id}-description`;
+const id = $props.id();
+const labelId = `${id}-label`;
+const descriptionId = `${id}-description`;
 
-    const buttonClasses =
-        'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[0.55]';
+const buttonClasses =
+    'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[0.55]';
 
-    function toggle(event: Event) {
-        if (disabled) {
-            return;
-        }
-        switched = !switched;
-        userOnclick?.(event as MouseEvent);
+function toggle(event: Event) {
+    if (disabled) {
+        return;
     }
+    switched = !switched;
+    userOnclick?.(event as MouseEvent);
+}
 </script>
 
 <div class="flex min-h-11 flex-row items-start gap-2.5 md:min-h-0">

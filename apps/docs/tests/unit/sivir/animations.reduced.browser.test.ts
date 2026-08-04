@@ -1,8 +1,9 @@
+import { toast } from '@sivir-ui/svelte/components/toast';
+import { tick } from 'svelte';
 import { expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { tick } from 'svelte';
-import { toast } from '@sivir-ui/svelte/components/toast';
 import MotionFixture from '../../fixtures/MotionFixture.svelte';
+import { required } from '../../test-utils';
 
 async function settle() {
     await tick();
@@ -26,6 +27,6 @@ it('computes every retained keyframe animation to none under reduced motion', as
 
     for (const element of [skeleton, progress, toastProgress]) {
         expect(element).toBeInTheDocument();
-        expect(getComputedStyle(element!).animationName).toBe('none');
+        expect(getComputedStyle(required(element)).animationName).toBe('none');
     }
 });

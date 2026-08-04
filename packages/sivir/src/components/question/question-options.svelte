@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { QuestionOptionsProps } from '.';
-    import { getQuestionContext } from './context.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { QuestionOptionsProps } from '.';
+import { getQuestionContext } from './context.svelte';
 
-    let { class: className, children, ...rest }: QuestionOptionsProps = $props();
-    const context = getQuestionContext();
+let { class: className, children, ...rest }: QuestionOptionsProps = $props();
+const context = getQuestionContext();
 </script>
 
 <div

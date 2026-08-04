@@ -1,9 +1,0 @@
-node_modules
-.turbo
-**/.svelte-kit
-**/build
-**/dist
-**/generated
-packages/sivir/registry
-bun.lock
-*.svx

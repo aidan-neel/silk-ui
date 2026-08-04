@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
+import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 </script>
 
 <div class="grid place-items-center">
     <AlertDialog.Root error>
         <AlertDialog.Trigger variant="destructive">Delete project</AlertDialog.Trigger>
-        <AlertDialog.Content class="max-w-[26rem]">
+        <AlertDialog.Content>
             <AlertDialog.Header>
                 <AlertDialog.Title>Delete this project?</AlertDialog.Title>
                 <AlertDialog.Description>

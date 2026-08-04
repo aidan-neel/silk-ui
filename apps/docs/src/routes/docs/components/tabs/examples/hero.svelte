@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
 
-    let activeTab = $state('overview');
+let activeTab = $state('overview');
 </script>
 
 <div class="flex justify-center p-3 sm:p-6">

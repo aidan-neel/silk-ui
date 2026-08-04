@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Shortcut from '@sivir-ui/svelte/components/shortcut';
+import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <div class="flex gap-2">

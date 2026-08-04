@@ -1,23 +1,23 @@
 <script lang="ts">
-    import Paperclip from '@lucide/svelte/icons/paperclip';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AttachmentTriggerProps } from '.';
-    import { getAttachmentContext } from './context.svelte';
+import Paperclip from '@lucide/svelte/icons/paperclip';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { AttachmentTriggerProps } from '.';
+import { getAttachmentContext } from './context.svelte';
 
-    let {
-        children,
-        element = $bindable(),
-        disabled = false,
-        class: className,
-        'aria-label': ariaLabel = 'Add attachments',
-        variant = 'ghost',
-        size = children ? 'sm' : 'icon',
-        onclick,
-        ...rest
-    }: AttachmentTriggerProps = $props();
+let {
+    children,
+    element = $bindable(),
+    disabled = false,
+    class: className,
+    'aria-label': ariaLabel = 'Add attachments',
+    variant = 'ghost',
+    size = children ? 'sm' : 'icon',
+    onclick,
+    ...rest
+}: AttachmentTriggerProps = $props();
 
-    const context = getAttachmentContext();
+const context = getAttachmentContext();
 </script>
 
 <Button

@@ -1,35 +1,35 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Conversation from '@sivir-ui/svelte/components/conversation';
-    import * as Message from '@sivir-ui/svelte/components/message';
-    import Plus from '@lucide/svelte/icons/plus';
+import Plus from '@lucide/svelte/icons/plus';
+import { Button } from '@sivir-ui/svelte/components/button';
+import * as Conversation from '@sivir-ui/svelte/components/conversation';
+import * as Message from '@sivir-ui/svelte/components/message';
 
-    let follow = $state(true);
-    let output = $state([
-        { id: 1, label: 'Queued release web-2419' },
-        { id: 2, label: 'Built application bundle in 18.2s' },
-        { id: 3, label: 'Uploaded 42 immutable assets' },
-        { id: 4, label: 'Deployed canary to iad1' },
-        { id: 5, label: 'Passed checkout smoke tests' },
-        { id: 6, label: 'Shifted 10% of production traffic' },
-        { id: 7, label: 'Observed p95 latency at 612 ms' }
-    ]);
+let follow = $state(true);
+let output = $state([
+    { id: 1, label: 'Queued release web-2419' },
+    { id: 2, label: 'Built application bundle in 18.2s' },
+    { id: 3, label: 'Uploaded 42 immutable assets' },
+    { id: 4, label: 'Deployed canary to iad1' },
+    { id: 5, label: 'Passed checkout smoke tests' },
+    { id: 6, label: 'Shifted 10% of production traffic' },
+    { id: 7, label: 'Observed p95 latency at 612 ms' }
+]);
 
-    const updates = [
-        'Shifted 25% of production traffic',
-        'Observed p95 latency at 584 ms',
-        'Passed payment-provider health check',
-        'Shifted 50% of production traffic'
-    ];
-    const followLabel = $derived(follow ? 'Following latest output' : 'Follow paused');
+const updates = [
+    'Shifted 25% of production traffic',
+    'Observed p95 latency at 584 ms',
+    'Passed payment-provider health check',
+    'Shifted 50% of production traffic'
+];
+const followLabel = $derived(follow ? 'Following latest output' : 'Follow paused');
 
-    function appendOutput() {
-        const index = output.length - 7;
-        output.push({
-            id: output.length + 1,
-            label: updates[index % updates.length]
-        });
-    }
+function appendOutput() {
+    const index = output.length - 7;
+    output.push({
+        id: output.length + 1,
+        label: updates[index % updates.length]
+    });
+}
 </script>
 
 <div class="w-full max-w-2xl space-y-3">

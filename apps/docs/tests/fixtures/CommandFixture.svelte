@@ -1,21 +1,21 @@
 <script lang="ts">
-    import * as Command from '@sivir-ui/svelte/components/command';
+import * as Command from '@sivir-ui/svelte/components/command';
 
-    let {
-        open = $bindable(false),
-        allowClickOutside = true,
-        onProfile = () => {},
-        onSettings = () => {},
-        onDisabled = () => {},
-        onLogout = () => {}
-    }: {
-        open?: boolean;
-        allowClickOutside?: boolean;
-        onProfile?: () => void;
-        onSettings?: () => void;
-        onDisabled?: () => void;
-        onLogout?: () => void;
-    } = $props();
+let {
+    open = $bindable(false),
+    allowClickOutside = true,
+    onProfile = () => {},
+    onSettings = () => {},
+    onDisabled = () => {},
+    onLogout = () => {}
+}: {
+    open?: boolean;
+    allowClickOutside?: boolean;
+    onProfile?: () => void;
+    onSettings?: () => void;
+    onDisabled?: () => void;
+    onLogout?: () => void;
+} = $props();
 </script>
 
 <button data-testid="command-external-trigger" onclick={() => (open = true)}>Open externally</button

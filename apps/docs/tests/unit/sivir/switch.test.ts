@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
+import { describe, expect, it } from 'vitest';
+import { required } from '../../test-utils';
 
 describe('Switch -- rendering', () => {
     it('renders a button with role="switch"', () => {
@@ -116,7 +117,7 @@ describe('Switch -- labelling', () => {
         const button = screen.getByRole('switch');
         const labelledBy = button.getAttribute('aria-labelledby');
         expect(labelledBy).toBeTruthy();
-        const labelEl = document.getElementById(labelledBy!);
+        const labelEl = document.getElementById(required(labelledBy));
         expect(labelEl?.textContent).toBe('Notifications');
     });
 
@@ -135,6 +136,6 @@ describe('Switch -- labelling', () => {
         const button = screen.getByRole('switch');
         const describedBy = button.getAttribute('aria-describedby');
         expect(describedBy).toBeTruthy();
-        expect(document.getElementById(describedBy!)?.textContent).toBe('helper text');
+        expect(document.getElementById(required(describedBy))?.textContent).toBe('helper text');
     });
 });

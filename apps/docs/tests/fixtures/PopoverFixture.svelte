@@ -1,13 +1,13 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
+import * as Popover from '@sivir-ui/svelte/components/popover';
 
-    let {
-        open = $bindable(false),
-        placement = 'bottom' as 'top' | 'bottom' | 'left' | 'right',
-        hoverable = false,
-        delay = 0,
-        closeDelay = 150
-    } = $props();
+let {
+    open = $bindable(false),
+    placement = 'bottom' as 'top' | 'bottom' | 'left' | 'right',
+    hoverable = false,
+    delay = 0,
+    closeDelay = 150
+} = $props();
 </script>
 
 <Popover.Root bind:open {placement} {hoverable} {delay} {closeDelay}>

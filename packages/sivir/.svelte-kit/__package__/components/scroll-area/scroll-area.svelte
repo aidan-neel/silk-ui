@@ -77,7 +77,7 @@
         <div aria-hidden="true" class="sticky top-0 z-10 h-0">
             <div
                 class={cn(
-                    'pointer-events-none absolute inset-x-0 top-0 flex h-7 items-start justify-center bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-panel,#fff)_92%,transparent),transparent)] transition-opacity duration-150',
+                    'pointer-events-none absolute inset-x-0 -top-px flex h-7 items-start justify-center bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] backdrop-blur-sm transition-opacity duration-150',
                     atTop ? 'opacity-0' : 'opacity-100'
                 )}
             >
@@ -93,7 +93,7 @@
         <div aria-hidden="true" class="sticky bottom-0 z-10 h-0">
             <div
                 class={cn(
-                    'pointer-events-none absolute inset-x-0 bottom-0 flex h-7 items-end justify-center bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-panel,#fff)_92%,transparent),transparent)] transition-opacity duration-150',
+                    'pointer-events-none absolute inset-x-0 -bottom-px flex h-7 items-end justify-center bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] backdrop-blur-sm transition-opacity duration-150',
                     atBottom ? 'opacity-0' : 'opacity-100'
                 )}
             >

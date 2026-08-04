@@ -1,31 +1,31 @@
 <script lang="ts">
-    import * as Conversation from '@sivir-ui/svelte/components/conversation';
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
-    import * as Message from '@sivir-ui/svelte/components/message';
-    import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
+import * as Conversation from '@sivir-ui/svelte/components/conversation';
+import { Markdown } from '@sivir-ui/svelte/components/markdown';
+import * as Message from '@sivir-ui/svelte/components/message';
+import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
 
-    const finding = [
-        '### What changed',
-        '',
-        'The latency increase starts in `POST /checkout` immediately after release `web-2418`.',
-        '',
-        '- Address validation added **430 ms** at p95.',
-        '- The provider timed out for 8% of non-US requests.',
-        '- Database and inventory spans stayed within baseline.',
-        '',
-        '> Roll back the synchronous validation call, then keep the rule behind the existing review queue.'
-    ].join('\n');
+const finding = [
+    '### What changed',
+    '',
+    'The latency increase starts in `POST /checkout` immediately after release `web-2418`.',
+    '',
+    '- Address validation added **430 ms** at p95.',
+    '- The provider timed out for 8% of non-US requests.',
+    '- Database and inventory spans stayed within baseline.',
+    '',
+    '> Roll back the synchronous validation call, then keep the rule behind the existing review queue.'
+].join('\n');
 
-    const rollback = [
-        'Use the targeted flag first:',
-        '',
-        '```ts',
-        "await flags.disable('checkout.address-verification');",
-        'await metrics.waitForRecovery({ window: "10m" });',
-        '```',
-        '',
-        'This avoids reverting the unrelated tax fixes in the same release.'
-    ].join('\n');
+const rollback = [
+    'Use the targeted flag first:',
+    '',
+    '```ts',
+    "await flags.disable('checkout.address-verification');",
+    'await metrics.waitForRecovery({ window: "10m" });',
+    '```',
+    '',
+    'This avoids reverting the unrelated tax fixes in the same release.'
+].join('\n');
 </script>
 
 <Conversation.Root

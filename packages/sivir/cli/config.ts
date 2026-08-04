@@ -1,5 +1,5 @@
-import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { SivirConfig } from './types';
 
@@ -25,5 +25,5 @@ export async function loadConfig(cwd: string): Promise<SivirConfig | null> {
 }
 
 export async function saveConfig(cwd: string, config: SivirConfig) {
-    await writeFile(configPath(cwd), JSON.stringify(config, null, '\t') + '\n');
+    await writeFile(configPath(cwd), `${JSON.stringify(config, null, '\t')}\n`);
 }

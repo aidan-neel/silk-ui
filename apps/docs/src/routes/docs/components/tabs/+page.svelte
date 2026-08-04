@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import VariantDefault from './examples/variant-default.svelte';
-    import VariantDefaultSrc from './examples/variant-default.svelte?raw';
-    import VariantGhost from './examples/variant-ghost.svelte';
-    import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
-    import VariantSegmented from './examples/variant-segmented.svelte';
-    import VariantSegmentedSrc from './examples/variant-segmented.svelte?raw';
-    import Vertical from './examples/vertical.svelte';
-    import VerticalSrc from './examples/vertical.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import VariantDefault from './examples/variant-default.svelte';
+import VariantDefaultSrc from './examples/variant-default.svelte?raw';
+import VariantGhost from './examples/variant-ghost.svelte';
+import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
+import VariantSegmented from './examples/variant-segmented.svelte';
+import VariantSegmentedSrc from './examples/variant-segmented.svelte?raw';
+import Vertical from './examples/vertical.svelte';
+import VerticalSrc from './examples/vertical.svelte?raw';
 
-    const installCommand = 'bunx @sivir-ui/svelte add tabs';
+const installCommand = 'bunx @sivir-ui/svelte add tabs';
 </script>
 
 <svelte:head>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
+import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
 </script>
 
 <Reasoning.Root class="w-full max-w-xl">

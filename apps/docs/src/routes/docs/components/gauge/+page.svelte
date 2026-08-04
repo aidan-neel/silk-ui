@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import ContextWindow from './examples/context-window.svelte';
+import ContextWindowSrc from './examples/context-window.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import UsageLimit from './examples/usage-limit.svelte';
+import UsageLimitSrc from './examples/usage-limit.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import ContextWindow from './examples/context-window.svelte';
-    import ContextWindowSrc from './examples/context-window.svelte?raw';
-    import UsageLimit from './examples/usage-limit.svelte';
-    import UsageLimitSrc from './examples/usage-limit.svelte?raw';
-
-    const installCommand = 'bunx --package @sivir-ui/svelte sivir add gauge';
+const installCommand = 'bunx --package @sivir-ui/svelte sivir add gauge';
 </script>
 
 <svelte:head>

@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AvatarImageProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import { getContext } from 'svelte';
+import type { AvatarImageProps } from '.';
 
-    let { class: className, src, alt = '', ...rest }: AvatarImageProps = $props();
+let { class: className, src, alt = '', ...rest }: AvatarImageProps = $props();
 
-    const ctx = getContext<{ imageLoaded: boolean }>('avatar-state');
-    let errored = $state(false);
+const ctx = getContext<{ imageLoaded: boolean }>('avatar-state');
+let errored = $state(false);
 </script>
 
 {#if src && !errored}

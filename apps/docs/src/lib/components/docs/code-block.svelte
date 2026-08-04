@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { highlight } from '$lib/highlight';
+import { cn } from '@sivir-ui/svelte/utils';
+import { highlight } from '$lib/highlight';
 
-    let {
-        code,
-        class: classProp,
-        lang = 'svelte',
-        ...rest
-    }: { code: string; class?: string; lang?: string } = $props();
+let {
+    code,
+    class: classProp,
+    lang = 'svelte',
+    ...rest
+}: { code: string; class?: string; lang?: string } = $props();
 
-    const html = $derived(highlight(code, lang));
+const html = $derived(highlight(code, lang));
 </script>
 
 <div

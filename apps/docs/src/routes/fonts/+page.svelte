@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
+import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
 </script>
 
 <svelte:head>

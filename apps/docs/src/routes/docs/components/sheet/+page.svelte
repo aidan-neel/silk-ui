@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Left from './examples/left.svelte';
-    import LeftSrc from './examples/left.svelte?raw';
-    import Right from './examples/right.svelte';
-    import RightSrc from './examples/right.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Left from './examples/left.svelte';
+import LeftSrc from './examples/left.svelte?raw';
+import Right from './examples/right.svelte';
+import RightSrc from './examples/right.svelte?raw';
 
-    const TITLE = 'Sheet';
+const TITLE = 'Sheet';
 
-    const installCommand = 'bunx @sivir-ui/svelte add sheet';
+const installCommand = 'bunx @sivir-ui/svelte add sheet';
 </script>
 
 <svelte:head>

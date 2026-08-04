@@ -1,9 +1,10 @@
-import { describe, expect, it, afterEach } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
-import { tick } from 'svelte';
 import { sheetIn, sheetOut } from '@sivir-ui/svelte/transition';
+import { tick } from 'svelte';
+import { afterEach, describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import SheetFixture from '../../fixtures/SheetFixture.svelte';
+import { queryRequired, required } from '../../test-utils';
 
 /*
  * Sheet uses Svelte in:/out: transitions (sheetIn/sheetOut), not a
@@ -129,7 +130,7 @@ describe('Sheet -- ARIA', () => {
     it('slides from the anchored edge without opacity fade', async () => {
         render(SheetFixture, { open: true, side: 'right' });
         await flush();
-        const panel = document.querySelector('[data-ui="sheet-content"]')!;
+        const panel = queryRequired(document, '[data-ui="sheet-content"]');
         expect(panel.getAttribute('data-motion')).toBe('sheet');
 
         const enter = sheetIn(panel, { side: 'right' });
@@ -149,7 +150,7 @@ describe('Sheet -- ARIA', () => {
         const dialog = document.querySelector('[role="dialog"]');
         const labelledBy = dialog?.getAttribute('aria-labelledby');
         expect(labelledBy).toBeTruthy();
-        expect(document.getElementById(labelledBy!)).toBeTruthy();
+        expect(document.getElementById(required(labelledBy))).toBeTruthy();
     });
 });
 

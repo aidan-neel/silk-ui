@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { resolve } from '$app/paths';
 
-    const overrideCss = `@theme {
+const overrideCss = `@theme {
   --color-primary: #155eef;
   --color-background: #fcfcfd;
   --color-foreground: #101828;
   --radius-lg: 0.55rem;
-   --font-sans: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
 }
 
 .dark {
@@ -16,12 +16,12 @@
   --color-primary: #7aa2ff;
 }`;
 
-    const themeImport = `@import './lib/sivir/ui.css';
+const themeImport = `@import './lib/sivir/ui.css';
 @import './lib/sivir/theme.css';`;
 
-    const classExample = '<Button class="w-full rounded-2xl">Continue</Button>';
+const classExample = '<Button class="w-full rounded-2xl">Continue</Button>';
 
-    const dataUiExample = `[data-ui='button'][data-variant='primary'] {
+const dataUiExample = `[data-ui='button'][data-variant='primary'] {
   border-radius: 999px;
 }
 
@@ -29,7 +29,7 @@
   text-transform: uppercase;
 }`;
 
-    const sourceExample = `# after: bunx --package @sivir-ui/svelte sivir add button
+const sourceExample = `# after: bunx --package @sivir-ui/svelte sivir add button
 src/lib/sivir/components/button/
 ├── button.svelte
 └── index.ts`;

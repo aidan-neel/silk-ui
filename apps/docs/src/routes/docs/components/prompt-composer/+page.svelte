@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Error from './examples/state-error.svelte';
-    import ErrorSrc from './examples/state-error.svelte?raw';
-    import Idle from './examples/idle.svelte';
-    import IdleSrc from './examples/idle.svelte?raw';
-    import Submitting from './examples/submitting.svelte';
-    import SubmittingSrc from './examples/submitting.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Idle from './examples/idle.svelte';
+import IdleSrc from './examples/idle.svelte?raw';
+import Error from './examples/state-error.svelte';
+import ErrorSrc from './examples/state-error.svelte?raw';
+import Submitting from './examples/submitting.svelte';
+import SubmittingSrc from './examples/submitting.svelte?raw';
 
-    const installCommand = 'bunx @sivir-ui/svelte add prompt-composer';
+const installCommand = 'bunx @sivir-ui/svelte add prompt-composer';
 </script>
 
 <svelte:head>

@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { resolve } from '$app/paths';
 
-    const packageQuick = `bun add @sivir-ui/svelte
+const packageQuick = `bun add @sivir-ui/svelte
 # then in your CSS:
 # @import '@sivir-ui/svelte/ui.css';`;
 
-    const cliQuick = `bunx --package @sivir-ui/svelte sivir init -y
+const cliQuick = `bunx --package @sivir-ui/svelte sivir init -y
 bunx --package @sivir-ui/svelte sivir add button`;
 </script>
 

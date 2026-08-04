@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import Input from '@sivir-ui/svelte/components/input/input.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Input from '@sivir-ui/svelte/components/input/input.svelte';
+import { describe, expect, it } from 'vitest';
+import { queryRequired } from '../../test-utils';
 
 describe('Input -- basic rendering', () => {
     it('renders a text input by default', () => {
@@ -91,7 +92,7 @@ describe('Input -- value binding', () => {
 
     it('updates the DOM value when the user types', async () => {
         const { container } = render(Input);
-        const input = container.querySelector('input')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input');
 
         const user = userEvent.setup();
         await user.type(input, 'typed');
@@ -100,7 +101,7 @@ describe('Input -- value binding', () => {
 
     it('does not accept input when disabled', async () => {
         const { container } = render(Input, { props: { disabled: true } });
-        const input = container.querySelector('input')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input');
         expect(input).toBeDisabled();
     });
 });
@@ -130,8 +131,8 @@ describe('Input -- attribute spreading', () => {
 describe('Input -- label/input coupling', () => {
     it('wraps the input in a label so clicking the label focuses the input', async () => {
         const { container } = render(Input, { props: { label: 'Email' } });
-        const label = container.querySelector('label')!;
-        const input = label.querySelector('input')!;
+        const label = queryRequired(container, 'label');
+        const input = queryRequired(label, 'input');
         expect(input).toBeInTheDocument();
         // Click label, input gets focus via native label/input semantics.
         label.click();
@@ -145,7 +146,7 @@ describe('Input -- label/input coupling', () => {
         const { container } = render(Input, {
             props: { label: 'Field', description: 'A description' }
         });
-        const label = container.querySelector('label')!;
+        const label = queryRequired(container, 'label');
         expect(label.textContent).toContain('Field');
         expect(label.textContent).toContain('A description');
     });

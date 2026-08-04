@@ -1,16 +1,16 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { travelingHighlight } from '@sivir-ui/svelte/utils';
-    import { getCommandContext } from './context.svelte';
+import { travelingHighlight } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
+import { getCommandContext } from './context.svelte';
 
-    const command = getCommandContext();
+const command = getCommandContext();
 
-    type Props = {
-        children?: Snippet;
-    };
+type Props = {
+    children?: Snippet;
+};
 
-    const { children }: Props = $props();
+const { children }: Props = $props();
 </script>
 
 <div

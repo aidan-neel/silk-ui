@@ -1,14 +1,10 @@
 pre-commit:
     parallel: true
     commands:
-        prettier:
-            glob: '*.{js,ts,svelte,json,css,md,svx,html,yaml,yml}'
-            run: bunx prettier --write {staged_files}
+        biome:
+            glob: '*.{js,ts,svelte,json,css,md,html,yaml,yml}'
+            run: bunx biome check --write {staged_files}
             stage_fixed: true
-        eslint:
-            root: 'apps/docs/'
-            glob: '*.{js,ts,svelte}'
-            run: bunx eslint {staged_files}
 
 pre-push:
     commands:

@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import { Textarea } from '@sivir-ui/svelte/components/textarea';
-    import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
-    import AtSign from '@lucide/svelte/icons/at-sign';
-    import ImagePlus from '@lucide/svelte/icons/image-plus';
-    import SmilePlus from '@lucide/svelte/icons/smile-plus';
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import AtSign from '@lucide/svelte/icons/at-sign';
+import ImagePlus from '@lucide/svelte/icons/image-plus';
+import SmilePlus from '@lucide/svelte/icons/smile-plus';
+import { Button } from '@sivir-ui/svelte/components/button';
+import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+import { Textarea } from '@sivir-ui/svelte/components/textarea';
+import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
 </script>
 
 <div class="w-full max-w-xl">

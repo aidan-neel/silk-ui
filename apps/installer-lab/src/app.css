@@ -1,9 +1,9 @@
-@import '@fontsource/dm-sans/latin-400.css';
-@import '@fontsource/dm-sans/latin-500.css';
-@import '@fontsource/dm-sans/latin-600.css';
-@import '@fontsource/dm-sans/latin-700.css';
-@import 'tailwindcss';
-@import '@sivir-ui/svelte/ui.css';
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+@import "tailwindcss";
+@import "@sivir-ui/svelte/ui.css";
 
 html {
     -webkit-font-smoothing: antialiased;
@@ -53,7 +53,7 @@ body {
     letter-spacing: -0.015em;
 }
 
-.controls[data-ui='card'][data-variant='panel'] > [data-ui='card-surface'] {
+.controls[data-ui="card"][data-variant="panel"] > [data-ui="card-surface"] {
     padding: 8px;
 }
 
@@ -136,7 +136,7 @@ body {
     grid-column: auto;
 }
 
-.developer-sample[data-ui='card'][data-variant='panel'] > [data-ui='card-surface'] {
+.developer-sample[data-ui="card"][data-variant="panel"] > [data-ui="card-surface"] {
     padding: 0;
 }
 
@@ -207,7 +207,7 @@ body {
     margin-top: 16px;
 }
 
-.log-panel[data-ui='card'][data-variant='panel'] > [data-ui='card-surface'] {
+.log-panel[data-ui="card"][data-variant="panel"] > [data-ui="card-surface"] {
     padding: 0;
 }
 
@@ -291,8 +291,8 @@ body {
     white-space: nowrap;
 }
 
-.guide-panel[data-ui='card'][data-variant='panel'] > [data-ui='card-surface'],
-.terminal-panel[data-ui='card'][data-variant='panel'] > [data-ui='card-surface'] {
+.guide-panel[data-ui="card"][data-variant="panel"] > [data-ui="card-surface"],
+.terminal-panel[data-ui="card"][data-variant="panel"] > [data-ui="card-surface"] {
     padding: 0;
 }
 
@@ -308,7 +308,7 @@ body {
     list-style: none;
 }
 
-.guide-step[data-ui='button'] {
+.guide-step[data-ui="button"] {
     display: grid;
     width: 100%;
     height: auto;
@@ -410,7 +410,7 @@ body {
     font-weight: 600;
 }
 
-.terminal-input[data-ui='input'] {
+.terminal-input[data-ui="input"] {
     font-family: var(--font-mono), monospace;
     font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
@@ -480,12 +480,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    :root *,
+    :root *::before,
+    :root *::after {
+        scroll-behavior: auto;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
     }
 }

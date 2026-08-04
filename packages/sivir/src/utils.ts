@@ -1,14 +1,14 @@
-import { type ClassValue, clsx, twMerge } from 'cnfast';
 import {
     computePosition,
-    offset,
     flip,
-    shift,
-    size,
+    offset,
     type Placement,
-    type ReferenceElement
+    type ReferenceElement,
+    shift,
+    size
 } from '@floating-ui/dom';
-import { getContext, hasContext, setContext, type Snippet } from 'svelte';
+import { type ClassValue, clsx, twMerge } from 'cnfast';
+import { getContext, hasContext, type Snippet, setContext } from 'svelte';
 
 export type DefaultProps = {
     class?: string;
@@ -92,9 +92,14 @@ export function closeMenuLayers(current: { open: boolean }, ancestors: { open: b
 
     // Let the selected submenu begin its normal exit before its parents follow.
     for (let index = ancestors.length - 1; index >= 0; index -= 1) {
+        const ancestor = ancestors[index];
+        if (!ancestor) {
+            continue;
+        }
+
         setTimeout(
             () => {
-                ancestors[index]!.open = false;
+                ancestor.open = false;
             },
             (ancestors.length - 1 - index) * 16 + 16
         );
@@ -166,7 +171,6 @@ export function isPointInSubmenuTriangle(
                 { x: panel.left, y: panel.top - contactMargin },
                 { x: panel.right, y: panel.top - contactMargin }
             );
-        case 'right':
         default:
             return pointInTriangle(
                 point,
@@ -577,7 +581,7 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     function measure(target: HTMLElement | undefined) {
         cancelAnimationFrame(frame);
         current = target;
-        if (!target || !target.isConnected || target.hidden) {
+        if (!target?.isConnected || target.hidden) {
             if (observedTarget) {
                 resizeObserver.unobserve(observedTarget);
                 observedTarget = undefined;

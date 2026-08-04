@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { FullscreenNavLinkProps } from '.';
-    import { getFullscreenNavContext } from './context.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { FullscreenNavLinkProps } from '.';
+import { getFullscreenNavContext } from './context.svelte';
 
-    let {
-        class: className,
-        children,
-        onclick: userOnclick,
-        style: styleName,
-        ...rest
-    }: FullscreenNavLinkProps = $props();
-    const { state } = getFullscreenNavContext();
-    const animationDelay = Math.min(50 + state.animationIndex * 35, 330);
-    state.animationIndex += 1;
+let {
+    class: className,
+    children,
+    onclick: userOnclick,
+    style: styleName,
+    ...rest
+}: FullscreenNavLinkProps = $props();
+const { state } = getFullscreenNavContext();
+const animationDelay = Math.min(50 + state.animationIndex * 35, 330);
+state.animationIndex += 1;
 </script>
 
 <a

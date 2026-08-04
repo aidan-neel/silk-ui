@@ -1,0 +1,4 @@
+- Add a versioned Markdown changelog at `/changelog/0.2.1`, aggregating release notes for LLM and developer integrations.
+- Add Spinner's `ready` state, which animates loading into a checkmark, holds it briefly, then blurs and collapses the indicator.
+- Add root-level `orientation` presets to Modal and Alert Dialog, with compact vertical and wider horizontal sizing. Modal defaults to horizontal; Alert Dialog defaults to vertical.
+- Make Alert Dialogs non-dismissible by backdrop, remove their top-right close control, and add a subtle two-layer destructive ring.

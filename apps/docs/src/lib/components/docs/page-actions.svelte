@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    export type PageActionsSection = 'breadcrumbs' | 'actions';
+export type PageActionsSection = 'breadcrumbs' | 'actions';
 </script>
 
 <script lang="ts">

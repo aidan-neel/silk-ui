@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as Avatar from '@sivir-ui/svelte/components/avatar';
+import * as Avatar from '@sivir-ui/svelte/components/avatar';
 
-    let {
-        src = '',
-        alt = '',
-        size = 'md' as 'sm' | 'md' | 'lg' | 'xl',
-        shape = 'circle' as 'circle' | 'square'
-    } = $props();
+let {
+    src = '',
+    alt = '',
+    size = 'md' as 'sm' | 'md' | 'lg' | 'xl',
+    shape = 'circle' as 'circle' | 'square'
+} = $props();
 </script>
 
 <Avatar.Root {size} {shape}>

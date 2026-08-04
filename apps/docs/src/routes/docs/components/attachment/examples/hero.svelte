@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as Attachment from '@sivir-ui/svelte/components/attachment';
+import * as Attachment from '@sivir-ui/svelte/components/attachment';
 
-    let files = $state<File[]>([]);
+let files = $state<File[]>([]);
 </script>
 
 <Attachment.Root

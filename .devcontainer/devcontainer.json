@@ -10,12 +10,7 @@
     "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
     "customizations": {
         "vscode": {
-            "extensions": [
-                "svelte.svelte-vscode",
-                "bradlc.vscode-tailwindcss",
-                "esbenp.prettier-vscode",
-                "dbaeumer.vscode-eslint"
-            ],
+            "extensions": ["svelte.svelte-vscode", "bradlc.vscode-tailwindcss", "biomejs.biome"],
             "settings": {
                 "terminal.integrated.profiles.linux": {
                     "zsh": {

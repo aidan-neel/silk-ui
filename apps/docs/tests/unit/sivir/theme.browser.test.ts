@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from 'vitest';
 import { DEFAULT_THEME, neutralTemperatures, themeToCss } from '@sivir-ui/svelte/themes/theme';
+import { afterEach, describe, expect, it } from 'vitest';
 
 const PARITY_PROPERTIES = [
     '--font-sans',
@@ -41,7 +41,9 @@ function install(css: string) {
 
 afterEach(() => {
     document.documentElement.classList.remove('dark');
-    document.querySelectorAll('[data-test-theme]').forEach((node) => node.remove());
+    document.querySelectorAll('[data-test-theme]').forEach((node) => {
+        node.remove();
+    });
 });
 
 describe('theme computed styles', () => {
@@ -66,7 +68,9 @@ describe('theme computed styles', () => {
                     expect(getComputedStyle(probe).color).toMatch(/^rgb/);
                 }
             }
-            document.querySelectorAll('[data-test-theme]').forEach((node) => node.remove());
+            document.querySelectorAll('[data-test-theme]').forEach((node) => {
+                node.remove();
+            });
         }
         probe.remove();
     });

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
+import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 </script>
 
 <Tooltip.Root delay={10} closeDelay={500}>

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { CodeBlockActionsProps } from '.';
-    import Copy from './code-block-copy.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { CodeBlockActionsProps } from '.';
+import Copy from './code-block-copy.svelte';
 
-    let { children, class: className, copy = true, ...rest }: CodeBlockActionsProps = $props();
+let { children, class: className, copy = true, ...rest }: CodeBlockActionsProps = $props();
 </script>
 
 <!-- `ml-auto` pins the action cluster to the right edge of the header. -->

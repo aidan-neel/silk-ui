@@ -1,5 +1,6 @@
 type $$ComponentProps = {
     size?: number;
+    ready?: boolean;
     class?: string;
     'aria-label'?: string;
     'aria-hidden'?: boolean | 'true' | 'false';

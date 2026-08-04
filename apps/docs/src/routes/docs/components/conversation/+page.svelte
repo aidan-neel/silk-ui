@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import EmptyState from './examples/empty-state.svelte';
+import EmptyStateSrc from './examples/empty-state.svelte?raw';
+import FollowOutput from './examples/follow-output.svelte';
+import FollowOutputSrc from './examples/follow-output.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import EmptyState from './examples/empty-state.svelte';
-    import EmptyStateSrc from './examples/empty-state.svelte?raw';
-    import FollowOutput from './examples/follow-output.svelte';
-    import FollowOutputSrc from './examples/follow-output.svelte?raw';
-
-    const installCommand = 'bunx @sivir-ui/svelte add conversation';
-    const usageSnippet = `import * as Conversation from '@sivir-ui/svelte/components/conversation';
+const installCommand = 'bunx @sivir-ui/svelte add conversation';
+const usageSnippet = `import * as Conversation from '@sivir-ui/svelte/components/conversation';
 import * as Message from '@sivir-ui/svelte/components/message';
 
 let follow = $state(true);

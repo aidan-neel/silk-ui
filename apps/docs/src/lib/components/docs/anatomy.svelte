@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { ComponentPart } from '$lib/component-anatomy';
+import type { ComponentPart } from '$lib/component-anatomy';
 
-    let { items }: { items: readonly ComponentPart[] } = $props();
+let { items }: { items: readonly ComponentPart[] } = $props();
 </script>
 
 <section id="anatomy" class="mt-12 scroll-mt-20 flex flex-col gap-4">

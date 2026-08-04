@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import { type Snippet } from 'svelte';
 
-    let {
-        children,
-        class: classProp,
-        title,
-        ...rest
-    }: {
-        children: Snippet;
-        class?: string;
-        title: string;
-    } = $props();
+let {
+    children,
+    class: classProp,
+    title,
+    ...rest
+}: {
+    children: Snippet;
+    class?: string;
+    title: string;
+} = $props();
 </script>
 
 <p {...rest} class={cn(classProp, `text-foreground-muted`)}>

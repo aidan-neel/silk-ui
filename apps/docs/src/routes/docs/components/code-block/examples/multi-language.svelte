@@ -1,13 +1,13 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
-    const ts = `export async function getUser(id: string) {
+const ts = `export async function getUser(id: string) {
   const res = await fetch(\`/api/users/\${id}\`);
   if (!res.ok) throw new Error('Not found');
   return res.json();
 }`;
 
-    const py = `import httpx
+const py = `import httpx
 
 async def get_user(id: str):
     async with httpx.AsyncClient() as client:
@@ -15,7 +15,7 @@ async def get_user(id: str):
         res.raise_for_status()
         return res.json()`;
 
-    const go = `func GetUser(id string) (*User, error) {
+const go = `func GetUser(id string) (*User, error) {
     res, err := http.Get("/api/users/" + id)
     if err != nil {
         return nil, err

@@ -32,7 +32,7 @@ describe('installer command construction', () => {
         }
     });
 
-    test('scaffolds TypeScript, adds Tailwind, and installs the bundled UI font', () => {
+    test('scaffolds TypeScript, adds Tailwind, and installs the default UI font', () => {
         const commands = scaffoldCommands('/tmp/run/consumer');
         expect(commands).toHaveLength(3);
         expect(commands[0].args).toContain('--no-install');
@@ -41,7 +41,7 @@ describe('installer command construction', () => {
         expect(commands[1].args).toContain('--no-install');
         expect(commands[2]).toMatchObject({
             bin: 'bun',
-            args: ['add', '@fontsource/dm-sans@5.3.0']
+            args: ['add', '@fontsource/inter@5.3.0']
         });
     });
 });

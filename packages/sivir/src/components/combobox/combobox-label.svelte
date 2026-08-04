@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 
-    type Props = {
-        children: Snippet;
-        class?: string;
-    };
+type Props = {
+    children: Snippet;
+    class?: string;
+};
 
-    let props: Props = $props();
+let props: Props = $props();
 </script>
 
 <p

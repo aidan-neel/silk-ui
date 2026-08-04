@@ -1,22 +1,21 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Disabled from './examples/disabled.svelte';
+import DisabledSrc from './examples/disabled.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Icon from './examples/icon.svelte';
+import IconSrc from './examples/icon.svelte?raw';
+import Sizes from './examples/sizes.svelte';
+import SizesSrc from './examples/sizes.svelte?raw';
+import Text from './examples/text.svelte';
+import TextSrc from './examples/text.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Icon from './examples/icon.svelte';
-    import IconSrc from './examples/icon.svelte?raw';
-    import Text from './examples/text.svelte';
-    import TextSrc from './examples/text.svelte?raw';
-    import Sizes from './examples/sizes.svelte';
-    import SizesSrc from './examples/sizes.svelte?raw';
-    import Disabled from './examples/disabled.svelte';
-    import DisabledSrc from './examples/disabled.svelte?raw';
+const TITLE = 'Toggle';
+const SLUG = 'toggle';
 
-    const TITLE = 'Toggle';
-    const SLUG = 'toggle';
-
-    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import Shortcut from '@sivir-ui/svelte/components/shortcut';
-    import Pencil from '@lucide/svelte/icons/pencil';
-    import Copy2 from '@lucide/svelte/icons/files';
-    import Archive from '@lucide/svelte/icons/archive';
-    import Trash from '@lucide/svelte/icons/trash-2';
-    import MoreHorizontal from '@lucide/svelte/icons/ellipsis';
+import Archive from '@lucide/svelte/icons/archive';
+import MoreHorizontal from '@lucide/svelte/icons/ellipsis';
+import Copy2 from '@lucide/svelte/icons/files';
+import Pencil from '@lucide/svelte/icons/pencil';
+import Trash from '@lucide/svelte/icons/trash-2';
+import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <DropdownMenu.Root>

@@ -1,35 +1,35 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
-    import * as Message from '@sivir-ui/svelte/components/message';
-    import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
-    import Check from '@lucide/svelte/icons/check';
-    import Copy from '@lucide/svelte/icons/copy';
-    import ThumbsUp from '@lucide/svelte/icons/thumbs-up';
+import Check from '@lucide/svelte/icons/check';
+import Copy from '@lucide/svelte/icons/copy';
+import ThumbsUp from '@lucide/svelte/icons/thumbs-up';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Markdown } from '@sivir-ui/svelte/components/markdown';
+import * as Message from '@sivir-ui/svelte/components/message';
+import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
 
-    const response = [
-        '### Billing API v2',
-        '',
-        'The release separates invoice adjustments from payment collection and replaces `account_id` with `customer_id`.',
-        '',
-        '- Update webhook handlers for `invoice.adjusted`.',
-        '- Backfill `customer_id` before switching reads.',
-        '- Keep v1 retries active during the seven-day overlap.',
-        '',
-        '> Main migration risk: consumers that infer payment state from invoice updates.'
-    ].join('\n');
+const response = [
+    '### Billing API v2',
+    '',
+    'The release separates invoice adjustments from payment collection and replaces `account_id` with `customer_id`.',
+    '',
+    '- Update webhook handlers for `invoice.adjusted`.',
+    '- Backfill `customer_id` before switching reads.',
+    '- Keep v1 retries active during the seven-day overlap.',
+    '',
+    '> Main migration risk: consumers that infer payment state from invoice updates.'
+].join('\n');
 
-    let copied = $state(false);
-    let helpful = $state(false);
+let copied = $state(false);
+let helpful = $state(false);
 
-    async function copyResponse() {
-        try {
-            await navigator.clipboard.writeText(response);
-            copied = true;
-        } catch {
-            copied = false;
-        }
+async function copyResponse() {
+    try {
+        await navigator.clipboard.writeText(response);
+        copied = true;
+    } catch {
+        copied = false;
     }
+}
 </script>
 
 <div class="w-full max-w-3xl space-y-7">

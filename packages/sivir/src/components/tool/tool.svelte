@@ -1,77 +1,73 @@
 <script lang="ts">
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
-    import { themedSlide } from '@sivir-ui/svelte/transition';
-    import { Spinner } from '@sivir-ui/svelte/components/spinner';
-    import type { ToolProps } from '.';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import { Spinner } from '@sivir-ui/svelte/components/spinner';
+import { themedSlide } from '@sivir-ui/svelte/transition';
+import { cn, pressable } from '@sivir-ui/svelte/utils';
+import type { ToolProps } from '.';
 
-    let {
-        name,
-        duration,
-        state = 'running',
-        variant = 'default',
-        open = $bindable(true),
-        onOpenChange,
-        onOpenChangeComplete,
-        trigger,
-        children,
-        class: className,
-        ...rest
-    }: ToolProps = $props();
+let {
+    name,
+    duration,
+    state = 'running',
+    variant = 'default',
+    open = $bindable(true),
+    onOpenChange,
+    onOpenChangeComplete,
+    trigger,
+    children,
+    class: className,
+    ...rest
+}: ToolProps = $props();
 
-    const id = $props.id();
-    const label = $derived(
-        state === 'running'
-            ? 'Task running'
-            : state === 'complete'
-              ? 'Task completed'
-              : 'Task failed'
-    );
-    let initialized = false;
-    let previousOpen = open;
-    let revision = 0;
-    let pending: { open: boolean; revision: number } | undefined;
-    let transitionRevision = 0;
+const id = $props.id();
+const label = $derived(
+    state === 'running' ? 'Task running' : state === 'complete' ? 'Task completed' : 'Task failed'
+);
+let initialized = false;
+let previousOpen = open;
+let revision = 0;
+let pending: { open: boolean; revision: number } | undefined;
+let transitionRevision = 0;
 
-    function complete(nextOpen: boolean, completedRevision: number) {
-        if (pending?.open !== nextOpen || pending.revision !== completedRevision) {
-            return;
-        }
-        pending = undefined;
-        if (nextOpen) {
-            onOpenChangeComplete?.(true);
-            return;
-        }
-        queueMicrotask(() => {
-            if (!pending) {
-                onOpenChangeComplete?.(false);
-            }
-        });
+function complete(nextOpen: boolean, completedRevision: number) {
+    if (pending?.open !== nextOpen || pending.revision !== completedRevision) {
+        return;
     }
-
-    $effect(() => {
-        if (!initialized) {
-            initialized = true;
-            previousOpen = open;
-            return;
+    pending = undefined;
+    if (nextOpen) {
+        onOpenChangeComplete?.(true);
+        return;
+    }
+    queueMicrotask(() => {
+        if (!pending) {
+            onOpenChangeComplete?.(false);
         }
-        if (open === previousOpen) {
-            return;
-        }
-        previousOpen = open;
-        revision += 1;
-        pending = { open, revision };
-        onOpenChange?.(open);
-        if (!open) {
-            return;
-        }
-        const completion = pending;
-        queueMicrotask(() => {
-            if (pending === completion && !open) {
-                complete(completion.open, completion.revision);
-            }
-        });
     });
+}
+
+$effect(() => {
+    if (!initialized) {
+        initialized = true;
+        previousOpen = open;
+        return;
+    }
+    if (open === previousOpen) {
+        return;
+    }
+    previousOpen = open;
+    revision += 1;
+    pending = { open, revision };
+    onOpenChange?.(open);
+    if (!open) {
+        return;
+    }
+    const completion = pending;
+    queueMicrotask(() => {
+        if (pending === completion && !open) {
+            complete(completion.open, completion.revision);
+        }
+    });
+});
 </script>
 
 <section

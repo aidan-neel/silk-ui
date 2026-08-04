@@ -1,20 +1,19 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Basic from './examples/basic.svelte';
+import BasicSrc from './examples/basic.svelte?raw';
+import Disabled from './examples/disabled.svelte';
+import DisabledSrc from './examples/disabled.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Stepped from './examples/stepped.svelte';
+import SteppedSrc from './examples/stepped.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Basic from './examples/basic.svelte';
-    import BasicSrc from './examples/basic.svelte?raw';
-    import Stepped from './examples/stepped.svelte';
-    import SteppedSrc from './examples/stepped.svelte?raw';
-    import Disabled from './examples/disabled.svelte';
-    import DisabledSrc from './examples/disabled.svelte?raw';
+const TITLE = 'Slider';
+const SLUG = 'slider';
 
-    const TITLE = 'Slider';
-    const SLUG = 'slider';
-
-    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

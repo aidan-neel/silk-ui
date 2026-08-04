@@ -1,74 +1,74 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { setContext, untrack } from 'svelte';
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
-    import type { CodeBlockProps, CodeBlockRegistry, CodeBlockTab } from '.';
-    import Header from './code-block-header.svelte';
-    import List from './code-block-list.svelte';
-    import Trigger from './code-block-trigger.svelte';
-    import Actions from './code-block-actions.svelte';
-    import Content from './code-block-content.svelte';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
+import { cn } from '@sivir-ui/svelte/utils';
+import { setContext, untrack } from 'svelte';
+import type { CodeBlockProps, CodeBlockRegistry, CodeBlockTab } from '.';
+import Actions from './code-block-actions.svelte';
+import Content from './code-block-content.svelte';
+import Header from './code-block-header.svelte';
+import List from './code-block-list.svelte';
+import Trigger from './code-block-trigger.svelte';
 
-    let {
-        children,
-        class: className,
-        value = $bindable(),
-        tabs,
-        code,
-        lang,
-        showLineNumbers = false,
-        copy = 'actionbar',
-        actions,
-        ...rest
-    }: CodeBlockProps = $props();
+let {
+    children,
+    class: className,
+    value = $bindable(),
+    tabs,
+    code,
+    lang,
+    showLineNumbers = false,
+    copy = 'actionbar',
+    actions,
+    ...rest
+}: CodeBlockProps = $props();
 
-    const SINGLE = '__single__';
+const SINGLE = '__single__';
 
-    /**
-     * High-level when `tabs` (multi-language) or `code` (single snippet) is given.
-     * Otherwise the caller composes the subparts as children.
-     */
-    const resolvedTabs = $derived<CodeBlockTab[]>(
-        (tabs ?? []).map((t) => {
-            return {
-                ...t,
-                value: t.value ?? t.lang
-            };
-        })
-    );
-    const isHighLevel = $derived(tabs != null || code != null);
-    const hasTabRow = $derived(resolvedTabs.length > 0);
-    const bodyCopy = $derived<'overlay' | 'inline' | undefined>(
-        copy === 'actionbar' ? undefined : copy
-    );
+/**
+ * High-level when `tabs` (multi-language) or `code` (single snippet) is given.
+ * Otherwise the caller composes the subparts as children.
+ */
+const resolvedTabs = $derived<CodeBlockTab[]>(
+    (tabs ?? []).map((t) => {
+        return {
+            ...t,
+            value: t.value ?? t.lang
+        };
+    })
+);
+const isHighLevel = $derived(tabs != null || code != null);
+const hasTabRow = $derived(resolvedTabs.length > 0);
+const bodyCopy = $derived<'overlay' | 'inline' | undefined>(
+    copy === 'actionbar' ? undefined : copy
+);
 
-    /**
-     * Seeds the active tab before the first render, reading the raw props because
-     * the derived above is not ready during init.
-     */
-    const initialValue = untrack(() => {
-        const firstTab = tabs?.[0];
-        return firstTab ? (firstTab.value ?? firstTab.lang) : code != null ? SINGLE : '';
-    });
-    value ??= initialValue;
+/**
+ * Seeds the active tab before the first render, reading the raw props because
+ * the derived above is not ready during init.
+ */
+const initialValue = untrack(() => {
+    const firstTab = tabs?.[0];
+    return firstTab ? (firstTab.value ?? firstTab.lang) : code != null ? SINGLE : '';
+});
+value ??= initialValue;
 
-    /**
-     * Raw code per tab -- Copy reads the active one -- plus the active/order
-     * tracking that drives the directional slide between tabs.
-     */
-    const registry = $state({
-        codes: {},
-        active: untrack(() => value ?? ''),
-        order: [],
-        contained: untrack(() => isHighLevel)
-    } as CodeBlockRegistry);
-    setContext('code-block', registry);
+/**
+ * Raw code per tab -- Copy reads the active one -- plus the active/order
+ * tracking that drives the directional slide between tabs.
+ */
+const registry = $state({
+    codes: {},
+    active: untrack(() => value ?? ''),
+    order: [],
+    contained: untrack(() => isHighLevel)
+} as CodeBlockRegistry);
+setContext('code-block', registry);
 
-    $effect(() => {
-        registry.active = value ?? '';
-        registry.contained = isHighLevel;
-    });
+$effect(() => {
+    registry.active = value ?? '';
+    registry.contained = isHighLevel;
+});
 </script>
 
 <div

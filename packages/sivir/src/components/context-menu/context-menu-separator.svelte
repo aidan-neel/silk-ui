@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { ContextMenuSeparatorProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ContextMenuSeparatorProps } from '.';
 
-    let { children, class: className, ...rest }: ContextMenuSeparatorProps = $props();
+let { children, class: className, ...rest }: ContextMenuSeparatorProps = $props();
 </script>
 
 <div

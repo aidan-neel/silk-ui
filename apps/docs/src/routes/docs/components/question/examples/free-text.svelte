@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as Question from '@sivir-ui/svelte/components/question';
+import * as Question from '@sivir-ui/svelte/components/question';
 
-    let answer = $state('');
-    let submitted = $state('');
+let answer = $state('');
+let submitted = $state('');
 </script>
 
 <div class="flex w-full max-w-2xl flex-col gap-3">

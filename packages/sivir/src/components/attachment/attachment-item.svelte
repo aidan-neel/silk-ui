@@ -1,65 +1,61 @@
 <script lang="ts">
-    import CircleAlert from '@lucide/svelte/icons/circle-alert';
-    import CircleCheck from '@lucide/svelte/icons/circle-check';
-    import FileText from '@lucide/svelte/icons/file-text';
-    import X from '@lucide/svelte/icons/x';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Spinner } from '@sivir-ui/svelte/components/spinner';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AttachmentItemProps } from '.';
+import CircleAlert from '@lucide/svelte/icons/circle-alert';
+import CircleCheck from '@lucide/svelte/icons/circle-check';
+import FileText from '@lucide/svelte/icons/file-text';
+import X from '@lucide/svelte/icons/x';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Spinner } from '@sivir-ui/svelte/components/spinner';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { AttachmentItemProps } from '.';
 
-    let {
-        file,
-        status = 'ready',
-        progress,
-        error,
-        onRemove,
-        removable = true,
-        class: className,
-        ...rest
-    }: AttachmentItemProps = $props();
+let {
+    file,
+    status = 'ready',
+    progress,
+    error,
+    onRemove,
+    removable = true,
+    class: className,
+    ...rest
+}: AttachmentItemProps = $props();
 
-    const safeProgress = $derived(
-        progress === undefined ? undefined : Math.min(100, Math.max(0, progress))
-    );
-    const preview = $derived.by(() => {
-        const previewFile = file;
-        return (node: HTMLImageElement) => {
-            const url = URL.createObjectURL(previewFile);
-            node.src = url;
-            return () => URL.revokeObjectURL(url);
-        };
-    });
-    const extension = $derived.by(() => {
-        const dot = file.name.lastIndexOf('.');
-        return dot > 0 && dot < file.name.length - 1
-            ? file.name
-                  .slice(dot + 1)
-                  .toUpperCase()
-                  .slice(0, 4)
-            : 'FILE';
-    });
-    const statusText = $derived(
-        status === 'complete'
-            ? 'Complete'
-            : status === 'error'
-              ? error || 'Attachment failed'
-              : 'Ready'
-    );
+const safeProgress = $derived(
+    progress === undefined ? undefined : Math.min(100, Math.max(0, progress))
+);
+const preview = $derived.by(() => {
+    const previewFile = file;
+    return (node: HTMLImageElement) => {
+        const url = URL.createObjectURL(previewFile);
+        node.src = url;
+        return () => URL.revokeObjectURL(url);
+    };
+});
+const extension = $derived.by(() => {
+    const dot = file.name.lastIndexOf('.');
+    return dot > 0 && dot < file.name.length - 1
+        ? file.name
+              .slice(dot + 1)
+              .toUpperCase()
+              .slice(0, 4)
+        : 'FILE';
+});
+const statusText = $derived(
+    status === 'complete' ? 'Complete' : status === 'error' ? error || 'Attachment failed' : 'Ready'
+);
 
-    function formatBytes(bytes: number) {
-        if (bytes < 1024) {
-            return `${bytes} B`;
-        }
-        const units = ['KB', 'MB', 'GB', 'TB'];
-        let value = bytes / 1024;
-        let unit = 0;
-        while (value >= 1024 && unit < units.length - 1) {
-            value /= 1024;
-            unit += 1;
-        }
-        return `${value < 10 ? value.toFixed(1) : Math.round(value)} ${units[unit]}`;
+function formatBytes(bytes: number) {
+    if (bytes < 1024) {
+        return `${bytes} B`;
     }
+    const units = ['KB', 'MB', 'GB', 'TB'];
+    let value = bytes / 1024;
+    let unit = 0;
+    while (value >= 1024 && unit < units.length - 1) {
+        value /= 1024;
+        unit += 1;
+    }
+    return `${value < 10 ? value.toFixed(1) : Math.round(value)} ${units[unit]}`;
+}
 </script>
 
 <div

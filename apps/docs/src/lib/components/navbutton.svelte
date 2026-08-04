@@ -1,22 +1,22 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import type { Snippet } from 'svelte';
+import { Button } from '@sivir-ui/svelte/components/button';
+import type { Snippet } from 'svelte';
+import { page } from '$app/stores';
 
-    type Props = {
-        href: string;
-        children: Snippet;
-        mobile?: boolean;
-        onclick?: () => void;
-    };
+type Props = {
+    href: string;
+    children: Snippet;
+    mobile?: boolean;
+    onclick?: () => void;
+};
 
-    let { href, children, mobile = false, onclick }: Props = $props();
-    const docLanding = [
-        '/docs/introduction',
-        '/docs/installation',
-        '/docs/theming',
-        '/docs/components'
-    ];
+let { href, children, mobile = false, onclick }: Props = $props();
+const docLanding = [
+    '/docs/introduction',
+    '/docs/installation',
+    '/docs/theming',
+    '/docs/components'
+];
 </script>
 
 <Button

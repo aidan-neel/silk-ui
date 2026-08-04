@@ -1,17 +1,16 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import CustomTrigger from './examples/custom-trigger.svelte';
+import CustomTriggerSrc from './examples/custom-trigger.svelte?raw';
+import Grouped from './examples/grouped.svelte';
+import GroupedSrc from './examples/grouped.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Grouped from './examples/grouped.svelte';
-    import GroupedSrc from './examples/grouped.svelte?raw';
-    import CustomTrigger from './examples/custom-trigger.svelte';
-    import CustomTriggerSrc from './examples/custom-trigger.svelte?raw';
-
-    const TITLE = 'Fullscreen Nav';
-    const SLUG = 'fullscreen-nav';
-    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+const TITLE = 'Fullscreen Nav';
+const SLUG = 'fullscreen-nav';
+const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

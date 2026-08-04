@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as Conversation from '@sivir-ui/svelte/components/conversation';
-    import * as Message from '@sivir-ui/svelte/components/message';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
-    import * as Question from '@sivir-ui/svelte/components/question';
+import * as Conversation from '@sivir-ui/svelte/components/conversation';
+import * as Message from '@sivir-ui/svelte/components/message';
+import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+import * as Question from '@sivir-ui/svelte/components/question';
 
-    let asking = $state(true);
-    let answer = $state<string | string[]>();
-    let draft = $state('Keep this draft');
+let asking = $state(true);
+let answer = $state<string | string[]>();
+let draft = $state('Keep this draft');
 </script>
 
 <div>

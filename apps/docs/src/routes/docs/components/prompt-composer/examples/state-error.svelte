@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+import { onMount } from 'svelte';
 
-    let status = $state<'idle' | 'error'>('idle');
+let status = $state<'idle' | 'error'>('idle');
 
-    onMount(() => {
-        const frame = requestAnimationFrame(() => {
-            status = 'error';
-        });
-
-        return () => cancelAnimationFrame(frame);
+onMount(() => {
+    const frame = requestAnimationFrame(() => {
+        status = 'error';
     });
+
+    return () => cancelAnimationFrame(frame);
+});
 </script>
 
 <PromptComposer.Root

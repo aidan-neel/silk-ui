@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Accordion from '@sivir-ui/svelte/components/accordion';
+import * as Accordion from '@sivir-ui/svelte/components/accordion';
 </script>
 
 <div class="w-full max-w-md">

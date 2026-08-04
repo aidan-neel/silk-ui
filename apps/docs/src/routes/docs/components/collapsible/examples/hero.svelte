@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
 
-    let open = $state(true);
+let open = $state(true);
 </script>
 
 <div class="w-full max-w-96">

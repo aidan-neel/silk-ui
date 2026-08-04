@@ -1,26 +1,26 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
-    import { ChevronDown } from '@lucide/svelte';
-    import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
-    import { getSelectContext } from './context.svelte';
-    import { getPopoverContext } from '../popover/context.svelte';
+import { ChevronDown } from '@lucide/svelte';
+import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
+import * as Popover from '@sivir-ui/svelte/components/popover';
+import { cn } from '@sivir-ui/svelte/utils';
+import { type Snippet } from 'svelte';
+import { getPopoverContext } from '../popover/context.svelte';
+import { getSelectContext } from './context.svelte';
 
-    const { state, labels } = getSelectContext();
-    const { id: popoverId, state: popoverState } = getPopoverContext();
+const { state, labels } = getSelectContext();
+const { id: popoverId, state: popoverState } = getPopoverContext();
 
-    type Props = {
-        children?: Snippet;
-        class?: string;
-        variant?: ButtonVariant;
-    } & Omit<Popover.PopoverTriggerProps, 'children' | 'class' | 'variant'>;
+type Props = {
+    children?: Snippet;
+    class?: string;
+    variant?: ButtonVariant;
+} & Omit<Popover.PopoverTriggerProps, 'children' | 'class' | 'variant'>;
 
-    let { children, class: className, variant = 'outline', ...rest }: Props = $props();
+let { children, class: className, variant = 'outline', ...rest }: Props = $props();
 
-    const selectedLabel = $derived(
-        state.value !== '' ? state.selectedLabel || labels.get(state.value) || '' : ''
-    );
+const selectedLabel = $derived(
+    state.value !== '' ? state.selectedLabel || labels.get(state.value) || '' : ''
+);
 </script>
 
 <Popover.Trigger

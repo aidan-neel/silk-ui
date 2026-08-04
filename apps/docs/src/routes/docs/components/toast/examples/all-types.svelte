@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { toast } from '@sivir-ui/svelte/components/toast';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { toast } from '@sivir-ui/svelte/components/toast';
 </script>
 
 <div class="flex flex-wrap gap-2">

@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
-    import { getContext } from 'svelte';
-    import type { ToggleGroupItemProps, ToggleGroupContext } from '.';
+import { cn, pressable } from '@sivir-ui/svelte/utils';
+import { getContext } from 'svelte';
+import type { ToggleGroupContext, ToggleGroupItemProps } from '.';
 
-    let { class: className, value, disabled, children, ...rest }: ToggleGroupItemProps = $props();
-    const ctx = getContext<ToggleGroupContext>('toggle-group');
+let { class: className, value, disabled, children, ...rest }: ToggleGroupItemProps = $props();
+const ctx = getContext<ToggleGroupContext>('toggle-group');
 
-    const active = $derived(ctx.isActive(value));
-    const isDisabled = $derived(disabled || ctx.disabled);
+const active = $derived(ctx.isActive(value));
+const isDisabled = $derived(disabled || ctx.disabled);
 </script>
 
 <button

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
+import { queryRequired } from '../../test-utils';
 
 describe('RadioGroup -- rendering', () => {
     it('renders one radio input per item', () => {
@@ -55,8 +56,8 @@ describe('RadioGroup -- initial selection', () => {
 describe('RadioGroup -- selection interaction', () => {
     it('changes selection when a different item is clicked', async () => {
         const { container } = render(RadioGroupFixture, { props: { value: 'apple' } });
-        const banana = container.querySelector<HTMLInputElement>('input[value="banana"]')!;
-        const apple = container.querySelector<HTMLInputElement>('input[value="apple"]')!;
+        const banana = queryRequired<HTMLInputElement>(container, 'input[value="banana"]');
+        const apple = queryRequired<HTMLInputElement>(container, 'input[value="apple"]');
 
         expect(apple.checked).toBe(true);
 

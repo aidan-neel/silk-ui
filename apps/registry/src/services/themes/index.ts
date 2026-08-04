@@ -22,7 +22,7 @@ export const themesController = new Elysia({
         '/',
         ({ set }) => {
             set.status = 405;
-            set.headers['allow'] = 'GET';
+            set.headers.allow = 'GET';
             return 'Theme publishing is disabled in v1.';
         },
         {

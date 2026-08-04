@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
+import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
 
-    let finalizePricing = $state(true);
-    let writeChangelog = $state(true);
-    let qaNavigation = $state(false);
-    let scheduleAnnouncement = $state(false);
-    let updateDocs = $state(false);
+let finalizePricing = $state(true);
+let writeChangelog = $state(true);
+let qaNavigation = $state(false);
+let scheduleAnnouncement = $state(false);
+let updateDocs = $state(false);
 
-    const completedCount = $derived(
-        [finalizePricing, writeChangelog, qaNavigation, scheduleAnnouncement, updateDocs].filter(
-            Boolean
-        ).length
-    );
-    const totalCount = 5;
+const completedCount = $derived(
+    [finalizePricing, writeChangelog, qaNavigation, scheduleAnnouncement, updateDocs].filter(
+        Boolean
+    ).length
+);
+const totalCount = 5;
 </script>
 
 <div class="w-full max-w-80">

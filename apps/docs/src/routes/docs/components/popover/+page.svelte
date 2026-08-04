@@ -1,17 +1,16 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Basic from './examples/basic.svelte';
+import BasicSrc from './examples/basic.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Placements from './examples/placements.svelte';
+import PlacementsSrc from './examples/placements.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Basic from './examples/basic.svelte';
-    import BasicSrc from './examples/basic.svelte?raw';
-    import Placements from './examples/placements.svelte';
-    import PlacementsSrc from './examples/placements.svelte?raw';
+const _TITLE = 'Popover';
 
-    const _TITLE = 'Popover';
-
-    const installCommand = 'bunx @sivir-ui/svelte add popover';
+const installCommand = 'bunx @sivir-ui/svelte add popover';
 </script>
 
 <svelte:head>

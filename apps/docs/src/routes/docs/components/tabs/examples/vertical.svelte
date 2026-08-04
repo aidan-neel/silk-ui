@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
 
-    let tab = $state('account');
+let tab = $state('account');
 </script>
 
 <div class="w-full max-w-lg p-2 sm:p-4">

@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
-    import * as Message from '@sivir-ui/svelte/components/message';
-    import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Markdown } from '@sivir-ui/svelte/components/markdown';
+import * as Message from '@sivir-ui/svelte/components/message';
 
-    let retrying = $state(false);
+let retrying = $state(false);
 
-    const partialResponse =
-        'The first two regions are healthy. I’m checking the remaining edge locations and';
+const partialResponse =
+    'The first two regions are healthy. I’m checking the remaining edge locations and';
 </script>
 
 <div class="w-full max-w-2xl space-y-8">

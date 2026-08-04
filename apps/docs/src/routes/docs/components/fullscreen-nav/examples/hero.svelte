@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
 </script>
 
 <FullscreenNav.Root>

@@ -1,4 +1,4 @@
-import { setContext, getContext, onDestroy } from 'svelte';
+import { getContext, onDestroy, setContext } from 'svelte';
 
 export const STATE_KEY = Symbol('TOAST');
 
@@ -192,7 +192,8 @@ function createToast(toastData: ToastInput, state = activeState): Toast {
         return toastData as Toast;
     }
 
-    const toastId = (nextToastId += 1);
+    nextToastId += 1;
+    const toastId = nextToastId;
     const duration = toastData.duration ?? 5600;
 
     const nextToast: Toast = {
@@ -353,7 +354,8 @@ function setToastUIState(): ToastHost {
         clientState = fresh;
     }
     const state = clientState;
-    const hostId = (nextHostId += 1);
+    nextHostId += 1;
+    const hostId = nextHostId;
     liveHosts.push(hostId);
     if (primaryHostId === null) {
         primaryHostId = hostId;
@@ -415,14 +417,14 @@ function __getActiveToastStateForTests(): ToastState | undefined {
 }
 
 export {
-    toast,
+    __getActiveToastStateForTests,
+    __setActiveToastStateForTests,
     dismissToast,
+    getToastPrimaryHostId,
+    getToastUIState,
     pauseToast,
     resumeToast,
-    updateToast,
-    getToastUIState,
-    getToastPrimaryHostId,
     setToastUIState,
-    __setActiveToastStateForTests,
-    __getActiveToastStateForTests
+    toast,
+    updateToast
 };

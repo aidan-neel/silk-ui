@@ -59,7 +59,7 @@ const COMPONENT_PEERS: Record<string, string> = {
 
 function header(text: string) {
     console.log();
-    console.log('  ' + gradientLine(text));
+    console.log(`  ${gradientLine(text)}`);
     console.log();
 }
 
@@ -77,7 +77,7 @@ function createApp(bare: boolean) {
 
     writeFileSync(
         path.join(appDir, 'package.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             {
                 name: 'sivir-sandbox-app',
                 private: true,
@@ -87,7 +87,7 @@ function createApp(bare: boolean) {
             },
             null,
             '\t'
-        ) + '\n'
+        )}\n`
     );
 
     // `sivir init` only checks that this file exists -- the sandbox exercises the

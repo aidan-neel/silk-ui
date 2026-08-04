@@ -1,26 +1,26 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { resolve } from '$app/paths';
 
-    const packageInstall = `bun add @sivir-ui/svelte
+const packageInstall = `bun add @sivir-ui/svelte
 # npm i @sivir-ui/svelte
 # pnpm add @sivir-ui/svelte`;
 
-    const packageCss = `@import '@sivir-ui/svelte/ui.css';`;
+const packageCss = `@import '@sivir-ui/svelte/ui.css';`;
 
-    const packageUse = `<script>
+const packageUse = `<script>
   import { Button } from '@sivir-ui/svelte';
 <${'/'}script>
 
 <Button>Get started</Button>`;
 
-    const cliCss = `/* src/app.css */
+const cliCss = `/* src/app.css */
 @import './lib/sivir/ui.css';`;
 
-    const cliAdd = `bunx --package @sivir-ui/svelte sivir add button
+const cliAdd = `bunx --package @sivir-ui/svelte sivir add button
 bunx --package @sivir-ui/svelte sivir list`;
 
-    const cliUse = `<script>
+const cliUse = `<script>
   import { Button } from '$lib/sivir/components/button';
 <${'/'}script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
+import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
 </script>
 
 <RadioGroup.Root disabled name="option">

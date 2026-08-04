@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Horizontal from './examples/horizontal.svelte';
-    import HorizontalSrc from './examples/horizontal.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Horizontal from './examples/horizontal.svelte';
+import HorizontalSrc from './examples/horizontal.svelte?raw';
 
-    const TITLE = 'Scroll Area';
+const TITLE = 'Scroll Area';
 
-    const installCommand = 'bunx @sivir-ui/svelte add scroll-area';
+const installCommand = 'bunx @sivir-ui/svelte add scroll-area';
 </script>
 
 <svelte:head>

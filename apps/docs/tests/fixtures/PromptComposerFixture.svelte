@@ -1,32 +1,32 @@
 <script lang="ts">
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
-    import type { PromptComposerStatus } from '@sivir-ui/svelte/components/prompt-composer';
+import type { PromptComposerStatus } from '@sivir-ui/svelte/components/prompt-composer';
+import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
 
-    let {
-        value = $bindable(''),
-        status = 'idle',
-        asyncSubmit = false
-    }: { value?: string; status?: PromptComposerStatus; asyncSubmit?: boolean } = $props();
+let {
+    value = $bindable(''),
+    status = 'idle',
+    asyncSubmit = false
+}: { value?: string; status?: PromptComposerStatus; asyncSubmit?: boolean } = $props();
 
-    let submitCount = $state(0);
-    let stopCount = $state(0);
-    let settle: (() => void) | undefined;
+let submitCount = $state(0);
+let stopCount = $state(0);
+let settle: (() => void) | undefined;
 
-    async function submit() {
-        submitCount += 1;
-        if (!asyncSubmit) return;
+async function submit() {
+    submitCount += 1;
+    if (!asyncSubmit) return;
 
-        await new Promise<void>((resolve) => {
-            settle = resolve;
-        });
-        settle = undefined;
-    }
+    await new Promise<void>((resolve) => {
+        settle = resolve;
+    });
+    settle = undefined;
+}
 
-    function resolveSubmission() {
-        const resolve = settle;
-        settle = undefined;
-        resolve?.();
-    }
+function resolveSubmission() {
+    const resolve = settle;
+    settle = undefined;
+    resolve?.();
+}
 </script>
 
 <PromptComposer.Root bind:value {status} onSubmit={submit} onStop={() => (stopCount += 1)}>

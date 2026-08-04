@@ -1,35 +1,29 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
-    import { getContext } from 'svelte';
-    import type { TabsState, TabsTriggerProps } from '.';
-    import { toTabIdPart } from './id';
+import { cn, pressable } from '@sivir-ui/svelte/utils';
+import { getContext } from 'svelte';
+import type { TabsState, TabsTriggerProps } from '.';
+import { toTabIdPart } from './id';
 
-    let {
-        children,
-        class: className,
-        value,
-        disabled = false,
-        ...rest
-    }: TabsTriggerProps = $props();
+let { children, class: className, value, disabled = false, ...rest }: TabsTriggerProps = $props();
 
-    const tabsState = getContext<TabsState>('tabs');
+const tabsState = getContext<TabsState>('tabs');
 
-    const triggerId = $derived(`${tabsState.id}-trigger-${toTabIdPart(value)}`);
-    const contentId = $derived(`${tabsState.id}-content-${toTabIdPart(value)}`);
-    const active = $derived(tabsState.value === value);
-    /**
-     * `ghost` has no active pill or underline, so a heavier weight -- plus the
-     * text-colour shift below -- is what marks the active tab.
-     */
-    const ghostActive = $derived(active && tabsState.variant === 'ghost');
+const triggerId = $derived(`${tabsState.id}-trigger-${toTabIdPart(value)}`);
+const contentId = $derived(`${tabsState.id}-content-${toTabIdPart(value)}`);
+const active = $derived(tabsState.value === value);
+/**
+ * `ghost` has no active pill or underline, so a heavier weight -- plus the
+ * text-colour shift below -- is what marks the active tab.
+ */
+const ghostActive = $derived(active && tabsState.variant === 'ghost');
 
-    /**
-     * Segmented pills sit taller than their text padding, so the extra
-     * flex-centring below keeps the label vertically centred inside the taller pill.
-     */
-    const segmented = $derived(tabsState.variant === 'segmented');
-    const vertical = $derived(tabsState.orientation === 'vertical');
+/**
+ * Segmented pills sit taller than their text padding, so the extra
+ * flex-centring below keeps the label vertically centred inside the taller pill.
+ */
+const segmented = $derived(tabsState.variant === 'segmented');
+const vertical = $derived(tabsState.orientation === 'vertical');
 </script>
 
 <button

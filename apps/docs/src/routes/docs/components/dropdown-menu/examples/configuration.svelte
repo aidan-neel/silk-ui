@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import Check from '@lucide/svelte/icons/check';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import Check from '@lucide/svelte/icons/check';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
-    let model = $state('GPT-5.6 Sol');
-    let effort = $state('High');
-    let speed = $state('Standard');
+let model = $state('GPT-5.6 Sol');
+let effort = $state('High');
+let speed = $state('Standard');
 </script>
 
 <DropdownMenu.Root>

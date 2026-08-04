@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import Shortcut from '@sivir-ui/svelte/components/shortcut';
-    import User from '@lucide/svelte/icons/user';
-    import Settings from '@lucide/svelte/icons/settings';
-    import LogOut from '@lucide/svelte/icons/log-out';
-    import CreditCard from '@lucide/svelte/icons/credit-card';
-    import LifeBuoy from '@lucide/svelte/icons/life-buoy';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import CreditCard from '@lucide/svelte/icons/credit-card';
+import LifeBuoy from '@lucide/svelte/icons/life-buoy';
+import LogOut from '@lucide/svelte/icons/log-out';
+import Settings from '@lucide/svelte/icons/settings';
+import User from '@lucide/svelte/icons/user';
+import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <DropdownMenu.Root>

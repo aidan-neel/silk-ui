@@ -1,13 +1,12 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import AllTypes from './examples/all-types.svelte';
+import AllTypesSrc from './examples/all-types.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import AllTypes from './examples/all-types.svelte';
-    import AllTypesSrc from './examples/all-types.svelte?raw';
-
-    const installCommand = 'bunx @sivir-ui/svelte add toast';
+const installCommand = 'bunx @sivir-ui/svelte add toast';
 </script>
 
 <svelte:head>

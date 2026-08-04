@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,7 +42,7 @@ async function writeConsumer(cwd: string, tarball: string) {
     await mkdir(path.join(cwd, 'src/routes'), { recursive: true });
     await writeFile(
         path.join(cwd, 'package.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             {
                 name: 'sivir-packed-consumer',
                 private: true,
@@ -69,7 +69,7 @@ async function writeConsumer(cwd: string, tarball: string) {
             },
             null,
             '\t'
-        ) + '\n'
+        )}\n`
     );
     await writeFile(
         path.join(cwd, 'svelte.config.js'),
@@ -81,7 +81,7 @@ async function writeConsumer(cwd: string, tarball: string) {
     );
     await writeFile(
         path.join(cwd, 'tsconfig.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             {
                 extends: './.svelte-kit/tsconfig.json',
                 compilerOptions: {
@@ -98,7 +98,7 @@ async function writeConsumer(cwd: string, tarball: string) {
             },
             null,
             '\t'
-        ) + '\n'
+        )}\n`
     );
     await writeFile(
         path.join(cwd, 'src/app.html'),

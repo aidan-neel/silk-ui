@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import type { ReasoningTriggerProps } from '.';
-    import { getReasoningContext } from './context.svelte';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ReasoningTriggerProps } from '.';
+import { getReasoningContext } from './context.svelte';
 
-    let {
-        title = 'Draft',
-        duration,
-        children,
-        class: className,
-        ...rest
-    }: ReasoningTriggerProps = $props();
-    const reasoning = getReasoningContext();
+let {
+    title = 'Draft',
+    duration,
+    children,
+    class: className,
+    ...rest
+}: ReasoningTriggerProps = $props();
+const reasoning = getReasoningContext();
 </script>
 
 <Button

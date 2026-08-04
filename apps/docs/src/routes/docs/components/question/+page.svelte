@@ -1,18 +1,17 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import ComposerTakeover from './examples/composer-takeover.svelte';
+import ComposerTakeoverSrc from './examples/composer-takeover.svelte?raw';
+import FreeText from './examples/free-text.svelte';
+import FreeTextSrc from './examples/free-text.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import MultipleChoice from './examples/multiple-choice.svelte';
+import MultipleChoiceSrc from './examples/multiple-choice.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import ComposerTakeover from './examples/composer-takeover.svelte';
-    import ComposerTakeoverSrc from './examples/composer-takeover.svelte?raw';
-    import FreeText from './examples/free-text.svelte';
-    import FreeTextSrc from './examples/free-text.svelte?raw';
-    import MultipleChoice from './examples/multiple-choice.svelte';
-    import MultipleChoiceSrc from './examples/multiple-choice.svelte?raw';
-
-    const installCommand = 'bunx --package @sivir-ui/svelte sivir add question';
-    const usageSnippet = `import * as Question from '@sivir-ui/svelte/components/question';
+const installCommand = 'bunx --package @sivir-ui/svelte sivir add question';
+const usageSnippet = `import * as Question from '@sivir-ui/svelte/components/question';
 import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
 
 let answer = $state<QuestionAnswer>();

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
 </script>
 
 <PromptComposer.Root value="Compare the two implementation options." onSubmit={() => {}}>

@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { SkeletonSwap } from '@sivir-ui/svelte/components/skeleton';
+import { SkeletonSwap } from '@sivir-ui/svelte/components/skeleton';
+import { onMount } from 'svelte';
 
-    let ready = $state(false);
-    let timer: ReturnType<typeof setTimeout> | undefined;
+let ready = $state(false);
+let timer: ReturnType<typeof setTimeout> | undefined;
 
-    onMount(() => {
-        timer = setTimeout(() => (ready = true), 850);
-        return () => clearTimeout(timer);
-    });
+onMount(() => {
+    timer = setTimeout(() => (ready = true), 850);
+    return () => clearTimeout(timer);
+});
 </script>
 
 <div class="w-full max-w-sm">

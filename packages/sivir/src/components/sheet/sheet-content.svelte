@@ -1,46 +1,46 @@
 <script lang="ts">
-    import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
-    import type { SheetContentProps } from '.';
-    import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
-    import { overlayIn, overlayOut, sheetIn, sheetOut } from '@sivir-ui/svelte/transition';
-    import { getSheetContext } from './context.svelte';
+import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
+import { overlayIn, overlayOut, sheetIn, sheetOut } from '@sivir-ui/svelte/transition';
+import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
+import type { SheetContentProps } from '.';
+import { getSheetContext } from './context.svelte';
 
-    let {
-        class: className,
-        allowClickOutside = true,
-        children,
-        side = 'right',
-        ...rest
-    }: SheetContentProps = $props();
+let {
+    class: className,
+    allowClickOutside = true,
+    children,
+    side = 'right',
+    ...rest
+}: SheetContentProps = $props();
 
-    const { id, state: sheetState } = getSheetContext();
-    let element = $state<HTMLElement>();
-    let portalEl = $state<HTMLDivElement>();
+const { id, state: sheetState } = getSheetContext();
+let element = $state<HTMLElement>();
+let portalEl = $state<HTMLDivElement>();
 
-    /**
-     * Portal to `<body>` so the sheet escapes ancestor stacking contexts, the same
-     * pattern Modal uses, and the slide always paints over the page.
-     */
-    $effect(() => {
-        if (!portalEl || typeof document === 'undefined') {
-            return;
-        }
-        document.body.appendChild(portalEl);
-        return () => {
-            portalEl?.remove();
-        };
-    });
+/**
+ * Portal to `<body>` so the sheet escapes ancestor stacking contexts, the same
+ * pattern Modal uses, and the slide always paints over the page.
+ */
+$effect(() => {
+    if (!portalEl || typeof document === 'undefined') {
+        return;
+    }
+    document.body.appendChild(portalEl);
+    return () => {
+        portalEl?.remove();
+    };
+});
 
-    /** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
-    useOverlay({
-        isOpen: () => sheetState.open,
-        panelEl: () => element,
-        onClose: () => {
-            sheetState.open = false;
-        },
-        allowClickOutside: () => allowClickOutside,
-        returnFocus: () => sheetState.triggerRef ?? undefined
-    });
+/** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
+useOverlay({
+    isOpen: () => sheetState.open,
+    panelEl: () => element,
+    onClose: () => {
+        sheetState.open = false;
+    },
+    allowClickOutside: () => allowClickOutside,
+    returnFocus: () => sheetState.triggerRef ?? undefined
+});
 </script>
 
 <!-- Keep the host in body before opening so Safari does not reparent active transitions. -->

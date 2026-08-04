@@ -1,14 +1,14 @@
 <script lang="ts">
-    import * as Modal from '@sivir-ui/svelte/components/modal';
-    import * as Popover from '@sivir-ui/svelte/components/popover';
+import * as Modal from '@sivir-ui/svelte/components/modal';
+import * as Popover from '@sivir-ui/svelte/components/popover';
 
-    let {
-        modalOpen = $bindable(false),
-        popoverOpen = $bindable(false)
-    }: {
-        modalOpen?: boolean;
-        popoverOpen?: boolean;
-    } = $props();
+let {
+    modalOpen = $bindable(false),
+    popoverOpen = $bindable(false)
+}: {
+    modalOpen?: boolean;
+    popoverOpen?: boolean;
+} = $props();
 </script>
 
 <button data-testid="open-modal" onclick={() => (modalOpen = true)}>Open modal</button>

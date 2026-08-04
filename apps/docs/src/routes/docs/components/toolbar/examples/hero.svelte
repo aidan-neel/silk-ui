@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Textarea } from '@sivir-ui/svelte/components/textarea';
-    import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
-    import Code2 from '@lucide/svelte/icons/code-2';
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
-    import Sparkles from '@lucide/svelte/icons/sparkles';
+import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import Code2 from '@lucide/svelte/icons/code-2';
+import Sparkles from '@lucide/svelte/icons/sparkles';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Textarea } from '@sivir-ui/svelte/components/textarea';
+import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
 
-    let message = $state('');
+let message = $state('');
 
-    function sendMessage(event: SubmitEvent) {
-        event.preventDefault();
-        message = '';
-    }
+function sendMessage(event: SubmitEvent) {
+    event.preventDefault();
+    message = '';
+}
 </script>
 
 <form class="w-full max-w-xl" onsubmit={sendMessage}>

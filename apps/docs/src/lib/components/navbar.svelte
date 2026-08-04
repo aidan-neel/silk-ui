@@ -1,68 +1,68 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import { page } from '$app/stores';
-    import { onMount } from 'svelte';
-    import { components, sanitizeComponent } from '$lib/components';
-    import Button from '@sivir-ui/svelte/components/button';
-    import Logo from './logo.svelte';
-    import Navbutton from './navbutton.svelte';
-    import Moon from '@lucide/svelte/icons/moon';
-    import Sun from '@lucide/svelte/icons/sun';
-    import { toggleMode, mode } from 'mode-watcher';
-    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
-    import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
-    import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+import Moon from '@lucide/svelte/icons/moon';
+import Sun from '@lucide/svelte/icons/sun';
+import Button from '@sivir-ui/svelte/components/button';
+import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+import { mode, toggleMode } from 'mode-watcher';
+import { onMount } from 'svelte';
+import { resolve } from '$app/paths';
+import { page } from '$app/stores';
+import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
+import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+import { components, sanitizeComponent } from '$lib/components';
+import Logo from './logo.svelte';
+import Navbutton from './navbutton.svelte';
 
-    const { starCount = null }: { starCount?: number | null } = $props();
+const { starCount = null }: { starCount?: number | null } = $props();
 
-    function formatStarCount(n: number | null): string {
-        if (n === null || Number.isNaN(n)) return 'Star';
-        if (n >= 1000) {
-            const k = n / 1000;
-            return `${k >= 10 ? Math.round(k) : k.toFixed(1)}k`;
-        }
-        return String(n);
+function formatStarCount(n: number | null): string {
+    if (n === null || Number.isNaN(n)) return 'Star';
+    if (n >= 1000) {
+        const k = n / 1000;
+        return `${k >= 10 ? Math.round(k) : k.toFixed(1)}k`;
     }
+    return String(n);
+}
 
-    let scrolled = $state(false);
-    let mobileMenuOpen = $state(false);
-    const isHome = $derived($page.url.pathname === '/');
-    const isDocs = $derived(
-        $page.url.pathname.startsWith('/docs') || $page.url.pathname.startsWith('/fonts')
-    );
+let scrolled = $state(false);
+let mobileMenuOpen = $state(false);
+const isHome = $derived($page.url.pathname === '/');
+const isDocs = $derived(
+    $page.url.pathname.startsWith('/docs') || $page.url.pathname.startsWith('/fonts')
+);
 
-    const navItems = [
-        { href: '/', label: 'Home' },
-        { href: '/docs/introduction', label: 'Docs' }
-    ];
-    const docsPages = [
-        { title: 'Introduction', href: resolve('/docs/introduction') },
-        { title: 'Installation', href: resolve('/docs/installation') },
-        { title: 'Theming', href: resolve('/docs/theming') },
-        { title: 'Components', href: resolve('/docs/components') }
-    ];
+const navItems = [
+    { href: '/', label: 'Home' },
+    { href: '/docs/introduction', label: 'Docs' }
+];
+const docsPages = [
+    { title: 'Introduction', href: resolve('/docs/introduction') },
+    { title: 'Installation', href: resolve('/docs/installation') },
+    { title: 'Theming', href: resolve('/docs/theming') },
+    { title: 'Components', href: resolve('/docs/components') }
+];
 
-    onMount(() => {
-        const updateScroll = () => {
-            scrolled = window.scrollY > 10;
-        };
+onMount(() => {
+    const updateScroll = () => {
+        scrolled = window.scrollY > 10;
+    };
 
-        updateScroll();
-        window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
+    window.addEventListener('scroll', updateScroll, { passive: true });
 
-        return () => {
-            window.removeEventListener('scroll', updateScroll);
-        };
-    });
+    return () => {
+        window.removeEventListener('scroll', updateScroll);
+    };
+});
 
-    function openGithub() {
-        window.open('https://github.com/aidan-neel/sivir-ui', '_blank', 'noopener,noreferrer');
-    }
+function openGithub() {
+    window.open('https://github.com/aidan-neel/sivir-ui', '_blank', 'noopener,noreferrer');
+}
 </script>
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
     <nav
-        class={`fixed inset-x-0 top-0 z-20 transition-[background-color,backdrop-filter] duration-200 ${
+        class={`sticky inset-x-0 top-0 z-20 transition-[background-color,backdrop-filter] duration-200 ${
             isDocs
                 ? 'bg-background/72 backdrop-blur-[14px]'
                 : scrolled

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import Checkbox from '@sivir-ui/svelte/components/checkbox/checkbox.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Checkbox from '@sivir-ui/svelte/components/checkbox/checkbox.svelte';
+import { describe, expect, it } from 'vitest';
+import { queryRequired } from '../../test-utils';
 
 describe('Checkbox -- rendering', () => {
     it('renders a native checkbox input', () => {
@@ -33,7 +34,7 @@ describe('Checkbox -- checked state', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default' }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input.checked).toBe(false);
     });
 
@@ -41,7 +42,7 @@ describe('Checkbox -- checked state', () => {
         const { container } = render(Checkbox, {
             props: { checked: true, variant: 'default' }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input.checked).toBe(true);
     });
 
@@ -49,7 +50,7 @@ describe('Checkbox -- checked state', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default' }
         });
-        let input = container.querySelector('input[type="checkbox"]')!;
+        let input = queryRequired(container, 'input[type="checkbox"]');
         expect(input.getAttribute('aria-checked')).toBe('false');
 
         // Rerender with checked=true is tracked via the bindable; can't
@@ -58,7 +59,7 @@ describe('Checkbox -- checked state', () => {
         const { container: container2 } = render(Checkbox, {
             props: { checked: true, variant: 'default' }
         });
-        input = container2.querySelector('input[type="checkbox"]')!;
+        input = queryRequired(container2, 'input[type="checkbox"]');
         expect(input.getAttribute('aria-checked')).toBe('true');
     });
 });
@@ -68,7 +69,7 @@ describe('Checkbox -- toggle interaction', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default' }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input.checked).toBe(false);
 
         const user = userEvent.setup();
@@ -80,7 +81,7 @@ describe('Checkbox -- toggle interaction', () => {
         const { container } = render(Checkbox, {
             props: { checked: true, variant: 'default' }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input.checked).toBe(true);
 
         const user = userEvent.setup();
@@ -92,7 +93,7 @@ describe('Checkbox -- toggle interaction', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default' }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input.className).toMatch(/opacity-0/);
     });
 });
@@ -102,7 +103,7 @@ describe('Checkbox -- disabled state', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default', disabled: true }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         expect(input).toBeDisabled();
     });
 
@@ -110,7 +111,7 @@ describe('Checkbox -- disabled state', () => {
         const { container } = render(Checkbox, {
             props: { checked: false, variant: 'default', disabled: true }
         });
-        const input = container.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="checkbox"]');
         const user = userEvent.setup();
         await user.click(input);
         expect(input.checked).toBe(false);

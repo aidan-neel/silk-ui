@@ -91,7 +91,7 @@
         "check:components": "svelte-check --tsconfig ./tsconfig.components.json",
         "test": "bun run build:registry && bun test",
         "sandbox": "bun scripts/sandbox.ts",
-        "lint": "prettier --check ."
+        "lint": "biome lint ."
     },
     "dependencies": {
         "@floating-ui/dom": "^1.7.6",

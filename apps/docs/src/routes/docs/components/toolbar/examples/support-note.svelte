@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Textarea } from '@sivir-ui/svelte/components/textarea';
-    import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
-    import BookOpen from '@lucide/svelte/icons/book-open';
-    import Paperclip from '@lucide/svelte/icons/paperclip';
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import BookOpen from '@lucide/svelte/icons/book-open';
+import Paperclip from '@lucide/svelte/icons/paperclip';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { Textarea } from '@sivir-ui/svelte/components/textarea';
+import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
 </script>
 
 <div class="w-full max-w-xl">

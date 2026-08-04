@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
-    import Pencil from '@lucide/svelte/icons/pencil';
-    import Share from '@lucide/svelte/icons/share-2';
-    import Check from '@lucide/svelte/icons/check';
+import Check from '@lucide/svelte/icons/check';
+import Pencil from '@lucide/svelte/icons/pencil';
+import Share from '@lucide/svelte/icons/share-2';
+import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 </script>
 
 <div class="flex items-center justify-center">

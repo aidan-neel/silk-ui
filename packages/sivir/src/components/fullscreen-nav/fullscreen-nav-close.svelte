@@ -1,16 +1,16 @@
 <script lang="ts">
-    import X from '@lucide/svelte/icons/x';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import type { FullscreenNavCloseProps } from '.';
-    import { getFullscreenNavContext } from './context.svelte';
+import X from '@lucide/svelte/icons/x';
+import { Button } from '@sivir-ui/svelte/components/button';
+import type { FullscreenNavCloseProps } from '.';
+import { getFullscreenNavContext } from './context.svelte';
 
-    let {
-        class: className,
-        children,
-        onclick: userOnclick,
-        ...rest
-    }: FullscreenNavCloseProps = $props();
-    const { state } = getFullscreenNavContext();
+let {
+    class: className,
+    children,
+    onclick: userOnclick,
+    ...rest
+}: FullscreenNavCloseProps = $props();
+const { state } = getFullscreenNavContext();
 </script>
 
 <Button

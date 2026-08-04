@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
-    import FolderOpen from '@lucide/svelte/icons/folder-open';
-    import Pencil from '@lucide/svelte/icons/pencil';
-    import Trash from '@lucide/svelte/icons/trash-2';
+import FolderOpen from '@lucide/svelte/icons/folder-open';
+import Pencil from '@lucide/svelte/icons/pencil';
+import Trash from '@lucide/svelte/icons/trash-2';
+import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 </script>
 
 <div class="flex items-center justify-center">

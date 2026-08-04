@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as Sheet from '@sivir-ui/svelte/components/sheet';
+import * as Sheet from '@sivir-ui/svelte/components/sheet';
 
-    let {
-        open = $bindable(false),
-        allowClickOutside = true,
-        side = 'right' as 'left' | 'right',
-        rows = 0
-    } = $props();
+let {
+    open = $bindable(false),
+    allowClickOutside = true,
+    side = 'right' as 'left' | 'right',
+    rows = 0
+} = $props();
 </script>
 
 <button data-testid="trigger" onclick={() => (open = true)}>Open</button>

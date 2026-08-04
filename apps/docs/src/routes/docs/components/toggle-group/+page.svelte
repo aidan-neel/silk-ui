@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Single from './examples/single.svelte';
-    import SingleSrc from './examples/single.svelte?raw';
-    import Multiple from './examples/multiple.svelte';
-    import MultipleSrc from './examples/multiple.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import Multiple from './examples/multiple.svelte';
+import MultipleSrc from './examples/multiple.svelte?raw';
+import Single from './examples/single.svelte';
+import SingleSrc from './examples/single.svelte?raw';
 
-    const TITLE = 'Toggle Group';
-    const SLUG = 'toggle-group';
+const TITLE = 'Toggle Group';
+const SLUG = 'toggle-group';
 
-    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

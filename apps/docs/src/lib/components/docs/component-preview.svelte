@@ -1,46 +1,46 @@
 <script lang="ts">
-    import { onMount, type Snippet } from 'svelte';
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
-    import * as Card from '@sivir-ui/svelte/components/card';
-    import Button from '@sivir-ui/svelte/components/button';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
-    import RefreshCw from '@lucide/svelte/icons/refresh-cw';
+import RefreshCw from '@lucide/svelte/icons/refresh-cw';
+import Button from '@sivir-ui/svelte/components/button';
+import * as Card from '@sivir-ui/svelte/components/card';
+import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
+import { cn } from '@sivir-ui/svelte/utils';
+import { onMount, type Snippet } from 'svelte';
 
-    let {
-        children,
-        code,
-        class: classProp,
-        refreshable = false,
-        ...rest
-    }: {
-        children?: Snippet;
-        code: string;
-        class?: string;
-        refreshable?: boolean;
-    } = $props();
+let {
+    children,
+    code,
+    class: classProp,
+    refreshable = false,
+    ...rest
+}: {
+    children?: Snippet;
+    code: string;
+    class?: string;
+    refreshable?: boolean;
+} = $props();
 
-    let value = $state<string>('preview');
-    let previewBody = $state<HTMLElement>();
-    let previewVersion = $state(0);
-    let refreshVersion = $state(0);
+let value = $state<string>('preview');
+let previewBody = $state<HTMLElement>();
+let previewVersion = $state(0);
+let refreshVersion = $state(0);
 
-    function refreshPreview() {
-        previewVersion += 1;
-        refreshVersion += 1;
+function refreshPreview() {
+    previewVersion += 1;
+    refreshVersion += 1;
+}
+
+onMount(() => {
+    // Drop initial focus into the first preview on the page so the user can
+    // Tab straight into the demo instead of walking through the chrome first.
+    if (
+        previewBody &&
+        previewBody.closest('[data-component-preview]') ===
+            document.querySelector('[data-component-preview]')
+    ) {
+        previewBody.focus({ preventScroll: true });
     }
-
-    onMount(() => {
-        // Drop initial focus into the first preview on the page so the user can
-        // Tab straight into the demo instead of walking through the chrome first.
-        if (
-            previewBody &&
-            previewBody.closest('[data-component-preview]') ===
-                document.querySelector('[data-component-preview]')
-        ) {
-            previewBody.focus({ preventScroll: true });
-        }
-    });
+});
 </script>
 
 <div class="flex flex-col gap-3.5" data-component-preview>

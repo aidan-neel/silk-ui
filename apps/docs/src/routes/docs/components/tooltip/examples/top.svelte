@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
-    import Info from '@lucide/svelte/icons/info';
+import Info from '@lucide/svelte/icons/info';
+import { Button } from '@sivir-ui/svelte/components/button';
+import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 </script>
 
 <Tooltip.Root placement="top">

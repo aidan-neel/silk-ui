@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
+import * as Popover from '@sivir-ui/svelte/components/popover';
 </script>
 
 <div class="flex flex-wrap gap-4 justify-center">

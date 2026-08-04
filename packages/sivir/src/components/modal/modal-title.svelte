@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { ModalTitleProps } from '.';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { getModalContext } from './context.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ModalTitleProps } from '.';
+import { getModalContext } from './context.svelte';
 
-    let { class: className, children, ...rest }: ModalTitleProps = $props();
+let { class: className, children, ...rest }: ModalTitleProps = $props();
 
-    const modal = getModalContext();
+const modal = getModalContext();
 </script>
 
 <h1

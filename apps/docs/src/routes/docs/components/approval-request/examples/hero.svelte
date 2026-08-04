@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as ApprovalRequest from '@sivir-ui/svelte/components/approval-request';
-    import { Button } from '@sivir-ui/svelte/components/button';
+import * as ApprovalRequest from '@sivir-ui/svelte/components/approval-request';
+import { Button } from '@sivir-ui/svelte/components/button';
 
-    let open = $state(false);
+let open = $state(false);
 </script>
 
 {#snippet commandDetails()}

@@ -1,15 +1,15 @@
 <script lang="ts">
-    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 
-    let {
-        onCopy = () => {},
-        onPaste = () => {},
-        onDelete = () => {}
-    }: {
-        onCopy?: () => void;
-        onPaste?: () => void;
-        onDelete?: () => void;
-    } = $props();
+let {
+    onCopy = () => {},
+    onPaste = () => {},
+    onDelete = () => {}
+}: {
+    onCopy?: () => void;
+    onPaste?: () => void;
+    onDelete?: () => void;
+} = $props();
 </script>
 
 <ContextMenu.Root>

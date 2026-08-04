@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { ReorderList } from '@sivir-ui/svelte/components/reorder-list';
+import { ReorderList } from '@sivir-ui/svelte/components/reorder-list';
 
-    type Item = { id: string; label: string };
-    let { disabled = false }: { disabled?: boolean } = $props();
-    let items = $state<Item[]>([
-        { id: 'one', label: 'First' },
-        { id: 'two', label: 'Second' },
-        { id: 'three', label: 'Third' }
-    ]);
-    let commits = $state(0);
+type Item = { id: string; label: string };
+let { disabled = false }: { disabled?: boolean } = $props();
+let items = $state<Item[]>([
+    { id: 'one', label: 'First' },
+    { id: 'two', label: 'Second' },
+    { id: 'three', label: 'Third' }
+]);
+let commits = $state(0);
 </script>
 
 <ReorderList

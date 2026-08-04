@@ -173,10 +173,11 @@ function parseExportedNames(source: string): string[] {
             if (!cleaned) continue;
             // `default as CodeBlock` / `Foo as Bar` → public name is the right-hand side.
             if (/\bas\b/.test(cleaned)) {
-                cleaned = cleaned
-                    .split(/\bas\b/)
-                    .pop()!
-                    .trim();
+                cleaned =
+                    cleaned
+                        .split(/\bas\b/)
+                        .at(-1)
+                        ?.trim() ?? '';
             } else {
                 cleaned = cleaned.replace(/\bdefault\b/g, '').trim();
             }
@@ -246,8 +247,10 @@ describe('public API contract (v1 freeze)', () => {
             const expected =
                 DIRECT_PARTS[slug as keyof typeof DIRECT_PARTS] ??
                 NAMED[slug as keyof typeof NAMED];
-            expect(expected, slug).toBeDefined();
-            for (const part of expected!) {
+            if (!expected) {
+                throw new Error(`Missing public API contract for ${slug}`);
+            }
+            for (const part of expected) {
                 expect(exported, `${slug} missing ${part}`).toContain(part);
             }
         }
@@ -278,12 +281,12 @@ describe('public API contract (v1 freeze)', () => {
             .map((component) => component.name)
             .sort((a, b) => a.localeCompare(b));
 
-        expect(publicNames).toEqual(FROZEN.filter((name) => !NON_INSTALLABLE.includes(name)));
+        expect(publicNames).toEqual(INSTALLABLE);
         for (const removed of REMOVED) {
             expect(publicNames).not.toContain(removed);
         }
 
-        for (const slug of FROZEN.filter((name) => !NON_INSTALLABLE.includes(name))) {
+        for (const slug of INSTALLABLE) {
             const plan = resolveInstallable(snapshot, slug);
             expect(plan).toBe(slug);
         }
@@ -339,7 +342,9 @@ describe('public API contract (v1 freeze)', () => {
 
 function resolveInstallable(snapshot: Awaited<ReturnType<typeof loadRegistryIndex>>, slug: string) {
     const entry = snapshot.components.find((component) => component.name === slug);
-    expect(entry, slug).toBeDefined();
-    expect(entry!.visibility).toBe('public');
-    return entry!.name;
+    if (!entry) {
+        throw new Error(`Missing registry entry for ${slug}`);
+    }
+    expect(entry.visibility).toBe('public');
+    return entry.name;
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 </script>
 
 <!-- copyPlacement="inline": a single-line body with the copy centered on the far right. -->

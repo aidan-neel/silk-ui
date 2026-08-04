@@ -1,18 +1,18 @@
 <script lang="ts">
-    import Menu from '@lucide/svelte/icons/menu';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import type { FullscreenNavTriggerProps } from '.';
-    import { getFullscreenNavContext } from './context.svelte';
+import Menu from '@lucide/svelte/icons/menu';
+import { Button } from '@sivir-ui/svelte/components/button';
+import type { FullscreenNavTriggerProps } from '.';
+import { getFullscreenNavContext } from './context.svelte';
 
-    let {
-        class: className,
-        children,
-        element = $bindable(),
-        onclick: userOnclick,
-        ...rest
-    }: FullscreenNavTriggerProps = $props();
+let {
+    class: className,
+    children,
+    element = $bindable(),
+    onclick: userOnclick,
+    ...rest
+}: FullscreenNavTriggerProps = $props();
 
-    const { id, state } = getFullscreenNavContext();
+const { id, state } = getFullscreenNavContext();
 </script>
 
 <Button

@@ -1,3 +1,4 @@
+import { changelogVersions } from '$lib/changelog';
 import { components } from '$lib/components';
 import type { RequestHandler } from './$types';
 
@@ -6,7 +7,8 @@ const staticPaths = [
     '/docs/introduction',
     '/docs/installation',
     '/docs/theming',
-    '/docs/components'
+    '/docs/components',
+    ...changelogVersions.map((version) => `/changelog/${version}`)
 ];
 
 function escapeXml(value: string): string {

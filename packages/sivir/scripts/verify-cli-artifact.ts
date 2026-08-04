@@ -6,7 +6,7 @@
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -52,7 +52,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
 
     await writeFile(
         path.join(cwd, 'package.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             {
                 name: 'sivir-cli-artifact-consumer',
                 private: true,
@@ -85,7 +85,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
             },
             null,
             '\t'
-        ) + '\n'
+        )}\n`
     );
 
     await writeFile(
@@ -98,7 +98,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
     );
     await writeFile(
         path.join(cwd, 'tsconfig.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             {
                 extends: './.svelte-kit/tsconfig.json',
                 compilerOptions: {
@@ -115,7 +115,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
             },
             null,
             '\t'
-        ) + '\n'
+        )}\n`
     );
     await writeFile(
         path.join(cwd, 'src/app.html'),

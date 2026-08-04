@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Streaming from './examples/streaming.svelte';
-    import StreamingSrc from './examples/streaming.svelte?raw';
-    import SafeHtml from './examples/safe-html.svelte';
-    import SafeHtmlSrc from './examples/safe-html.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
+import SafeHtml from './examples/safe-html.svelte';
+import SafeHtmlSrc from './examples/safe-html.svelte?raw';
+import Streaming from './examples/streaming.svelte';
+import StreamingSrc from './examples/streaming.svelte?raw';
 
-    const installCommand = 'bunx @sivir-ui/svelte add markdown';
-    const usageSnippet = `import { Markdown } from '@sivir-ui/svelte/components/markdown';
+const installCommand = 'bunx @sivir-ui/svelte add markdown';
+const usageSnippet = `import { Markdown } from '@sivir-ui/svelte/components/markdown';
 
 const content = [
   '## Result',

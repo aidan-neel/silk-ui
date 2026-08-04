@@ -1,16 +1,17 @@
 <script lang="ts">
-    import type { ApiReferenceItem } from './api-reference-types';
-    const {
-        title,
-        component,
-        items,
-        description
-    }: {
-        title: string;
-        component: string;
-        items: ApiReferenceItem[];
-        description: string;
-    } = $props();
+import type { ApiReferenceItem } from './api-reference-types';
+
+const {
+    title,
+    component,
+    items,
+    description
+}: {
+    title: string;
+    component: string;
+    items: ApiReferenceItem[];
+    description: string;
+} = $props();
 </script>
 
 <div class="w-full flex flex-col gap-6">

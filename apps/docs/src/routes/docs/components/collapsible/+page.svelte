@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+import Default from './examples/default.svelte';
+import DefaultSrc from './examples/default.svelte?raw';
+import Hero from './examples/hero.svelte';
+import HeroSrc from './examples/hero.svelte?raw';
 
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Default from './examples/default.svelte';
-    import DefaultSrc from './examples/default.svelte?raw';
+const TITLE = 'Collapsible';
+const SLUG = 'collapsible';
 
-    const TITLE = 'Collapsible';
-    const SLUG = 'collapsible';
-
-    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>
