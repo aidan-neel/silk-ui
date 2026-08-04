@@ -22,7 +22,7 @@ const {
 
 <Modal.Content
     {allowClickOutside}
-    size="2xl"
+    size="xl"
     showClose={false}
     panelIdPrefix="command"
     data-ui="command-content"

@@ -1,1 +1,2 @@
 - Fade ScrollArea edge-cue blur into content, keep cues flush with scrollport boundaries, and support inherited top or bottom cue corners with `cueRadius`.
+- Restore Svelte component type checking for approval requests and command palettes.
