@@ -1,54 +1,54 @@
 <script lang="ts">
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
-    import LoaderCircle from '@lucide/svelte/icons/loader-circle';
-    import Square from '@lucide/svelte/icons/square';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { PromptComposerSubmitProps } from '.';
-    import { getPromptComposerContext } from './context.svelte';
+import ArrowUp from '@lucide/svelte/icons/arrow-up';
+import LoaderCircle from '@lucide/svelte/icons/loader-circle';
+import Square from '@lucide/svelte/icons/square';
+import { Button } from '@sivir-ui/svelte/components/button';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { PromptComposerSubmitProps } from '.';
+import { getPromptComposerContext } from './context.svelte';
 
-    let {
-        label = 'Send message',
-        queueLabel = 'Queue message',
-        stopLabel = 'Stop response',
-        children,
-        element = $bindable(),
-        disabled = false,
-        class: className,
-        onclick,
-        ...rest
-    }: PromptComposerSubmitProps = $props();
+let {
+    label = 'Send message',
+    queueLabel = 'Queue message',
+    stopLabel = 'Stop response',
+    children,
+    element = $bindable(),
+    disabled = false,
+    class: className,
+    onclick,
+    ...rest
+}: PromptComposerSubmitProps = $props();
 
-    const context = getPromptComposerContext();
-    const empty = $derived(context.value.trim() === '');
-    const action = $derived.by(() => {
-        if (context.pending) {
-            return 'pending';
-        }
-        if (context.generating === undefined && context.status === 'submitting') {
-            return 'stop';
-        }
-        if (context.generating) {
-            return empty ? 'stop' : 'queue';
-        }
-        return 'send';
-    });
-    const isDisabled = $derived(
-        context.disabled ||
-            disabled ||
-            (action === 'send' && !context.allowEmpty && empty) ||
-            action === 'pending'
-    );
-    const actionLabel = $derived(
-        action === 'stop' ? stopLabel : action === 'queue' ? queueLabel : label
-    );
-
-    function handleClick(event: MouseEvent) {
-        onclick?.(event);
-        if (!event.defaultPrevented && action === 'stop') {
-            context.stop();
-        }
+const context = getPromptComposerContext();
+const empty = $derived(context.value.trim() === '');
+const action = $derived.by(() => {
+    if (context.pending) {
+        return 'pending';
     }
+    if (context.generating === undefined && context.status === 'submitting') {
+        return 'stop';
+    }
+    if (context.generating) {
+        return empty ? 'stop' : 'queue';
+    }
+    return 'send';
+});
+const isDisabled = $derived(
+    context.disabled ||
+        disabled ||
+        (action === 'send' && !context.allowEmpty && empty) ||
+        action === 'pending'
+);
+const actionLabel = $derived(
+    action === 'stop' ? stopLabel : action === 'queue' ? queueLabel : label
+);
+
+function handleClick(event: MouseEvent) {
+    onclick?.(event);
+    if (!event.defaultPrevented && action === 'stop') {
+        context.stop();
+    }
+}
 </script>
 
 <Button

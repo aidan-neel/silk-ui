@@ -4,7 +4,7 @@ import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 </script>
 
 <div class="grid place-items-center">
-    <AlertDialog.Root error orientation="horizontal">
+    <AlertDialog.Root error orientation="vertical">
         <AlertDialog.Trigger variant="destructive">
             <Trash size={14} />
             Delete workspace

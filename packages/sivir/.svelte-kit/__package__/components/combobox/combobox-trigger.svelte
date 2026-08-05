@@ -1,140 +1,140 @@
 <script lang="ts">
-    import { onMount, tick } from 'svelte';
-    import type { ComboboxItem } from '.';
-    import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
-    import { button } from '../button/variants';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import Fuse from 'fuse.js';
-    import { getComboboxContext } from './context.svelte';
-    import { getPopoverContext } from '../popover/context.svelte';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
+import { cn } from '@sivir-ui/svelte/utils';
+import Fuse from 'fuse.js';
+import { onMount, tick } from 'svelte';
+import { button } from '../button/variants';
+import { getPopoverContext } from '../popover/context.svelte';
+import type { ComboboxItem } from '.';
+import { getComboboxContext } from './context.svelte';
 
-    const { id, state: comboboxState } = getComboboxContext();
-    const { state: popoverState } = getPopoverContext();
+const { id, state: comboboxState } = getComboboxContext();
+const { state: popoverState } = getPopoverContext();
 
-    type Props = Omit<PopoverTriggerProps, 'children'> & {
-        placeholder?: string;
-        searchPlacement?: 'trigger' | 'menu';
-        threshold?: number;
-    };
-    let {
-        class: className,
-        placeholder = 'Select…',
-        searchPlacement = 'trigger',
-        threshold = 0.28,
-        variant = 'outline',
-        size = 'md',
-        disabled = false,
-        onclick,
-        onopen,
-        'aria-label': ariaLabel,
-        ...rest
-    }: Props = $props();
+type Props = Omit<PopoverTriggerProps, 'children'> & {
+    placeholder?: string;
+    searchPlacement?: 'trigger' | 'menu';
+    threshold?: number;
+};
+let {
+    class: className,
+    placeholder = 'Select…',
+    searchPlacement = 'trigger',
+    threshold = 0.28,
+    variant = 'outline',
+    size = 'md',
+    disabled = false,
+    onclick,
+    onopen,
+    'aria-label': ariaLabel,
+    ...rest
+}: Props = $props();
 
-    let triggerElement = $state<HTMLDivElement>();
-    let inputElement = $state<HTMLInputElement>();
+let triggerElement = $state<HTMLDivElement>();
+let inputElement = $state<HTMLInputElement>();
 
-    $effect(() => {
-        comboboxState.searchPlacement = searchPlacement;
-        comboboxState.threshold = threshold;
-    });
-    const fuse = $derived(
-        new Fuse(Array.from(comboboxState.items), {
-            keys: ['value', 'label'],
-            threshold,
-            ignoreLocation: true,
-            minMatchCharLength: 1
-        })
-    );
-    const available = $derived(
-        comboboxState.searchContent
-            ? Array.from(comboboxState.results)
-            : Array.from(comboboxState.items)
-    );
-    const activeDescendant = $derived(
-        available.find((item) => item.value === comboboxState.activeValue)?.id
-    );
-    const displayValue = $derived(
-        searchPlacement === 'trigger' && comboboxState.open
-            ? comboboxState.searchContent
-            : (comboboxState.selected?.label ?? '')
-    );
+$effect(() => {
+    comboboxState.searchPlacement = searchPlacement;
+    comboboxState.threshold = threshold;
+});
+const fuse = $derived(
+    new Fuse(Array.from(comboboxState.items), {
+        keys: ['value', 'label'],
+        threshold,
+        ignoreLocation: true,
+        minMatchCharLength: 1
+    })
+);
+const available = $derived(
+    comboboxState.searchContent
+        ? Array.from(comboboxState.results)
+        : Array.from(comboboxState.items)
+);
+const activeDescendant = $derived(
+    available.find((item) => item.value === comboboxState.activeValue)?.id
+);
+const displayValue = $derived(
+    searchPlacement === 'trigger' && comboboxState.open
+        ? comboboxState.searchContent
+        : (comboboxState.selected?.label ?? '')
+);
 
-    onMount(() => {
-        popoverState.buttonRef = triggerElement ?? null;
-    });
+onMount(() => {
+    popoverState.buttonRef = triggerElement ?? null;
+});
 
-    function handleInput(event: Event) {
-        if (searchPlacement === 'menu') {
-            return;
-        }
-        comboboxState.searchContent = (event.currentTarget as HTMLInputElement).value;
-        comboboxState.results = new Set<ComboboxItem>(
-            fuse.search(comboboxState.searchContent).map((result) => result.item)
-        );
-        comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
+function handleInput(event: Event) {
+    if (searchPlacement === 'menu') {
+        return;
     }
+    comboboxState.searchContent = (event.currentTarget as HTMLInputElement).value;
+    comboboxState.results = new Set<ComboboxItem>(
+        fuse.search(comboboxState.searchContent).map((result) => result.item)
+    );
+    comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
+}
 
-    function open() {
-        if (disabled || comboboxState.open) {
-            return;
-        }
-        onopen?.();
-        comboboxState.open = true;
-        onclick?.();
+function open() {
+    if (disabled || comboboxState.open) {
+        return;
     }
+    onopen?.();
+    comboboxState.open = true;
+    onclick?.();
+}
 
-    function handleInputKeydown(event: KeyboardEvent) {
-        const activeIndex = available.findIndex((item) => item.value === comboboxState.activeValue);
-        if (
-            event.key === 'ArrowDown' ||
-            event.key === 'ArrowUp' ||
-            event.key === 'Home' ||
-            event.key === 'End'
-        ) {
-            event.preventDefault();
-            if (!comboboxState.open) {
-                open();
-            }
-            const index =
-                event.key === 'Home'
-                    ? 0
-                    : event.key === 'End'
-                      ? available.length - 1
-                      : event.key === 'ArrowDown'
-                        ? (activeIndex + 1 + available.length) % available.length
-                        : (activeIndex - 1 + available.length) % available.length;
-            const next = available[index];
-            if (next) {
-                comboboxState.activeValue = next.value;
-                next.ref?.scrollIntoView({ block: 'nearest' });
-            }
-            return;
-        }
-        if (event.key === 'Enter' && comboboxState.open) {
-            event.preventDefault();
-            const active =
-                available.find((item) => item.value === comboboxState.activeValue) ?? available[0];
-            if (active) {
-                comboboxState.selected = active;
-                comboboxState.open = false;
-                active.callback?.();
-            }
-        }
-    }
-
-    $effect(() => {
+function handleInputKeydown(event: KeyboardEvent) {
+    const activeIndex = available.findIndex((item) => item.value === comboboxState.activeValue);
+    if (
+        event.key === 'ArrowDown' ||
+        event.key === 'ArrowUp' ||
+        event.key === 'Home' ||
+        event.key === 'End'
+    ) {
+        event.preventDefault();
         if (!comboboxState.open) {
-            return;
+            open();
         }
-        if (searchPlacement === 'menu') {
-            return;
+        const index =
+            event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? available.length - 1
+                  : event.key === 'ArrowDown'
+                    ? (activeIndex + 1 + available.length) % available.length
+                    : (activeIndex - 1 + available.length) % available.length;
+        const next = available[index];
+        if (next) {
+            comboboxState.activeValue = next.value;
+            next.ref?.scrollIntoView({ block: 'nearest' });
         }
-        void tick().then(() => {
-            inputElement?.focus({ preventScroll: true });
-            inputElement?.select();
-        });
+        return;
+    }
+    if (event.key === 'Enter' && comboboxState.open) {
+        event.preventDefault();
+        const active =
+            available.find((item) => item.value === comboboxState.activeValue) ?? available[0];
+        if (active) {
+            comboboxState.selected = active;
+            comboboxState.open = false;
+            active.callback?.();
+        }
+    }
+}
+
+$effect(() => {
+    if (!comboboxState.open) {
+        return;
+    }
+    if (searchPlacement === 'menu') {
+        return;
+    }
+    void tick().then(() => {
+        inputElement?.focus({ preventScroll: true });
+        inputElement?.select();
     });
+});
 </script>
 
 <div

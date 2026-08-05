@@ -91,15 +91,22 @@ function formatStarCount(count: number | null): string {
         class="mx-auto flex w-[calc(100%-2.5rem)] max-w-[37rem] flex-1 flex-col items-center justify-start py-[5rem] text-center sm:w-[calc(100%-3rem)] sm:py-[clamp(6rem,21vh,14rem)] sm:pb-16"
     >
         <h1
-            class="max-w-[11ch] font-[var(--font-header)] text-[clamp(2.4rem,6vw,4.25rem)] leading-[0.98] font-medium! tracking-[-0.045em] text-foreground"
+            class="w-full font-[var(--font-header)] text-[clamp(1.8rem,5.2vw,3.75rem)] leading-[0.98] font-medium! tracking-[-0.045em] text-foreground motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[transform-origin:top_center]"
         >
-            Restyle everything from a few tokens.
+            <span class="block text-nowrap">Restyle everything from</span>
+            <span class="block"
+                >a few tokens.</span
+            >
         </h1>
-        <p class="mt-6 max-w-[33rem] text-base leading-[1.6] text-foreground-muted">
+        <p
+            class="mt-6 max-w-[33rem] text-base leading-[1.6] text-foreground-muted motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:45ms] motion-safe:[transform-origin:top_center]"
+        >
             Choose from 55 Svelte 5 components that take on your visual system without forks,
             overrides, or a fight.
         </p>
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <div
+            class="mt-8 flex flex-wrap justify-center gap-3 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:80ms] motion-safe:[transform-origin:top_center]"
+        >
             <Button href={resolve('/docs/components')} size="lg" class="max-sm:flex-1">
                 Browse all 55 components
                 <ArrowRight size={16} />

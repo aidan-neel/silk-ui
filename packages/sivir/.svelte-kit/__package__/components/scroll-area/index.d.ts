@@ -1,10 +1,11 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import ScrollArea from './scroll-area.svelte';
 export type ScrollAreaProps = {
     orientation?: 'vertical' | 'horizontal' | 'both';
     showCues?: boolean;
+    cueRadius?: 'none' | 'top' | 'bottom' | 'all';
     children?: Snippet;
     element?: HTMLDivElement;
 } & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;

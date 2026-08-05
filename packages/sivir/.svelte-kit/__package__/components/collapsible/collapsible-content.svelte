@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { themedSlide } from '@sivir-ui/svelte/transition';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { CollapsibleContentProps } from '.';
-    import { getCollapsibleContext } from './context.svelte';
+import { themedSlide } from '@sivir-ui/svelte/transition';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { CollapsibleContentProps } from '.';
+import { getCollapsibleContext } from './context.svelte';
 
-    let { class: className, children, ...rest }: CollapsibleContentProps = $props();
-    const { id, state } = getCollapsibleContext();
+let { class: className, children, ...rest }: CollapsibleContentProps = $props();
+const { id, state } = getCollapsibleContext();
 </script>
 
 {#if state.open}

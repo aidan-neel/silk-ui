@@ -22,3 +22,8 @@
 - Hide the scrollbar on the documentation sidebar without disabling scrolling.
 - Replace mobile documentation breadcrumbs with a Fullscreen Nav menu.
 - Keep repository source, scripts, styles, and tests clean under Biome's recommended rules.
+- Update the default ScrollArea example to demonstrate its standalone clipping behavior.
+- Add interactive native validation examples to the Input documentation.
+- Match the Input validation example's error ring and motion to PromptComposer.
+- Place Input validation errors immediately below their fields.
+- Refine Input validation error emphasis and motion.

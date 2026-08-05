@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { ApprovalRequestDetailsProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ApprovalRequestDetailsProps } from '.';
 
-    let { class: className, children, ...rest }: ApprovalRequestDetailsProps = $props();
+let { class: className, children, ...rest }: ApprovalRequestDetailsProps = $props();
 </script>
 
 <div

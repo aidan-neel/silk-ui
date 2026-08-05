@@ -1,5 +1,5 @@
 import { cubicIn, cubicOut, quintOut } from 'svelte/easing';
-import { fade, type EasingFunction, type TransitionConfig } from 'svelte/transition';
+import { type EasingFunction, fade, type TransitionConfig } from 'svelte/transition';
 
 /**
  * Reads a CSS duration variable and normalizes it to milliseconds.
@@ -83,6 +83,7 @@ function panelTransition(
     const style = getComputedStyle(node);
     const opacity = Number(style.opacity);
     const baseTransform = style.transform === 'none' ? '' : style.transform;
+    const baseFilter = style.filter === 'none' ? '' : style.filter;
     const offsetY = options?.offsetY ?? getCssNumber(node, '--motion-panel-y', 2);
     const startScale =
         options?.startScale ?? getCssNumber(node, '--motion-panel-scale-start', 0.97);
@@ -91,7 +92,7 @@ function panelTransition(
         duration: getCssDuration(node, durationVariable, fallbackDuration),
         easing: options?.easing ?? cubicOut,
         css: (t) => {
-            return `opacity:${t * opacity};transform:${baseTransform} translateY(${(1 - t) * offsetY}px) scale(${startScale + (1 - startScale) * t})`;
+            return `opacity:${t * opacity};transform:${baseTransform} translateY(${(1 - t) * offsetY}px) scale(${startScale + (1 - startScale) * t});filter:${baseFilter} blur(${(1 - t) * 2}px)`;
         }
     };
 }

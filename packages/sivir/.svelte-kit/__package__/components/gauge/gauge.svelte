@@ -1,34 +1,34 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { GaugeProps, GaugeTone } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { GaugeProps, GaugeTone } from '.';
 
-    let {
-        value,
-        max = 100,
-        label,
-        size = 28,
-        strokeWidth = 2,
-        tone = 'primary',
-        children,
-        class: className,
-        ...rest
-    }: GaugeProps = $props();
+let {
+    value,
+    max = 100,
+    label,
+    size = 28,
+    strokeWidth = 2,
+    tone = 'primary',
+    children,
+    class: className,
+    ...rest
+}: GaugeProps = $props();
 
-    const toneClasses: Record<GaugeTone, string> = {
-        primary: 'text-primary',
-        muted: 'text-foreground-muted',
-        success: 'text-success',
-        warning: 'text-warning',
-        error: 'text-error'
-    };
-    const safeMax = $derived(Math.max(max, 1));
-    const safeSize = $derived(Math.max(size, 16));
-    const safeStrokeWidth = $derived(Math.min(Math.max(strokeWidth, 1), safeSize / 2));
-    const clamped = $derived(Math.min(Math.max(value, 0), safeMax));
-    const radius = $derived((safeSize - safeStrokeWidth) / 2);
-    const circumference = $derived(2 * Math.PI * radius);
-    const offset = $derived(circumference * (1 - clamped / safeMax));
-    const accessibleLabel = $derived(label ?? `${clamped} of ${safeMax}`);
+const toneClasses: Record<GaugeTone, string> = {
+    primary: 'text-primary',
+    muted: 'text-foreground-muted',
+    success: 'text-success',
+    warning: 'text-warning',
+    error: 'text-error'
+};
+const safeMax = $derived(Math.max(max, 1));
+const safeSize = $derived(Math.max(size, 16));
+const safeStrokeWidth = $derived(Math.min(Math.max(strokeWidth, 1), safeSize / 2));
+const clamped = $derived(Math.min(Math.max(value, 0), safeMax));
+const radius = $derived((safeSize - safeStrokeWidth) / 2);
+const circumference = $derived(2 * Math.PI * radius);
+const offset = $derived(circumference * (1 - clamped / safeMax));
+const accessibleLabel = $derived(label ?? `${clamped} of ${safeMax}`);
 </script>
 
 <div

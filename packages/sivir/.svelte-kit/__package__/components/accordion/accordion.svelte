@@ -1,51 +1,51 @@
 <script lang="ts">
-    import { setContext } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AccordionProps, AccordionContext } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import { setContext } from 'svelte';
+import type { AccordionContext, AccordionProps } from '.';
 
-    let {
-        class: className,
-        type = 'single',
-        value = $bindable<string | string[] | undefined>(),
-        collapsible = true,
-        onValueChange,
-        children,
-        ...rest
-    }: AccordionProps = $props();
+let {
+    class: className,
+    type = 'single',
+    value = $bindable<string | string[] | undefined>(),
+    collapsible = true,
+    onValueChange,
+    children,
+    ...rest
+}: AccordionProps = $props();
 
-    function isOpen(itemValue: string) {
-        if (type === 'multiple') {
-            return Array.isArray(value) && value.includes(itemValue);
-        }
-        return value === itemValue;
+function isOpen(itemValue: string) {
+    if (type === 'multiple') {
+        return Array.isArray(value) && value.includes(itemValue);
     }
+    return value === itemValue;
+}
 
-    function toggle(itemValue: string) {
-        if (type === 'multiple') {
-            const arr = Array.isArray(value) ? [...value] : [];
-            const idx = arr.indexOf(itemValue);
-            if (idx === -1) {
-                arr.push(itemValue);
-            } else {
-                arr.splice(idx, 1);
-            }
-            value = arr;
-            onValueChange?.(arr);
+function toggle(itemValue: string) {
+    if (type === 'multiple') {
+        const arr = Array.isArray(value) ? [...value] : [];
+        const idx = arr.indexOf(itemValue);
+        if (idx === -1) {
+            arr.push(itemValue);
         } else {
-            if (value === itemValue) {
-                if (collapsible) {
-                    value = undefined;
-                    onValueChange?.(undefined);
-                }
-            } else {
-                value = itemValue;
-                onValueChange?.(itemValue);
+            arr.splice(idx, 1);
+        }
+        value = arr;
+        onValueChange?.(arr);
+    } else {
+        if (value === itemValue) {
+            if (collapsible) {
+                value = undefined;
+                onValueChange?.(undefined);
             }
+        } else {
+            value = itemValue;
+            onValueChange?.(itemValue);
         }
     }
+}
 
-    const ctx: AccordionContext = { isOpen, toggle };
-    setContext('accordion', ctx);
+const ctx: AccordionContext = { isOpen, toggle };
+setContext('accordion', ctx);
 </script>
 
 <div

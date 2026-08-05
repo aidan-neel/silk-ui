@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AvatarFallbackProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import { getContext } from 'svelte';
+import type { AvatarFallbackProps } from '.';
 
-    let { class: className, children, ...rest }: AvatarFallbackProps = $props();
-    const ctx = getContext<{ imageLoaded: boolean }>('avatar-state');
+let { class: className, children, ...rest }: AvatarFallbackProps = $props();
+const ctx = getContext<{ imageLoaded: boolean }>('avatar-state');
 </script>
 
 {#if !ctx.imageLoaded}

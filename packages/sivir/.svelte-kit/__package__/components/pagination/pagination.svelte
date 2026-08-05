@@ -1,48 +1,48 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import ChevronLeft from '@lucide/svelte/icons/chevron-left';
-    import ChevronRight from '@lucide/svelte/icons/chevron-right';
-    import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
-    import type { PaginationProps } from '.';
+import ChevronLeft from '@lucide/svelte/icons/chevron-left';
+import ChevronRight from '@lucide/svelte/icons/chevron-right';
+import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { PaginationProps } from '.';
 
-    let {
-        class: className,
-        page = $bindable(1),
-        total,
-        siblings = 1,
-        onPageChange,
-        ...rest
-    }: PaginationProps = $props();
+let {
+    class: className,
+    page = $bindable(1),
+    total,
+    siblings = 1,
+    onPageChange,
+    ...rest
+}: PaginationProps = $props();
 
-    function go(next: number) {
-        const clamped = Math.min(Math.max(next, 1), total);
-        if (clamped === page) {
-            return;
-        }
-        page = clamped;
-        onPageChange?.(clamped);
+function go(next: number) {
+    const clamped = Math.min(Math.max(next, 1), total);
+    if (clamped === page) {
+        return;
     }
+    page = clamped;
+    onPageChange?.(clamped);
+}
 
-    const pages = $derived.by(() => {
-        const result: (number | 'ellipsis')[] = [];
-        const start = Math.max(2, page - siblings);
-        const end = Math.min(total - 1, page + siblings);
+const pages = $derived.by(() => {
+    const result: (number | 'ellipsis')[] = [];
+    const start = Math.max(2, page - siblings);
+    const end = Math.min(total - 1, page + siblings);
 
-        result.push(1);
-        if (start > 2) {
-            result.push('ellipsis');
-        }
-        for (let i = start; i <= end; i++) {
-            result.push(i);
-        }
-        if (end < total - 1) {
-            result.push('ellipsis');
-        }
-        if (total > 1) {
-            result.push(total);
-        }
-        return result;
-    });
+    result.push(1);
+    if (start > 2) {
+        result.push('ellipsis');
+    }
+    for (let i = start; i <= end; i++) {
+        result.push(i);
+    }
+    if (end < total - 1) {
+        result.push('ellipsis');
+    }
+    if (total > 1) {
+        result.push(total);
+    }
+    return result;
+});
 </script>
 
 <nav

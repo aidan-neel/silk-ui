@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
-    import type { ContextMenuSubContentProps } from '.';
+import * as Popover from '@sivir-ui/svelte/components/popover';
+import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
+import type { ContextMenuSubContentProps } from '.';
 
-    let { class: className, children, ...rest }: ContextMenuSubContentProps = $props();
+let { class: className, children, ...rest }: ContextMenuSubContentProps = $props();
 </script>
 
 <Popover.Content

@@ -1,53 +1,69 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import ChevronUp from '@lucide/svelte/icons/chevron-up';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import type { ScrollAreaProps } from '.';
+import ChevronDown from '@lucide/svelte/icons/chevron-down';
+import ChevronUp from '@lucide/svelte/icons/chevron-up';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { ScrollAreaProps } from '.';
 
-    let {
-        class: className,
-        children,
-        orientation = 'vertical',
-        showCues = true,
-        element = $bindable(),
-        onscroll,
-        ...rest
-    }: ScrollAreaProps = $props();
+let {
+    class: className,
+    children,
+    orientation = 'vertical',
+    showCues = true,
+    cueRadius = 'none',
+    element = $bindable(),
+    onscroll,
+    ...rest
+}: ScrollAreaProps = $props();
 
-    let scrollTop = $state(0);
-    let scrollHeight = $state(0);
-    let clientHeight = $state(0);
+let scrollTop = $state(0);
+let scrollHeight = $state(0);
+let clientHeight = $state(0);
 
-    const atTop = $derived(scrollTop <= 1);
-    const atBottom = $derived(scrollTop + clientHeight >= scrollHeight - 1);
-    const overflows = $derived(scrollHeight - clientHeight > 1);
-    const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
+const atTop = $derived(scrollTop <= 1);
+const atBottom = $derived(scrollTop + clientHeight >= scrollHeight - 1);
+const overflows = $derived(scrollHeight - clientHeight > 1);
+const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
+const rootCueRadius = $derived(
+    cueRadius === 'all'
+        ? 'rounded-[inherit]'
+        : cueRadius === 'top'
+          ? 'rounded-t-[inherit]'
+          : cueRadius === 'bottom'
+            ? 'rounded-b-[inherit]'
+            : ''
+);
+const topCueRadius = $derived(
+    cueRadius === 'top' || cueRadius === 'all' ? 'rounded-t-[inherit]' : ''
+);
+const bottomCueRadius = $derived(
+    cueRadius === 'bottom' || cueRadius === 'all' ? 'rounded-b-[inherit]' : ''
+);
 
-    function measure() {
-        if (!element) {
-            return;
-        }
-        scrollTop = element.scrollTop;
-        scrollHeight = element.scrollHeight;
-        clientHeight = element.clientHeight;
+function measure() {
+    if (!element) {
+        return;
     }
+    scrollTop = element.scrollTop;
+    scrollHeight = element.scrollHeight;
+    clientHeight = element.clientHeight;
+}
 
-    /**
-     * Measure on mount and whenever the content or viewport size changes, so the
-     * edge cues are correct before the first scroll event fires.
-     */
-    $effect(() => {
-        if (!element) {
-            return;
-        }
-        measure();
-        const ro = new ResizeObserver(measure);
-        ro.observe(element);
-        for (const child of Array.from(element.children)) {
-            ro.observe(child);
-        }
-        return () => ro.disconnect();
-    });
+/**
+ * Measure on mount and whenever the content or viewport size changes, so the
+ * edge cues are correct before the first scroll event fires.
+ */
+$effect(() => {
+    if (!element) {
+        return;
+    }
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(element);
+    for (const child of Array.from(element.children)) {
+        ro.observe(child);
+    }
+    return () => ro.disconnect();
+});
 </script>
 
 <div
@@ -60,6 +76,7 @@
         '[&::-webkit-scrollbar]:size-2.5 [&::-webkit-scrollbar-track]:bg-transparent',
         '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-[color-mix(in_srgb,var(--color-foreground)_18%,transparent)] [&::-webkit-scrollbar-thumb]:bg-clip-padding',
         '[&::-webkit-scrollbar-thumb:hover]:bg-[color-mix(in_srgb,var(--color-foreground)_32%,transparent)] [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding',
+        rootCueRadius,
         orientation === 'horizontal'
             ? 'overflow-x-auto overflow-y-hidden'
             : orientation === 'vertical'
@@ -77,7 +94,8 @@
         <div aria-hidden="true" class="sticky top-0 z-10 h-0">
             <div
                 class={cn(
-                    'pointer-events-none absolute inset-x-0 -top-px flex h-7 items-start justify-center bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] backdrop-blur-sm transition-opacity duration-150',
+                    'pointer-events-none absolute inset-x-0 -top-px flex h-7 items-start justify-center bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] [-webkit-mask-image:linear-gradient(to_bottom,#000_0%,#000_40%,transparent_100%)] [mask-image:linear-gradient(to_bottom,#000_0%,#000_40%,transparent_100%)] backdrop-blur-sm transition-opacity duration-150',
+                    topCueRadius,
                     atTop ? 'opacity-0' : 'opacity-100'
                 )}
             >
@@ -93,7 +111,8 @@
         <div aria-hidden="true" class="sticky bottom-0 z-10 h-0">
             <div
                 class={cn(
-                    'pointer-events-none absolute inset-x-0 -bottom-px flex h-7 items-end justify-center bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] backdrop-blur-sm transition-opacity duration-150',
+                    'pointer-events-none absolute inset-x-0 -bottom-px flex h-7 items-end justify-center bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-panel,#fff)_96%,transparent),transparent)] [-webkit-mask-image:linear-gradient(to_top,#000_0%,#000_40%,transparent_100%)] [mask-image:linear-gradient(to_top,#000_0%,#000_40%,transparent_100%)] backdrop-blur-sm transition-opacity duration-150',
+                    bottomCueRadius,
                     atBottom ? 'opacity-0' : 'opacity-100'
                 )}
             >

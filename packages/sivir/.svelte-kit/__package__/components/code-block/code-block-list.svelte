@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
-    import type { CodeBlockListProps } from '.';
+import * as Tabs from '@sivir-ui/svelte/components/tabs';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { CodeBlockListProps } from '.';
 
-    let { children, class: className, ...rest }: CodeBlockListProps = $props();
+let { children, class: className, ...rest }: CodeBlockListProps = $props();
 </script>
 
 <!-- Delegates the active-underline indicator + keyboard nav to Sivir's Tabs. -->

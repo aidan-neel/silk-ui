@@ -1,32 +1,32 @@
 <script lang="ts">
-    import type { HTMLInputAttributes } from 'svelte/elements';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { input } from './variants';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { HTMLInputAttributes } from 'svelte/elements';
+import { input } from './variants';
 
-    let {
-        placeholder,
-        label,
-        description,
-        type = 'text',
-        variant = 'outline',
-        class: classProp,
-        element = $bindable<HTMLInputElement>(),
-        value = $bindable<string | number | boolean | FileList | undefined>(),
-        checked = $bindable<boolean | undefined>(),
-        files = $bindable<FileList | undefined>(),
-        ...rest
-    }: {
-        placeholder?: string;
-        label?: string;
-        description?: string;
-        type?: string;
-        variant?: 'outline' | 'secondary';
-        class?: string;
-        element?: HTMLInputElement | undefined;
-        value?: string | number | boolean | FileList | undefined;
-        checked?: boolean | undefined;
-        files?: FileList | undefined;
-    } & HTMLInputAttributes = $props();
+let {
+    placeholder,
+    label,
+    description,
+    type = 'text',
+    variant = 'outline',
+    class: classProp,
+    element = $bindable<HTMLInputElement>(),
+    value = $bindable<string | number | boolean | FileList | undefined>(),
+    checked = $bindable<boolean | undefined>(),
+    files = $bindable<FileList | undefined>(),
+    ...rest
+}: {
+    placeholder?: string;
+    label?: string;
+    description?: string;
+    type?: string;
+    variant?: 'outline' | 'secondary';
+    class?: string;
+    element?: HTMLInputElement | undefined;
+    value?: string | number | boolean | FileList | undefined;
+    checked?: boolean | undefined;
+    files?: FileList | undefined;
+} & HTMLInputAttributes = $props();
 </script>
 
 <label class="flex w-full flex-col gap-1">

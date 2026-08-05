@@ -1,17 +1,17 @@
 <script lang="ts">
-    import type { ModalTriggerProps } from '.';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { getModalContext } from './context.svelte';
+import { Button } from '@sivir-ui/svelte/components/button';
+import type { ModalTriggerProps } from '.';
+import { getModalContext } from './context.svelte';
 
-    let {
-        class: className,
-        children,
-        element = $bindable(),
-        onclick,
-        ...rest
-    }: ModalTriggerProps = $props();
+let {
+    class: className,
+    children,
+    element = $bindable(),
+    onclick,
+    ...rest
+}: ModalTriggerProps = $props();
 
-    const modal = getModalContext();
+const modal = getModalContext();
 </script>
 
 <Button

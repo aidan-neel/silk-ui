@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AttachmentListProps } from '.';
-    import Item from './attachment-item.svelte';
-    import { getAttachmentContext } from './context.svelte';
+import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { AttachmentListProps } from '.';
+import Item from './attachment-item.svelte';
+import { getAttachmentContext } from './context.svelte';
 
-    let {
-        label = 'Attachments',
-        class: className,
-        'aria-label': ariaLabel,
-        ...rest
-    }: AttachmentListProps = $props();
+let {
+    label = 'Attachments',
+    class: className,
+    'aria-label': ariaLabel,
+    ...rest
+}: AttachmentListProps = $props();
 
-    const context = getAttachmentContext();
+const context = getAttachmentContext();
 </script>
 
 {#if context.files.length > 0}

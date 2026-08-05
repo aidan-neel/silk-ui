@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { MessageActionsProps } from '.';
-    import { getMessageContext } from './context.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { MessageActionsProps } from '.';
+import { getMessageContext } from './context.svelte';
 
-    let {
-        children,
-        class: className,
-        'aria-label': ariaLabel = 'Message actions',
-        ...rest
-    }: MessageActionsProps = $props();
-    const message = getMessageContext();
+let {
+    children,
+    class: className,
+    'aria-label': ariaLabel = 'Message actions',
+    ...rest
+}: MessageActionsProps = $props();
+const message = getMessageContext();
 </script>
 
 <div

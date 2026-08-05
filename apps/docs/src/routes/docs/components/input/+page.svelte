@@ -4,6 +4,8 @@ import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
 import Hero from './examples/hero.svelte';
 import HeroSrc from './examples/hero.svelte?raw';
+import Validation from './examples/validation.svelte';
+import ValidationSrc from './examples/validation.svelte?raw';
 import VariantOutline from './examples/variant-outline.svelte';
 import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
 import VariantSecondary from './examples/variant-secondary.svelte';
@@ -16,7 +18,7 @@ const installCommand = 'bunx @sivir-ui/svelte add input';
     <title>Sivir · Input</title>
     <meta
         name="description"
-        content="Text input with labels, helper text, and two visual variants."
+        content="Text input with labels, helper text, visual variants, and native validation."
     />
 </svelte:head>
 
@@ -103,6 +105,20 @@ const installCommand = 'bunx @sivir-ui/svelte add input';
             </h3>
             <ComponentPreview code={VariantSecondarySrc}>
                 <VariantSecondary />
+            </ComponentPreview>
+        </div>
+
+        <div id="validation" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Validation
+            </h3>
+            <p class="text-sm text-foreground-muted">
+                Use native constraints with error messages that respond to blur and form submission.
+            </p>
+            <ComponentPreview code={ValidationSrc}>
+                <Validation />
             </ComponentPreview>
         </div>
     </section>

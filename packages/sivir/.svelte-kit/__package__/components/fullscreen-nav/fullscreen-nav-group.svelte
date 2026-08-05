@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { FullscreenNavGroupProps } from '.';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { FullscreenNavGroupProps } from '.';
 
-    let { class: className, heading, children, ...rest }: FullscreenNavGroupProps = $props();
-    const groupId = $props.id();
-    const headingId = `fullscreen-nav-group-${groupId}`;
+let { class: className, heading, children, ...rest }: FullscreenNavGroupProps = $props();
+const groupId = $props.id();
+const headingId = `fullscreen-nav-group-${groupId}`;
 </script>
 
 <section

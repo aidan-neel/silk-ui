@@ -1,2 +1,8 @@
-- Fade ScrollArea edge-cue blur into content, keep cues flush with scrollport boundaries, and support inherited top or bottom cue corners with `cueRadius`.
+- Fade ScrollArea edge-cue blur into content, keep cues flush with scrollport boundaries, and clip the blur within the container.
+- Make the ScrollArea viewport inherit the shell radius so blurred edge cues cannot square off rounded corners.
+- Place the Combobox search field above results when it is rendered inside the menu.
 - Restore Svelte component type checking for approval requests and command palettes.
+- Refine the home-page headline hierarchy with an intentional two-line layout.
+- Reduce the default width of horizontal and vertical modals, and show the vertical alert-dialog layout in its base example.
+- Ensure documentation pages retain bottom scroll room after overflowing content, and improve vertical alert-dialog icon spacing.
+- Apply the documentation entrance animation to the home-page hero.

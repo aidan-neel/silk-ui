@@ -1,35 +1,35 @@
 <script lang="ts">
-    import type { Component, Snippet } from 'svelte';
-    import { badge } from './variants';
-    import { cn } from '@sivir-ui/svelte/utils';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { Component, Snippet } from 'svelte';
+import { badge } from './variants';
 
-    let {
-        variant = 'secondary',
-        children,
-        class: classProp,
-        href,
-        icon: Icon,
-        iconSize = 13,
-        dot = false,
-        ...rest
-    }: {
-        variant?:
-            | 'primary'
-            | 'secondary'
-            | 'ghost'
-            | 'outline'
-            | 'destructive'
-            | 'info'
-            | 'success'
-            | 'warning'
-            | 'error';
-        children?: Snippet;
-        class?: string;
-        href?: string;
-        icon?: Component<{ size?: number | string; class?: string }>;
-        iconSize?: number | string;
-        dot?: boolean;
-    } & Record<string, unknown> = $props();
+let {
+    variant = 'secondary',
+    children,
+    class: classProp,
+    href,
+    icon: Icon,
+    iconSize = 13,
+    dot = false,
+    ...rest
+}: {
+    variant?:
+        | 'primary'
+        | 'secondary'
+        | 'ghost'
+        | 'outline'
+        | 'destructive'
+        | 'info'
+        | 'success'
+        | 'warning'
+        | 'error';
+    children?: Snippet;
+    class?: string;
+    href?: string;
+    icon?: Component<{ size?: number | string; class?: string }>;
+    iconSize?: number | string;
+    dot?: boolean;
+} & Record<string, unknown> = $props();
 </script>
 
 {#snippet inner()}

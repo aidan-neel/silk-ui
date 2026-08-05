@@ -1,37 +1,37 @@
 <script lang="ts">
-    import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
-    import { overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
-    import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
-    import type { FullscreenNavContentProps } from '.';
-    import { getFullscreenNavContext } from './context.svelte';
+import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
+import { overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
+import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
+import type { FullscreenNavContentProps } from '.';
+import { getFullscreenNavContext } from './context.svelte';
 
-    let {
-        class: className,
-        label = 'Navigation menu',
-        children,
-        ...rest
-    }: FullscreenNavContentProps = $props();
+let {
+    class: className,
+    label = 'Navigation menu',
+    children,
+    ...rest
+}: FullscreenNavContentProps = $props();
 
-    const { id, state: navState } = getFullscreenNavContext();
-    let element = $state<HTMLElement>();
-    let portalEl = $state<HTMLDivElement>();
+const { id, state: navState } = getFullscreenNavContext();
+let element = $state<HTMLElement>();
+let portalEl = $state<HTMLDivElement>();
 
-    $effect(() => {
-        if (!portalEl || typeof document === 'undefined') {
-            return;
-        }
-        document.body.appendChild(portalEl);
-        return () => portalEl?.remove();
-    });
+$effect(() => {
+    if (!portalEl || typeof document === 'undefined') {
+        return;
+    }
+    document.body.appendChild(portalEl);
+    return () => portalEl?.remove();
+});
 
-    useOverlay({
-        isOpen: () => navState.open,
-        panelEl: () => element,
-        onClose: () => {
-            navState.open = false;
-        },
-        returnFocus: () => navState.triggerRef ?? undefined
-    });
+useOverlay({
+    isOpen: () => navState.open,
+    panelEl: () => element,
+    onClose: () => {
+        navState.open = false;
+    },
+    returnFocus: () => navState.triggerRef ?? undefined
+});
 </script>
 
 <!-- Keep the host in body before opening so Safari never starts a transition in one tree then reparents it. -->

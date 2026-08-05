@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
-    import { themedSlide } from '@sivir-ui/svelte/transition';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { AccordionContentProps, AccordionContext } from '.';
+import { themedSlide } from '@sivir-ui/svelte/transition';
+import { cn } from '@sivir-ui/svelte/utils';
+import { getContext } from 'svelte';
+import type { AccordionContentProps, AccordionContext } from '.';
 
-    let { class: className, children, ...rest }: AccordionContentProps = $props();
-    const ctx = getContext<AccordionContext>('accordion');
-    const item = getContext<{ value: string; disabled: boolean }>('accordion-item');
-    const open = $derived(ctx.isOpen(item.value));
+let { class: className, children, ...rest }: AccordionContentProps = $props();
+const ctx = getContext<AccordionContext>('accordion');
+const item = getContext<{ value: string; disabled: boolean }>('accordion-item');
+const open = $derived(ctx.isOpen(item.value));
 </script>
 
 {#if open}

@@ -1,78 +1,78 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-    import type { MarkdownTableCell, MarkdownToken } from './_types';
-    import Self from './markdown-token.svelte';
+import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+import type { MarkdownTableCell, MarkdownToken } from './_types';
+import Self from './markdown-token.svelte';
 
-    let { tokens }: { tokens: MarkdownToken[] } = $props();
+let { tokens }: { tokens: MarkdownToken[] } = $props();
 
-    function safeUrl(value?: string) {
-        const url = value?.trim();
-        if (!url) {
-            return undefined;
-        }
-
-        const compact = url.replace(/[\u0000-\u0020]/g, '');
-        const scheme = compact.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
-        if (scheme && scheme !== 'http' && scheme !== 'https' && scheme !== 'mailto') {
-            return undefined;
-        }
-
-        return url;
+function safeUrl(value?: string) {
+    const url = value?.trim();
+    if (!url) {
+        return undefined;
     }
 
-    function isExternalUrl(value: string) {
-        return /^(?:https?:|\/\/)/i.test(value.replace(/[\u0000-\u0020]/g, ''));
+    const compact = url.replace(/[\u0000-\u0020]/g, '');
+    const scheme = compact.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
+    if (scheme && scheme !== 'http' && scheme !== 'https' && scheme !== 'mailto') {
+        return undefined;
     }
 
-    function safeImageUrl(value?: string) {
-        const url = safeUrl(value);
-        if (!url) {
-            return undefined;
-        }
-        try {
-            const base = new URL('https://sivir.invalid/');
-            return new URL(url, base).origin === base.origin ? url : undefined;
-        } catch {
-            return undefined;
-        }
-    }
+    return url;
+}
 
-    function codeLanguage(value?: string) {
-        return value?.trim().split(/\s+/, 1)[0] || undefined;
-    }
+function isExternalUrl(value: string) {
+    return /^(?:https?:|\/\/)/i.test(value.replace(/[\u0000-\u0020]/g, ''));
+}
 
-    function listStart(value?: number | string) {
-        const start = typeof value === 'number' ? value : Number.parseInt(value ?? '', 10);
-        return Number.isFinite(start) ? start : undefined;
+function safeImageUrl(value?: string) {
+    const url = safeUrl(value);
+    if (!url) {
+        return undefined;
     }
+    try {
+        const base = new URL('https://sivir.invalid/');
+        return new URL(url, base).origin === base.origin ? url : undefined;
+    } catch {
+        return undefined;
+    }
+}
 
-    function cellTokens(cell: MarkdownTableCell) {
-        return cell.tokens ?? [{ type: 'text', text: cell.text ?? '' }];
-    }
+function codeLanguage(value?: string) {
+    return value?.trim().split(/\s+/, 1)[0] || undefined;
+}
 
-    function alignmentClass(alignment?: 'center' | 'left' | 'right' | null) {
-        return alignment === 'center'
-            ? 'text-center'
-            : alignment === 'right'
-              ? 'text-right'
-              : 'text-left';
-    }
+function listStart(value?: number | string) {
+    const start = typeof value === 'number' ? value : Number.parseInt(value ?? '', 10);
+    return Number.isFinite(start) ? start : undefined;
+}
 
-    function tokenKey(token: MarkdownToken, index: number) {
-        return `${index}:${token.type}:${(token.raw ?? token.text ?? '').slice(0, 80)}`;
-    }
+function cellTokens(cell: MarkdownTableCell) {
+    return cell.tokens ?? [{ type: 'text', text: cell.text ?? '' }];
+}
 
-    function cellKey(cell: MarkdownTableCell, index: number) {
-        return `${index}:${(cell.text ?? '').slice(0, 80)}`;
-    }
+function alignmentClass(alignment?: 'center' | 'left' | 'right' | null) {
+    return alignment === 'center'
+        ? 'text-center'
+        : alignment === 'right'
+          ? 'text-right'
+          : 'text-left';
+}
 
-    function rowKey(row: MarkdownTableCell[], index: number) {
-        return `${index}:${row
-            .map((cell) => cell.text ?? '')
-            .join('|')
-            .slice(0, 120)}`;
-    }
+function tokenKey(token: MarkdownToken, index: number) {
+    return `${index}:${token.type}:${(token.raw ?? token.text ?? '').slice(0, 80)}`;
+}
+
+function cellKey(cell: MarkdownTableCell, index: number) {
+    return `${index}:${(cell.text ?? '').slice(0, 80)}`;
+}
+
+function rowKey(row: MarkdownTableCell[], index: number) {
+    return `${index}:${row
+        .map((cell) => cell.text ?? '')
+        .join('|')
+        .slice(0, 120)}`;
+}
 </script>
 
 {#each tokens as token, index (tokenKey(token, index))}

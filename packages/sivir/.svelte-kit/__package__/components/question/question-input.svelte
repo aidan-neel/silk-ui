@@ -1,29 +1,29 @@
 <script lang="ts">
-    import type { HTMLTextareaAttributes } from 'svelte/elements';
-    import { Textarea } from '@sivir-ui/svelte/components/textarea';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { QuestionInputProps } from '.';
-    import { getQuestionContext } from './context.svelte';
+import { Textarea } from '@sivir-ui/svelte/components/textarea';
+import { cn } from '@sivir-ui/svelte/utils';
+import type { HTMLTextareaAttributes } from 'svelte/elements';
+import type { QuestionInputProps } from '.';
+import { getQuestionContext } from './context.svelte';
 
-    let {
-        submitOnEnter = true,
-        placeholder = 'Type your answer...',
-        'aria-label': ariaLabel = 'Answer',
-        rows = 2,
-        disabled = false,
-        readonly = false,
-        autoresize = true,
-        element = $bindable(),
-        class: className,
-        oninput,
-        onkeydown,
-        oncompositionstart,
-        oncompositionend,
-        ...rest
-    }: QuestionInputProps = $props();
+let {
+    submitOnEnter = true,
+    placeholder = 'Type your answer...',
+    'aria-label': ariaLabel = 'Answer',
+    rows = 2,
+    disabled = false,
+    readonly = false,
+    autoresize = true,
+    element = $bindable(),
+    class: className,
+    oninput,
+    onkeydown,
+    oncompositionstart,
+    oncompositionend,
+    ...rest
+}: QuestionInputProps = $props();
 
-    const context = getQuestionContext();
-    let composing = false;
+const context = getQuestionContext();
+let composing = false;
 </script>
 
 {#if context.type === 'text'}

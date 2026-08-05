@@ -26,16 +26,16 @@ const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' 
 const sizeClass = $derived(
     (modal.state.orientation === 'horizontal'
         ? {
-              sm: 'max-w-sm',
-              md: 'max-w-md',
-              lg: 'max-w-xl',
-              xl: 'max-w-2xl'
+              sm: 'max-w-[23rem]',
+              md: 'max-w-[27rem]',
+              lg: 'max-w-[35rem]',
+              xl: 'max-w-[41rem]'
           }
         : {
-              sm: 'max-w-[18rem]',
-              md: 'max-w-sm',
-              lg: 'max-w-md',
-              xl: 'max-w-xl'
+              sm: 'max-w-[17rem]',
+              md: 'max-w-[23rem]',
+              lg: 'max-w-[27rem]',
+              xl: 'max-w-[35rem]'
           })[resolvedSize]
 );
 const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);

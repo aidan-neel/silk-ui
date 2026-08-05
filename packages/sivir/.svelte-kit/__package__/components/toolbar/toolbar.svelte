@@ -1,12 +1,12 @@
 <script lang="ts">
-    import type { HTMLAttributes } from 'svelte/elements';
-    import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+import type { HTMLAttributes } from 'svelte/elements';
 
-    let {
-        children,
-        class: classProp,
-        ...rest
-    }: DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> = $props();
+let {
+    children,
+    class: classProp,
+    ...rest
+}: DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> = $props();
 </script>
 
 <div

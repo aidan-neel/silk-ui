@@ -67,7 +67,7 @@ const installCommand = 'bunx @sivir-ui/svelte add scroll-area';
             Import the Scroll Area and use it to wrap content:
         </p>
         <CodeBlock
-            code={`import { ScrollArea } from '$lib/sivir/components/scroll-area';\n\n<ScrollArea class="h-48 w-64">\n  <div>Your content here</div>\n</ScrollArea>`}
+            code={`import { ScrollArea } from '$lib/sivir/components/scroll-area';\n\n<ScrollArea class="h-48 w-64 rounded-lg border">\n  <div>Your content here</div>\n</ScrollArea>`}
             lang="svelte"
             copy="overlay"
         />

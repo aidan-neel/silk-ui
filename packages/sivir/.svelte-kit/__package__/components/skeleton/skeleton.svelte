@@ -1,36 +1,36 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import { type Snippet } from 'svelte';
 
-    let {
-        children,
-        class: classProp,
-        w: width,
-        h: height,
-        unit = 'px',
-        ...rest
-    }: {
-        children?: Snippet;
-        class?: string;
-        w?: number;
-        h?: number;
-        unit?:
-            | 'px'
-            | 'rem'
-            | 'em'
-            | '%'
-            | 'vh'
-            | 'vw'
-            | 'vmin'
-            | 'vmax'
-            | 'ch'
-            | 'ex'
-            | 'cm'
-            | 'mm'
-            | 'in'
-            | 'pt'
-            | 'pc';
-    } = $props();
+let {
+    children,
+    class: classProp,
+    w: width,
+    h: height,
+    unit = 'px',
+    ...rest
+}: {
+    children?: Snippet;
+    class?: string;
+    w?: number;
+    h?: number;
+    unit?:
+        | 'px'
+        | 'rem'
+        | 'em'
+        | '%'
+        | 'vh'
+        | 'vw'
+        | 'vmin'
+        | 'vmax'
+        | 'ch'
+        | 'ex'
+        | 'cm'
+        | 'mm'
+        | 'in'
+        | 'pt'
+        | 'pc';
+} = $props();
 </script>
 
 <!-- token-lint-disable-next-line -->

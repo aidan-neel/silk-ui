@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { marked } from 'marked';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { MarkdownProps } from '.';
-    import type { MarkdownToken } from './_types';
-    import TokenRenderer from './markdown-token.svelte';
+import { cn } from '@sivir-ui/svelte/utils';
+import { marked } from 'marked';
+import type { MarkdownProps } from '.';
+import type { MarkdownToken } from './_types';
+import TokenRenderer from './markdown-token.svelte';
 
-    let { content, streaming = false, class: className, ...rest }: MarkdownProps = $props();
+let { content, streaming = false, class: className, ...rest }: MarkdownProps = $props();
 
-    const tokens = $derived(
-        marked.lexer(content, { gfm: true, breaks: false }) as unknown as MarkdownToken[]
-    );
+const tokens = $derived(
+    marked.lexer(content, { gfm: true, breaks: false }) as unknown as MarkdownToken[]
+);
 </script>
 
 <div
