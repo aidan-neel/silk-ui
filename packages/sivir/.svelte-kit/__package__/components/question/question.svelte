@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { untrack } from 'svelte';
     import CircleAlert from '@lucide/svelte/icons/circle-alert';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { untrack } from 'svelte';
     import type { QuestionAnswer, QuestionProps, QuestionStatus, QuestionType } from '.';
     import { setQuestionContext } from './context.svelte';
 

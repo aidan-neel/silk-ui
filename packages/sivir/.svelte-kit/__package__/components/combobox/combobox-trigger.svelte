@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { onMount, tick } from 'svelte';
-    import type { ComboboxItem } from '.';
-    import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
-    import { button } from '../button/variants';
-    import { cn } from '@sivir-ui/svelte/utils';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
+    import { cn } from '@sivir-ui/svelte/utils';
     import Fuse from 'fuse.js';
-    import { getComboboxContext } from './context.svelte';
+    import { onMount, tick } from 'svelte';
+    import { button } from '../button/variants';
     import { getPopoverContext } from '../popover/context.svelte';
+    import type { ComboboxItem } from '.';
+    import { getComboboxContext } from './context.svelte';
 
     const { id, state: comboboxState } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();

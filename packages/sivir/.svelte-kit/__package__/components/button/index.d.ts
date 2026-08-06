@@ -1,7 +1,7 @@
+import type { Intent } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import Button from './button.svelte';
-import type { Snippet } from 'svelte';
-import type { Intent } from '@sivir-ui/svelte/utils';
 export type ButtonVariant = Intent | 'panel' | 'quiet';
 export type ButtonStatus = 'idle' | 'loading' | 'success' | 'error';
 export type ButtonProps = {

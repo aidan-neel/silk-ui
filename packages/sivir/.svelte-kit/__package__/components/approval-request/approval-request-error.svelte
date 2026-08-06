@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import type { DefaultProps } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
     import { getApprovalRequestContext } from './context.svelte';
 
     let { children, class: className }: { children?: Snippet } & DefaultProps = $props();

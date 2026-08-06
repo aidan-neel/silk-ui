@@ -4,4 +4,4 @@ export type ComboboxContext = {
     state: ComboboxState;
 };
 declare const setComboboxContext: (value: ComboboxContext) => ComboboxContext, getComboboxContext: () => ComboboxContext;
-export { setComboboxContext, getComboboxContext };
+export { getComboboxContext, setComboboxContext };

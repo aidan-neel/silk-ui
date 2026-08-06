@@ -1,5 +1,5 @@
-import type { HTMLAttributes, SvelteHTMLElements } from 'svelte/elements';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { HTMLAttributes, SvelteHTMLElements } from 'svelte/elements';
 import ResponseStream from './response-stream.svelte';
 export type Mode = 'typewriter' | 'fade';
 export type Segment = {

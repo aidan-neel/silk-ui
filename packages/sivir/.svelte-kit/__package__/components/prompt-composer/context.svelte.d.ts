@@ -10,4 +10,4 @@ export type PromptComposerContext = {
     stop: () => void;
 };
 declare const setPromptComposerContext: (value: PromptComposerContext) => PromptComposerContext, getPromptComposerContext: () => PromptComposerContext;
-export { setPromptComposerContext, getPromptComposerContext };
+export { getPromptComposerContext, setPromptComposerContext };

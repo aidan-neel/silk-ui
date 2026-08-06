@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
     import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
+    import { cn } from '@sivir-ui/svelte/utils';
     import { untrack } from 'svelte';
     import type { ConversationContentProps } from '.';
     import { getConversationContext } from './context.svelte';
