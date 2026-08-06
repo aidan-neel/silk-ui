@@ -1,5 +1,5 @@
-import { type ClassValue } from 'cnfast';
 import { type Placement, type ReferenceElement } from '@floating-ui/dom';
+import { type ClassValue } from 'cnfast';
 import { type Snippet } from 'svelte';
 export type DefaultProps = {
     class?: string;

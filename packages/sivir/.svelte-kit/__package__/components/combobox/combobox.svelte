@@ -1,8 +1,8 @@
 <script lang="ts">
+    import * as Popover from '@sivir-ui/svelte/components/popover';
     import { untrack } from 'svelte';
     import { SvelteSet } from 'svelte/reactivity';
     import type { ComboboxState } from '.';
-    import * as Popover from '@sivir-ui/svelte/components/popover';
     import { setComboboxContext } from './context.svelte';
 
     interface Props extends Popover.PopoverProps {}

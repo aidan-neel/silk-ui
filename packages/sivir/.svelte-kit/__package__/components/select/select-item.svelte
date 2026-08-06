@@ -1,11 +1,11 @@
 <script lang="ts">
+    import Check from '@lucide/svelte/icons/check';
     import type { ButtonProps } from '@sivir-ui/svelte/components/button';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import { cn } from '@sivir-ui/svelte/utils';
     import { onMount, type Snippet } from 'svelte';
-    import Check from '@lucide/svelte/icons/check';
-    import { getSelectContext } from './context.svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import { getSelectContext } from './context.svelte';
 
     const { id, state: selectState, labels, values } = getSelectContext();
     const { state: popoverState } = getPopoverContext();

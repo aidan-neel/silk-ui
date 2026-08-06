@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
+    import { resolve } from '$app/paths';
     import { components, sanitizeComponent } from '$lib/components';
 </script>
 

@@ -9,4 +9,4 @@ export type ComboboxContext = {
 const { set: setComboboxContext, get: getComboboxContext } =
     createContext<ComboboxContext>('combobox');
 
-export { setComboboxContext, getComboboxContext };
+export { getComboboxContext, setComboboxContext };

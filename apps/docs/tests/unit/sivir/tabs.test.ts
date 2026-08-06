@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import TabsFixture from '../../fixtures/TabsFixture.svelte';
 
 describe('Tabs -- rendering', () => {

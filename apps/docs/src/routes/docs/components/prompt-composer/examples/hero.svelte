@@ -1,10 +1,10 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import ShieldCheck from '@lucide/svelte/icons/shield-check';
     import Workflow from '@lucide/svelte/icons/workflow';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import { onDestroy } from 'svelte';
 
     const models = ['Sivir 3.1', 'Sivir Mini'];
@@ -69,7 +69,9 @@
                         {#each modes as option (option)}
                             <DropdownMenu.Item onclick={() => (mode = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if mode === option}<Check size={13} aria-hidden="true" />{/if}
+                                {#if mode === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>
@@ -90,10 +92,9 @@
                         {#each permissions as option (option)}
                             <DropdownMenu.Item onclick={() => (permission = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if permission === option}<Check
-                                        size={13}
-                                        aria-hidden="true"
-                                    />{/if}
+                                {#if permission === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>
@@ -120,7 +121,9 @@
                         {#each models as option (option)}
                             <DropdownMenu.Item onclick={() => (model = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if model === option}<Check size={13} aria-hidden="true" />{/if}
+                                {#if model === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>

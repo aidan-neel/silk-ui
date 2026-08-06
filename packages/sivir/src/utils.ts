@@ -1,14 +1,14 @@
-import { type ClassValue, clsx, twMerge } from 'cnfast';
 import {
     computePosition,
-    offset,
     flip,
-    shift,
-    size,
+    offset,
     type Placement,
-    type ReferenceElement
+    type ReferenceElement,
+    shift,
+    size
 } from '@floating-ui/dom';
-import { getContext, hasContext, setContext, type Snippet } from 'svelte';
+import { type ClassValue, clsx, twMerge } from 'cnfast';
+import { getContext, hasContext, type Snippet, setContext } from 'svelte';
 
 export type DefaultProps = {
     class?: string;

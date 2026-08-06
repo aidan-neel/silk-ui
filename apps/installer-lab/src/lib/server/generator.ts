@@ -1,5 +1,5 @@
-import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { InstallPath } from '$lib/run-types';
 

@@ -1,24 +1,23 @@
 <script lang="ts">
+    import AlignCenter from '@lucide/svelte/icons/align-center';
+    import AlignLeft from '@lucide/svelte/icons/align-left';
+    import AlignRight from '@lucide/svelte/icons/align-right';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
     import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
-    import AlignLeft from '@lucide/svelte/icons/align-left';
-    import AlignCenter from '@lucide/svelte/icons/align-center';
-    import AlignRight from '@lucide/svelte/icons/align-right';
-
-    import { resolve } from '$app/paths';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Input } from '@sivir-ui/svelte/components/input';
-    import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
-    import { Switch } from '@sivir-ui/svelte/components/switch';
-    import { Badge } from '@sivir-ui/svelte/components/badge';
-    import { Slider } from '@sivir-ui/svelte/components/slider';
-    import { Progress } from '@sivir-ui/svelte/components/progress';
-    import * as Card from '@sivir-ui/svelte/components/card';
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
-    import * as Avatar from '@sivir-ui/svelte/components/avatar';
     import * as Alert from '@sivir-ui/svelte/components/alert';
+    import * as Avatar from '@sivir-ui/svelte/components/avatar';
+    import { Badge } from '@sivir-ui/svelte/components/badge';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as Card from '@sivir-ui/svelte/components/card';
+    import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
+    import { Input } from '@sivir-ui/svelte/components/input';
+    import { Progress } from '@sivir-ui/svelte/components/progress';
+    import { Slider } from '@sivir-ui/svelte/components/slider';
+    import { Switch } from '@sivir-ui/svelte/components/switch';
+    import * as Tabs from '@sivir-ui/svelte/components/tabs';
     import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
     import type { Snippet } from 'svelte';
+    import { resolve } from '$app/paths';
 
     const titleWords = ['Restyle', 'everything', 'from', 'a', 'few', 'tokens.'];
 
@@ -54,8 +53,9 @@
 
 <section class="hero">
     <h1 class="hero__title">
-        {#each titleWords as word, i (word + i)}<span class="word" style="--i: {i}">{word}</span
-            >{i < titleWords.length - 1 ? ' ' : ''}{/each}
+        {#each titleWords as word, i (word + i)}
+            <span class="word" style="--i: {i}">{word}</span>{i < titleWords.length - 1 ? ' ' : ''}
+        {/each}
     </h1>
 
     <p class="hero__subtitle reveal" style="--d: 0.18s">Build with 55 Svelte 5 components.</p>
@@ -84,7 +84,8 @@
             <div class="gcard__heading">
                 <span class="gcard__title">{c.title}</span>
                 <span class="gcard__meta">
-                    {exampleCount(c.slug)} examples
+                    {exampleCount(c.slug)}
+                    examples
                     <ArrowUpRight size={13} class="gcard__arrow" />
                 </span>
             </div>

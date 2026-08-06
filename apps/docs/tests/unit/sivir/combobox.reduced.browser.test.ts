@@ -1,7 +1,7 @@
-import { expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page } from 'vitest/browser';
 import { tick } from 'svelte';
+import { expect, it } from 'vitest';
+import { page } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import ComboboxFixture from '../../fixtures/ComboboxFixture.svelte';
 
 it('disables result filtering motion when reduced motion is requested', async () => {

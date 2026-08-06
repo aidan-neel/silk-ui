@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import Default from './examples/default.svelte';
     import DefaultSrc from './examples/default.svelte?raw';
-    import WithPresets from './examples/with-presets.svelte';
-    import WithPresetsSrc from './examples/with-presets.svelte?raw';
     import Formats from './examples/formats.svelte';
     import FormatsSrc from './examples/formats.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import WithPresets from './examples/with-presets.svelte';
+    import WithPresetsSrc from './examples/with-presets.svelte?raw';
 
     const TITLE = 'Color Picker';
     const SLUG = 'color-picker';
@@ -68,7 +67,8 @@
         <p class="text-sm text-foreground-muted">
             Compose the Color Picker from its <code class="font-mono text-foreground">Root</code>,
             <code class="font-mono text-foreground">Trigger</code>, and
-            <code class="font-mono text-foreground">Content</code> parts:
+            <code class="font-mono text-foreground">Content</code>
+            parts:
         </p>
         <CodeBlock
             code={`import * as ColorPicker from '$lib/sivir/components/color-picker';\n\nlet value = $state('#5e6ad2');\n\n<ColorPicker.Root value={value} onValueChange={(v) => (value = v)} format="hsl">\n\t<ColorPicker.Trigger />\n\t<ColorPicker.Content />\n</ColorPicker.Root>`}

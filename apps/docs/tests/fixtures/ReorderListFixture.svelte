@@ -19,7 +19,9 @@
     {disabled}
     onCommit={() => (commits += 1)}
 >
-    {#snippet children(item)}<span>{item.label}</span>{/snippet}
+    {#snippet children(item)}
+        <span>{item.label}</span>
+    {/snippet}
 </ReorderList>
 <output aria-label="Order">{items.map((item) => item.id).join(',')}</output>
 <output aria-label="Commits">{commits}</output>

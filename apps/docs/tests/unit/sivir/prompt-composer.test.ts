@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
 
 describe('PromptComposer', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { readFile, readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 
 import packageJson from './package.json';
 
@@ -61,7 +61,7 @@ describe('publishable package contract', () => {
     test('scans compiled component modules in published consumer installations', async () => {
         const css = await readFile(new URL('./src/ui.css', import.meta.url), 'utf8');
 
-        expect(css).toContain('@source "./**/*.{svelte,ts,js}";');
+        expect(css).toContain("@source './**/*.{svelte,ts,js}';");
     });
 
     test('keeps component animations colocated and reduced-motion safe', async () => {

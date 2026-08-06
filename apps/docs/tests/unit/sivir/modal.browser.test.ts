@@ -1,9 +1,9 @@
-import { describe, expect, it, afterEach } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
-import { tick } from 'svelte';
-import ModalFixture from '../../fixtures/ModalFixture.svelte';
 import { dialogIn, dialogOut } from '@sivir-ui/svelte/transition';
+import { tick } from 'svelte';
+import { afterEach, describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
+import ModalFixture from '../../fixtures/ModalFixture.svelte';
 
 /*
  * Browser-mode tests for modal. These exercise mount/unmount, focus

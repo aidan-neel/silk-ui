@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import { components, sanitizeComponent } from '$lib/components';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { travelingHighlight } from '@sivir-ui/svelte/utils';
     import BookOpen from '@lucide/svelte/icons/book-open';
+    import Component from '@lucide/svelte/icons/component';
     import Download from '@lucide/svelte/icons/download';
     import Palette from '@lucide/svelte/icons/palette';
-    import Component from '@lucide/svelte/icons/component';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { travelingHighlight } from '@sivir-ui/svelte/utils';
+    import { page } from '$app/stores';
+    import { components, sanitizeComponent } from '$lib/components';
 
     let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } =
         $props();

@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import Star from '@lucide/svelte/icons/star';
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import Star from '@lucide/svelte/icons/star';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
     const options = ['Most starred', 'Recently updated', 'Alphabetical', 'Oldest first'];
     let selected = $state(options[0]);
@@ -18,7 +18,9 @@
         {#each options as option (option)}
             <DropdownMenu.Item callback={() => (selected = option)}>
                 <span>{option}</span>
-                {#if selected === option}<Check size={12} class="ml-auto text-primary" />{/if}
+                {#if selected === option}
+                    <Check size={12} class="ml-auto text-primary" />
+                {/if}
             </DropdownMenu.Item>
         {/each}
     </DropdownMenu.Content>

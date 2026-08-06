@@ -1,5 +1,5 @@
-import type { Snippet } from 'svelte';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 type $$ComponentProps = {
     children?: Snippet;
 } & DefaultProps;

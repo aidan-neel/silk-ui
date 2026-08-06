@@ -15,4 +15,4 @@ export type PromptComposerContext = {
 const { set: setPromptComposerContext, get: getPromptComposerContext } =
     createContext<PromptComposerContext>('prompt-composer');
 
-export { setPromptComposerContext, getPromptComposerContext };
+export { getPromptComposerContext, setPromptComposerContext };

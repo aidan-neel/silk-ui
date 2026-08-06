@@ -1,19 +1,19 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './approval-request.svelte';
-import Content from './approval-request-content.svelte';
-import Header from './approval-request-header.svelte';
-import Status from './approval-request-status.svelte';
-import Icon from './approval-request-icon.svelte';
-import Risk from './approval-request-risk.svelte';
-import Title from './approval-request-title.svelte';
-import Description from './approval-request-description.svelte';
-import Details from './approval-request-details.svelte';
-import Footer from './approval-request-footer.svelte';
 import Cancel from './approval-request-cancel.svelte';
 import Confirm from './approval-request-confirm.svelte';
-import Error from './approval-request-error.svelte';
+import Content from './approval-request-content.svelte';
+import Description from './approval-request-description.svelte';
+import Details from './approval-request-details.svelte';
+import ApprovalError from './approval-request-error.svelte';
+import Footer from './approval-request-footer.svelte';
+import Header from './approval-request-header.svelte';
+import Icon from './approval-request-icon.svelte';
+import Risk from './approval-request-risk.svelte';
+import Status from './approval-request-status.svelte';
+import Title from './approval-request-title.svelte';
 export type ApprovalRisk = 'low' | 'medium' | 'high';
 export type ApprovalRequestActionName = 'cancel' | 'confirm';
 export type ApprovalRequestRootProps = {
@@ -39,4 +39,4 @@ export type ApprovalRequestActionProps = {
     failureMessage?: string;
     children?: Snippet;
 } & DefaultProps & Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'status' | 'loading' | 'loadingLabel'>;
-export { Root, Content, Header, Status, Icon, Risk, Title, Description, Details, Footer, Cancel, Confirm, Error };
+export { ApprovalError as Error, Cancel, Confirm, Content, Description, Details, Footer, Header, Icon, Risk, Root, Status, Title };

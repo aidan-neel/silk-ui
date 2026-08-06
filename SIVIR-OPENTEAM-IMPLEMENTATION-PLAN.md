@@ -1,9 +1,9 @@
 # Sivir Support for OpenTeam: Implementation Plan
 
-Status: Proposed  
-Scope: OpenTeam consumer workarounds 1-10  
-Repositories: `/home/aidan/silk` and `/home/aidan/openteam`  
-Package: `@sivir-ui/svelte`  
+Status: Proposed
+Scope: OpenTeam consumer workarounds 1-10
+Repositories: `/home/aidan/silk` and `/home/aidan/openteam`
+Package: `@sivir-ui/svelte`
 Release: Unreleased; assign the package version only after the final diff is known
 
 ## Goal

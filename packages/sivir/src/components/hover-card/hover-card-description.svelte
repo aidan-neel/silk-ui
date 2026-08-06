@@ -1,6 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
+    import type { Snippet } from 'svelte';
 
     let {
         children,

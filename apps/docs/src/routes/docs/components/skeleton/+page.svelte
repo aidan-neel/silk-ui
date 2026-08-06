@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Card from './examples/card.svelte';
+    import CardSrc from './examples/card.svelte?raw';
+    import Circle from './examples/circle.svelte';
+    import CircleSrc from './examples/circle.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
     import Rectangle from './examples/rectangle.svelte';
     import RectangleSrc from './examples/rectangle.svelte?raw';
-    import Circle from './examples/circle.svelte';
-    import CircleSrc from './examples/circle.svelte?raw';
-    import Card from './examples/card.svelte';
-    import CardSrc from './examples/card.svelte?raw';
 
     const TITLE = 'Skeleton';
 
@@ -64,8 +63,8 @@
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Use <code>SkeletonSwap</code> around asynchronous content. Fast responses skip the placeholder;
-            once shown, it stays visible long enough to avoid a flash.
+            Use <code>SkeletonSwap</code> around asynchronous content. Fast responses skip the
+            placeholder; once shown, it stays visible long enough to avoid a flash.
         </p>
         <CodeBlock
             code={`import { SkeletonSwap } from '$lib/sivir/components/skeleton';

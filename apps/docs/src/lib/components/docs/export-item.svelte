@@ -1,6 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
+    import type { Snippet } from 'svelte';
 
     let {
         children,
@@ -15,9 +15,11 @@
 </script>
 
 <p {...rest} class={cn(classProp, `text-foreground-muted`)}>
-    <span class="text-foreground px-3">•</span><span
+    <span class="text-foreground px-3">•</span
+    ><span
         class="text-foreground [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] [font-family:var(--font-header),sans-serif]"
-        >{title} -</span
+        >{title}
+        -</span
     >
     {@render children?.()}
 </p>

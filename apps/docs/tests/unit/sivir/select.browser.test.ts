@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import SelectFixture from '../../fixtures/SelectFixture.svelte';
 
 async function flush() {

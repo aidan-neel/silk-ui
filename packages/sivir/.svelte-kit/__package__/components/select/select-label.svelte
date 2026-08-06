@@ -10,6 +10,4 @@
     let { children, class: className, ...rest }: Props = $props();
 </script>
 
-<DropdownMenu.Label {...rest} class={className}>
-    {@render children?.()}
-</DropdownMenu.Label>
+<DropdownMenu.Label {...rest} class={className}> {@render children?.()} </DropdownMenu.Label>

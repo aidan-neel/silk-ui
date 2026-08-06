@@ -23,20 +23,20 @@ bun --cwd=packages/sivir run verify:cli-artifact
 
 Formatting is part of the code quality bar, not a cleanup task to defer. All
 supported source, configuration, and documentation files must be formatted with
-the repository's Prettier configuration before review. Run `bun run format`
+the repository's Biome configuration before review. Run `bun run format`
 while editing and `bun run format:check` before considering formatting work
-complete. Do not hand-format around Prettier or disable it for individual
+complete. Do not hand-format around Biome or disable it for individual
 files.
 
 Write code for people to scan, review, debug, and safely modify. Compact code
 is not concise when it hides structure. The following rules are mandatory:
 
 - Put every `import` and `export` declaration on its own logical line. Use
-  multi-line import or export specifiers when Prettier wraps them.
+  multi-line import or export specifiers when Biome wraps them.
 - Write object, type, interface, tuple, and function parameter definitions
   across multiple lines when they contain several properties, parameters, or
   nested values. Keep one concern per line and use a trailing comma where
-  Prettier adds one.
+  Biome adds one.
 - Use one statement per line. Never combine declarations, assignments,
   conditions, loops, or side effects with semicolons on a single line.
 - Give every function, method, constructor, callback with non-trivial work, and

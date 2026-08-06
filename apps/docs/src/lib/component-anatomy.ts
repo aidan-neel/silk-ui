@@ -1,4 +1,4 @@
-import { components } from './components';
+import type { components } from './components';
 
 export type ComponentSlug = (typeof components)[number];
 

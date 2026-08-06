@@ -1,6 +1,6 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './conversation.svelte';
 import Content from './conversation-content.svelte';
 import Empty from './conversation-empty.svelte';
@@ -38,4 +38,4 @@ export type ConversationScrollButtonProps = {
     'children' | 'class' | 'aria-label' | 'disabled' | 'tabindex' | 'type'
 >;
 
-export { Root, Content, Empty, ScrollButton };
+export { Content, Empty, Root, ScrollButton };

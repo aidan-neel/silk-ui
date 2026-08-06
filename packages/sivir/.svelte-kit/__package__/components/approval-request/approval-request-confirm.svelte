@@ -25,5 +25,6 @@
         (approvalRequest.pending !== null && approvalRequest.pending !== 'confirm')}
     status={approvalRequest.pending === 'confirm' ? 'loading' : undefined}
     loadingLabel={pendingLabel}
-    onclick={handleClick}>{@render children?.()}</AlertDialog.Confirm
+    onclick={handleClick}
+    >{@render children?.()}</AlertDialog.Confirm
 >

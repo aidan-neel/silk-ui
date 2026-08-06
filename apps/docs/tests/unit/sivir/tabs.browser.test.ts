@@ -1,7 +1,7 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page } from 'vitest/browser';
 import { tick } from 'svelte';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { page } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import TabsFixture from '../../fixtures/TabsFixture.svelte';
 
 async function settleLayout() {

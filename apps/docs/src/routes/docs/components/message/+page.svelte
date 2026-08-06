@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -68,8 +68,9 @@
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            <code>Content</code> adapts its layout to <code>from</code>. Use <code>status</code> for streaming
-            or failed output, and give every icon-only action an accessible label.
+            <code>Content</code>
+            adapts its layout to <code>from</code>. Use <code>status</code> for streaming or failed
+            output, and give every icon-only action an accessible label.
         </p>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>

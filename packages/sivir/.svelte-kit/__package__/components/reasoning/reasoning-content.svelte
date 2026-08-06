@@ -1,7 +1,7 @@
 <script lang="ts">
     import { themedSlide } from '@sivir-ui/svelte/transition';
-    import { onDestroy } from 'svelte';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { onDestroy } from 'svelte';
     import type { ReasoningContentProps } from '.';
     import { getReasoningContext } from './context.svelte';
 

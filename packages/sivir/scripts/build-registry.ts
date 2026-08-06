@@ -10,15 +10,15 @@
  *   registry/themes.json  -- built-in theme presets pre-rendered to CSS
  */
 
-import { mkdir, readdir, rm, copyFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { copyFile, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { builtInThemePresets } from '../src/themes/builtin-presets';
-import { themeToCss } from '../src/themes/theme';
-import type { Manifest } from '../src/_manifest/types';
 import type { RegistryIndex, RegistryTheme } from '../cli/types';
 import pkg from '../package.json';
+import type { Manifest } from '../src/_manifest/types';
+import { builtInThemePresets } from '../src/themes/builtin-presets';
+import { themeToCss } from '../src/themes/theme';
 
 const pkgRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sivirSrc = path.resolve(pkgRoot, 'src');
@@ -79,7 +79,11 @@ for (const manifest of manifests) {
         }
     }
     for (const file of manifest.files) fileSet.add(file);
-    for (const entry of manifest.shared) sharedToFiles(entry).forEach((f) => fileSet.add(f));
+    for (const entry of manifest.shared) {
+        sharedToFiles(entry).forEach((file) => {
+            fileSet.add(file);
+        });
+    }
 }
 
 for (const file of fileSet) {

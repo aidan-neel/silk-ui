@@ -1,5 +1,5 @@
+import { computePosition, flip, offset, shift, size } from '@floating-ui/dom';
 import { clsx, twMerge } from 'cnfast';
-import { computePosition, offset, flip, shift, size } from '@floating-ui/dom';
 import { getContext, hasContext, setContext } from 'svelte';
 /**
  * Merges class values and resolves Tailwind conflicts via cnfast.

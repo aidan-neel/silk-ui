@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -129,8 +129,8 @@
                     Vertical
                 </h3>
                 <p class="mt-2 text-sm text-foreground-muted">
-                    Set <code>orientation="vertical"</code> for a side-by-side layout. Use Up and Down
-                    Arrow to move between tabs; Home and End jump to the first and last tab.
+                    Set <code>orientation="vertical"</code> for a side-by-side layout. Use Up and
+                    Down Arrow to move between tabs; Home and End jump to the first and last tab.
                 </p>
             </div>
             <ComponentPreview code={VerticalSrc}>

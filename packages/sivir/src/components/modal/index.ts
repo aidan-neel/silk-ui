@@ -1,16 +1,16 @@
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
+import type { ButtonProps } from '../button';
 import Root from './modal.svelte';
-import Trigger from './modal-trigger.svelte';
+import Body from './modal-body.svelte';
+import Close from './modal-close.svelte';
+import Confirm from './modal-confirm.svelte';
 import Content from './modal-content.svelte';
-import Title from './modal-title.svelte';
 import Description from './modal-description.svelte';
 import Footer from './modal-footer.svelte';
 import Header from './modal-header.svelte';
-import Close from './modal-close.svelte';
-import Confirm from './modal-confirm.svelte';
-import Body from './modal-body.svelte';
-import type { ButtonProps } from '../button';
-import type { Snippet } from 'svelte';
+import Title from './modal-title.svelte';
+import Trigger from './modal-trigger.svelte';
 
 export type ModalState = {
     open: boolean;
@@ -49,4 +49,4 @@ export type ModalProps = {
     children?: Snippet;
 };
 
-export { Root, Trigger, Content, Title, Description, Header, Body, Close, Footer, Confirm };
+export { Body, Close, Confirm, Content, Description, Footer, Header, Root, Title, Trigger };

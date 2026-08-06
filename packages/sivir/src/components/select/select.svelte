@@ -48,6 +48,4 @@
     });
 </script>
 
-<DropdownMenu.Root>
-    {@render children?.()}
-</DropdownMenu.Root>
+<DropdownMenu.Root> {@render children?.()} </DropdownMenu.Root>

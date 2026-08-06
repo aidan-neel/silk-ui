@@ -1,32 +1,31 @@
-import { describe, expect, it, beforeEach } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
-import { tick } from 'svelte';
-import axe from 'axe-core';
-
-import { createRawSnippet } from 'svelte';
 import Button from '@sivir-ui/svelte/components/button/button.svelte';
-import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
 import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
 import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
+import axe from 'axe-core';
+import { createRawSnippet, tick } from 'svelte';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 
 function textSnippet(text: string) {
     return createRawSnippet(() => ({
         render: () => `<span>${text}</span>`
     }));
 }
-import ModalFixture from '../../fixtures/ModalFixture.svelte';
-import SheetFixture from '../../fixtures/SheetFixture.svelte';
-import PopoverFixture from '../../fixtures/PopoverFixture.svelte';
-import AlertDialogFixture from '../../fixtures/AlertDialogFixture.svelte';
-import DropdownMenuFixture from '../../fixtures/DropdownMenuFixture.svelte';
-import SelectFixture from '../../fixtures/SelectFixture.svelte';
-import ComboboxFixture from '../../fixtures/ComboboxFixture.svelte';
-import TabsFixture from '../../fixtures/TabsFixture.svelte';
+
 import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
-import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
+import AlertDialogFixture from '../../fixtures/AlertDialogFixture.svelte';
+import ComboboxFixture from '../../fixtures/ComboboxFixture.svelte';
 import CommandFixture from '../../fixtures/CommandFixture.svelte';
+import DropdownMenuFixture from '../../fixtures/DropdownMenuFixture.svelte';
+import ModalFixture from '../../fixtures/ModalFixture.svelte';
+import PopoverFixture from '../../fixtures/PopoverFixture.svelte';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
+import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
+import SelectFixture from '../../fixtures/SelectFixture.svelte';
+import SheetFixture from '../../fixtures/SheetFixture.svelte';
+import TabsFixture from '../../fixtures/TabsFixture.svelte';
 
 /*
  * A11y tier -- strategy Sec.14.1.

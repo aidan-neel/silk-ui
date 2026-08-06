@@ -1,8 +1,8 @@
+import QuestionSubmit from '@sivir-ui/svelte/components/question/question-submit.svelte';
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
 import type { Component } from 'svelte';
-import QuestionSubmit from '@sivir-ui/svelte/components/question/question-submit.svelte';
+import { describe, expect, it } from 'vitest';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 import QuestionTakeoverFixture from '../../fixtures/QuestionTakeoverFixture.svelte';
 

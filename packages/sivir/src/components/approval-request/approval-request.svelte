@@ -76,6 +76,4 @@
     });
 </script>
 
-<AlertDialog.Root bind:open error={risk === 'high'}>
-    {@render children?.()}
-</AlertDialog.Root>
+<AlertDialog.Root bind:open error={risk === 'high'}> {@render children?.()} </AlertDialog.Root>

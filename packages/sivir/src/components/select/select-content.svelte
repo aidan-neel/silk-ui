@@ -1,8 +1,8 @@
 <script lang="ts">
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import { tick, type Snippet } from 'svelte';
-    import { getSelectContext } from './context.svelte';
+    import { type Snippet, tick } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import { getSelectContext } from './context.svelte';
 
     const { state: popoverState } = getPopoverContext();
 

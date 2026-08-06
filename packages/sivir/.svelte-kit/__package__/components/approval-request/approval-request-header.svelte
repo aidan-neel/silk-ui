@@ -5,6 +5,4 @@
     let { class: className, children, ...rest }: ApprovalRequestHeaderProps = $props();
 </script>
 
-<AlertDialog.Header {...rest} class={className}>
-    {@render children?.()}
-</AlertDialog.Header>
+<AlertDialog.Header {...rest} class={className}> {@render children?.()} </AlertDialog.Header>

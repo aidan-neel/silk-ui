@@ -1,12 +1,12 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
+    import type { TabsState } from '@sivir-ui/svelte/components/tabs';
     import { cn } from '@sivir-ui/svelte/utils';
     import { getContext } from 'svelte';
-    import type { TabsState } from '@sivir-ui/svelte/components/tabs';
-    import type { CodeBlockContentProps, CodeBlockRegistry } from '.';
-    import { highlight } from './highlight';
-    import Copy from './code-block-copy.svelte';
     import { toTabIdPart } from '../tabs/id';
+    import type { CodeBlockContentProps, CodeBlockRegistry } from '.';
+    import Copy from './code-block-copy.svelte';
+    import { highlight } from './highlight';
 
     const CODE_SURFACE =
         'flex min-w-full [&_:is(.hljs-comment,.hljs-quote)]:text-[var(--code-block-token-comment)] [&_:is(.hljs-comment,.hljs-quote)]:italic [&_:is(.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-section,.hljs-link)]:text-[var(--code-block-token-keyword)] [&_:is(.hljs-string,.hljs-meta-string,.hljs-regexp,.hljs-template-tag)]:text-[var(--code-block-token-string)] [&_:is(.hljs-number,.hljs-symbol,.hljs-bullet)]:text-[var(--code-block-token-number)] [&_.hljs-title]:text-[var(--code-block-token-function)] [&_:is(.hljs-attr,.hljs-attribute,.hljs-property,.hljs-variable,.hljs-template-variable)]:text-[var(--code-block-token-property)] [&_:is(.hljs-built_in,.hljs-type,.hljs-params)]:text-[var(--code-block-token-builtin)] [&_.hljs-class_.hljs-title]:text-[var(--code-block-token-builtin)] [&_.hljs-title.class\\_]:text-[var(--code-block-token-builtin)] [&_.hljs-meta]:text-[var(--code-block-token-meta)] [&_.hljs-meta_.hljs-keyword]:text-[var(--code-block-token-meta)] [&_.hljs-emphasis]:italic [&_.hljs-strong]:font-semibold';
@@ -88,7 +88,8 @@
         {#if copyPlacement === 'inline'}
             <div class={cn(CODE_SURFACE, 'w-full items-center')}>
                 <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"><code
+                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
                 <Copy class="mr-1.5 shrink-0" />
@@ -98,11 +99,13 @@
                 {#if showLineNumbers}
                     <pre
                         aria-hidden="true"
-                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[13px] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]">{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
+                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[13px] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
+                    >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
                                 1}{newline}{/each}</pre>
                 {/if}
                 <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"><code
+                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
             </div>

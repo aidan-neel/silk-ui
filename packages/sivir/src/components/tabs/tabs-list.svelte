@@ -95,7 +95,9 @@
         });
         ro.observe(listEl);
         const triggers = listEl.querySelectorAll<HTMLElement>('[role="tab"]');
-        triggers.forEach((el) => ro.observe(el));
+        triggers.forEach((el) => {
+            ro.observe(el);
+        });
         window.addEventListener('resize', measureIndicator);
         return () => {
             ro.disconnect();

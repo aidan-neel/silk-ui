@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { resolve } from '$app/paths';
 
     const packageQuick = `bun add @sivir-ui/svelte
 # then in your CSS:
@@ -40,14 +40,17 @@ bunx --package @sivir-ui/svelte sivir add button`;
             Two ways to use it
         </h2>
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
-            <strong>Package import.</strong> Install
-            <code class="font-mono text-foreground">@sivir-ui/svelte</code> and import components from
-            the package. Fastest path when you want a dependency, not source ownership.
+            <strong>Package import.</strong>
+            Install
+            <code class="font-mono text-foreground">@sivir-ui/svelte</code>
+            and import components from the package. Fastest path when you want a dependency, not
+            source ownership.
         </p>
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
-            <strong>CLI source copy.</strong> Run the
-            <code class="font-mono text-foreground">sivir</code> CLI to copy component files into your
-            repo. You own the markup and can edit it freely.
+            <strong>CLI source copy.</strong>
+            Run the
+            <code class="font-mono text-foreground">sivir</code>
+            CLI to copy component files into your repo. You own the markup and can edit it freely.
         </p>
     </section>
 
@@ -90,7 +93,8 @@ bunx --package @sivir-ui/svelte sivir add button`;
         <p class="m-0 text-[1rem] text-foreground leading-relaxed">
             <a
                 class="text-foreground underline underline-offset-2"
-                href={resolve('/docs/installation')}>Installation</a
+                href={resolve('/docs/installation')}
+                >Installation</a
             >
             ·
             <a class="text-foreground underline underline-offset-2" href={resolve('/docs/theming')}
@@ -99,7 +103,8 @@ bunx --package @sivir-ui/svelte sivir add button`;
             ·
             <a
                 class="text-foreground underline underline-offset-2"
-                href={resolve('/docs/components')}>Components</a
+                href={resolve('/docs/components')}
+                >Components</a
             >
         </p>
     </section>

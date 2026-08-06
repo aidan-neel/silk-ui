@@ -1,5 +1,5 @@
-import type { Snippet } from 'svelte';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 import type {
     HTMLAttributes,
     HTMLButtonAttributes,
@@ -7,10 +7,10 @@ import type {
     HTMLTextareaAttributes
 } from 'svelte/elements';
 import Root from './prompt-composer.svelte';
-import Input from './prompt-composer-input.svelte';
-import Toolbar from './prompt-composer-toolbar.svelte';
 import Actions from './prompt-composer-actions.svelte';
+import Input from './prompt-composer-input.svelte';
 import Submit from './prompt-composer-submit.svelte';
+import Toolbar from './prompt-composer-toolbar.svelte';
 
 export type PromptComposerStatus = 'idle' | 'submitting' | 'error';
 
@@ -65,4 +65,4 @@ export type PromptComposerSubmitState = Readonly<{
     empty: boolean;
 }>;
 
-export { Root, Input, Toolbar, Actions, Submit };
+export { Actions, Input, Root, Submit, Toolbar };

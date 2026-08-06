@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { tick } from 'svelte';
-    import Fuse from 'fuse.js';
     import Search from '@lucide/svelte/icons/search';
+    import Fuse from 'fuse.js';
+    import { tick } from 'svelte';
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
 

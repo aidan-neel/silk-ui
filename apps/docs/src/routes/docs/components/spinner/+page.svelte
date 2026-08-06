@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -51,8 +51,8 @@
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Use Spinner for work with an unknown duration. Set <code>aria-hidden</code> when adjacent
-            text already describes the loading state.
+            Use Spinner for work with an unknown duration. Set <code>aria-hidden</code> when
+            adjacent text already describes the loading state.
         </p>
         <CodeBlock
             code={`import { Spinner } from '@sivir-ui/svelte/components/spinner';\n\n<Spinner aria-hidden="true" />`}

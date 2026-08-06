@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 

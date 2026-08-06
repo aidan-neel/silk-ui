@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+    import { onMount } from 'svelte';
 
     let status = $state<'idle' | 'error'>('idle');
 

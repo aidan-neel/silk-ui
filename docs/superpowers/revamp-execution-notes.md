@@ -25,7 +25,7 @@ Replicate this EXACT structure for every component page (rollout agents: read th
 - **Examples = flat titled pieces**: under an `<h2 …docs-section-heading>Examples</h2>`, each example is its OWN piece: `<div id=… class="scroll-mt-20 flex flex-col gap-3"><h3 …docs-subsection-heading>{Title}</h3><ComponentPreview code=…>{demo}</ComponentPreview></div>`. One piece per variant/example. Consolidate naturally-comparable sets (e.g. all Sizes) into ONE preview. Each piece's heading uses the SAME docs-subsection-heading style as section headers. No descriptive metadata text under demos.
 - API reference tables (existing).
 - ComponentPreview primitive (already final): **ghost-tab indicator** (active tab `bg-secondary text-foreground`, transition), tabs DETACHED from panel (`gap-3.5`), panel `min-h-[20rem] max-h-[40rem]` shared by BOTH tabs → no height jump on switch; code scrolls within max-h.
-- For `code={…}` with no `${}` interpolation use a plain string attribute `code="…"` (eslint `svelte/no-useless-mustaches`); template literals only when they contain `\n` or interpolation.
+- For `code={…}` with no `${}` interpolation use a plain string attribute `code="…"`; template literals only when they contain `\n` or interpolation.
 
 ## Docs flow (shadcn-INSPIRED but DIFFERENTIATED — user: "too shadcny", dial it back)
 

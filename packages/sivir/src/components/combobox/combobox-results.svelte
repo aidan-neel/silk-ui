@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount, tick, type Snippet } from 'svelte';
+    import { onMount, type Snippet, tick } from 'svelte';
     import { getComboboxContext } from './context.svelte';
 
     const { id, state: comboboxState } = getComboboxContext();

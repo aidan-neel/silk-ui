@@ -25,5 +25,6 @@
         (approvalRequest.pending !== null && approvalRequest.pending !== 'cancel')}
     status={approvalRequest.pending === 'cancel' ? 'loading' : undefined}
     loadingLabel={pendingLabel}
-    onclick={handleClick}>{@render children?.()}</AlertDialog.Exit
+    onclick={handleClick}
+    >{@render children?.()}</AlertDialog.Exit
 >

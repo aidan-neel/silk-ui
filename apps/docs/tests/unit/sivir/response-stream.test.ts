@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { render, waitFor } from '@testing-library/svelte';
 import ResponseStream from '@sivir-ui/svelte/components/response-stream/response-stream.svelte';
+import { render, waitFor } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
 
 async function* chunks() {
     yield 'First ';

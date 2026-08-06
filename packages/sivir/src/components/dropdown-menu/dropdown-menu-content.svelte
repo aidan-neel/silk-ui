@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
+    import type { Snippet } from 'svelte';
     import { getDropdownMenuContext } from './context.svelte';
 
     const { inverted } = getDropdownMenuContext();

@@ -21,4 +21,4 @@ export type QuestionContext = {
 const { set: setQuestionContext, get: getQuestionContext } =
     createContext<QuestionContext>('question');
 
-export { setQuestionContext, getQuestionContext };
+export { getQuestionContext, setQuestionContext };

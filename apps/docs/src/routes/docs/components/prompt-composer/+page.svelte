@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
-    import Error from './examples/state-error.svelte';
-    import ErrorSrc from './examples/state-error.svelte?raw';
     import Idle from './examples/idle.svelte';
     import IdleSrc from './examples/idle.svelte?raw';
+    import ErrorExample from './examples/state-error.svelte';
+    import ErrorSrc from './examples/state-error.svelte?raw';
     import Submitting from './examples/submitting.svelte';
     import SubmittingSrc from './examples/submitting.svelte?raw';
 
@@ -87,8 +87,8 @@ async function sendPrompt(prompt: string) {
         />
         <p class="text-sm text-foreground-muted">
             By default, <kbd>Enter</kbd> submits and <kbd>Shift</kbd> + <kbd>Enter</kbd> inserts a
-            new line. Set <code>submitOnEnter={false}</code> on <code>Input</code> when Enter should always
-            create a new line.
+            new line. Set <code>submitOnEnter={false}</code> on <code>Input</code> when Enter should
+            always create a new line.
         </p>
     </section>
 
@@ -128,7 +128,7 @@ async function sendPrompt(prompt: string) {
             >
                 Error
             </h3>
-            <ComponentPreview code={ErrorSrc} refreshable><Error /></ComponentPreview>
+            <ComponentPreview code={ErrorSrc} refreshable><ErrorExample /></ComponentPreview>
         </div>
     </section>
 </div>

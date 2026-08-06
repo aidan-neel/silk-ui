@@ -26,6 +26,4 @@
     });
 </script>
 
-<span bind:this={el} aria-hidden="true" class="sr-only">
-    {@render children?.()}
-</span>
+<span bind:this={el} aria-hidden="true" class="sr-only"> {@render children?.()} </span>

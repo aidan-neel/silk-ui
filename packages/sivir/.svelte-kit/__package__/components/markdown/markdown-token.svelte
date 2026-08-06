@@ -77,7 +77,7 @@
 
 {#each tokens as token, index (tokenKey(token, index))}
     {#if token.type === 'space' || token.type === 'def'}
-        <!-- Markdown spacing and reference definitions do not produce visible nodes. -->
+    <!-- Markdown spacing and reference definitions do not produce visible nodes. -->
     {:else if token.type === 'heading'}
         {#if token.depth === 1}
             <h1
@@ -214,7 +214,7 @@
             </ul>
         {/if}
     {:else if token.type === 'checkbox'}
-        <!-- Task-list checkboxes are rendered by the containing list item. -->
+    <!-- Task-list checkboxes are rendered by the containing list item. -->
     {:else if token.type === 'blockquote'}
         <blockquote class="my-4 border-s-2 border-border ps-4 text-foreground-muted">
             <Self tokens={token.tokens ?? [{ type: 'text', text: token.text ?? '' }]} />
@@ -263,7 +263,8 @@
     {:else if token.type === 'html'}
         {#if token.block}
             <pre
-                class="my-3 overflow-x-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border bg-secondary/50 px-3 py-2 font-mono text-[0.875em] leading-relaxed text-foreground-muted"><code
+                class="my-3 overflow-x-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border bg-secondary/50 px-3 py-2 font-mono text-[0.875em] leading-relaxed text-foreground-muted"
+            ><code
                     >{token.text ?? token.raw ?? ''}</code
                 ></pre>
         {:else}

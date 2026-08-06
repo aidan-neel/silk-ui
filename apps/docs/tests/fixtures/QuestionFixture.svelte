@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { untrack } from 'svelte';
-    import * as Question from '@sivir-ui/svelte/components/question';
     import type {
         QuestionAnswer,
         QuestionStatus,
         QuestionType
     } from '@sivir-ui/svelte/components/question';
+    import * as Question from '@sivir-ui/svelte/components/question';
+    import { untrack } from 'svelte';
 
     let {
         type = 'single',
