@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { ApiReferenceItem } from './api-reference-types';
+
     const {
         title,
         component,
@@ -41,16 +42,19 @@
                     <tr class="border-b">
                         <th
                             class="p-3 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
-                            >Property</th
                         >
+                            Property
+                        </th>
                         <th
                             class="p-3 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
-                            >Type</th
                         >
+                            Type
+                        </th>
                         <th
                             class="p-3 [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
-                            >Description</th
                         >
+                            Description
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +74,8 @@
                                     {type}
                                 </span>
                             </td>
-                            <td class="p-3 align-top text-sm"
-                                >{description}<br />
+                            <td class="p-3 align-top text-sm">
+                                {description}<br />
                                 <span class="font-mono text-foreground-muted text-sm mt-2">
                                     Default: {defaults ?? '-'}
                                 </span>

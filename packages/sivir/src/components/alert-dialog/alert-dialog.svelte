@@ -5,6 +5,4 @@
     let { open = $bindable(false), error = false, children }: AlertDialogProps = $props();
 </script>
 
-<Modal.Root bind:open {error}>
-    {@render children?.()}
-</Modal.Root>
+<Modal.Root bind:open {error}> {@render children?.()} </Modal.Root>

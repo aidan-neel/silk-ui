@@ -1,35 +1,34 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import AsLink from './examples/as-link.svelte';
+    import AsLinkSrc from './examples/as-link.svelte?raw';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import IconGroup from './examples/icon-group.svelte';
+    import IconGroupSrc from './examples/icon-group.svelte?raw';
+    import LeadingIcon from './examples/leading-icon.svelte';
+    import LeadingIconSrc from './examples/leading-icon.svelte?raw';
+    import Loading from './examples/loading.svelte';
+    import LoadingSrc from './examples/loading.svelte?raw';
+    import Sizes from './examples/sizes.svelte';
+    import SizesSrc from './examples/sizes.svelte?raw';
+    import TrailingIcon from './examples/trailing-icon.svelte';
+    import TrailingIconSrc from './examples/trailing-icon.svelte?raw';
+    import VariantDestructive from './examples/variant-destructive.svelte';
+    import VariantDestructiveSrc from './examples/variant-destructive.svelte?raw';
+    import VariantGhost from './examples/variant-ghost.svelte';
+    import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
+    import VariantOutline from './examples/variant-outline.svelte';
+    import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
+    import VariantPanel from './examples/variant-panel.svelte';
+    import VariantPanelSrc from './examples/variant-panel.svelte?raw';
     import VariantPrimary from './examples/variant-primary.svelte';
     import VariantPrimarySrc from './examples/variant-primary.svelte?raw';
     import VariantSecondary from './examples/variant-secondary.svelte';
     import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
-    import VariantOutline from './examples/variant-outline.svelte';
-    import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
-    import VariantGhost from './examples/variant-ghost.svelte';
-    import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
-    import VariantDestructive from './examples/variant-destructive.svelte';
-    import VariantDestructiveSrc from './examples/variant-destructive.svelte?raw';
-    import VariantPanel from './examples/variant-panel.svelte';
-    import VariantPanelSrc from './examples/variant-panel.svelte?raw';
-    import Sizes from './examples/sizes.svelte';
-    import SizesSrc from './examples/sizes.svelte?raw';
-    import Disabled from './examples/disabled.svelte';
-    import DisabledSrc from './examples/disabled.svelte?raw';
-    import LeadingIcon from './examples/leading-icon.svelte';
-    import LeadingIconSrc from './examples/leading-icon.svelte?raw';
-    import TrailingIcon from './examples/trailing-icon.svelte';
-    import TrailingIconSrc from './examples/trailing-icon.svelte?raw';
-    import Loading from './examples/loading.svelte';
-    import LoadingSrc from './examples/loading.svelte?raw';
-    import AsLink from './examples/as-link.svelte';
-    import AsLinkSrc from './examples/as-link.svelte?raw';
-    import IconGroup from './examples/icon-group.svelte';
-    import IconGroupSrc from './examples/icon-group.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add button';
 </script>
@@ -86,8 +85,9 @@
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Use <code>status</code> for async feedback. Every label occupies the same grid cell, so state
-            changes never resize the button; success and error switch to a matching semantic surface.
+            Use <code>status</code> for async feedback. Every label occupies the same grid cell, so
+            state changes never resize the button; success and error switch to a matching semantic
+            surface.
         </p>
         <CodeBlock
             code={`import { Button } from '$lib/sivir/components/button';

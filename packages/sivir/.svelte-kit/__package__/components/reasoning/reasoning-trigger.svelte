@@ -26,7 +26,8 @@
             class={cn(
                 'font-[var(--font-weight-label)]',
                 reasoning.streaming ? 'sivir-reasoning-shimmer' : 'text-foreground-muted'
-            )}>{reasoning.streaming ? 'Thinking' : 'Thought'}</span
+            )}
+            >{reasoning.streaming ? 'Thinking' : 'Thought'}</span
         >
         {#if !reasoning.streaming && duration}
             <span class="text-foreground-muted">for {duration}</span>

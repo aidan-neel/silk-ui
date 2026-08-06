@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type ContextMenuTriggerProps } from '.';
+    import type { ContextMenuTriggerProps } from '.';
     import type { VirtualElement } from '@floating-ui/dom';
     import { getContextMenuContext } from './context.svelte';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -58,8 +58,8 @@
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Use <code>streaming</code> while the model is thinking; use <code>duration</code> when it
-            completes.
+            Use <code>streaming</code> while the model is thinking; use <code>duration</code> when
+            it completes.
         </p>
         <CodeBlock
             code={`import * as Reasoning from '@sivir-ui/svelte/components/reasoning';

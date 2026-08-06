@@ -18,8 +18,9 @@
     } = $props();
 </script>
 
-<button data-testid="command-external-trigger" onclick={() => (open = true)}>Open externally</button
->
+<button type="button" data-testid="command-external-trigger" onclick={() => (open = true)}>
+    Open externally
+</button>
 <output data-testid="command-open-state">{String(open)}</output>
 
 <Command.Root bind:open>

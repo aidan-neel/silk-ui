@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -83,8 +83,8 @@ async function sendPrompt(prompt: string) {
         />
         <p class="text-sm text-foreground-muted">
             By default, <kbd>Enter</kbd> submits and <kbd>Shift</kbd> + <kbd>Enter</kbd> inserts a
-            new line. Set <code>submitOnEnter={false}</code> on <code>Input</code> when Enter should always
-            create a new line.
+            new line. Set <code>submitOnEnter={false}</code> on <code>Input</code> when Enter should
+            always create a new line.
         </p>
     </section>
 

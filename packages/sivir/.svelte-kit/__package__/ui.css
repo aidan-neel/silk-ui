@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source "./**/*.{svelte,ts,js}";
+@source './**/*.{svelte,ts,js}';
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
@@ -322,8 +322,8 @@
 /* iOS Safari zooms focused text-entry controls below 16px. Preserve page zoom while preventing that jump. */
 @media (max-width: 767px) {
     input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not(
-            [type='button']
-        ):not([type='submit']):not([type='reset']),
+        [type='button']
+    ):not([type='submit']):not([type='reset']),
     textarea,
     select {
         font-size: 16px;

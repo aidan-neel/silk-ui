@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { type Snippet } from 'svelte';
     import { ChevronDown } from '@lucide/svelte';
     import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
-    import { getSelectContext } from './context.svelte';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import { getSelectContext } from './context.svelte';
 
     const { state, labels } = getSelectContext();
     const { id: popoverId } = getPopoverContext();

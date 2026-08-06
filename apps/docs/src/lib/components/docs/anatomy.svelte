@@ -13,7 +13,8 @@
     <div class="max-w-2xl text-sm leading-6 text-foreground-muted">
         {#each items as item (item.name)}
             <p class="my-0 border-b border-border py-2.5 first:pt-0 last:border-b-0 last:pb-0">
-                <code class="font-medium text-foreground">{item.name}</code> - {item.description}
+                <code class="font-medium text-foreground">{item.name}</code>
+                - {item.description}
             </p>
         {/each}
     </div>

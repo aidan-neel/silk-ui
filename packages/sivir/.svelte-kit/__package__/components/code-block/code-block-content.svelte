@@ -86,7 +86,8 @@
         {#if copyPlacement === 'inline'}
             <div class={cn(CODE_SURFACE, 'w-full items-center')}>
                 <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"><code
+                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
                 <Copy class="mr-1.5 shrink-0" />
@@ -96,11 +97,13 @@
                 {#if showLineNumbers}
                     <pre
                         aria-hidden="true"
-                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[13px] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]">{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
+                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[13px] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
+                    >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
                                 1}{newline}{/each}</pre>
                 {/if}
                 <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"><code
+                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[13px] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
             </div>

@@ -14,7 +14,7 @@
 
 <Tooltip.Root {delay} {closeDelay} {placement}>
     <Tooltip.Trigger>
-        <button data-testid="tooltip-trigger">Hover me</button>
+        <button type="button" data-testid="tooltip-trigger">Hover me</button>
     </Tooltip.Trigger>
     <Tooltip.Content>
         <span data-testid="tooltip-body">Tooltip content</span>

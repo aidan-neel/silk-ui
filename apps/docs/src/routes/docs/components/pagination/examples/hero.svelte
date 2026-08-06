@@ -19,9 +19,7 @@
         {/each}
     </ul>
     <div class="flex items-center justify-between gap-3">
-        <p class="m-0 text-xs text-foreground-muted tabular-nums">
-            Page {page} of {totalPages}
-        </p>
+        <p class="m-0 text-xs text-foreground-muted tabular-nums">Page {page} of {totalPages}</p>
         <Pagination bind:page total={totalPages} />
     </div>
 </div>

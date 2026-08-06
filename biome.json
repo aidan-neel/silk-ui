@@ -1,0 +1,89 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.5.7/schema.json",
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "files": {
+        "ignoreUnknown": true,
+        "includes": [
+            "**",
+            "!!**/.svelte-kit",
+            "!!**/build",
+            "!!**/dist",
+            "!!**/generated",
+            "!!packages/sivir/.release",
+            "!!packages/sivir/.sandbox",
+            "!!packages/sivir/registry",
+            "!bun.lock",
+            "!**/*.svx"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 100
+    },
+    "linter": {
+        "enabled": true,
+        "includes": ["**", "!**/*.svg"],
+        "rules": {
+            "preset": "recommended"
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "single",
+            "trailingCommas": "none"
+        }
+    },
+    "json": {
+        "formatter": {
+            "trailingCommas": "none"
+        }
+    },
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
+        },
+        "formatter": {
+            "quoteStyle": "single"
+        }
+    },
+    "html": {
+        "experimentalFullSupportEnabled": true,
+        "formatter": {
+            "enabled": true,
+            "indentScriptAndStyle": true,
+            "selfCloseVoidElements": "always"
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["**/*.svelte"],
+            "linter": {
+                "rules": {
+                    "a11y": {
+                        "noLabelWithoutControl": "off",
+                        "noNoninteractiveTabindex": "off",
+                        "noStaticElementInteractions": "off",
+                        "noSvgWithoutTitle": "off",
+                        "useAriaPropsForRole": "off",
+                        "useAriaPropsSupportedByRole": "off",
+                        "useFocusableInteractive": "off",
+                        "useKeyWithClickEvents": "off",
+                        "useKeyWithMouseEvents": "off",
+                        "useSemanticElements": "off",
+                        "useValidAnchor": "off"
+                    },
+                    "suspicious": {
+                        "noControlCharactersInRegex": "off",
+                        "noGlobalAssign": "off"
+                    }
+                }
+            }
+        }
+    ]
+}

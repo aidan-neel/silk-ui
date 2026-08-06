@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import { type Snippet } from 'svelte';
     import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import type { Snippet } from 'svelte';
 
     type Props = {
         children: Snippet;
@@ -12,6 +12,4 @@
     let { children, class: className, variant, ...rest }: Props = $props();
 </script>
 
-<Popover.Trigger class={className} {variant} {...rest}>
-    {@render children?.()}
-</Popover.Trigger>
+<Popover.Trigger class={className} {variant} {...rest}> {@render children?.()} </Popover.Trigger>

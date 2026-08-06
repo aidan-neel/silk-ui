@@ -49,6 +49,4 @@
     });
 </script>
 
-<Popover.Root bind:open={selectState.open} state_key={key}>
-    {@render children?.()}
-</Popover.Root>
+<Popover.Root bind:open={selectState.open} state_key={key}> {@render children?.()} </Popover.Root>

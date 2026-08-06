@@ -1,8 +1,8 @@
 <script lang="ts" generics="T">
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { tick, untrack } from 'svelte';
     import { flip } from 'svelte/animate';
     import { cubicOut } from 'svelte/easing';
-    import { tick, untrack } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
     import type { ReorderListProps } from '.';
 
     let {
@@ -341,9 +341,12 @@
                         viewBox="0 0 10 14"
                         class="h-3.5 w-2.5 shrink-0 fill-current text-foreground-muted/55"
                     >
-                        <circle cx="2.5" cy="2.5" r="1.2" /><circle cx="7.5" cy="2.5" r="1.2" />
-                        <circle cx="2.5" cy="7" r="1.2" /><circle cx="7.5" cy="7" r="1.2" />
-                        <circle cx="2.5" cy="11.5" r="1.2" /><circle cx="7.5" cy="11.5" r="1.2" />
+                        <circle cx="2.5" cy="2.5" r="1.2" />
+                        <circle cx="7.5" cy="2.5" r="1.2" />
+                        <circle cx="2.5" cy="7" r="1.2" />
+                        <circle cx="7.5" cy="7" r="1.2" />
+                        <circle cx="2.5" cy="11.5" r="1.2" />
+                        <circle cx="7.5" cy="11.5" r="1.2" />
                     </svg>
                     <span class="sr-only">{getLabel(item)}</span>
                     <span aria-hidden="true" class="min-w-0 flex-1">

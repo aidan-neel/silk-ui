@@ -93,9 +93,7 @@
                             {/each}
                         </List>
                     {/if}
-                    <Actions copy={copy === 'actionbar'}>
-                        {@render actions?.()}
-                    </Actions>
+                    <Actions copy={copy === 'actionbar'}> {@render actions?.()} </Actions>
                 </Header>
             {/if}
             {#if hasTabRow || code != null}

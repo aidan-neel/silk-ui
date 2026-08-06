@@ -1,13 +1,12 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import EmptyState from './examples/empty-state.svelte';
     import EmptyStateSrc from './examples/empty-state.svelte?raw';
     import FollowOutput from './examples/follow-output.svelte';
     import FollowOutputSrc from './examples/follow-output.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add conversation';
     const usageSnippet = `import * as Conversation from '@sivir-ui/svelte/components/conversation';
@@ -72,8 +71,8 @@ let follow = $state(true);
         </h2>
         <p class="text-sm text-foreground-muted">
             Give <code>Root</code> a bounded height so <code>Content</code> can scroll. Bind
-            <code>follow</code> when the surrounding interface needs to reflect whether new output is
-            being followed.
+            <code>follow</code>
+            when the surrounding interface needs to reflect whether new output is being followed.
         </p>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>

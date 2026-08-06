@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Popover from '@sivir-ui/svelte/components/popover';
-    import { untrack } from 'svelte';
     import type { Snippet } from 'svelte';
+    import { untrack } from 'svelte';
     import { setDropdownMenuContext } from './context.svelte';
 
     type Props = {
@@ -18,6 +18,4 @@
     setDropdownMenuContext({ inverted: untrack(() => inverted), ancestors: [], submenus: [] });
 </script>
 
-<Popover.Root placement="bottom-start">
-    {@render children?.()}
-</Popover.Root>
+<Popover.Root placement="bottom-start"> {@render children?.()} </Popover.Root>

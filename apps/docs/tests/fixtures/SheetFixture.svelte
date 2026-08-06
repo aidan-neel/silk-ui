@@ -9,7 +9,7 @@
     } = $props();
 </script>
 
-<button data-testid="trigger" onclick={() => (open = true)}>Open</button>
+<button type="button" data-testid="trigger" onclick={() => (open = true)}>Open</button>
 
 <Sheet.Root bind:open>
     <Sheet.Content {allowClickOutside} {side}>
@@ -18,8 +18,8 @@
             <Sheet.Description>Sheet Description</Sheet.Description>
         </Sheet.Header>
         <div>
-            <button data-testid="inside-1">Inside one</button>
-            <button data-testid="inside-2">Inside two</button>
+            <button type="button" data-testid="inside-1">Inside one</button>
+            <button type="button" data-testid="inside-2">Inside two</button>
             {#each Array(rows) as _, index (index)}
                 <div class="h-10">Scrollable row {index + 1}</div>
             {/each}

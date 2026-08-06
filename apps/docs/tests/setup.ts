@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
-import { afterEach, beforeAll } from 'vitest';
 import { cleanup } from '@testing-library/svelte';
+import { afterEach, beforeAll } from 'vitest';
 
 /*
  * jsdom does not implement the Web Animations API. Svelte 5's transition
@@ -51,7 +51,7 @@ beforeAll(() => {
     if (!('animate' in Element.prototype)) {
         Object.defineProperty(Element.prototype, 'animate', {
             configurable: true,
-            value: function () {
+            value: () => {
                 const noop = () => undefined;
                 const animation = {
                     cancel: noop,

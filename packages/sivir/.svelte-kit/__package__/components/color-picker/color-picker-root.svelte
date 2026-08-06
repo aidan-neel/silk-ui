@@ -44,7 +44,5 @@
         <p class="text-sm text-foreground-muted">{label}</p>
     {/if}
 
-    <Popover.Root placement="bottom">
-        {@render children()}
-    </Popover.Root>
+    <Popover.Root placement="bottom"> {@render children()} </Popover.Root>
 </div>

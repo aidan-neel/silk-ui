@@ -5,6 +5,4 @@
     let { class: className, children, onclick, ...rest }: ButtonProps = $props();
 </script>
 
-<Modal.Trigger {onclick} class={className} {...rest}>
-    {@render children?.()}
-</Modal.Trigger>
+<Modal.Trigger {onclick} class={className} {...rest}> {@render children?.()} </Modal.Trigger>

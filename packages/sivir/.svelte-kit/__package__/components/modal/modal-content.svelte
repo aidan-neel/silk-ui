@@ -116,6 +116,7 @@
                 >
                     {#if showClose}
                         <button
+                            type="button"
                             onclick={() => {
                                 modal.state.open = false;
                             }}

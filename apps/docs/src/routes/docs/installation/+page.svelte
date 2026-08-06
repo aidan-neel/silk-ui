@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { resolve } from '$app/paths';
 
     const packageInstall = `bun add @sivir-ui/svelte
 # npm i @sivir-ui/svelte
@@ -83,7 +83,8 @@ bunx --package @sivir-ui/svelte sivir list`;
         <CodeBlock code={packageUse} lang="svelte" copy="overlay" />
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
             Compound components use a namespace export (for example
-            <code class="font-mono">Modal</code> with
+            <code class="font-mono">Modal</code>
+            with
             <code class="font-mono">Modal.Root</code>,
             <code class="font-mono">Modal.Content</code>, …).
         </p>
@@ -163,7 +164,8 @@ bunx --package @sivir-ui/svelte sivir list`;
         >
             <li>
                 Tailwind v3 is not supported. Sivir needs v4
-                <code class="font-mono">@theme</code> and
+                <code class="font-mono">@theme</code>
+                and
                 <code class="font-mono">color-mix</code>.
             </li>
             <li>
@@ -193,7 +195,8 @@ bunx --package @sivir-ui/svelte sivir list`;
             ·
             <a
                 class="text-foreground underline underline-offset-2"
-                href={resolve('/docs/components')}>Components</a
+                href={resolve('/docs/components')}
+                >Components</a
             >
         </p>
     </section>

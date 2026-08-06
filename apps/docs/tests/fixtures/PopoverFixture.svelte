@@ -17,6 +17,6 @@
     <Popover.Content>
         <Popover.Title>Popover Title</Popover.Title>
         <p data-testid="popover-body">Popover body content</p>
-        <button data-testid="inside-popover">Inside button</button>
+        <button type="button" data-testid="inside-popover">Inside button</button>
     </Popover.Content>
 </Popover.Root>

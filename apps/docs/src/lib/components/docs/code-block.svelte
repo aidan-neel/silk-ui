@@ -21,7 +21,8 @@
 >
     <div class="w-full overflow-x-auto">
         <pre
-            class="m-0 min-w-full overflow-x-auto rounded-[inherit] border-0 bg-transparent px-3 py-2.5 font-[var(--font-mono)] text-[12.5px] leading-[1.45]"><code
+            class="m-0 min-w-full overflow-x-auto rounded-[inherit] border-0 bg-transparent px-3 py-2.5 font-[var(--font-mono)] text-[12.5px] leading-[1.45]"
+        ><code
                 >{@html html}</code
             ></pre>
     </div>

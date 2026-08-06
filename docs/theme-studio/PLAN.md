@@ -14,7 +14,7 @@ Run is **autonomous** — open decisions are made defensibly and logged in `deci
 - Static layer: `packages/sivir/src/ui.css` (198 declared tokens). Dynamic layer: `themeToCss()` in `presets.ts` (129 emitted). Code consumes 182. **Gaps:** 28 dead, 77 consumed-but-uneditable, 16 emitted-but-unconsumed, plus the Category-C hardcodes — see `gap-report.md`.
 - Live apply: `themes/live.ts` injects `<style id="sivir-live-theme-style">`. Studio state = `$state` runes in `+page.svelte`; `generatedCss = $derived(themeToCss(editorTheme))`; `$effect` re-applies.
 - Tests: Vitest 4 + @testing-library/svelte in `apps/docs/tests/unit/sivir/` (projects: unit/ssr/browser). Baseline: **0 typecheck errors, 573 tests pass, 0 lint errors.**
-- Commands (from `apps/docs`): `bun run check` | `bun run lint` | `bun run test:ci` | `bun run test:browser`; build from root `bun run build`; `bun run dev`. A **lefthook pre-commit** runs prettier/eslint — `bun run format` before committing.
+- Commands (from `apps/docs`): `bun run check` | `bun run lint` | `bun run test:ci` | `bun run test:browser`; build from root `bun run build`; `bun run dev`. A **lefthook pre-commit** runs Biome formatting and linting; run `bun run format` before committing.
 
 ## Phases
 

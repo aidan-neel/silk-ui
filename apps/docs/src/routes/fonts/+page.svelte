@@ -28,6 +28,7 @@
     <div class="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {#each fonts as font (font.name)}
             <button
+                type="button"
                 onclick={() => (selectedFont.current = font.name)}
                 aria-pressed={selectedFont.current === font.name}
                 class={`min-h-40 rounded-[var(--radius-lg)] border p-5 text-left transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] ${selectedFont.current === font.name ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-foreground-muted'}`}

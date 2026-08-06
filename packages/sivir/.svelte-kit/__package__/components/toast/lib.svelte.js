@@ -120,7 +120,8 @@ function createToast(toastData, state = activeState) {
     if (!state?.data) {
         return toastData;
     }
-    const toastId = (nextToastId += 1);
+    nextToastId += 1;
+    const toastId = nextToastId;
     const duration = toastData.duration ?? 5600;
     const nextToast = {
         ...toastData,
@@ -256,7 +257,8 @@ function setToastUIState() {
         clientState = fresh;
     }
     const state = clientState;
-    const hostId = (nextHostId += 1);
+    nextHostId += 1;
+    const hostId = nextHostId;
     liveHosts.push(hostId);
     if (primaryHostId === null) {
         primaryHostId = hostId;

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { untrack } from 'svelte';
-    import { type ContextMenuCheckboxItemProps } from '.';
+    import type { ContextMenuCheckboxItemProps } from '.';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
     import Check from '@lucide/svelte/icons/check';

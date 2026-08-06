@@ -30,6 +30,4 @@
     });
 </script>
 
-<Modal.Root bind:open>
-    {@render children?.()}
-</Modal.Root>
+<Modal.Root bind:open> {@render children?.()} </Modal.Root>

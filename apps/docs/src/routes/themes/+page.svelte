@@ -1,18 +1,17 @@
 <script lang="ts">
-    import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
-    import { themeToCss, type Theme } from '@sivir-ui/svelte/themes/theme';
+    import Braces from '@lucide/svelte/icons/braces';
+    import Check from '@lucide/svelte/icons/check';
+    import FileCode from '@lucide/svelte/icons/file-code';
+    import Search from '@lucide/svelte/icons/search';
+    import Sparkles from '@lucide/svelte/icons/sparkles';
+    import X from '@lucide/svelte/icons/x';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { Input } from '@sivir-ui/svelte/components/input';
     import { toast } from '@sivir-ui/svelte/components/toast';
+    import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
     import { applyLiveThemeCss } from '@sivir-ui/svelte/themes/live';
+    import { type Theme, themeToCss } from '@sivir-ui/svelte/themes/theme';
     import type { PageData } from './$types';
-
-    import Search from '@lucide/svelte/icons/search';
-    import Sparkles from '@lucide/svelte/icons/sparkles';
-    import Check from '@lucide/svelte/icons/check';
-    import X from '@lucide/svelte/icons/x';
-    import FileCode from '@lucide/svelte/icons/file-code';
-    import Braces from '@lucide/svelte/icons/braces';
 
     const { data = { themes: builtInThemePresets } as PageData }: { data?: PageData } = $props();
     const getInitialThemes = () => {
@@ -121,7 +120,8 @@
                 >
                     <span>
                         <span class="font-[600] text-foreground">{themes.length}</span>
-                        {themes.length === 1 ? 'theme' : 'themes'} available
+                        {themes.length === 1 ? 'theme' : 'themes'}
+                        available
                     </span>
                     {#if searchQuery.trim()}
                         <span aria-hidden="true">·</span>
@@ -277,7 +277,9 @@
                     <div>
                         <span class="text-foreground-muted">Brand</span>
                         <div class="flex items-center gap-2 mt-1">
-                            <span class="size-4 rounded" style={`background: ${detailTheme.brand}`}
+                            <span
+                                class="size-4 rounded"
+                                style={`background: ${detailTheme.brand}`}
                             ></span>
                             <code class="text-foreground-muted font-mono text-[0.75rem]"
                                 >{detailTheme.brand}</code
@@ -299,7 +301,8 @@
                     <div>
                         <span class="text-foreground-muted">Fonts</span>
                         <p class="m-0 mt-1 text-foreground text-[0.75rem]">
-                            {detailTheme.fontSans} / {detailTheme.fontMono}
+                            {detailTheme.fontSans}
+                            / {detailTheme.fontMono}
                         </p>
                     </div>
                 </div>

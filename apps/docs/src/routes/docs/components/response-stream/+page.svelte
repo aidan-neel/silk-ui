@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -78,8 +78,8 @@
                     Complete responses
                 </h3>
                 <p class="mt-1 text-sm text-foreground-muted">
-                    For a complete string, use <code>speed</code> from 1 (slowest) to 100 (fastest) to
-                    control the reveal pace.
+                    For a complete string, use <code>speed</code> from 1 (slowest) to 100 (fastest)
+                    to control the reveal pace.
                 </p>
             </div>
             <CodeBlock

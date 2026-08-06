@@ -15,9 +15,8 @@
         "cookie": "1.1.1",
         "fast-uri": "3.1.5",
         "postcss": "8.5.25",
-        "prettier": "3.8.3",
         "tar": "7.5.22",
-        "undici": "7.28.0"
+        "undici": "7.29.0"
     },
     "scripts": {
         "dev": "turbo run dev",
@@ -25,16 +24,15 @@
         "build": "turbo run build",
         "generate": "turbo run generate",
         "check": "turbo run check",
-        "lint": "turbo run lint",
+        "lint": "biome lint .",
         "test": "turbo run test",
-        "format": "prettier --write .",
-        "format:check": "prettier --check .",
+        "format": "biome format --write .",
+        "format:check": "biome format .",
         "prepare": "lefthook install"
     },
     "devDependencies": {
+        "@biomejs/biome": "^2.5.7",
         "lefthook": "^1.13.6",
-        "prettier": "^3.8.1",
-        "prettier-plugin-svelte": "^3.5.1",
         "turbo": "^2.10.0"
     }
 }

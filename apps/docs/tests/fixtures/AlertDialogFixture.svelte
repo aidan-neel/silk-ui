@@ -4,7 +4,7 @@
     let { open = $bindable(false), allowClickOutside = false, error = false } = $props();
 </script>
 
-<button data-testid="trigger" onclick={() => (open = true)}>Open alert dialog</button>
+<button type="button" data-testid="trigger" onclick={() => (open = true)}>Open alert dialog</button>
 
 <AlertDialog.Root bind:open {error}>
     <AlertDialog.Content {allowClickOutside}>

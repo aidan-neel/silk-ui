@@ -55,7 +55,8 @@
                 'text-foreground',
                 state === 'complete' && 'font-[var(--font-weight-label)]',
                 state === 'running' && 'sivir-tool-running'
-            )}>{label}</span
+            )}
+            >{label}</span
         >
         <span class="min-w-0 flex-1 truncate text-foreground-muted">{name}</span>
         {#if duration}

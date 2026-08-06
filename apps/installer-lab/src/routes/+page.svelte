@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import BrandMark from '@sivir-ui/svelte/brand-mark';
     import * as Alert from '@sivir-ui/svelte/components/alert';
     import { Badge } from '@sivir-ui/svelte/components/badge';
     import { Button } from '@sivir-ui/svelte/components/button';
-    import { Input } from '@sivir-ui/svelte/components/input';
     import * as Card from '@sivir-ui/svelte/components/card';
+    import { Input } from '@sivir-ui/svelte/components/input';
     import { Progress } from '@sivir-ui/svelte/components/progress';
     import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
+    import { onMount } from 'svelte';
     import {
-        isActivePhase,
         type InstallPath,
+        isActivePhase,
         type RunPhase,
         type RunSnapshot,
         type RunSource
@@ -372,13 +372,15 @@
                             variant={mode === 'automatic' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={terminalBusy}
-                            onclick={() => (mode = 'automatic')}>Automatic</Button
+                            onclick={() => (mode = 'automatic')}
+                            >Automatic</Button
                         >
                         <Button
                             variant={mode === 'manual' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={active}
-                            onclick={() => (mode = 'manual')}>Manual terminal</Button
+                            onclick={() => (mode = 'manual')}
+                            >Manual terminal</Button
                         >
                     </div>
                 </div>
@@ -390,13 +392,15 @@
                             variant={source === 'local' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={controlsDisabled}
-                            onclick={() => (source = 'local')}>Local working tree</Button
+                            onclick={() => (source = 'local')}
+                            >Local working tree</Button
                         >
                         <Button
                             variant={source === 'npm' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={controlsDisabled}
-                            onclick={() => (source = 'npm')}>npm latest</Button
+                            onclick={() => (source = 'npm')}
+                            >npm latest</Button
                         >
                     </div>
                 </div>
@@ -408,13 +412,15 @@
                             variant={installPath === 'cli' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={controlsDisabled}
-                            onclick={() => (installPath = 'cli')}>CLI source-copy</Button
+                            onclick={() => (installPath = 'cli')}
+                            >CLI source-copy</Button
                         >
                         <Button
                             variant={installPath === 'package' ? 'secondary' : 'ghost'}
                             size="sm"
                             disabled={controlsDisabled}
-                            onclick={() => (installPath = 'package')}>Package imports</Button
+                            onclick={() => (installPath = 'package')}
+                            >Package imports</Button
                         >
                     </div>
                 </div>
@@ -434,7 +440,8 @@
                             variant="outline"
                             size="sm"
                             disabled={terminalBusy}
-                            onclick={() => prepareTerminal(true)}>Recreate app</Button
+                            onclick={() => prepareTerminal(true)}
+                            >Recreate app</Button
                         >
                     {:else if active}
                         <Button variant="destructive" onclick={cancelRun}>Cancel</Button>
@@ -458,10 +465,12 @@
                     <div class="status-line">
                         <Badge variant={badgeVariant}>{statusLabel}</Badge>
                         <span class="run-meta tabular">{elapsed}</span>
-                        {#if snapshot.version}<span class="run-meta">v{snapshot.version}</span>{/if}
-                        {#if snapshot.componentCount}<span class="run-meta"
-                                >{snapshot.componentCount} components</span
-                            >{/if}
+                        {#if snapshot.version}
+                            <span class="run-meta">v{snapshot.version}</span>
+                        {/if}
+                        {#if snapshot.componentCount}
+                            <span class="run-meta">{snapshot.componentCount} components</span>
+                        {/if}
                     </div>
                     <Progress
                         value={progress}
@@ -501,7 +510,9 @@
                         </Button>
                     </div>
                     <Card.Root variant="panel" class="preview-panel">
-                        <iframe src={snapshot.previewUrl} title="Generated Sivir consumer preview"
+                        <iframe
+                            src={snapshot.previewUrl}
+                            title="Generated Sivir consumer preview"
                         ></iframe>
                     </Card.Root>
                 {/if}
@@ -583,7 +594,8 @@
                                     type="button"
                                     variant="destructive"
                                     size="sm"
-                                    onclick={cancelTerminal}>Cancel</Button
+                                    onclick={cancelTerminal}
+                                    >Cancel</Button
                                 >
                             {:else}
                                 <Button type="submit" size="sm" disabled={!terminalInput.trim()}

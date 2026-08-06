@@ -18,6 +18,4 @@
     setDropdownMenuContext({ inverted: untrack(() => inverted), ancestors: [], submenus: [] });
 </script>
 
-<Popover.Root placement="bottom-start">
-    {@render children?.()}
-</Popover.Root>
+<Popover.Root placement="bottom-start"> {@render children?.()} </Popover.Root>

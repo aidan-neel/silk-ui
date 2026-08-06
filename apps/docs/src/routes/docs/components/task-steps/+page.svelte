@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
 
@@ -39,8 +39,8 @@
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
         <h2 class="docs-section-heading">Usage</h2>
         <p class="text-sm text-foreground-muted">
-            Set <code>current</code> to the running step. Values before it are complete; the array length
-            means the whole run is complete.
+            Set <code>current</code> to the running step. Values before it are complete; the array
+            length means the whole run is complete.
         </p>
         <CodeBlock
             lang="svelte"

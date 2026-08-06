@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
-    import { themedSlide } from '@sivir-ui/svelte/transition';
-    import { Spinner } from '@sivir-ui/svelte/components/spinner';
-    import type { ToolProps } from '.';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import { Spinner } from '@sivir-ui/svelte/components/spinner';
+    import { themedSlide } from '@sivir-ui/svelte/transition';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { ToolProps } from '.';
 
     let {
         name,
@@ -55,7 +55,8 @@
                 'text-foreground',
                 state === 'complete' && 'font-[var(--font-weight-label)]',
                 state === 'running' && 'sivir-tool-running'
-            )}>{label}</span
+            )}
+            >{label}</span
         >
         <span class="min-w-0 flex-1 truncate text-foreground-muted">{name}</span>
         {#if duration}

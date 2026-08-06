@@ -61,7 +61,7 @@
     }
 </script>
 
-<button class="flex p-4 border relative rounded-lg flex-col gap-3">
+<button type="button" class="flex p-4 border relative rounded-lg flex-col gap-3">
     <h3
         class="text-left text-lg [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] tracking-[-0.02em] [font-family:var(--font-header),sans-serif]"
     >

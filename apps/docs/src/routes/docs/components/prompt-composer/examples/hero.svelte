@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as Attachment from '@sivir-ui/svelte/components/attachment';
-    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import LockKeyhole from '@lucide/svelte/icons/lock-keyhole';
     import Sparkles from '@lucide/svelte/icons/sparkles';
+    import * as Attachment from '@sivir-ui/svelte/components/attachment';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import { onDestroy } from 'svelte';
 
     const models = ['Sivir 3.1', 'Sivir Mini'];
@@ -84,10 +84,9 @@
                             {#each models as option (option)}
                                 <DropdownMenu.Item onclick={() => (model = option)}>
                                     <span class="flex-1">{option}</span>
-                                    {#if model === option}<Check
-                                            size={13}
-                                            aria-hidden="true"
-                                        />{/if}
+                                    {#if model === option}
+                                        <Check size={13} aria-hidden="true" />
+                                    {/if}
                                 </DropdownMenu.Item>
                             {/each}
                         </DropdownMenu.Content>
@@ -112,10 +111,9 @@
                             {#each permissions as option (option)}
                                 <DropdownMenu.Item onclick={() => (permission = option)}>
                                     <span class="flex-1">{option}</span>
-                                    {#if permission === option}<Check
-                                            size={13}
-                                            aria-hidden="true"
-                                        />{/if}
+                                    {#if permission === option}
+                                        <Check size={13} aria-hidden="true" />
+                                    {/if}
                                 </DropdownMenu.Item>
                             {/each}
                         </DropdownMenu.Content>
@@ -128,7 +126,8 @@
     </Attachment.Root>
 
     <p class="px-1 text-xs text-foreground-muted" role="status" aria-live="polite">
-        {message}{files.length
+        {message}
+        {files.length
             ? ` · ${files.length} ${files.length === 1 ? 'file' : 'files'} attached`
             : ''}
     </p>

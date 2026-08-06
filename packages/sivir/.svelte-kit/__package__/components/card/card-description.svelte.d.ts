@@ -1,4 +1,4 @@
-import { type Snippet } from 'svelte';
+import type { Snippet } from 'svelte';
 type $$ComponentProps = {
     children: Snippet;
     class?: string;

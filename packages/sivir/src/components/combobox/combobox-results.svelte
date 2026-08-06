@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { type Snippet } from 'svelte';
     import { travelingHighlight } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
     import { getComboboxContext } from './context.svelte';
 
     const { id, state: comboboxState } = getComboboxContext();

@@ -1,23 +1,22 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Single from './examples/single.svelte';
-    import SingleSrc from './examples/single.svelte?raw';
-    import MultiLanguage from './examples/multi-language.svelte';
-    import MultiLanguageSrc from './examples/multi-language.svelte?raw';
-    import LineNumbers from './examples/line-numbers.svelte';
-    import LineNumbersSrc from './examples/line-numbers.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import Compound from './examples/compound.svelte';
     import CompoundSrc from './examples/compound.svelte?raw';
-    import CustomActions from './examples/custom-actions.svelte';
-    import CustomActionsSrc from './examples/custom-actions.svelte?raw';
-    import CopyOverlay from './examples/copy-overlay.svelte';
-    import CopyOverlaySrc from './examples/copy-overlay.svelte?raw';
     import CopyInline from './examples/copy-inline.svelte';
     import CopyInlineSrc from './examples/copy-inline.svelte?raw';
+    import CopyOverlay from './examples/copy-overlay.svelte';
+    import CopyOverlaySrc from './examples/copy-overlay.svelte?raw';
+    import CustomActions from './examples/custom-actions.svelte';
+    import CustomActionsSrc from './examples/custom-actions.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import LineNumbers from './examples/line-numbers.svelte';
+    import LineNumbersSrc from './examples/line-numbers.svelte?raw';
+    import MultiLanguage from './examples/multi-language.svelte';
+    import MultiLanguageSrc from './examples/multi-language.svelte?raw';
+    import Single from './examples/single.svelte';
+    import SingleSrc from './examples/single.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add code-block';
 
@@ -90,8 +89,10 @@
         <p class="text-sm text-foreground-muted">
             Pass a <code class="font-mono text-foreground">tabs</code> array for the multi-language
             form, or
-            <code class="font-mono text-foreground">code</code> +
-            <code class="font-mono text-foreground">lang</code> for a single snippet:
+            <code class="font-mono text-foreground">code</code>
+            +
+            <code class="font-mono text-foreground">lang</code>
+            for a single snippet:
         </p>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>
