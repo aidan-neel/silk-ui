@@ -13,12 +13,14 @@
 
 <div class="flex justify-center">
     <div class="w-[240px]">
-        <Combobox.Root placeholder="Select a language">
-            <Combobox.Trigger class="w-full" />
+        <Combobox.Root>
+            <Combobox.Trigger placeholder="Select a language" class="w-full" />
             <Combobox.Content>
-                {#each languages as item (item.value)}
-                    <Combobox.Item value={item.value} label={item.label} callback={() => {}} />
-                {/each}
+                <Combobox.Results>
+                    {#each languages as item (item.value)}
+                        <Combobox.Item value={item.value} label={item.label} callback={() => {}} />
+                    {/each}
+                </Combobox.Results>
             </Combobox.Content>
         </Combobox.Root>
     </div>

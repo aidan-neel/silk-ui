@@ -31,6 +31,7 @@ export const components = [
     'popover',
     'progress',
     'prompt-composer',
+    'question',
     'radio-group',
     'reasoning',
     'reorder-list',

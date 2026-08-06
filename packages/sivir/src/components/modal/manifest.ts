@@ -15,7 +15,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: 'modal',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description:
         'Centered dialog overlay with portal, focus trap, click-outside, and Svelte transitions. Composes _internal/overlay for shared mechanics.',

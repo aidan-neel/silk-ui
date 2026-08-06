@@ -1,9 +1,11 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
+    import { onDestroy } from 'svelte';
     import type { ResponseStreamProps, Segment } from '.';
 
     let {
         textStream,
+        streaming = false,
         mode = 'typewriter',
         speed = 20,
         fadeDuration,
@@ -22,6 +24,10 @@
     let isLive = $state(false);
     let currentIndex = 0;
     let streamId = 0;
+    let snapshotSession = 0;
+    let sourceKind: 'static' | 'snapshot' | 'finalized-snapshot' | 'async' | undefined;
+    let previousSource: string | AsyncIterable<string> | undefined;
+    let previousSnapshot = '';
     let animationFrame: number | undefined;
     let abortController: AbortController | undefined;
 
@@ -49,10 +55,13 @@
     }
 
     function getSegmentDelay() {
-        return getProcessingDelay();
+        if (typeof segmentDelay === 'number') {
+            return Math.max(0, segmentDelay);
+        }
+        return 0;
     }
 
-    function updateSegments(text: string) {
+    function updateSegments(text: string, snapshot = false) {
         if (mode !== 'fade') {
             return;
         }
@@ -60,13 +69,18 @@
             const segmenter = new Intl.Segmenter(navigator.language, { granularity: 'word' });
             segments = Array.from(segmenter.segment(text), (segment, index) => ({
                 text: segment.segment,
-                index
+                index,
+                key: snapshot ? `${snapshotSession}-${index}` : `${index}-${segment.segment}`
             }));
         } catch (error) {
             segments = text
                 .split(/(\s+)/)
                 .filter(Boolean)
-                .map((text, index) => ({ text, index }));
+                .map((text, index) => ({
+                    text,
+                    index,
+                    key: snapshot ? `${snapshotSession}-${index}` : `${index}-${text}`
+                }));
             onError?.(error);
         }
     }
@@ -94,6 +108,15 @@
         displayedText = '';
         segments = [];
         isComplete = false;
+    }
+
+    function applySnapshot(text: string, fresh = false) {
+        if (fresh) {
+            snapshotSession += 1;
+        }
+        displayedText = text;
+        updateSegments(text, true);
+        previousSnapshot = text;
     }
 
     function renderString(text: string, id: number) {
@@ -145,22 +168,67 @@
         }
     }
 
-    function startStreaming() {
+    function startAsync(stream: AsyncIterable<string>) {
         reset();
         const id = ++streamId;
-        isLive = typeof textStream !== 'string';
-        if (typeof textStream === 'string') {
-            renderString(textStream, id);
-        } else {
-            renderAsync(textStream, id);
-        }
+        isLive = true;
+        sourceKind = 'async';
+        renderAsync(stream, id);
     }
 
     $effect(() => {
-        textStream;
-        startStreaming();
-        return stopStreaming;
+        if (typeof textStream !== 'string') {
+            if (sourceKind !== 'async' || previousSource !== textStream) {
+                previousSource = textStream;
+                startAsync(textStream);
+            }
+            return;
+        }
+
+        if (streaming) {
+            const fresh = sourceKind !== 'snapshot';
+            if (fresh) {
+                reset();
+                sourceKind = 'snapshot';
+                isLive = true;
+                applySnapshot(textStream, true);
+                return;
+            }
+            if (textStream === previousSnapshot) {
+                return;
+            }
+            if (!textStream.startsWith(previousSnapshot)) {
+                applySnapshot(textStream, true);
+                return;
+            }
+            applySnapshot(textStream);
+            return;
+        }
+
+        if (sourceKind === 'snapshot') {
+            stopStreaming();
+            if (textStream !== previousSnapshot) {
+                applySnapshot(textStream, !textStream.startsWith(previousSnapshot));
+            }
+            isLive = false;
+            sourceKind = 'finalized-snapshot';
+            complete();
+            return;
+        }
+
+        if (sourceKind === 'finalized-snapshot' && textStream === previousSnapshot) {
+            return;
+        }
+
+        reset();
+        const id = ++streamId;
+        sourceKind = 'static';
+        previousSource = textStream;
+        isLive = false;
+        renderString(textStream, id);
     });
+
+    onDestroy(stopStreaming);
 </script>
 
 <svelte:element
@@ -168,7 +236,7 @@
     data-ui="response-stream"
     data-mode={mode}
     aria-live="polite"
-    aria-busy={!isComplete}
+    aria-busy={streaming || !isComplete}
     class={cn(
         className,
         'whitespace-pre-wrap text-[length:var(--font-size-body)] leading-6 text-foreground'
@@ -176,11 +244,11 @@
     {...rest}
 >
     {#if mode === 'fade'}
-        {#each segments as segment (`${segment.index}-${segment.text}`)}
+        {#each segments as segment (segment.key)}
             <span
                 class="sivir-response-stream-segment"
-                style:--response-stream-fade-duration={`${isLive ? 0 : getFadeDuration()}ms`}
-                style:--response-stream-segment-delay={`${isLive ? 0 : segment.index * getSegmentDelay()}ms`}
+                style:--response-stream-fade-duration={`${getFadeDuration()}ms`}
+                style:--response-stream-segment-delay={`${isLive ? getSegmentDelay() : segment.index * getSegmentDelay()}ms`}
             >
                 {segment.text}
             </span>
@@ -193,6 +261,7 @@
 <style>
     .sivir-response-stream-segment {
         display: inline-block;
+        filter: blur(3px);
         opacity: 0;
         animation: sivir-response-stream-fade-in var(--response-stream-fade-duration)
             var(--ease-out) forwards;
@@ -201,6 +270,7 @@
 
     @keyframes sivir-response-stream-fade-in {
         to {
+            filter: blur(0);
             opacity: 1;
         }
     }
@@ -208,6 +278,7 @@
     @media (prefers-reduced-motion: reduce) {
         .sivir-response-stream-segment {
             animation: none;
+            filter: none;
             opacity: 1;
         }
     }

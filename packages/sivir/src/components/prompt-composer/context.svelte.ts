@@ -6,6 +6,8 @@ export type PromptComposerContext = {
     readonly status: PromptComposerStatus;
     readonly disabled: boolean;
     readonly allowEmpty: boolean;
+    readonly generating: boolean | undefined;
+    readonly pending: boolean;
     submit: () => void;
     stop: () => void;
 };
@@ -13,4 +15,4 @@ export type PromptComposerContext = {
 const { set: setPromptComposerContext, get: getPromptComposerContext } =
     createContext<PromptComposerContext>('prompt-composer');
 
-export { setPromptComposerContext, getPromptComposerContext };
+export { getPromptComposerContext, setPromptComposerContext };

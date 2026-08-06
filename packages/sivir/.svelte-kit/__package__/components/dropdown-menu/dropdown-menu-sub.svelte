@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import * as Popover from '@sivir-ui/svelte/components/popover';
+    import type { Snippet } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
     import { getDropdownMenuContext, setDropdownMenuContext } from './context.svelte';
 

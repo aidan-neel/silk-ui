@@ -11,6 +11,7 @@ export const button = tv({
             primary: 'bg-primary text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] data-[state=open]:bg-[var(--color-primary-hover)]',
             secondary: 'bg-secondary text-foreground hover:bg-[var(--color-field-hover)] data-[state=open]:bg-[var(--color-field-hover)]',
             ghost: 'bg-transparent text-foreground hover:bg-foreground/[0.08] data-[state=open]:bg-foreground/[0.08]',
+            quiet: 'bg-transparent text-foreground',
             /**
              * Outline keeps the soft raised shadow. Focus composes the ring on top
              * of the lift so the raised look survives focus.

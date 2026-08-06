@@ -5,7 +5,6 @@ import Label from './select-label.svelte';
 import Item from './select-item.svelte';
 import Content from './select-content.svelte';
 export type SelectState = {
-    open: boolean;
     value: string;
     selectedLabel: string;
 };

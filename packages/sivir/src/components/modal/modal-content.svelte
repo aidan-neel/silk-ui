@@ -9,6 +9,7 @@
     let {
         class: className,
         allowClickOutside = true,
+        allowEscape = true,
         role = 'dialog',
         contentClass = '',
         maxWidthClass,
@@ -67,6 +68,7 @@
             modal.state.open = false;
         },
         allowClickOutside: () => allowClickOutside,
+        allowEscape: () => allowEscape,
         returnFocus: () => modal.returnFocusEl
     });
 </script>

@@ -9,6 +9,7 @@
         </span>
     </Select.Trigger>
     <Select.Content>
+        <Select.Label>Fruits</Select.Label>
         <Select.Item value="apple" label="Apple"
             ><span data-testid="opt-apple">Apple</span></Select.Item
         >

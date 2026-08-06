@@ -12,12 +12,14 @@
 
 <div class="flex items-center justify-center">
     <div class="w-[280px]">
-        <Combobox.Root placeholder="Select a framework">
-            <Combobox.Trigger class="w-full" />
+        <Combobox.Root>
+            <Combobox.Trigger placeholder="Select a framework" class="w-full" />
             <Combobox.Content>
-                {#each frameworks as item (item.value)}
-                    <Combobox.Item value={item.value} label={item.label} callback={() => {}} />
-                {/each}
+                <Combobox.Results>
+                    {#each frameworks as item (item.value)}
+                        <Combobox.Item value={item.value} label={item.label} callback={() => {}} />
+                    {/each}
+                </Combobox.Results>
             </Combobox.Content>
         </Combobox.Root>
     </div>

@@ -78,4 +78,4 @@ declare function __setActiveToastStateForTests(state: ToastState | undefined): v
  * state without going through Svelte context.
  */
 declare function __getActiveToastStateForTests(): ToastState | undefined;
-export { toast, dismissToast, pauseToast, resumeToast, updateToast, getToastUIState, getToastPrimaryHostId, setToastUIState, __setActiveToastStateForTests, __getActiveToastStateForTests };
+export { __getActiveToastStateForTests, __setActiveToastStateForTests, dismissToast, getToastPrimaryHostId, getToastUIState, pauseToast, resumeToast, setToastUIState, toast, updateToast };

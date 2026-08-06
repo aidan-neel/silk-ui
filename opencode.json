@@ -8,5 +8,15 @@
                 "x-api-key": "{env:TWENTY_FIRST_API_KEY}"
             }
         }
+    },
+    "lsp": {
+        "typescript": {
+            "command": ["typescript-language-server", "--stdio"],
+            "extensions": [".ts", ".tsx", ".js", ".jsx"]
+        },
+        "svelte": {
+            "command": ["bunx", "--bun", "svelte-language-server", "--stdio"],
+            "extensions": [".svelte"]
+        }
     }
 }

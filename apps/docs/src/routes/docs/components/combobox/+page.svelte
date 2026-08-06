@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import Basic from './examples/basic.svelte';
     import BasicSrc from './examples/basic.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import MenuSearch from './examples/menu-search.svelte';
+    import MenuSearchSrc from './examples/menu-search.svelte?raw';
 
     const TITLE = 'Combobox';
     const SLUG = 'combobox';
@@ -62,7 +63,7 @@
         </h2>
         <p class="text-sm text-foreground-muted">Import and use the Combobox components:</p>
         <CodeBlock
-            code={`import * as Combobox from '$lib/sivir/components/combobox';\n\nlet selected = $state('next');\n\n<Combobox.Root>\n  <Combobox.Trigger>{selected}</Combobox.Trigger>\n  <Combobox.Content>\n    <Combobox.Item value="next" label="Next.js" callback={() => (selected = 'next')} />\n  </Combobox.Content>\n</Combobox.Root>`}
+            code={`import * as Combobox from '$lib/sivir/components/combobox';\n\nlet selected = $state('next');\n\n<Combobox.Root>\n  <Combobox.Trigger>{selected}</Combobox.Trigger>\n  <Combobox.Content>\n    <Combobox.Results>\n      <Combobox.Item value="next" label="Next.js" callback={() => (selected = 'next')} />\n    </Combobox.Results>\n  </Combobox.Content>\n</Combobox.Root>`}
             lang="svelte"
             copy="overlay"
         />
@@ -87,6 +88,20 @@
             </h3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
+            </ComponentPreview>
+        </div>
+
+        <div id="menu-search" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Search in the menu
+            </h3>
+            <p class="text-sm text-foreground-muted">
+                Keep the trigger select-like and place the search field in the menu.
+            </p>
+            <ComponentPreview code={MenuSearchSrc}>
+                <MenuSearch />
             </ComponentPreview>
         </div>
     </section>

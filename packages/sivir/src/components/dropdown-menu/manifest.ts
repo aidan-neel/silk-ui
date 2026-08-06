@@ -10,7 +10,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: 'dropdown-menu',
-    version: '2.1.0',
+    version: '2.2.0',
     visibility: 'public',
     description:
         'Click-triggered menu popover with items, labels, separators, and nested submenus.',
@@ -20,12 +20,16 @@ export const manifest: Manifest = {
         'components/dropdown-menu/dropdown-menu-trigger.svelte',
         'components/dropdown-menu/dropdown-menu-content.svelte',
         'components/dropdown-menu/dropdown-menu-item.svelte',
+        'components/dropdown-menu/dropdown-menu-radio-group.svelte',
+        'components/dropdown-menu/dropdown-menu-radio-item.svelte',
+        'components/dropdown-menu/dropdown-menu-checkbox-item.svelte',
         'components/dropdown-menu/dropdown-menu-label.svelte',
         'components/dropdown-menu/dropdown-menu-separator.svelte',
         'components/dropdown-menu/dropdown-menu-sub.svelte',
         'components/dropdown-menu/dropdown-menu-sub-trigger.svelte',
         'components/dropdown-menu/dropdown-menu-sub-content.svelte',
         'components/dropdown-menu/context.svelte.ts',
+        'components/dropdown-menu/radio-group-context.svelte.ts',
         'components/dropdown-menu/index.ts',
         'components/dropdown-menu/manifest.ts'
     ],

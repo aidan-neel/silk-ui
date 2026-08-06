@@ -1,4 +1,4 @@
-import { setContext, getContext, onDestroy } from 'svelte';
+import { getContext, onDestroy, setContext } from 'svelte';
 export const STATE_KEY = Symbol('TOAST');
 const toastTimeouts = new Map();
 const TOAST_EXIT_DURATION = 340;
@@ -313,4 +313,4 @@ function __setActiveToastStateForTests(state) {
 function __getActiveToastStateForTests() {
     return activeState;
 }
-export { toast, dismissToast, pauseToast, resumeToast, updateToast, getToastUIState, getToastPrimaryHostId, setToastUIState, __setActiveToastStateForTests, __getActiveToastStateForTests };
+export { __getActiveToastStateForTests, __setActiveToastStateForTests, dismissToast, getToastPrimaryHostId, getToastUIState, pauseToast, resumeToast, setToastUIState, toast, updateToast };

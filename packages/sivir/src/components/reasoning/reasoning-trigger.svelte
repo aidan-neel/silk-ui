@@ -1,50 +1,61 @@
 <script lang="ts">
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { ReasoningTriggerProps } from '.';
     import { getReasoningContext } from './context.svelte';
 
-    let { title = 'Draft', duration, class: className, ...rest }: ReasoningTriggerProps = $props();
+    let {
+        title = 'Draft',
+        duration,
+        children,
+        class: className,
+        ...rest
+    }: ReasoningTriggerProps = $props();
     const reasoning = getReasoningContext();
 </script>
 
-<button
+<Button
     {...rest}
     type="button"
-    use:pressable
+    variant="quiet"
     data-ui="reasoning-trigger"
     aria-expanded={reasoning.open}
     aria-controls={`reasoning-${reasoning.id}`}
     onclick={() => (reasoning.open = !reasoning.open)}
     class={cn(
         className,
-        "sivir-press relative flex max-w-full flex-col items-start gap-0.5 text-left transition-[transform,scale] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-press)] after:absolute after:-inset-1.5 after:content-[''] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+        "relative flex h-auto max-w-full flex-col items-start justify-start gap-1.5 rounded-none px-0 text-left after:absolute after:-inset-1.5 after:content-['']"
     )}
 >
-    <span class="flex items-center gap-1">
-        <span
-            class={cn(
-                'font-[var(--font-weight-label)]',
-                reasoning.streaming ? 'sivir-reasoning-shimmer' : 'text-foreground-muted'
-            )}
-            >{reasoning.streaming ? 'Thinking' : 'Thought'}</span
-        >
-        {#if !reasoning.streaming && duration}
-            <span class="text-foreground-muted">for {duration}</span>
+    {#if children}
+        {@render children({ open: reasoning.open, streaming: reasoning.streaming })}
+    {:else}
+        <span class="flex items-center gap-1">
+            <span
+                class={cn(
+                    'font-[var(--font-weight-label)]',
+                    reasoning.streaming ? 'sivir-reasoning-shimmer' : 'text-foreground-muted'
+                )}
+                >{reasoning.streaming ? 'Thinking' : 'Thought'}</span
+            >
+            {#if !reasoning.streaming && duration}
+                <span class="text-foreground-muted">for {duration}</span>
+            {/if}
+            <ChevronDown
+                size={14}
+                aria-hidden="true"
+                class={cn(
+                    'shrink-0 text-foreground-muted transition-transform [transition-duration:var(--motion-duration-hover)]',
+                    reasoning.open && 'rotate-180'
+                )}
+            />
+        </span>
+        {#if !reasoning.open}
+            <span class="max-w-full text-pretty">{title}</span>
         {/if}
-        <ChevronDown
-            size={14}
-            aria-hidden="true"
-            class={cn(
-                'shrink-0 text-foreground-muted transition-transform [transition-duration:var(--motion-duration-hover)]',
-                reasoning.open && 'rotate-180'
-            )}
-        />
-    </span>
-    {#if !reasoning.open}
-        <span class="max-w-full truncate text-primary">{title}</span>
     {/if}
-</button>
+</Button>
 
 <style>
     .sivir-reasoning-shimmer {

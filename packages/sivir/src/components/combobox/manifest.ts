@@ -19,6 +19,7 @@ export const manifest: Manifest = {
         'components/combobox/combobox.svelte',
         'components/combobox/combobox-trigger.svelte',
         'components/combobox/combobox-content.svelte',
+        'components/combobox/combobox-search.svelte',
         'components/combobox/combobox-results.svelte',
         'components/combobox/combobox-item.svelte',
         'components/combobox/combobox-label.svelte',
@@ -27,7 +28,7 @@ export const manifest: Manifest = {
         'components/combobox/manifest.ts'
     ],
     components: ['popover', 'button'],
-    shared: ['utils.cn', 'utils.createContext', 'utils.travelingHighlight'],
+    shared: ['utils.cn', 'utils.createContext'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         'fuse.js': '^7.0.0',

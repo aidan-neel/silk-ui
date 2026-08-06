@@ -12,7 +12,10 @@ export type ConversationRootProps = {
     threshold?: number;
     children?: Snippet;
 } & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
-export type ConversationContentProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role' | 'aria-live' | 'aria-relevant'>;
+export type ConversationContentProps = {
+    /** Classes applied to the inner transcript stack rather than the scroll viewport. */
+    transcriptClass?: string;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role' | 'aria-live' | 'aria-relevant'>;
 export type ConversationEmptyProps = {
     icon?: Snippet;
     title?: string;

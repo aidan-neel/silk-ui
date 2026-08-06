@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { cn } from '@sivir-ui/svelte/utils';
     import { setContext, untrack } from 'svelte';
     import type { TabsProps, TabsVariant } from '.';
 
@@ -59,7 +60,7 @@
 </script>
 
 <div
-    class={className}
+    class={cn(className, orientation === 'vertical' && 'flex items-start gap-4')}
     data-ui="tabs"
     data-orientation={orientation}
     data-variant={variant}

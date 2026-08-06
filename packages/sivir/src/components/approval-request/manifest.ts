@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'approval-request',
-    version: '1.0.0',
+    version: '2.0.0',
     visibility: 'public',
     description:
         'Modal permission prompt for reviewing and resolving agent tool execution requests.',
@@ -14,6 +14,7 @@ export const manifest: Manifest = {
         'components/approval-request/approval-request-content.svelte',
         'components/approval-request/approval-request-description.svelte',
         'components/approval-request/approval-request-details.svelte',
+        'components/approval-request/approval-request-error.svelte',
         'components/approval-request/approval-request-footer.svelte',
         'components/approval-request/approval-request-header.svelte',
         'components/approval-request/approval-request-icon.svelte',

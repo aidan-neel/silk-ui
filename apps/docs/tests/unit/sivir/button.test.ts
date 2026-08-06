@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
+import Button from '@sivir-ui/svelte/components/button/button.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { createRawSnippet } from 'svelte';
-import Button from '@sivir-ui/svelte/components/button/button.svelte';
+import { describe, expect, it, vi } from 'vitest';
 
 function textSnippet(text: string) {
     return createRawSnippet(() => ({
@@ -36,7 +36,15 @@ describe('Button -- rendering and DOM element selection', () => {
 });
 
 describe('Button -- variant prop wiring', () => {
-    const variants = ['primary', 'secondary', 'ghost', 'outline', 'destructive', 'panel'] as const;
+    const variants = [
+        'primary',
+        'secondary',
+        'ghost',
+        'quiet',
+        'outline',
+        'destructive',
+        'panel'
+    ] as const;
 
     for (const variant of variants) {
         it(`renders the "${variant}" variant without throwing`, () => {

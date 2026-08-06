@@ -1,14 +1,15 @@
 <script lang="ts">
+    import X from '@lucide/svelte/icons/x';
+    import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
+    import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
     import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
     import type { ModalContentProps } from '.';
-    import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
-    import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
-    import X from '@lucide/svelte/icons/x';
     import { getModalContext } from './context.svelte';
 
     let {
         class: className,
         allowClickOutside = true,
+        allowEscape = true,
         role = 'dialog',
         contentClass = '',
         maxWidthClass,
@@ -67,6 +68,7 @@
             modal.state.open = false;
         },
         allowClickOutside: () => allowClickOutside,
+        allowEscape: () => allowEscape,
         returnFocus: () => modal.returnFocusEl
     });
 </script>

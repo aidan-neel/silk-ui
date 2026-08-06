@@ -2,7 +2,7 @@
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { cn } from '@sivir-ui/svelte/utils';
     import type { Snippet } from 'svelte';
-    import { setColorPickerContext, type ColorFormat, type ColorOption } from './context';
+    import { type ColorFormat, type ColorOption, setColorPickerContext } from './context';
 
     type Props = {
         label?: string;

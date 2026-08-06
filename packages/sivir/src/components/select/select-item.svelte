@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+    import Check from '@lucide/svelte/icons/check';
+    import type { ButtonProps } from '@sivir-ui/svelte/components/button';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import { cn } from '@sivir-ui/svelte/utils';
     import { onMount, type Snippet } from 'svelte';
-    import Check from '@lucide/svelte/icons/check';
-    import { getSelectContext } from './context.svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import { getSelectContext } from './context.svelte';
 
     const { id, state: selectState, labels, values } = getSelectContext();
     const { state: popoverState } = getPopoverContext();
@@ -72,23 +73,21 @@
     });
 </script>
 
-<Button
+<DropdownMenu.Item
     bind:element
     id={`select-${id}-option-${value}`}
     role="option"
     aria-selected={selectState.value === value}
-    data-collection-item
     tabindex={-1}
     {...rest}
-    onclick={(event: MouseEvent) => {
+    callback={() => {
         const resolved = resolveLabel() || labels.get(value) || value;
         labels.set(value, resolved);
         selectState.value = value;
         selectState.selectedLabel = resolved;
-        selectState.open = false;
         popoverState.buttonRef?.focus();
-        userOnclick?.(event);
     }}
+    onclick={userOnclick}
     class={cn(className, 'sivir-menu-item')}
     unstyled
 >
@@ -99,4 +98,4 @@
             <Check />
         </div>
     {/if}
-</Button>
+</DropdownMenu.Item>

@@ -1,14 +1,14 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
+    import * as Tabs from '@sivir-ui/svelte/components/tabs';
     import { cn } from '@sivir-ui/svelte/utils';
     import { setContext, untrack } from 'svelte';
-    import * as Tabs from '@sivir-ui/svelte/components/tabs';
     import type { CodeBlockProps, CodeBlockRegistry, CodeBlockTab } from '.';
+    import Actions from './code-block-actions.svelte';
+    import Content from './code-block-content.svelte';
     import Header from './code-block-header.svelte';
     import List from './code-block-list.svelte';
     import Trigger from './code-block-trigger.svelte';
-    import Actions from './code-block-actions.svelte';
-    import Content from './code-block-content.svelte';
 
     let {
         children,

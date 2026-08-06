@@ -8,8 +8,8 @@
         "bun": ">=1.3.11"
     },
     "scripts": {
-        "dev": "bunx vite dev",
-        "devnet": "bunx vite dev --host 0.0.0.0",
+        "dev": "node --max-old-space-size=4096 node_modules/vite/bin/vite.js dev",
+        "devnet": "node --max-old-space-size=4096 node_modules/vite/bin/vite.js dev --host 0.0.0.0",
         "build": "bunx --bun vite build",
         "preview": "bunx --bun vite preview",
         "prepare": "svelte-kit sync || echo ''",

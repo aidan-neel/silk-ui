@@ -76,7 +76,7 @@ export function componentMarkdown(component: string): string | undefined {
         '',
         '## API',
         '',
-        'Use the public exports below. Standard Svelte and HTML attributes accepted by the exported prop types are supported.',
+        'This reference is generated at build time from the component manifest, public `index.ts`, and documentation examples below. Changes to those source files are reflected here in the published Markdown. Standard Svelte and HTML attributes accepted by the exported prop types are supported.',
         '',
         fence('ts', sourceFor(indexes, component, 'index.ts')),
         ...(componentExamples.length
@@ -183,7 +183,7 @@ export function componentsMarkdown(): string {
     return [
         '# Sivir UI components',
         '',
-        'Each component reference includes its package manifest, public API source, and Svelte examples.',
+        'Each component reference is generated at build time from its package manifest, public API source, and Svelte examples. Published Markdown reflects changes to those canonical sources.',
         '',
         ...components.map(
             (component) => `- [${sanitizeComponent(component)}](/docs/components/${component}.md)`

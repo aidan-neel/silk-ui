@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import TabsFixture from '../../fixtures/TabsFixture.svelte';
 
 describe('Tabs -- rendering', () => {
@@ -59,17 +59,41 @@ describe('Tabs -- interaction', () => {
 });
 
 describe('Tabs -- orientation', () => {
-    it('renders horizontal by default', () => {
+    it('exposes horizontal orientation by default', () => {
         const { container } = render(TabsFixture, { props: { value: 'one' } });
-        const root = container.querySelector('[data-ui]');
-        expect(root).toBeInTheDocument();
+        const root = container.querySelector('[data-ui="tabs"]')!;
+        const list = screen.getByRole('tablist');
+        expect(root).toHaveAttribute('data-orientation', 'horizontal');
+        expect(list).toHaveAttribute('aria-orientation', 'horizontal');
     });
 
-    it('accepts orientation="vertical" without throwing', () => {
+    it('exposes vertical orientation on the root and tablist', () => {
         const { container } = render(TabsFixture, {
             props: { value: 'one', orientation: 'vertical' }
         });
-        expect(container.querySelector('button')).toBeInTheDocument();
+        const root = container.querySelector('[data-ui="tabs"]')!;
+        const list = screen.getByRole('tablist');
+        expect(root).toHaveAttribute('data-orientation', 'vertical');
+        expect(list).toHaveAttribute('aria-orientation', 'vertical');
+    });
+
+    it('uses Down and Up Arrow to select tabs', async () => {
+        render(TabsFixture, {
+            props: { value: 'one', orientation: 'vertical' }
+        });
+        const user = userEvent.setup();
+        const first = screen.getByRole('tab', { name: 'One' });
+        const second = screen.getByRole('tab', { name: 'Two' });
+
+        first.focus();
+        await user.keyboard('{ArrowDown}');
+        expect(second).toHaveFocus();
+        expect(second).toHaveAttribute('aria-selected', 'true');
+        expect(screen.getByTestId('content-two')).toBeInTheDocument();
+
+        await user.keyboard('{ArrowUp}');
+        expect(first).toHaveFocus();
+        expect(first).toHaveAttribute('aria-selected', 'true');
     });
 });
 

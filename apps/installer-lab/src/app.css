@@ -4,8 +4,6 @@
 @import '@fontsource/dm-sans/latin-700.css';
 @import 'tailwindcss';
 @import '@sivir-ui/svelte/ui.css';
-@source '../../../packages/sivir/src/brand-mark.svelte';
-@source '../../../packages/sivir/src/components/{alert,badge,button,card,input,progress,scroll-area}/**/*.{svelte,ts}';
 
 html {
     -webkit-font-smoothing: antialiased;

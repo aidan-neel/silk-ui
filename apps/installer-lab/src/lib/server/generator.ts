@@ -1,5 +1,5 @@
-import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { InstallPath } from '$lib/run-types';
 
@@ -86,10 +86,7 @@ export function rewriteFixtureImports(source: string, installPath: InstallPath) 
 
 export function rootCss(installPath: InstallPath) {
     const uiImport = installPath === 'cli' ? '$lib/sivir/ui.css' : '@sivir-ui/svelte/ui.css';
-    const source =
-        installPath === 'cli'
-            ? '@source "../lib/sivir/**/*.{svelte,ts}";'
-            : '@source "../../node_modules/@sivir-ui/svelte/src/**/*.{svelte,ts}";';
+    const source = installPath === 'cli' ? '@source "../lib/sivir/**/*.{svelte,ts}";' : '';
     return `@import '@fontsource/dm-sans/latin-400.css';
 @import '@fontsource/dm-sans/latin-500.css';
 @import '@fontsource/dm-sans/latin-600.css';

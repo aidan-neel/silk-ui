@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
+    import { resolve } from '$app/paths';
     import { components, sanitizeComponent } from '$lib/components';
 </script>
 
@@ -8,7 +8,7 @@
     <title>Sivir · Components</title>
     <meta
         name="description"
-        content="Browse all 54 accessible, themeable Svelte 5 components in Sivir UI."
+        content="Browse all 55 accessible, themeable Svelte 5 components in Sivir UI."
     />
 </svelte:head>
 

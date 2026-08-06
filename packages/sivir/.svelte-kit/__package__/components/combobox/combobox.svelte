@@ -5,17 +5,9 @@
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { setComboboxContext } from './context.svelte';
 
-    interface Props extends Popover.PopoverProps {
-        placeholder?: string;
-    }
+    interface Props extends Popover.PopoverProps {}
 
-    let {
-        children,
-        state_key,
-        placeholder = 'Select…',
-        open = $bindable(false),
-        ...rest
-    }: Props = $props();
+    let { children, state_key, open = $bindable(false), ...rest }: Props = $props();
 
     const generatedKey = $props.id();
     const key = untrack(() => state_key ?? generatedKey);
@@ -24,10 +16,12 @@
         items: new SvelteSet(),
         results: new SvelteSet(),
         searchContent: '',
+        searchPlacement: 'trigger',
+        threshold: 0.28,
         activeValue: undefined
     });
     let syncedOpen = $state(untrack(() => open));
-    setComboboxContext({ id: key, placeholder: untrack(() => placeholder), state: comboboxState });
+    setComboboxContext({ id: key, state: comboboxState });
 
     $effect(() => {
         if (comboboxState.open) {

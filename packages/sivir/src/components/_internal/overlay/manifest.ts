@@ -17,7 +17,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: '_internal/overlay',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'internal',
     description:
         'Shared overlay primitive owning focus trap, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',

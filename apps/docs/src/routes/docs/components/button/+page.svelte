@@ -27,6 +27,8 @@
     import VariantPanelSrc from './examples/variant-panel.svelte?raw';
     import VariantPrimary from './examples/variant-primary.svelte';
     import VariantPrimarySrc from './examples/variant-primary.svelte?raw';
+    import VariantQuiet from './examples/variant-quiet.svelte';
+    import VariantQuietSrc from './examples/variant-quiet.svelte?raw';
     import VariantSecondary from './examples/variant-secondary.svelte';
     import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
 
@@ -157,6 +159,17 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
             </h3>
             <ComponentPreview code={VariantGhostSrc}>
                 <VariantGhost />
+            </ComponentPreview>
+        </div>
+
+        <div id="variant-quiet" class="scroll-mt-20 flex flex-col gap-3">
+            <h3
+                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
+            >
+                Quiet
+            </h3>
+            <ComponentPreview code={VariantQuietSrc}>
+                <VariantQuiet />
             </ComponentPreview>
         </div>
 

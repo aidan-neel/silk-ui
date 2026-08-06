@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import SelectFixture from '../../fixtures/SelectFixture.svelte';
 
 async function flush() {
@@ -29,6 +29,7 @@ describe('Select -- open and close', () => {
         await expect.element(page.getByTestId('opt-apple')).toBeInTheDocument();
         await expect.element(page.getByTestId('opt-banana')).toBeInTheDocument();
         await expect.element(page.getByTestId('opt-cherry')).toBeInTheDocument();
+        await expect.element(page.getByText('Fruits')).toBeInTheDocument();
         expect(document.querySelectorAll('[role="listbox"] .sivir-item-highlight')).toHaveLength(1);
     });
 

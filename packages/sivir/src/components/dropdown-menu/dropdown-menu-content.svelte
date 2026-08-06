@@ -11,21 +11,22 @@
     type Props = {
         children: Snippet;
         class?: string;
-    };
+    } & Omit<Popover.PopoverContentProps, 'children' | 'class' | 'surfaceClass'>;
 
-    let props: Props = $props();
+    let { children, class: className, role = 'menu', ...rest }: Props = $props();
 </script>
 
 <Popover.Content
-    role="menu"
+    {role}
     tabindex={-1}
     focusTrap={false}
     lockScroll={false}
     data-ui="dropdown-menu-content"
-    class={cn(props.class, 'min-w-[var(--popover-trigger-width)] w-max', inverted && INVERTED_MENU)}
+    class={cn(className, 'min-w-[var(--popover-trigger-width)] w-max', inverted && INVERTED_MENU)}
     surfaceClass="p-0"
+    {...rest}
 >
     <div use:travelingHighlight class="flex flex-col gap-0 p-1">
-        {@render props.children?.()}
+        {@render children?.()}
     </div>
 </Popover.Content>

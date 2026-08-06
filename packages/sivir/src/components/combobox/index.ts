@@ -1,10 +1,10 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './combobox.svelte';
 import Content from './combobox-content.svelte';
-import Trigger from './combobox-trigger.svelte';
-import Results from './combobox-results.svelte';
 import Item from './combobox-item.svelte';
 import Label from './combobox-label.svelte';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import Results from './combobox-results.svelte';
+import Trigger from './combobox-trigger.svelte';
 
 export type ComboboxItem = {
     id: string;
@@ -19,17 +19,19 @@ export type ComboboxState = {
     items: Set<ComboboxItem>;
     results: Set<ComboboxItem>;
     searchContent: string;
+    searchPlacement: 'trigger' | 'menu';
+    threshold: number;
     activeValue?: string;
     selected?: ComboboxItem;
 };
 
-export type ComboboxRootProps = {
-    placeholder?: string;
-} & DefaultProps;
+export type ComboboxRootProps = DefaultProps;
 
 export type ComboboxTriggerProps = {
     class?: string;
+    placeholder?: string;
+    searchPlacement?: 'trigger' | 'menu';
     threshold?: number;
 } & DefaultProps;
 
-export { Root, Content, Trigger, Results, Item, Label };
+export { Content, Item, Label, Results, Root, Trigger };

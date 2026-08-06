@@ -7,4 +7,7 @@ import Separator from './dropdown-menu-separator.svelte';
 import Sub from './dropdown-menu-sub.svelte';
 import SubContent from './dropdown-menu-sub-content.svelte';
 import SubTrigger from './dropdown-menu-sub-trigger.svelte';
-export { Root, Trigger, Label, Item, Content, Separator, Sub, SubContent, SubTrigger };
+import RadioGroup from './dropdown-menu-radio-group.svelte';
+import RadioItem from './dropdown-menu-radio-item.svelte';
+import CheckboxItem from './dropdown-menu-checkbox-item.svelte';
+export { Root, Trigger, Label, Item, Content, Separator, Sub, SubContent, SubTrigger, RadioGroup, RadioItem, CheckboxItem };

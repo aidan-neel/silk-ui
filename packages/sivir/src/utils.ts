@@ -1,14 +1,14 @@
-import { type ClassValue, clsx, twMerge } from 'cnfast';
 import {
     computePosition,
-    offset,
     flip,
-    shift,
-    size,
+    offset,
     type Placement,
-    type ReferenceElement
+    type ReferenceElement,
+    shift,
+    size
 } from '@floating-ui/dom';
-import { getContext, hasContext, setContext, type Snippet } from 'svelte';
+import { type ClassValue, clsx, twMerge } from 'cnfast';
+import { getContext, hasContext, type Snippet, setContext } from 'svelte';
 
 export type DefaultProps = {
     class?: string;
@@ -623,6 +623,13 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
         }
     }
 
+    function onPointerOver(event: PointerEvent) {
+        const item = usableItem(event.target);
+        if (item && item !== current) {
+            schedule(item);
+        }
+    }
+
     function onPointerLeave() {
         schedule(restingTarget());
     }
@@ -658,6 +665,7 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     });
 
     node.addEventListener('pointermove', onPointerMove);
+    node.addEventListener('pointerover', onPointerOver);
     node.addEventListener('pointerleave', onPointerLeave);
     node.addEventListener('focusin', onFocusIn);
     node.addEventListener('focusout', onFocusOut);
@@ -670,6 +678,7 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
             resizeObserver.disconnect();
             mutationObserver.disconnect();
             node.removeEventListener('pointermove', onPointerMove);
+            node.removeEventListener('pointerover', onPointerOver);
             node.removeEventListener('pointerleave', onPointerLeave);
             node.removeEventListener('focusin', onFocusIn);
             node.removeEventListener('focusout', onFocusOut);

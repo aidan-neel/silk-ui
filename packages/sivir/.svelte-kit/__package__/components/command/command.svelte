@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { untrack, type Snippet } from 'svelte';
     import * as Modal from '@sivir-ui/svelte/components/modal';
+    import { type Snippet, untrack } from 'svelte';
     import type { CommandState } from '.';
     import { resetCommand, setCommandContext } from './context.svelte';
 

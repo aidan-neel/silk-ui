@@ -1,12 +1,11 @@
 <script lang="ts">
+    import Check from '@lucide/svelte/icons/check';
     import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
     import { cn } from '@sivir-ui/svelte/utils';
     import { onMount } from 'svelte';
-    import Check from '@lucide/svelte/icons/check';
-
+    import { getPopoverContext } from '../popover/context.svelte';
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
-    import { getPopoverContext } from '../popover/context.svelte';
 
     const { id, state: comboboxState } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
@@ -29,6 +28,10 @@
         callback: callback,
         ref: el
     }) as ComboboxItem;
+    const visible = $derived(
+        comboboxState.searchContent === '' ||
+            Array.from(comboboxState.results).some((result) => result.value === item.value)
+    );
 
     function close() {
         comboboxState.selected = item;
@@ -47,28 +50,30 @@
     });
 </script>
 
-{#if comboboxState.searchContent === '' || Array.from(comboboxState.results).some((r) => r.value === item.value)}
-    <Button
-        bind:element={el}
-        id={optionId}
-        role="option"
-        aria-selected={comboboxState.selected?.value === item.value}
-        data-collection-item
-        data-collection-active={comboboxState.activeValue === item.value}
-        tabindex={-1}
-        {...rest}
-        onpointerenter={() => {
-            comboboxState.activeValue = item.value;
-        }}
-        onclick={close}
-        class={cn(className, 'sivir-menu-item flex-row gap-3 text-sm')}
-        unstyled
-    >
-        {label}
-        {#if comboboxState.selected?.value === item.value}
-            <div aria-hidden="true">
-                <Check />
-            </div>
-        {/if}
-    </Button>
-{/if}
+<Button
+    bind:element={el}
+    id={optionId}
+    role="option"
+    aria-selected={comboboxState.selected?.value === item.value}
+    aria-hidden={!visible || undefined}
+    inert={!visible || undefined}
+    data-collection-item
+    data-collection-active={comboboxState.activeValue === item.value}
+    data-combobox-value={value}
+    data-visible={visible}
+    tabindex={-1}
+    {...rest}
+    onclick={close}
+    class={cn(
+        className,
+        'sivir-menu-item flex-row gap-3 overflow-hidden text-sm opacity-100 transition-[height,opacity,border-width] [transition-duration:var(--motion-duration-hover)] ease-[var(--ease-out)] motion-reduce:transition-none data-[visible=false]:h-0 data-[visible=false]:border-y-0 data-[visible=false]:opacity-0'
+    )}
+    unstyled
+>
+    {label}
+    {#if comboboxState.selected?.value === item.value}
+        <div aria-hidden="true">
+            <Check />
+        </div>
+    {/if}
+</Button>

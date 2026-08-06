@@ -1,8 +1,8 @@
 <script lang="ts" generics="T">
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { tick, untrack } from 'svelte';
     import { flip } from 'svelte/animate';
     import { cubicOut } from 'svelte/easing';
-    import { tick, untrack } from 'svelte';
-    import { cn } from '@sivir-ui/svelte/utils';
     import type { ReorderListProps } from '.';
 
     let {
@@ -113,7 +113,7 @@
         onCommit?.([...items]);
     }
 
-    function clearPointerSession() {
+    function clearPointerSession(settle = false) {
         const session = pointerSession;
         pointerSession = undefined;
         if (!session) {
@@ -122,7 +122,13 @@
         if (listElement?.hasPointerCapture?.(session.pointerId)) {
             listElement.releasePointerCapture?.(session.pointerId);
         }
+        if (settle && !reduced) {
+            // Restore the translate transition before clearing the drag offset.
+            session.node.style.removeProperty('transition-property');
+            void session.node.offsetWidth;
+        }
         session.node.style.translate = '';
+        session.node.style.removeProperty('transition-property');
         session.node.style.removeProperty('will-change');
     }
 
@@ -231,6 +237,11 @@
                 return;
             }
             dragging = session.id;
+            // Direct manipulation must track the pointer without interpolation.
+            session.node.style.setProperty(
+                'transition-property',
+                'background-color, border-color, box-shadow'
+            );
             session.node.style.setProperty('will-change', 'translate');
         }
         if (dragging !== session.id) {
@@ -266,7 +277,7 @@
         const moved = dragging === session.id;
         dragging = undefined;
         snapshot = undefined;
-        clearPointerSession();
+        clearPointerSession(moved);
         if (moved) {
             announceDrop(session.id);
             onCommit?.([...items]);

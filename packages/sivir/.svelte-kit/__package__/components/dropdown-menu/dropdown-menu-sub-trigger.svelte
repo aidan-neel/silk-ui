@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
     import { ChevronRight } from '@lucide/svelte';
     import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
     import { onDestroy } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
     import { getDropdownMenuContext } from './context.svelte';

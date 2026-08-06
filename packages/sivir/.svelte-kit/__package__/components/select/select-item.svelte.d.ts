@@ -1,4 +1,4 @@
-import { type ButtonProps } from '@sivir-ui/svelte/components/button';
+import type { ButtonProps } from '@sivir-ui/svelte/components/button';
 import { type Snippet } from 'svelte';
 type Props = {
     value: string;

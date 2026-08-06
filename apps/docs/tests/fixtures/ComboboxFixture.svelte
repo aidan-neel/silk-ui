@@ -4,16 +4,22 @@
     let {
         onApple = () => {},
         onBanana = () => {},
-        onCherry = () => {}
+        onCherry = () => {},
+        searchPlacement = 'trigger'
     }: {
         onApple?: () => void;
         onBanana?: () => void;
         onCherry?: () => void;
+        searchPlacement?: 'trigger' | 'menu';
     } = $props();
 </script>
 
-<Combobox.Root placeholder="Search fruits">
-    <Combobox.Trigger data-testid="combobox-trigger" />
+<Combobox.Root>
+    <Combobox.Trigger
+        {searchPlacement}
+        placeholder="Search fruits"
+        data-testid="combobox-trigger"
+    />
     <Combobox.Content>
         <Combobox.Results>
             <Combobox.Item value="apple" label="Apple" callback={onApple} />

@@ -8,7 +8,7 @@
     import { getSelectContext } from './context.svelte';
 
     const { state, labels } = getSelectContext();
-    const { id: popoverId } = getPopoverContext();
+    const { id: popoverId, state: popoverState } = getPopoverContext();
 
     type Props = {
         children?: Snippet;
@@ -31,7 +31,7 @@
     role="combobox"
     aria-haspopup="listbox"
     aria-controls={`popover-${popoverId}-content`}
-    aria-expanded={state.open}
+    aria-expanded={popoverState.open}
     aria-label={state.value !== ''
         ? `Selected value ${state.selectedLabel || state.value}`
         : ((rest as { 'aria-label'?: string })['aria-label'] ?? 'Open select')}

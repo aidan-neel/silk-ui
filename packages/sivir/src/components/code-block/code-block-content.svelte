@@ -43,6 +43,7 @@
 
     const html = $derived(highlight(code, lang));
     const lineCount = $derived(code.replace(/\n$/, '').split('\n').length);
+    const layout = $derived(lineCount === 1 ? 'single-line' : 'multi-line');
 
     const activeValue = $derived(tabs ? tabs.value : (registry?.active ?? value));
     const isActive = $derived(activeValue === value);
@@ -66,6 +67,7 @@
     aria-labelledby={tabId}
     data-ui="code-block-content"
     data-state={isActive ? 'active' : 'inactive'}
+    data-layout={layout}
     aria-hidden={!isActive}
     inert={!isActive}
     class={cn(
@@ -109,7 +111,12 @@
             </div>
         {/if}
         {#if copyPlacement === 'overlay'}
-            <Copy class="absolute right-2 top-2 z-10 bg-card" />
+            <Copy
+                class={cn(
+                    'absolute right-2 z-10 bg-card',
+                    layout === 'single-line' ? 'top-1/2 -translate-y-1/2' : 'top-2'
+                )}
+            />
         {/if}
     </div>
 </div>

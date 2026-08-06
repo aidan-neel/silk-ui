@@ -1,14 +1,14 @@
 <script lang="ts">
+    import { ChevronDown } from '@lucide/svelte';
+    import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { cn } from '@sivir-ui/svelte/utils';
     import type { Snippet } from 'svelte';
-    import { ChevronDown } from '@lucide/svelte';
-    import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
-    import { getSelectContext } from './context.svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import { getSelectContext } from './context.svelte';
 
     const { state, labels } = getSelectContext();
-    const { id: popoverId } = getPopoverContext();
+    const { id: popoverId, state: popoverState } = getPopoverContext();
 
     type Props = {
         children?: Snippet;
@@ -31,7 +31,7 @@
     role="combobox"
     aria-haspopup="listbox"
     aria-controls={`popover-${popoverId}-content`}
-    aria-expanded={state.open}
+    aria-expanded={popoverState.open}
     aria-label={state.value !== ''
         ? `Selected value ${state.selectedLabel || state.value}`
         : ((rest as { 'aria-label'?: string })['aria-label'] ?? 'Open select')}

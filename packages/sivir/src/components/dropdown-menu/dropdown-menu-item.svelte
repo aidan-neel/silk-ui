@@ -9,15 +9,22 @@
     const { ancestors } = getDropdownMenuContext();
 
     type Props = {
-        class?: string;
         children?: Snippet;
         callback?: () => void;
     } & ButtonProps;
 
-    let { children, class: className, callback, onclick: userOnclick, ...rest }: Props = $props();
+    let {
+        children,
+        class: className,
+        callback,
+        onclick: userOnclick,
+        element = $bindable(),
+        ...rest
+    }: Props = $props();
 </script>
 
 <Button
+    bind:element
     role="menuitem"
     data-collection-item
     {...rest}

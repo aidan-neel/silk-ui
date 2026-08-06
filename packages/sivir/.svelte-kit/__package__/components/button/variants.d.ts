@@ -8,6 +8,7 @@ export declare const button: import("tailwind-variants").TVReturnType<{
         primary: string;
         secondary: string;
         ghost: string;
+        quiet: string;
         /**
          * Outline keeps the soft raised shadow. Focus composes the ring on top
          * of the lift so the raised look survives focus.
@@ -37,6 +38,7 @@ export declare const button: import("tailwind-variants").TVReturnType<{
         primary: string;
         secondary: string;
         ghost: string;
+        quiet: string;
         /**
          * Outline keeps the soft raised shadow. Focus composes the ring on top
          * of the lift so the raised look survives focus.
@@ -66,6 +68,7 @@ export declare const button: import("tailwind-variants").TVReturnType<{
         primary: string;
         secondary: string;
         ghost: string;
+        quiet: string;
         /**
          * Outline keeps the soft raised shadow. Focus composes the ring on top
          * of the lift so the raised look survives focus.
