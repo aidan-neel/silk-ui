@@ -4,6 +4,6 @@ type Props = {
     children: Snippet;
     class?: string;
 } & Omit<Popover.PopoverContentProps, 'children' | 'class' | 'surfaceClass'>;
-declare const DropdownMenuContent: import('svelte').Component<Props, {}, ''>;
+declare const DropdownMenuContent: import("svelte").Component<Props, {}, "">;
 type DropdownMenuContent = ReturnType<typeof DropdownMenuContent>;
 export default DropdownMenuContent;

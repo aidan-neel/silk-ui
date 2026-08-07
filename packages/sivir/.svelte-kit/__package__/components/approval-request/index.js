@@ -11,18 +11,4 @@ import Icon from './approval-request-icon.svelte';
 import Risk from './approval-request-risk.svelte';
 import Status from './approval-request-status.svelte';
 import Title from './approval-request-title.svelte';
-export {
-    Cancel,
-    Confirm,
-    Content,
-    Description,
-    Details,
-    ErrorComponent as Error,
-    Footer,
-    Header,
-    Icon,
-    Risk,
-    Root,
-    Status,
-    Title
-};
+export { Cancel, Confirm, Content, Description, Details, ErrorComponent as Error, Footer, Header, Icon, Risk, Root, Status, Title };

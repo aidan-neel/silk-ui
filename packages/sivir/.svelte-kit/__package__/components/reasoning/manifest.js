@@ -2,8 +2,7 @@ export const manifest = {
     name: 'reasoning',
     version: '1.2.0',
     visibility: 'public',
-    description:
-        'Expandable model reasoning status and trace for AI responses. Its trigger uses the Button quiet variant for a low-emphasis, no-hover-fill control.',
+    description: 'Expandable model reasoning status and trace for AI responses. Its trigger uses the Button quiet variant for a low-emphasis, no-hover-fill control.',
     files: [
         'components/reasoning/reasoning.svelte',
         'components/reasoning/reasoning-trigger.svelte',

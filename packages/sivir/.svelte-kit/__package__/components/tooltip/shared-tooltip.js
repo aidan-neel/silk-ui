@@ -79,35 +79,36 @@ function reposition(ref, placement, animated) {
         middleware: [offset(8), flip({ padding: 8 }), shift({ padding: 8 })]
     })
         .then(({ x, y }) => {
+        if (!bubble || activeRef !== ref) {
+            return;
+        }
+        const horizontal = placement === 'top' || placement === 'bottom';
+        const center = horizontal ? 'translateX(-50%)' : 'translateY(-50%)';
+        lastCenter = center;
+        const left = horizontal ? x + bubble.offsetWidth / 2 : x;
+        const top = horizontal ? y : y + bubble.offsetHeight / 2;
+        if (animated) {
+            bubble.style.left = `${left}px`;
+            bubble.style.top = `${top}px`;
+        }
+        else {
+            const prev = bubble.style.transition;
+            bubble.style.transition = 'none';
+            bubble.style.transform = `${center} ${HIDE}`;
+            bubble.style.left = `${left}px`;
+            bubble.style.top = `${top}px`;
+            void bubble.offsetHeight;
+            bubble.style.transition = prev;
+        }
+        requestAnimationFrame(() => {
             if (!bubble || activeRef !== ref) {
                 return;
             }
-            const horizontal = placement === 'top' || placement === 'bottom';
-            const center = horizontal ? 'translateX(-50%)' : 'translateY(-50%)';
-            lastCenter = center;
-            const left = horizontal ? x + bubble.offsetWidth / 2 : x;
-            const top = horizontal ? y : y + bubble.offsetHeight / 2;
-            if (animated) {
-                bubble.style.left = `${left}px`;
-                bubble.style.top = `${top}px`;
-            } else {
-                const prev = bubble.style.transition;
-                bubble.style.transition = 'none';
-                bubble.style.transform = `${center} ${HIDE}`;
-                bubble.style.left = `${left}px`;
-                bubble.style.top = `${top}px`;
-                void bubble.offsetHeight;
-                bubble.style.transition = prev;
-            }
-            requestAnimationFrame(() => {
-                if (!bubble || activeRef !== ref) {
-                    return;
-                }
-                bubble.style.opacity = '1';
-                bubble.style.transform = `${center} ${SHOW}`;
-            });
-        })
-        .catch(() => {});
+            bubble.style.opacity = '1';
+            bubble.style.transform = `${center} ${SHOW}`;
+        });
+    })
+        .catch(() => { });
 }
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref, text, placement) {
@@ -133,7 +134,8 @@ export function showTooltip(ref, text, placement = 'top', delay = 125) {
     clearTimeout(closeTimer);
     if (visible || delay <= 0) {
         present(ref, text, placement);
-    } else {
+    }
+    else {
         openTimer = setTimeout(() => present(ref, text, placement), delay);
     }
 }

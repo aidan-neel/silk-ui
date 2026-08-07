@@ -17,7 +17,6 @@ export type ShowMoreProps = {
     label?: string;
     onExpandedChange?: (expanded: boolean) => void;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;
 export { ShowMore };
 export default ShowMore;

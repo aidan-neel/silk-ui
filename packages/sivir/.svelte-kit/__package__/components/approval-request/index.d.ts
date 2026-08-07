@@ -24,10 +24,8 @@ export type ApprovalRequestRootProps = {
     error?: string | null;
     children?: Snippet;
 };
-export type ApprovalRequestContentProps = DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>;
-export type ApprovalRequestHeaderProps = DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+export type ApprovalRequestContentProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>;
+export type ApprovalRequestHeaderProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export type ApprovalRequestStatusProps = ApprovalRequestHeaderProps;
 export type ApprovalRequestIconProps = ApprovalRequestHeaderProps;
 export type ApprovalRequestRiskProps = ApprovalRequestHeaderProps;
@@ -40,20 +38,5 @@ export type ApprovalRequestActionProps = {
     pendingLabel?: string;
     failureMessage?: string;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'status' | 'loading' | 'loadingLabel'>;
-export {
-    Cancel,
-    Confirm,
-    Content,
-    Description,
-    Details,
-    ErrorComponent as Error,
-    Footer,
-    Header,
-    Icon,
-    Risk,
-    Root,
-    Status,
-    Title
-};
+} & DefaultProps & Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'status' | 'loading' | 'loadingLabel'>;
+export { Cancel, Confirm, Content, Description, Details, ErrorComponent as Error, Footer, Header, Icon, Risk, Root, Status, Title };

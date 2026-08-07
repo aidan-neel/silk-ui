@@ -4,6 +4,6 @@ type Props = {
     children?: Snippet;
     callback?: () => void;
 } & ButtonProps;
-declare const DropdownMenuItem: import('svelte').Component<Props, {}, 'element'>;
+declare const DropdownMenuItem: import("svelte").Component<Props, {}, "element">;
 type DropdownMenuItem = ReturnType<typeof DropdownMenuItem>;
 export default DropdownMenuItem;

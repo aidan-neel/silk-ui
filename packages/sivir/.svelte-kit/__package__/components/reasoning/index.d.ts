@@ -11,19 +11,16 @@ export type ReasoningRootProps = {
     onOpenChange?: (open: boolean) => void;
     onOpenChangeComplete?: (open: boolean) => void;
     children?: Snippet;
-} & Omit<DefaultProps, 'children'> &
-    Omit<HTMLAttributes<HTMLElement>, 'children'>;
+} & Omit<DefaultProps, 'children'> & Omit<HTMLAttributes<HTMLElement>, 'children'>;
 export type ReasoningTriggerProps = {
     title?: string;
     /** A compact summary of the completed reasoning time, such as 2.4s. */
     duration?: string;
     children?: Snippet<[ReasoningTriggerState]>;
-} & Omit<DefaultProps, 'children'> &
-    Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'title'>;
+} & Omit<DefaultProps, 'children'> & Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'title'>;
 export type ReasoningTriggerState = Readonly<{
     open: boolean;
     streaming: boolean;
 }>;
-export type ReasoningContentProps = DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'id'>;
+export type ReasoningContentProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'id'>;
 export { Content, Root, Trigger };

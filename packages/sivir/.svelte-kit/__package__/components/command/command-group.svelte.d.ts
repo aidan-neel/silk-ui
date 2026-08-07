@@ -4,6 +4,6 @@ type Props = {
     class?: string;
     heading: string;
 };
-declare const CommandGroup: import('svelte').Component<Props, {}, ''>;
+declare const CommandGroup: import("svelte").Component<Props, {}, "">;
 type CommandGroup = ReturnType<typeof CommandGroup>;
 export default CommandGroup;

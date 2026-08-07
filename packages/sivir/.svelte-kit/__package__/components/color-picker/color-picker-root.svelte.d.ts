@@ -10,6 +10,6 @@ type Props = {
     class?: string;
     children: Snippet;
 };
-declare const ColorPickerRoot: import('svelte').Component<Props, {}, ''>;
+declare const ColorPickerRoot: import("svelte").Component<Props, {}, "">;
 type ColorPickerRoot = ReturnType<typeof ColorPickerRoot>;
 export default ColorPickerRoot;

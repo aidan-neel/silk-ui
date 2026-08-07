@@ -5,6 +5,6 @@ type Props = {
     allowClickOutside?: boolean;
     label?: string;
 };
-declare const CommandContent: import('svelte').Component<Props, {}, ''>;
+declare const CommandContent: import("svelte").Component<Props, {}, "">;
 type CommandContent = ReturnType<typeof CommandContent>;
 export default CommandContent;

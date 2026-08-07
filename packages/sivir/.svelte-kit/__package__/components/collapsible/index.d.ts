@@ -11,8 +11,7 @@ export type CollapsibleProps = {
 };
 export type CollapsibleTriggerProps = {
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLButtonAttributes, 'onclick' | 'children'>;
+} & DefaultProps & Omit<HTMLButtonAttributes, 'onclick' | 'children'>;
 export type CollapsibleContentProps = {
     children?: Snippet;
 } & DefaultProps;

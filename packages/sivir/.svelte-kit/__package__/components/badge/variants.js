@@ -7,13 +7,10 @@ export const badge = tv({
             secondary: 'bg-secondary text-foreground',
             ghost: 'bg-transparent text-foreground hover:bg-[color-mix(in_srgb,var(--color-foreground)_6%,transparent)]',
             outline: 'border border-border bg-transparent text-foreground',
-            destructive:
-                'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)]',
+            destructive: 'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)]',
             info: 'bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)] text-[var(--color-info)]',
-            success:
-                'bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[var(--color-success)]',
-            warning:
-                'bg-[color-mix(in_srgb,var(--color-warning)_12%,transparent)] text-[var(--color-warning)]',
+            success: 'bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[var(--color-success)]',
+            warning: 'bg-[color-mix(in_srgb,var(--color-warning)_12%,transparent)] text-[var(--color-warning)]',
             error: 'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)]'
         }
     },

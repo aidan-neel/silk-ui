@@ -8,8 +8,7 @@ export const manifest = {
     name: 'copy-button',
     version: '1.0.0',
     visibility: 'public',
-    description:
-        'One-tap clipboard button with a Copy↔Check icon morph and tooltip feedback, reverting after a short hold.',
+    description: 'One-tap clipboard button with a Copy↔Check icon morph and tooltip feedback, reverting after a short hold.',
     files: [
         'components/copy-button/copy-button.svelte',
         'components/copy-button/index.ts',

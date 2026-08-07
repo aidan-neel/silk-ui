@@ -1,11 +1,5 @@
 import type { Snippet } from 'svelte';
-import type {
-    HTMLAttributes,
-    HTMLButtonAttributes,
-    HTMLFormAttributes,
-    HTMLInputAttributes,
-    HTMLTextareaAttributes
-} from 'svelte/elements';
+import type { HTMLAttributes, HTMLButtonAttributes, HTMLFormAttributes, HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements';
 import Root from './question.svelte';
 import Actions from './question-actions.svelte';
 import Cancel from './question-cancel.svelte';
@@ -31,10 +25,7 @@ export type QuestionProps = {
     onCancel?: (event: MouseEvent) => void;
     class?: string;
     children?: Snippet;
-} & Omit<
-    HTMLFormAttributes,
-    'children' | 'class' | 'onsubmit' | 'action' | 'method' | 'target' | 'enctype' | 'name'
->;
+} & Omit<HTMLFormAttributes, 'children' | 'class' | 'onsubmit' | 'action' | 'method' | 'target' | 'enctype' | 'name'>;
 export type QuestionTitleProps = {
     class?: string;
     children?: Snippet;
@@ -54,10 +45,7 @@ export type QuestionOptionProps = {
     disabled?: boolean;
     element?: HTMLInputElement;
     class?: string;
-} & Omit<
-    HTMLInputAttributes,
-    'type' | 'value' | 'name' | 'checked' | 'disabled' | 'children' | 'class'
->;
+} & Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked' | 'disabled' | 'children' | 'class'>;
 export type QuestionInputProps = {
     submitOnEnter?: boolean;
     autoresize?: boolean;
@@ -68,18 +56,7 @@ export type QuestionInputProps = {
     readonly?: boolean;
     element?: HTMLTextAreaElement;
     class?: string;
-} & Omit<
-    HTMLTextareaAttributes,
-    | 'children'
-    | 'class'
-    | 'value'
-    | 'name'
-    | 'placeholder'
-    | 'aria-label'
-    | 'rows'
-    | 'disabled'
-    | 'readonly'
->;
+} & Omit<HTMLTextareaAttributes, 'children' | 'class' | 'value' | 'name' | 'placeholder' | 'aria-label' | 'rows' | 'disabled' | 'readonly'>;
 export type QuestionActionsProps = {
     class?: string;
     children?: Snippet;

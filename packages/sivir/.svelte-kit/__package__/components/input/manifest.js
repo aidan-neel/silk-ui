@@ -16,8 +16,7 @@ export const manifest = {
     name: 'input',
     version: '4.0.0',
     visibility: 'public',
-    description:
-        'Text input wrapping a native <input>. 2 variants. Forwards file/checkbox/text/number/etc. types.',
+    description: 'Text input wrapping a native <input>. 2 variants. Forwards file/checkbox/text/number/etc. types.',
     files: [
         'components/input/input.svelte',
         'components/input/variants.ts',

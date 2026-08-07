@@ -13,8 +13,7 @@ export const manifest = {
     name: 'color-picker',
     version: '3.0.0',
     visibility: 'public',
-    description:
-        'Popover-based color picker with SB drag, hue strip, hex input, and HSL sliders. Optional preset swatches. Compound: Root / Trigger / Content.',
+    description: 'Popover-based color picker with SB drag, hue strip, hex input, and HSL sliders. Optional preset swatches. Compound: Root / Trigger / Content.',
     files: [
         'components/color-picker/color-picker-root.svelte',
         'components/color-picker/color-picker-trigger.svelte',

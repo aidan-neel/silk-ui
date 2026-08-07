@@ -13,21 +13,11 @@
  */
 import { type Placement } from '@floating-ui/dom';
 /** Hover/focus a trigger: show after `delay`, or morph instantly if one is already up. */
-export declare function showTooltip(
-    ref: HTMLElement,
-    text: string,
-    placement?: Placement,
-    delay?: number
-): void;
+export declare function showTooltip(ref: HTMLElement, text: string, placement?: Placement, delay?: number): void;
 /** Re-label the active bubble in place (for example, a Copy→Copied flip). */
 export declare function updateTooltipText(ref: HTMLElement, text: string): void;
 /** Force the bubble up now and, unless the pointer is over the trigger, auto-hide after `holdMs`. */
-export declare function flashTooltip(
-    ref: HTMLElement,
-    text: string,
-    placement?: Placement,
-    holdMs?: number
-): void;
+export declare function flashTooltip(ref: HTMLElement, text: string, placement?: Placement, holdMs?: number): void;
 /** Leave/blur a trigger: schedule a hide, ignored if a different trigger took over. */
 export declare function hideTooltip(ref: HTMLElement | null, closeDelay?: number): void;
 /**

@@ -2,8 +2,7 @@ export const manifest = {
     name: 'question',
     version: '1.0.0',
     visibility: 'public',
-    description:
-        'Inline agent question form with single-choice, multiple-choice, and free-text answers.',
+    description: 'Inline agent question form with single-choice, multiple-choice, and free-text answers.',
     files: [
         'components/question/question.svelte',
         'components/question/question-title.svelte',

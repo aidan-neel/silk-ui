@@ -3,6 +3,6 @@ type Props = {
     variant?: 'outline' | 'secondary' | 'ghost';
     class?: string;
 };
-declare const ColorPickerTrigger: import('svelte').Component<Props, {}, ''>;
+declare const ColorPickerTrigger: import("svelte").Component<Props, {}, "">;
 type ColorPickerTrigger = ReturnType<typeof ColorPickerTrigger>;
 export default ColorPickerTrigger;

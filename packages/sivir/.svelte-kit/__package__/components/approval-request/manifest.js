@@ -2,8 +2,7 @@ export const manifest = {
     name: 'approval-request',
     version: '2.0.0',
     visibility: 'public',
-    description:
-        'Modal permission prompt for reviewing and resolving agent tool execution requests.',
+    description: 'Modal permission prompt for reviewing and resolving agent tool execution requests.',
     role: 'alertdialog',
     files: [
         'components/approval-request/approval-request.svelte',

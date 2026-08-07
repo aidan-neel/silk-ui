@@ -23,8 +23,7 @@ export const manifest = {
     name: 'popover',
     version: '2.0.0',
     visibility: 'public',
-    description:
-        'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, click-outside + Escape dismiss, optional portal.',
+    description: 'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, click-outside + Escape dismiss, optional portal.',
     role: 'dialog',
     files: [
         'components/popover/popover.svelte',

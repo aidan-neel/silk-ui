@@ -11,26 +11,20 @@ export type ConversationRootProps = {
     /** Distance from the bottom, in pixels, that still counts as following. */
     threshold?: number;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export type ConversationContentProps = {
     /** Classes applied to the inner transcript stack rather than the scroll viewport. */
     transcriptClass?: string;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role' | 'aria-live' | 'aria-relevant'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role' | 'aria-live' | 'aria-relevant'>;
 export type ConversationEmptyProps = {
     icon?: Snippet;
     title?: string;
     description?: string;
     action?: Snippet;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export type ConversationScrollButtonProps = {
     label?: string;
     class?: string;
-} & Omit<
-    HTMLButtonAttributes,
-    'children' | 'class' | 'aria-label' | 'disabled' | 'tabindex' | 'type'
->;
+} & Omit<HTMLButtonAttributes, 'children' | 'class' | 'aria-label' | 'disabled' | 'tabindex' | 'type'>;
 export { Content, Empty, Root, ScrollButton };

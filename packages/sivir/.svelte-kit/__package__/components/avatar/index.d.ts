@@ -12,8 +12,7 @@ export type AvatarProps = {
 export type AvatarImageProps = {
     src?: string;
     alt?: string;
-} & DefaultProps &
-    HTMLImgAttributes;
+} & DefaultProps & HTMLImgAttributes;
 export type AvatarFallbackProps = {
     children?: Snippet;
 } & DefaultProps;

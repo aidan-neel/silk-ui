@@ -21,8 +21,7 @@ export type ToolProps = {
     onOpenChangeComplete?: (open: boolean) => void;
     trigger?: Snippet<[ToolTriggerState]>;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLElement>, 'children'>;
 export type ToolTriggerState = Readonly<{
     open: boolean;
     state: ToolState;
@@ -37,11 +36,9 @@ export type ToolItemProps = {
 export type ToolInputProps = {
     label?: string;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export type ToolOutputProps = {
     label?: string;
     children?: Snippet;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export { Input, Item, Output, Root };

@@ -15,6 +15,5 @@ export type QuestionContext = {
     submit: () => void;
     cancel: (event: MouseEvent) => void;
 };
-declare const setQuestionContext: (value: QuestionContext) => QuestionContext,
-    getQuestionContext: () => QuestionContext;
+declare const setQuestionContext: (value: QuestionContext) => QuestionContext, getQuestionContext: () => QuestionContext;
 export { getQuestionContext, setQuestionContext };

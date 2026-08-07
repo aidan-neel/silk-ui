@@ -7,8 +7,7 @@ export const manifest = {
     name: 'tooltip',
     version: '2.0.0',
     visibility: 'public',
-    description:
-        'Hover-revealed inline guidance with a shared Tailwind-styled surface, role="tooltip", and small default delays.',
+    description: 'Hover-revealed inline guidance with a shared Tailwind-styled surface, role="tooltip", and small default delays.',
     role: 'tooltip',
     files: [
         'components/tooltip/tooltip.svelte',

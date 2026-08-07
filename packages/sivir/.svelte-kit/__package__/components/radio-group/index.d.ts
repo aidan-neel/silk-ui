@@ -16,8 +16,7 @@ export type RadioGroupItemProps = {
     label?: string;
     description?: string;
     id?: string;
-} & DefaultProps &
-    Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked'>;
+} & DefaultProps & Omit<HTMLInputAttributes, 'type' | 'value' | 'name' | 'checked'>;
 export type RadioGroupContext = {
     readonly name: string | undefined;
     readonly disabled: boolean;

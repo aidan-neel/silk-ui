@@ -23,6 +23,5 @@ export type ResponseStreamProps = {
     onComplete?: () => void;
     onError?: (error: unknown) => void;
     as?: keyof SvelteHTMLElements;
-} & DefaultProps &
-    Omit<HTMLAttributes<HTMLElement>, 'children'>;
+} & DefaultProps & Omit<HTMLAttributes<HTMLElement>, 'children'>;
 export { ResponseStream };

@@ -8,20 +8,16 @@ export const button = tv({
              * popover or menu trigger reads as hovered for as long as its surface
              * is open.
              */
-            primary:
-                'bg-primary text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] data-[state=open]:bg-[var(--color-primary-hover)]',
-            secondary:
-                'bg-secondary text-foreground hover:bg-[var(--color-field-hover)] data-[state=open]:bg-[var(--color-field-hover)]',
+            primary: 'bg-primary text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] data-[state=open]:bg-[var(--color-primary-hover)]',
+            secondary: 'bg-secondary text-foreground hover:bg-[var(--color-field-hover)] data-[state=open]:bg-[var(--color-field-hover)]',
             ghost: 'bg-transparent text-foreground hover:bg-foreground/[0.08] data-[state=open]:bg-foreground/[0.08]',
             quiet: 'bg-transparent text-foreground',
             /**
              * Outline keeps the soft raised shadow. Focus composes the ring on top
              * of the lift so the raised look survives focus.
              */
-            outline:
-                'bg-card text-foreground shadow-[var(--elevation-button-outline)] hover:bg-secondary data-[state=open]:bg-secondary focus-visible:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
-            destructive:
-                'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)]',
+            outline: 'bg-card text-foreground shadow-[var(--elevation-button-outline)] hover:bg-secondary data-[state=open]:bg-secondary focus-visible:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
+            destructive: 'bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)] text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-error)_20%,transparent)]',
             /**
              * A clickable Panel: the same interaction as `outline` wearing Panel's
              * concentric frame -- the semantic border outside and the inset surface

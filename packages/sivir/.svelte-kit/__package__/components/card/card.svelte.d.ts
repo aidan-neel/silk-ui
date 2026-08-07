@@ -4,6 +4,6 @@ type $$ComponentProps = {
     class?: string;
     variant?: 'default' | 'panel';
 };
-declare const Card: import('svelte').Component<$$ComponentProps, {}, ''>;
+declare const Card: import("svelte").Component<$$ComponentProps, {}, "">;
 type Card = ReturnType<typeof Card>;
 export default Card;

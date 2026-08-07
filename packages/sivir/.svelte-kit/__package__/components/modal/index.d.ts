@@ -37,8 +37,7 @@ export type ModalContentProps = {
     showClose?: boolean;
     /** Width preset. Vertical layouts remain compact; horizontal layouts are one step wider. */
     size?: ModalSize;
-} & DefaultProps &
-    Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
+} & DefaultProps & Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
 export type ModalProps = {
     open?: boolean;
     /** Sets supported browser chrome to red while the modal is open. */

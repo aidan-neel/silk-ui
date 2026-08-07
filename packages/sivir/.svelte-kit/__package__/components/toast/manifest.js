@@ -15,8 +15,7 @@ export const manifest = {
     name: 'toast',
     version: '2.1.0',
     visibility: 'public',
-    description:
-        'Toast notification system with body-portaled Toaster, free-function toast() API, and a shared client stack (SSR-safe).',
+    description: 'Toast notification system with body-portaled Toaster, free-function toast() API, and a shared client stack (SSR-safe).',
     files: [
         'components/toast/lib.svelte.ts',
         'components/toast/toaster.svelte',

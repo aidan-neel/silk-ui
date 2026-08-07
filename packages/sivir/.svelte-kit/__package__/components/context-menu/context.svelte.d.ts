@@ -4,6 +4,5 @@ export type ContextMenuContext = {
     /** Open menu layers from root → immediate parent (submenu cone ancestors). */
     ancestors: ContextMenuState[];
 };
-declare const setContextMenuContext: (value: ContextMenuContext) => ContextMenuContext,
-    getContextMenuContext: () => ContextMenuContext;
+declare const setContextMenuContext: (value: ContextMenuContext) => ContextMenuContext, getContextMenuContext: () => ContextMenuContext;
 export { setContextMenuContext, getContextMenuContext };

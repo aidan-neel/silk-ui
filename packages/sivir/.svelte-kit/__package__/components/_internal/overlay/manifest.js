@@ -17,8 +17,7 @@ export const manifest = {
     name: '_internal/overlay',
     version: '1.1.0',
     visibility: 'internal',
-    description:
-        'Shared overlay primitive owning focus trap, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',
+    description: 'Shared overlay primitive owning focus trap, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',
     files: [
         'components/_internal/overlay/overlay.svelte.ts',
         'components/_internal/overlay/index.ts',

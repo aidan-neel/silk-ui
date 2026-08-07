@@ -9,6 +9,6 @@ type Props = {
     href?: string;
     onclick?: () => void;
 };
-declare const CommandItem: import('svelte').Component<Props, {}, ''>;
+declare const CommandItem: import("svelte").Component<Props, {}, "">;
 type CommandItem = ReturnType<typeof CommandItem>;
 export default CommandItem;

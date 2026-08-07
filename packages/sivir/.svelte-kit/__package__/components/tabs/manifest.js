@@ -2,8 +2,7 @@ export const manifest = {
     name: 'tabs',
     version: '1.1.0',
     visibility: 'public',
-    description:
-        'Horizontal or vertical tabbed interface with List, Trigger, and Content subparts. Supports three visual variants and a bindable active value.',
+    description: 'Horizontal or vertical tabbed interface with List, Trigger, and Content subparts. Supports three visual variants and a bindable active value.',
     role: 'tablist',
     files: [
         'components/tabs/tabs.svelte',

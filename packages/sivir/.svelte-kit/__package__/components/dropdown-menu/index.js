@@ -10,17 +10,4 @@ import Sub from './dropdown-menu-sub.svelte';
 import SubContent from './dropdown-menu-sub-content.svelte';
 import SubTrigger from './dropdown-menu-sub-trigger.svelte';
 import Trigger from './dropdown-menu-trigger.svelte';
-export {
-    CheckboxItem,
-    Content,
-    Item,
-    Label,
-    RadioGroup,
-    RadioItem,
-    Root,
-    Separator,
-    Sub,
-    SubContent,
-    SubTrigger,
-    Trigger
-};
+export { CheckboxItem, Content, Item, Label, RadioGroup, RadioItem, Root, Separator, Sub, SubContent, SubTrigger, Trigger };

@@ -151,67 +151,62 @@ function createToast(toastData, state = activeState) {
 /** Wraps a promise with loading, success, and error toast states. */
 function toastPromise(promise, messages) {
     const state = activeState;
-    const t = createToast(
-        {
-            title: messages.loading,
-            description: messages.loadingDescription,
-            type: 'loading',
-            persistent: true,
-            exitable: false
-        },
-        state
-    );
+    const t = createToast({
+        title: messages.loading,
+        description: messages.loadingDescription,
+        type: 'loading',
+        persistent: true,
+        exitable: false
+    }, state);
     promise
         .then((data) => {
-            if (t.id === undefined) {
-                return;
-            }
-            const title =
-                typeof messages.success === 'function' ? messages.success(data) : messages.success;
-            const description = messages.successDescription
-                ? typeof messages.successDescription === 'function'
-                    ? messages.successDescription(data)
-                    : messages.successDescription
-                : undefined;
-            updateToastForState(state, t.id, {
-                title,
-                description,
-                type: 'success',
-                persistent: false,
-                duration: 4200,
-                exitable: true,
-                createdAt: Date.now(),
-                remaining: 4200,
-                paused: false,
-                leaving: false
-            });
-            scheduleToastRemoval(t.id, 4200, state);
-        })
-        .catch((err) => {
-            if (t.id === undefined) {
-                return;
-            }
-            const title =
-                typeof messages.error === 'function' ? messages.error(err) : messages.error;
-            const description = messages.errorDescription
-                ? typeof messages.errorDescription === 'function'
-                    ? messages.errorDescription(err)
-                    : messages.errorDescription
-                : undefined;
-            updateToastForState(state, t.id, {
-                title,
-                description,
-                type: 'error',
-                persistent: false,
-                duration: 4200,
-                exitable: true,
-                createdAt: Date.now(),
-                remaining: 4200,
-                paused: false,
-                leaving: false
-            });
-            scheduleToastRemoval(t.id, 4200, state);
+        if (t.id === undefined) {
+            return;
+        }
+        const title = typeof messages.success === 'function' ? messages.success(data) : messages.success;
+        const description = messages.successDescription
+            ? typeof messages.successDescription === 'function'
+                ? messages.successDescription(data)
+                : messages.successDescription
+            : undefined;
+        updateToastForState(state, t.id, {
+            title,
+            description,
+            type: 'success',
+            persistent: false,
+            duration: 4200,
+            exitable: true,
+            createdAt: Date.now(),
+            remaining: 4200,
+            paused: false,
+            leaving: false
         });
+        scheduleToastRemoval(t.id, 4200, state);
+    })
+        .catch((err) => {
+        if (t.id === undefined) {
+            return;
+        }
+        const title = typeof messages.error === 'function' ? messages.error(err) : messages.error;
+        const description = messages.errorDescription
+            ? typeof messages.errorDescription === 'function'
+                ? messages.errorDescription(err)
+                : messages.errorDescription
+            : undefined;
+        updateToastForState(state, t.id, {
+            title,
+            description,
+            type: 'error',
+            persistent: false,
+            duration: 4200,
+            exitable: true,
+            createdAt: Date.now(),
+            remaining: 4200,
+            paused: false,
+            leaving: false
+        });
+        scheduleToastRemoval(t.id, 4200, state);
+    });
     return t;
 }
 const toast = createToast;
@@ -220,8 +215,7 @@ toast.success = (title, opts) => createToast({ ...opts, title, type: 'success' }
 toast.error = (title, opts) => createToast({ ...opts, title, type: 'error' });
 toast.warning = (title, opts) => createToast({ ...opts, title, type: 'warning' });
 toast.info = (title, opts) => createToast({ ...opts, title, type: 'info' });
-toast.loading = (title, opts) =>
-    createToast({ ...opts, title, type: 'loading', persistent: true, exitable: false });
+toast.loading = (title, opts) => createToast({ ...opts, title, type: 'loading', persistent: true, exitable: false });
 toast.dismiss = (id) => {
     if (id !== undefined) {
         dismissToast(id);
@@ -307,7 +301,8 @@ function __setActiveToastStateForTests(state) {
             clearTimeout(entry.timeout);
             toastTimeouts.delete(id);
         }
-    } else {
+    }
+    else {
         clientState = state;
     }
 }
@@ -318,15 +313,4 @@ function __setActiveToastStateForTests(state) {
 function __getActiveToastStateForTests() {
     return activeState;
 }
-export {
-    __getActiveToastStateForTests,
-    __setActiveToastStateForTests,
-    dismissToast,
-    getToastPrimaryHostId,
-    getToastUIState,
-    pauseToast,
-    resumeToast,
-    setToastUIState,
-    toast,
-    updateToast
-};
+export { __getActiveToastStateForTests, __setActiveToastStateForTests, dismissToast, getToastPrimaryHostId, getToastUIState, pauseToast, resumeToast, setToastUIState, toast, updateToast };

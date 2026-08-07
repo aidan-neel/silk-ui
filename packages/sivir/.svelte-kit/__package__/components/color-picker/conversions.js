@@ -26,9 +26,11 @@ export function hexToHsv(hex) {
     if (delta !== 0) {
         if (max === r) {
             hue = ((g - b) / delta) % 6;
-        } else if (max === g) {
+        }
+        else if (max === g) {
             hue = (b - r) / delta + 2;
-        } else {
+        }
+        else {
             hue = (r - g) / delta + 4;
         }
         hue = hue * 60;
@@ -54,26 +56,30 @@ export function hsvToHex(hue, sat, val) {
     if (hue < 60) {
         r = c;
         g = x;
-    } else if (hue < 120) {
+    }
+    else if (hue < 120) {
         r = x;
         g = c;
-    } else if (hue < 180) {
+    }
+    else if (hue < 180) {
         g = c;
         b = x;
-    } else if (hue < 240) {
+    }
+    else if (hue < 240) {
         g = x;
         b = c;
-    } else if (hue < 300) {
+    }
+    else if (hue < 300) {
         r = x;
         b = c;
-    } else {
+    }
+    else {
         r = c;
         b = x;
     }
-    const toH = (n) =>
-        Math.round((n + m) * 255)
-            .toString(16)
-            .padStart(2, '0');
+    const toH = (n) => Math.round((n + m) * 255)
+        .toString(16)
+        .padStart(2, '0');
     return `#${toH(r)}${toH(g)}${toH(b)}`;
 }
 export function hexToRgb(hex) {
@@ -84,10 +90,9 @@ export function hexToRgb(hex) {
     return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
 export function rgbToHex(red, green, blue) {
-    const toHex = (value) =>
-        Math.round(Math.max(0, Math.min(255, value)))
-            .toString(16)
-            .padStart(2, '0');
+    const toHex = (value) => Math.round(Math.max(0, Math.min(255, value)))
+        .toString(16)
+        .padStart(2, '0');
     return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
 }
 /**
@@ -112,9 +117,11 @@ export function hexToHsl(hex) {
         sat = delta / (1 - Math.abs(2 * l - 1));
         if (max === r) {
             hue = ((g - b) / delta) % 6;
-        } else if (max === g) {
+        }
+        else if (max === g) {
             hue = (b - r) / delta + 2;
-        } else {
+        }
+        else {
             hue = (r - g) / delta + 4;
         }
         hue *= 60;
@@ -136,25 +143,29 @@ export function hslToHex(hue, sat, light) {
     if (hue < 60) {
         r = c;
         g = x;
-    } else if (hue < 120) {
+    }
+    else if (hue < 120) {
         r = x;
         g = c;
-    } else if (hue < 180) {
+    }
+    else if (hue < 180) {
         g = c;
         b = x;
-    } else if (hue < 240) {
+    }
+    else if (hue < 240) {
         g = x;
         b = c;
-    } else if (hue < 300) {
+    }
+    else if (hue < 300) {
         r = x;
         b = c;
-    } else {
+    }
+    else {
         r = c;
         b = x;
     }
-    const toH = (n) =>
-        Math.round((n + m) * 255)
-            .toString(16)
-            .padStart(2, '0');
+    const toH = (n) => Math.round((n + m) * 255)
+        .toString(16)
+        .padStart(2, '0');
     return `#${toH(r)}${toH(g)}${toH(b)}`;
 }

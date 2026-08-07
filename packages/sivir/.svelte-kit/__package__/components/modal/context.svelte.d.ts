@@ -5,6 +5,5 @@ export type ModalContext = {
     returnFocusEl: HTMLElement | undefined;
     state: ModalState;
 };
-declare const setModalContext: (value: ModalContext) => ModalContext,
-    getModalContext: () => ModalContext;
+declare const setModalContext: (value: ModalContext) => ModalContext, getModalContext: () => ModalContext;
 export { setModalContext, getModalContext };

@@ -71,12 +71,9 @@ export function closeMenuLayers(current, ancestors) {
         if (!ancestor) {
             continue;
         }
-        setTimeout(
-            () => {
-                ancestor.open = false;
-            },
-            (ancestors.length - 1 - index) * 16 + 16
-        );
+        setTimeout(() => {
+            ancestor.open = false;
+        }, (ancestors.length - 1 - index) * 16 + 16);
     }
 }
 function pointInTriangle(point, a, b, c) {
@@ -89,12 +86,10 @@ function pointInTriangle(point, a, b, c) {
     return !(hasNegative && hasPositive);
 }
 function pointInRect(point, rect) {
-    return (
-        point.x >= rect.left &&
+    return (point.x >= rect.left &&
         point.x <= rect.right &&
         point.y >= rect.top &&
-        point.y <= rect.bottom
-    );
+        point.y <= rect.bottom);
 }
 /** Whether a pointer is in the contact triangle between a floating trigger and panel. */
 export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
@@ -108,33 +103,13 @@ export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
     };
     switch (placement.split('-')[0]) {
         case 'left':
-            return pointInTriangle(
-                point,
-                { x: trigger.left - contactMargin, y: triggerCenter.y },
-                { x: panel.right + contactMargin, y: panel.top },
-                { x: panel.right + contactMargin, y: panel.bottom }
-            );
+            return pointInTriangle(point, { x: trigger.left - contactMargin, y: triggerCenter.y }, { x: panel.right + contactMargin, y: panel.top }, { x: panel.right + contactMargin, y: panel.bottom });
         case 'top':
-            return pointInTriangle(
-                point,
-                { x: triggerCenter.x, y: trigger.top - contactMargin },
-                { x: panel.left, y: panel.bottom + contactMargin },
-                { x: panel.right, y: panel.bottom + contactMargin }
-            );
+            return pointInTriangle(point, { x: triggerCenter.x, y: trigger.top - contactMargin }, { x: panel.left, y: panel.bottom + contactMargin }, { x: panel.right, y: panel.bottom + contactMargin });
         case 'bottom':
-            return pointInTriangle(
-                point,
-                { x: triggerCenter.x, y: trigger.bottom + contactMargin },
-                { x: panel.left, y: panel.top - contactMargin },
-                { x: panel.right, y: panel.top - contactMargin }
-            );
+            return pointInTriangle(point, { x: triggerCenter.x, y: trigger.bottom + contactMargin }, { x: panel.left, y: panel.top - contactMargin }, { x: panel.right, y: panel.top - contactMargin });
         default:
-            return pointInTriangle(
-                point,
-                { x: trigger.right + contactMargin, y: triggerCenter.y },
-                { x: panel.left - contactMargin, y: panel.top },
-                { x: panel.left - contactMargin, y: panel.bottom }
-            );
+            return pointInTriangle(point, { x: trigger.right + contactMargin, y: triggerCenter.y }, { x: panel.left - contactMargin, y: panel.top }, { x: panel.left - contactMargin, y: panel.bottom });
     }
 }
 let bodyScrollLocks = 0;
@@ -149,30 +124,22 @@ let bodyInertLocks = 0;
  * prefixes each overlay assigns.
  */
 function isFloatingOverlayElement(el) {
-    if (
-        el.hasAttribute('data-floating-content') ||
+    if (el.hasAttribute('data-floating-content') ||
         el.hasAttribute('data-overlay-root') ||
         el.getAttribute('data-ui') === 'modal-overlay' ||
-        el.getAttribute('data-ui') === 'sheet-overlay'
-    ) {
+        el.getAttribute('data-ui') === 'sheet-overlay') {
         return true;
     }
-    if (
-        el.querySelector?.(
-            '[data-floating-content], [data-overlay-root], [role="dialog"], [role="alertdialog"], [data-ui="modal-overlay"], [data-ui="sheet-overlay"]'
-        )
-    ) {
+    if (el.querySelector?.('[data-floating-content], [data-overlay-root], [role="dialog"], [role="alertdialog"], [data-ui="modal-overlay"], [data-ui="sheet-overlay"]')) {
         return true;
     }
     const id = el.id;
-    return (
-        id.startsWith('popover-') ||
+    return (id.startsWith('popover-') ||
         id.startsWith('modal-') ||
         id.startsWith('dialog-') ||
         id.startsWith('sheet-') ||
         id.startsWith('command-') ||
-        id.startsWith('alert-dialog-')
-    );
+        id.startsWith('alert-dialog-'));
 }
 /**
  * Locks document scrolling and returns a disposer.
@@ -183,7 +150,7 @@ function isFloatingOverlayElement(el) {
  */
 export function lockBodyScroll() {
     if (typeof document === 'undefined') {
-        return () => {};
+        return () => { };
     }
     if (bodyScrollLocks === 0) {
         savedBodyOverflow = document.body.style.overflow;
@@ -208,7 +175,7 @@ export function lockBodyScroll() {
 /** Marks non-overlay body children as non-interactive while a floating layer is open. */
 export function lockBodyBackground() {
     if (typeof document === 'undefined') {
-        return () => {};
+        return () => { };
     }
     if (bodyInertLocks === 0) {
         for (const el of Array.from(document.body.children)) {
@@ -292,7 +259,7 @@ function ensureEscapeListener() {
  */
 export function pushEscapeLayer(close, element) {
     if (typeof document === 'undefined') {
-        return () => {};
+        return () => { };
     }
     ensureEscapeListener();
     const layer = { close, element };
@@ -330,11 +297,9 @@ export function getFocusableElements(container) {
         if (el.getAttribute('aria-hidden') === 'true') {
             return false;
         }
-        return !(
-            el.offsetParent === null &&
+        return !(el.offsetParent === null &&
             getComputedStyle(el).position !== 'fixed' &&
-            getComputedStyle(el).position !== 'sticky'
-        );
+            getComputedStyle(el).position !== 'sticky');
     });
 }
 /** Focuses the first focusable descendant when one exists. */
@@ -348,8 +313,7 @@ export function trapFocus(dialogEl, options) {
     if (!dialogEl) {
         return;
     }
-    const previouslyFocused =
-        options?.returnFocus ??
+    const previouslyFocused = options?.returnFocus ??
         (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     const handleKeydown = (e) => {
         if (e.key !== 'Tab') {
@@ -367,7 +331,8 @@ export function trapFocus(dialogEl, options) {
                 e.preventDefault();
                 last.focus();
             }
-        } else {
+        }
+        else {
             if (!active || !dialogEl.contains(active) || active === last) {
                 e.preventDefault();
                 first.focus();
@@ -381,7 +346,8 @@ export function trapFocus(dialogEl, options) {
         }
         if (options?.initialFocus) {
             options.initialFocus.focus();
-        } else if (!focusFirstDescendant(dialogEl)) {
+        }
+        else if (!focusFirstDescendant(dialogEl)) {
             dialogEl.focus();
         }
     };
@@ -390,7 +356,8 @@ export function trapFocus(dialogEl, options) {
     queueMicrotask(() => {
         if (options?.initialFocus) {
             options.initialFocus.focus();
-        } else if (!focusFirstDescendant(dialogEl)) {
+        }
+        else if (!focusFirstDescendant(dialogEl)) {
             dialogEl.focus();
         }
     });
@@ -439,8 +406,7 @@ export function pressable(node) {
  */
 export function travelingHighlight(node, options = {}) {
     const itemSelector = options.itemSelector ?? '[data-collection-item]';
-    const restingSelector =
-        options.restingSelector ??
+    const restingSelector = options.restingSelector ??
         `${itemSelector}[data-collection-active="true"], ${itemSelector}[aria-selected="true"], ${itemSelector}[data-state="open"]`;
     const highlight = document.createElement('span');
     highlight.className = 'sivir-item-highlight';
@@ -472,9 +438,7 @@ export function travelingHighlight(node, options = {}) {
     }
     function restingTarget() {
         for (const selector of restingSelector.split(',').map((part) => part.trim())) {
-            const target = Array.from(node.querySelectorAll(selector)).find(
-                (item) => item.closest('.sivir-collection-surface') === node
-            );
+            const target = Array.from(node.querySelectorAll(selector)).find((item) => item.closest('.sivir-collection-surface') === node);
             if (target) {
                 return target;
             }
@@ -601,13 +565,9 @@ export function clickOutside(node, callback, exclude = []) {
         const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
         const target = event.target;
         const isInsideNode = path.includes(node) || (target ? node.contains(target) : false);
-        const isInsideExcluded = exclude.some(
-            (excludeNode) =>
-                path.includes(excludeNode) || (target ? excludeNode.contains(target) : false)
-        );
+        const isInsideExcluded = exclude.some((excludeNode) => path.includes(excludeNode) || (target ? excludeNode.contains(target) : false));
         const targetEl = target instanceof Element ? target : null;
-        const isInsideFloating =
-            path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
+        const isInsideFloating = path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
             targetEl?.closest('[data-floating-content]') != null;
         return !isInsideNode && !isInsideExcluded && !isInsideFloating;
     }
@@ -668,24 +628,18 @@ export function positionFloatingPanel(reference, floating, placement) {
                 apply({ availableWidth, availableHeight, elements }) {
                     elements.floating.style.maxWidth = `${Math.max(availableWidth, 0)}px`;
                     elements.floating.style.maxHeight = `${Math.max(availableHeight, 0)}px`;
-                    elements.floating.style.setProperty(
-                        '--popover-available-width',
-                        `${Math.max(availableWidth, 0)}px`
-                    );
-                    elements.floating.style.setProperty(
-                        '--popover-available-height',
-                        `${Math.max(availableHeight, 0)}px`
-                    );
+                    elements.floating.style.setProperty('--popover-available-width', `${Math.max(availableWidth, 0)}px`);
+                    elements.floating.style.setProperty('--popover-available-height', `${Math.max(availableHeight, 0)}px`);
                 }
             })
         ]
     })
         .then(({ x, y, placement: resolvedPlacement }) => {
-            Object.assign(floating.style, {
-                left: `${x}px`,
-                top: `${y}px`
-            });
-            floating.dataset.placement = resolvedPlacement;
-        })
-        .catch(() => {});
+        Object.assign(floating.style, {
+            left: `${x}px`,
+            top: `${y}px`
+        });
+        floating.dataset.placement = resolvedPlacement;
+    })
+        .catch(() => { });
 }

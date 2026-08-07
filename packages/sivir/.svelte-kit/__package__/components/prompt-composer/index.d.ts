@@ -1,11 +1,6 @@
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
-import type {
-    HTMLAttributes,
-    HTMLButtonAttributes,
-    HTMLFormAttributes,
-    HTMLTextareaAttributes
-} from 'svelte/elements';
+import type { HTMLAttributes, HTMLButtonAttributes, HTMLFormAttributes, HTMLTextareaAttributes } from 'svelte/elements';
 import Root from './prompt-composer.svelte';
 import Actions from './prompt-composer-actions.svelte';
 import Input from './prompt-composer-input.svelte';
@@ -23,10 +18,7 @@ export type PromptComposerProps = {
     onStop?: () => void;
     class?: string;
     children?: Snippet;
-} & Omit<
-    HTMLFormAttributes,
-    'children' | 'class' | 'onsubmit' | 'action' | 'method' | 'target' | 'enctype'
->;
+} & Omit<HTMLFormAttributes, 'children' | 'class' | 'onsubmit' | 'action' | 'method' | 'target' | 'enctype'>;
 export type PromptComposerInputProps = {
     submitOnEnter?: boolean;
     element?: HTMLTextAreaElement;
@@ -48,8 +40,7 @@ export type PromptComposerSubmitProps = {
     element?: HTMLButtonElement | HTMLAnchorElement;
     onclick?: (event: MouseEvent) => void;
     class?: string;
-} & Omit<DefaultProps, 'children'> &
-    Omit<HTMLButtonAttributes, 'children' | 'class' | 'type' | 'onclick'>;
+} & Omit<DefaultProps, 'children'> & Omit<HTMLButtonAttributes, 'children' | 'class' | 'type' | 'onclick'>;
 export type PromptComposerSubmitAction = 'send' | 'queue' | 'stop' | 'pending';
 export type PromptComposerSubmitState = Readonly<{
     action: PromptComposerSubmitAction;

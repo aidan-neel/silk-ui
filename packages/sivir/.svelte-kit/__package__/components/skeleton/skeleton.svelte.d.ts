@@ -4,23 +4,8 @@ type $$ComponentProps = {
     class?: string;
     w?: number;
     h?: number;
-    unit?:
-        | 'px'
-        | 'rem'
-        | 'em'
-        | '%'
-        | 'vh'
-        | 'vw'
-        | 'vmin'
-        | 'vmax'
-        | 'ch'
-        | 'ex'
-        | 'cm'
-        | 'mm'
-        | 'in'
-        | 'pt'
-        | 'pc';
+    unit?: 'px' | 'rem' | 'em' | '%' | 'vh' | 'vw' | 'vmin' | 'vmax' | 'ch' | 'ex' | 'cm' | 'mm' | 'in' | 'pt' | 'pc';
 };
-declare const Skeleton: import('svelte').Component<$$ComponentProps, {}, ''>;
+declare const Skeleton: import("svelte").Component<$$ComponentProps, {}, "">;
 type Skeleton = ReturnType<typeof Skeleton>;
 export default Skeleton;

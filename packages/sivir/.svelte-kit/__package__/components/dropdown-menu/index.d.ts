@@ -22,26 +22,11 @@ export type DropdownMenuRadioItemProps = {
     value: string;
     children?: Snippet;
     element?: HTMLButtonElement | HTMLAnchorElement;
-} & DefaultProps &
-    Omit<HTMLButtonAttributes, 'children' | 'role' | 'aria-checked'>;
+} & DefaultProps & Omit<HTMLButtonAttributes, 'children' | 'role' | 'aria-checked'>;
 export type DropdownMenuCheckboxItemProps = {
     checked?: boolean;
     onCheckedChange?: (checked: boolean) => void;
     children?: Snippet;
     element?: HTMLButtonElement | HTMLAnchorElement;
-} & DefaultProps &
-    Omit<HTMLButtonAttributes, 'children' | 'role' | 'aria-checked'>;
-export {
-    CheckboxItem,
-    Content,
-    Item,
-    Label,
-    RadioGroup,
-    RadioItem,
-    Root,
-    Separator,
-    Sub,
-    SubContent,
-    SubTrigger,
-    Trigger
-};
+} & DefaultProps & Omit<HTMLButtonAttributes, 'children' | 'role' | 'aria-checked'>;
+export { CheckboxItem, Content, Item, Label, RadioGroup, RadioItem, Root, Separator, Sub, SubContent, SubTrigger, Trigger };

@@ -2,8 +2,7 @@ export const manifest = {
     name: 'shortcut',
     version: '1.0.0',
     visibility: 'public',
-    description:
-        'Keyboard shortcut indicator. Activates its nearest interactive owner or an explicit ontrigger callback.',
+    description: 'Keyboard shortcut indicator. Activates its nearest interactive owner or an explicit ontrigger callback.',
     files: [
         'components/shortcut/shortcut.svelte',
         'components/shortcut/index.ts',

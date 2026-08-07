@@ -11,10 +11,6 @@ type $$ComponentProps = {
     checked?: boolean | undefined;
     files?: FileList | undefined;
 } & HTMLInputAttributes;
-declare const Input: import('svelte').Component<
-    $$ComponentProps,
-    {},
-    'value' | 'element' | 'files' | 'checked'
->;
+declare const Input: import("svelte").Component<$$ComponentProps, {}, "value" | "element" | "files" | "checked">;
 type Input = ReturnType<typeof Input>;
 export default Input;

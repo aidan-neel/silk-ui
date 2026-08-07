@@ -5,6 +5,6 @@ type $$ComponentProps = {
     children: Snippet;
     class?: string;
 };
-declare const Alert: import('svelte').Component<$$ComponentProps, {}, ''>;
+declare const Alert: import("svelte").Component<$$ComponentProps, {}, "">;
 type Alert = ReturnType<typeof Alert>;
 export default Alert;

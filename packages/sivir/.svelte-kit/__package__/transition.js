@@ -45,7 +45,8 @@ export function cubicBezier(x1, y1, x2, y2) {
             }
             if (x < t) {
                 lo = mid;
-            } else {
+            }
+            else {
                 hi = mid;
             }
             mid = (lo + hi) / 2;
@@ -70,8 +71,7 @@ function panelTransition(node, durationVariable, fallbackDuration, options) {
     const baseTransform = style.transform === 'none' ? '' : style.transform;
     const baseFilter = style.filter === 'none' ? '' : style.filter;
     const offsetY = options?.offsetY ?? getCssNumber(node, '--motion-panel-y', 2);
-    const startScale =
-        options?.startScale ?? getCssNumber(node, '--motion-panel-scale-start', 0.97);
+    const startScale = options?.startScale ?? getCssNumber(node, '--motion-panel-scale-start', 0.97);
     return {
         duration: getCssDuration(node, durationVariable, fallbackDuration),
         easing: options?.easing ?? cubicOut,
@@ -130,11 +130,7 @@ export function sheetOut(node, params = {}) {
 }
 /** Vertical slide that reads its duration from a CSS motion variable. */
 export const themedSlide = (node, params = {}) => {
-    const duration = getCssDuration(
-        node,
-        params.durationVar ?? '--motion-duration-panel',
-        params.fallback ?? 220
-    );
+    const duration = getCssDuration(node, params.durationVar ?? '--motion-duration-panel', params.fallback ?? 220);
     const style = getComputedStyle(node);
     const opacity = +style.opacity;
     const height = parseFloat(style.height);
@@ -149,8 +145,7 @@ export const themedSlide = (node, params = {}) => {
         delay: 0,
         easing: cubicOut,
         css: (t) => {
-            return (
-                `overflow: hidden;` +
+            return (`overflow: hidden;` +
                 `opacity: ${Math.min(t * 20, 1) * opacity};` +
                 `height: ${t * height}px;` +
                 `padding-top: ${t * paddingTop}px;` +
@@ -158,8 +153,7 @@ export const themedSlide = (node, params = {}) => {
                 `margin-top: ${t * marginTop}px;` +
                 `margin-bottom: ${t * marginBottom}px;` +
                 `border-top-width: ${t * borderTopWidth}px;` +
-                `border-bottom-width: ${t * borderBottomWidth}px;`
-            );
+                `border-bottom-width: ${t * borderBottomWidth}px;`);
         }
     };
 };

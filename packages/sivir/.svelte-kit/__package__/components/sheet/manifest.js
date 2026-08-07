@@ -13,8 +13,7 @@ export const manifest = {
     name: 'sheet',
     version: '1.0.0',
     visibility: 'public',
-    description:
-        'Side-anchored drawer overlay (left | right). Composes _internal/overlay for shared mechanics and Svelte transitions for motion.',
+    description: 'Side-anchored drawer overlay (left | right). Composes _internal/overlay for shared mechanics and Svelte transitions for motion.',
     role: 'dialog',
     files: [
         'components/sheet/sheet.svelte',

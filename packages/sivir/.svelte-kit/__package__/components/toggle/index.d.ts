@@ -9,7 +9,6 @@ export type ToggleProps = {
     variant?: 'default' | 'outlined';
     children?: Snippet;
     onPressedChange?: (pressed: boolean) => void;
-} & DefaultProps &
-    Omit<HTMLButtonAttributes, 'onclick' | 'children'>;
+} & DefaultProps & Omit<HTMLButtonAttributes, 'onclick' | 'children'>;
 export { Toggle };
 export default Toggle;

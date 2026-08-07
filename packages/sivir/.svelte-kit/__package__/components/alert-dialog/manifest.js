@@ -2,8 +2,7 @@ export const manifest = {
     name: 'alert-dialog',
     version: '1.1.0',
     visibility: 'public',
-    description:
-        'Confirmation dialog with role="alertdialog", default allowClickOutside=false, and Exit/Confirm buttons (no Close).',
+    description: 'Confirmation dialog with role="alertdialog", default allowClickOutside=false, and Exit/Confirm buttons (no Close).',
     role: 'alertdialog',
     files: [
         'components/alert-dialog/alert-dialog.svelte',
