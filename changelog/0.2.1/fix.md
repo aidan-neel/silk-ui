@@ -6,3 +6,4 @@
 - Reduce the default width of horizontal and vertical modals, and show the vertical alert-dialog layout in its base example.
 - Ensure documentation pages retain bottom scroll room after overflowing content, and improve vertical alert-dialog icon spacing.
 - Apply the documentation entrance animation to the home-page hero.
+- Allow commits containing only Biome-ignored generated package artifacts to pass the pre-commit hook.

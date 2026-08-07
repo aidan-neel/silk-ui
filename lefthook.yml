@@ -3,7 +3,7 @@ pre-commit:
     commands:
         biome:
             glob: '*.{js,ts,svelte,json,css,md,html,yaml,yml}'
-            run: bunx biome check --write {staged_files}
+            run: bunx biome check --write --no-errors-on-unmatched {staged_files}
             stage_fixed: true
 
 pre-push:
