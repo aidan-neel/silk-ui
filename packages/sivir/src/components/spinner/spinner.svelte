@@ -1,73 +1,75 @@
 <script lang="ts">
-import Check from '@lucide/svelte/icons/check';
-import LoaderCircle from '@lucide/svelte/icons/loader-circle';
-import { getCssDuration } from '@sivir-ui/svelte/transition';
-import { cn } from '@sivir-ui/svelte/utils';
+    import Check from '@lucide/svelte/icons/check';
+    import LoaderCircle from '@lucide/svelte/icons/loader-circle';
+    import { getCssDuration } from '@sivir-ui/svelte/transition';
+    import { cn } from '@sivir-ui/svelte/utils';
 
-type SpinnerProps = {
-    size?: number;
-    ready?: boolean;
-    class?: string;
-    'aria-label'?: string;
-    'aria-hidden'?: boolean | 'true' | 'false';
-};
+    type SpinnerProps = {
+        size?: number;
+        ready?: boolean;
+        class?: string;
+        'aria-label'?: string;
+        'aria-hidden'?: boolean | 'true' | 'false';
+    };
 
-type SpinnerPhase = 'loading' | 'success' | 'exiting' | 'hidden';
+    type SpinnerPhase = 'loading' | 'success' | 'exiting' | 'hidden';
 
-const successVisibleDuration = 2000;
+    const successVisibleDuration = 2000;
 
-let {
-    size = 16,
-    ready = false,
-    class: classProp,
-    'aria-label': ariaLabel,
-    'aria-hidden': ariaHidden
-}: SpinnerProps = $props();
+    let {
+        size = 16,
+        ready = false,
+        class: classProp,
+        'aria-label': ariaLabel,
+        'aria-hidden': ariaHidden
+    }: SpinnerProps = $props();
 
-let indicator = $state<HTMLSpanElement>();
-let phase = $state<SpinnerPhase>('loading');
-let entered = $state(false);
-const showCheckmark = $derived(phase === 'success' || phase === 'exiting');
-const collapsed = $derived(!entered || phase === 'exiting');
+    let indicator = $state<HTMLSpanElement>();
+    let phase = $state<SpinnerPhase>('loading');
+    let entered = $state(false);
+    const showCheckmark = $derived(phase === 'success' || phase === 'exiting');
+    const collapsed = $derived(!entered || phase === 'exiting');
 
-$effect(() => {
-    if (!ready) {
-        phase = 'loading';
-        entered = false;
-        const frame = requestAnimationFrame(() => {
-            entered = true;
-        });
+    $effect(() => {
+        if (!ready) {
+            phase = 'loading';
+            entered = false;
+            const frame = requestAnimationFrame(() => {
+                entered = true;
+            });
+
+            return () => {
+                cancelAnimationFrame(frame);
+            };
+        }
+
+        entered = true;
+        phase = 'success';
+        const timer = setTimeout(() => {
+            phase = 'exiting';
+        }, successVisibleDuration);
 
         return () => {
-            cancelAnimationFrame(frame);
+            clearTimeout(timer);
         };
-    }
+    });
 
-    entered = true;
-    phase = 'success';
-    const timer = setTimeout(() => {
-        phase = 'exiting';
-    }, successVisibleDuration);
+    $effect(() => {
+        if (phase !== 'exiting') {
+            return;
+        }
 
-    return () => {
-        clearTimeout(timer);
-    };
-});
+        const duration = indicator
+            ? getCssDuration(indicator, '--motion-duration-panel', 180)
+            : 180;
+        const timer = setTimeout(() => {
+            phase = 'hidden';
+        }, duration);
 
-$effect(() => {
-    if (phase !== 'exiting') {
-        return;
-    }
-
-    const duration = indicator ? getCssDuration(indicator, '--motion-duration-panel', 180) : 180;
-    const timer = setTimeout(() => {
-        phase = 'hidden';
-    }, duration);
-
-    return () => {
-        clearTimeout(timer);
-    };
-});
+        return () => {
+            clearTimeout(timer);
+        };
+    });
 </script>
 
 {#if phase !== 'hidden'}

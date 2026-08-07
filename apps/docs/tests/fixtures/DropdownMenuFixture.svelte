@@ -1,17 +1,17 @@
 <script lang="ts">
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
-let {
-    onItem1 = () => {},
-    onItem2 = () => {},
-    onItem3 = () => {},
-    inverted = false
-}: {
-    onItem1?: () => void;
-    onItem2?: () => void;
-    onItem3?: () => void;
-    inverted?: boolean;
-} = $props();
+    let {
+        onItem1 = () => {},
+        onItem2 = () => {},
+        onItem3 = () => {},
+        inverted = false
+    }: {
+        onItem1?: () => void;
+        onItem2?: () => void;
+        onItem3?: () => void;
+        inverted?: boolean;
+    } = $props();
 </script>
 
 <DropdownMenu.Root {inverted}>

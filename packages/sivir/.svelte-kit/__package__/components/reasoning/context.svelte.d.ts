@@ -7,5 +7,6 @@ export type ReasoningContext = {
     transitionStart: (open: boolean) => number;
     transitionComplete: (open: boolean, revision: number) => void;
 };
-declare const setReasoningContext: (value: ReasoningContext) => ReasoningContext, getReasoningContext: () => ReasoningContext;
+declare const setReasoningContext: (value: ReasoningContext) => ReasoningContext,
+    getReasoningContext: () => ReasoningContext;
 export { getReasoningContext, setReasoningContext };

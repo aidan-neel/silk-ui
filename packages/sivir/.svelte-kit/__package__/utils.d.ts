@@ -37,16 +37,24 @@ export declare function createContext<T>(name: string): {
  * Shared by context-menu and dropdown-menu, whose state objects differ but
  * both expose `open`.
  */
-export declare function closeMenuLayers(current: {
-    open: boolean;
-}, ancestors: {
-    open: boolean;
-}[]): void;
+export declare function closeMenuLayers(
+    current: {
+        open: boolean;
+    },
+    ancestors: {
+        open: boolean;
+    }[]
+): void;
 /** Whether a pointer is in the contact triangle between a floating trigger and panel. */
-export declare function isPointInSubmenuTriangle(point: {
-    x: number;
-    y: number;
-}, trigger: DOMRect, panel: DOMRect, placement: Placement): boolean;
+export declare function isPointInSubmenuTriangle(
+    point: {
+        x: number;
+        y: number;
+    },
+    trigger: DOMRect,
+    panel: DOMRect,
+    placement: Placement
+): boolean;
 /**
  * Locks document scrolling and returns a disposer.
  *
@@ -69,10 +77,13 @@ export declare function resetEscapeStackForTests(): void;
 /** Returns the visible, interactive descendants inside a container. */
 export declare function getFocusableElements(container: HTMLElement): HTMLElement[];
 /** Keeps keyboard focus inside a container and restores the previous focus on cleanup. */
-export declare function trapFocus(dialogEl: HTMLElement, options?: {
-    initialFocus?: HTMLElement | null;
-    returnFocus?: HTMLElement | null;
-}): (() => void) | undefined;
+export declare function trapFocus(
+    dialogEl: HTMLElement,
+    options?: {
+        initialFocus?: HTMLElement | null;
+        returnFocus?: HTMLElement | null;
+    }
+): (() => void) | undefined;
 /**
  * Constant-pixel press scale.
  *
@@ -92,7 +103,10 @@ type TravelingHighlightOptions = {
  * Draws one highlight that travels between the active items in a collection.
  * Geometry is written directly so pointer movement never causes a component render.
  */
-export declare function travelingHighlight(node: HTMLElement, options?: TravelingHighlightOptions): {
+export declare function travelingHighlight(
+    node: HTMLElement,
+    options?: TravelingHighlightOptions
+): {
     destroy(): void;
 };
 /**
@@ -106,7 +120,11 @@ export declare function travelingHighlight(node: HTMLElement, options?: Travelin
  * target's own ancestor chain stays intact after the wrapper is detached, so it
  * serves as the fallback and keeps a parent overlay from being dismissed too.
  */
-export declare function clickOutside(node: Node, callback: () => void, exclude?: Node[]): {
+export declare function clickOutside(
+    node: Node,
+    callback: () => void,
+    exclude?: Node[]
+): {
     destroy(): void;
 };
 /**
@@ -116,5 +134,9 @@ export declare function clickOutside(node: Node, callback: () => void, exclude?:
  * during an asynchronous layout pass, and teardown is an expected terminal
  * state rather than an error.
  */
-export declare function positionFloatingPanel(reference: ReferenceElement, floating: HTMLElement, placement: Placement): Promise<void>;
+export declare function positionFloatingPanel(
+    reference: ReferenceElement,
+    floating: HTMLElement,
+    placement: Placement
+): Promise<void>;
 export {};

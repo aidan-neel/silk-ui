@@ -1,18 +1,18 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import FileRow from './examples/file-row.svelte';
-import FileRowSrc from './examples/file-row.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Image from './examples/image.svelte';
-import ImageSrc from './examples/image.svelte?raw';
-import TaskCard from './examples/task-card.svelte';
-import TaskCardSrc from './examples/task-card.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import FileRow from './examples/file-row.svelte';
+    import FileRowSrc from './examples/file-row.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Image from './examples/image.svelte';
+    import ImageSrc from './examples/image.svelte?raw';
+    import TaskCard from './examples/task-card.svelte';
+    import TaskCardSrc from './examples/task-card.svelte?raw';
 
-const _TITLE = 'Context Menu';
+    const _TITLE = 'Context Menu';
 
-const installCommand = 'bunx @sivir-ui/svelte add context-menu';
+    const installCommand = 'bunx @sivir-ui/svelte add context-menu';
 </script>
 
 <svelte:head>

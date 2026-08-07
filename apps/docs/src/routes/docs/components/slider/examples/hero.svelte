@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Slider } from '@sivir-ui/svelte/components/slider';
+    import { Slider } from '@sivir-ui/svelte/components/slider';
 
-let volume = $state(64);
+    let volume = $state(64);
 </script>
 
 <div class="flex w-full max-w-sm flex-col gap-2">

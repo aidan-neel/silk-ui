@@ -1,13 +1,13 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Reply from './examples/reply.svelte';
-import ReplySrc from './examples/reply.svelte?raw';
-import SupportNote from './examples/support-note.svelte';
-import SupportNoteSrc from './examples/support-note.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Reply from './examples/reply.svelte';
+    import ReplySrc from './examples/reply.svelte?raw';
+    import SupportNote from './examples/support-note.svelte';
+    import SupportNoteSrc from './examples/support-note.svelte?raw';
 </script>
 
 <svelte:head>

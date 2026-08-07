@@ -1,25 +1,25 @@
 <script lang="ts">
-import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
-import { Label } from '@sivir-ui/svelte/components/label';
-import * as Select from '@sivir-ui/svelte/components/select';
-import * as Sheet from '@sivir-ui/svelte/components/sheet';
-import { Switch } from '@sivir-ui/svelte/components/switch';
+    import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
+    import { Label } from '@sivir-ui/svelte/components/label';
+    import * as Select from '@sivir-ui/svelte/components/select';
+    import * as Sheet from '@sivir-ui/svelte/components/sheet';
+    import { Switch } from '@sivir-ui/svelte/components/switch';
 
-let status = $state('all');
-let onlyMine = $state(false);
-let includeArchived = $state(false);
-let hasAssignee = $state(true);
-let hasLabels = $state(true);
+    let status = $state('all');
+    let onlyMine = $state(false);
+    let includeArchived = $state(false);
+    let hasAssignee = $state(true);
+    let hasLabels = $state(true);
 
-const statuses = [
-    { value: 'all', label: 'All statuses' },
-    { value: 'open', label: 'Open' },
-    { value: 'closed', label: 'Closed' }
-];
+    const statuses = [
+        { value: 'all', label: 'All statuses' },
+        { value: 'open', label: 'Open' },
+        { value: 'closed', label: 'Closed' }
+    ];
 
-const statusLabel = $derived(statuses.find((s) => s.value === status)?.label ?? 'Status');
+    const statusLabel = $derived(statuses.find((s) => s.value === status)?.label ?? 'Status');
 </script>
 
 <Sheet.Root>

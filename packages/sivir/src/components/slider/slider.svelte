@@ -1,40 +1,40 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { SliderProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { SliderProps } from '.';
 
-let {
-    class: className,
-    value = $bindable(0),
-    min = 0,
-    max = 100,
-    step = 1,
-    disabled = false,
-    label,
-    onValueChange,
-    ...rest
-}: SliderProps = $props();
-const pct = $derived(
-    max > min ? Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100) : 0
-);
+    let {
+        class: className,
+        value = $bindable(0),
+        min = 0,
+        max = 100,
+        step = 1,
+        disabled = false,
+        label,
+        onValueChange,
+        ...rest
+    }: SliderProps = $props();
+    const pct = $derived(
+        max > min ? Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100) : 0
+    );
 
-function handle(event: Event) {
-    const next = Number((event.target as HTMLInputElement).value);
-    value = next;
-    onValueChange?.(next);
-}
-
-function startDrag(event: PointerEvent) {
-    const input = event.currentTarget as HTMLInputElement;
-    if (input.disabled) {
-        return;
+    function handle(event: Event) {
+        const next = Number((event.target as HTMLInputElement).value);
+        value = next;
+        onValueChange?.(next);
     }
-    input.dataset.dragging = '';
-}
 
-function endDrag(event: PointerEvent) {
-    delete (event.currentTarget as HTMLInputElement).dataset.dragging;
-}
+    function startDrag(event: PointerEvent) {
+        const input = event.currentTarget as HTMLInputElement;
+        if (input.disabled) {
+            return;
+        }
+        input.dataset.dragging = '';
+    }
+
+    function endDrag(event: PointerEvent) {
+        delete (event.currentTarget as HTMLInputElement).dataset.dragging;
+    }
 </script>
 
 <div

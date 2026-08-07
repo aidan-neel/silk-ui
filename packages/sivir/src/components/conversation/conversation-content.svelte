@@ -1,102 +1,104 @@
 <script lang="ts">
-import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
-import { cn } from '@sivir-ui/svelte/utils';
-import { untrack } from 'svelte';
-import type { ConversationContentProps } from '.';
-import { getConversationContext } from './context.svelte';
+    import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { untrack } from 'svelte';
+    import type { ConversationContentProps } from '.';
+    import { getConversationContext } from './context.svelte';
 
-let {
-    children,
-    class: className,
-    transcriptClass,
-    'aria-label': ariaLabel = 'Conversation',
-    tabindex,
-    onscroll,
-    onscrollend,
-    onwheel,
-    ontouchstart,
-    onpointerdown,
-    ...rest
-}: ConversationContentProps = $props();
+    let {
+        children,
+        class: className,
+        transcriptClass,
+        'aria-label': ariaLabel = 'Conversation',
+        tabindex,
+        onscroll,
+        onscrollend,
+        onwheel,
+        ontouchstart,
+        onpointerdown,
+        ...rest
+    }: ConversationContentProps = $props();
 
-const conversation = getConversationContext();
-let scrollable = $state(false);
-let viewport = $state<HTMLDivElement>();
-let previousScrollTop = 0;
-let userScrollIntent = false;
+    const conversation = getConversationContext();
+    let scrollable = $state(false);
+    let viewport = $state<HTMLDivElement>();
+    let previousScrollTop = 0;
+    let userScrollIntent = false;
 
-function isNearBottom(viewport: HTMLDivElement) {
-    const remaining = viewport.scrollHeight - viewport.clientHeight - viewport.scrollTop;
-    return remaining <= Math.max(0, conversation.threshold);
-}
-
-function measure(viewport: HTMLDivElement) {
-    scrollable = viewport.scrollHeight - viewport.clientHeight > 1;
-    const nearBottom = isNearBottom(viewport);
-    conversation.atBottom = nearBottom;
-    if (nearBottom) {
-        conversation.follow = true;
-        conversation.scrollingToBottom = false;
-    }
-    return nearBottom;
-}
-
-function handleScroll(viewport: HTMLDivElement) {
-    const nextScrollTop = viewport.scrollTop;
-    const nearBottom = measure(viewport);
-
-    if (
-        !nearBottom &&
-        (userScrollIntent ||
-            (!conversation.scrollingToBottom && nextScrollTop < previousScrollTop - 1))
-    ) {
-        conversation.follow = false;
-        conversation.scrollingToBottom = false;
+    function isNearBottom(viewport: HTMLDivElement) {
+        const remaining = viewport.scrollHeight - viewport.clientHeight - viewport.scrollTop;
+        return remaining <= Math.max(0, conversation.threshold);
     }
 
-    previousScrollTop = nextScrollTop;
-    userScrollIntent = false;
-}
-
-function observeViewport(viewport: HTMLDivElement) {
-    untrack(() => {
-        conversation.viewport = viewport;
-        previousScrollTop = viewport.scrollTop;
-        measure(viewport);
-    });
-
-    const transcript = viewport.querySelector<HTMLElement>('[data-ui="conversation-transcript"]');
-    const observer = new ResizeObserver(() => {
-        if (conversation.follow) {
-            conversation.scrollToBottom('auto');
-        } else {
-            measure(viewport);
+    function measure(viewport: HTMLDivElement) {
+        scrollable = viewport.scrollHeight - viewport.clientHeight > 1;
+        const nearBottom = isNearBottom(viewport);
+        conversation.atBottom = nearBottom;
+        if (nearBottom) {
+            conversation.follow = true;
+            conversation.scrollingToBottom = false;
         }
-    });
-    observer.observe(viewport);
-    if (transcript) {
-        observer.observe(transcript);
+        return nearBottom;
+    }
+
+    function handleScroll(viewport: HTMLDivElement) {
+        const nextScrollTop = viewport.scrollTop;
+        const nearBottom = measure(viewport);
+
+        if (
+            !nearBottom &&
+            (userScrollIntent ||
+                (!conversation.scrollingToBottom && nextScrollTop < previousScrollTop - 1))
+        ) {
+            conversation.follow = false;
+            conversation.scrollingToBottom = false;
+        }
+
+        previousScrollTop = nextScrollTop;
+        userScrollIntent = false;
+    }
+
+    function observeViewport(viewport: HTMLDivElement) {
+        untrack(() => {
+            conversation.viewport = viewport;
+            previousScrollTop = viewport.scrollTop;
+            measure(viewport);
+        });
+
+        const transcript = viewport.querySelector<HTMLElement>(
+            '[data-ui="conversation-transcript"]'
+        );
+        const observer = new ResizeObserver(() => {
+            if (conversation.follow) {
+                conversation.scrollToBottom('auto');
+            } else {
+                measure(viewport);
+            }
+        });
+        observer.observe(viewport);
+        if (transcript) {
+            observer.observe(transcript);
+        }
+
+        $effect(() => {
+            if (conversation.follow && !conversation.scrollingToBottom) {
+                viewport.scrollTop = viewport.scrollHeight;
+            }
+        });
+
+        return () => {
+            observer.disconnect();
+            if (conversation.viewport === viewport) {
+                conversation.viewport = undefined;
+            }
+        };
     }
 
     $effect(() => {
-        if (conversation.follow && !conversation.scrollingToBottom) {
-            viewport.scrollTop = viewport.scrollHeight;
+        if (viewport) {
+            return observeViewport(viewport);
         }
     });
-
-    return () => {
-        observer.disconnect();
-        if (conversation.viewport === viewport) {
-            conversation.viewport = undefined;
-        }
-    };
-}
-
-$effect(() => {
-    if (viewport) {
-        return observeViewport(viewport);
-    }
-});
 </script>
 
 <!-- Named overflow regions need a focus target for reliable keyboard scrolling. -->

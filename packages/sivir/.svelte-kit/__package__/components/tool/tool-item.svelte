@@ -1,16 +1,16 @@
 <script lang="ts">
-import Document from '@lucide/svelte/icons/file-text';
-import Magnifer from '@lucide/svelte/icons/search';
-import Command from '@lucide/svelte/icons/wrench';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ToolItemProps } from '.';
+    import Document from '@lucide/svelte/icons/file-text';
+    import Magnifer from '@lucide/svelte/icons/search';
+    import Command from '@lucide/svelte/icons/wrench';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ToolItemProps } from '.';
 
-let { name, detail, kind = 'command', class: className, ...rest }: ToolItemProps = $props();
+    let { name, detail, kind = 'command', class: className, ...rest }: ToolItemProps = $props();
 
-const Icon = $derived(kind === 'search' ? Magnifer : kind === 'read' ? Document : Command);
-const color = $derived(
-    kind === 'search' ? 'text-primary' : kind === 'read' ? 'text-success' : 'text-foreground'
-);
+    const Icon = $derived(kind === 'search' ? Magnifer : kind === 'read' ? Document : Command);
+    const color = $derived(
+        kind === 'search' ? 'text-primary' : kind === 'read' ? 'text-success' : 'text-foreground'
+    );
 </script>
 
 <div

@@ -1,6 +1,6 @@
 <script lang="ts">
-import Trash from '@lucide/svelte/icons/trash-2';
-import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
+    import Trash from '@lucide/svelte/icons/trash-2';
+    import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 </script>
 
 <div class="grid place-items-center">

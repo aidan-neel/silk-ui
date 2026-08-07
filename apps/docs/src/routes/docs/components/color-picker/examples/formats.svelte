@@ -1,9 +1,9 @@
 <script lang="ts">
-import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
+    import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
 
-let hslValue = $state('#5e6ad2');
-let rgbValue = $state('#5e6ad2');
-let hsvValue = $state('#5e6ad2');
+    let hslValue = $state('#5e6ad2');
+    let rgbValue = $state('#5e6ad2');
+    let hsvValue = $state('#5e6ad2');
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4">

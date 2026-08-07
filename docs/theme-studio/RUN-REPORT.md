@@ -48,7 +48,7 @@ Full log in `decisions.md` (D0.1–D5.2). Notable autonomous calls:
 ## Known pre-existing issues (NOT introduced here)
 
 - `/themes/[name].css` 500s in dev — the theme-**registry** backend isn't running (`getRegistryThemeBySlug` throws before `themeToCss`). No effect on Studio rendering.
-- Pre-existing svelte-check (5) and eslint (~134, mostly `svelte/require-each-key`) warnings predate this work; errors were green at baseline and remain 0.
+- Pre-existing svelte-check (5) and lint (~134, mostly missing keyed each blocks) warnings predate this work; errors were green at baseline and remain 0.
 
 ## How to verify / resume
 

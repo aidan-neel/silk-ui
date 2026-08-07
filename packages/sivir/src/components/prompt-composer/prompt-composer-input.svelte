@@ -1,58 +1,58 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { PromptComposerInputProps } from '.';
-import { getPromptComposerContext } from './context.svelte';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { PromptComposerInputProps } from '.';
+    import { getPromptComposerContext } from './context.svelte';
 
-let {
-    submitOnEnter = true,
-    placeholder = 'Message the agent...',
-    'aria-label': ariaLabel = 'Message',
-    rows = 1,
-    disabled = false,
-    readonly = false,
-    class: className,
-    element = $bindable(),
-    oninput,
-    onkeydown,
-    oncompositionstart,
-    oncompositionend,
-    ...rest
-}: PromptComposerInputProps = $props();
+    let {
+        submitOnEnter = true,
+        placeholder = 'Message the agent...',
+        'aria-label': ariaLabel = 'Message',
+        rows = 1,
+        disabled = false,
+        readonly = false,
+        class: className,
+        element = $bindable(),
+        oninput,
+        onkeydown,
+        oncompositionstart,
+        oncompositionend,
+        ...rest
+    }: PromptComposerInputProps = $props();
 
-const context = getPromptComposerContext();
-let composing = false;
+    const context = getPromptComposerContext();
+    let composing = false;
 
-function resize(target = element) {
-    if (!target) {
-        return;
-    }
-    target.style.height = 'auto';
-    const maxHeight = Number.parseFloat(getComputedStyle(target).maxHeight);
-    const height = Number.isFinite(maxHeight)
-        ? Math.min(target.scrollHeight, maxHeight)
-        : target.scrollHeight;
-    target.style.height = `${height}px`;
-    target.style.overflowY = target.scrollHeight > height ? 'auto' : 'hidden';
-}
-
-function observeSize(target: HTMLTextAreaElement) {
-    let width = target.clientWidth;
-    const observer = new ResizeObserver(() => {
-        const nextWidth = target.clientWidth;
-        if (nextWidth === width) {
+    function resize(target = element) {
+        if (!target) {
             return;
         }
-        width = nextWidth;
-        resize(target);
-    });
-    observer.observe(target);
-    return () => observer.disconnect();
-}
+        target.style.height = 'auto';
+        const maxHeight = Number.parseFloat(getComputedStyle(target).maxHeight);
+        const height = Number.isFinite(maxHeight)
+            ? Math.min(target.scrollHeight, maxHeight)
+            : target.scrollHeight;
+        target.style.height = `${height}px`;
+        target.style.overflowY = target.scrollHeight > height ? 'auto' : 'hidden';
+    }
 
-$effect(() => {
-    context.value;
-    resize();
-});
+    function observeSize(target: HTMLTextAreaElement) {
+        let width = target.clientWidth;
+        const observer = new ResizeObserver(() => {
+            const nextWidth = target.clientWidth;
+            if (nextWidth === width) {
+                return;
+            }
+            width = nextWidth;
+            resize(target);
+        });
+        observer.observe(target);
+        return () => observer.disconnect();
+    }
+
+    $effect(() => {
+        context.value;
+        resize();
+    });
 </script>
 
 <textarea

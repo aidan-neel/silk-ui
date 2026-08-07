@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
-const code = `const greet = (name: string) => {
+    const code = `const greet = (name: string) => {
   return \`Hello, \${name}!\`;
 };
 

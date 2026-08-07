@@ -1,232 +1,234 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import { onDestroy } from 'svelte';
-import type { ResponseStreamProps, Segment } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { onDestroy } from 'svelte';
+    import type { ResponseStreamProps, Segment } from '.';
 
-let {
-    textStream,
-    streaming = false,
-    mode = 'typewriter',
-    speed = 20,
-    fadeDuration,
-    segmentDelay,
-    characterChunkSize,
-    onComplete,
-    onError,
-    as = 'span',
-    class: className,
-    ...rest
-}: ResponseStreamProps = $props();
+    let {
+        textStream,
+        streaming = false,
+        mode = 'typewriter',
+        speed = 20,
+        fadeDuration,
+        segmentDelay,
+        characterChunkSize,
+        onComplete,
+        onError,
+        as = 'span',
+        class: className,
+        ...rest
+    }: ResponseStreamProps = $props();
 
-let displayedText = $state('');
-let segments = $state<Segment[]>([]);
-let isComplete = $state(false);
-let isLive = $state(false);
-let currentIndex = 0;
-let streamId = 0;
-let snapshotSession = 0;
-let sourceKind: 'static' | 'snapshot' | 'finalized-snapshot' | 'async' | undefined;
-let previousSource: string | AsyncIterable<string> | undefined;
-let previousSnapshot = '';
-let animationFrame: number | undefined;
-let abortController: AbortController | undefined;
+    let displayedText = $state('');
+    let segments = $state<Segment[]>([]);
+    let isComplete = $state(false);
+    let isLive = $state(false);
+    let currentIndex = 0;
+    let streamId = 0;
+    let snapshotSession = 0;
+    let sourceKind: 'static' | 'snapshot' | 'finalized-snapshot' | 'async' | undefined;
+    let previousSource: string | AsyncIterable<string> | undefined;
+    let previousSnapshot = '';
+    let animationFrame: number | undefined;
+    let abortController: AbortController | undefined;
 
-function getChunkSize() {
-    if (typeof characterChunkSize === 'number') {
-        return Math.max(1, characterChunkSize);
+    function getChunkSize() {
+        if (typeof characterChunkSize === 'number') {
+            return Math.max(1, characterChunkSize);
+        }
+        return speed < 25
+            ? 1
+            : Math.max(1, Math.round((Math.min(100, Math.max(1, speed)) - 25) / 10));
     }
-    return speed < 25 ? 1 : Math.max(1, Math.round((Math.min(100, Math.max(1, speed)) - 25) / 10));
-}
 
-function getProcessingDelay() {
-    if (typeof segmentDelay === 'number') {
-        return Math.max(0, segmentDelay);
+    function getProcessingDelay() {
+        if (typeof segmentDelay === 'number') {
+            return Math.max(0, segmentDelay);
+        }
+        return Math.max(1, Math.round(100 / Math.sqrt(Math.min(100, Math.max(1, speed)))));
     }
-    return Math.max(1, Math.round(100 / Math.sqrt(Math.min(100, Math.max(1, speed)))));
-}
 
-function getFadeDuration() {
-    if (typeof fadeDuration === 'number') {
-        return Math.max(10, fadeDuration);
+    function getFadeDuration() {
+        if (typeof fadeDuration === 'number') {
+            return Math.max(10, fadeDuration);
+        }
+        return Math.round(1000 / Math.sqrt(Math.min(100, Math.max(1, speed))));
     }
-    return Math.round(1000 / Math.sqrt(Math.min(100, Math.max(1, speed))));
-}
 
-function getSegmentDelay() {
-    if (typeof segmentDelay === 'number') {
-        return Math.max(0, segmentDelay);
+    function getSegmentDelay() {
+        if (typeof segmentDelay === 'number') {
+            return Math.max(0, segmentDelay);
+        }
+        return 0;
     }
-    return 0;
-}
 
-function updateSegments(text: string, snapshot = false) {
-    if (mode !== 'fade') {
-        return;
-    }
-    try {
-        const segmenter = new Intl.Segmenter(navigator.language, { granularity: 'word' });
-        segments = Array.from(segmenter.segment(text), (segment, index) => ({
-            text: segment.segment,
-            index,
-            key: snapshot ? `${snapshotSession}-${index}` : `${index}-${segment.segment}`
-        }));
-    } catch (error) {
-        segments = text
-            .split(/(\s+)/)
-            .filter(Boolean)
-            .map((text, index) => ({
-                text,
+    function updateSegments(text: string, snapshot = false) {
+        if (mode !== 'fade') {
+            return;
+        }
+        try {
+            const segmenter = new Intl.Segmenter(navigator.language, { granularity: 'word' });
+            segments = Array.from(segmenter.segment(text), (segment, index) => ({
+                text: segment.segment,
                 index,
-                key: snapshot ? `${snapshotSession}-${index}` : `${index}-${text}`
+                key: snapshot ? `${snapshotSession}-${index}` : `${index}-${segment.segment}`
             }));
-        onError?.(error);
+        } catch (error) {
+            segments = text
+                .split(/(\s+)/)
+                .filter(Boolean)
+                .map((text, index) => ({
+                    text,
+                    index,
+                    key: snapshot ? `${snapshotSession}-${index}` : `${index}-${text}`
+                }));
+            onError?.(error);
+        }
     }
-}
 
-function complete() {
-    if (isComplete) {
-        return;
-    }
-    isComplete = true;
-    onComplete?.();
-}
-
-function stopStreaming() {
-    if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-    }
-    animationFrame = undefined;
-    abortController?.abort();
-    abortController = undefined;
-}
-
-function reset() {
-    stopStreaming();
-    currentIndex = 0;
-    displayedText = '';
-    segments = [];
-    isComplete = false;
-}
-
-function applySnapshot(text: string, fresh = false) {
-    if (fresh) {
-        snapshotSession += 1;
-    }
-    displayedText = text;
-    updateSegments(text, true);
-    previousSnapshot = text;
-}
-
-function renderString(text: string, id: number) {
-    let lastFrameTime = 0;
-
-    const nextFrame = (timestamp: number) => {
-        if (id !== streamId) {
+    function complete() {
+        if (isComplete) {
             return;
         }
-        if (timestamp - lastFrameTime < getProcessingDelay()) {
-            animationFrame = requestAnimationFrame(nextFrame);
-            return;
+        isComplete = true;
+        onComplete?.();
+    }
+
+    function stopStreaming() {
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
         }
-        lastFrameTime = timestamp;
+        animationFrame = undefined;
+        abortController?.abort();
+        abortController = undefined;
+    }
 
-        const endIndex = Math.min(currentIndex + getChunkSize(), text.length);
-        displayedText = text.slice(0, endIndex);
-        updateSegments(displayedText);
-        currentIndex = endIndex;
+    function reset() {
+        stopStreaming();
+        currentIndex = 0;
+        displayedText = '';
+        segments = [];
+        isComplete = false;
+    }
 
-        if (endIndex < text.length) {
-            animationFrame = requestAnimationFrame(nextFrame);
-        } else {
-            complete();
+    function applySnapshot(text: string, fresh = false) {
+        if (fresh) {
+            snapshotSession += 1;
         }
-    };
+        displayedText = text;
+        updateSegments(text, true);
+        previousSnapshot = text;
+    }
 
-    animationFrame = requestAnimationFrame(nextFrame);
-}
+    function renderString(text: string, id: number) {
+        let lastFrameTime = 0;
 
-async function renderAsync(stream: AsyncIterable<string>, id: number) {
-    const controller = new AbortController();
-    abortController = controller;
-
-    try {
-        for await (const chunk of stream) {
-            if (controller.signal.aborted || id !== streamId) {
+        const nextFrame = (timestamp: number) => {
+            if (id !== streamId) {
                 return;
             }
-            displayedText += chunk;
+            if (timestamp - lastFrameTime < getProcessingDelay()) {
+                animationFrame = requestAnimationFrame(nextFrame);
+                return;
+            }
+            lastFrameTime = timestamp;
+
+            const endIndex = Math.min(currentIndex + getChunkSize(), text.length);
+            displayedText = text.slice(0, endIndex);
             updateSegments(displayedText);
-        }
-        complete();
-    } catch (error) {
-        if (!controller.signal.aborted) {
-            onError?.(error);
+            currentIndex = endIndex;
+
+            if (endIndex < text.length) {
+                animationFrame = requestAnimationFrame(nextFrame);
+            } else {
+                complete();
+            }
+        };
+
+        animationFrame = requestAnimationFrame(nextFrame);
+    }
+
+    async function renderAsync(stream: AsyncIterable<string>, id: number) {
+        const controller = new AbortController();
+        abortController = controller;
+
+        try {
+            for await (const chunk of stream) {
+                if (controller.signal.aborted || id !== streamId) {
+                    return;
+                }
+                displayedText += chunk;
+                updateSegments(displayedText);
+            }
             complete();
+        } catch (error) {
+            if (!controller.signal.aborted) {
+                onError?.(error);
+                complete();
+            }
         }
     }
-}
 
-function startAsync(stream: AsyncIterable<string>) {
-    reset();
-    const id = ++streamId;
-    isLive = true;
-    sourceKind = 'async';
-    renderAsync(stream, id);
-}
-
-$effect(() => {
-    if (typeof textStream !== 'string') {
-        if (sourceKind !== 'async' || previousSource !== textStream) {
-            previousSource = textStream;
-            startAsync(textStream);
-        }
-        return;
+    function startAsync(stream: AsyncIterable<string>) {
+        reset();
+        const id = ++streamId;
+        isLive = true;
+        sourceKind = 'async';
+        renderAsync(stream, id);
     }
 
-    if (streaming) {
-        const fresh = sourceKind !== 'snapshot';
-        if (fresh) {
-            reset();
-            sourceKind = 'snapshot';
-            isLive = true;
-            applySnapshot(textStream, true);
+    $effect(() => {
+        if (typeof textStream !== 'string') {
+            if (sourceKind !== 'async' || previousSource !== textStream) {
+                previousSource = textStream;
+                startAsync(textStream);
+            }
             return;
         }
-        if (textStream === previousSnapshot) {
-            return;
-        }
-        if (!textStream.startsWith(previousSnapshot)) {
-            applySnapshot(textStream, true);
-            return;
-        }
-        applySnapshot(textStream);
-        return;
-    }
 
-    if (sourceKind === 'snapshot') {
-        stopStreaming();
-        if (textStream !== previousSnapshot) {
-            applySnapshot(textStream, !textStream.startsWith(previousSnapshot));
+        if (streaming) {
+            const fresh = sourceKind !== 'snapshot';
+            if (fresh) {
+                reset();
+                sourceKind = 'snapshot';
+                isLive = true;
+                applySnapshot(textStream, true);
+                return;
+            }
+            if (textStream === previousSnapshot) {
+                return;
+            }
+            if (!textStream.startsWith(previousSnapshot)) {
+                applySnapshot(textStream, true);
+                return;
+            }
+            applySnapshot(textStream);
+            return;
         }
+
+        if (sourceKind === 'snapshot') {
+            stopStreaming();
+            if (textStream !== previousSnapshot) {
+                applySnapshot(textStream, !textStream.startsWith(previousSnapshot));
+            }
+            isLive = false;
+            sourceKind = 'finalized-snapshot';
+            complete();
+            return;
+        }
+
+        if (sourceKind === 'finalized-snapshot' && textStream === previousSnapshot) {
+            return;
+        }
+
+        reset();
+        const id = ++streamId;
+        sourceKind = 'static';
+        previousSource = textStream;
         isLive = false;
-        sourceKind = 'finalized-snapshot';
-        complete();
-        return;
-    }
+        renderString(textStream, id);
+    });
 
-    if (sourceKind === 'finalized-snapshot' && textStream === previousSnapshot) {
-        return;
-    }
-
-    reset();
-    const id = ++streamId;
-    sourceKind = 'static';
-    previousSource = textStream;
-    isLive = false;
-    renderString(textStream, id);
-});
-
-onDestroy(stopStreaming);
+    onDestroy(stopStreaming);
 </script>
 
 <svelte:element

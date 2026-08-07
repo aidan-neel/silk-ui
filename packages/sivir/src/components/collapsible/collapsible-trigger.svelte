@@ -1,10 +1,10 @@
 <script lang="ts">
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import type { CollapsibleTriggerProps } from '.';
-import { getCollapsibleContext } from './context.svelte';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { CollapsibleTriggerProps } from '.';
+    import { getCollapsibleContext } from './context.svelte';
 
-let { class: className, children, ...rest }: CollapsibleTriggerProps = $props();
-const { id, state } = getCollapsibleContext();
+    let { class: className, children, ...rest }: CollapsibleTriggerProps = $props();
+    const { id, state } = getCollapsibleContext();
 </script>
 
 <button

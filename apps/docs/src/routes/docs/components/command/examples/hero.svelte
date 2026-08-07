@@ -1,14 +1,14 @@
 <script lang="ts">
-import CircleDot from '@lucide/svelte/icons/circle-dot';
-import FolderPlus from '@lucide/svelte/icons/folder-plus';
-import Inbox from '@lucide/svelte/icons/inbox';
-import Map from '@lucide/svelte/icons/map';
-import Moon from '@lucide/svelte/icons/moon';
-import Search from '@lucide/svelte/icons/search';
-import SquarePen from '@lucide/svelte/icons/square-pen';
-import Users from '@lucide/svelte/icons/users';
-import * as Command from '@sivir-ui/svelte/components/command';
-import Shortcut from '@sivir-ui/svelte/components/shortcut';
+    import CircleDot from '@lucide/svelte/icons/circle-dot';
+    import FolderPlus from '@lucide/svelte/icons/folder-plus';
+    import Inbox from '@lucide/svelte/icons/inbox';
+    import MapIcon from '@lucide/svelte/icons/map';
+    import Moon from '@lucide/svelte/icons/moon';
+    import Search from '@lucide/svelte/icons/search';
+    import SquarePen from '@lucide/svelte/icons/square-pen';
+    import Users from '@lucide/svelte/icons/users';
+    import * as Command from '@sivir-ui/svelte/components/command';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <div class="flex w-full items-center justify-center">
@@ -36,7 +36,7 @@ import Shortcut from '@sivir-ui/svelte/components/shortcut';
                         My Issues
                     </Command.Item>
                     <Command.Item name="Roadmap">
-                        <Map size={16} />
+                        <MapIcon size={16} />
                         Roadmap
                     </Command.Item>
                 </Command.Group>

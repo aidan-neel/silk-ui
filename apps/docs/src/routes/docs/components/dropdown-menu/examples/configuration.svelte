@@ -1,11 +1,11 @@
 <script lang="ts">
-import Check from '@lucide/svelte/icons/check';
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import Check from '@lucide/svelte/icons/check';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
-let model = $state('GPT-5.6 Sol');
-let effort = $state('High');
-let speed = $state('Standard');
+    let model = $state('GPT-5.6 Sol');
+    let effort = $state('High');
+    let speed = $state('Standard');
 </script>
 
 <DropdownMenu.Root>
@@ -20,11 +20,15 @@ let speed = $state('Standard');
             <DropdownMenu.SubContent class="min-w-[12rem]">
                 <DropdownMenu.Item callback={() => (model = 'GPT-5.6 Sol')}>
                     <span>GPT-5.6 Sol</span>
-                    {#if model === 'GPT-5.6 Sol'}<Check size={16} class="ml-auto" />{/if}
+                    {#if model === 'GPT-5.6 Sol'}
+                        <Check size={16} class="ml-auto" />
+                    {/if}
                 </DropdownMenu.Item>
                 <DropdownMenu.Item callback={() => (model = 'Opus 4.6')}>
                     <span>Opus 4.6</span>
-                    {#if model === 'Opus 4.6'}<Check size={16} class="ml-auto" />{/if}
+                    {#if model === 'Opus 4.6'}
+                        <Check size={16} class="ml-auto" />
+                    {/if}
                 </DropdownMenu.Item>
             </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
@@ -34,7 +38,9 @@ let speed = $state('Standard');
                 {#each ['Low', 'Medium', 'High'] as option (option)}
                     <DropdownMenu.Item callback={() => (effort = option)}>
                         <span>{option}</span>
-                        {#if effort === option}<Check size={16} class="ml-auto" />{/if}
+                        {#if effort === option}
+                            <Check size={16} class="ml-auto" />
+                        {/if}
                     </DropdownMenu.Item>
                 {/each}
             </DropdownMenu.SubContent>
@@ -45,7 +51,9 @@ let speed = $state('Standard');
                 {#each ['Fast', 'Standard', 'Deliberate'] as option (option)}
                     <DropdownMenu.Item callback={() => (speed = option)}>
                         <span>{option}</span>
-                        {#if speed === option}<Check size={16} class="ml-auto" />{/if}
+                        {#if speed === option}
+                            <Check size={16} class="ml-auto" />
+                        {/if}
                     </DropdownMenu.Item>
                 {/each}
             </DropdownMenu.SubContent>

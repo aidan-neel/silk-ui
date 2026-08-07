@@ -1,26 +1,26 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { resolve } from '$app/paths';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { resolve } from '$app/paths';
 
-const packageInstall = `bun add @sivir-ui/svelte
+    const packageInstall = `bun add @sivir-ui/svelte
 # npm i @sivir-ui/svelte
 # pnpm add @sivir-ui/svelte`;
 
-const packageCss = `@import '@sivir-ui/svelte/ui.css';`;
+    const packageCss = `@import '@sivir-ui/svelte/ui.css';`;
 
-const packageUse = `<script>
+    const packageUse = `<script>
   import { Button } from '@sivir-ui/svelte';
 <${'/'}script>
 
 <Button>Get started</Button>`;
 
-const cliCss = `/* src/app.css */
+    const cliCss = `/* src/app.css */
 @import './lib/sivir/ui.css';`;
 
-const cliAdd = `bunx --package @sivir-ui/svelte sivir add button
+    const cliAdd = `bunx --package @sivir-ui/svelte sivir add button
 bunx --package @sivir-ui/svelte sivir list`;
 
-const cliUse = `<script>
+    const cliUse = `<script>
   import { Button } from '$lib/sivir/components/button';
 <${'/'}script>
 
@@ -83,7 +83,8 @@ const cliUse = `<script>
         <CodeBlock code={packageUse} lang="svelte" copy="overlay" />
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
             Compound components use a namespace export (for example
-            <code class="font-mono">Modal</code> with
+            <code class="font-mono">Modal</code>
+            with
             <code class="font-mono">Modal.Root</code>,
             <code class="font-mono">Modal.Content</code>, …).
         </p>
@@ -163,7 +164,8 @@ const cliUse = `<script>
         >
             <li>
                 Tailwind v3 is not supported. Sivir needs v4
-                <code class="font-mono">@theme</code> and
+                <code class="font-mono">@theme</code>
+                and
                 <code class="font-mono">color-mix</code>.
             </li>
             <li>
@@ -193,7 +195,8 @@ const cliUse = `<script>
             ·
             <a
                 class="text-foreground underline underline-offset-2"
-                href={resolve('/docs/components')}>Components</a
+                href={resolve('/docs/components')}
+                >Components</a
             >
         </p>
     </section>

@@ -1,8 +1,8 @@
 export declare const THEME_VERSION: 2;
-export declare const neutralTemperatures: readonly ["cool", "true", "warm"];
-export declare const radiusScales: readonly ["sharp", "default", "rounded"];
-export declare const densities: readonly ["compact", "default", "comfortable"];
-export declare const motionFeels: readonly ["none", "subtle", "default", "expressive"];
+export declare const neutralTemperatures: readonly ['cool', 'true', 'warm'];
+export declare const radiusScales: readonly ['sharp', 'default', 'rounded'];
+export declare const densities: readonly ['compact', 'default', 'comfortable'];
+export declare const motionFeels: readonly ['none', 'subtle', 'default', 'expressive'];
 export type NeutralTemp = (typeof neutralTemperatures)[number];
 export type RadiusScale = (typeof radiusScales)[number];
 export type Density = (typeof densities)[number];

@@ -1,15 +1,15 @@
 <script lang="ts">
-import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
+    import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
 
-let {
-    type = 'single',
-    value = $bindable<string | string[] | undefined>(''),
-    disabled = false
-}: {
-    type?: 'single' | 'multiple';
-    value?: string | string[] | undefined;
-    disabled?: boolean;
-} = $props();
+    let {
+        type = 'single',
+        value = $bindable<string | string[] | undefined>(''),
+        disabled = false
+    }: {
+        type?: 'single' | 'multiple';
+        value?: string | string[] | undefined;
+        disabled?: boolean;
+    } = $props();
 </script>
 
 <ToggleGroup.Root {type} bind:value {disabled}>

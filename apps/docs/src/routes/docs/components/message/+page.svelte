@@ -1,16 +1,16 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import RoleVariants from './examples/role-variants.svelte';
-import RoleVariantsSrc from './examples/role-variants.svelte?raw';
-import States from './examples/states.svelte';
-import StatesSrc from './examples/states.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import RoleVariants from './examples/role-variants.svelte';
+    import RoleVariantsSrc from './examples/role-variants.svelte?raw';
+    import States from './examples/states.svelte';
+    import StatesSrc from './examples/states.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add message';
-const usageSnippet = `import * as Message from '@sivir-ui/svelte/components/message';
+    const installCommand = 'bunx @sivir-ui/svelte add message';
+    const usageSnippet = `import * as Message from '@sivir-ui/svelte/components/message';
 
 <Message.Root from="assistant" status="idle">
   <Message.Content>
@@ -68,8 +68,9 @@ const usageSnippet = `import * as Message from '@sivir-ui/svelte/components/mess
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            <code>Content</code> adapts its layout to <code>from</code>. Use <code>status</code> for streaming
-            or failed output, and give every icon-only action an accessible label.
+            <code>Content</code>
+            adapts its layout to <code>from</code>. Use <code>status</code> for streaming or failed
+            output, and give every icon-only action an accessible label.
         </p>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>

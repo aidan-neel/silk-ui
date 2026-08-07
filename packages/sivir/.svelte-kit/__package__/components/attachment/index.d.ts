@@ -5,7 +5,11 @@ import Root from './attachment.svelte';
 import Trigger from './attachment-trigger.svelte';
 import List from './attachment-list.svelte';
 import Item from './attachment-item.svelte';
-export type AttachmentRejectionCode = 'duplicate-file' | 'file-invalid-type' | 'file-too-large' | 'too-many-files';
+export type AttachmentRejectionCode =
+    | 'duplicate-file'
+    | 'file-invalid-type'
+    | 'file-too-large'
+    | 'too-many-files';
 export type AttachmentRejection = {
     file: File;
     code: AttachmentRejectionCode;

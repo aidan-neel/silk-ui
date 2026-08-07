@@ -5,6 +5,6 @@ type Props = {
     label?: string;
     children?: Snippet;
 } & ButtonProps;
-declare const SelectItem: import("svelte").Component<Props, {}, "">;
+declare const SelectItem: import('svelte').Component<Props, {}, ''>;
 type SelectItem = ReturnType<typeof SelectItem>;
 export default SelectItem;

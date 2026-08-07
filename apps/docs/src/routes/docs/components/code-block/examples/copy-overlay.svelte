@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
-const code = `model = SentenceTransformer("all-MiniLM-L6-v2")
+    const code = `model = SentenceTransformer("all-MiniLM-L6-v2")
 embeddings = model.encode(documents)
 index.upsert(vectors=zip(ids, embeddings))`;
 </script>

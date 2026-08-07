@@ -1,11 +1,11 @@
 <script lang="ts">
-import * as Accordion from '@sivir-ui/svelte/components/accordion';
+    import * as Accordion from '@sivir-ui/svelte/components/accordion';
 
-let {
-    type = 'single' as 'single' | 'multiple',
-    value = $bindable<string | string[] | undefined>(undefined),
-    collapsible = false
-} = $props();
+    let {
+        type = 'single' as 'single' | 'multiple',
+        value = $bindable<string | string[] | undefined>(undefined),
+        collapsible = false
+    } = $props();
 </script>
 
 <Accordion.Root {type} bind:value {collapsible}>

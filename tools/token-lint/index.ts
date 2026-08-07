@@ -46,7 +46,7 @@ export function lintSource(file: string, source: string): Violation[] {
     // that only appears as a var() FALLBACK -- e.g. var(--font-size-body, 16px) --
     // is not treated as a hardcoded literal. Primitive-leak still tests the raw line.
     const stripVars = (s: string) => {
-        let prev;
+        let prev = s;
         do {
             prev = s;
             s = s.replace(/var\([^()]*\)/g, '');

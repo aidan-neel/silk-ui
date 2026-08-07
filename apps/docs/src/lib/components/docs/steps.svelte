@@ -1,20 +1,20 @@
 <script lang="ts">
-import type { Snippet } from 'svelte';
+    import type { Snippet } from 'svelte';
 
-interface StepItem {
-    title?: string;
-    description?: string;
-}
+    interface StepItem {
+        title?: string;
+        description?: string;
+    }
 
-let {
-    steps = [],
-    class: classProp = '',
-    children
-}: {
-    steps?: StepItem[];
-    class?: string;
-    children?: Snippet;
-} = $props();
+    let {
+        steps = [],
+        class: classProp = '',
+        children
+    }: {
+        steps?: StepItem[];
+        class?: string;
+        children?: Snippet;
+    } = $props();
 </script>
 
 <div class={`flex flex-col gap-0 ${classProp}`}>

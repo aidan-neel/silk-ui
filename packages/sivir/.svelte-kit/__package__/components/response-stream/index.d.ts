@@ -1,5 +1,5 @@
-import type { HTMLAttributes, SvelteHTMLElements } from 'svelte/elements';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { HTMLAttributes, SvelteHTMLElements } from 'svelte/elements';
 import ResponseStream from './response-stream.svelte';
 export type Mode = 'typewriter' | 'fade';
 export type Segment = {
@@ -23,5 +23,6 @@ export type ResponseStreamProps = {
     onComplete?: () => void;
     onError?: (error: unknown) => void;
     as?: keyof SvelteHTMLElements;
-} & DefaultProps & Omit<HTMLAttributes<HTMLElement>, 'children'>;
+} & DefaultProps &
+    Omit<HTMLAttributes<HTMLElement>, 'children'>;
 export { ResponseStream };

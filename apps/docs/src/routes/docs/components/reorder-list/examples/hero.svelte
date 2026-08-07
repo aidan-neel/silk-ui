@@ -1,15 +1,15 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import { ReorderList } from '@sivir-ui/svelte/components/reorder-list';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { ReorderList } from '@sivir-ui/svelte/components/reorder-list';
 
-type AgendaItem = { id: string; name: string; duration: string };
-const initial: AgendaItem[] = [
-    { id: 'opening', name: 'Opening remarks', duration: '5 min' },
-    { id: 'roadmap', name: 'Roadmap review', duration: '15 min' },
-    { id: 'critique', name: 'Design critique', duration: '20 min' },
-    { id: 'questions', name: 'Open questions', duration: '10 min' }
-];
-let items = $state([...initial]);
+    type AgendaItem = { id: string; name: string; duration: string };
+    const initial: AgendaItem[] = [
+        { id: 'opening', name: 'Opening remarks', duration: '5 min' },
+        { id: 'roadmap', name: 'Roadmap review', duration: '15 min' },
+        { id: 'critique', name: 'Design critique', duration: '20 min' },
+        { id: 'questions', name: 'Open questions', duration: '10 min' }
+    ];
+    let items = $state([...initial]);
 </script>
 
 <div class="w-full max-w-md">

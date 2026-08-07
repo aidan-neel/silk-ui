@@ -1,15 +1,15 @@
 <script lang="ts">
-import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 
-let {
-    onOpen = () => {},
-    onRename = () => {},
-    onTrash = () => {}
-}: {
-    onOpen?: () => void;
-    onRename?: () => void;
-    onTrash?: () => void;
-} = $props();
+    let {
+        onOpen = () => {},
+        onRename = () => {},
+        onTrash = () => {}
+    }: {
+        onOpen?: () => void;
+        onRename?: () => void;
+        onTrash?: () => void;
+    } = $props();
 </script>
 
 <!--

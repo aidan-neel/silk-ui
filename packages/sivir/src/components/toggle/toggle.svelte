@@ -1,26 +1,26 @@
 <script lang="ts">
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import type { ToggleProps } from '.';
-import { toggle } from './variants';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { ToggleProps } from '.';
+    import { toggle } from './variants';
 
-let {
-    class: className,
-    pressed = $bindable(false),
-    disabled = false,
-    size = 'md',
-    variant = 'default',
-    children,
-    onPressedChange,
-    ...rest
-}: ToggleProps = $props();
+    let {
+        class: className,
+        pressed = $bindable(false),
+        disabled = false,
+        size = 'md',
+        variant = 'default',
+        children,
+        onPressedChange,
+        ...rest
+    }: ToggleProps = $props();
 
-function togglePressed() {
-    if (disabled) {
-        return;
+    function togglePressed() {
+        if (disabled) {
+            return;
+        }
+        pressed = !pressed;
+        onPressedChange?.(pressed);
     }
-    pressed = !pressed;
-    onPressedChange?.(pressed);
-}
 </script>
 
 <button

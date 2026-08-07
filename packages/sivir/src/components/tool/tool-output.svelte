@@ -1,8 +1,8 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ToolOutputProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ToolOutputProps } from '.';
 
-let { label = 'Output', children, class: className, ...rest }: ToolOutputProps = $props();
+    let { label = 'Output', children, class: className, ...rest }: ToolOutputProps = $props();
 </script>
 
 <div data-ui="tool-output" class={cn(className, 'mt-3 flex flex-col gap-1.5')} {...rest}>

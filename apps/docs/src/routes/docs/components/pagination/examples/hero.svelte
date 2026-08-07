@@ -1,11 +1,11 @@
 <script lang="ts">
-import { Pagination } from '@sivir-ui/svelte/components/pagination';
+    import { Pagination } from '@sivir-ui/svelte/components/pagination';
 
-const pageSize = 5;
-const items = Array.from({ length: 48 }, (_, i) => `Result ${i + 1}`);
-let page = $state(1);
-const totalPages = Math.ceil(items.length / pageSize);
-const pageItems = $derived(items.slice((page - 1) * pageSize, page * pageSize));
+    const pageSize = 5;
+    const items = Array.from({ length: 48 }, (_, i) => `Result ${i + 1}`);
+    let page = $state(1);
+    const totalPages = Math.ceil(items.length / pageSize);
+    const pageItems = $derived(items.slice((page - 1) * pageSize, page * pageSize));
 </script>
 
 <div class="flex w-full max-w-sm flex-col gap-4">
@@ -19,9 +19,7 @@ const pageItems = $derived(items.slice((page - 1) * pageSize, page * pageSize));
         {/each}
     </ul>
     <div class="flex items-center justify-between gap-3">
-        <p class="m-0 text-xs text-foreground-muted tabular-nums">
-            Page {page} of {totalPages}
-        </p>
+        <p class="m-0 text-xs text-foreground-muted tabular-nums">Page {page} of {totalPages}</p>
         <Pagination bind:page total={totalPages} />
     </div>
 </div>

@@ -1,31 +1,31 @@
 <script lang="ts">
-import ArrowRight from '@lucide/svelte/icons/arrow-right';
-import Moon from '@lucide/svelte/icons/moon';
-import Sun from '@lucide/svelte/icons/sun';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { mode, toggleMode } from 'mode-watcher';
-import { resolve } from '$app/paths';
+    import ArrowRight from '@lucide/svelte/icons/arrow-right';
+    import Moon from '@lucide/svelte/icons/moon';
+    import Sun from '@lucide/svelte/icons/sun';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { mode, toggleMode } from 'mode-watcher';
+    import { resolve } from '$app/paths';
 
-import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
-import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+    import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
+    import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
 
-import type { PageData } from './$types';
+    import type { PageData } from './$types';
 
-const { data }: { data: PageData } = $props();
+    const { data }: { data: PageData } = $props();
 
-function formatStarCount(count: number | null): string {
-    if (count === null || Number.isNaN(count)) {
-        return 'Star';
+    function formatStarCount(count: number | null): string {
+        if (count === null || Number.isNaN(count)) {
+            return 'Star';
+        }
+
+        if (count >= 1000) {
+            const thousands = count / 1000;
+
+            return `${thousands >= 10 ? Math.round(thousands) : thousands.toFixed(1)}k`;
+        }
+
+        return String(count);
     }
-
-    if (count >= 1000) {
-        const thousands = count / 1000;
-
-        return `${thousands >= 10 ? Math.round(thousands) : thousands.toFixed(1)}k`;
-    }
-
-    return String(count);
-}
 </script>
 
 <svelte:head>
@@ -94,9 +94,7 @@ function formatStarCount(count: number | null): string {
             class="w-full font-[var(--font-header)] text-[clamp(1.8rem,5.2vw,3.75rem)] leading-[0.98] font-medium! tracking-[-0.045em] text-foreground motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[transform-origin:top_center]"
         >
             <span class="block text-nowrap">Restyle everything from</span>
-            <span class="block"
-                >a few tokens.</span
-            >
+            <span class="block">a few tokens.</span>
         </h1>
         <p
             class="mt-6 max-w-[33rem] text-base leading-[1.6] text-foreground-muted motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:45ms] motion-safe:[transform-origin:top_center]"

@@ -1,16 +1,16 @@
 <script lang="ts">
-import * as Select from '@sivir-ui/svelte/components/select';
+    import * as Select from '@sivir-ui/svelte/components/select';
 
-const priorities = [
-    { value: 'none', label: 'No priority' },
-    { value: 'urgent', label: 'Urgent' },
-    { value: 'high', label: 'High' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'low', label: 'Low' }
-];
+    const priorities = [
+        { value: 'none', label: 'No priority' },
+        { value: 'urgent', label: 'Urgent' },
+        { value: 'high', label: 'High' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'low', label: 'Low' }
+    ];
 
-let selectedPriority = $state('medium');
-const selected = $derived(priorities.find((p) => p.value === selectedPriority));
+    let selectedPriority = $state('medium');
+    const selected = $derived(priorities.find((p) => p.value === selectedPriority));
 </script>
 
 <div class="flex flex-col gap-2">

@@ -7,6 +7,7 @@ export type ScrollAreaProps = {
     showCues?: boolean;
     children?: Snippet;
     element?: HTMLDivElement;
-} & DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;
+} & DefaultProps &
+    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;
 export { ScrollArea };
 export default ScrollArea;

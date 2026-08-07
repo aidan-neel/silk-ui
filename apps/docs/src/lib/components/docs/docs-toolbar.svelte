@@ -1,62 +1,62 @@
 <script lang="ts">
-import ChevronRight from '@lucide/svelte/icons/chevron-right';
-import Moon from '@lucide/svelte/icons/moon';
-import Sun from '@lucide/svelte/icons/sun';
-import { Button } from '@sivir-ui/svelte/components/button';
-import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
-import { mode, toggleMode } from 'mode-watcher';
-import { resolve } from '$app/paths';
-import { page } from '$app/state';
+    import ChevronRight from '@lucide/svelte/icons/chevron-right';
+    import Moon from '@lucide/svelte/icons/moon';
+    import Sun from '@lucide/svelte/icons/sun';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+    import { mode, toggleMode } from 'mode-watcher';
+    import { resolve } from '$app/paths';
+    import { page } from '$app/state';
 
-import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
-import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
-import SideNavbar from './side-navbar.svelte';
+    import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
+    import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+    import SideNavbar from './side-navbar.svelte';
 
-const { starCount = null }: { starCount?: number | null } = $props();
-let mobileMenuOpen = $state(false);
+    const { starCount = null }: { starCount?: number | null } = $props();
+    let mobileMenuOpen = $state(false);
 
-const breadcrumbs = $derived.by(() => {
-    const segments = page.url.pathname.split('/').filter(Boolean);
+    const breadcrumbs = $derived.by(() => {
+        const segments = page.url.pathname.split('/').filter(Boolean);
 
-    return segments.map((segment, index) => ({
-        href: `/${segments.slice(0, index + 1).join('/')}`,
-        label: formatSegment(segment)
-    }));
-});
+        return segments.map((segment, index) => ({
+            href: `/${segments.slice(0, index + 1).join('/')}`,
+            label: formatSegment(segment)
+        }));
+    });
 
-function formatSegment(segment: string): string {
-    const labels: Record<string, string> = {
-        docs: 'Docs',
-        components: 'Components'
-    };
+    function formatSegment(segment: string): string {
+        const labels: Record<string, string> = {
+            docs: 'Docs',
+            components: 'Components'
+        };
 
-    if (labels[segment]) {
-        return labels[segment];
+        if (labels[segment]) {
+            return labels[segment];
+        }
+
+        return segment
+            .split('-')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
     }
 
-    return segment
-        .split('-')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-}
+    function formatStarCount(count: number | null): string {
+        if (count === null || Number.isNaN(count)) {
+            return 'Star';
+        }
 
-function formatStarCount(count: number | null): string {
-    if (count === null || Number.isNaN(count)) {
-        return 'Star';
+        if (count >= 1000) {
+            const thousands = count / 1000;
+
+            return `${thousands >= 10 ? Math.round(thousands) : thousands.toFixed(1)}k`;
+        }
+
+        return String(count);
     }
 
-    if (count >= 1000) {
-        const thousands = count / 1000;
-
-        return `${thousands >= 10 ? Math.round(thousands) : thousands.toFixed(1)}k`;
+    function closeMobileMenu() {
+        mobileMenuOpen = false;
     }
-
-    return String(count);
-}
-
-function closeMobileMenu() {
-    mobileMenuOpen = false;
-}
 </script>
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>

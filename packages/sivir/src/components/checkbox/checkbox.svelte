@@ -1,23 +1,23 @@
 <script lang="ts">
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import { checkbox, checkboxBox, checkboxText } from './variants';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import { checkbox, checkboxBox, checkboxText } from './variants';
 
-let {
-    checked = $bindable<boolean>(),
-    label,
-    description,
-    disabled,
-    variant = 'default',
-    class: classProp,
-    ...rest
-}: {
-    checked: boolean;
-    label?: string;
-    description?: string;
-    disabled?: boolean;
-    variant?: 'default' | 'primary';
-    class?: string;
-} = $props();
+    let {
+        checked = $bindable<boolean>(),
+        label,
+        description,
+        disabled,
+        variant = 'default',
+        class: classProp,
+        ...rest
+    }: {
+        checked: boolean;
+        label?: string;
+        description?: string;
+        disabled?: boolean;
+        variant?: 'default' | 'primary';
+        class?: string;
+    } = $props();
 </script>
 
 <label

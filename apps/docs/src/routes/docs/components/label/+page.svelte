@@ -1,14 +1,14 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Disabled from './examples/disabled.svelte';
-import DisabledSrc from './examples/disabled.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import WithRequired from './examples/with-required.svelte';
-import WithRequiredSrc from './examples/with-required.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import WithRequired from './examples/with-required.svelte';
+    import WithRequiredSrc from './examples/with-required.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add label';
+    const installCommand = 'bunx @sivir-ui/svelte add label';
 </script>
 
 <svelte:head>

@@ -1,66 +1,66 @@
 <script lang="ts">
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
-import type { ButtonProps } from '.';
-import { button } from './variants';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
+    import type { ButtonProps } from '.';
+    import { button } from './variants';
 
-let {
-    href,
-    variant = 'primary',
-    children,
-    class: classProp,
-    size = 'md',
-    element = $bindable(),
-    unstyled = false,
-    status,
-    loading,
-    loadingLabel,
-    successLabel,
-    errorLabel,
-    'aria-label': ariaLabel,
-    'aria-disabled': ariaDisabled,
-    onclick,
-    ...rest
-}: ButtonProps = $props();
+    let {
+        href,
+        variant = 'primary',
+        children,
+        class: classProp,
+        size = 'md',
+        element = $bindable(),
+        unstyled = false,
+        status,
+        loading,
+        loadingLabel,
+        successLabel,
+        errorLabel,
+        'aria-label': ariaLabel,
+        'aria-disabled': ariaDisabled,
+        onclick,
+        ...rest
+    }: ButtonProps = $props();
 
-const classes = $derived(cn(classProp, unstyled ? undefined : button({ variant, size })));
-const visualStatus = $derived(status ?? (loading ? 'loading' : 'idle'));
-const statusClasses = $derived(
-    unstyled
-        ? undefined
-        : visualStatus === 'success'
-          ? 'bg-[color-mix(in_srgb,var(--color-success)_12%,var(--color-card))] text-[var(--color-success)] hover:bg-[color-mix(in_srgb,var(--color-success)_18%,var(--color-card))] data-[state=open]:bg-[color-mix(in_srgb,var(--color-success)_18%,var(--color-card))]'
-          : visualStatus === 'error'
-            ? 'bg-[color-mix(in_srgb,var(--color-error)_12%,var(--color-card))] text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_18%,var(--color-card))] data-[state=open]:bg-[color-mix(in_srgb,var(--color-error)_18%,var(--color-card))]'
-            : undefined
-);
-const styledClasses = $derived(cn(classes, statusClasses));
-const stateful = $derived(
-    status !== undefined ||
-        loading !== undefined ||
-        loadingLabel !== undefined ||
-        successLabel !== undefined ||
-        errorLabel !== undefined
-);
-const pending = $derived(visualStatus === 'loading');
-const currentLabel = $derived(
-    visualStatus === 'loading'
-        ? (loadingLabel ?? 'Loading…')
-        : visualStatus === 'success'
-          ? (successLabel ?? 'Done')
-          : visualStatus === 'error'
-            ? (errorLabel ?? 'Try again')
-            : ariaLabel
-);
+    const classes = $derived(cn(classProp, unstyled ? undefined : button({ variant, size })));
+    const visualStatus = $derived(status ?? (loading ? 'loading' : 'idle'));
+    const statusClasses = $derived(
+        unstyled
+            ? undefined
+            : visualStatus === 'success'
+              ? 'bg-[color-mix(in_srgb,var(--color-success)_12%,var(--color-card))] text-[var(--color-success)] hover:bg-[color-mix(in_srgb,var(--color-success)_18%,var(--color-card))] data-[state=open]:bg-[color-mix(in_srgb,var(--color-success)_18%,var(--color-card))]'
+              : visualStatus === 'error'
+                ? 'bg-[color-mix(in_srgb,var(--color-error)_12%,var(--color-card))] text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_18%,var(--color-card))] data-[state=open]:bg-[color-mix(in_srgb,var(--color-error)_18%,var(--color-card))]'
+                : undefined
+    );
+    const styledClasses = $derived(cn(classes, statusClasses));
+    const stateful = $derived(
+        status !== undefined ||
+            loading !== undefined ||
+            loadingLabel !== undefined ||
+            successLabel !== undefined ||
+            errorLabel !== undefined
+    );
+    const pending = $derived(visualStatus === 'loading');
+    const currentLabel = $derived(
+        visualStatus === 'loading'
+            ? (loadingLabel ?? 'Loading…')
+            : visualStatus === 'success'
+              ? (successLabel ?? 'Done')
+              : visualStatus === 'error'
+                ? (errorLabel ?? 'Try again')
+                : ariaLabel
+    );
 
-function activate(event: MouseEvent) {
-    if (pending) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
+    function activate(event: MouseEvent) {
+        if (pending) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+        onclick?.(event);
     }
-    onclick?.(event);
-}
 </script>
 
 {#snippet content()}

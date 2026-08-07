@@ -1,10 +1,10 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import type { QuestionActionProps } from '.';
-import { getQuestionContext } from './context.svelte';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import type { QuestionActionProps } from '.';
+    import { getQuestionContext } from './context.svelte';
 
-let { children, disabled = false, onclick, ...rest }: QuestionActionProps = $props();
-const context = getQuestionContext();
+    let { children, disabled = false, onclick, ...rest }: QuestionActionProps = $props();
+    const context = getQuestionContext();
 </script>
 
 <Button

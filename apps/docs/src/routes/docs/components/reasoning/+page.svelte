@@ -1,15 +1,15 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Streaming from './examples/streaming.svelte';
-import StreamingSrc from './examples/streaming.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Streaming from './examples/streaming.svelte';
+    import StreamingSrc from './examples/streaming.svelte?raw';
 
-const TITLE = 'Reasoning';
-const SLUG = 'reasoning';
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const TITLE = 'Reasoning';
+    const SLUG = 'reasoning';
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>
@@ -58,8 +58,8 @@ const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Use <code>streaming</code> while the model is thinking; use <code>duration</code> when it
-            completes.
+            Use <code>streaming</code> while the model is thinking; use <code>duration</code> when
+            it completes.
         </p>
         <CodeBlock
             code={`import * as Reasoning from '@sivir-ui/svelte/components/reasoning';

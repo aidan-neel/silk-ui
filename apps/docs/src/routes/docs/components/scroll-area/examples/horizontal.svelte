@@ -1,18 +1,18 @@
 <script lang="ts">
-import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
+    import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
 
-const tabs = [
-    'Overview',
-    'Activity',
-    'Settings',
-    'Members',
-    'Billing',
-    'Integrations',
-    'Webhooks',
-    'Security',
-    'Audit log',
-    'Danger zone'
-];
+    const tabs = [
+        'Overview',
+        'Activity',
+        'Settings',
+        'Members',
+        'Billing',
+        'Integrations',
+        'Webhooks',
+        'Security',
+        'Audit log',
+        'Danger zone'
+    ];
 </script>
 
 <div class="flex items-center justify-center p-10">

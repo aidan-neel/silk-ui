@@ -1,8 +1,14 @@
-import * as clack from '@clack/prompts';
 import { spawnSync } from 'node:child_process';
+import * as clack from '@clack/prompts';
 import pc from 'picocolors';
 import { CONFIG_FILE, loadConfig, saveConfig } from '../config';
-import { ResolveError, installableFiles, loadRegistryIndex, resolveInstallPlan } from '../registry';
+import {
+    type InstallPlan,
+    installableFiles,
+    loadRegistryIndex,
+    ResolveError,
+    resolveInstallPlan
+} from '../registry';
 import {
     type CopyResult,
     declaredDependencies,
@@ -35,7 +41,7 @@ export async function add(names: string[], options: AddOptions) {
     }
 
     const index = await loadRegistryIndex();
-    let plan;
+    let plan: InstallPlan;
     try {
         plan = resolveInstallPlan(index, names);
     } catch (error) {

@@ -1,18 +1,18 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Basic from './examples/basic.svelte';
-import BasicSrc from './examples/basic.svelte?raw';
-import Description from './examples/description.svelte';
-import DescriptionSrc from './examples/description.svelte?raw';
-import Disabled from './examples/disabled.svelte';
-import DisabledSrc from './examples/disabled.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Basic from './examples/basic.svelte';
+    import BasicSrc from './examples/basic.svelte?raw';
+    import Description from './examples/description.svelte';
+    import DescriptionSrc from './examples/description.svelte?raw';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
 
-const TITLE = 'Switch';
+    const TITLE = 'Switch';
 
-const installCommand = 'bunx @sivir-ui/svelte add switch';
+    const installCommand = 'bunx @sivir-ui/svelte add switch';
 </script>
 
 <svelte:head>

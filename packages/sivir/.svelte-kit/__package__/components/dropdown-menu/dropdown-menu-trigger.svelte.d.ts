@@ -6,6 +6,6 @@ type Props = {
     class?: string;
     variant?: ButtonVariant;
 } & Omit<Popover.PopoverTriggerProps, 'children' | 'class' | 'variant'>;
-declare const DropdownMenuTrigger: import("svelte").Component<Props, {}, "">;
+declare const DropdownMenuTrigger: import('svelte').Component<Props, {}, ''>;
 type DropdownMenuTrigger = ReturnType<typeof DropdownMenuTrigger>;
 export default DropdownMenuTrigger;

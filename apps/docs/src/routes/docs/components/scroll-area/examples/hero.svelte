@@ -1,39 +1,39 @@
 <script lang="ts">
-import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
+    import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
 
-let activeChatId = $state(0);
+    let activeChatId = $state(0);
 
-const chats = [
-    { id: 0, date: 'Today', title: 'Svelte 5 runes migration' },
-    { id: 1, date: 'Today', title: 'Designing the studio preset' },
-    { id: 2, date: 'Today', title: 'Tailwind v4 token setup' },
-    { id: 3, date: 'Today', title: 'Pagination active state' },
-    { id: 4, date: 'Yesterday', title: 'Figma plugin ideas' },
-    { id: 5, date: 'Yesterday', title: 'Vercel deploy hook' },
-    { id: 6, date: 'Yesterday', title: 'Refactor command palette' },
-    { id: 7, date: 'Yesterday', title: 'Hover card a11y' },
-    { id: 8, date: 'Previous 7 days', title: 'Toast queue logic' },
-    { id: 9, date: 'Previous 7 days', title: 'Color picker math' },
-    { id: 10, date: 'Previous 7 days', title: 'Button loading states' },
-    { id: 11, date: 'Previous 7 days', title: 'Modal scroll behavior' },
-    { id: 12, date: 'Previous 7 days', title: 'Badge variant system' },
-    { id: 13, date: 'Previous 7 days', title: 'Breadcrumb navigation' },
-    { id: 14, date: 'Previous 7 days', title: 'Dropdown menu icons' },
-    { id: 15, date: 'Previous 7 days', title: 'Alert dialog focus trap' }
-];
+    const chats = [
+        { id: 0, date: 'Today', title: 'Svelte 5 runes migration' },
+        { id: 1, date: 'Today', title: 'Designing the studio preset' },
+        { id: 2, date: 'Today', title: 'Tailwind v4 token setup' },
+        { id: 3, date: 'Today', title: 'Pagination active state' },
+        { id: 4, date: 'Yesterday', title: 'Figma plugin ideas' },
+        { id: 5, date: 'Yesterday', title: 'Vercel deploy hook' },
+        { id: 6, date: 'Yesterday', title: 'Refactor command palette' },
+        { id: 7, date: 'Yesterday', title: 'Hover card a11y' },
+        { id: 8, date: 'Previous 7 days', title: 'Toast queue logic' },
+        { id: 9, date: 'Previous 7 days', title: 'Color picker math' },
+        { id: 10, date: 'Previous 7 days', title: 'Button loading states' },
+        { id: 11, date: 'Previous 7 days', title: 'Modal scroll behavior' },
+        { id: 12, date: 'Previous 7 days', title: 'Badge variant system' },
+        { id: 13, date: 'Previous 7 days', title: 'Breadcrumb navigation' },
+        { id: 14, date: 'Previous 7 days', title: 'Dropdown menu icons' },
+        { id: 15, date: 'Previous 7 days', title: 'Alert dialog focus trap' }
+    ];
 
-const groupedChats = chats.reduce(
-    (acc, chat) => {
-        const group = acc.find((g) => g.date === chat.date);
-        if (group) {
-            group.items.push(chat);
-        } else {
-            acc.push({ date: chat.date, items: [chat] });
-        }
-        return acc;
-    },
-    [] as Array<{ date: string; items: typeof chats }>
-);
+    const groupedChats = chats.reduce(
+        (acc, chat) => {
+            const group = acc.find((g) => g.date === chat.date);
+            if (group) {
+                group.items.push(chat);
+            } else {
+                acc.push({ date: chat.date, items: [chat] });
+            }
+            return acc;
+        },
+        [] as Array<{ date: string; items: typeof chats }>
+    );
 </script>
 
 <div class="flex items-center justify-center p-10">

@@ -1,48 +1,48 @@
 <script lang="ts">
-import Circle from '@lucide/svelte/icons/circle';
-import CircleAlert from '@lucide/svelte/icons/circle-alert';
-import Minus from '@lucide/svelte/icons/minus';
-import SignalHigh from '@lucide/svelte/icons/signal-high';
-import SignalLow from '@lucide/svelte/icons/signal-low';
-import SignalMedium from '@lucide/svelte/icons/signal-medium';
-import SquarePen from '@lucide/svelte/icons/square-pen';
-import * as Avatar from '@sivir-ui/svelte/components/avatar';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { Input } from '@sivir-ui/svelte/components/input';
-import { Label } from '@sivir-ui/svelte/components/label';
-import * as Select from '@sivir-ui/svelte/components/select';
-import * as Sheet from '@sivir-ui/svelte/components/sheet';
-import { Textarea } from '@sivir-ui/svelte/components/textarea';
+    import Circle from '@lucide/svelte/icons/circle';
+    import CircleAlert from '@lucide/svelte/icons/circle-alert';
+    import Minus from '@lucide/svelte/icons/minus';
+    import SignalHigh from '@lucide/svelte/icons/signal-high';
+    import SignalLow from '@lucide/svelte/icons/signal-low';
+    import SignalMedium from '@lucide/svelte/icons/signal-medium';
+    import SquarePen from '@lucide/svelte/icons/square-pen';
+    import * as Avatar from '@sivir-ui/svelte/components/avatar';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Input } from '@sivir-ui/svelte/components/input';
+    import { Label } from '@sivir-ui/svelte/components/label';
+    import * as Select from '@sivir-ui/svelte/components/select';
+    import * as Sheet from '@sivir-ui/svelte/components/sheet';
+    import { Textarea } from '@sivir-ui/svelte/components/textarea';
 
-let issueTitle = $state('');
-let issueDescription = $state('');
-let status = $state('');
-let priority = $state('');
-let assignee = $state('');
+    let issueTitle = $state('');
+    let issueDescription = $state('');
+    let status = $state('');
+    let priority = $state('');
+    let assignee = $state('');
 
-const statuses = [
-    { value: 'todo', label: 'Todo', icon: Circle },
-    { value: 'in-progress', label: 'In progress', icon: Circle },
-    { value: 'done', label: 'Done', icon: Circle }
-];
+    const statuses = [
+        { value: 'todo', label: 'Todo', icon: Circle },
+        { value: 'in-progress', label: 'In progress', icon: Circle },
+        { value: 'done', label: 'Done', icon: Circle }
+    ];
 
-const priorities = [
-    { value: 'none', label: 'No priority', icon: Minus },
-    { value: 'urgent', label: 'Urgent', icon: CircleAlert },
-    { value: 'high', label: 'High', icon: SignalHigh },
-    { value: 'medium', label: 'Medium', icon: SignalMedium },
-    { value: 'low', label: 'Low', icon: SignalLow }
-];
+    const priorities = [
+        { value: 'none', label: 'No priority', icon: Minus },
+        { value: 'urgent', label: 'Urgent', icon: CircleAlert },
+        { value: 'high', label: 'High', icon: SignalHigh },
+        { value: 'medium', label: 'Medium', icon: SignalMedium },
+        { value: 'low', label: 'Low', icon: SignalLow }
+    ];
 
-const assignees = [
-    { value: 'an', label: 'Aidan N.', initials: 'AN' },
-    { value: 'sk', label: 'Sam K.', initials: 'SK' },
-    { value: 'unassigned', label: 'Unassigned', initials: '?' }
-];
+    const assignees = [
+        { value: 'an', label: 'Aidan N.', initials: 'AN' },
+        { value: 'sk', label: 'Sam K.', initials: 'SK' },
+        { value: 'unassigned', label: 'Unassigned', initials: '?' }
+    ];
 
-const statusMeta = $derived(statuses.find((s) => s.value === status));
-const priorityMeta = $derived(priorities.find((p) => p.value === priority));
-const assigneeMeta = $derived(assignees.find((a) => a.value === assignee));
+    const statusMeta = $derived(statuses.find((s) => s.value === status));
+    const priorityMeta = $derived(priorities.find((p) => p.value === priority));
+    const assigneeMeta = $derived(assignees.find((a) => a.value === assignee));
 </script>
 
 <div class="flex items-center justify-center">

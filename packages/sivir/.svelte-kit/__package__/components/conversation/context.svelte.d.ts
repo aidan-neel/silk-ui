@@ -10,5 +10,6 @@ export type ConversationContext = {
     set viewport(value: HTMLDivElement | undefined);
     scrollToBottom: (behavior?: ScrollBehavior) => void;
 };
-declare const setConversationContext: (value: ConversationContext) => ConversationContext, getConversationContext: () => ConversationContext;
+declare const setConversationContext: (value: ConversationContext) => ConversationContext,
+    getConversationContext: () => ConversationContext;
 export { getConversationContext, setConversationContext };

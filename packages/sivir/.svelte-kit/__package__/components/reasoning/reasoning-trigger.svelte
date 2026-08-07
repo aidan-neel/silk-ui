@@ -1,18 +1,18 @@
 <script lang="ts">
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ReasoningTriggerProps } from '.';
-import { getReasoningContext } from './context.svelte';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ReasoningTriggerProps } from '.';
+    import { getReasoningContext } from './context.svelte';
 
-let {
-    title = 'Draft',
-    duration,
-    children,
-    class: className,
-    ...rest
-}: ReasoningTriggerProps = $props();
-const reasoning = getReasoningContext();
+    let {
+        title = 'Draft',
+        duration,
+        children,
+        class: className,
+        ...rest
+    }: ReasoningTriggerProps = $props();
+    const reasoning = getReasoningContext();
 </script>
 
 <Button
@@ -36,7 +36,8 @@ const reasoning = getReasoningContext();
                 class={cn(
                     'font-[var(--font-weight-label)]',
                     reasoning.streaming ? 'sivir-reasoning-shimmer' : 'text-foreground-muted'
-                )}>{reasoning.streaming ? 'Thinking' : 'Thought'}</span
+                )}
+                >{reasoning.streaming ? 'Thinking' : 'Thought'}</span
             >
             {#if !reasoning.streaming && duration}
                 <span class="text-foreground-muted">for {duration}</span>

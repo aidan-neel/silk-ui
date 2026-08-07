@@ -1,38 +1,38 @@
 <script lang="ts">
-import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
-import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
-import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
-import { onMount } from 'svelte';
-import { getModalContext } from '../modal/context.svelte';
+    import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+    import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
+    import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+    import { onMount } from 'svelte';
+    import { getModalContext } from '../modal/context.svelte';
 
-type Props = {
-    closeOnClick?: boolean;
-    onclick?: (event: MouseEvent) => void;
-} & DefaultProps &
-    ButtonProps;
+    type Props = {
+        closeOnClick?: boolean;
+        onclick?: (event: MouseEvent) => void;
+    } & DefaultProps &
+        ButtonProps;
 
-let { class: className, children, onclick, closeOnClick = true, ...rest }: Props = $props();
+    let { class: className, children, onclick, closeOnClick = true, ...rest }: Props = $props();
 
-const modal = getModalContext();
-let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>(undefined);
+    const modal = getModalContext();
+    let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>(undefined);
 
-/** Cancel reads as outline in light, ghost in dark. */
-const isDark = useIsDark();
-const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
-const actionWidthClass = $derived(
-    modal.state.orientation === 'vertical' ? 'w-full sm:flex-1' : 'w-full sm:w-fit'
-);
+    /** Cancel reads as outline in light, ghost in dark. */
+    const isDark = useIsDark();
+    const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
+    const actionWidthClass = $derived(
+        modal.state.orientation === 'vertical' ? 'w-full sm:flex-1' : 'w-full sm:w-fit'
+    );
 
-function handleClick(event: MouseEvent) {
-    if (closeOnClick) {
-        modal.state.open = false;
+    function handleClick(event: MouseEvent) {
+        if (closeOnClick) {
+            modal.state.open = false;
+        }
+        onclick?.(event);
     }
-    onclick?.(event);
-}
 
-onMount(() => {
-    element?.focus();
-});
+    onMount(() => {
+        element?.focus();
+    });
 </script>
 
 <Button

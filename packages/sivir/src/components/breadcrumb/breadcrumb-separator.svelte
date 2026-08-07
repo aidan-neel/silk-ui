@@ -1,9 +1,9 @@
 <script lang="ts">
-import ChevronRight from '@lucide/svelte/icons/chevron-right';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { BreadcrumbSeparatorProps } from '.';
+    import ChevronRight from '@lucide/svelte/icons/chevron-right';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { BreadcrumbSeparatorProps } from '.';
 
-let { class: className, children, ...rest }: BreadcrumbSeparatorProps = $props();
+    let { class: className, children, ...rest }: BreadcrumbSeparatorProps = $props();
 </script>
 
 {#if children}

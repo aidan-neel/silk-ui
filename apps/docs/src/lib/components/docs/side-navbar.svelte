@@ -1,27 +1,28 @@
 <script lang="ts">
-import BookOpen from '@lucide/svelte/icons/book-open';
-import Component from '@lucide/svelte/icons/component';
-import Download from '@lucide/svelte/icons/download';
-import Palette from '@lucide/svelte/icons/palette';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { travelingHighlight } from '@sivir-ui/svelte/utils';
-import { page } from '$app/stores';
-import { components, sanitizeComponent } from '$lib/components';
-import Logo from '$lib/components/logo.svelte';
+    import BookOpen from '@lucide/svelte/icons/book-open';
+    import Component from '@lucide/svelte/icons/component';
+    import Download from '@lucide/svelte/icons/download';
+    import Palette from '@lucide/svelte/icons/palette';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { travelingHighlight } from '@sivir-ui/svelte/utils';
+    import { page } from '$app/stores';
+    import { components, sanitizeComponent } from '$lib/components';
+    import Logo from '$lib/components/logo.svelte';
 
-let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } = $props();
-const pageName = $derived($page.url.pathname);
+    let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } =
+        $props();
+    const pageName = $derived($page.url.pathname);
 
-const gettingStartedItems = [
-    { href: '/docs/introduction', label: 'Introduction', icon: BookOpen },
-    { href: '/docs/installation', label: 'Installation', icon: Download },
-    { href: '/docs/theming', label: 'Theming', icon: Palette },
-    { href: '/docs/components', label: 'Components', icon: Component }
-];
+    const gettingStartedItems = [
+        { href: '/docs/introduction', label: 'Introduction', icon: BookOpen },
+        { href: '/docs/installation', label: 'Installation', icon: Download },
+        { href: '/docs/theming', label: 'Theming', icon: Palette },
+        { href: '/docs/components', label: 'Components', icon: Component }
+    ];
 
-function isActive(path: string) {
-    return pageName === path;
-}
+    function isActive(path: string) {
+        return pageName === path;
+    }
 </script>
 
 <aside

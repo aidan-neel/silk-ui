@@ -2,7 +2,8 @@ export const manifest = {
     name: 'attachment',
     version: '1.0.0',
     visibility: 'public',
-    description: 'Validated local-file picker with drag and drop, previews, status, and progress display.',
+    description:
+        'Validated local-file picker with drag and drop, previews, status, and progress display.',
     files: [
         'components/attachment/attachment.svelte',
         'components/attachment/attachment-trigger.svelte',

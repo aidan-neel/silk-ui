@@ -1,16 +1,16 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Determinate from './examples/determinate.svelte';
-import DeterminateSrc from './examples/determinate.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Indeterminate from './examples/indeterminate.svelte';
-import IndeterminateSrc from './examples/indeterminate.svelte?raw';
-import WithLabel from './examples/with-label.svelte';
-import WithLabelSrc from './examples/with-label.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Determinate from './examples/determinate.svelte';
+    import DeterminateSrc from './examples/determinate.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Indeterminate from './examples/indeterminate.svelte';
+    import IndeterminateSrc from './examples/indeterminate.svelte?raw';
+    import WithLabel from './examples/with-label.svelte';
+    import WithLabelSrc from './examples/with-label.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add progress';
+    const installCommand = 'bunx @sivir-ui/svelte add progress';
 </script>
 
 <svelte:head>

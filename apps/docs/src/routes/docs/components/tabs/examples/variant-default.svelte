@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as Tabs from '@sivir-ui/svelte/components/tabs';
+    import * as Tabs from '@sivir-ui/svelte/components/tabs';
 
-let tab = $state('overview');
+    let tab = $state('overview');
 </script>
 
 <Tabs.Root bind:value={tab}>

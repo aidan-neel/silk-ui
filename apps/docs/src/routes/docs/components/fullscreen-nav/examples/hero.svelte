@@ -1,12 +1,13 @@
 <script lang="ts">
-import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
 </script>
 
 <FullscreenNav.Root>
     <FullscreenNav.Trigger aria-label="Open example navigation" />
     <FullscreenNav.Content label="Example navigation">
         <header class="flex items-center justify-between">
-            <span class="font-[var(--font-header)] text-lg font-semibold tracking-tight">Sivir</span
+            <span class="font-[var(--font-header)] text-lg font-semibold tracking-tight"
+                >Sivir</span
             >
             <FullscreenNav.Close />
         </header>

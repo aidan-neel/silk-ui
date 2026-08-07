@@ -1,13 +1,13 @@
 <script lang="ts">
-import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
+    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
 
-let {
-    items = [],
-    class: classProp = ''
-}: {
-    items?: Array<{ label: string; href?: string }>;
-    class?: string;
-} = $props();
+    let {
+        items = [],
+        class: classProp = ''
+    }: {
+        items?: Array<{ label: string; href?: string }>;
+        class?: string;
+    } = $props();
 </script>
 
 <Breadcrumb.Root class={`text-sm text-foreground-muted ${classProp}`}>

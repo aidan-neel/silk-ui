@@ -1,13 +1,13 @@
 <script lang="ts">
-import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
-import * as Question from '@sivir-ui/svelte/components/question';
+    import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
+    import * as Question from '@sivir-ui/svelte/components/question';
 
-let answer = $state<QuestionAnswer>();
-let submitted = $state('');
+    let answer = $state<QuestionAnswer>();
+    let submitted = $state('');
 
-function submit(value: QuestionAnswer) {
-    submitted = Array.isArray(value) ? value.join(', ') : value;
-}
+    function submit(value: QuestionAnswer) {
+        submitted = Array.isArray(value) ? value.join(', ') : value;
+    }
 </script>
 
 <div class="flex w-full max-w-2xl flex-col gap-3">

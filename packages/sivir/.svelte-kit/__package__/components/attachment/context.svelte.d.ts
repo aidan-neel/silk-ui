@@ -4,5 +4,6 @@ export type AttachmentContext = {
     open: () => void;
     remove: (file: File) => void;
 };
-declare const setAttachmentContext: (value: AttachmentContext) => AttachmentContext, getAttachmentContext: () => AttachmentContext;
+declare const setAttachmentContext: (value: AttachmentContext) => AttachmentContext,
+    getAttachmentContext: () => AttachmentContext;
 export { setAttachmentContext, getAttachmentContext };

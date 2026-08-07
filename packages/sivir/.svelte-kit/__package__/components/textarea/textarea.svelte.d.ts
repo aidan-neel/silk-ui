@@ -11,6 +11,6 @@ type $$ComponentProps = {
     element?: HTMLTextAreaElement | undefined;
     value?: string | number | null | undefined;
 } & HTMLTextareaAttributes;
-declare const Textarea: import("svelte").Component<$$ComponentProps, {}, "value" | "element">;
+declare const Textarea: import('svelte').Component<$$ComponentProps, {}, 'value' | 'element'>;
 type Textarea = ReturnType<typeof Textarea>;
 export default Textarea;

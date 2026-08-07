@@ -1,6 +1,15 @@
 import type { Component, Snippet } from 'svelte';
 type $$ComponentProps = {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'destructive' | 'info' | 'success' | 'warning' | 'error';
+    variant?:
+        | 'primary'
+        | 'secondary'
+        | 'ghost'
+        | 'outline'
+        | 'destructive'
+        | 'info'
+        | 'success'
+        | 'warning'
+        | 'error';
     children?: Snippet;
     class?: string;
     href?: string;
@@ -11,6 +20,6 @@ type $$ComponentProps = {
     iconSize?: number | string;
     dot?: boolean;
 } & Record<string, unknown>;
-declare const Badge: Component<$$ComponentProps, {}, "">;
+declare const Badge: Component<$$ComponentProps, {}, ''>;
 type Badge = ReturnType<typeof Badge>;
 export default Badge;

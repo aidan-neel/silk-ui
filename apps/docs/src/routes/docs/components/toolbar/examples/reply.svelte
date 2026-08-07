@@ -1,12 +1,12 @@
 <script lang="ts">
-import ArrowUp from '@lucide/svelte/icons/arrow-up';
-import AtSign from '@lucide/svelte/icons/at-sign';
-import ImagePlus from '@lucide/svelte/icons/image-plus';
-import SmilePlus from '@lucide/svelte/icons/smile-plus';
-import { Button } from '@sivir-ui/svelte/components/button';
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-import { Textarea } from '@sivir-ui/svelte/components/textarea';
-import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
+    import ArrowUp from '@lucide/svelte/icons/arrow-up';
+    import AtSign from '@lucide/svelte/icons/at-sign';
+    import ImagePlus from '@lucide/svelte/icons/image-plus';
+    import SmilePlus from '@lucide/svelte/icons/smile-plus';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import { Textarea } from '@sivir-ui/svelte/components/textarea';
+    import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
 </script>
 
 <div class="w-full max-w-xl">
@@ -17,13 +17,15 @@ import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
                     variant="ghost"
                     size="sm"
                     class="size-7 rounded-[var(--radius-md)] p-0"
-                    aria-label="Mention someone"><AtSign size={14} /></Button
+                    aria-label="Mention someone"
+                    ><AtSign size={14} /></Button
                 >
                 <Button
                     variant="ghost"
                     size="sm"
                     class="size-7 rounded-[var(--radius-md)] p-0"
-                    aria-label="Add image"><ImagePlus size={14} /></Button
+                    aria-label="Add image"
+                    ><ImagePlus size={14} /></Button
                 >
                 <DropdownMenu.Root>
                     <DropdownMenu.Trigger

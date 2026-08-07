@@ -1,19 +1,19 @@
 <script lang="ts">
-import Button from '@sivir-ui/svelte/components/button';
-import * as Command from '@sivir-ui/svelte/components/command';
-import Shortcut from '@sivir-ui/svelte/components/shortcut';
+    import Button from '@sivir-ui/svelte/components/button';
+    import * as Command from '@sivir-ui/svelte/components/command';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
 
-let {
-    mode = 'button',
-    shortcut = 'cmd+k',
-    disabled = false,
-    onactivate = () => {}
-}: {
-    mode?: 'button' | 'standalone' | 'command';
-    shortcut?: string;
-    disabled?: boolean;
-    onactivate?: () => void;
-} = $props();
+    let {
+        mode = 'button',
+        shortcut = 'cmd+k',
+        disabled = false,
+        onactivate = () => {}
+    }: {
+        mode?: 'button' | 'standalone' | 'command';
+        shortcut?: string;
+        disabled?: boolean;
+        onactivate?: () => void;
+    } = $props();
 </script>
 
 {#if mode === 'command'}

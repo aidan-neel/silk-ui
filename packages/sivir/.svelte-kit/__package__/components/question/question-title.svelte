@@ -1,9 +1,9 @@
 <script lang="ts">
-import CircleHelp from '@lucide/svelte/icons/circle-help';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { QuestionTitleProps } from '.';
+    import CircleHelp from '@lucide/svelte/icons/circle-help';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { QuestionTitleProps } from '.';
 
-let { class: className, children, ...rest }: QuestionTitleProps = $props();
+    let { class: className, children, ...rest }: QuestionTitleProps = $props();
 </script>
 
 <legend

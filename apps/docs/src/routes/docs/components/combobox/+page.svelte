@@ -1,17 +1,17 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Basic from './examples/basic.svelte';
-import BasicSrc from './examples/basic.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import MenuSearch from './examples/menu-search.svelte';
-import MenuSearchSrc from './examples/menu-search.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Basic from './examples/basic.svelte';
+    import BasicSrc from './examples/basic.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import MenuSearch from './examples/menu-search.svelte';
+    import MenuSearchSrc from './examples/menu-search.svelte?raw';
 
-const TITLE = 'Combobox';
-const SLUG = 'combobox';
+    const TITLE = 'Combobox';
+    const SLUG = 'combobox';
 
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

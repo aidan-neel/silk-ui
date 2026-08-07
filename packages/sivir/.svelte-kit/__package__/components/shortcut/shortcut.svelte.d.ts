@@ -5,6 +5,6 @@ type Props = Omit<HTMLAttributes<HTMLElement>, 'children'> & {
     shortcut: string;
     ontrigger?: (event: KeyboardEvent) => void;
 };
-declare const Shortcut: import("svelte").Component<Props, {}, "">;
+declare const Shortcut: import('svelte').Component<Props, {}, ''>;
 type Shortcut = ReturnType<typeof Shortcut>;
 export default Shortcut;

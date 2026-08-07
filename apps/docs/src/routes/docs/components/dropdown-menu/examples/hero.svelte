@@ -1,12 +1,12 @@
 <script lang="ts">
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import CreditCard from '@lucide/svelte/icons/credit-card';
-import LifeBuoy from '@lucide/svelte/icons/life-buoy';
-import LogOut from '@lucide/svelte/icons/log-out';
-import Settings from '@lucide/svelte/icons/settings';
-import User from '@lucide/svelte/icons/user';
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-import Shortcut from '@sivir-ui/svelte/components/shortcut';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import CreditCard from '@lucide/svelte/icons/credit-card';
+    import LifeBuoy from '@lucide/svelte/icons/life-buoy';
+    import LogOut from '@lucide/svelte/icons/log-out';
+    import Settings from '@lucide/svelte/icons/settings';
+    import User from '@lucide/svelte/icons/user';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <DropdownMenu.Root>
@@ -36,7 +36,8 @@ import Shortcut from '@sivir-ui/svelte/components/shortcut';
         </DropdownMenu.Item>
         <DropdownMenu.Item>
             <span class="flex items-center gap-2 text-[var(--color-error)]">
-                <LogOut size={13} /> Sign out
+                <LogOut size={13} />
+                Sign out
             </span>
             <Shortcut shortcut="shift+cmd+Q" />
         </DropdownMenu.Item>

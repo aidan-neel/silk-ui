@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
+    import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
 
-let open = $state(false);
+    let open = $state(false);
 </script>
 
 <div class="w-full max-w-md">

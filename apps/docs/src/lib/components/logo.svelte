@@ -1,5 +1,5 @@
 <script lang="ts">
-import { resolve } from '$app/paths';
+    import { resolve } from '$app/paths';
 </script>
 
 <a href={resolve('/')} class="flex items-center gap-2 no-underline" aria-label="Sivir UI Home">

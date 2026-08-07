@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
+    import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
 
-let value = $state<string | undefined>('pro');
+    let value = $state<string | undefined>('pro');
 </script>
 
 <RadioGroup.Root bind:value name="plan">

@@ -1,53 +1,53 @@
 <script lang="ts">
-import { input } from '@sivir-ui/svelte/components/input/variants';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { Snippet } from 'svelte';
-import type { HTMLTextareaAttributes } from 'svelte/elements';
+    import { input } from '@sivir-ui/svelte/components/input/variants';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
+    import type { HTMLTextareaAttributes } from 'svelte/elements';
 
-let {
-    placeholder,
-    label,
-    description,
-    variant = 'outline',
-    autoresize = false,
-    class: classProp,
-    children,
-    element = $bindable<HTMLTextAreaElement>(),
-    value = $bindable<string | number | null | undefined>(),
-    oninput,
-    ...rest
-}: {
-    placeholder?: string;
-    label?: string;
-    description?: string;
-    variant?: 'outline' | 'secondary';
-    autoresize?: boolean;
-    class?: string;
-    children?: Snippet;
-    element?: HTMLTextAreaElement | undefined;
-    value?: string | number | null | undefined;
-} & HTMLTextareaAttributes = $props();
+    let {
+        placeholder,
+        label,
+        description,
+        variant = 'outline',
+        autoresize = false,
+        class: classProp,
+        children,
+        element = $bindable<HTMLTextAreaElement>(),
+        value = $bindable<string | number | null | undefined>(),
+        oninput,
+        ...rest
+    }: {
+        placeholder?: string;
+        label?: string;
+        description?: string;
+        variant?: 'outline' | 'secondary';
+        autoresize?: boolean;
+        class?: string;
+        children?: Snippet;
+        element?: HTMLTextAreaElement | undefined;
+        value?: string | number | null | undefined;
+    } & HTMLTextareaAttributes = $props();
 
-function resize() {
-    if (!autoresize || !element) {
-        return;
+    function resize() {
+        if (!autoresize || !element) {
+            return;
+        }
+        element.style.height = 'auto';
+        element.style.height = `${element.scrollHeight}px`;
     }
-    element.style.height = 'auto';
-    element.style.height = `${element.scrollHeight}px`;
-}
 
-$effect(() => {
-    if (autoresize) {
-        value;
-        resize();
-    }
-});
+    $effect(() => {
+        if (autoresize) {
+            value;
+            resize();
+        }
+    });
 
-const composerClass = $derived(
-    variant === 'secondary'
-        ? 'border-transparent bg-secondary focus-within:border-[color-mix(in_srgb,var(--color-secondary)_45%,var(--color-primary))]'
-        : 'border-[var(--color-input)] bg-[var(--color-field)] focus-within:border-primary'
-);
+    const composerClass = $derived(
+        variant === 'secondary'
+            ? 'border-transparent bg-secondary focus-within:border-[color-mix(in_srgb,var(--color-secondary)_45%,var(--color-primary))]'
+            : 'border-[var(--color-input)] bg-[var(--color-field)] focus-within:border-primary'
+    );
 </script>
 
 <label class="flex flex-col gap-1">

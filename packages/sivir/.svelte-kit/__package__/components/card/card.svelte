@@ -1,17 +1,17 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import { type Snippet } from 'svelte';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
 
-let {
-    children,
-    class: classProp,
-    variant = 'default',
-    ...rest
-}: {
-    children: Snippet;
-    class?: string;
-    variant?: 'default' | 'panel';
-} = $props();
+    let {
+        children,
+        class: classProp,
+        variant = 'default',
+        ...rest
+    }: {
+        children: Snippet;
+        class?: string;
+        variant?: 'default' | 'panel';
+    } = $props();
 </script>
 
 {#if variant === 'panel'}

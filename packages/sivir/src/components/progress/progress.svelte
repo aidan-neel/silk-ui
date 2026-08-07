@@ -1,18 +1,18 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ProgressProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ProgressProps } from '.';
 
-let {
-    class: className,
-    value = 0,
-    max = 100,
-    indeterminate = false,
-    ...rest
-}: ProgressProps = $props();
+    let {
+        class: className,
+        value = 0,
+        max = 100,
+        indeterminate = false,
+        ...rest
+    }: ProgressProps = $props();
 
-const safeMax = $derived(Math.max(max, 1));
-const clamped = $derived(Math.min(Math.max(value, 0), safeMax));
-const pct = $derived((clamped / safeMax) * 100);
+    const safeMax = $derived(Math.max(max, 1));
+    const clamped = $derived(Math.min(Math.max(value, 0), safeMax));
+    const pct = $derived((clamped / safeMax) * 100);
 </script>
 
 <div

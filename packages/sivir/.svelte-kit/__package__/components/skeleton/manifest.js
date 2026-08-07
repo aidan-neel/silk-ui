@@ -2,7 +2,8 @@ export const manifest = {
     name: 'skeleton',
     version: '2.0.0',
     visibility: 'public',
-    description: 'Static loading placeholder and a delayed, minimum-visible swap into real content.',
+    description:
+        'Static loading placeholder and a delayed, minimum-visible swap into real content.',
     files: [
         'components/skeleton/skeleton.svelte',
         'components/skeleton/skeleton-swap.svelte',

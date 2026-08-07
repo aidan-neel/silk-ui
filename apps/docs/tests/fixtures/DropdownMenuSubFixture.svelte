@@ -1,17 +1,17 @@
 <script lang="ts">
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
 
-let {
-    onRoot = () => {},
-    onSocial = () => {},
-    onTwitter = () => {},
-    onEmail = () => {}
-}: {
-    onRoot?: () => void;
-    onSocial?: () => void;
-    onTwitter?: () => void;
-    onEmail?: () => void;
-} = $props();
+    let {
+        onRoot = () => {},
+        onSocial = () => {},
+        onTwitter = () => {},
+        onEmail = () => {}
+    }: {
+        onRoot?: () => void;
+        onSocial?: () => void;
+        onTwitter?: () => void;
+        onEmail?: () => void;
+    } = $props();
 </script>
 
 <!--

@@ -1,28 +1,34 @@
 <script lang="ts">
-import Check from '@lucide/svelte/icons/circle-check';
-import X from '@lucide/svelte/icons/circle-x';
-import Info from '@lucide/svelte/icons/info';
-import Warning from '@lucide/svelte/icons/triangle-alert';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { Snippet } from 'svelte';
-import { alert, alertIcon } from './variants';
+    import Check from '@lucide/svelte/icons/circle-check';
+    import X from '@lucide/svelte/icons/circle-x';
+    import Info from '@lucide/svelte/icons/info';
+    import Warning from '@lucide/svelte/icons/triangle-alert';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
+    import { alert, alertIcon } from './variants';
 
-type Variant = 'info' | 'error' | 'success' | 'warning';
+    type Variant = 'info' | 'error' | 'success' | 'warning';
 
-let {
-    variant = 'info',
-    children,
-    class: classProp,
-    ...rest
-}: {
-    variant?: Variant;
-    children: Snippet;
-    class?: string;
-} = $props();
+    let {
+        variant = 'info',
+        children,
+        class: classProp,
+        ...rest
+    }: {
+        variant?: Variant;
+        children: Snippet;
+        class?: string;
+    } = $props();
 
-const Icon = $derived(
-    variant === 'success' ? Check : variant === 'error' ? X : variant === 'warning' ? Warning : Info
-);
+    const Icon = $derived(
+        variant === 'success'
+            ? Check
+            : variant === 'error'
+              ? X
+              : variant === 'warning'
+                ? Warning
+                : Info
+    );
 </script>
 
 <div role="alert" {...rest} class={cn(classProp, alert())}>

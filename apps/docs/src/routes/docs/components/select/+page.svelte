@@ -1,11 +1,11 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add select';
+    const installCommand = 'bunx @sivir-ui/svelte add select';
 </script>
 
 <svelte:head>

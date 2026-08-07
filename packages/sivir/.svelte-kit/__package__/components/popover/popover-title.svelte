@@ -1,11 +1,11 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { PopoverTitleProps } from '.';
-import { getPopoverContext } from './context.svelte';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { PopoverTitleProps } from '.';
+    import { getPopoverContext } from './context.svelte';
 
-const { id: key } = getPopoverContext();
+    const { id: key } = getPopoverContext();
 
-let { children, class: classProp, ...rest }: PopoverTitleProps = $props();
+    let { children, class: classProp, ...rest }: PopoverTitleProps = $props();
 </script>
 
 <p

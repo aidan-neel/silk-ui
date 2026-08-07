@@ -1,24 +1,24 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import BasicMenu from './examples/basic-menu.svelte';
-import BasicMenuSrc from './examples/basic-menu.svelte?raw';
-import Configuration from './examples/configuration.svelte';
-import ConfigurationSrc from './examples/configuration.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import RowActions from './examples/row-actions.svelte';
-import RowActionsSrc from './examples/row-actions.svelte?raw';
-import ShareMenu from './examples/share-menu.svelte';
-import ShareMenuSrc from './examples/share-menu.svelte?raw';
-import SortMenu from './examples/sort-menu.svelte';
-import SortMenuSrc from './examples/sort-menu.svelte?raw';
-import UserMenu from './examples/user-menu.svelte';
-import UserMenuSrc from './examples/user-menu.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import BasicMenu from './examples/basic-menu.svelte';
+    import BasicMenuSrc from './examples/basic-menu.svelte?raw';
+    import Configuration from './examples/configuration.svelte';
+    import ConfigurationSrc from './examples/configuration.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import RowActions from './examples/row-actions.svelte';
+    import RowActionsSrc from './examples/row-actions.svelte?raw';
+    import ShareMenu from './examples/share-menu.svelte';
+    import ShareMenuSrc from './examples/share-menu.svelte?raw';
+    import SortMenu from './examples/sort-menu.svelte';
+    import SortMenuSrc from './examples/sort-menu.svelte?raw';
+    import UserMenu from './examples/user-menu.svelte';
+    import UserMenuSrc from './examples/user-menu.svelte?raw';
 
-const _TITLE = 'Dropdown Menu';
+    const _TITLE = 'Dropdown Menu';
 
-const installCommand = 'bunx @sivir-ui/svelte add dropdown-menu';
+    const installCommand = 'bunx @sivir-ui/svelte add dropdown-menu';
 </script>
 
 <svelte:head>

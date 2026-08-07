@@ -1,26 +1,26 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import * as Conversation from '@sivir-ui/svelte/components/conversation';
-import * as Message from '@sivir-ui/svelte/components/message';
-import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
-import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
-import * as Question from '@sivir-ui/svelte/components/question';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as Conversation from '@sivir-ui/svelte/components/conversation';
+    import * as Message from '@sivir-ui/svelte/components/message';
+    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+    import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
+    import * as Question from '@sivir-ui/svelte/components/question';
 
-let asking = $state(true);
-let answer = $state<QuestionAnswer>();
-let draft = $state('Keep the migration reversible.');
-let sentPrompt = $state('');
-let shouldFocusQuestion = $state(false);
+    let asking = $state(true);
+    let answer = $state<QuestionAnswer>();
+    let draft = $state('Keep the migration reversible.');
+    let sentPrompt = $state('');
+    let shouldFocusQuestion = $state(false);
 
-function answerQuestion(value: QuestionAnswer) {
-    answer = value;
-    asking = false;
-}
+    function answerQuestion(value: QuestionAnswer) {
+        answer = value;
+        asking = false;
+    }
 
-function sendPrompt(value: string) {
-    sentPrompt = value;
-    draft = '';
-}
+    function sendPrompt(value: string) {
+        sentPrompt = value;
+        draft = '';
+    }
 </script>
 
 <div
@@ -79,7 +79,8 @@ function sendPrompt(value: string) {
                     />
                 </Question.Options>
                 <Question.Actions>
-                    <Question.Cancel onclick={() => (asking = false)}>Skip question</Question.Cancel
+                    <Question.Cancel onclick={() => (asking = false)}
+                        >Skip question</Question.Cancel
                     >
                     <Question.Submit />
                 </Question.Actions>

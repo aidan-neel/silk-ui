@@ -1,6 +1,6 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import * as Card from '@sivir-ui/svelte/components/card';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as Card from '@sivir-ui/svelte/components/card';
 </script>
 
 <Card.Root class="w-full max-w-[28rem]">

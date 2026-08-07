@@ -6,7 +6,9 @@ export function setColorPickerContext(ctx) {
 export function getColorPickerContext() {
     const ctx = getContext(CONTEXT_KEY);
     if (!ctx) {
-        throw new Error('ColorPicker.Trigger and ColorPicker.Content must be used inside ColorPicker.Root');
+        throw new Error(
+            'ColorPicker.Trigger and ColorPicker.Content must be used inside ColorPicker.Root'
+        );
     }
     return ctx;
 }

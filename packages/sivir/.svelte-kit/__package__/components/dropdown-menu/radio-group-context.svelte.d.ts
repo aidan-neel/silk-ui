@@ -3,5 +3,8 @@ export type DropdownMenuRadioGroupContext = {
     set value(value: string | undefined);
     onValueChange?: (value: string) => void;
 };
-declare const setDropdownMenuRadioGroupContext: (value: DropdownMenuRadioGroupContext) => DropdownMenuRadioGroupContext, getDropdownMenuRadioGroupContext: () => DropdownMenuRadioGroupContext;
+declare const setDropdownMenuRadioGroupContext: (
+        value: DropdownMenuRadioGroupContext
+    ) => DropdownMenuRadioGroupContext,
+    getDropdownMenuRadioGroupContext: () => DropdownMenuRadioGroupContext;
 export { getDropdownMenuRadioGroupContext, setDropdownMenuRadioGroupContext };

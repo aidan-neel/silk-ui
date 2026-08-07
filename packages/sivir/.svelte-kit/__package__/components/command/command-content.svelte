@@ -1,23 +1,23 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import * as Modal from '@sivir-ui/svelte/components/modal';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { Snippet } from 'svelte';
+    import * as Modal from '@sivir-ui/svelte/components/modal';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
 
-type Props = {
-    children?: Snippet;
-    class?: string;
-    allowClickOutside?: boolean;
-    label?: string;
-};
+    type Props = {
+        children?: Snippet;
+        class?: string;
+        allowClickOutside?: boolean;
+        label?: string;
+    };
 
-const {
-    children,
-    class: className,
-    allowClickOutside = true,
-    label = 'Command palette',
-    ...rest
-}: Props = $props();
+    const {
+        children,
+        class: className,
+        allowClickOutside = true,
+        label = 'Command palette',
+        ...rest
+    }: Props = $props();
 </script>
 
 <Modal.Content

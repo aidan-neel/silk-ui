@@ -1,69 +1,69 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import { Input } from '@sivir-ui/svelte/components/input';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Input } from '@sivir-ui/svelte/components/input';
 
-let email = $state('');
-let workspaceSlug = $state('');
-let emailInput = $state<HTMLInputElement>();
-let workspaceSlugInput = $state<HTMLInputElement>();
-let emailTouched = $state(false);
-let workspaceSlugTouched = $state(false);
-let submitted = $state(false);
-const errorInputClass =
-    'border-[color-mix(in_srgb,var(--color-error)_70%,transparent)] shadow-[0_0_0_calc(var(--border-size)*2)_color-mix(in_srgb,var(--color-error)_25%,transparent)]';
+    let email = $state('');
+    let workspaceSlug = $state('');
+    let emailInput = $state<HTMLInputElement>();
+    let workspaceSlugInput = $state<HTMLInputElement>();
+    let emailTouched = $state(false);
+    let workspaceSlugTouched = $state(false);
+    let submitted = $state(false);
+    const errorInputClass =
+        'border-[color-mix(in_srgb,var(--color-error)_70%,transparent)] shadow-[0_0_0_calc(var(--border-size)*2)_color-mix(in_srgb,var(--color-error)_25%,transparent)]';
 
-function emailValidationMessage(
-    value: string,
-    input: HTMLInputElement | undefined,
-    isTouched: boolean
-): string {
-    if (!isTouched) {
+    function emailValidationMessage(
+        value: string,
+        input: HTMLInputElement | undefined,
+        isTouched: boolean
+    ): string {
+        if (!isTouched) {
+            return '';
+        }
+
+        if (value.trim() === '') {
+            return 'Enter an email address.';
+        }
+
+        if (!input?.validity.valid) {
+            return 'Enter a valid email address.';
+        }
+
         return '';
     }
 
-    if (value.trim() === '') {
-        return 'Enter an email address.';
-    }
+    function workspaceSlugValidationMessage(
+        value: string,
+        input: HTMLInputElement | undefined,
+        isTouched: boolean
+    ): string {
+        if (!isTouched) {
+            return '';
+        }
 
-    if (!input?.validity.valid) {
-        return 'Enter a valid email address.';
-    }
+        if (value.trim() === '') {
+            return 'Enter a workspace slug.';
+        }
 
-    return '';
-}
+        if (!input?.validity.valid) {
+            return 'Use lowercase letters, numbers, and hyphens only.';
+        }
 
-function workspaceSlugValidationMessage(
-    value: string,
-    input: HTMLInputElement | undefined,
-    isTouched: boolean
-): string {
-    if (!isTouched) {
         return '';
     }
 
-    if (value.trim() === '') {
-        return 'Enter a workspace slug.';
+    function validate(event: SubmitEvent) {
+        event.preventDefault();
+        emailTouched = true;
+        workspaceSlugTouched = true;
+        submitted = true;
     }
 
-    if (!input?.validity.valid) {
-        return 'Use lowercase letters, numbers, and hyphens only.';
-    }
-
-    return '';
-}
-
-function validate(event: SubmitEvent) {
-    event.preventDefault();
-    emailTouched = true;
-    workspaceSlugTouched = true;
-    submitted = true;
-}
-
-let emailError = $derived(emailValidationMessage(email, emailInput, emailTouched));
-let workspaceSlugError = $derived(
-    workspaceSlugValidationMessage(workspaceSlug, workspaceSlugInput, workspaceSlugTouched)
-);
-let isValid = $derived(submitted && !emailError && !workspaceSlugError);
+    let emailError = $derived(emailValidationMessage(email, emailInput, emailTouched));
+    let workspaceSlugError = $derived(
+        workspaceSlugValidationMessage(workspaceSlug, workspaceSlugInput, workspaceSlugTouched)
+    );
+    let isValid = $derived(submitted && !emailError && !workspaceSlugError);
 </script>
 
 <form class="w-full max-w-md space-y-4" novalidate onsubmit={validate}>
@@ -96,7 +96,10 @@ let isValid = $derived(submitted && !emailError && !workspaceSlugError);
                 {emailError}
             </p>
         </div>
-        <p id="email-description" class="text-foreground-muted [font-size:var(--font-size-body,16px)]">
+        <p
+            id="email-description"
+            class="text-foreground-muted [font-size:var(--font-size-body,16px)]"
+        >
             We'll use this to send workspace invites.
         </p>
     </div>

@@ -1,59 +1,59 @@
 <script lang="ts">
-import type {
-    QuestionAnswer,
-    QuestionStatus,
-    QuestionType
-} from '@sivir-ui/svelte/components/question';
-import * as Question from '@sivir-ui/svelte/components/question';
-import { untrack } from 'svelte';
+    import type {
+        QuestionAnswer,
+        QuestionStatus,
+        QuestionType
+    } from '@sivir-ui/svelte/components/question';
+    import * as Question from '@sivir-ui/svelte/components/question';
+    import { untrack } from 'svelte';
 
-let {
-    type = 'single',
-    value = $bindable(),
-    status = 'idle',
-    required = true,
-    autofocus = false,
-    disabled = false,
-    delayed = false,
-    showActions = true,
-    asyncSubmit = false
-}: {
-    type?: QuestionType;
-    value?: QuestionAnswer;
-    status?: QuestionStatus;
-    required?: boolean;
-    autofocus?: boolean;
-    disabled?: boolean;
-    delayed?: boolean;
-    showActions?: boolean;
-    asyncSubmit?: boolean;
-} = $props();
+    let {
+        type = 'single',
+        value = $bindable(),
+        status = 'idle',
+        required = true,
+        autofocus = false,
+        disabled = false,
+        delayed = false,
+        showActions = true,
+        asyncSubmit = false
+    }: {
+        type?: QuestionType;
+        value?: QuestionAnswer;
+        status?: QuestionStatus;
+        required?: boolean;
+        autofocus?: boolean;
+        disabled?: boolean;
+        delayed?: boolean;
+        showActions?: boolean;
+        asyncSubmit?: boolean;
+    } = $props();
 
-let submittedAnswer = $state<QuestionAnswer>();
-let submitCount = $state(0);
-let submitClickCount = $state(0);
-let cancelCount = $state(0);
-let showControls = $state(!untrack(() => delayed));
-let settle: (() => void) | undefined;
+    let submittedAnswer = $state<QuestionAnswer>();
+    let submitCount = $state(0);
+    let submitClickCount = $state(0);
+    let cancelCount = $state(0);
+    let showControls = $state(!untrack(() => delayed));
+    let settle: (() => void) | undefined;
 
-async function submit(answer: QuestionAnswer) {
-    submitCount += 1;
-    submittedAnswer = answer;
-    if (!asyncSubmit) {
-        return;
+    async function submit(answer: QuestionAnswer) {
+        submitCount += 1;
+        submittedAnswer = answer;
+        if (!asyncSubmit) {
+            return;
+        }
+
+        await new Promise<void>((resolve) => {
+            settle = resolve;
+        });
+        settle = undefined;
     }
 
-    await new Promise<void>((resolve) => {
-        settle = resolve;
-    });
-    settle = undefined;
-}
-
-function resolveSubmission() {
-    const resolve = settle;
-    settle = undefined;
-    resolve?.();
-}
+    function resolveSubmission() {
+        const resolve = settle;
+        settle = undefined;
+        resolve?.();
+    }
 </script>
 
 <Question.Root

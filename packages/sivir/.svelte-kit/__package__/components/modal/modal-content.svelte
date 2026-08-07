@@ -1,77 +1,77 @@
 <script lang="ts">
-import X from '@lucide/svelte/icons/x';
-import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
-import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
-import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
-import type { ModalContentProps } from '.';
-import { getModalContext } from './context.svelte';
+    import X from '@lucide/svelte/icons/x';
+    import { useOverlay } from '@sivir-ui/svelte/components/_internal/overlay';
+    import { dialogIn, dialogOut, overlayIn, overlayOut } from '@sivir-ui/svelte/transition';
+    import { cn, visualViewportBounds } from '@sivir-ui/svelte/utils';
+    import type { ModalContentProps } from '.';
+    import { getModalContext } from './context.svelte';
 
-let {
-    class: className,
-    allowClickOutside = true,
-    allowEscape = true,
-    role = 'dialog',
-    contentClass = '',
-    overlayClass = '',
-    surfaceClass = '',
-    panelIdPrefix = 'modal',
-    showClose = true,
-    size,
-    children,
-    ...rest
-}: ModalContentProps = $props();
+    let {
+        class: className,
+        allowClickOutside = true,
+        allowEscape = true,
+        role = 'dialog',
+        contentClass = '',
+        overlayClass = '',
+        surfaceClass = '',
+        panelIdPrefix = 'modal',
+        showClose = true,
+        size,
+        children,
+        ...rest
+    }: ModalContentProps = $props();
 
-const modal = getModalContext();
-const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' ? 'lg' : 'md'));
-const sizeClass = $derived(
-    (modal.state.orientation === 'horizontal'
-        ? {
-              sm: 'max-w-[23rem]',
-              md: 'max-w-[27rem]',
-              lg: 'max-w-[35rem]',
-              xl: 'max-w-[41rem]'
-          }
-        : {
-              sm: 'max-w-[17rem]',
-              md: 'max-w-[23rem]',
-              lg: 'max-w-[27rem]',
-              xl: 'max-w-[35rem]'
-          })[resolvedSize]
-);
-const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);
-const contentId = $derived(`${panelIdPrefix}-${modal.id}`);
-let element = $state<HTMLElement>();
-let portalEl = $state<HTMLDivElement>();
+    const modal = getModalContext();
+    const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' ? 'lg' : 'md'));
+    const sizeClass = $derived(
+        (modal.state.orientation === 'horizontal'
+            ? {
+                  sm: 'max-w-[23rem]',
+                  md: 'max-w-[27rem]',
+                  lg: 'max-w-[35rem]',
+                  xl: 'max-w-[41rem]'
+              }
+            : {
+                  sm: 'max-w-[17rem]',
+                  md: 'max-w-[23rem]',
+                  lg: 'max-w-[27rem]',
+                  xl: 'max-w-[35rem]'
+              })[resolvedSize]
+    );
+    const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);
+    const contentId = $derived(`${panelIdPrefix}-${modal.id}`);
+    let element = $state<HTMLElement>();
+    let portalEl = $state<HTMLDivElement>();
 
-$effect(() => {
-    modal.contentId = contentId;
-});
+    $effect(() => {
+        modal.contentId = contentId;
+    });
 
-/**
- * Portal the modal to `<body>` so its z-index escapes ancestor stacking
- * contexts such as flex items with a z-index or transformed parents.
- */
-$effect(() => {
-    if (!portalEl || typeof document === 'undefined') {
-        return;
-    }
-    document.body.appendChild(portalEl);
-    return () => {
-        portalEl?.remove();
-    };
-});
+    /**
+     * Portal the modal to `<body>` so its z-index escapes ancestor stacking
+     * contexts such as flex items with a z-index or transformed parents.
+     */
+    $effect(() => {
+        if (!portalEl || typeof document === 'undefined') {
+            return;
+        }
+        document.body.appendChild(portalEl);
+        return () => {
+            portalEl?.remove();
+        };
+    });
 
-/** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
-useOverlay({
-    isOpen: () => modal.state.open,
-    panelEl: () => element,
-    onClose: () => {
-        modal.state.open = false;
-    },
-    allowClickOutside: () => allowClickOutside,
-    allowEscape: () => allowEscape,
-    returnFocus: () => modal.returnFocusEl
-});
+    /** Shared overlay behavior: focus trap, click-outside, Escape, body lock. */
+    useOverlay({
+        isOpen: () => modal.state.open,
+        panelEl: () => element,
+        onClose: () => {
+            modal.state.open = false;
+        },
+        allowClickOutside: () => allowClickOutside,
+        allowEscape: () => allowEscape,
+        returnFocus: () => modal.returnFocusEl
+    });
 </script>
 
 <!-- Keep the host in body before opening so Safari does not reparent active transitions. -->
@@ -122,6 +122,7 @@ useOverlay({
                 >
                     {#if showClose}
                         <button
+                            type="button"
                             onclick={() => {
                                 modal.state.open = false;
                             }}

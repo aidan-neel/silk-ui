@@ -1,11 +1,11 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
+    import { cn } from '@sivir-ui/svelte/utils';
 
-let {
-    size = 30,
-    class: className,
-    label
-}: { size?: number; class?: string; label?: string } = $props();
+    let {
+        size = 30,
+        class: className,
+        label
+    }: { size?: number; class?: string; label?: string } = $props();
 </script>
 
 <span

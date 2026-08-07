@@ -1,37 +1,37 @@
 <script lang="ts">
-import { Toaster } from '@sivir-ui/svelte/components/toast';
-import { ModeWatcher } from 'mode-watcher';
-import DocsToolbar from '$lib/components/docs/docs-toolbar.svelte';
-import SideNavbar from '$lib/components/docs/side-navbar.svelte';
-import '@sivir-ui/svelte/ui.css';
-import '../app.css';
-import { injectAnalytics } from '@vercel/analytics/sveltekit';
-import type { Snippet } from 'svelte';
-import { dev } from '$app/environment';
-import { page } from '$app/stores';
-import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
+    import { Toaster } from '@sivir-ui/svelte/components/toast';
+    import { ModeWatcher } from 'mode-watcher';
+    import DocsToolbar from '$lib/components/docs/docs-toolbar.svelte';
+    import SideNavbar from '$lib/components/docs/side-navbar.svelte';
+    import '@sivir-ui/svelte/ui.css';
+    import '../app.css';
+    import { injectAnalytics } from '@vercel/analytics/sveltekit';
+    import type { Snippet } from 'svelte';
+    import { dev } from '$app/environment';
+    import { page } from '$app/stores';
+    import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
 
-import type { LayoutData } from './$types';
+    import type { LayoutData } from './$types';
 
-injectAnalytics({ mode: dev ? 'development' : 'production' });
+    injectAnalytics({ mode: dev ? 'development' : 'production' });
 
-const { children, data }: { children: Snippet; data: LayoutData } = $props();
+    const { children, data }: { children: Snippet; data: LayoutData } = $props();
 
-const isHome = $derived($page.url.pathname === '/');
-const isDocs = $derived($page.url.pathname.startsWith('/docs'));
+    const isHome = $derived($page.url.pathname === '/');
+    const isDocs = $derived($page.url.pathname.startsWith('/docs'));
 
-// `--font-header` defaults to `var(--font-sans)`, so one custom property re-skins every page.
-$effect(() => {
-    const font =
-        fonts.find((entry) => entry.name === selectedFont.current) ??
-        fonts.find((entry) => entry.name === DEFAULT_FONT);
-    if (font) document.documentElement.style.setProperty('--font-sans', font.family);
-});
+    // `--font-header` defaults to `var(--font-sans)`, so one custom property re-skins every page.
+    $effect(() => {
+        const font =
+            fonts.find((entry) => entry.name === selectedFont.current) ??
+            fonts.find((entry) => entry.name === DEFAULT_FONT);
+        if (font) document.documentElement.style.setProperty('--font-sans', font.family);
+    });
 
-// NOTE: the global docs no longer re-apply a persisted Studio theme on load.
-// That override (stored as `sivir-live-theme-css`) was masking the baked
-// default theme from ui.css "no matter what". Live theming is a Studio-only
-// concern now (rebuilt in Plan 3); docs always render the shipped default.
+    // NOTE: the global docs no longer re-apply a persisted Studio theme on load.
+    // That override (stored as `sivir-live-theme-css`) was masking the baked
+    // default theme from ui.css "no matter what". Live theming is a Studio-only
+    // concern now (rebuilt in Plan 3); docs always render the shipped default.
 </script>
 
 <svelte:head>

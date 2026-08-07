@@ -1,17 +1,17 @@
 <script lang="ts">
-import MessageCircle from '@lucide/svelte/icons/message-circle';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ConversationEmptyProps } from '.';
+    import MessageCircle from '@lucide/svelte/icons/message-circle';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ConversationEmptyProps } from '.';
 
-let {
-    icon,
-    title = 'Start a conversation',
-    description = 'Ask a question or share what you are working on.',
-    action,
-    children,
-    class: className,
-    ...rest
-}: ConversationEmptyProps = $props();
+    let {
+        icon,
+        title = 'Start a conversation',
+        description = 'Ask a question or share what you are working on.',
+        action,
+        children,
+        class: className,
+        ...rest
+    }: ConversationEmptyProps = $props();
 </script>
 
 <div

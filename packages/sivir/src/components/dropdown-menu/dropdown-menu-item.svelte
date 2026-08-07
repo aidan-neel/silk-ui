@@ -1,26 +1,26 @@
 <script lang="ts">
-import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
-import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
-import { type Snippet } from 'svelte';
-import { getPopoverContext } from '../popover/context.svelte';
-import { getDropdownMenuContext } from './context.svelte';
+    import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+    import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
+    import { getPopoverContext } from '../popover/context.svelte';
+    import { getDropdownMenuContext } from './context.svelte';
 
-const { state: popoverState } = getPopoverContext();
-const { ancestors } = getDropdownMenuContext();
+    const { state: popoverState } = getPopoverContext();
+    const { ancestors } = getDropdownMenuContext();
 
-type Props = {
-    children?: Snippet;
-    callback?: () => void;
-} & ButtonProps;
+    type Props = {
+        children?: Snippet;
+        callback?: () => void;
+    } & ButtonProps;
 
-let {
-    children,
-    class: className,
-    callback,
-    onclick: userOnclick,
-    element = $bindable(),
-    ...rest
-}: Props = $props();
+    let {
+        children,
+        class: className,
+        callback,
+        onclick: userOnclick,
+        element = $bindable(),
+        ...rest
+    }: Props = $props();
 </script>
 
 <Button

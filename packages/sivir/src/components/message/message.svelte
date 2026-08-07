@@ -1,29 +1,29 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { MessageRootProps } from '.';
-import { type MessageContext, setMessageContext } from './context.svelte';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { MessageRootProps } from '.';
+    import { type MessageContext, setMessageContext } from './context.svelte';
 
-let {
-    from = 'assistant',
-    status = 'idle',
-    name,
-    timestamp,
-    avatar,
-    children,
-    class: className,
-    ...rest
-}: MessageRootProps = $props();
+    let {
+        from = 'assistant',
+        status = 'idle',
+        name,
+        timestamp,
+        avatar,
+        children,
+        class: className,
+        ...rest
+    }: MessageRootProps = $props();
 
-const message: MessageContext = {
-    get from() {
-        return from;
-    },
-    get status() {
-        return status;
-    }
-};
+    const message: MessageContext = {
+        get from() {
+            return from;
+        },
+        get status() {
+            return status;
+        }
+    };
 
-setMessageContext(message);
+    setMessageContext(message);
 </script>
 
 <article

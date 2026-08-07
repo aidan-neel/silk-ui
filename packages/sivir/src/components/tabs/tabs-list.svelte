@@ -1,159 +1,164 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import { getContext, untrack } from 'svelte';
-import type { TabsListProps, TabsState } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { getContext, untrack } from 'svelte';
+    import type { TabsListProps, TabsState } from '.';
 
-let { children, class: className, ...rest }: TabsListProps = $props();
-const tabsState = getContext<TabsState>('tabs');
+    let { children, class: className, ...rest }: TabsListProps = $props();
+    const tabsState = getContext<TabsState>('tabs');
 
-type Rect = { left: number; top: number; width: number; height: number };
+    type Rect = { left: number; top: number; width: number; height: number };
 
-const variant = $derived(tabsState.variant);
-const vertical = $derived(tabsState.orientation === 'vertical');
-/**
- * `default` and `ghost` get the animated hover-highlight pill. The
- * container-style `segmented` variant does not -- its pill marks the active tab.
- */
-const showHover = $derived(variant !== 'segmented');
+    const variant = $derived(tabsState.variant);
+    const vertical = $derived(tabsState.orientation === 'vertical');
+    /**
+     * `default` and `ghost` get the animated hover-highlight pill. The
+     * container-style `segmented` variant does not -- its pill marks the active tab.
+     */
+    const showHover = $derived(variant !== 'segmented');
 
-let listEl = $state<HTMLDivElement | undefined>(undefined);
-let indicator = $state<Rect | null>(null);
-let hover = $state<Rect | null>(null);
-let hovering = $state(false);
-let ready = $state(false);
-let hoverTarget: HTMLElement | undefined;
+    let listEl = $state<HTMLDivElement | undefined>(undefined);
+    let indicator = $state<Rect | null>(null);
+    let hover = $state<Rect | null>(null);
+    let hovering = $state(false);
+    let ready = $state(false);
+    let hoverTarget: HTMLElement | undefined;
 
-/**
- * Ghost uses a single fill that rests on the selected tab and slides to
- * whatever tab the pointer is over, snapping back to the selection on
- * mouse-leave.
- */
-const ghostRect = $derived(hovering && hover ? hover : indicator);
+    /**
+     * Ghost uses a single fill that rests on the selected tab and slides to
+     * whatever tab the pointer is over, snapping back to the selection on
+     * mouse-leave.
+     */
+    const ghostRect = $derived(hovering && hover ? hover : indicator);
 
-function rectOf(el: HTMLElement): Rect {
-    return {
-        left: el.offsetLeft,
-        top: el.offsetTop,
-        width: el.offsetWidth,
-        height: el.offsetHeight
-    };
-}
-
-function measureIndicator() {
-    if (!listEl) {
-        return;
+    function rectOf(el: HTMLElement): Rect {
+        return {
+            left: el.offsetLeft,
+            top: el.offsetTop,
+            width: el.offsetWidth,
+            height: el.offsetHeight
+        };
     }
-    const active = listEl.querySelector<HTMLElement>('[role="tab"][data-state="active"]');
-    indicator = active ? rectOf(active) : null;
-}
 
-function measureHover() {
-    if (!listEl || !hoverTarget || !listEl.contains(hoverTarget)) {
-        return;
+    function measureIndicator() {
+        if (!listEl) {
+            return;
+        }
+        const active = listEl.querySelector<HTMLElement>('[role="tab"][data-state="active"]');
+        indicator = active ? rectOf(active) : null;
     }
-    hover = rectOf(hoverTarget);
-}
 
-function handleMouseOver(event: Event) {
-    if (!showHover || !listEl) {
-        return;
+    function measureHover() {
+        if (!listEl || !hoverTarget || !listEl.contains(hoverTarget)) {
+            return;
+        }
+        hover = rectOf(hoverTarget);
     }
-    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
-    if (!target || target.hasAttribute('disabled') || !listEl.contains(target)) {
-        return;
+
+    function handleMouseOver(event: Event) {
+        if (!showHover || !listEl) {
+            return;
+        }
+        const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('[role="tab"]');
+        if (!target || target.hasAttribute('disabled') || !listEl.contains(target)) {
+            return;
+        }
+        hoverTarget = target;
+        hover = rectOf(target);
+        hovering = true;
     }
-    hoverTarget = target;
-    hover = rectOf(target);
-    hovering = true;
-}
 
-function handleMouseLeave() {
-    hoverTarget = undefined;
-    hovering = false;
-}
+    function handleMouseLeave() {
+        hoverTarget = undefined;
+        hovering = false;
+    }
 
-$effect(() => {
-    const _value = tabsState.value;
-    const _orientation = tabsState.orientation;
-    untrack(() => {
-        queueMicrotask(() => {
-            measureIndicator();
-            measureHover();
-            ready = true;
+    $effect(() => {
+        const _value = tabsState.value;
+        const _orientation = tabsState.orientation;
+        untrack(() => {
+            queueMicrotask(() => {
+                measureIndicator();
+                measureHover();
+                ready = true;
+            });
         });
     });
-});
 
-$effect(() => {
-    if (!listEl) {
-        return;
-    }
-    const ro = new ResizeObserver(() => {
-        measureIndicator();
-        measureHover();
+    $effect(() => {
+        if (!listEl) {
+            return;
+        }
+        const ro = new ResizeObserver(() => {
+            measureIndicator();
+            measureHover();
+        });
+        ro.observe(listEl);
+        const triggers = listEl.querySelectorAll<HTMLElement>('[role="tab"]');
+        triggers.forEach((el) => {
+            ro.observe(el);
+        });
+        window.addEventListener('resize', measureIndicator);
+        return () => {
+            ro.disconnect();
+            window.removeEventListener('resize', measureIndicator);
+        };
     });
-    ro.observe(listEl);
-    const triggers = listEl.querySelectorAll<HTMLElement>('[role="tab"]');
-    triggers.forEach((el) => ro.observe(el));
-    window.addEventListener('resize', measureIndicator);
-    return () => {
-        ro.disconnect();
-        window.removeEventListener('resize', measureIndicator);
-    };
-});
 
-function moveFocus(current: HTMLElement, direction: 1 | -1) {
-    const list = current.closest('[role="tablist"]');
-    if (!list) {
-        return;
+    function moveFocus(current: HTMLElement, direction: 1 | -1) {
+        const list = current.closest('[role="tablist"]');
+        if (!list) {
+            return;
+        }
+        const tabs = Array.from(list.querySelectorAll<HTMLElement>('[role="tab"]:not([disabled])'));
+        const index = tabs.indexOf(current);
+        if (index === -1) {
+            return;
+        }
+        const next = tabs[(index + direction + tabs.length) % tabs.length];
+        next?.focus();
+        next?.click();
     }
-    const tabs = Array.from(list.querySelectorAll<HTMLElement>('[role="tab"]:not([disabled])'));
-    const index = tabs.indexOf(current);
-    if (index === -1) {
-        return;
-    }
-    const next = tabs[(index + direction + tabs.length) % tabs.length];
-    next?.focus();
-    next?.click();
-}
 
-function handleKeydown(event: KeyboardEvent) {
-    const target = event.target;
-    if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'tab') {
-        return;
+    function handleKeydown(event: KeyboardEvent) {
+        const target = event.target;
+        if (!(target instanceof HTMLElement) || target.getAttribute('role') !== 'tab') {
+            return;
+        }
+        const isHorizontal = tabsState.orientation === 'horizontal';
+        if (event.key === 'Home') {
+            event.preventDefault();
+            const first = target
+                .closest('[role="tablist"]')
+                ?.querySelector<HTMLElement>('[role="tab"]:not([disabled])');
+            first?.focus();
+            first?.click();
+            return;
+        }
+        if (event.key === 'End') {
+            event.preventDefault();
+            const tabs = target
+                .closest('[role="tablist"]')
+                ?.querySelectorAll<HTMLElement>('[role="tab"]:not([disabled])');
+            tabs?.[tabs.length - 1]?.focus();
+            tabs?.[tabs.length - 1]?.click();
+            return;
+        }
+        if (
+            (isHorizontal && event.key === 'ArrowRight') ||
+            (!isHorizontal && event.key === 'ArrowDown')
+        ) {
+            event.preventDefault();
+            moveFocus(target, 1);
+        }
+        if (
+            (isHorizontal && event.key === 'ArrowLeft') ||
+            (!isHorizontal && event.key === 'ArrowUp')
+        ) {
+            event.preventDefault();
+            moveFocus(target, -1);
+        }
     }
-    const isHorizontal = tabsState.orientation === 'horizontal';
-    if (event.key === 'Home') {
-        event.preventDefault();
-        const first = target
-            .closest('[role="tablist"]')
-            ?.querySelector<HTMLElement>('[role="tab"]:not([disabled])');
-        first?.focus();
-        first?.click();
-        return;
-    }
-    if (event.key === 'End') {
-        event.preventDefault();
-        const tabs = target
-            .closest('[role="tablist"]')
-            ?.querySelectorAll<HTMLElement>('[role="tab"]:not([disabled])');
-        tabs?.[tabs.length - 1]?.focus();
-        tabs?.[tabs.length - 1]?.click();
-        return;
-    }
-    if (
-        (isHorizontal && event.key === 'ArrowRight') ||
-        (!isHorizontal && event.key === 'ArrowDown')
-    ) {
-        event.preventDefault();
-        moveFocus(target, 1);
-    }
-    if ((isHorizontal && event.key === 'ArrowLeft') || (!isHorizontal && event.key === 'ArrowUp')) {
-        event.preventDefault();
-        moveFocus(target, -1);
-    }
-}
 </script>
 
 <div

@@ -8,5 +8,6 @@ export type DropdownMenuContext = {
     /** The parent layer's submenu registry, used by this submenu trigger. */
     parentSubmenus?: PopoverState[];
 };
-declare const setDropdownMenuContext: (value: DropdownMenuContext) => DropdownMenuContext, getDropdownMenuContext: () => DropdownMenuContext;
+declare const setDropdownMenuContext: (value: DropdownMenuContext) => DropdownMenuContext,
+    getDropdownMenuContext: () => DropdownMenuContext;
 export { setDropdownMenuContext, getDropdownMenuContext };

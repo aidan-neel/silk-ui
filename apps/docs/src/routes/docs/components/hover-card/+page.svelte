@@ -1,17 +1,17 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Definition from './examples/definition.svelte';
-import DefinitionSrc from './examples/definition.svelte?raw';
-import LinkPreview from './examples/link-preview.svelte';
-import LinkPreviewSrc from './examples/link-preview.svelte?raw';
-import UserPreview from './examples/user-preview.svelte';
-import UserPreviewSrc from './examples/user-preview.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Definition from './examples/definition.svelte';
+    import DefinitionSrc from './examples/definition.svelte?raw';
+    import LinkPreview from './examples/link-preview.svelte';
+    import LinkPreviewSrc from './examples/link-preview.svelte?raw';
+    import UserPreview from './examples/user-preview.svelte';
+    import UserPreviewSrc from './examples/user-preview.svelte?raw';
 
-const _TITLE = 'Hover Card';
-const SLUG = 'hover-card';
+    const _TITLE = 'Hover Card';
+    const SLUG = 'hover-card';
 
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

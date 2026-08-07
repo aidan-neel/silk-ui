@@ -1,14 +1,14 @@
 <script lang="ts">
-import * as Popover from '@sivir-ui/svelte/components/popover';
-import { travelingHighlight } from '@sivir-ui/svelte/utils';
-import type { Snippet } from 'svelte';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { travelingHighlight } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
 
-type Props = {
-    children: Snippet;
-    class?: string;
-};
+    type Props = {
+        children: Snippet;
+        class?: string;
+    };
 
-let props: Props = $props();
+    let props: Props = $props();
 </script>
 
 <Popover.Content

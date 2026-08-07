@@ -4,6 +4,6 @@ type SubTriggerProps = {
     class?: string;
     children?: Snippet;
 } & Omit<Popover.PopoverTriggerProps, 'children' | 'class'>;
-declare const DropdownMenuSubTrigger: import("svelte").Component<SubTriggerProps, {}, "">;
+declare const DropdownMenuSubTrigger: import('svelte').Component<SubTriggerProps, {}, ''>;
 type DropdownMenuSubTrigger = ReturnType<typeof DropdownMenuSubTrigger>;
 export default DropdownMenuSubTrigger;

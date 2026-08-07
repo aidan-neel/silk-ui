@@ -1,8 +1,8 @@
 <script lang="ts">
-import FolderOpen from '@lucide/svelte/icons/folder-open';
-import Pencil from '@lucide/svelte/icons/pencil';
-import Trash from '@lucide/svelte/icons/trash-2';
-import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+    import FolderOpen from '@lucide/svelte/icons/folder-open';
+    import Pencil from '@lucide/svelte/icons/pencil';
+    import Trash from '@lucide/svelte/icons/trash-2';
+    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 </script>
 
 <div class="flex items-center justify-center">
@@ -24,7 +24,8 @@ import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
             <ContextMenu.Separator />
             <ContextMenu.Item callback={() => {}}>
                 <span class="flex items-center gap-2 text-[var(--color-error)]">
-                    <Trash size={14} /> Delete
+                    <Trash size={14} />
+                    Delete
                 </span>
             </ContextMenu.Item>
         </ContextMenu.Content>

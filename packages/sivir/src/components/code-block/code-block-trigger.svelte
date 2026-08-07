@@ -1,16 +1,16 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import * as Tabs from '@sivir-ui/svelte/components/tabs';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { CodeBlockTriggerProps } from '.';
+    import * as Tabs from '@sivir-ui/svelte/components/tabs';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { CodeBlockTriggerProps } from '.';
 
-let {
-    children,
-    class: className,
-    value,
-    disabled = false,
-    ...rest
-}: CodeBlockTriggerProps = $props();
+    let {
+        children,
+        class: className,
+        value,
+        disabled = false,
+        ...rest
+    }: CodeBlockTriggerProps = $props();
 </script>
 
 <Tabs.Trigger

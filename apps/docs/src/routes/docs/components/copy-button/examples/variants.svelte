@@ -1,5 +1,5 @@
 <script lang="ts">
-import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
+    import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
 </script>
 
 <div class="flex items-center gap-3">

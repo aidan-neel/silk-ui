@@ -4,6 +4,6 @@ type Props = Omit<PopoverTriggerProps, 'children'> & {
     searchPlacement?: 'trigger' | 'menu';
     threshold?: number;
 };
-declare const ComboboxTrigger: import("svelte").Component<Props, {}, "">;
+declare const ComboboxTrigger: import('svelte').Component<Props, {}, ''>;
 type ComboboxTrigger = ReturnType<typeof ComboboxTrigger>;
 export default ComboboxTrigger;

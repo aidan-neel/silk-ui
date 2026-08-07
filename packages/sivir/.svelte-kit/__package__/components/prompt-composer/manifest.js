@@ -2,7 +2,8 @@ export const manifest = {
     name: 'prompt-composer',
     version: '1.0.0',
     visibility: 'public',
-    description: 'Controlled agent-message form with autoresizing input, toolbar, and send/stop action.',
+    description:
+        'Controlled agent-message form with autoresizing input, toolbar, and send/stop action.',
     files: [
         'components/prompt-composer/prompt-composer.svelte',
         'components/prompt-composer/prompt-composer-input.svelte',

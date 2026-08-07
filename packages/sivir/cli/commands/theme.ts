@@ -1,8 +1,8 @@
-import * as clack from '@clack/prompts';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import * as clack from '@clack/prompts';
 import pc from 'picocolors';
-import { parseTheme, themeToCss } from '../../../sivir/src/themes/theme';
+import { parseTheme, type Theme, themeToCss } from '../../../sivir/src/themes/theme';
 import { CONFIG_FILE, loadConfig } from '../config';
 import { loadRegistryThemes } from '../registry';
 import { fail, ok } from '../utils/ui';
@@ -29,7 +29,7 @@ export async function resolveThemeCss(slug: string, registry: string) {
     if (!response.ok) {
         throw new Error(`theme registry responded ${response.status} for ${url}`);
     }
-    let theme;
+    let theme: Theme;
     try {
         theme = parseTheme(await response.json());
     } catch (error) {
@@ -54,7 +54,7 @@ export async function addTheme(slug: string, options: ThemeOptions) {
     const spinner = clack.spinner();
     spinner.start(`Resolving theme ${pc.cyan(slug)}`);
 
-    let resolved;
+    let resolved: Awaited<ReturnType<typeof resolveThemeCss>>;
     try {
         resolved = await resolveThemeCss(slug, config.registry);
     } catch (error) {

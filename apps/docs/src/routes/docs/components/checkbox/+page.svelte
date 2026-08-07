@@ -1,21 +1,21 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Checked from './examples/checked.svelte';
-import CheckedSrc from './examples/checked.svelte?raw';
-import Disabled from './examples/disabled.svelte';
-import DisabledSrc from './examples/disabled.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import LabelOnly from './examples/label-only.svelte';
-import LabelOnlySrc from './examples/label-only.svelte?raw';
-import WithDescription from './examples/with-description.svelte';
-import WithDescriptionSrc from './examples/with-description.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Checked from './examples/checked.svelte';
+    import CheckedSrc from './examples/checked.svelte?raw';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import LabelOnly from './examples/label-only.svelte';
+    import LabelOnlySrc from './examples/label-only.svelte?raw';
+    import WithDescription from './examples/with-description.svelte';
+    import WithDescriptionSrc from './examples/with-description.svelte?raw';
 
-const TITLE = 'Checkbox';
-const SLUG = 'checkbox';
+    const TITLE = 'Checkbox';
+    const SLUG = 'checkbox';
 
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

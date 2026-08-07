@@ -1,78 +1,78 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { SkeletonSwapProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { SkeletonSwapProps } from '.';
 
-let {
-    ready,
-    children,
-    skeleton,
-    lines = 3,
-    lineHeight = 21,
-    barHeight = 9,
-    reserve,
-    delay = 120,
-    minVisible = 380,
-    label,
-    class: className,
-    ...rest
-}: SkeletonSwapProps = $props();
+    let {
+        ready,
+        children,
+        skeleton,
+        lines = 3,
+        lineHeight = 21,
+        barHeight = 9,
+        reserve,
+        delay = 120,
+        minVisible = 380,
+        label,
+        class: className,
+        ...rest
+    }: SkeletonSwapProps = $props();
 
-const widths = [100, 93, 97, 88, 95, 91] as const;
-let shell = $state<HTMLDivElement>();
-let body = $state<HTMLDivElement>();
-let showSkeleton = $state(false);
-let shownAt = 0;
-let scrollable = $state(false);
-const boxHeight = $derived(reserve ?? lines * lineHeight);
-const contentVisible = $derived(ready && !showSkeleton);
+    const widths = [100, 93, 97, 88, 95, 91] as const;
+    let shell = $state<HTMLDivElement>();
+    let body = $state<HTMLDivElement>();
+    let showSkeleton = $state(false);
+    let shownAt = 0;
+    let scrollable = $state(false);
+    const boxHeight = $derived(reserve ?? lines * lineHeight);
+    const contentVisible = $derived(ready && !showSkeleton);
 
-function widthFor(index: number) {
-    if (lines > 1 && index === lines - 1) {
-        return 62;
+    function widthFor(index: number) {
+        if (lines > 1 && index === lines - 1) {
+            return 62;
+        }
+        return widths[(index * 7 + 3) % widths.length];
     }
-    return widths[(index * 7 + 3) % widths.length];
-}
 
-$effect(() => {
-    if (!ready) {
-        if (showSkeleton) {
+    $effect(() => {
+        if (!ready) {
+            if (showSkeleton) {
+                return;
+            }
+            const timer = setTimeout(() => {
+                shownAt = performance.now();
+                showSkeleton = true;
+            }, delay);
+            return () => clearTimeout(timer);
+        }
+
+        if (!showSkeleton) {
             return;
         }
+        const remaining = Math.max(0, minVisible - (performance.now() - shownAt));
         const timer = setTimeout(() => {
-            shownAt = performance.now();
-            showSkeleton = true;
-        }, delay);
+            showSkeleton = false;
+        }, remaining);
         return () => clearTimeout(timer);
-    }
+    });
 
-    if (!showSkeleton) {
-        return;
-    }
-    const remaining = Math.max(0, minVisible - (performance.now() - shownAt));
-    const timer = setTimeout(() => {
-        showSkeleton = false;
-    }, remaining);
-    return () => clearTimeout(timer);
-});
-
-$effect(() => {
-    if (!shell) {
-        return;
-    }
-    const measure = () => {
-        const next = shell ? shell.scrollHeight - shell.clientHeight > 1 : false;
-        if (next !== scrollable) {
-            scrollable = next;
+    $effect(() => {
+        if (!shell) {
+            return;
         }
-    };
-    const observer = new ResizeObserver(measure);
-    observer.observe(shell);
-    if (body) {
-        observer.observe(body);
-    }
-    measure();
-    return () => observer.disconnect();
-});
+        const measure = () => {
+            const next = shell ? shell.scrollHeight - shell.clientHeight > 1 : false;
+            if (next !== scrollable) {
+                scrollable = next;
+            }
+        };
+        const observer = new ResizeObserver(measure);
+        observer.observe(shell);
+        if (body) {
+            observer.observe(body);
+        }
+        measure();
+        return () => observer.disconnect();
+    });
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->

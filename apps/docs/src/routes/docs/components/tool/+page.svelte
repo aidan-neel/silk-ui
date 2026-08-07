@@ -1,17 +1,17 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Quiet from './examples/quiet.svelte';
-import QuietSrc from './examples/quiet.svelte?raw';
-import ToolStates from './examples/tool-states.svelte';
-import ToolStatesSrc from './examples/tool-states.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Quiet from './examples/quiet.svelte';
+    import QuietSrc from './examples/quiet.svelte?raw';
+    import ToolStates from './examples/tool-states.svelte';
+    import ToolStatesSrc from './examples/tool-states.svelte?raw';
 
-const TITLE = 'Tool';
-const SLUG = 'tool';
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const TITLE = 'Tool';
+    const SLUG = 'tool';
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>
@@ -100,8 +100,8 @@ const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
                 Quiet
             </h3>
             <p class="text-sm text-foreground-muted">
-                Use <code>variant="quiet"</code> when tool details should stay visually secondary to the
-                response.
+                Use <code>variant="quiet"</code> when tool details should stay visually secondary to
+                the response.
             </p>
             <ComponentPreview code={QuietSrc}><Quiet /></ComponentPreview>
         </div>

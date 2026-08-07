@@ -77,8 +77,7 @@ export function loadStudioTheme() {
     }
     try {
         return parseTheme(JSON.parse(stored));
-    }
-    catch {
+    } catch {
         localStorage.removeItem(STUDIO_THEME_KEY);
         return null;
     }
@@ -98,21 +97,21 @@ export function getSavedThemes() {
         }
         return values
             .map((value) => {
-            if (typeof value !== 'object' || value === null) {
-                throw new TypeError('Invalid theme.');
-            }
-            const record = value;
-            return {
-                ...parseTheme(record),
-                id: typeof record.id === 'string' ? record.id : randomId(),
-                savedAt: typeof record.savedAt === 'string'
-                    ? record.savedAt
-                    : new Date().toISOString()
-            };
-        })
+                if (typeof value !== 'object' || value === null) {
+                    throw new TypeError('Invalid theme.');
+                }
+                const record = value;
+                return {
+                    ...parseTheme(record),
+                    id: typeof record.id === 'string' ? record.id : randomId(),
+                    savedAt:
+                        typeof record.savedAt === 'string'
+                            ? record.savedAt
+                            : new Date().toISOString()
+                };
+            })
             .sort((a, b) => b.savedAt.localeCompare(a.savedAt));
-    }
-    catch {
+    } catch {
         localStorage.removeItem(SAVED_THEMES_KEY);
         return [];
     }

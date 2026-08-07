@@ -1,53 +1,53 @@
 <script lang="ts">
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import ChevronUp from '@lucide/svelte/icons/chevron-up';
-import { cn } from '@sivir-ui/svelte/utils';
-import type { ScrollAreaProps } from '.';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import ChevronUp from '@lucide/svelte/icons/chevron-up';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ScrollAreaProps } from '.';
 
-let {
-    class: className,
-    children,
-    orientation = 'vertical',
-    showCues = true,
-    element = $bindable(),
-    onscroll,
-    ...rest
-}: ScrollAreaProps = $props();
+    let {
+        class: className,
+        children,
+        orientation = 'vertical',
+        showCues = true,
+        element = $bindable(),
+        onscroll,
+        ...rest
+    }: ScrollAreaProps = $props();
 
-let scrollTop = $state(0);
-let scrollHeight = $state(0);
-let clientHeight = $state(0);
+    let scrollTop = $state(0);
+    let scrollHeight = $state(0);
+    let clientHeight = $state(0);
 
-const atTop = $derived(scrollTop <= 1);
-const atBottom = $derived(scrollTop + clientHeight >= scrollHeight - 1);
-const overflows = $derived(scrollHeight - clientHeight > 1);
-const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
+    const atTop = $derived(scrollTop <= 1);
+    const atBottom = $derived(scrollTop + clientHeight >= scrollHeight - 1);
+    const overflows = $derived(scrollHeight - clientHeight > 1);
+    const cuesVisible = $derived(showCues && orientation === 'vertical' && overflows);
 
-function measure() {
-    if (!element) {
-        return;
+    function measure() {
+        if (!element) {
+            return;
+        }
+        scrollTop = element.scrollTop;
+        scrollHeight = element.scrollHeight;
+        clientHeight = element.clientHeight;
     }
-    scrollTop = element.scrollTop;
-    scrollHeight = element.scrollHeight;
-    clientHeight = element.clientHeight;
-}
 
-/**
- * Measure on mount and whenever the content or viewport size changes, so the
- * edge cues are correct before the first scroll event fires.
- */
-$effect(() => {
-    if (!element) {
-        return;
-    }
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(element);
-    for (const child of Array.from(element.children)) {
-        ro.observe(child);
-    }
-    return () => ro.disconnect();
-});
+    /**
+     * Measure on mount and whenever the content or viewport size changes, so the
+     * edge cues are correct before the first scroll event fires.
+     */
+    $effect(() => {
+        if (!element) {
+            return;
+        }
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(element);
+        for (const child of Array.from(element.children)) {
+            ro.observe(child);
+        }
+        return () => ro.disconnect();
+    });
 </script>
 
 <div

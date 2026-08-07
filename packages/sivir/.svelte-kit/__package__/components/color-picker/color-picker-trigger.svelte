@@ -1,23 +1,23 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import * as Popover from '@sivir-ui/svelte/components/popover';
-import { cn } from '@sivir-ui/svelte/utils';
-import { getColorPickerContext } from './context';
-import { isValidHex } from './conversions';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { getColorPickerContext } from './context';
+    import { isValidHex } from './conversions';
 
-type Props = {
-    /** Trigger style -- matches Button variants. Defaults to outlined. */
-    variant?: 'outline' | 'secondary' | 'ghost';
-    class?: string;
-};
+    type Props = {
+        /** Trigger style -- matches Button variants. Defaults to outlined. */
+        variant?: 'outline' | 'secondary' | 'ghost';
+        class?: string;
+    };
 
-let { variant = 'outline', class: className }: Props = $props();
+    let { variant = 'outline', class: className }: Props = $props();
 
-const ctx = getColorPickerContext();
-const selectedLabel = $derived(
-    ctx.options.find((o) => o.value.toLowerCase() === (ctx.value ?? '').toLowerCase())?.label ??
-        null
-);
+    const ctx = getColorPickerContext();
+    const selectedLabel = $derived(
+        ctx.options.find((o) => o.value.toLowerCase() === (ctx.value ?? '').toLowerCase())?.label ??
+            null
+    );
 </script>
 
 <Popover.Trigger

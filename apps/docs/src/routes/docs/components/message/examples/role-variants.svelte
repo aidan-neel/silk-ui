@@ -1,5 +1,5 @@
 <script lang="ts">
-import * as Message from '@sivir-ui/svelte/components/message';
+    import * as Message from '@sivir-ui/svelte/components/message';
 </script>
 
 <div class="w-full max-w-2xl space-y-7">

@@ -1,8 +1,8 @@
 # OpenTeam Changelog for the Next Sivir Upgrade
 
-Status: Draft for the next `@sivir-ui/svelte` release  
-Current OpenTeam resolution: `0.1.9`  
-Required target: `__SIVIR_VERSION__` (replace with the exact npm version before this document is marked ready)  
+Status: Draft for the next `@sivir-ui/svelte` release
+Current OpenTeam resolution: `0.1.9`
+Required target: `__SIVIR_VERSION__` (replace with the exact npm version before this document is marked ready)
 Implementation source: `SIVIR-OPENTEAM-IMPLEMENTATION-PLAN.md`
 
 ## Purpose

@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
-const code = `def fib(n):
+    const code = `def fib(n):
     a, b = 0, 1
     for _ in range(n):
         a, b = b, a + b

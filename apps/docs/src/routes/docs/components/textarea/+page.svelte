@@ -1,18 +1,18 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Basic from './examples/basic.svelte';
-import BasicSrc from './examples/basic.svelte?raw';
-import Disabled from './examples/disabled.svelte';
-import DisabledSrc from './examples/disabled.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Labeled from './examples/labeled.svelte';
-import LabeledSrc from './examples/labeled.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Basic from './examples/basic.svelte';
+    import BasicSrc from './examples/basic.svelte?raw';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Labeled from './examples/labeled.svelte';
+    import LabeledSrc from './examples/labeled.svelte?raw';
 
-const TITLE = 'Textarea';
+    const TITLE = 'Textarea';
 
-const installCommand = 'bunx @sivir-ui/svelte add textarea';
+    const installCommand = 'bunx @sivir-ui/svelte add textarea';
 </script>
 
 <svelte:head>
@@ -63,8 +63,8 @@ const installCommand = 'bunx @sivir-ui/svelte add textarea';
             Usage
         </h2>
         <p class="text-sm text-foreground-muted">
-            Import Textarea and bind its value. Add <code>autoresize</code> for message composers that
-            grow with their content.
+            Import Textarea and bind its value. Add <code>autoresize</code> for message composers
+            that grow with their content.
         </p>
         <CodeBlock
             code={`import { Textarea } from '$lib/sivir/components/textarea';\n\n<Textarea bind:value autoresize label="Message" />`}

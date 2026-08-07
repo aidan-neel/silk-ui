@@ -3,9 +3,11 @@ import { tv } from 'tailwind-variants';
 export const toastIcon = tv({
     variants: {
         type: {
-            success: 'text-[var(--color-success)] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)]',
+            success:
+                'text-[var(--color-success)] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)]',
             error: 'text-[var(--color-error)] bg-[color-mix(in_srgb,var(--color-error)_12%,transparent)]',
-            warning: 'text-[var(--color-warning)] bg-[color-mix(in_srgb,var(--color-warning)_12%,transparent)]',
+            warning:
+                'text-[var(--color-warning)] bg-[color-mix(in_srgb,var(--color-warning)_12%,transparent)]',
             info: 'text-[var(--color-info)] bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)]',
             loading: 'text-foreground-muted bg-secondary/40',
             default: ''

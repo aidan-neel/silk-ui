@@ -92,8 +92,7 @@ export function highlight(code, lang) {
     if (resolved && hljs.getLanguage(resolved)) {
         try {
             return hljs.highlight(code, { language: resolved, ignoreIllegals: true }).value;
-        }
-        catch {
+        } catch {
             return escapeHtml(code);
         }
     }

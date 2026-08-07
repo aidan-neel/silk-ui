@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
+    import * as Collapsible from '@sivir-ui/svelte/components/collapsible';
 
-let { open = $bindable(false), disabled = false } = $props();
+    let { open = $bindable(false), disabled = false } = $props();
 </script>
 
 <Collapsible.Root bind:open {disabled}>

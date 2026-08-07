@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
 import ToolFixture from '../../fixtures/ToolFixture.svelte';
 
 describe('Tool', () => {

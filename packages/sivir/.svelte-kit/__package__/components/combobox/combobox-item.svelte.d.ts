@@ -6,6 +6,6 @@ type Props = {
     label: string;
     callback?: () => void;
 } & ButtonProps;
-declare const ComboboxItem: import("svelte").Component<Props, {}, "">;
+declare const ComboboxItem: import('svelte').Component<Props, {}, ''>;
 type ComboboxItem = ReturnType<typeof ComboboxItem>;
 export default ComboboxItem;

@@ -1,11 +1,11 @@
 <script lang="ts">
-import Archive from '@lucide/svelte/icons/archive';
-import MoreHorizontal from '@lucide/svelte/icons/ellipsis';
-import Copy2 from '@lucide/svelte/icons/files';
-import Pencil from '@lucide/svelte/icons/pencil';
-import Trash from '@lucide/svelte/icons/trash-2';
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-import Shortcut from '@sivir-ui/svelte/components/shortcut';
+    import Archive from '@lucide/svelte/icons/archive';
+    import MoreHorizontal from '@lucide/svelte/icons/ellipsis';
+    import Copy2 from '@lucide/svelte/icons/files';
+    import Pencil from '@lucide/svelte/icons/pencil';
+    import Trash from '@lucide/svelte/icons/trash-2';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
 </script>
 
 <DropdownMenu.Root>
@@ -26,7 +26,8 @@ import Shortcut from '@sivir-ui/svelte/components/shortcut';
         <DropdownMenu.Separator />
         <DropdownMenu.Item>
             <span class="flex items-center gap-2 text-[var(--color-error)]">
-                <Trash size={13} /> Delete
+                <Trash size={13} />
+                Delete
             </span>
             <Shortcut shortcut="backspace" />
         </DropdownMenu.Item>

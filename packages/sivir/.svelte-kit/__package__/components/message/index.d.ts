@@ -13,7 +13,9 @@ export type MessageRootProps = {
     timestamp?: string;
     avatar?: Snippet;
     children?: Snippet;
-} & DefaultProps & Omit<HTMLAttributes<HTMLElement>, 'children' | 'aria-busy'>;
+} & DefaultProps &
+    Omit<HTMLAttributes<HTMLElement>, 'children' | 'aria-busy'>;
 export type MessageContentProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
-export type MessageActionsProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>;
+export type MessageActionsProps = DefaultProps &
+    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>;
 export { Root, Content, Actions };

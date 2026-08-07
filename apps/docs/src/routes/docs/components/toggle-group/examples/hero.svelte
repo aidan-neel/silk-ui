@@ -1,10 +1,10 @@
 <script lang="ts">
-import AlignCenter from '@lucide/svelte/icons/align-center';
-import AlignLeft from '@lucide/svelte/icons/align-left';
-import AlignRight from '@lucide/svelte/icons/align-right';
-import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
+    import AlignCenter from '@lucide/svelte/icons/align-center';
+    import AlignLeft from '@lucide/svelte/icons/align-left';
+    import AlignRight from '@lucide/svelte/icons/align-right';
+    import * as ToggleGroup from '@sivir-ui/svelte/components/toggle-group';
 
-let alignment = $state('center');
+    let alignment = $state('center');
 </script>
 
 <ToggleGroup.Root type="single" bind:value={alignment}>

@@ -1,20 +1,20 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Shapes from './examples/shapes.svelte';
-import ShapesSrc from './examples/shapes.svelte?raw';
-import Sizes from './examples/sizes.svelte';
-import SizesSrc from './examples/sizes.svelte?raw';
-import WithImage from './examples/with-image.svelte';
-import WithImageSrc from './examples/with-image.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Shapes from './examples/shapes.svelte';
+    import ShapesSrc from './examples/shapes.svelte?raw';
+    import Sizes from './examples/sizes.svelte';
+    import SizesSrc from './examples/sizes.svelte?raw';
+    import WithImage from './examples/with-image.svelte';
+    import WithImageSrc from './examples/with-image.svelte?raw';
 
-const TITLE = 'Avatar';
-const SLUG = 'avatar';
+    const TITLE = 'Avatar';
+    const SLUG = 'avatar';
 
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

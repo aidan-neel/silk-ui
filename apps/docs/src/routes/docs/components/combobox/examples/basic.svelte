@@ -1,14 +1,14 @@
 <script lang="ts">
-import * as Combobox from '@sivir-ui/svelte/components/combobox';
+    import * as Combobox from '@sivir-ui/svelte/components/combobox';
 
-const languages = [
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'fr', label: 'French' },
-    { value: 'de', label: 'German' },
-    { value: 'ja', label: 'Japanese' },
-    { value: 'pt', label: 'Portuguese' }
-];
+    const languages = [
+        { value: 'en', label: 'English' },
+        { value: 'es', label: 'Spanish' },
+        { value: 'fr', label: 'French' },
+        { value: 'de', label: 'German' },
+        { value: 'ja', label: 'Japanese' },
+        { value: 'pt', label: 'Portuguese' }
+    ];
 </script>
 
 <div class="flex justify-center">

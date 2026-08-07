@@ -1,15 +1,22 @@
 <script lang="ts">
-import * as Modal from '@sivir-ui/svelte/components/modal';
-import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+    import * as Modal from '@sivir-ui/svelte/components/modal';
+    import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
 
-type Props = {
-    allowEscape?: boolean;
-    ariaBusy?: boolean;
-    /** Max-width preset. Defaults to `md`. */
-    size?: 'sm' | 'md' | 'lg' | 'xl';
-} & DefaultProps;
+    type Props = {
+        allowEscape?: boolean;
+        ariaBusy?: boolean;
+        /** Max-width preset. Defaults to `md`. */
+        size?: 'sm' | 'md' | 'lg' | 'xl';
+    } & DefaultProps;
 
-let { class: className, allowEscape = true, ariaBusy, size, children, ...rest }: Props = $props();
+    let {
+        class: className,
+        allowEscape = true,
+        ariaBusy,
+        size,
+        children,
+        ...rest
+    }: Props = $props();
 </script>
 
 <Modal.Content

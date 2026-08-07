@@ -1,11 +1,11 @@
 <script lang="ts">
-import * as Popover from '@sivir-ui/svelte/components/popover';
-import { cn } from '@sivir-ui/svelte/utils';
-import ComboboxSearch from './combobox-search.svelte';
-import { getComboboxContext } from './context.svelte';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import ComboboxSearch from './combobox-search.svelte';
+    import { getComboboxContext } from './context.svelte';
 
-const { children, class: className, ...rest }: Popover.PopoverContentProps = $props();
-const { state: comboboxState } = getComboboxContext();
+    const { children, class: className, ...rest }: Popover.PopoverContentProps = $props();
+    const { state: comboboxState } = getComboboxContext();
 </script>
 
 <Popover.Content

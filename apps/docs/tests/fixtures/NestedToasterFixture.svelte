@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Toaster } from '@sivir-ui/svelte/components/toast';
+    import { Toaster } from '@sivir-ui/svelte/components/toast';
 
-let { showNested = true }: { showNested?: boolean } = $props();
+    let { showNested = true }: { showNested?: boolean } = $props();
 </script>
 
 <Toaster />

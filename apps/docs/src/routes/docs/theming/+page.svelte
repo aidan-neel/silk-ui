@@ -1,8 +1,8 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { resolve } from '$app/paths';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { resolve } from '$app/paths';
 
-const overrideCss = `@theme {
+    const overrideCss = `@theme {
   --color-primary: #155eef;
   --color-background: #fcfcfd;
   --color-foreground: #101828;
@@ -16,12 +16,12 @@ const overrideCss = `@theme {
   --color-primary: #7aa2ff;
 }`;
 
-const themeImport = `@import './lib/sivir/ui.css';
+    const themeImport = `@import './lib/sivir/ui.css';
 @import './lib/sivir/theme.css';`;
 
-const classExample = '<Button class="w-full rounded-2xl">Continue</Button>';
+    const classExample = '<Button class="w-full rounded-2xl">Continue</Button>';
 
-const dataUiExample = `[data-ui='button'][data-variant='primary'] {
+    const dataUiExample = `[data-ui='button'][data-variant='primary'] {
   border-radius: 999px;
 }
 
@@ -29,7 +29,7 @@ const dataUiExample = `[data-ui='button'][data-variant='primary'] {
   text-transform: uppercase;
 }`;
 
-const sourceExample = `# after: bunx --package @sivir-ui/svelte sivir add button
+    const sourceExample = `# after: bunx --package @sivir-ui/svelte sivir add button
 src/lib/sivir/components/button/
 ├── button.svelte
 └── index.ts`;
@@ -146,8 +146,9 @@ src/lib/sivir/components/button/
         </p>
         <CodeBlock code={themeImport} lang="css" copy="overlay" />
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
-            <code class="font-mono">sivir list</code> shows available built-in theme slugs. Community
-            theme registry hosting is not part of v1.
+            <code class="font-mono">sivir list</code>
+            shows available built-in theme slugs. Community theme registry hosting is not part of
+            v1.
         </p>
     </section>
 
@@ -184,7 +185,8 @@ src/lib/sivir/components/button/
         </h2>
         <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
             Components render <code class="font-mono">data-ui</code> (and often
-            <code class="font-mono">data-variant</code> /
+            <code class="font-mono">data-variant</code>
+            /
             <code class="font-mono">data-size</code>). Scope CSS to a family without forking files.
         </p>
         <CodeBlock code={dataUiExample} lang="css" copy="overlay" />
@@ -213,7 +215,8 @@ src/lib/sivir/components/button/
         <p class="m-0 text-[1rem] text-foreground leading-relaxed">
             <a
                 class="text-foreground underline underline-offset-2"
-                href={resolve('/docs/components')}>Components</a
+                href={resolve('/docs/components')}
+                >Components</a
             >
         </p>
     </section>

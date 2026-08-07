@@ -1,5 +1,5 @@
 <script lang="ts">
-import * as Card from '@sivir-ui/svelte/components/card';
+    import * as Card from '@sivir-ui/svelte/components/card';
 </script>
 
 <Card.Root variant="panel" class="w-full max-w-[22rem]">
@@ -9,8 +9,8 @@ import * as Card from '@sivir-ui/svelte/components/card';
     </Card.Header>
     <Card.Content>
         <p class="m-0 text-sm text-foreground-muted">
-            Use <code class="font-mono text-foreground">variant="panel"</code> when a card should sit
-            inside a framed surface instead of a flat border.
+            Use <code class="font-mono text-foreground">variant="panel"</code> when a card should
+            sit inside a framed surface instead of a flat border.
         </p>
     </Card.Content>
 </Card.Root>

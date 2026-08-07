@@ -1,29 +1,29 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import VariantDestructive from './examples/variant-destructive.svelte';
-import VariantDestructiveSrc from './examples/variant-destructive.svelte?raw';
-import VariantError from './examples/variant-error.svelte';
-import VariantErrorSrc from './examples/variant-error.svelte?raw';
-import VariantGhost from './examples/variant-ghost.svelte';
-import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
-import VariantInfo from './examples/variant-info.svelte';
-import VariantInfoSrc from './examples/variant-info.svelte?raw';
-import VariantOutline from './examples/variant-outline.svelte';
-import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
-import VariantPrimary from './examples/variant-primary.svelte';
-import VariantPrimarySrc from './examples/variant-primary.svelte?raw';
-import VariantSecondary from './examples/variant-secondary.svelte';
-import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
-import VariantSuccess from './examples/variant-success.svelte';
-import VariantSuccessSrc from './examples/variant-success.svelte?raw';
-import VariantWarning from './examples/variant-warning.svelte';
-import VariantWarningSrc from './examples/variant-warning.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import VariantDestructive from './examples/variant-destructive.svelte';
+    import VariantDestructiveSrc from './examples/variant-destructive.svelte?raw';
+    import VariantError from './examples/variant-error.svelte';
+    import VariantErrorSrc from './examples/variant-error.svelte?raw';
+    import VariantGhost from './examples/variant-ghost.svelte';
+    import VariantGhostSrc from './examples/variant-ghost.svelte?raw';
+    import VariantInfo from './examples/variant-info.svelte';
+    import VariantInfoSrc from './examples/variant-info.svelte?raw';
+    import VariantOutline from './examples/variant-outline.svelte';
+    import VariantOutlineSrc from './examples/variant-outline.svelte?raw';
+    import VariantPrimary from './examples/variant-primary.svelte';
+    import VariantPrimarySrc from './examples/variant-primary.svelte?raw';
+    import VariantSecondary from './examples/variant-secondary.svelte';
+    import VariantSecondarySrc from './examples/variant-secondary.svelte?raw';
+    import VariantSuccess from './examples/variant-success.svelte';
+    import VariantSuccessSrc from './examples/variant-success.svelte?raw';
+    import VariantWarning from './examples/variant-warning.svelte';
+    import VariantWarningSrc from './examples/variant-warning.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add badge';
+    const installCommand = 'bunx @sivir-ui/svelte add badge';
 </script>
 
 <svelte:head>

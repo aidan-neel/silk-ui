@@ -6,5 +6,6 @@ export type SelectContext = {
     labels: Map<string, string>;
     values: Set<string>;
 };
-declare const setSelectContext: (value: SelectContext) => SelectContext, getSelectContext: () => SelectContext;
+declare const setSelectContext: (value: SelectContext) => SelectContext,
+    getSelectContext: () => SelectContext;
 export { setSelectContext, getSelectContext };

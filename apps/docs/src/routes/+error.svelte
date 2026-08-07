@@ -1,8 +1,8 @@
 <script lang="ts">
-import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { resolve } from '$app/paths';
-import { page } from '$app/state';
+    import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { resolve } from '$app/paths';
+    import { page } from '$app/state';
 </script>
 
 <svelte:head>

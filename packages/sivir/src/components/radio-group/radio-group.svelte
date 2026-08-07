@@ -1,40 +1,40 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import { setContext } from 'svelte';
-import type { RadioGroupContext, RadioGroupProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import { setContext } from 'svelte';
+    import type { RadioGroupContext, RadioGroupProps } from '.';
 
-let {
-    class: className,
-    value = $bindable<string | undefined>(),
-    name,
-    disabled = false,
-    onValueChange,
-    children,
-    ...rest
-}: RadioGroupProps = $props();
+    let {
+        class: className,
+        value = $bindable<string | undefined>(),
+        name,
+        disabled = false,
+        onValueChange,
+        children,
+        ...rest
+    }: RadioGroupProps = $props();
 
-function isSelected(itemValue: string) {
-    return value === itemValue;
-}
-function setValue(itemValue: string) {
-    if (disabled) {
-        return;
+    function isSelected(itemValue: string) {
+        return value === itemValue;
     }
-    value = itemValue;
-    onValueChange?.(itemValue);
-}
+    function setValue(itemValue: string) {
+        if (disabled) {
+            return;
+        }
+        value = itemValue;
+        onValueChange?.(itemValue);
+    }
 
-const ctx: RadioGroupContext = {
-    get name() {
-        return name;
-    },
-    get disabled() {
-        return disabled;
-    },
-    isSelected,
-    setValue
-};
-setContext('radio-group', ctx);
+    const ctx: RadioGroupContext = {
+        get name() {
+            return name;
+        },
+        get disabled() {
+            return disabled;
+        },
+        isSelected,
+        setValue
+    };
+    setContext('radio-group', ctx);
 </script>
 
 <div

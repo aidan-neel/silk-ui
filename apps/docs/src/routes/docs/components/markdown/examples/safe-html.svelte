@@ -1,16 +1,16 @@
 <script lang="ts">
-import ShieldCheck from '@lucide/svelte/icons/shield-check';
-import { Markdown } from '@sivir-ui/svelte/components/markdown';
+    import ShieldCheck from '@lucide/svelte/icons/shield-check';
+    import { Markdown } from '@sivir-ui/svelte/components/markdown';
 
-const untrustedOutput = [
-    '## Imported model output',
-    '',
-    `<script>document.body.textContent = "changed";<${'/'}script>`,
-    '',
-    '<button onclick="sendSecrets()">Approve access</button>',
-    '',
-    '[Open internal report](javascript:sendSecrets())'
-].join('\n');
+    const untrustedOutput = [
+        '## Imported model output',
+        '',
+        `<script>document.body.textContent = "changed";<${'/'}script>`,
+        '',
+        '<button onclick="sendSecrets()">Approve access</button>',
+        '',
+        '[Open internal report](javascript:sendSecrets())'
+    ].join('\n');
 </script>
 
 <div class="w-full max-w-2xl rounded-[var(--radius-xl)] border border-border bg-panel p-5 sm:p-6">

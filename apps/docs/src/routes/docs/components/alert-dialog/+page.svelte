@@ -1,14 +1,14 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import Destructive from './examples/destructive.svelte';
-import DestructiveSrc from './examples/destructive.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import SignOut from './examples/sign-out.svelte';
-import SignOutSrc from './examples/sign-out.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import Destructive from './examples/destructive.svelte';
+    import DestructiveSrc from './examples/destructive.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import SignOut from './examples/sign-out.svelte';
+    import SignOutSrc from './examples/sign-out.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add alert-dialog';
+    const installCommand = 'bunx @sivir-ui/svelte add alert-dialog';
 </script>
 
 <svelte:head>

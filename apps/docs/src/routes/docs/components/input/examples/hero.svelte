@@ -1,9 +1,9 @@
 <script lang="ts">
-import { Button } from '@sivir-ui/svelte/components/button';
-import { Input } from '@sivir-ui/svelte/components/input';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Input } from '@sivir-ui/svelte/components/input';
 
-let projectName = $state('sivir-ui');
-let rootDirectory = $state('./');
+    let projectName = $state('sivir-ui');
+    let rootDirectory = $state('./');
 </script>
 
 <div class="w-full max-w-sm space-y-6">

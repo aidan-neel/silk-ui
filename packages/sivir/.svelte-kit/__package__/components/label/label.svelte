@@ -1,8 +1,8 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { LabelProps } from '.';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { LabelProps } from '.';
 
-let { class: className, children, ...rest }: LabelProps = $props();
+    let { class: className, children, ...rest }: LabelProps = $props();
 </script>
 
 <label

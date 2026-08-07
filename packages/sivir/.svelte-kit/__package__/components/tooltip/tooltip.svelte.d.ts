@@ -6,6 +6,6 @@ type $$ComponentProps = {
     closeDelay?: number;
     placement?: Placement;
 };
-declare const Tooltip: import("svelte").Component<$$ComponentProps, {}, "">;
+declare const Tooltip: import('svelte').Component<$$ComponentProps, {}, ''>;
 type Tooltip = ReturnType<typeof Tooltip>;
 export default Tooltip;

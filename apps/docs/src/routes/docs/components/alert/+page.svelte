@@ -1,22 +1,22 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import VariantError from './examples/variant-error.svelte';
-import VariantErrorSrc from './examples/variant-error.svelte?raw';
-import VariantInfo from './examples/variant-info.svelte';
-import VariantInfoSrc from './examples/variant-info.svelte?raw';
-import VariantSuccess from './examples/variant-success.svelte';
-import VariantSuccessSrc from './examples/variant-success.svelte?raw';
-import VariantWarning from './examples/variant-warning.svelte';
-import VariantWarningSrc from './examples/variant-warning.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import VariantError from './examples/variant-error.svelte';
+    import VariantErrorSrc from './examples/variant-error.svelte?raw';
+    import VariantInfo from './examples/variant-info.svelte';
+    import VariantInfoSrc from './examples/variant-info.svelte?raw';
+    import VariantSuccess from './examples/variant-success.svelte';
+    import VariantSuccessSrc from './examples/variant-success.svelte?raw';
+    import VariantWarning from './examples/variant-warning.svelte';
+    import VariantWarningSrc from './examples/variant-warning.svelte?raw';
 
-const TITLE = 'Alert';
-const SLUG = 'alert';
+    const TITLE = 'Alert';
+    const SLUG = 'alert';
 
-const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
+    const installCommand = `bunx @sivir-ui/svelte add ${SLUG}`;
 </script>
 
 <svelte:head>

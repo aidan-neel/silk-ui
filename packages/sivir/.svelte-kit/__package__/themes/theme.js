@@ -150,16 +150,20 @@ function brandDeclarations(brand, mode) {
         // Keep default hover in lockstep with baked ui.css and WCAG AA on white labels.
         `--color-primary-hover: ${isDefault ? '#1270ad' : `color-mix(in srgb, ${brand} 78%, black)`};`,
         `--color-ring: color-mix(in srgb, ${brand} 30%, transparent);`,
-        `--sivir-blue-500: ${isDefault
-            ? mode === 'light'
-                ? 'hsl(212.2 100% 64.5%)'
-                : 'hsl(216.6 100% 67.8%)'
-            : brand};`,
-        `--sivir-blue-50: ${isDefault
-            ? mode === 'light'
-                ? 'hsl(218.8 100% 96.7%)'
-                : 'hsl(217.1 52.5% 15.7%)'
-            : `color-mix(in srgb, ${brand} 12%, ${mode === 'light' ? 'white' : 'black'})`};`
+        `--sivir-blue-500: ${
+            isDefault
+                ? mode === 'light'
+                    ? 'hsl(212.2 100% 64.5%)'
+                    : 'hsl(216.6 100% 67.8%)'
+                : brand
+        };`,
+        `--sivir-blue-50: ${
+            isDefault
+                ? mode === 'light'
+                    ? 'hsl(218.8 100% 96.7%)'
+                    : 'hsl(217.1 52.5% 15.7%)'
+                : `color-mix(in srgb, ${brand} 12%, ${mode === 'light' ? 'white' : 'black'})`
+        };`
     ];
 }
 /** Scales a `Nms` motion token (keeps `0ms` as-is). */
@@ -193,7 +197,8 @@ export function themeToCss(themeInput) {
         `--motion-duration-toast-in: ${motion.toastIn};`,
         `--motion-duration-toast-out: ${motion.toastOut};`
     ];
-    return (block(':root,\n.dark', shared) +
+    return (
+        block(':root,\n.dark', shared) +
         block(':root', [
             ...brandDeclarations(theme.brand, 'light'),
             ...neutralDeclarations(NEUTRALS[theme.neutral].light)
@@ -201,7 +206,8 @@ export function themeToCss(themeInput) {
         block('.dark', [
             ...brandDeclarations(theme.brand, 'dark'),
             ...neutralDeclarations(NEUTRALS[theme.neutral].dark)
-        ]));
+        ])
+    );
 }
 function isRecord(value) {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -228,7 +234,9 @@ export function parseTheme(value) {
     }
     const slug = requiredString(value.slug, 'slug');
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-        throw new TypeError('Invalid theme: slug must contain lowercase letters, numbers, or hyphens.');
+        throw new TypeError(
+            'Invalid theme: slug must contain lowercase letters, numbers, or hyphens.'
+        );
     }
     const brand = requiredString(value.brand, 'brand').toLowerCase();
     if (!/^#[0-9a-f]{6}$/.test(brand)) {
@@ -257,8 +265,7 @@ export function isTheme(value) {
     try {
         parseTheme(value);
         return true;
-    }
-    catch {
+    } catch {
         return false;
     }
 }

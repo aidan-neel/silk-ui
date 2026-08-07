@@ -1,10 +1,10 @@
 <script lang="ts">
-import { cn } from '@sivir-ui/svelte/utils';
-import type { SheetTitleProps } from '.';
-import { getSheetContext } from './context.svelte';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { SheetTitleProps } from '.';
+    import { getSheetContext } from './context.svelte';
 
-let { class: className, children, ...rest }: SheetTitleProps = $props();
-const { id } = getSheetContext();
+    let { class: className, children, ...rest }: SheetTitleProps = $props();
+    const { id } = getSheetContext();
 </script>
 
 <h1

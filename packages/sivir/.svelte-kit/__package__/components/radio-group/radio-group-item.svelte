@@ -1,22 +1,22 @@
 <script lang="ts">
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import { getContext } from 'svelte';
-import type { RadioGroupContext, RadioGroupItemProps } from '.';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import { getContext } from 'svelte';
+    import type { RadioGroupContext, RadioGroupItemProps } from '.';
 
-let {
-    class: className,
-    value,
-    disabled,
-    label,
-    description,
-    id,
-    ...rest
-}: RadioGroupItemProps = $props();
+    let {
+        class: className,
+        value,
+        disabled,
+        label,
+        description,
+        id,
+        ...rest
+    }: RadioGroupItemProps = $props();
 
-const ctx = getContext<RadioGroupContext>('radio-group');
-const selected = $derived(ctx.isSelected(value));
-const isDisabled = $derived(disabled || ctx.disabled);
-const inputId = $derived(id ?? `radio-${value}`);
+    const ctx = getContext<RadioGroupContext>('radio-group');
+    const selected = $derived(ctx.isSelected(value));
+    const isDisabled = $derived(disabled || ctx.disabled);
+    const inputId = $derived(id ?? `radio-${value}`);
 </script>
 
 <label

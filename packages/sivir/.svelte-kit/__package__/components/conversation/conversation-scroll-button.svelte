@@ -1,23 +1,23 @@
 <script lang="ts">
-import ArrowDown from '@lucide/svelte/icons/arrow-down';
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import type { ConversationScrollButtonProps } from '.';
-import { getConversationContext } from './context.svelte';
+    import ArrowDown from '@lucide/svelte/icons/arrow-down';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { ConversationScrollButtonProps } from '.';
+    import { getConversationContext } from './context.svelte';
 
-let {
-    label = 'Scroll to latest message',
-    class: className,
-    onclick,
-    ...rest
-}: ConversationScrollButtonProps = $props();
+    let {
+        label = 'Scroll to latest message',
+        class: className,
+        onclick,
+        ...rest
+    }: ConversationScrollButtonProps = $props();
 
-const conversation = getConversationContext();
-const visible = $derived(!conversation.follow && !conversation.atBottom);
+    const conversation = getConversationContext();
+    const visible = $derived(!conversation.follow && !conversation.atBottom);
 
-function scrollToBottom() {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    conversation.scrollToBottom(reducedMotion ? 'auto' : 'smooth');
-}
+    function scrollToBottom() {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        conversation.scrollToBottom(reducedMotion ? 'auto' : 'smooth');
+    }
 </script>
 
 <div class="pointer-events-none absolute inset-x-0 bottom-3 z-10 flex justify-center px-4">

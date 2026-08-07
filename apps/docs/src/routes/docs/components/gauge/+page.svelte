@@ -1,14 +1,14 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import ContextWindow from './examples/context-window.svelte';
-import ContextWindowSrc from './examples/context-window.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import UsageLimit from './examples/usage-limit.svelte';
-import UsageLimitSrc from './examples/usage-limit.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import ContextWindow from './examples/context-window.svelte';
+    import ContextWindowSrc from './examples/context-window.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import UsageLimit from './examples/usage-limit.svelte';
+    import UsageLimitSrc from './examples/usage-limit.svelte?raw';
 
-const installCommand = 'bunx --package @sivir-ui/svelte sivir add gauge';
+    const installCommand = 'bunx --package @sivir-ui/svelte sivir add gauge';
 </script>
 
 <svelte:head>
@@ -59,8 +59,8 @@ const installCommand = 'bunx --package @sivir-ui/svelte sivir add gauge';
         <p class="text-sm text-foreground-muted">
             Use <code>value</code> and <code>max</code> for the filled portion. Provide
             <code>label</code>
-            to name the meter for screen-reader users; children can replace the default numeric center
-            text.
+            to name the meter for screen-reader users; children can replace the default numeric
+            center text.
         </p>
         <CodeBlock
             code={`import { Gauge } from '@sivir-ui/svelte/components/gauge';

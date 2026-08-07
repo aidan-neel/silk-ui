@@ -1,13 +1,13 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
 
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import RiskLevels from './examples/risk-levels.svelte';
-import RiskLevelsSrc from './examples/risk-levels.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import RiskLevels from './examples/risk-levels.svelte';
+    import RiskLevelsSrc from './examples/risk-levels.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add approval-request';
+    const installCommand = 'bunx @sivir-ui/svelte add approval-request';
 </script>
 
 <svelte:head>
@@ -54,8 +54,8 @@ const installCommand = 'bunx @sivir-ui/svelte add approval-request';
         <p class="text-sm text-foreground-muted">
             Control visibility with <code>bind:open</code>. <code>Cancel</code> and
             <code>Confirm</code>
-            close the modal and fire their <code>onclick</code> callbacks. Use verb-first labels that
-            name the exact action.
+            close the modal and fire their <code>onclick</code> callbacks. Use verb-first labels
+            that name the exact action.
         </p>
         <CodeBlock
             code={`import * as ApprovalRequest from '@sivir-ui/svelte/components/approval-request';

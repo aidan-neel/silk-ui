@@ -1,18 +1,18 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import ContentOnly from './examples/content-only.svelte';
-import ContentOnlySrc from './examples/content-only.svelte?raw';
-import Full from './examples/full.svelte';
-import FullSrc from './examples/full.svelte?raw';
-import HeaderFooter from './examples/header-footer.svelte';
-import HeaderFooterSrc from './examples/header-footer.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import Panel from './examples/panel.svelte';
-import PanelSrc from './examples/panel.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import ContentOnly from './examples/content-only.svelte';
+    import ContentOnlySrc from './examples/content-only.svelte?raw';
+    import Full from './examples/full.svelte';
+    import FullSrc from './examples/full.svelte?raw';
+    import HeaderFooter from './examples/header-footer.svelte';
+    import HeaderFooterSrc from './examples/header-footer.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import Panel from './examples/panel.svelte';
+    import PanelSrc from './examples/panel.svelte?raw';
 
-const installCommand = 'bunx @sivir-ui/svelte add card';
+    const installCommand = 'bunx @sivir-ui/svelte add card';
 </script>
 
 <svelte:head>

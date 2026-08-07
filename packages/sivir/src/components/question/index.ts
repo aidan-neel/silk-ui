@@ -7,14 +7,14 @@ import type {
     HTMLTextareaAttributes
 } from 'svelte/elements';
 import Root from './question.svelte';
-import Title from './question-title.svelte';
-import Description from './question-description.svelte';
-import Options from './question-options.svelte';
-import Option from './question-option.svelte';
-import Input from './question-input.svelte';
 import Actions from './question-actions.svelte';
 import Cancel from './question-cancel.svelte';
+import Description from './question-description.svelte';
+import Input from './question-input.svelte';
+import Option from './question-option.svelte';
+import Options from './question-options.svelte';
 import Submit from './question-submit.svelte';
+import Title from './question-title.svelte';
 
 export type QuestionType = 'single' | 'multiple' | 'text';
 export type QuestionAnswer = string | string[];
@@ -105,4 +105,4 @@ export type QuestionSubmitProps = {
     element?: HTMLButtonElement | HTMLAnchorElement;
 } & Omit<HTMLButtonAttributes, 'children' | 'type'>;
 
-export { Root, Title, Description, Options, Option, Input, Actions, Cancel, Submit };
+export { Actions, Cancel, Description, Input, Option, Options, Root, Submit, Title };

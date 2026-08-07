@@ -1,17 +1,17 @@
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import { ComponentPreview, InstallCommand } from '$lib/components/docs';
-import ComposerTakeover from './examples/composer-takeover.svelte';
-import ComposerTakeoverSrc from './examples/composer-takeover.svelte?raw';
-import FreeText from './examples/free-text.svelte';
-import FreeTextSrc from './examples/free-text.svelte?raw';
-import Hero from './examples/hero.svelte';
-import HeroSrc from './examples/hero.svelte?raw';
-import MultipleChoice from './examples/multiple-choice.svelte';
-import MultipleChoiceSrc from './examples/multiple-choice.svelte?raw';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import ComposerTakeover from './examples/composer-takeover.svelte';
+    import ComposerTakeoverSrc from './examples/composer-takeover.svelte?raw';
+    import FreeText from './examples/free-text.svelte';
+    import FreeTextSrc from './examples/free-text.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
+    import MultipleChoice from './examples/multiple-choice.svelte';
+    import MultipleChoiceSrc from './examples/multiple-choice.svelte?raw';
 
-const installCommand = 'bunx --package @sivir-ui/svelte sivir add question';
-const usageSnippet = `import * as Question from '@sivir-ui/svelte/components/question';
+    const installCommand = 'bunx --package @sivir-ui/svelte sivir add question';
+    const usageSnippet = `import * as Question from '@sivir-ui/svelte/components/question';
 import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
 
 let answer = $state<QuestionAnswer>();
@@ -84,8 +84,8 @@ let answer = $state<QuestionAnswer>();
         <p class="text-sm text-foreground-muted">
             Use <code>type="single"</code> for one option, <code>type="multiple"</code> for several,
             or <code>type="text"</code> with <code>Question.Input</code>. Async submit handlers are
-            awaited and cannot run twice while unresolved. Changing <code>type</code> resets the bound
-            answer to the new mode's empty value.
+            awaited and cannot run twice while unresolved. Changing <code>type</code> resets the
+            bound answer to the new mode's empty value.
         </p>
     </section>
 

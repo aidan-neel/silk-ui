@@ -1,13 +1,13 @@
 <script lang="ts">
-import * as Combobox from '@sivir-ui/svelte/components/combobox';
+    import * as Combobox from '@sivir-ui/svelte/components/combobox';
 
-const frameworks = [
-    { value: 'nextjs', label: 'Next.js' },
-    { value: 'sveltekit', label: 'SvelteKit' },
-    { value: 'nuxtjs', label: 'Nuxt.js' },
-    { value: 'remix', label: 'Remix' },
-    { value: 'astro', label: 'Astro' }
-];
+    const frameworks = [
+        { value: 'nextjs', label: 'Next.js' },
+        { value: 'sveltekit', label: 'SvelteKit' },
+        { value: 'nuxtjs', label: 'Nuxt.js' },
+        { value: 'remix', label: 'Remix' },
+        { value: 'astro', label: 'Astro' }
+    ];
 </script>
 
 <div class="flex items-center justify-center">

@@ -6,6 +6,6 @@ type Props = {
     class?: string;
     variant?: ButtonVariant;
 } & Omit<Popover.PopoverTriggerProps, 'children' | 'class' | 'variant'>;
-declare const SelectTrigger: import("svelte").Component<Props, {}, "">;
+declare const SelectTrigger: import('svelte').Component<Props, {}, ''>;
 type SelectTrigger = ReturnType<typeof SelectTrigger>;
 export default SelectTrigger;

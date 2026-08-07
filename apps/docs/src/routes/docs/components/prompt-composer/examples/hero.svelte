@@ -1,51 +1,51 @@
 <script lang="ts">
-import Check from '@lucide/svelte/icons/check';
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import ShieldCheck from '@lucide/svelte/icons/shield-check';
-import Workflow from '@lucide/svelte/icons/workflow';
-import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
-import { onDestroy } from 'svelte';
+    import Check from '@lucide/svelte/icons/check';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import ShieldCheck from '@lucide/svelte/icons/shield-check';
+    import Workflow from '@lucide/svelte/icons/workflow';
+    import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
+    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+    import { onDestroy } from 'svelte';
 
-const models = ['Sivir 3.1', 'Sivir Mini'];
-const modes = ['Plan', 'Build'];
-const permissions = ['Ask first', 'Auto approve'];
+    const models = ['Sivir 3.1', 'Sivir Mini'];
+    const modes = ['Plan', 'Build'];
+    const permissions = ['Ask first', 'Auto approve'];
 
-let value = $state('Review the release notes and call out any migration risks.');
-let model = $state(models[0]);
-let mode = $state(modes[0]);
-let permission = $state(permissions[0]);
-let message = $state('Ready to send');
-let timer: ReturnType<typeof setTimeout> | undefined;
-let settle: (() => void) | undefined;
+    let value = $state('Review the release notes and call out any migration risks.');
+    let model = $state(models[0]);
+    let mode = $state(modes[0]);
+    let permission = $state(permissions[0]);
+    let message = $state('Ready to send');
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let settle: (() => void) | undefined;
 
-async function submitPrompt(prompt: string) {
-    message = 'Sending prompt';
-    await new Promise<void>((resolve) => {
-        settle = resolve;
-        timer = setTimeout(() => {
-            value = '';
-            message = `Sent “${prompt}”`;
-            timer = undefined;
-            settle = undefined;
-            resolve();
-        }, 1600);
+    async function submitPrompt(prompt: string) {
+        message = 'Sending prompt';
+        await new Promise<void>((resolve) => {
+            settle = resolve;
+            timer = setTimeout(() => {
+                value = '';
+                message = `Sent “${prompt}”`;
+                timer = undefined;
+                settle = undefined;
+                resolve();
+            }, 1600);
+        });
+    }
+
+    function stopSubmission() {
+        if (timer) clearTimeout(timer);
+        timer = undefined;
+        const resolve = settle;
+        settle = undefined;
+        message = 'Stopped before sending';
+        resolve?.();
+    }
+
+    onDestroy(() => {
+        if (timer) clearTimeout(timer);
+        settle?.();
     });
-}
-
-function stopSubmission() {
-    if (timer) clearTimeout(timer);
-    timer = undefined;
-    const resolve = settle;
-    settle = undefined;
-    message = 'Stopped before sending';
-    resolve?.();
-}
-
-onDestroy(() => {
-    if (timer) clearTimeout(timer);
-    settle?.();
-});
 </script>
 
 <div class="flex w-full max-w-2xl flex-col gap-3">
@@ -69,7 +69,9 @@ onDestroy(() => {
                         {#each modes as option (option)}
                             <DropdownMenu.Item onclick={() => (mode = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if mode === option}<Check size={13} aria-hidden="true" />{/if}
+                                {#if mode === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>
@@ -90,10 +92,9 @@ onDestroy(() => {
                         {#each permissions as option (option)}
                             <DropdownMenu.Item onclick={() => (permission = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if permission === option}<Check
-                                        size={13}
-                                        aria-hidden="true"
-                                    />{/if}
+                                {#if permission === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>
@@ -120,7 +121,9 @@ onDestroy(() => {
                         {#each models as option (option)}
                             <DropdownMenu.Item onclick={() => (model = option)}>
                                 <span class="flex-1">{option}</span>
-                                {#if model === option}<Check size={13} aria-hidden="true" />{/if}
+                                {#if model === option}
+                                    <Check size={13} aria-hidden="true" />
+                                {/if}
                             </DropdownMenu.Item>
                         {/each}
                     </DropdownMenu.Content>

@@ -1,5 +1,5 @@
 <script lang="ts">
-import * as Popover from '@sivir-ui/svelte/components/popover';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
 </script>
 
 <Popover.Root>

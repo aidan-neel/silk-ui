@@ -1,14 +1,14 @@
 <script lang="ts">
-import ChevronDown from '@lucide/svelte/icons/chevron-down';
-import { cn, pressable } from '@sivir-ui/svelte/utils';
-import { getContext } from 'svelte';
-import type { AccordionContext, AccordionTriggerProps } from '.';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import { getContext } from 'svelte';
+    import type { AccordionContext, AccordionTriggerProps } from '.';
 
-let { class: className, children, ...rest }: AccordionTriggerProps = $props();
+    let { class: className, children, ...rest }: AccordionTriggerProps = $props();
 
-const ctx = getContext<AccordionContext>('accordion');
-const item = getContext<{ value: string; disabled: boolean }>('accordion-item');
-const open = $derived(ctx.isOpen(item.value));
+    const ctx = getContext<AccordionContext>('accordion');
+    const item = getContext<{ value: string; disabled: boolean }>('accordion-item');
+    const open = $derived(ctx.isOpen(item.value));
 </script>
 
 <button

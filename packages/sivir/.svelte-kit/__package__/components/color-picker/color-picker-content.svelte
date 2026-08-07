@@ -1,237 +1,237 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import Check from '@lucide/svelte/icons/check';
-import * as Popover from '@sivir-ui/svelte/components/popover';
-import { getColorPickerContext } from './context';
-import {
-    hexToHsl,
-    hexToHsv,
-    hexToRgb,
-    hslToHex,
-    hsvToHex,
-    isValidHex,
-    rgbToHex
-} from './conversions';
+    import Check from '@lucide/svelte/icons/check';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { getColorPickerContext } from './context';
+    import {
+        hexToHsl,
+        hexToHsv,
+        hexToRgb,
+        hslToHex,
+        hsvToHex,
+        isValidHex,
+        rgbToHex
+    } from './conversions';
 
-const ctx = getColorPickerContext();
+    const ctx = getColorPickerContext();
 
-/** Picker state: the HSV working values plus the raw hex field. */
-let hue = $state(0);
-let sat = $state(0);
-let val = $state(100);
-let hexInput = $state(isValidHex(ctx.value) ? ctx.value.toLowerCase() : '#000000');
-let sbEl = $state<HTMLElement | undefined>(undefined);
-let hueEl = $state<HTMLElement | undefined>(undefined);
+    /** Picker state: the HSV working values plus the raw hex field. */
+    let hue = $state(0);
+    let sat = $state(0);
+    let val = $state(100);
+    let hexInput = $state(isValidHex(ctx.value) ? ctx.value.toLowerCase() : '#000000');
+    let sbEl = $state<HTMLElement | undefined>(undefined);
+    let hueEl = $state<HTMLElement | undefined>(undefined);
 
-/**
- * HSL slider state, owned by the sliders themselves so user intent survives
- * the hex round-trip. Low-saturation hexes lose hue precision and pure-grey
- * hexes have no hue at all, so deriving HSL straight from the hex would snap
- * the H slider back to 0 mid-drag.
- */
-let hslH = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[0] : 0);
-let hslS = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[1] : 0);
-let hslL = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[2] : 100);
-let rgbR = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[0] : 255);
-let rgbG = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[1] : 255);
-let rgbB = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[2] : 255);
-let skipNextSync = false;
+    /**
+     * HSL slider state, owned by the sliders themselves so user intent survives
+     * the hex round-trip. Low-saturation hexes lose hue precision and pure-grey
+     * hexes have no hue at all, so deriving HSL straight from the hex would snap
+     * the H slider back to 0 mid-drag.
+     */
+    let hslH = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[0] : 0);
+    let hslS = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[1] : 0);
+    let hslL = $state(isValidHex(ctx.value) ? hexToHsl(ctx.value)[2] : 100);
+    let rgbR = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[0] : 255);
+    let rgbG = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[1] : 255);
+    let rgbB = $state(isValidHex(ctx.value) ? hexToRgb(ctx.value)[2] : 255);
+    let skipNextSync = false;
 
-const hasOptions = $derived(ctx.options.length > 0);
-const hueColor = $derived(`hsl(${hue}, 100%, 50%)`);
-const previewHex = $derived(
-    isValidHex(hexInput) ? hexInput : isValidHex(ctx.value) ? ctx.value : '#000000'
-);
+    const hasOptions = $derived(ctx.options.length > 0);
+    const hueColor = $derived(`hsl(${hue}, 100%, 50%)`);
+    const previewHex = $derived(
+        isValidHex(hexInput) ? hexInput : isValidHex(ctx.value) ? ctx.value : '#000000'
+    );
 
-/**
- * Writes one HSL channel and re-derives the hex.
- *
- * At S=0 every hue maps to the same grey hex, so moving H would feel dead;
- * nudging S to a sensible default keeps the chosen hue visible.
- */
-function setHslChannel(channel: 'h' | 's' | 'l', rawValue: string) {
-    const next = Number.parseFloat(rawValue);
-    if (!Number.isFinite(next)) {
-        return;
-    }
-    if (channel === 'h') {
-        hslH = next;
-        if (hslS === 0) {
-            hslS = 60;
+    /**
+     * Writes one HSL channel and re-derives the hex.
+     *
+     * At S=0 every hue maps to the same grey hex, so moving H would feel dead;
+     * nudging S to a sensible default keeps the chosen hue visible.
+     */
+    function setHslChannel(channel: 'h' | 's' | 'l', rawValue: string) {
+        const next = Number.parseFloat(rawValue);
+        if (!Number.isFinite(next)) {
+            return;
         }
-    } else if (channel === 's') {
-        hslS = next;
-    } else {
-        hslL = next;
+        if (channel === 'h') {
+            hslH = next;
+            if (hslS === 0) {
+                hslS = 60;
+            }
+        } else if (channel === 's') {
+            hslS = next;
+        } else {
+            hslL = next;
+        }
+        const newHex = hslToHex(hslH, hslS, hslL);
+        skipNextSync = true;
+        applyHex(newHex);
     }
-    const newHex = hslToHex(hslH, hslS, hslL);
-    skipNextSync = true;
-    applyHex(newHex);
-}
 
-function setRgbChannel(channel: 'r' | 'g' | 'b', rawValue: string) {
-    const next = Number.parseFloat(rawValue);
-    if (!Number.isFinite(next)) {
-        return;
+    function setRgbChannel(channel: 'r' | 'g' | 'b', rawValue: string) {
+        const next = Number.parseFloat(rawValue);
+        if (!Number.isFinite(next)) {
+            return;
+        }
+        if (channel === 'r') {
+            rgbR = next;
+        } else if (channel === 'g') {
+            rgbG = next;
+        } else {
+            rgbB = next;
+        }
+        applyHex(rgbToHex(rgbR, rgbG, rgbB));
     }
-    if (channel === 'r') {
-        rgbR = next;
-    } else if (channel === 'g') {
-        rgbG = next;
-    } else {
-        rgbB = next;
-    }
-    applyHex(rgbToHex(rgbR, rgbG, rgbB));
-}
 
-/**
- * Syncs the external value into HSV, the hex field, and the HSL sliders.
- *
- * When the incoming hex is achromatic the user's last hue choice is
- * preserved, since the round-trip would otherwise snap H back to 0.
- */
-$effect(() => {
-    if (!isValidHex(ctx.value)) {
-        return;
-    }
-    const lower = ctx.value.toLowerCase();
-    if (skipNextSync) {
-        skipNextSync = false;
-        hexInput = lower;
-        const [hh, ss, vv] = hexToHsv(ctx.value);
-        hue = hh;
-        sat = ss;
-        val = vv;
-        [rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
-        return;
-    }
-    const [h, s, v2] = hexToHsv(ctx.value);
-    hue = h;
-    sat = s;
-    val = v2;
-    hexInput = lower;
-    const [hh, hs, hl] = hexToHsl(ctx.value);
-    if (hs > 0) {
-        hslH = hh;
-    }
-    hslS = hs;
-    hslL = hl;
-    [rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
-});
-
-/** Commits a hex value to the picker context. */
-function applyHex(hex: string) {
-    if (!isValidHex(hex)) {
-        return;
-    }
-    ctx.apply(hex);
-}
-
-function applyHsv() {
-    const hex = hsvToHex(hue, sat, val);
-    hexInput = hex;
-    ctx.apply(hex);
-}
-
-/**
- * Accepts typed or pasted hex.
- *
- * Non-hex characters are stripped first -- pastes carry a `#` prefix, spaces,
- * or a fully-qualified `#5e6ad2` -- so `maxlength=6` on the bare-hex input
- * cannot chop the last character off a 7-character paste.
- */
-function handleHexInput(raw: string) {
-    const digits = raw.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
-    const cleaned = `#${digits}`;
-    hexInput = cleaned;
-    if (isValidHex(cleaned)) {
-        const [h, s, v2] = hexToHsv(cleaned);
+    /**
+     * Syncs the external value into HSV, the hex field, and the HSL sliders.
+     *
+     * When the incoming hex is achromatic the user's last hue choice is
+     * preserved, since the round-trip would otherwise snap H back to 0.
+     */
+    $effect(() => {
+        if (!isValidHex(ctx.value)) {
+            return;
+        }
+        const lower = ctx.value.toLowerCase();
+        if (skipNextSync) {
+            skipNextSync = false;
+            hexInput = lower;
+            const [hh, ss, vv] = hexToHsv(ctx.value);
+            hue = hh;
+            sat = ss;
+            val = vv;
+            [rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
+            return;
+        }
+        const [h, s, v2] = hexToHsv(ctx.value);
         hue = h;
         sat = s;
         val = v2;
-        ctx.apply(cleaned);
-    }
-}
-
-/** Saturation/brightness square drag handling. */
-let draggingSb = false;
-let draggingHue = false;
-let draggingSlider = false;
-
-function suppressReleaseClick() {
-    let timeout: ReturnType<typeof setTimeout> | undefined;
-    const preventClose = (event: MouseEvent) => {
-        event.stopImmediatePropagation();
-        document.removeEventListener('click', preventClose, true);
-        if (timeout) {
-            clearTimeout(timeout);
+        hexInput = lower;
+        const [hh, hs, hl] = hexToHsl(ctx.value);
+        if (hs > 0) {
+            hslH = hh;
         }
-    };
-    document.addEventListener('click', preventClose, true);
-    timeout = setTimeout(() => document.removeEventListener('click', preventClose, true), 0);
-}
+        hslS = hs;
+        hslL = hl;
+        [rgbR, rgbG, rgbB] = hexToRgb(ctx.value);
+    });
 
-function finishDrag(e: PointerEvent, suppressClick = true) {
-    if (!draggingSb && !draggingHue && !draggingSlider) {
-        return;
+    /** Commits a hex value to the picker context. */
+    function applyHex(hex: string) {
+        if (!isValidHex(hex)) {
+            return;
+        }
+        ctx.apply(hex);
     }
-    if (draggingSb && sbEl?.hasPointerCapture(e.pointerId)) {
-        sbEl.releasePointerCapture(e.pointerId);
-    }
-    if (draggingHue && hueEl?.hasPointerCapture(e.pointerId)) {
-        hueEl.releasePointerCapture(e.pointerId);
-    }
-    draggingSb = false;
-    draggingHue = false;
-    draggingSlider = false;
-    if (suppressClick) {
-        suppressReleaseClick();
-    }
-}
 
-function sbEventToSV(e: PointerEvent) {
-    if (!sbEl) {
-        return;
+    function applyHsv() {
+        const hex = hsvToHex(hue, sat, val);
+        hexInput = hex;
+        ctx.apply(hex);
     }
-    const rect = sbEl.getBoundingClientRect();
-    sat = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 100);
-    val = Math.round(Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height)) * 100);
-    applyHsv();
-}
 
-function onSbDown(e: PointerEvent) {
-    draggingSb = true;
-    sbEl?.setPointerCapture(e.pointerId);
-    sbEventToSV(e);
-}
-function onSbMove(e: PointerEvent) {
-    if (draggingSb) {
+    /**
+     * Accepts typed or pasted hex.
+     *
+     * Non-hex characters are stripped first -- pastes carry a `#` prefix, spaces,
+     * or a fully-qualified `#5e6ad2` -- so `maxlength=6` on the bare-hex input
+     * cannot chop the last character off a 7-character paste.
+     */
+    function handleHexInput(raw: string) {
+        const digits = raw.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
+        const cleaned = `#${digits}`;
+        hexInput = cleaned;
+        if (isValidHex(cleaned)) {
+            const [h, s, v2] = hexToHsv(cleaned);
+            hue = h;
+            sat = s;
+            val = v2;
+            ctx.apply(cleaned);
+        }
+    }
+
+    /** Saturation/brightness square drag handling. */
+    let draggingSb = false;
+    let draggingHue = false;
+    let draggingSlider = false;
+
+    function suppressReleaseClick() {
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        const preventClose = (event: MouseEvent) => {
+            event.stopImmediatePropagation();
+            document.removeEventListener('click', preventClose, true);
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        };
+        document.addEventListener('click', preventClose, true);
+        timeout = setTimeout(() => document.removeEventListener('click', preventClose, true), 0);
+    }
+
+    function finishDrag(e: PointerEvent, suppressClick = true) {
+        if (!draggingSb && !draggingHue && !draggingSlider) {
+            return;
+        }
+        if (draggingSb && sbEl?.hasPointerCapture(e.pointerId)) {
+            sbEl.releasePointerCapture(e.pointerId);
+        }
+        if (draggingHue && hueEl?.hasPointerCapture(e.pointerId)) {
+            hueEl.releasePointerCapture(e.pointerId);
+        }
+        draggingSb = false;
+        draggingHue = false;
+        draggingSlider = false;
+        if (suppressClick) {
+            suppressReleaseClick();
+        }
+    }
+
+    function sbEventToSV(e: PointerEvent) {
+        if (!sbEl) {
+            return;
+        }
+        const rect = sbEl.getBoundingClientRect();
+        sat = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 100);
+        val = Math.round(Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height)) * 100);
+        applyHsv();
+    }
+
+    function onSbDown(e: PointerEvent) {
+        draggingSb = true;
+        sbEl?.setPointerCapture(e.pointerId);
         sbEventToSV(e);
     }
-}
-/** Hue strip drag handling. */
-function hueEventToH(e: PointerEvent) {
-    if (!hueEl) {
-        return;
+    function onSbMove(e: PointerEvent) {
+        if (draggingSb) {
+            sbEventToSV(e);
+        }
     }
-    const rect = hueEl.getBoundingClientRect();
-    hue = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 360);
-    applyHsv();
-}
+    /** Hue strip drag handling. */
+    function hueEventToH(e: PointerEvent) {
+        if (!hueEl) {
+            return;
+        }
+        const rect = hueEl.getBoundingClientRect();
+        hue = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 360);
+        applyHsv();
+    }
 
-function onHueDown(e: PointerEvent) {
-    draggingHue = true;
-    hueEl?.setPointerCapture(e.pointerId);
-    hueEventToH(e);
-}
-function onHueMove(e: PointerEvent) {
-    if (draggingHue) {
+    function onHueDown(e: PointerEvent) {
+        draggingHue = true;
+        hueEl?.setPointerCapture(e.pointerId);
         hueEventToH(e);
     }
-}
-function startSliderDrag() {
-    draggingSlider = true;
-}
+    function onHueMove(e: PointerEvent) {
+        if (draggingHue) {
+            hueEventToH(e);
+        }
+    }
+    function startSliderDrag() {
+        draggingSlider = true;
+    }
 </script>
 
 <svelte:window onpointerup={(e) => finishDrag(e)} onpointercancel={(e) => finishDrag(e, false)} />

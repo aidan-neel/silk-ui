@@ -1,7 +1,7 @@
 <script lang="ts">
-import * as Modal from '@sivir-ui/svelte/components/modal';
+    import * as Modal from '@sivir-ui/svelte/components/modal';
 
-let open = $state(false);
+    let open = $state(false);
 </script>
 
 <Modal.Root bind:open orientation="horizontal">

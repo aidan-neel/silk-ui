@@ -27,3 +27,4 @@
 - Match the Input validation example's error ring and motion to PromptComposer.
 - Place Input validation errors immediately below their fields.
 - Refine Input validation error emphasis and motion.
+- Preserve the documentation redesign while adopting the latest component microinteraction refinements.

@@ -7,7 +7,9 @@
  * corrects on hydration.
  */
 export function useIsDark() {
-    let dark = $state(typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+    let dark = $state(
+        typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
+    );
     $effect(() => {
         const root = document.documentElement;
         const update = () => {

@@ -26,7 +26,10 @@ export interface Toast {
     paused?: boolean;
     leaving?: boolean;
 }
-type ToastInput = Omit<Toast, 'id' | 'exit' | 'update' | 'createdAt' | 'remaining' | 'paused' | 'leaving'>;
+type ToastInput = Omit<
+    Toast,
+    'id' | 'exit' | 'update' | 'createdAt' | 'remaining' | 'paused' | 'leaving'
+>;
 interface PromiseMessages<T> {
     loading: string;
     success: string | ((data: T) => string);
@@ -78,4 +81,15 @@ declare function __setActiveToastStateForTests(state: ToastState | undefined): v
  * state without going through Svelte context.
  */
 declare function __getActiveToastStateForTests(): ToastState | undefined;
-export { __getActiveToastStateForTests, __setActiveToastStateForTests, dismissToast, getToastPrimaryHostId, getToastUIState, pauseToast, resumeToast, setToastUIState, toast, updateToast };
+export {
+    __getActiveToastStateForTests,
+    __setActiveToastStateForTests,
+    dismissToast,
+    getToastPrimaryHostId,
+    getToastUIState,
+    pauseToast,
+    resumeToast,
+    setToastUIState,
+    toast,
+    updateToast
+};

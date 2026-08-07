@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
-import * as Question from '@sivir-ui/svelte/components/question';
+    import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
+    import * as Question from '@sivir-ui/svelte/components/question';
 
-let answer = $state<QuestionAnswer>([]);
-let summary = $state('');
+    let answer = $state<QuestionAnswer>([]);
+    let summary = $state('');
 </script>
 
 <div class="flex w-full max-w-2xl flex-col gap-3">

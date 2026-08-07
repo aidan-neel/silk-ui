@@ -22,7 +22,8 @@ export type PopoverContentProps = {
     focusTrap?: boolean;
     /** Lock document scrolling while the panel is open. Defaults to `true`. */
     lockScroll?: boolean;
-} & DefaultProps & Partial<HTMLAttributes<HTMLElement>>;
+} & DefaultProps &
+    Partial<HTMLAttributes<HTMLElement>>;
 export type PopoverProps = {
     children?: Snippet;
     open?: boolean;
@@ -46,10 +47,36 @@ export type PopoverTriggerProps = {
     /** Called immediately before this trigger opens its popover. */
     onopen?: () => void;
     style?: string;
-} & Pick<HTMLButtonAttributes, 'disabled' | 'type' | 'name' | 'value' | 'id' | 'role' | 'tabindex' | 'aria-label' | 'aria-controls' | 'aria-expanded' | 'aria-haspopup'> & Partial<Record<`data-${string}`, string | boolean | null>>;
+} & Pick<
+    HTMLButtonAttributes,
+    | 'disabled'
+    | 'type'
+    | 'name'
+    | 'value'
+    | 'id'
+    | 'role'
+    | 'tabindex'
+    | 'aria-label'
+    | 'aria-controls'
+    | 'aria-expanded'
+    | 'aria-haspopup'
+> &
+    Partial<Record<`data-${string}`, string | boolean | null>>;
 export type PopoverTitleProps = DefaultProps;
 /** Mirrors floating-ui's placements: a side, optionally aligned to a corner. */
-export type Placement = 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end';
+export type Placement =
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end';
 export type PopoverState = {
     open: boolean;
     focusedInside?: boolean;

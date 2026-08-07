@@ -1,80 +1,80 @@
 <script lang="ts">
-import Braces from '@lucide/svelte/icons/braces';
-import Check from '@lucide/svelte/icons/check';
-import FileCode from '@lucide/svelte/icons/file-code';
-import Search from '@lucide/svelte/icons/search';
-import Sparkles from '@lucide/svelte/icons/sparkles';
-import X from '@lucide/svelte/icons/x';
-import { Button } from '@sivir-ui/svelte/components/button';
-import { Input } from '@sivir-ui/svelte/components/input';
-import { toast } from '@sivir-ui/svelte/components/toast';
-import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
-import { applyLiveThemeCss } from '@sivir-ui/svelte/themes/live';
-import { type Theme, themeToCss } from '@sivir-ui/svelte/themes/theme';
-import type { PageData } from './$types';
+    import Braces from '@lucide/svelte/icons/braces';
+    import Check from '@lucide/svelte/icons/check';
+    import FileCode from '@lucide/svelte/icons/file-code';
+    import Search from '@lucide/svelte/icons/search';
+    import Sparkles from '@lucide/svelte/icons/sparkles';
+    import X from '@lucide/svelte/icons/x';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Input } from '@sivir-ui/svelte/components/input';
+    import { toast } from '@sivir-ui/svelte/components/toast';
+    import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
+    import { applyLiveThemeCss } from '@sivir-ui/svelte/themes/live';
+    import { type Theme, themeToCss } from '@sivir-ui/svelte/themes/theme';
+    import type { PageData } from './$types';
 
-const { data = { themes: builtInThemePresets } as PageData }: { data?: PageData } = $props();
-const getInitialThemes = () => {
-    const builtInSlugs = new Set(builtInThemePresets.map((theme) => theme.slug));
-    const registryThemes = Array.isArray(data?.themes) ? data.themes : [];
-    return [
-        ...builtInThemePresets,
-        ...registryThemes.filter((theme) => !builtInSlugs.has(theme.slug))
-    ];
-};
+    const { data = { themes: builtInThemePresets } as PageData }: { data?: PageData } = $props();
+    const getInitialThemes = () => {
+        const builtInSlugs = new Set(builtInThemePresets.map((theme) => theme.slug));
+        const registryThemes = Array.isArray(data?.themes) ? data.themes : [];
+        return [
+            ...builtInThemePresets,
+            ...registryThemes.filter((theme) => !builtInSlugs.has(theme.slug))
+        ];
+    };
 
-let searchQuery = $state('');
-let themes = $state<Theme[]>(getInitialThemes());
+    let searchQuery = $state('');
+    let themes = $state<Theme[]>(getInitialThemes());
 
-const filteredThemes = $derived.by(() => {
-    const needle = searchQuery.trim().toLowerCase();
-    return themes.filter((theme) => {
-        if (!needle) return true;
-        const haystack = [theme.name, theme.description, theme.publisher ?? '']
-            .join(' ')
-            .toLowerCase();
-        return haystack.includes(needle);
+    const filteredThemes = $derived.by(() => {
+        const needle = searchQuery.trim().toLowerCase();
+        return themes.filter((theme) => {
+            if (!needle) return true;
+            const haystack = [theme.name, theme.description, theme.publisher ?? '']
+                .join(' ')
+                .toLowerCase();
+            return haystack.includes(needle);
+        });
     });
-});
 
-function applyTheme(theme: Theme) {
-    applyLiveThemeCss(themeToCss(theme));
-    toast({
-        title: `${theme.name} applied`,
-        description: 'Live tokens updated across the app.',
-        duration: 2000,
-        type: 'success'
-    });
-}
+    function applyTheme(theme: Theme) {
+        applyLiveThemeCss(themeToCss(theme));
+        toast({
+            title: `${theme.name} applied`,
+            description: 'Live tokens updated across the app.',
+            duration: 2000,
+            type: 'success'
+        });
+    }
 
-// Theme detail modal
-let detailOpen = $state(false);
-let detailTheme = $state<Theme | null>(null);
-let copiedKey = $state<'css' | 'json' | null>(null);
+    // Theme detail modal
+    let detailOpen = $state(false);
+    let detailTheme = $state<Theme | null>(null);
+    let copiedKey = $state<'css' | 'json' | null>(null);
 
-function openDetail(theme: Theme) {
-    detailTheme = theme;
-    copiedKey = null;
-    detailOpen = true;
-}
+    function openDetail(theme: Theme) {
+        detailTheme = theme;
+        copiedKey = null;
+        detailOpen = true;
+    }
 
-function copyValue(value: string, key: 'css' | 'json', label: string) {
-    if (typeof navigator === 'undefined' || !navigator.clipboard) return;
-    void navigator.clipboard.writeText(value);
-    copiedKey = key;
-    toast({
-        title: `${label} copied`,
-        description: 'Paste it wherever you like.',
-        duration: 1600,
-        type: 'success'
-    });
-    setTimeout(() => {
-        if (copiedKey === key) copiedKey = null;
-    }, 1600);
-}
+    function copyValue(value: string, key: 'css' | 'json', label: string) {
+        if (typeof navigator === 'undefined' || !navigator.clipboard) return;
+        void navigator.clipboard.writeText(value);
+        copiedKey = key;
+        toast({
+            title: `${label} copied`,
+            description: 'Paste it wherever you like.',
+            duration: 1600,
+            type: 'success'
+        });
+        setTimeout(() => {
+            if (copiedKey === key) copiedKey = null;
+        }, 1600);
+    }
 
-const detailCss = $derived(detailTheme ? themeToCss(detailTheme) : '');
-const detailJson = $derived(detailTheme ? JSON.stringify(detailTheme, null, 2) : '');
+    const detailCss = $derived(detailTheme ? themeToCss(detailTheme) : '');
+    const detailJson = $derived(detailTheme ? JSON.stringify(detailTheme, null, 2) : '');
 </script>
 
 <svelte:head>
@@ -120,7 +120,8 @@ const detailJson = $derived(detailTheme ? JSON.stringify(detailTheme, null, 2) :
                 >
                     <span>
                         <span class="font-[600] text-foreground">{themes.length}</span>
-                        {themes.length === 1 ? 'theme' : 'themes'} available
+                        {themes.length === 1 ? 'theme' : 'themes'}
+                        available
                     </span>
                     {#if searchQuery.trim()}
                         <span aria-hidden="true">·</span>
@@ -276,7 +277,9 @@ const detailJson = $derived(detailTheme ? JSON.stringify(detailTheme, null, 2) :
                     <div>
                         <span class="text-foreground-muted">Brand</span>
                         <div class="flex items-center gap-2 mt-1">
-                            <span class="size-4 rounded" style={`background: ${detailTheme.brand}`}
+                            <span
+                                class="size-4 rounded"
+                                style={`background: ${detailTheme.brand}`}
                             ></span>
                             <code class="text-foreground-muted font-mono text-[0.75rem]"
                                 >{detailTheme.brand}</code
@@ -298,7 +301,8 @@ const detailJson = $derived(detailTheme ? JSON.stringify(detailTheme, null, 2) :
                     <div>
                         <span class="text-foreground-muted">Fonts</span>
                         <p class="m-0 mt-1 text-foreground text-[0.75rem]">
-                            {detailTheme.fontSans} / {detailTheme.fontMono}
+                            {detailTheme.fontSans}
+                            / {detailTheme.fontMono}
                         </p>
                     </div>
                 </div>

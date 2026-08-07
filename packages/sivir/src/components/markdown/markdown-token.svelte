@@ -1,83 +1,83 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-import type { MarkdownTableCell, MarkdownToken } from './_types';
-import Self from './markdown-token.svelte';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import type { MarkdownTableCell, MarkdownToken } from './_types';
+    import Self from './markdown-token.svelte';
 
-let { tokens }: { tokens: MarkdownToken[] } = $props();
+    let { tokens }: { tokens: MarkdownToken[] } = $props();
 
-function safeUrl(value?: string) {
-    const url = value?.trim();
-    if (!url) {
-        return undefined;
+    function safeUrl(value?: string) {
+        const url = value?.trim();
+        if (!url) {
+            return undefined;
+        }
+
+        const compact = url.replace(/[\u0000-\u0020]/g, '');
+        const scheme = compact.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
+        if (scheme && scheme !== 'http' && scheme !== 'https' && scheme !== 'mailto') {
+            return undefined;
+        }
+
+        return url;
     }
 
-    const compact = url.replace(/[\u0000-\u0020]/g, '');
-    const scheme = compact.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
-    if (scheme && scheme !== 'http' && scheme !== 'https' && scheme !== 'mailto') {
-        return undefined;
+    function isExternalUrl(value: string) {
+        return /^(?:https?:|\/\/)/i.test(value.replace(/[\u0000-\u0020]/g, ''));
     }
 
-    return url;
-}
-
-function isExternalUrl(value: string) {
-    return /^(?:https?:|\/\/)/i.test(value.replace(/[\u0000-\u0020]/g, ''));
-}
-
-function safeImageUrl(value?: string) {
-    const url = safeUrl(value);
-    if (!url) {
-        return undefined;
+    function safeImageUrl(value?: string) {
+        const url = safeUrl(value);
+        if (!url) {
+            return undefined;
+        }
+        try {
+            const base = new URL('https://sivir.invalid/');
+            return new URL(url, base).origin === base.origin ? url : undefined;
+        } catch {
+            return undefined;
+        }
     }
-    try {
-        const base = new URL('https://sivir.invalid/');
-        return new URL(url, base).origin === base.origin ? url : undefined;
-    } catch {
-        return undefined;
+
+    function codeLanguage(value?: string) {
+        return value?.trim().split(/\s+/, 1)[0] || undefined;
     }
-}
 
-function codeLanguage(value?: string) {
-    return value?.trim().split(/\s+/, 1)[0] || undefined;
-}
+    function listStart(value?: number | string) {
+        const start = typeof value === 'number' ? value : Number.parseInt(value ?? '', 10);
+        return Number.isFinite(start) ? start : undefined;
+    }
 
-function listStart(value?: number | string) {
-    const start = typeof value === 'number' ? value : Number.parseInt(value ?? '', 10);
-    return Number.isFinite(start) ? start : undefined;
-}
+    function cellTokens(cell: MarkdownTableCell) {
+        return cell.tokens ?? [{ type: 'text', text: cell.text ?? '' }];
+    }
 
-function cellTokens(cell: MarkdownTableCell) {
-    return cell.tokens ?? [{ type: 'text', text: cell.text ?? '' }];
-}
+    function alignmentClass(alignment?: 'center' | 'left' | 'right' | null) {
+        return alignment === 'center'
+            ? 'text-center'
+            : alignment === 'right'
+              ? 'text-right'
+              : 'text-left';
+    }
 
-function alignmentClass(alignment?: 'center' | 'left' | 'right' | null) {
-    return alignment === 'center'
-        ? 'text-center'
-        : alignment === 'right'
-          ? 'text-right'
-          : 'text-left';
-}
+    function tokenKey(token: MarkdownToken, index: number) {
+        return `${index}:${token.type}:${(token.raw ?? token.text ?? '').slice(0, 80)}`;
+    }
 
-function tokenKey(token: MarkdownToken, index: number) {
-    return `${index}:${token.type}:${(token.raw ?? token.text ?? '').slice(0, 80)}`;
-}
+    function cellKey(cell: MarkdownTableCell, index: number) {
+        return `${index}:${(cell.text ?? '').slice(0, 80)}`;
+    }
 
-function cellKey(cell: MarkdownTableCell, index: number) {
-    return `${index}:${(cell.text ?? '').slice(0, 80)}`;
-}
-
-function rowKey(row: MarkdownTableCell[], index: number) {
-    return `${index}:${row
-        .map((cell) => cell.text ?? '')
-        .join('|')
-        .slice(0, 120)}`;
-}
+    function rowKey(row: MarkdownTableCell[], index: number) {
+        return `${index}:${row
+            .map((cell) => cell.text ?? '')
+            .join('|')
+            .slice(0, 120)}`;
+    }
 </script>
 
 {#each tokens as token, index (tokenKey(token, index))}
     {#if token.type === 'space' || token.type === 'def'}
-        <!-- Markdown spacing and reference definitions do not produce visible nodes. -->
+    <!-- Markdown spacing and reference definitions do not produce visible nodes. -->
     {:else if token.type === 'heading'}
         {#if token.depth === 1}
             <h1
@@ -214,7 +214,7 @@ function rowKey(row: MarkdownTableCell[], index: number) {
             </ul>
         {/if}
     {:else if token.type === 'checkbox'}
-        <!-- Task-list checkboxes are rendered by the containing list item. -->
+    <!-- Task-list checkboxes are rendered by the containing list item. -->
     {:else if token.type === 'blockquote'}
         <blockquote class="my-4 border-s-2 border-border ps-4 text-foreground-muted">
             <Self tokens={token.tokens ?? [{ type: 'text', text: token.text ?? '' }]} />
@@ -263,7 +263,8 @@ function rowKey(row: MarkdownTableCell[], index: number) {
     {:else if token.type === 'html'}
         {#if token.block}
             <pre
-                class="my-3 overflow-x-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border bg-secondary/50 px-3 py-2 font-mono text-[0.875em] leading-relaxed text-foreground-muted"><code
+                class="my-3 overflow-x-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border bg-secondary/50 px-3 py-2 font-mono text-[0.875em] leading-relaxed text-foreground-muted"
+            ><code
                     >{token.text ?? token.raw ?? ''}</code
                 ></pre>
         {:else}

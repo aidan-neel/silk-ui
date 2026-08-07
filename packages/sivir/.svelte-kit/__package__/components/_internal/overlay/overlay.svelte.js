@@ -1,4 +1,10 @@
-import { clickOutside, getFocusableElements, lockBodyScroll, pushEscapeLayer, trapFocus } from '@sivir-ui/svelte/utils';
+import {
+    clickOutside,
+    getFocusableElements,
+    lockBodyScroll,
+    pushEscapeLayer,
+    trapFocus
+} from '@sivir-ui/svelte/utils';
 export function useOverlay(opts) {
     $effect(() => {
         if (!opts.isOpen()) {
