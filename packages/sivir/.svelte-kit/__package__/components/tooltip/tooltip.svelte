@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { setContext, untrack, type Snippet } from 'svelte';
+    import { type Snippet, setContext, untrack } from 'svelte';
 
     type Placement = 'top' | 'left' | 'bottom' | 'right';
 

@@ -28,7 +28,6 @@
             "inputs": ["prisma/schema.prisma", "prisma.config.ts"],
             "outputs": ["prisma/generated/**", ".vercel/output/**"]
         },
-        "lint": {},
         "test": {
             "dependsOn": ["^build", "build"]
         }

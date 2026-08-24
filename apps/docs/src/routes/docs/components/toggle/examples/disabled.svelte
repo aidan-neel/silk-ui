@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Toggle } from '@sivir-ui/svelte/components/toggle';
     import Bold from '@lucide/svelte/icons/bold';
+    import { Toggle } from '@sivir-ui/svelte/components/toggle';
 </script>
 
 <Toggle disabled>

@@ -10,7 +10,6 @@
 <AlertDialog.Content
     {...rest}
     size="lg"
-    showClose={false}
     allowEscape={approvalRequest.pending === null}
     data-ui="approval-request"
     data-risk={approvalRequest.risk}

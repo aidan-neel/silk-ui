@@ -105,7 +105,10 @@ export function resolveInstallPlan(index: RegistryIndex, names: string[]): Insta
     const resolved = new Map<string, RegistryComponent>();
     const queue = [...requestedNames];
     while (queue.length > 0) {
-        const name = queue.shift()!;
+        const name = queue.shift();
+        if (name === undefined) {
+            break;
+        }
         if (resolved.has(name)) continue;
         const component = byName.get(name);
         if (!component) {

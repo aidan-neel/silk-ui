@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
     import ShieldCheck from '@lucide/svelte/icons/shield-check';
+    import { Markdown } from '@sivir-ui/svelte/components/markdown';
 
     const untrustedOutput = [
         '## Imported model output',

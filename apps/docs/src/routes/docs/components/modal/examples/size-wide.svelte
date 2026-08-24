@@ -4,9 +4,9 @@
     let open = $state(false);
 </script>
 
-<Modal.Root bind:open>
+<Modal.Root bind:open orientation="horizontal">
     <Modal.Trigger variant="outline">Open wide modal</Modal.Trigger>
-    <Modal.Content size="2xl">
+    <Modal.Content size="xl">
         <Modal.Header>
             <Modal.Title>Import project data</Modal.Title>
             <Modal.Description>

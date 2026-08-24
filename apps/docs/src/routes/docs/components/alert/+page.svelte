@@ -1,17 +1,18 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import VariantError from './examples/variant-error.svelte';
+    import VariantErrorSrc from './examples/variant-error.svelte?raw';
     import VariantInfo from './examples/variant-info.svelte';
     import VariantInfoSrc from './examples/variant-info.svelte?raw';
     import VariantSuccess from './examples/variant-success.svelte';
     import VariantSuccessSrc from './examples/variant-success.svelte?raw';
     import VariantWarning from './examples/variant-warning.svelte';
     import VariantWarningSrc from './examples/variant-warning.svelte?raw';
-    import VariantError from './examples/variant-error.svelte';
-    import VariantErrorSrc from './examples/variant-error.svelte?raw';
 
     const TITLE = 'Alert';
     const SLUG = 'alert';
@@ -29,7 +30,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -43,6 +44,7 @@
                 An inline callout for contextual messages. Comes in four variants.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
     import ArrowDown from '@lucide/svelte/icons/arrow-down';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
     import type { ConversationScrollButtonProps } from '.';
     import { getConversationContext } from './context.svelte';
 

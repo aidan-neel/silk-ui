@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
     import LockKeyhole from '@lucide/svelte/icons/lock-keyhole';
     import Shield from '@lucide/svelte/icons/shield';
     import ShieldAlert from '@lucide/svelte/icons/shield-alert';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { ApprovalRequestIconProps } from '.';
     import { getApprovalRequestContext } from './context.svelte';
 

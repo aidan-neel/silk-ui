@@ -3,13 +3,13 @@
 </script>
 
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
-    import { Badge } from '@sivir-ui/svelte/components/badge';
+    import Accessibility from '@lucide/svelte/icons/accessibility';
     import ChevronRight from '@lucide/svelte/icons/chevron-right';
     import FileCode from '@lucide/svelte/icons/file-code';
-    import Accessibility from '@lucide/svelte/icons/accessibility';
     import MessageSquareWarning from '@lucide/svelte/icons/message-square-warning';
+    import { Badge } from '@sivir-ui/svelte/components/badge';
+    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
+    import { resolve } from '$app/paths';
 
     let {
         title,

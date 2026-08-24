@@ -126,10 +126,10 @@ const index: RegistryIndex = {
     )
 };
 
-await writeFile(path.join(outDir, 'index.json'), JSON.stringify(index, null, '\t') + '\n');
+await writeFile(path.join(outDir, 'index.json'), `${JSON.stringify(index, null, '\t')}\n`);
 await writeFile(
     path.join(outDir, 'themes.json'),
-    JSON.stringify(await buildThemes(), null, '\t') + '\n'
+    `${JSON.stringify(await buildThemes(), null, '\t')}\n`
 );
 
 console.log(`registry: ${index.components.length} components, ${fileSet.size} files, themes built`);

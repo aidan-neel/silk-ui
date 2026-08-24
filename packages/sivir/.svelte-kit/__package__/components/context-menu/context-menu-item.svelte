@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { ContextMenuItemProps } from '.';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
+    import type { ContextMenuItemProps } from '.';
     import { getContextMenuContext } from './context.svelte';
 
     const { state: contextMenuState, ancestors } = getContextMenuContext();

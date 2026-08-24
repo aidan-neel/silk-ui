@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { marked } from 'marked';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { marked } from 'marked';
     import type { MarkdownProps } from '.';
     import type { MarkdownToken } from './_types';
     import TokenRenderer from './markdown-token.svelte';

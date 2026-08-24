@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
+import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
+import { describe, expect, it, vi } from 'vitest';
+import { required } from '../../test-utils';
 
 describe('Pagination -- rendering', () => {
     it('renders a nav element with aria-label="Pagination"', () => {
@@ -96,7 +97,7 @@ describe('Pagination -- interaction', () => {
         });
         const user = userEvent.setup();
         const buttons = Array.from(container.querySelectorAll('button'));
-        const page4 = buttons.find((b) => b.textContent?.trim() === '4')!;
+        const page4 = required(buttons.find((button) => button.textContent?.trim() === '4'));
         await user.click(page4);
         expect(onPageChange).toHaveBeenCalledWith(4);
     });
@@ -107,7 +108,7 @@ describe('Pagination -- interaction', () => {
             props: { page: 3, total: 5, siblings: 5, onPageChange }
         });
         const user = userEvent.setup();
-        const current = screen.getByText('3').closest('button')!;
+        const current = required(screen.getByText('3').closest('button'));
         await user.click(current);
         expect(onPageChange).not.toHaveBeenCalled();
     });

@@ -308,6 +308,7 @@ describe('Combobox -- menu search', () => {
             'rounded-[var(--radius-lg)]',
             'bg-secondary'
         );
+        expect(searchField?.parentElement?.firstElementChild).toBe(searchField);
         const searchFieldStyles = getComputedStyle(searchField as HTMLElement);
         expect([
             searchFieldStyles.borderTopWidth,

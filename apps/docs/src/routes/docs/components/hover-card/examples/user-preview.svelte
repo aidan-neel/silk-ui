@@ -1,10 +1,10 @@
 <script lang="ts">
-    import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
+    import Building from '@lucide/svelte/icons/building';
+    import MapPin from '@lucide/svelte/icons/map-pin';
+    import Users from '@lucide/svelte/icons/users';
     import * as Avatar from '@sivir-ui/svelte/components/avatar';
     import { Button } from '@sivir-ui/svelte/components/button';
-    import Users from '@lucide/svelte/icons/users';
-    import MapPin from '@lucide/svelte/icons/map-pin';
-    import Building from '@lucide/svelte/icons/building';
+    import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
 </script>
 
 <div class="flex items-center justify-center">

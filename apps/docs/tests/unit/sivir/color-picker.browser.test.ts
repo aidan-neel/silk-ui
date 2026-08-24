@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import ColorPickerFixture from '../../fixtures/ColorPickerFixture.svelte';
+import { required } from '../../test-utils';
 
 /*
  * Color-picker is a popover-using component. Sprint 2 covers the
@@ -125,7 +126,7 @@ describe('ColorPicker -- SB drag (saturation/value)', () => {
         expect(receivedValue).toMatch(/^#[0-9a-f]{6}$/);
         // Initial value was pure red (#ff0000, sat=100, val=100). A click at the
         // center maps to sat=50, val=50 -- distinctly different.
-        expect(receivedValue!.toLowerCase()).not.toBe('#ff0000');
+        expect(required(receivedValue).toLowerCase()).not.toBe('#ff0000');
     });
 });
 

@@ -1,14 +1,15 @@
-import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
+import type { ToastState } from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
 import {
-    toast,
+    __getActiveToastStateForTests,
+    __setActiveToastStateForTests,
     dismissToast,
     pauseToast,
     resumeToast,
-    updateToast,
-    __setActiveToastStateForTests,
-    __getActiveToastStateForTests
+    toast,
+    updateToast
 } from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
-import type { ToastState } from '@sivir-ui/svelte/components/toast/lib.svelte.ts';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { required } from '../../test-utils';
 
 /*
  * Toast tests use fake timers. The library's lifecycle is timer-driven
@@ -175,10 +176,11 @@ describe('toast -- max 5 toasts', () => {
 describe('pauseToast / resumeToast', () => {
     it('pauseToast sets paused=true and computes remaining', () => {
         const t = toast({ title: 'p', duration: 1000 });
+        const id = required(t.id);
         vi.advanceTimersByTime(300);
-        pauseToast(t.id!);
+        pauseToast(id);
 
-        const current = toastUIState().data.toasts.find((x) => x.id === t.id)!;
+        const current = required(toastUIState().data.toasts.find((toast) => toast.id === id));
         expect(current.paused).toBe(true);
         expect(current.remaining).toBeLessThanOrEqual(1000);
         expect(current.remaining).toBeGreaterThanOrEqual(0);
@@ -186,14 +188,15 @@ describe('pauseToast / resumeToast', () => {
 
     it('resumeToast unpauses and reschedules dismissal', () => {
         const t = toast({ title: 'p', duration: 1000 });
+        const id = required(t.id);
         vi.advanceTimersByTime(300);
-        pauseToast(t.id!);
+        pauseToast(id);
 
         // While paused, the toast does not dismiss.
         vi.advanceTimersByTime(5000);
         expect(toastUIState().data.toasts.find((x) => x.id === t.id)).toBeDefined();
 
-        resumeToast(t.id!);
+        resumeToast(id);
         const remainingAfterResume =
             toastUIState().data.toasts.find((x) => x.id === t.id)?.remaining ?? 0;
         expect(remainingAfterResume).toBeGreaterThan(0);
@@ -208,7 +211,7 @@ describe('pauseToast / resumeToast', () => {
 describe('updateToast', () => {
     it('merges updates into an existing toast in place', () => {
         const t = toast({ title: 'before', persistent: true });
-        updateToast(t.id!, { title: 'after', type: 'success' });
+        updateToast(required(t.id), { title: 'after', type: 'success' });
 
         const current = toastUIState().data.toasts.find((x) => x.id === t.id);
         expect(current?.title).toBe('after');

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import AttachmentFixture from '../../fixtures/AttachmentFixture.svelte';
+import { queryRequired } from '../../test-utils';
 
 async function chooseFiles(input: HTMLInputElement, files: File[]) {
     Object.defineProperty(input, 'files', { configurable: true, value: files });
@@ -11,7 +12,7 @@ async function chooseFiles(input: HTMLInputElement, files: File[]) {
 describe('Attachment', () => {
     it('adds accepted files and removes the rendered item', async () => {
         const { container } = render(AttachmentFixture);
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="file"]');
         const file = new File(['release notes'], 'release-notes.txt', {
             type: 'text/plain',
             lastModified: 1
@@ -34,7 +35,7 @@ describe('Attachment', () => {
 
     it('rejects an invalid file type with a typed code', async () => {
         const { container } = render(AttachmentFixture, { props: { accept: '.txt' } });
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="file"]');
         const file = new File(['report'], 'report.pdf', {
             type: 'application/pdf',
             lastModified: 2
@@ -50,7 +51,7 @@ describe('Attachment', () => {
 
     it('rejects an oversized file with a typed code', async () => {
         const { container } = render(AttachmentFixture, { props: { maxSize: 4 } });
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="file"]');
         const file = new File(['12345'], 'large.txt', { type: 'text/plain', lastModified: 3 });
 
         await chooseFiles(input, [file]);
@@ -61,7 +62,7 @@ describe('Attachment', () => {
 
     it('rejects a duplicate file with a typed code', async () => {
         const { container } = render(AttachmentFixture);
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="file"]');
         const file = new File(['same'], 'same.txt', { type: 'text/plain', lastModified: 4 });
 
         await chooseFiles(input, [file]);
@@ -73,7 +74,7 @@ describe('Attachment', () => {
 
     it('rejects files beyond the maximum count with a typed code', async () => {
         const { container } = render(AttachmentFixture, { props: { maxFiles: 1 } });
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+        const input = queryRequired<HTMLInputElement>(container, 'input[type="file"]');
         const first = new File(['one'], 'one.txt', { type: 'text/plain', lastModified: 5 });
         const second = new File(['two'], 'two.txt', { type: 'text/plain', lastModified: 6 });
 

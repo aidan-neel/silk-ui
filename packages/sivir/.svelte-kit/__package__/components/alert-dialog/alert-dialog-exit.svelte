@@ -19,6 +19,9 @@
     /** Cancel reads as outline in light, ghost in dark. */
     const isDark = useIsDark();
     const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
+    const actionWidthClass = $derived(
+        modal.state.orientation === 'vertical' ? 'w-full sm:flex-1' : 'w-full sm:w-fit'
+    );
 
     function handleClick(event: MouseEvent) {
         if (closeOnClick) {
@@ -37,7 +40,7 @@
     onclick={handleClick}
     variant={cancelVariant}
     {...rest}
-    class={cn(className, 'flex w-full flex-row items-center justify-center gap-2 sm:flex-1')}
+    class={cn(className, 'flex flex-row items-center justify-center gap-2', actionWidthClass)}
 >
     {@render children?.()}
 </Button>

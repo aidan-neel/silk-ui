@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { SheetTriggerProps } from '.';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import type { SheetTriggerProps } from '.';
     import { getSheetContext } from './context.svelte';
 
     let {

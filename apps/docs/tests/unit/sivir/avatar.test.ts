@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
 import AvatarFixture from '../../fixtures/AvatarFixture.svelte';
+import { queryRequired } from '../../test-utils';
 
 describe('Avatar -- rendering', () => {
     it('renders the root wrapper with data-ui="avatar"', () => {
@@ -25,7 +26,7 @@ describe('Avatar -- image load coordination', () => {
         const { container } = render(AvatarFixture, {
             props: { src: 'https://example.com/img.png', alt: 'User' }
         });
-        const img = container.querySelector('img')!;
+        const img = queryRequired(container, 'img');
         expect(img).toBeInTheDocument();
 
         // Dispatch a load event to simulate the image loading.
@@ -40,7 +41,7 @@ describe('Avatar -- image load coordination', () => {
         const { container } = render(AvatarFixture, {
             props: { src: 'https://example.com/bad.png', alt: 'User' }
         });
-        const img = container.querySelector('img')!;
+        const img = queryRequired(container, 'img');
         // First simulate load (hides fallback).
         img.dispatchEvent(new Event('load'));
         await waitFor(() => {
@@ -59,7 +60,7 @@ describe('Avatar -- image load coordination', () => {
         const { container } = render(AvatarFixture, {
             props: { src: 'https://example.com/bad.png', alt: 'User' }
         });
-        const img = container.querySelector('img')!;
+        const img = queryRequired(container, 'img');
         img.dispatchEvent(new Event('error'));
 
         await waitFor(() => {
@@ -78,13 +79,13 @@ describe('Avatar -- size prop wiring', () => {
 describe('Avatar -- shape prop wiring', () => {
     it('applies a rounded-full class for circle shape', () => {
         const { container } = render(AvatarFixture, { props: { shape: 'circle' } });
-        const root = container.querySelector('[data-ui="avatar"]')!;
+        const root = queryRequired(container, '[data-ui="avatar"]');
         expect(root.className).toContain('rounded-full');
     });
 
     it('does not apply rounded-full for square shape', () => {
         const { container } = render(AvatarFixture, { props: { shape: 'square' } });
-        const root = container.querySelector('[data-ui="avatar"]')!;
+        const root = queryRequired(container, '[data-ui="avatar"]');
         expect(root.className).not.toContain('rounded-full');
     });
 });

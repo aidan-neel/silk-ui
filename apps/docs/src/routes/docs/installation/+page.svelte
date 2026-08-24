@@ -1,6 +1,7 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { resolve } from '$app/paths';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     const packageInstall = `bun add @sivir-ui/svelte
 # npm i @sivir-ui/svelte
@@ -33,7 +34,7 @@ bunx --package @sivir-ui/svelte sivir list`;
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-16">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -47,6 +48,7 @@ bunx --package @sivir-ui/svelte sivir list`;
                 Install Sivir UI into your project.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="prerequisites" class="scroll-mt-20 flex flex-col gap-4">

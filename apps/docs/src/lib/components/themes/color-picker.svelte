@@ -1,6 +1,6 @@
 <script lang="ts">
-    import ColorPicker from '$lib/components/color-picker.svelte';
     import type { ColorOption } from '@sivir-ui/svelte/components/color-picker';
+    import ColorPicker from '$lib/components/color-picker.svelte';
 
     type Props = {
         value: string;

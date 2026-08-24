@@ -1,8 +1,8 @@
 <script lang="ts">
+    import { input } from '@sivir-ui/svelte/components/input/variants';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { Snippet } from 'svelte';
     import type { HTMLTextareaAttributes } from 'svelte/elements';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { input } from '@sivir-ui/svelte/components/input/variants';
 
     let {
         placeholder,

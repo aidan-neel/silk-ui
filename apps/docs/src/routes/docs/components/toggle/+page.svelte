@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
+    import Disabled from './examples/disabled.svelte';
+    import DisabledSrc from './examples/disabled.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
     import Icon from './examples/icon.svelte';
     import IconSrc from './examples/icon.svelte?raw';
-    import Text from './examples/text.svelte';
-    import TextSrc from './examples/text.svelte?raw';
     import Sizes from './examples/sizes.svelte';
     import SizesSrc from './examples/sizes.svelte?raw';
-    import Disabled from './examples/disabled.svelte';
-    import DisabledSrc from './examples/disabled.svelte?raw';
+    import Text from './examples/text.svelte';
+    import TextSrc from './examples/text.svelte?raw';
 
     const TITLE = 'Toggle';
     const SLUG = 'toggle';
@@ -26,7 +26,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -40,6 +40,7 @@
                 A button with an on/off pressed state. Comes in several sizes.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

@@ -1,13 +1,14 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
-    import SingleMode from './examples/single-mode.svelte';
-    import SingleModeSrc from './examples/single-mode.svelte?raw';
     import MultipleMode from './examples/multiple-mode.svelte';
     import MultipleModeSrc from './examples/multiple-mode.svelte?raw';
+    import SingleMode from './examples/single-mode.svelte';
+    import SingleModeSrc from './examples/single-mode.svelte?raw';
 
     const TITLE = 'Accordion';
     const SLUG = 'accordion';
@@ -25,7 +26,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -40,6 +41,7 @@
                 allows any combination.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

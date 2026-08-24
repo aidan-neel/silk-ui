@@ -1,21 +1,21 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import BasicMenu from './examples/basic-menu.svelte';
     import BasicMenuSrc from './examples/basic-menu.svelte?raw';
-    import UserMenu from './examples/user-menu.svelte';
-    import UserMenuSrc from './examples/user-menu.svelte?raw';
+    import Configuration from './examples/configuration.svelte';
+    import ConfigurationSrc from './examples/configuration.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
     import RowActions from './examples/row-actions.svelte';
     import RowActionsSrc from './examples/row-actions.svelte?raw';
     import ShareMenu from './examples/share-menu.svelte';
     import ShareMenuSrc from './examples/share-menu.svelte?raw';
     import SortMenu from './examples/sort-menu.svelte';
     import SortMenuSrc from './examples/sort-menu.svelte?raw';
-    import Configuration from './examples/configuration.svelte';
-    import ConfigurationSrc from './examples/configuration.svelte?raw';
+    import UserMenu from './examples/user-menu.svelte';
+    import UserMenuSrc from './examples/user-menu.svelte?raw';
 
     const _TITLE = 'Dropdown Menu';
 
@@ -32,7 +32,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -46,6 +46,7 @@
                 A menu of actions anchored to a button.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

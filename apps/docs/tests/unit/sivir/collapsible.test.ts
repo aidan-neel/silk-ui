@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import CollapsibleFixture from '../../fixtures/CollapsibleFixture.svelte';
+import { required } from '../../test-utils';
 
 describe('Collapsible -- rendering', () => {
     it('renders the trigger always', () => {
@@ -49,7 +50,7 @@ describe('Collapsible -- toggle interaction', () => {
 describe('Collapsible -- disabled state', () => {
     it('disables the trigger when disabled=true', () => {
         render(CollapsibleFixture, { props: { open: false, disabled: true } });
-        const button = screen.getByTestId('collapsible-trigger').closest('button')!;
+        const button = required(screen.getByTestId('collapsible-trigger').closest('button'));
         expect(button).toBeDisabled();
     });
 });

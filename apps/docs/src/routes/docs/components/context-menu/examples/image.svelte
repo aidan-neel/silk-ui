@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
-    import Download from '@lucide/svelte/icons/download';
     import Copy from '@lucide/svelte/icons/copy';
+    import Download from '@lucide/svelte/icons/download';
+    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
 </script>
 
 <div class="flex items-center justify-center">

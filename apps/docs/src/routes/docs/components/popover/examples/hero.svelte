@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Popover from '@sivir-ui/svelte/components/popover';
-    import * as Avatar from '@sivir-ui/svelte/components/avatar';
-    import { Input } from '@sivir-ui/svelte/components/input';
-    import Share2 from '@lucide/svelte/icons/share-2';
     import Link from '@lucide/svelte/icons/link';
+    import Share2 from '@lucide/svelte/icons/share-2';
+    import * as Avatar from '@sivir-ui/svelte/components/avatar';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Input } from '@sivir-ui/svelte/components/input';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
 </script>
 
 <Popover.Root placement="bottom">

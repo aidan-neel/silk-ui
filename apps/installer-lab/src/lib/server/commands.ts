@@ -1,4 +1,4 @@
-import { spawn, type ChildProcess } from 'node:child_process';
+import { type ChildProcess, spawn } from 'node:child_process';
 import type { CommandSummary, InstallPath, RunSource } from '$lib/run-types';
 
 export type CommandSpec = CommandSummary & {
@@ -44,7 +44,7 @@ export function scaffoldCommands(consumerRoot: string): CommandSpec[] {
             ],
             cwd: consumerRoot
         },
-        { bin: 'bun', args: ['add', '@fontsource/dm-sans@5.3.0'], cwd: consumerRoot }
+        { bin: 'bun', args: ['add', '@fontsource/inter@5.3.0'], cwd: consumerRoot }
     ];
 }
 

@@ -1,5 +1,5 @@
 import * as Popover from '@sivir-ui/svelte/components/popover';
-import type { Snippet } from 'svelte';
+import { type Snippet } from 'svelte';
 type SubTriggerProps = {
     class?: string;
     children?: Snippet;

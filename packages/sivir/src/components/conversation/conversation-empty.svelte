@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
     import MessageCircle from '@lucide/svelte/icons/message-circle';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { ConversationEmptyProps } from '.';
 
     let {

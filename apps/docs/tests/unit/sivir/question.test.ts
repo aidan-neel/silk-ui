@@ -5,6 +5,7 @@ import type { Component } from 'svelte';
 import { describe, expect, it } from 'vitest';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 import QuestionTakeoverFixture from '../../fixtures/QuestionTakeoverFixture.svelte';
+import { queryRequired, required } from '../../test-utils';
 
 describe('Question', () => {
     it('submits one selected answer', async () => {
@@ -47,7 +48,7 @@ describe('Question', () => {
         await user.keyboard('{Shift>}{Enter}{/Shift}');
 
         expect(input).toBeRequired();
-        expect(new FormData(input.closest('form')!).get('answer')).toBe(
+        expect(new FormData(required(input.closest('form'))).get('answer')).toBe(
             'Use the existing release plan\n'
         );
         expect(screen.getByTestId('submit-count')).toHaveTextContent('0');
@@ -119,7 +120,7 @@ describe('Question', () => {
     it('announces validation even when Actions is omitted', async () => {
         const view = render(QuestionFixture, { props: { showActions: false } });
 
-        await fireEvent.submit(view.container.querySelector('form')!);
+        await fireEvent.submit(queryRequired(view.container, 'form'));
 
         expect(screen.getByRole('status')).toHaveTextContent('Select an answer.');
     });
@@ -158,8 +159,9 @@ describe('Question', () => {
         const form = submit.closest('form');
 
         submit.focus();
-        await fireEvent.submit(form!);
-        await fireEvent.submit(form!);
+        const requiredForm = required(form);
+        await fireEvent.submit(requiredForm);
+        await fireEvent.submit(requiredForm);
 
         expect(screen.getByTestId('submit-count')).toHaveTextContent('1');
         expect(screen.getByTestId('submit-click-count')).toHaveTextContent('0');

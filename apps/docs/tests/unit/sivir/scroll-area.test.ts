@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/svelte';
-import { createRawSnippet } from 'svelte';
 import ScrollArea from '@sivir-ui/svelte/components/scroll-area/scroll-area.svelte';
+import { fireEvent, render, waitFor } from '@testing-library/svelte';
+import { createRawSnippet } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { queryRequired } from '../../test-utils';
 
 /*
  * Scroll-area is a pure presentational wrapper -- it sets overflow rules
@@ -29,14 +30,14 @@ describe('ScrollArea -- rendering', () => {
         expect(container.textContent).toContain('inside scroll');
     });
 
-    it('uses Tailwind scrollbar utilities without a custom class', () => {
+    it('uses Tailwind scrollbar utilities on the viewport without a custom class', () => {
         const { container } = render(ScrollArea, {
             props: { children: textSnippet('x') }
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
-        expect(root.className).toContain('[scrollbar-width:thin]');
-        expect(root.className).toContain('[&::-webkit-scrollbar]:size-2.5');
-        expect(root.className).not.toContain('sivir-scroll');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
+        expect(viewport.className).toContain('[scrollbar-width:thin]');
+        expect(viewport.className).toContain('[&::-webkit-scrollbar]:size-2.5');
+        expect(viewport.className).not.toContain('sivir-scroll');
     });
 });
 
@@ -45,20 +46,22 @@ describe('ScrollArea -- orientation prop', () => {
         const { container } = render(ScrollArea, {
             props: { children: textSnippet('x') }
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
+        const root = queryRequired(container, '[data-ui="scroll-area"]');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
         expect(root.getAttribute('data-orientation')).toBe('vertical');
-        expect(root.className).toContain('overflow-y-auto');
-        expect(root.className).toContain('overflow-x-hidden');
+        expect(viewport.className).toContain('overflow-y-auto');
+        expect(viewport.className).toContain('overflow-x-hidden');
     });
 
     it('applies overflow-x-auto for orientation="horizontal"', () => {
         const { container } = render(ScrollArea, {
             props: { orientation: 'horizontal', children: textSnippet('x') }
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
+        const root = queryRequired(container, '[data-ui="scroll-area"]');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
         expect(root.getAttribute('data-orientation')).toBe('horizontal');
-        expect(root.className).toContain('overflow-x-auto');
-        expect(root.className).toContain('overflow-y-hidden');
+        expect(viewport.className).toContain('overflow-x-auto');
+        expect(viewport.className).toContain('overflow-y-hidden');
     });
 
     it('exposes data-orientation as a styling hook for downstream CSS', () => {
@@ -82,16 +85,54 @@ describe('ScrollArea -- overscroll behavior', () => {
         const { container } = render(ScrollArea, {
             props: { children: textSnippet('x') }
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
-        expect(root.className).toContain('overscroll-contain');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
+        expect(viewport.className).toContain('overscroll-contain');
     });
 
     it('does not pad the scrollport so edge fades sit flush', () => {
         const { container } = render(ScrollArea, {
             props: { children: textSnippet('x') }
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
-        expect(root.className.split(/\s+/)).not.toContain('p-1');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
+        expect(viewport.className.split(/\s+/)).not.toContain('p-1');
+    });
+});
+
+describe('ScrollArea -- edge cues', () => {
+    it('clips blurred cues within the root shell and overlaps the viewport edges', async () => {
+        const { container } = render(ScrollArea, {
+            props: { children: textSnippet('x') }
+        });
+        const root = queryRequired<HTMLElement>(container, '[data-ui="scroll-area"]');
+        const viewport = queryRequired<HTMLElement>(container, '[data-ui="scroll-area-viewport"]');
+
+        Object.defineProperties(viewport, {
+            scrollHeight: { configurable: true, value: 1000 },
+            clientHeight: { configurable: true, value: 200 }
+        });
+        viewport.scrollTop = 100;
+        await fireEvent.scroll(viewport);
+
+        await waitFor(() => {
+            expect(viewport.querySelectorAll('[aria-hidden="true"] > div')).toHaveLength(2);
+        });
+
+        const [topCue, bottomCue] = Array.from(
+            viewport.querySelectorAll<HTMLElement>('[aria-hidden="true"] > div')
+        );
+
+        expect(root.className).toContain('overflow-hidden');
+        expect(viewport.className).toContain('rounded-[inherit]');
+        expect(topCue.className).toContain('backdrop-blur-sm');
+        expect(topCue.className).toContain('-top-px');
+        expect(topCue.className).toContain(
+            '[mask-image:linear-gradient(to_bottom,#000_0%,#000_40%,transparent_100%)]'
+        );
+        expect(bottomCue.className).toContain('backdrop-blur-sm');
+        expect(bottomCue.className).toContain('-bottom-px');
+        expect(bottomCue.className).toContain(
+            '[mask-image:linear-gradient(to_top,#000_0%,#000_40%,transparent_100%)]'
+        );
     });
 });
 
@@ -100,15 +141,15 @@ describe('ScrollArea -- attribute spreading', () => {
         const { container } = render(ScrollArea, {
             props: { class: 'my-scroll', children: textSnippet('x') } as never
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
+        const root = queryRequired(container, '[data-ui="scroll-area"]');
         expect(root.className).toContain('my-scroll');
     });
 
-    it('spreads aria-label', () => {
+    it('spreads aria-label to the scrollable viewport', () => {
         const { container } = render(ScrollArea, {
             props: { 'aria-label': 'Article body', children: textSnippet('x') } as never
         });
-        const root = container.querySelector('[data-ui="scroll-area"]')!;
-        expect(root.getAttribute('aria-label')).toBe('Article body');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
+        expect(viewport.getAttribute('aria-label')).toBe('Article body');
     });
 });

@@ -15,7 +15,11 @@ import Trigger from './modal-trigger.svelte';
 export type ModalState = {
     open: boolean;
     error: boolean;
+    orientation: ModalOrientation;
 };
+
+export type ModalOrientation = 'horizontal' | 'vertical';
+export type ModalSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export type ModalTriggerProps = ButtonProps;
 export type ModalTitleProps = DefaultProps;
@@ -31,14 +35,12 @@ export type ModalContentProps = {
     allowEscape?: boolean;
     role?: 'dialog' | 'alertdialog';
     contentClass?: string;
-    /** Optional explicit max-width class. Overrides the selected size preset. */
-    maxWidthClass?: string;
     overlayClass?: string;
     surfaceClass?: string;
     panelIdPrefix?: string;
     showClose?: boolean;
-    /** Max-width preset. Defaults to `md`. */
-    size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    /** Width preset. Vertical layouts remain compact; horizontal layouts are one step wider. */
+    size?: ModalSize;
 } & DefaultProps &
     Partial<Record<`aria-${string}`, string | boolean | null | undefined>>;
 
@@ -46,6 +48,8 @@ export type ModalProps = {
     open?: boolean;
     /** Sets supported browser chrome to red while the modal is open. */
     error?: boolean;
+    /** Controls the default width and action layout. Defaults to `horizontal`. */
+    orientation?: ModalOrientation;
     children?: Snippet;
 };
 

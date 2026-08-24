@@ -2,7 +2,6 @@ export const components = [
     'accordion',
     'alert',
     'alert-dialog',
-    'approval-request',
     'attachment',
     'avatar',
     'badge',
@@ -31,7 +30,6 @@ export const components = [
     'popover',
     'progress',
     'prompt-composer',
-    'question',
     'radio-group',
     'reasoning',
     'reorder-list',
@@ -57,6 +55,10 @@ export const components = [
 ] as const;
 
 export const sanitizeComponent = (name: string) => {
+    if (name === 'prompt-composer') {
+        return 'Composer';
+    }
+
     return name
         .split('-')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

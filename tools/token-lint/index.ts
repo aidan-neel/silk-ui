@@ -33,7 +33,7 @@ export function lintSource(file: string, source: string): Violation[] {
             // Check if it names ANY rule: look for pattern like "disable-line no-something"
             // Extract what comes after the directive - should be a valid rule name pattern
             const match = s.match(/token-lint-disable[a-z-]*\s+([a-z][a-z0-9-]*)/);
-            if (match && match[1]) {
+            if (match?.[1]) {
                 // It looks like a rule name, and it doesn't match our rule, so not disabled
                 return false;
             }

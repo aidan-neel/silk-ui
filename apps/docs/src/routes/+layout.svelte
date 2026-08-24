@@ -1,13 +1,15 @@
 <script lang="ts">
     import { Toaster } from '@sivir-ui/svelte/components/toast';
-    import Navbar from '$lib/components/navbar.svelte';
     import { ModeWatcher } from 'mode-watcher';
+    import DocsToolbar from '$lib/components/docs/docs-toolbar.svelte';
+    import SideNavbar from '$lib/components/docs/side-navbar.svelte';
     import '@sivir-ui/svelte/ui.css';
     import '../app.css';
+    import { injectAnalytics } from '@vercel/analytics/sveltekit';
     import type { Snippet } from 'svelte';
     import { dev } from '$app/environment';
+    import { afterNavigate } from '$app/navigation';
     import { page } from '$app/stores';
-    import { injectAnalytics } from '@vercel/analytics/sveltekit';
     import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
 
     import type { LayoutData } from './$types';
@@ -17,6 +19,7 @@
     const { children, data }: { children: Snippet; data: LayoutData } = $props();
 
     const isHome = $derived($page.url.pathname === '/');
+    const isDocs = $derived($page.url.pathname.startsWith('/docs'));
 
     // `--font-header` defaults to `var(--font-sans)`, so one custom property re-skins every page.
     $effect(() => {
@@ -30,6 +33,13 @@
     // That override (stored as `sivir-live-theme-css`) was masking the baked
     // default theme from ui.css "no matter what". Live theming is a Studio-only
     // concern now (rebuilt in Plan 3); docs always render the shipped default.
+
+    let docsScrollEl = $state<HTMLDivElement>();
+
+    afterNavigate(() => {
+        docsScrollEl?.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    });
 </script>
 
 <svelte:head>
@@ -57,20 +67,34 @@
 
 <ModeWatcher />
 <Toaster />
-<main class="flex w-full flex-row justify-center">
-    <Navbar starCount={data?.starCount ?? null} />
-</main>
 
-<main class="min-h-screen w-screen bg-background pt-16">
+<main
+    class={`w-screen bg-background p-3 ${isDocs ? 'h-[100svh] overflow-hidden' : 'min-h-screen'}`}
+>
     {#if isHome}
-        <div class="relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-[1400px] flex-col">
+        <div class="relative mx-auto flex min-h-[calc(100vh-1.5rem)] w-full max-w-none flex-col">
             {@render children?.()}
         </div>
     {:else}
         <div
-            class="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-[1400px] flex-col gap-5 px-4 md:px-6 lg:flex-row lg:gap-0"
+            class={`flex w-full gap-3 ${isDocs ? 'h-[calc(100svh-1.5rem)]' : 'min-h-[calc(100svh-1.5rem)]'}`}
         >
-            {@render children?.()}
+            {#if isDocs}
+                <SideNavbar
+                    class="hidden h-[calc(100svh-1.5rem)] w-64 flex-shrink-0 pt-5 pr-4 lg:flex"
+                />
+            {/if}
+            <div
+                class="flex min-w-0 flex-1 flex-col overflow-clip rounded-[calc(var(--radius-lg)+0.5rem)] border border-border bg-background"
+            >
+                <DocsToolbar starCount={data?.starCount ?? null} />
+                <div
+                    bind:this={docsScrollEl}
+                    class={`mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 px-4 md:px-6 lg:flex-row lg:gap-0 ${isDocs ? 'min-h-0 overflow-y-auto' : ''}`}
+                >
+                    {@render children?.()}
+                </div>
+            </div>
         </div>
     {/if}
 </main>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -15,7 +16,7 @@
 </script>
 
 <svelte:head>
-    <title>Sivir · Prompt Composer</title>
+    <title>Sivir · Composer</title>
     <meta
         name="description"
         content="A composable prompt input with actions, submission state, and keyboard behavior built in."
@@ -23,14 +24,15 @@
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
                 style="font-family: var(--font-header);"
             >
-                Prompt Composer
+                Composer
             </h1>
+
             <p
                 class="mt-2 max-w-2xl text-[1rem] leading-relaxed font-[var(--font-weight-description,450)] text-foreground-muted"
             >
@@ -38,6 +40,7 @@
                 state.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="hero" class="scroll-mt-20 flex flex-col gap-4">

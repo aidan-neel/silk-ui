@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
-    import type { ToolItemProps } from '.';
     import Document from '@lucide/svelte/icons/file-text';
     import Magnifer from '@lucide/svelte/icons/search';
     import Command from '@lucide/svelte/icons/wrench';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ToolItemProps } from '.';
 
     let { name, detail, kind = 'command', class: className, ...rest }: ToolItemProps = $props();
 

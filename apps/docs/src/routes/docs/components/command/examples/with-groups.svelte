@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as Command from '@sivir-ui/svelte/components/command';
-    import Search from '@lucide/svelte/icons/search';
     import Plus from '@lucide/svelte/icons/plus';
+    import Search from '@lucide/svelte/icons/search';
     import Settings from '@lucide/svelte/icons/settings';
     import Users from '@lucide/svelte/icons/users';
+    import * as Command from '@sivir-ui/svelte/components/command';
 </script>
 
 <div class="flex items-center justify-center">

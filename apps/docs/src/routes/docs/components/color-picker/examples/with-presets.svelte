@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
     import type { ColorOption } from '@sivir-ui/svelte/components/color-picker';
+    import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
 
     let valueWithOptions = $state('#0284c7');
 

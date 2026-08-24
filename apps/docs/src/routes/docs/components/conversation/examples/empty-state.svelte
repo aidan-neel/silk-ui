@@ -1,8 +1,8 @@
 <script lang="ts">
+    import FileText from '@lucide/svelte/icons/file-text';
     import { Button } from '@sivir-ui/svelte/components/button';
     import * as Conversation from '@sivir-ui/svelte/components/conversation';
     import * as Message from '@sivir-ui/svelte/components/message';
-    import FileText from '@lucide/svelte/icons/file-text';
 
     let started = $state(false);
 </script>

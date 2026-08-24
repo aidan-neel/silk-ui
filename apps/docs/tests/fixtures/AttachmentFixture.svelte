@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as Attachment from '@sivir-ui/svelte/components/attachment';
     import type { AttachmentRejection } from '@sivir-ui/svelte/components/attachment';
+    import * as Attachment from '@sivir-ui/svelte/components/attachment';
 
     let {
         accept = '.txt',

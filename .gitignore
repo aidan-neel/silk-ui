@@ -1,37 +1,52 @@
+# Local workspaces and notes
 /dev
-node_modules
+/plans
+/audit
+/ignored
+/inspiration
+/temp
 
-# Output
-.turbo
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/.codex
-/build
+# Dependencies and caches
+node_modules/
+.turbo/
+.vite/
+*.tsbuildinfo
+
+# Build and test output
+.output/
+.vercel/
+.netlify/
+.wrangler/
+.svelte-kit/
+build/
+dist/
 .release/
+coverage/
+.vitest-attachments/
+playwright-report/
+test-results/
+.sandbox/
+
+# Generated source
+/apps/registry/prisma/generated/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Env
+# Environment
 .env
 .env.*
 !.env.example
 !.env.test
 
-# Vite
+# Logs and temporary files
+*.log
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-ignored/
-inspiration/
-.claude/
-audit/
-node_modules/
 
-temp/
-
-# Local agent skill cache (not part of the project)
-.agents/
+# Local agent state
+/.agents/
+/.claude/
+/.codex/
+/.opencode/

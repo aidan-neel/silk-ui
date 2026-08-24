@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import type { PromptComposerStatus } from '@sivir-ui/svelte/components/prompt-composer';
+    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
 
     let {
         value = $bindable(''),

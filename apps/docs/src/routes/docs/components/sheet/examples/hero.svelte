@@ -1,18 +1,18 @@
 <script lang="ts">
+    import Circle from '@lucide/svelte/icons/circle';
+    import CircleAlert from '@lucide/svelte/icons/circle-alert';
+    import Minus from '@lucide/svelte/icons/minus';
+    import SignalHigh from '@lucide/svelte/icons/signal-high';
+    import SignalLow from '@lucide/svelte/icons/signal-low';
+    import SignalMedium from '@lucide/svelte/icons/signal-medium';
+    import SquarePen from '@lucide/svelte/icons/square-pen';
+    import * as Avatar from '@sivir-ui/svelte/components/avatar';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { Input } from '@sivir-ui/svelte/components/input';
     import { Label } from '@sivir-ui/svelte/components/label';
-    import { Textarea } from '@sivir-ui/svelte/components/textarea';
-    import * as Avatar from '@sivir-ui/svelte/components/avatar';
     import * as Select from '@sivir-ui/svelte/components/select';
     import * as Sheet from '@sivir-ui/svelte/components/sheet';
-    import SquarePen from '@lucide/svelte/icons/square-pen';
-    import Circle from '@lucide/svelte/icons/circle';
-    import SignalHigh from '@lucide/svelte/icons/signal-high';
-    import SignalMedium from '@lucide/svelte/icons/signal-medium';
-    import SignalLow from '@lucide/svelte/icons/signal-low';
-    import CircleAlert from '@lucide/svelte/icons/circle-alert';
-    import Minus from '@lucide/svelte/icons/minus';
+    import { Textarea } from '@sivir-ui/svelte/components/textarea';
 
     let issueTitle = $state('');
     let issueDescription = $state('');

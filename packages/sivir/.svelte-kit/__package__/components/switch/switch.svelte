@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { HTMLButtonAttributes } from 'svelte/elements';
     import type { SwitchProps } from '.';
-    import { cn } from '@sivir-ui/svelte/utils';
 
     let {
         switched = $bindable(false),

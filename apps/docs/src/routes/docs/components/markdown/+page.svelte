@@ -1,13 +1,14 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
-    import Streaming from './examples/streaming.svelte';
-    import StreamingSrc from './examples/streaming.svelte?raw';
     import SafeHtml from './examples/safe-html.svelte';
     import SafeHtmlSrc from './examples/safe-html.svelte?raw';
+    import Streaming from './examples/streaming.svelte';
+    import StreamingSrc from './examples/streaming.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add markdown';
     const usageSnippet = `import { Markdown } from '@sivir-ui/svelte/components/markdown';
@@ -34,7 +35,7 @@ const content = [
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -49,6 +50,7 @@ const content = [
                 code blocks.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="hero" class="scroll-mt-20 flex flex-col gap-4">

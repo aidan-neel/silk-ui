@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { page } from '$app/state';
     import { onMount, tick } from 'svelte';
+    import { page } from '$app/state';
 
     type TocItem = {
         id: string;

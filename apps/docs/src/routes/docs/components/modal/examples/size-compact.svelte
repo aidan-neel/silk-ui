@@ -4,7 +4,7 @@
     let open = $state(false);
 </script>
 
-<Modal.Root bind:open>
+<Modal.Root bind:open orientation="vertical">
     <Modal.Trigger variant="outline">Open compact modal</Modal.Trigger>
     <Modal.Content size="sm">
         <Modal.Header>

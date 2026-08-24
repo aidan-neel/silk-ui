@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { ModalTriggerProps } from '.';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import type { ModalTriggerProps } from '.';
     import { getModalContext } from './context.svelte';
 
     let {

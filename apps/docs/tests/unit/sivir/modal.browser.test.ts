@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-svelte';
 import ModalFixture from '../../fixtures/ModalFixture.svelte';
+import { queryRequired, required } from '../../test-utils';
 
 /*
  * Browser-mode tests for modal. These exercise mount/unmount, focus
@@ -155,6 +156,33 @@ describe('Modal -- close paths actually unmount (P3-F6 disambiguation)', () => {
 });
 
 describe('Modal -- ARIA contract in browser', () => {
+    it('uses the vertical layout and compact width when requested', async () => {
+        render(ModalFixture, { open: true, orientation: 'vertical' });
+        await flush();
+
+        const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+        const header = dialog.querySelector('[data-orientation]') as HTMLElement;
+
+        expect(dialog.getAttribute('data-orientation')).toBe('vertical');
+        expect(dialog.className).toContain('max-w-sm');
+        expect(header.getAttribute('data-orientation')).toBe('vertical');
+        expect(page.getByText('Confirm').element().className).toContain('sm:flex-1');
+    });
+
+    it('uses the horizontal layout and wide width by default', async () => {
+        render(ModalFixture, { open: true });
+        await flush();
+
+        const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+        const header = dialog.querySelector('[data-orientation]') as HTMLElement;
+
+        expect(dialog.getAttribute('data-orientation')).toBe('horizontal');
+        expect(dialog.className).toContain('max-w-xl');
+        expect(header.getAttribute('data-orientation')).toBe('horizontal');
+        expect(header.className).toContain('flex-row');
+        expect(page.getByText('Confirm').element().className).toContain('sm:w-fit');
+    });
+
     it('uses the dedicated centered dialog motion', async () => {
         render(ModalFixture, { open: true });
         await flush();
@@ -167,7 +195,7 @@ describe('Modal -- ARIA contract in browser', () => {
     it('enters upward and exits upward without retracing the enter path', async () => {
         render(ModalFixture, { open: true });
         await flush();
-        const dialog = document.querySelector('[role="dialog"]')!;
+        const dialog = queryRequired(document, '[role="dialog"]');
         const enter = dialogIn(dialog);
         const exit = dialogOut(dialog);
 
@@ -205,7 +233,7 @@ describe('Modal -- ARIA contract in browser', () => {
         const dialog = document.querySelector('[role="dialog"]');
         const labelledBy = dialog?.getAttribute('aria-labelledby');
         expect(labelledBy).toBeTruthy();
-        expect(document.getElementById(labelledBy!)).toBeTruthy();
+        expect(document.getElementById(required(labelledBy))).toBeTruthy();
     });
 
     it('sets aria-describedby pointing to a real id', async () => {
@@ -214,7 +242,7 @@ describe('Modal -- ARIA contract in browser', () => {
         const dialog = document.querySelector('[role="dialog"]');
         const describedBy = dialog?.getAttribute('aria-describedby');
         expect(describedBy).toBeTruthy();
-        expect(document.getElementById(describedBy!)).toBeTruthy();
+        expect(document.getElementById(required(describedBy))).toBeTruthy();
     });
 });
 

@@ -5,7 +5,7 @@
 <div class="grid place-items-center">
     <AlertDialog.Root>
         <AlertDialog.Trigger variant="outline">Sign out</AlertDialog.Trigger>
-        <AlertDialog.Content class="max-w-[24rem]">
+        <AlertDialog.Content>
             <AlertDialog.Header>
                 <AlertDialog.Title>Sign out?</AlertDialog.Title>
                 <AlertDialog.Description>

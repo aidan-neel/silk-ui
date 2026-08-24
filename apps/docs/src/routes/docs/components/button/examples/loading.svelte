@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
     import type { ButtonStatus } from '@sivir-ui/svelte/components/button';
+    import { Button } from '@sivir-ui/svelte/components/button';
 
     let status = $state<ButtonStatus>('idle');
     let timer: ReturnType<typeof setTimeout> | undefined;

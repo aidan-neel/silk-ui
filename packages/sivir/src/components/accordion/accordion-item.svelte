@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { setContext } from 'svelte';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { setContext } from 'svelte';
     import type { AccordionItemProps } from '.';
 
     let {

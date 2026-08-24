@@ -1,6 +1,5 @@
 <script lang="ts">
     import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
-    import SquarePen from '@lucide/svelte/icons/square-pen';
 
     let activeChatId = $state(0);
 
@@ -38,48 +37,31 @@
 </script>
 
 <div class="flex items-center justify-center p-10">
-    <div
-        class="flex flex-col rounded-[var(--radius-lg)] border border-border bg-card overflow-hidden"
-        style="height: 18rem; width: 18rem;"
+    <ScrollArea
+        aria-label="Recent chats"
+        class="h-72 w-72 rounded-[var(--radius-lg)] border border-border bg-card"
     >
-        <!-- Header -->
-        <div class="flex items-center justify-between border-b border-border px-4 py-3 shrink-0">
-            <h2 class="text-sm font-semibold text-foreground">Chats</h2>
-            <button
-                type="button"
-                class="p-1.5 rounded-md hover:bg-secondary text-foreground-muted hover:text-foreground transition-colors"
-                title="New chat"
-            >
-                <SquarePen size={16} />
-            </button>
-        </div>
+        <div class="flex flex-col p-2">
+            {#each groupedChats as group (group.date)}
+                <div
+                    class="px-2 py-2 pt-3 text-[0.7rem] font-semibold uppercase tracking-wider text-foreground-muted"
+                >
+                    {group.date}
+                </div>
 
-        <!-- Scrollable chat list -->
-        <ScrollArea class="flex-1">
-            <div class="flex flex-col">
-                {#each groupedChats as group (group.date)}
-                    <!-- Date header -->
-                    <div
-                        class="px-4 py-2 pt-3 text-[0.7rem] font-semibold uppercase text-foreground-muted tracking-wider"
-                    >
-                        {group.date}
-                    </div>
-
-                    <!-- Chat items -->
-                    {#each group.items as chat (chat.id)}
-                        <button
-                            type="button"
-                            onclick={() => (activeChatId = chat.id)}
-                            class="w-full truncate px-3 py-2 text-left text-[0.85rem] transition-colors {activeChatId ===
+                {#each group.items as chat (chat.id)}
+                    <button
+                        type="button"
+                        onclick={() => (activeChatId = chat.id)}
+                        class="w-full truncate rounded-[var(--radius-md)] px-3 py-2 text-left text-[0.85rem] transition-colors {activeChatId ===
                             chat.id
-                                ? 'bg-secondary text-foreground'
-                                : 'text-foreground-muted hover:bg-secondary/50 hover:text-foreground'}"
-                        >
-                            {chat.title}
-                        </button>
-                    {/each}
+                            ? 'bg-secondary text-foreground'
+                            : 'text-foreground-muted hover:bg-secondary/50 hover:text-foreground'}"
+                    >
+                        {chat.title}
+                    </button>
                 {/each}
-            </div>
-        </ScrollArea>
-    </div>
+            {/each}
+        </div>
+    </ScrollArea>
 </div>

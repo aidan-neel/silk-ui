@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { alert, alertIcon } from './variants';
-    import { cn } from '@sivir-ui/svelte/utils';
     import Check from '@lucide/svelte/icons/circle-check';
     import X from '@lucide/svelte/icons/circle-x';
-    import Warning from '@lucide/svelte/icons/triangle-alert';
     import Info from '@lucide/svelte/icons/info';
+    import Warning from '@lucide/svelte/icons/triangle-alert';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
+    import { alert, alertIcon } from './variants';
 
     type Variant = 'info' | 'error' | 'success' | 'warning';
 

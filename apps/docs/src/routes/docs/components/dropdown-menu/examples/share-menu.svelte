@@ -1,11 +1,11 @@
 <script lang="ts">
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import EyeOff from '@lucide/svelte/icons/eye-off';
+    import Copy2 from '@lucide/svelte/icons/files';
+    import Send from '@lucide/svelte/icons/send';
+    import User from '@lucide/svelte/icons/user';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import Shortcut from '@sivir-ui/svelte/components/shortcut';
-    import User from '@lucide/svelte/icons/user';
-    import Copy2 from '@lucide/svelte/icons/files';
-    import EyeOff from '@lucide/svelte/icons/eye-off';
-    import Send from '@lucide/svelte/icons/send';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
 </script>
 
 <DropdownMenu.Root>

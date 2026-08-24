@@ -2,18 +2,19 @@
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
     import { resolve } from '$app/paths';
     import { components, sanitizeComponent } from '$lib/components';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 </script>
 
 <svelte:head>
     <title>Sivir · Components</title>
     <meta
         name="description"
-        content="Browse all 55 accessible, themeable Svelte 5 components in Sivir UI."
+        content="Browse all 53 accessible, themeable Svelte 5 components in Sivir UI."
     />
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-16">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -21,12 +22,14 @@
             >
                 Components
             </h1>
+
             <p
                 class="mt-2 text-[1rem] text-foreground leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
             >
                 Build with easy-to-style UI components.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">

@@ -1,8 +1,8 @@
 <script lang="ts">
+    import Plus from '@lucide/svelte/icons/plus';
     import { Button } from '@sivir-ui/svelte/components/button';
     import * as Conversation from '@sivir-ui/svelte/components/conversation';
     import * as Message from '@sivir-ui/svelte/components/message';
-    import Plus from '@lucide/svelte/icons/plus';
 
     let follow = $state(true);
     let output = $state([

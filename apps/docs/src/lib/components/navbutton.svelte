@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { page } from '$app/stores';
     import { Button } from '@sivir-ui/svelte/components/button';
     import type { Snippet } from 'svelte';
+    import { page } from '$app/stores';
 
     type Props = {
         href: string;

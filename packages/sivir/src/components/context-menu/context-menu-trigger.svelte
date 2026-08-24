@@ -28,6 +28,10 @@
         e.stopPropagation();
 
         const el = makeVirtualEl(e.clientX, e.clientY);
+        if (contextMenuState.open) {
+            contextMenuState.virtualElement = el;
+            return;
+        }
         contextMenuState.virtualElement = el;
         contextMenuState.open = true;
     }
@@ -39,7 +43,12 @@
         e.preventDefault();
         const target = e.currentTarget as HTMLElement;
         const rect = target.getBoundingClientRect();
-        contextMenuState.virtualElement = makeVirtualEl(rect.left, rect.bottom);
+        const el = makeVirtualEl(rect.left, rect.bottom);
+        if (contextMenuState.open) {
+            contextMenuState.virtualElement = el;
+            return;
+        }
+        contextMenuState.virtualElement = el;
         contextMenuState.open = true;
     }
 
@@ -49,10 +58,15 @@
         }
         const target = e.currentTarget as HTMLElement;
         const rect = target.getBoundingClientRect();
-        contextMenuState.virtualElement = makeVirtualEl(
+        const el = makeVirtualEl(
             e.clientX || rect.left + rect.width / 2,
             e.clientY || rect.top + rect.height / 2
         );
+        if (contextMenuState.open) {
+            contextMenuState.virtualElement = el;
+            return;
+        }
+        contextMenuState.virtualElement = el;
         contextMenuState.open = true;
     }
 </script>

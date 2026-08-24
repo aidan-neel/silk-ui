@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
     import type { MessageRootProps } from '.';
-    import { setMessageContext, type MessageContext } from './context.svelte';
+    import { type MessageContext, setMessageContext } from './context.svelte';
 
     let {
         from = 'assistant',

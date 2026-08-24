@@ -42,24 +42,24 @@ blockquote {
 
 /* Hide scrollbar on the element itself */
 .hide-scrollbar {
-    -ms-overflow-style: none !important;
-    scrollbar-width: none !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-    display: none !important;
+    display: none;
 }
 
 /* Hide scrollbar on the element and all descendants */
 .hide-scrollbar-all,
 .hide-scrollbar-all * {
-    -ms-overflow-style: none !important;
-    scrollbar-width: none !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .hide-scrollbar-all::-webkit-scrollbar,
 .hide-scrollbar-all *::-webkit-scrollbar {
-    display: none !important;
+    display: none;
 }
 
 @layer base {
@@ -83,35 +83,12 @@ blockquote {
     }
 }
 
-.home-page-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-    pointer-events: none;
-    background-image:
-        radial-gradient(
-            circle at 12% 0%,
-            color-mix(in srgb, var(--color-primary) 14%, transparent) 0%,
-            transparent 36%
-        ),
-        radial-gradient(
-            circle at 88% 8%,
-            color-mix(in srgb, var(--color-primary) 8%, transparent) 0%,
-            transparent 28%
-        ),
-        linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--color-background) 94%, var(--color-primary) 4%) 0%,
-            var(--color-background) 62%
-        );
-}
-
 ::selection {
     background-color: color-mix(in srgb, var(--color-primary) 32%, transparent);
 }
 
 pre {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .h1 {

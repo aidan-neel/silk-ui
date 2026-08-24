@@ -9,15 +9,25 @@
         "ignoreUnknown": true,
         "includes": [
             "**",
+            "!!**/node_modules",
+            "!!**/.turbo",
             "!!**/.svelte-kit",
+            "!!**/.vercel",
+            "!!**/.output",
+            "!!**/.netlify",
+            "!!**/.wrangler",
             "!!**/build",
             "!!**/dist",
             "!!**/generated",
+            "!!**/package-lock.json",
+            "!!**/pnpm-lock.yaml",
+            "!!**/yarn.lock",
             "!!packages/sivir/.release",
-            "!!packages/sivir/.sandbox",
             "!!packages/sivir/registry",
-            "!bun.lock",
-            "!**/*.svx"
+            "!!packages/sivir/.sandbox",
+            "!!temp",
+            "!**/*.svx",
+            "!bun.lock"
         ]
     },
     "formatter": {
@@ -25,13 +35,6 @@
         "indentStyle": "space",
         "indentWidth": 4,
         "lineWidth": 100
-    },
-    "linter": {
-        "enabled": true,
-        "includes": ["**", "!**/*.svg"],
-        "rules": {
-            "preset": "recommended"
-        }
     },
     "javascript": {
         "formatter": {
@@ -58,6 +61,16 @@
             "enabled": true,
             "indentScriptAndStyle": true,
             "selfCloseVoidElements": "always"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "includes": ["**", "!**/*.svg"],
+        "rules": {
+            "preset": "recommended",
+            "suspicious": {
+                "noImplicitAnyLet": "off"
+            }
         }
     },
     "overrides": [

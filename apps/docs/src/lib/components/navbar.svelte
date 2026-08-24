@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import { page } from '$app/stores';
-    import { onMount } from 'svelte';
-    import { components, sanitizeComponent } from '$lib/components';
-    import Button from '@sivir-ui/svelte/components/button';
-    import Logo from './logo.svelte';
-    import Navbutton from './navbutton.svelte';
     import Moon from '@lucide/svelte/icons/moon';
     import Sun from '@lucide/svelte/icons/sun';
-    import { toggleMode, mode } from 'mode-watcher';
+    import Button from '@sivir-ui/svelte/components/button';
     import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
+    import { mode, toggleMode } from 'mode-watcher';
+    import { onMount } from 'svelte';
+    import { resolve } from '$app/paths';
+    import { page } from '$app/stores';
     import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
     import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+    import { components, sanitizeComponent } from '$lib/components';
+    import Logo from './logo.svelte';
+    import Navbutton from './navbutton.svelte';
 
     const { starCount = null }: { starCount?: number | null } = $props();
 
@@ -62,7 +62,7 @@
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
     <nav
-        class={`fixed inset-x-0 top-0 z-20 transition-[background-color,backdrop-filter] duration-200 ${
+        class={`sticky inset-x-0 top-0 z-20 transition-[background-color,backdrop-filter] duration-200 ${
             isDocs
                 ? 'bg-background/72 backdrop-blur-[14px]'
                 : scrolled

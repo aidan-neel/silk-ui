@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
     import ChevronLeft from '@lucide/svelte/icons/chevron-left';
     import ChevronRight from '@lucide/svelte/icons/chevron-right';
     import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { PaginationProps } from '.';
 
     let {

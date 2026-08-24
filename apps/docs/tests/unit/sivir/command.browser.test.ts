@@ -1,8 +1,9 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import CommandFixture from '../../fixtures/CommandFixture.svelte';
+import { required } from '../../test-utils';
 
 async function flush() {
     await tick();
@@ -198,12 +199,12 @@ describe('Command -- search input', () => {
         const search = document.querySelector('[role="combobox"]') as HTMLInputElement;
 
         expect(
-            document.getElementById(search.getAttribute('aria-activedescendant')!)
+            document.getElementById(required(search.getAttribute('aria-activedescendant')))
         ).toContainElement(page.getByTestId('cmd-profile').element());
         await userEvent.keyboard('{ArrowDown}{ArrowDown}');
         await flush();
         expect(
-            document.getElementById(search.getAttribute('aria-activedescendant')!)
+            document.getElementById(required(search.getAttribute('aria-activedescendant')))
         ).toContainElement(page.getByTestId('cmd-logout').element());
 
         await userEvent.keyboard('{Home}{Enter}');

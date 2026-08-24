@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { setContext } from 'svelte';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { RadioGroupProps, RadioGroupContext } from '.';
+    import { setContext } from 'svelte';
+    import type { RadioGroupContext, RadioGroupProps } from '.';
 
     let {
         class: className,

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { HTMLAttributes } from 'svelte/elements';
     import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+    import type { HTMLAttributes } from 'svelte/elements';
 
     let {
         children,

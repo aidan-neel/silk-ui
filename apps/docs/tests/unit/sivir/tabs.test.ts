@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import TabsFixture from '../../fixtures/TabsFixture.svelte';
+import { queryRequired, required } from '../../test-utils';
 
 describe('Tabs -- rendering', () => {
     it('renders one trigger per tab', () => {
@@ -20,8 +21,8 @@ describe('Tabs -- rendering', () => {
 
     it('marks the active trigger with aria-selected="true"', () => {
         render(TabsFixture, { props: { value: 'two' } });
-        const triggerTwo = screen.getByTestId('trig-two').closest('button')!;
-        const triggerOne = screen.getByTestId('trig-one').closest('button')!;
+        const triggerTwo = required(screen.getByTestId('trig-two').closest('button'));
+        const triggerOne = required(screen.getByTestId('trig-one').closest('button'));
         expect(triggerTwo.getAttribute('aria-selected')).toBe('true');
         expect(triggerOne.getAttribute('aria-selected')).toBe('false');
     });
@@ -51,17 +52,17 @@ describe('Tabs -- interaction', () => {
 
     it('exposes aria-controls linking triggers to content', () => {
         render(TabsFixture, { props: { value: 'one' } });
-        const trigger = screen.getByTestId('trig-one').closest('button')!;
+        const trigger = required(screen.getByTestId('trig-one').closest('button'));
         const ariaControls = trigger.getAttribute('aria-controls');
         expect(ariaControls).toBeTruthy();
-        expect(document.getElementById(ariaControls!)).toBeTruthy();
+        expect(document.getElementById(required(ariaControls))).toBeTruthy();
     });
 });
 
 describe('Tabs -- orientation', () => {
     it('exposes horizontal orientation by default', () => {
         const { container } = render(TabsFixture, { props: { value: 'one' } });
-        const root = container.querySelector('[data-ui="tabs"]')!;
+        const root = queryRequired(container, '[data-ui="tabs"]');
         const list = screen.getByRole('tablist');
         expect(root).toHaveAttribute('data-orientation', 'horizontal');
         expect(list).toHaveAttribute('aria-orientation', 'horizontal');
@@ -71,7 +72,7 @@ describe('Tabs -- orientation', () => {
         const { container } = render(TabsFixture, {
             props: { value: 'one', orientation: 'vertical' }
         });
-        const root = container.querySelector('[data-ui="tabs"]')!;
+        const root = queryRequired(container, '[data-ui="tabs"]');
         const list = screen.getByRole('tablist');
         expect(root).toHaveAttribute('data-orientation', 'vertical');
         expect(list).toHaveAttribute('aria-orientation', 'vertical');
@@ -120,26 +121,26 @@ describe('Tabs -- ARIA roles', () => {
 describe('Tabs -- variants', () => {
     it('defaults to the underline variant', () => {
         render(TabsFixture, { props: { value: 'one' } });
-        const list = document.querySelector('[data-ui="tabs-list"]')!;
+        const list = queryRequired(document, '[data-ui="tabs-list"]');
         expect(list.getAttribute('data-variant')).toBe('default');
     });
 
     it('segmented renders a muted track container', () => {
         render(TabsFixture, { props: { value: 'one', variant: 'segmented' } });
-        const list = document.querySelector('[data-ui="tabs-list"]')!;
+        const list = queryRequired(document, '[data-ui="tabs-list"]');
         expect(list.getAttribute('data-variant')).toBe('segmented');
         expect(list.className).toContain('bg-secondary');
     });
 
     it('segmented triggers render taller (min-height token) from first paint', () => {
         render(TabsFixture, { props: { value: 'one', variant: 'segmented' } });
-        const trigger = document.querySelector('[role="tab"]')!;
+        const trigger = queryRequired(document, '[role="tab"]');
         expect(trigger.className).toContain('min-h-[32px]');
     });
 
     it('ghost has no bordered container', () => {
         render(TabsFixture, { props: { value: 'one', variant: 'ghost' } });
-        const list = document.querySelector('[data-ui="tabs-list"]')!;
+        const list = queryRequired(document, '[data-ui="tabs-list"]');
         expect(list.getAttribute('data-variant')).toBe('ghost');
         expect(list.className).not.toContain('border-border');
     });
@@ -147,7 +148,7 @@ describe('Tabs -- variants', () => {
     it('default renders the tokenized underline as the active indicator', async () => {
         render(TabsFixture, { props: { value: 'one', variant: 'default' } });
         await waitFor(() => {
-            const list = document.querySelector('[data-ui="tabs-list"]')!;
+            const list = queryRequired(document, '[data-ui="tabs-list"]');
             const indicator = list.querySelector('div[aria-hidden="true"]');
             expect(indicator?.className).toContain('h-0.5');
         });
@@ -156,7 +157,7 @@ describe('Tabs -- variants', () => {
     it('segmented renders an elevated pill as the active indicator', async () => {
         render(TabsFixture, { props: { value: 'one', variant: 'segmented' } });
         await waitFor(() => {
-            const list = document.querySelector('[data-ui="tabs-list"]')!;
+            const list = queryRequired(document, '[data-ui="tabs-list"]');
             const indicator = list.querySelector('div[aria-hidden="true"]');
             expect(indicator?.className).toContain('bg-card');
         });
@@ -166,12 +167,12 @@ describe('Tabs -- variants', () => {
         render(TabsFixture, { props: { value: 'one', variant: 'ghost' } });
         // the selected tab carries the ghost fill (a sliding highlight element)
         await waitFor(() => {
-            const list = document.querySelector('[data-ui="tabs-list"]')!;
+            const list = queryRequired(document, '[data-ui="tabs-list"]');
             const fill = list.querySelector('div[aria-hidden="true"]');
             expect(fill?.className).toContain('bg-secondary/70');
         });
         // and the active tab is still conveyed on the trigger itself
-        const activeTrigger = screen.getByTestId('trig-one').closest('button')!;
+        const activeTrigger = required(screen.getByTestId('trig-one').closest('button'));
         expect(activeTrigger.getAttribute('aria-selected')).toBe('true');
         expect(activeTrigger.className).toContain('text-foreground');
     });

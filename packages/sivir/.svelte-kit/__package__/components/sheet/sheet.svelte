@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { SheetState, SheetProps } from '.';
+    import type { SheetProps, SheetState } from '.';
     import { setSheetContext } from './context.svelte';
 
     let { open = $bindable(false), children }: SheetProps = $props();

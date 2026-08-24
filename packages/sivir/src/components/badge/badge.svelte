@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { Component, Snippet } from 'svelte';
     import { badge } from './variants';
-    import { cn } from '@sivir-ui/svelte/utils';
 
     let {
         variant = 'secondary',

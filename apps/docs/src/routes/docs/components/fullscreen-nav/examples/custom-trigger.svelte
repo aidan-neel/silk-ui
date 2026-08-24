@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
     import Menu from '@lucide/svelte/icons/menu';
+    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
 </script>
 
 <FullscreenNav.Root>

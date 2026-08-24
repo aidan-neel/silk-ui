@@ -1,11 +1,11 @@
 <script lang="ts">
+    import Check from '@lucide/svelte/icons/check';
+    import Copy from '@lucide/svelte/icons/copy';
+    import ThumbsUp from '@lucide/svelte/icons/thumbs-up';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { Markdown } from '@sivir-ui/svelte/components/markdown';
     import * as Message from '@sivir-ui/svelte/components/message';
     import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
-    import Check from '@lucide/svelte/icons/check';
-    import Copy from '@lucide/svelte/icons/copy';
-    import ThumbsUp from '@lucide/svelte/icons/thumbs-up';
 
     const response = [
         '### Billing API v2',

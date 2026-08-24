@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { button } from './variants';
-    import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
     import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
     import type { ButtonProps } from '.';
+    import { button } from './variants';
 
     let {
         href,

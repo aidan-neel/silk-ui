@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
+    import { cn } from '@sivir-ui/svelte/utils';
     import { onMount } from 'svelte';
     import type { ModalCloseProps } from '.';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { cn } from '@sivir-ui/svelte/utils';
-    import { useIsDark } from '@sivir-ui/svelte/is-dark.svelte.ts';
     import { getModalContext } from './context.svelte';
 
     let { class: className, children, onclick, ...rest }: ModalCloseProps = $props();
@@ -14,6 +14,9 @@
     /** Cancel reads as outline in light, ghost in dark. */
     const isDark = useIsDark();
     const cancelVariant = $derived(isDark.current ? 'ghost' : 'outline');
+    const actionWidthClass = $derived(
+        modal.state.orientation === 'vertical' ? 'w-full sm:flex-1' : 'w-full sm:w-fit'
+    );
 
     onMount(() => {
         element?.focus();
@@ -28,7 +31,7 @@
     }}
     variant={cancelVariant}
     {...rest}
-    class={cn(className, `flex sm:w-fit w-full flex-row gap-2 justify-center items-center`)}
+    class={cn(className, 'flex flex-row items-center justify-center gap-2', actionWidthClass)}
 >
     {@render children?.()}
 </Button>

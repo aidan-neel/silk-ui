@@ -7,7 +7,7 @@ import Confirm from './approval-request-confirm.svelte';
 import Content from './approval-request-content.svelte';
 import Description from './approval-request-description.svelte';
 import Details from './approval-request-details.svelte';
-import ApprovalError from './approval-request-error.svelte';
+import ErrorComponent from './approval-request-error.svelte';
 import Footer from './approval-request-footer.svelte';
 import Header from './approval-request-header.svelte';
 import Icon from './approval-request-icon.svelte';
@@ -47,12 +47,12 @@ export type ApprovalRequestActionProps = {
     Omit<HTMLButtonAttributes, 'children' | 'onclick' | 'status' | 'loading' | 'loadingLabel'>;
 
 export {
-    ApprovalError as Error,
     Cancel,
     Confirm,
     Content,
     Description,
     Details,
+    ErrorComponent as Error,
     Footer,
     Header,
     Icon,

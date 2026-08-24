@@ -12,32 +12,33 @@
         allowEscape = true,
         role = 'dialog',
         contentClass = '',
-        maxWidthClass,
         overlayClass = '',
         surfaceClass = '',
         panelIdPrefix = 'modal',
         showClose = true,
-        size = 'md',
+        size,
         children,
         ...rest
     }: ModalContentProps = $props();
 
-    const sizeClass = $derived(
-        maxWidthClass ??
-            (
-                {
-                    // token-lint-disable-next-line no-literal-length
-                    sm: 'md:max-w-[18rem]',
-                    md: 'md:max-w-sm',
-                    lg: 'md:max-w-md',
-                    xl: 'md:max-w-xl',
-                    '2xl': 'md:max-w-2xl',
-                    '3xl': 'md:max-w-3xl'
-                } as const
-            )[size]
-    );
-
     const modal = getModalContext();
+    const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' ? 'lg' : 'md'));
+    const sizeClass = $derived(
+        (modal.state.orientation === 'horizontal'
+            ? {
+                  sm: 'max-w-[23rem]',
+                  md: 'max-w-[27rem]',
+                  lg: 'max-w-[35rem]',
+                  xl: 'max-w-[41rem]'
+              }
+            : {
+                  sm: 'max-w-[17rem]',
+                  md: 'max-w-[23rem]',
+                  lg: 'max-w-[27rem]',
+                  xl: 'max-w-[35rem]'
+              })[resolvedSize]
+    );
+    const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);
     const contentId = $derived(`${panelIdPrefix}-${modal.id}`);
     let element = $state<HTMLElement>();
     let portalEl = $state<HTMLDivElement>();
@@ -85,7 +86,7 @@
                 data-ui="modal-overlay"
                 class={cn(
                     overlayClass, // token-lint-disable-next-line no-literal-length
-                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-[2px] [backface-visibility:hidden] [transform:translateZ(0)]'
+                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-[2px] backdrop-brightness-90 [backface-visibility:hidden] [transform:translateZ(0)]'
                 )}
             ></div>
             <div
@@ -96,12 +97,15 @@
                 class={cn(
                     contentClass,
                     className, // token-lint-disable-next-line no-literal-length
-                    'origin-center bg-panel text-foreground shadow-[var(--elevation-float)]',
+                    'origin-center bg-panel text-foreground shadow-[var(--elevation-modal)]',
                     'rounded-[var(--radius-lg)] border border-border',
                     'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
-                    sizeClass
+                    sizeClass,
+                    isDestructiveAlert && 'shadow-[var(--elevation-alert-error)]'
                 )}
                 {role}
+                data-orientation={modal.state.orientation}
+                data-destructive={isDestructiveAlert || undefined}
                 aria-modal="true"
                 id={contentId}
                 aria-labelledby={modal.id + '-title'}

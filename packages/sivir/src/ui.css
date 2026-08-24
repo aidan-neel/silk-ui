@@ -4,7 +4,7 @@
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-    --font-sans: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-header: var(--font-sans);
 
@@ -62,11 +62,16 @@
 
     --elevation-1: 0 4px 2px rgb(0 0 0 / 0.04);
     --elevation-float: 0 8px 24px -8px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+    --elevation-modal: 0 16px 40px -16px rgb(0 0 0 / 0.28), 0 4px 12px -6px rgb(0 0 0 / 0.14);
+    --elevation-alert-error:
+        0 0 0 1px color-mix(in srgb, var(--color-error) 28%, transparent),
+        0 0 0 5px color-mix(in srgb, var(--color-error) 10%, transparent), var(--elevation-modal);
     --elevation-control:
         inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(15 15 16 / 0.08),
         inset 0 1px 0 0 rgb(255 255 255 / 0.4);
     --elevation-button-outline:
-        inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(15 15 16 / 0.08),
+        inset 0 0 0 1px var(--color-border),
+        inset 0 -2px 3px -2px rgb(15 15 16 / 0.08),
         inset 0 1px 0 0 rgb(255 255 255 / 0.45), 0 1px 1px rgb(28 25 23 / 0.06),
         0 2px 4px -4px rgb(28 25 23 / 0.22);
     --focus-ring: 0 0 0 3px var(--color-ring);
@@ -150,7 +155,8 @@
         inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(0 0 0 / 0.32),
         inset 0 1px 0 0 rgb(255 255 255 / 0.05);
     --elevation-button-outline:
-        inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(0 0 0 / 0.32),
+        inset 0 0 0 1px var(--color-border),
+        inset 0 -2px 3px -2px rgb(0 0 0 / 0.32),
         inset 0 1px 0 0 rgb(255 255 255 / 0.05), 0 1px 2px rgb(0 0 0 / 0.3);
 }
 

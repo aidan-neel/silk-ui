@@ -2,7 +2,7 @@
 
 A focused set of Svelte components for building interfaces with a clear visual system. Use the pieces as shipped, or take the source and shape them into a component library that fits your product.
 
-![Components](https://img.shields.io/badge/Components-55-1f9be6)
+![Components](https://img.shields.io/badge/Components-53-1f9be6)
 
 <img
   src="apps/docs/static/og-default.png"

@@ -1,4 +1,5 @@
 import type { ButtonProps } from '@sivir-ui/svelte/components/button';
+import type { ModalOrientation, ModalSize } from '@sivir-ui/svelte/components/modal';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import Root from './alert-dialog.svelte';
@@ -18,13 +19,14 @@ export type AlertDialogProps = {
     open?: boolean;
     /** Sets supported browser chrome to red while the alert dialog is open. */
     error?: boolean;
+    /** Controls the default width and action layout. Defaults to `vertical`. */
+    orientation?: ModalOrientation;
     children?: Snippet;
 };
 export type AlertDialogContentProps = {
-    allowClickOutside?: boolean;
     allowEscape?: boolean;
-    size?: 'sm' | 'md' | 'lg' | 'xl';
-    showClose?: boolean;
+    /** Width preset. Vertical layouts remain compact; horizontal layouts are one step wider. */
+    size?: ModalSize;
 } & DefaultProps;
 export type AlertDialogActionProps = {
     closeOnClick?: boolean;

@@ -7,6 +7,7 @@
     import { travelingHighlight } from '@sivir-ui/svelte/utils';
     import { page } from '$app/stores';
     import { components, sanitizeComponent } from '$lib/components';
+    import Logo from '$lib/components/logo.svelte';
 
     let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } =
         $props();
@@ -26,8 +27,12 @@
 
 <aside
     use:travelingHighlight
-    class={`${classProp} sivir-docs-sidebar hide-scrollbar-all flex flex-col gap-5 overflow-y-auto pb-8 pr-4`}
+    class={`${classProp} sivir-docs-sidebar hide-scrollbar flex flex-col gap-5 overflow-y-auto pb-8 pr-4`}
 >
+    <div class="relative z-10 px-3">
+        <Logo />
+    </div>
+
     <section class="relative z-10 flex flex-col gap-1.5">
         <h3
             class="px-2 text-[12px] text-foreground-muted [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
@@ -91,25 +96,7 @@
 
 <style>
     .sivir-docs-sidebar {
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--color-foreground) 18%, transparent) transparent;
         overscroll-behavior: contain;
-    }
-    .sivir-docs-sidebar::-webkit-scrollbar {
-        width: 8px;
-    }
-    .sivir-docs-sidebar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .sivir-docs-sidebar::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--color-foreground) 14%, transparent);
-        border: 2px solid transparent;
-        background-clip: padding-box;
-        border-radius: 9999px;
-    }
-    .sivir-docs-sidebar:hover::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--color-foreground) 26%, transparent);
-        background-clip: padding-box;
     }
     :global(.sivir-docs-sidebar > .sivir-item-highlight) {
         background-color: color-mix(in srgb, var(--color-secondary) 70%, transparent);

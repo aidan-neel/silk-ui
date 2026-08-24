@@ -182,6 +182,6 @@ export function highlight(code: string, lang: string = 'txt'): string {
         case 'json':
             return highlightJson(code);
         default:
-            return escape(code);
+            return escapeHtml(code);
     }
 }

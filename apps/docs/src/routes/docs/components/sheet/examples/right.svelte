@@ -1,11 +1,11 @@
 <script lang="ts">
+    import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
     import { Label } from '@sivir-ui/svelte/components/label';
-    import { Switch } from '@sivir-ui/svelte/components/switch';
     import * as Select from '@sivir-ui/svelte/components/select';
     import * as Sheet from '@sivir-ui/svelte/components/sheet';
-    import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
+    import { Switch } from '@sivir-ui/svelte/components/switch';
 
     let status = $state('all');
     let onlyMine = $state(false);

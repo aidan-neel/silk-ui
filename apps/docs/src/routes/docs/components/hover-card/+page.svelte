@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import UserPreview from './examples/user-preview.svelte';
-    import UserPreviewSrc from './examples/user-preview.svelte?raw';
-    import LinkPreview from './examples/link-preview.svelte';
-    import LinkPreviewSrc from './examples/link-preview.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Definition from './examples/definition.svelte';
     import DefinitionSrc from './examples/definition.svelte?raw';
+    import LinkPreview from './examples/link-preview.svelte';
+    import LinkPreviewSrc from './examples/link-preview.svelte?raw';
+    import UserPreview from './examples/user-preview.svelte';
+    import UserPreviewSrc from './examples/user-preview.svelte?raw';
 
     const _TITLE = 'Hover Card';
     const SLUG = 'hover-card';
@@ -25,7 +25,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -39,6 +39,7 @@
                 A preview card that opens on hover or focus.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

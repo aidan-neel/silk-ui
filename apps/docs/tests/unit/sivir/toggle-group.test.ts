@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import ToggleGroupFixture from '../../fixtures/ToggleGroupFixture.svelte';
+import { required } from '../../test-utils';
 
 describe('ToggleGroup -- rendering', () => {
     it('renders one button per item', () => {
@@ -20,8 +21,8 @@ describe('ToggleGroup -- single mode', () => {
             props: { type: 'single', value: 'italic' }
         });
         const buttons = Array.from(container.querySelectorAll<HTMLButtonElement>('button'));
-        const italic = buttons.find((b) => b.textContent === 'I')!;
-        const bold = buttons.find((b) => b.textContent === 'B')!;
+        const italic = required(buttons.find((button) => button.textContent === 'I'));
+        const bold = required(buttons.find((button) => button.textContent === 'B'));
         expect(italic.getAttribute('aria-pressed')).toBe('true');
         expect(bold.getAttribute('aria-pressed')).toBe('false');
     });
@@ -31,8 +32,8 @@ describe('ToggleGroup -- single mode', () => {
             props: { type: 'single', value: 'bold' }
         });
         const buttons = Array.from(container.querySelectorAll<HTMLButtonElement>('button'));
-        const bold = buttons.find((b) => b.textContent === 'B')!;
-        const underline = buttons.find((b) => b.textContent === 'U')!;
+        const bold = required(buttons.find((button) => button.textContent === 'B'));
+        const underline = required(buttons.find((button) => button.textContent === 'U'));
 
         const user = userEvent.setup();
         await user.click(underline);
@@ -62,9 +63,9 @@ describe('ToggleGroup -- multiple mode', () => {
             props: { type: 'multiple', value: ['bold', 'italic'] }
         });
         const buttons = Array.from(container.querySelectorAll<HTMLButtonElement>('button'));
-        const bold = buttons.find((b) => b.textContent === 'B')!;
-        const italic = buttons.find((b) => b.textContent === 'I')!;
-        const underline = buttons.find((b) => b.textContent === 'U')!;
+        const bold = required(buttons.find((button) => button.textContent === 'B'));
+        const italic = required(buttons.find((button) => button.textContent === 'I'));
+        const underline = required(buttons.find((button) => button.textContent === 'U'));
         expect(bold.getAttribute('aria-pressed')).toBe('true');
         expect(italic.getAttribute('aria-pressed')).toBe('true');
         expect(underline.getAttribute('aria-pressed')).toBe('false');
@@ -89,7 +90,7 @@ describe('ToggleGroup -- multiple mode', () => {
             props: { type: 'multiple', value: ['bold'] }
         });
         const buttons = Array.from(container.querySelectorAll<HTMLButtonElement>('button'));
-        const bold = buttons.find((b) => b.textContent === 'B')!;
+        const bold = required(buttons.find((button) => button.textContent === 'B'));
         expect(bold.getAttribute('aria-pressed')).toBe('true');
 
         const user = userEvent.setup();

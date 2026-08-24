@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
-    import Grouped from './examples/grouped.svelte';
-    import GroupedSrc from './examples/grouped.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import CustomTrigger from './examples/custom-trigger.svelte';
     import CustomTriggerSrc from './examples/custom-trigger.svelte?raw';
+    import Grouped from './examples/grouped.svelte';
+    import GroupedSrc from './examples/grouped.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
 
     const TITLE = 'Fullscreen Nav';
     const SLUG = 'fullscreen-nav';
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -34,6 +34,7 @@
                 A mobile navigation menu that opens as a focused, full-viewport layer.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="hero" class="scroll-mt-20 flex flex-col gap-4">

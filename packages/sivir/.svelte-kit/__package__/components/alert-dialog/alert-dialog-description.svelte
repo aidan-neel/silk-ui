@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { getModalContext } from '../modal/context.svelte';
     import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
+    import { getModalContext } from '../modal/context.svelte';
 
     let { class: className, children, ...rest }: DefaultProps = $props();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { onMount } from 'svelte';
     import type { ShowMoreProps } from '.';
 
     let {

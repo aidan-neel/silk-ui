@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
     import ChevronRight from '@lucide/svelte/icons/chevron-right';
     import Home from '@lucide/svelte/icons/home';
+    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
 </script>
 
 <div class="flex items-center justify-center">

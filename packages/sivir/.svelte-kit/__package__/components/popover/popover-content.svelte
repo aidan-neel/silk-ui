@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { onDestroy, onMount } from 'svelte';
+    import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
     import {
         clickOutside,
         cn,
-        lockBodyScroll,
         isPointInSubmenuTriangle,
+        lockBodyScroll,
         positionFloatingPanel,
         pushEscapeLayer,
         trapFocus
     } from '@sivir-ui/svelte/utils';
-    import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
+    import { onDestroy, onMount } from 'svelte';
     import type { Placement, PopoverContentProps } from '.';
     import { getPopoverContext } from './context.svelte';
 
@@ -248,6 +248,13 @@
      */
     $effect(() => {
         if (popoverState.open && popover) {
+            updatePosition();
+        }
+    });
+
+    $effect(() => {
+        if (popoverState.open && popover && refElement) {
+            void refElement;
             updatePosition();
         }
     });

@@ -67,8 +67,12 @@ export function closeMenuLayers(current, ancestors) {
     current.open = false;
     // Let the selected submenu begin its normal exit before its parents follow.
     for (let index = ancestors.length - 1; index >= 0; index -= 1) {
+        const ancestor = ancestors[index];
+        if (!ancestor) {
+            continue;
+        }
         setTimeout(() => {
-            ancestors[index].open = false;
+            ancestor.open = false;
         }, (ancestors.length - 1 - index) * 16 + 16);
     }
 }
@@ -104,7 +108,6 @@ export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
             return pointInTriangle(point, { x: triggerCenter.x, y: trigger.top - contactMargin }, { x: panel.left, y: panel.bottom + contactMargin }, { x: panel.right, y: panel.bottom + contactMargin });
         case 'bottom':
             return pointInTriangle(point, { x: triggerCenter.x, y: trigger.bottom + contactMargin }, { x: panel.left, y: panel.top - contactMargin }, { x: panel.right, y: panel.top - contactMargin });
-        case 'right':
         default:
             return pointInTriangle(point, { x: trigger.right + contactMargin, y: triggerCenter.y }, { x: panel.left - contactMargin, y: panel.top }, { x: panel.left - contactMargin, y: panel.bottom });
     }
@@ -445,7 +448,7 @@ export function travelingHighlight(node, options = {}) {
     function measure(target) {
         cancelAnimationFrame(frame);
         current = target;
-        if (!target || !target.isConnected || target.hidden) {
+        if (!target?.isConnected || target.hidden) {
             if (observedTarget) {
                 resizeObserver.unobserve(observedTarget);
                 observedTarget = undefined;

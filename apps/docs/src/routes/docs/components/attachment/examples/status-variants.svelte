@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as Attachment from '@sivir-ui/svelte/components/attachment';
     import type { AttachmentStatus } from '@sivir-ui/svelte/components/attachment';
+    import * as Attachment from '@sivir-ui/svelte/components/attachment';
     import { onMount } from 'svelte';
 
     type Example = {

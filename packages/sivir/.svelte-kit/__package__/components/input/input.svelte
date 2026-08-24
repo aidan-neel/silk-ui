@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { HTMLInputAttributes } from 'svelte/elements';
     import { cn } from '@sivir-ui/svelte/utils';
+    import type { HTMLInputAttributes } from 'svelte/elements';
     import { input } from './variants';
 
     let {

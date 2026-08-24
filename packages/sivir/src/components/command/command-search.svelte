@@ -1,9 +1,9 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { onMount, tick } from 'svelte';
-    import type { HTMLInputAttributes } from 'svelte/elements';
     import Search from '@lucide/svelte/icons/search';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { onMount, tick } from 'svelte';
+    import type { HTMLInputAttributes } from 'svelte/elements';
     import { getCommandContext, getCommandResults } from './context.svelte';
     import { DEFAULT_COMMAND_SEARCH_THRESHOLD, searchCommandItems } from './search';
 

@@ -2,8 +2,8 @@
     import { Button } from '@sivir-ui/svelte/components/button';
     import { cn } from '@sivir-ui/svelte/utils';
     import { onMount, type Snippet } from 'svelte';
-    import type { CommandItem } from '.';
     import { getModalContext } from '../modal/context.svelte';
+    import type { CommandItem } from '.';
     import { getCommandContext } from './context.svelte';
 
     const command = getCommandContext();

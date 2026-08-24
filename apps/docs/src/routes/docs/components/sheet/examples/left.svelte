@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { Badge } from '@sivir-ui/svelte/components/badge';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Avatar from '@sivir-ui/svelte/components/avatar';
-    import * as Sheet from '@sivir-ui/svelte/components/sheet';
-    import Menu from '@lucide/svelte/icons/menu';
+    import FolderKanban from '@lucide/svelte/icons/folder-kanban';
     import Home from '@lucide/svelte/icons/home';
     import Inbox from '@lucide/svelte/icons/inbox';
-    import FolderKanban from '@lucide/svelte/icons/folder-kanban';
+    import Menu from '@lucide/svelte/icons/menu';
     import Settings from '@lucide/svelte/icons/settings';
+    import * as Avatar from '@sivir-ui/svelte/components/avatar';
+    import { Badge } from '@sivir-ui/svelte/components/badge';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as Sheet from '@sivir-ui/svelte/components/sheet';
 </script>
 
 <Sheet.Root>

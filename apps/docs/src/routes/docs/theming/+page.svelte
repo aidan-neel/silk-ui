@@ -1,13 +1,14 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { resolve } from '$app/paths';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     const overrideCss = `@theme {
   --color-primary: #155eef;
   --color-background: #fcfcfd;
   --color-foreground: #101828;
   --radius-lg: 0.55rem;
-   --font-sans: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
 }
 
 .dark {
@@ -44,7 +45,7 @@ src/lib/sivir/components/button/
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-16">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -59,6 +60,7 @@ src/lib/sivir/components/button/
                 single component with classes and selectors.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="where-tokens-live" class="scroll-mt-20 flex flex-col gap-5">

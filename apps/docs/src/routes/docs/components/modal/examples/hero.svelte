@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as Modal from '@sivir-ui/svelte/components/modal';
     import { Input } from '@sivir-ui/svelte/components/input';
+    import * as Modal from '@sivir-ui/svelte/components/modal';
 
     let open = $state(false);
     let domain = $state('');
 </script>
 
-<Modal.Root bind:open>
+<Modal.Root bind:open orientation="vertical">
     <Modal.Trigger>Add Domain</Modal.Trigger>
     <Modal.Content>
         <Modal.Header>

@@ -34,5 +34,8 @@
         "@biomejs/biome": "^2.5.7",
         "lefthook": "^1.13.6",
         "turbo": "^2.10.0"
+    },
+    "dependencies": {
+        "opencode-goal-plugin": "^0.7.0"
     }
 }

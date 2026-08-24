@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { components, sanitizeComponent } from '$lib/components';
     import ChevronLeft from '@lucide/svelte/icons/chevron-left';
     import ChevronRight from '@lucide/svelte/icons/chevron-right';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { page } from '$app/stores';
+    import { components, sanitizeComponent } from '$lib/components';
 
     type Page = { href: string; label: string };
 

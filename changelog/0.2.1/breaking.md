@@ -1,0 +1,1 @@
+- Remove ScrollArea's `cueRadius` prop; its edge-cue blur is now clipped by the component's container.

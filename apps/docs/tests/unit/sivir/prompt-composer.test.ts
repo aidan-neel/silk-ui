@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
+import { required } from '../../test-utils';
 
 describe('PromptComposer', () => {
     it('binds typed input and submits it with Enter', async () => {
@@ -68,7 +69,9 @@ describe('PromptComposer', () => {
         expect(alert).toHaveTextContent('Message could not be sent.');
         expect(alert).not.toHaveClass('blur-[4px]');
         expect(form).not.toBeNull();
-        expect(alert.compareDocumentPosition(form!)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+        expect(alert.compareDocumentPosition(required(form))).toBe(
+            Node.DOCUMENT_POSITION_FOLLOWING
+        );
     });
 
     it('does not duplicate an unresolved async submission', async () => {

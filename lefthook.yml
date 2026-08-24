@@ -2,7 +2,7 @@ pre-commit:
     parallel: true
     commands:
         biome:
-            glob: '*.{js,ts,svelte,json,jsonc,css,html}'
+            glob: '*.{js,ts,svelte,json,css,md,html,yaml,yml}'
             run: bunx biome check --write --no-errors-on-unmatched {staged_files}
             stage_fixed: true
 

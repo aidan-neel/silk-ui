@@ -19,8 +19,8 @@
 >
     {#if comboboxState.searchPlacement === 'menu'}
         <div class="flex max-h-[var(--popover-available-height)] flex-col">
-            {@render children?.()}
             <ComboboxSearch />
+            {@render children?.()}
         </div>
     {:else}
         {@render children?.()}

@@ -1,11 +1,11 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import { getToastPrimaryHostId, setToastUIState } from './lib.svelte';
-    import Toast from './toast.svelte';
-    import { cubicOut, quartOut } from 'svelte/easing';
-    import type { TransitionConfig } from 'svelte/transition';
     import { getCssDuration } from '@sivir-ui/svelte/transition';
     import { visualViewportBounds } from '@sivir-ui/svelte/utils';
+    import { cubicOut, quartOut } from 'svelte/easing';
+    import type { TransitionConfig } from 'svelte/transition';
+    import { getToastPrimaryHostId, setToastUIState } from './lib.svelte';
+    import Toast from './toast.svelte';
 
     const { state: toastState, hostId } = setToastUIState();
     const isPrimary = $derived(getToastPrimaryHostId() === hostId);

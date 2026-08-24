@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { getContext, onDestroy, type Snippet } from 'svelte';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { getContext, onDestroy, type Snippet } from 'svelte';
     import {
-        showTooltip,
-        hideTooltip,
-        updateTooltipText,
         flashTooltip,
-        isActiveTooltip
+        hideTooltip,
+        isActiveTooltip,
+        showTooltip,
+        updateTooltipText
     } from './shared-tooltip';
 
     type Placement = 'top' | 'left' | 'bottom' | 'right';

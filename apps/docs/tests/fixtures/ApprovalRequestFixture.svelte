@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as ApprovalRequest from '@sivir-ui/svelte/components/approval-request';
     import type { ApprovalRisk } from '@sivir-ui/svelte/components/approval-request';
+    import * as ApprovalRequest from '@sivir-ui/svelte/components/approval-request';
     import { Button } from '@sivir-ui/svelte/components/button';
 
     let { risk = 'high', open = $bindable(false) }: { risk?: ApprovalRisk; open?: boolean } =

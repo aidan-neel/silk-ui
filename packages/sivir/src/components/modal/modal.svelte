@@ -48,10 +48,19 @@
     import type { ModalProps, ModalState } from '.';
     import { setModalContext } from './context.svelte';
 
-    let { open = $bindable(false), error = false, children }: ModalProps = $props();
+    let {
+        open = $bindable(false),
+        error = false,
+        orientation = 'horizontal',
+        children
+    }: ModalProps = $props();
     const id = $props.id();
 
-    const modalState = $state<ModalState>({ open, error: false });
+    const modalState = $state<ModalState>({
+        open,
+        error: false,
+        orientation: 'horizontal'
+    });
     const modalContext = $state({
         id,
         contentId: `modal-${id}`,
@@ -77,6 +86,7 @@
 
     $effect(() => {
         modalState.error = error;
+        modalState.orientation = orientation;
         if (open !== syncedOpen) {
             syncedOpen = open;
             modalState.open = open;

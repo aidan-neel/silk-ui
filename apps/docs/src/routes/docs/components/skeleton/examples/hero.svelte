@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { SkeletonSwap } from '@sivir-ui/svelte/components/skeleton';
+    import { onMount } from 'svelte';
 
     let ready = $state(false);
     let timer: ReturnType<typeof setTimeout> | undefined;

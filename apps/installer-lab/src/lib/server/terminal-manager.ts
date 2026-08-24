@@ -1,29 +1,29 @@
+import type { ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { appendFile, mkdir, readFile, realpath, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { stripVTControlCharacters } from 'node:util';
-import type { ChildProcess } from 'node:child_process';
 import type { InstallPath, RunSource } from '$lib/run-types';
 import type { TerminalEvent, TerminalSnapshot } from '$lib/terminal-types';
 import {
+    type CommandSpec,
     commandLabel,
     consumerInstallCommand,
     scaffoldCommands,
-    spawnDetached,
-    type CommandSpec
+    spawnDetached
 } from './commands';
-import { TerminalEventHub } from './terminal-event-hub';
 import {
-    manualRoot,
     manualConsumerRoot,
+    manualRoot,
     manualStagingRoot,
     manualTarballPath,
+    removeDisposableWorkspace,
     repoRoot,
     terminalLogPath,
-    terminalSnapshotPath,
-    removeDisposableWorkspace
+    terminalSnapshotPath
 } from './paths';
 import { terminateProcess } from './run-manager';
+import { TerminalEventHub } from './terminal-event-hub';
 
 const MAX_COMMAND_LENGTH = 8_000;
 
@@ -202,7 +202,7 @@ export class TerminalManager {
 
     private async persistSnapshot() {
         await this.ensureWorkspace();
-        await writeFile(terminalSnapshotPath, JSON.stringify(this.snapshot, null, '\t') + '\n');
+        await writeFile(terminalSnapshotPath, `${JSON.stringify(this.snapshot, null, '\t')}\n`);
     }
 
     private async patchSnapshot(patch: Partial<TerminalSnapshot>) {

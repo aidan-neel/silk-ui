@@ -1,8 +1,8 @@
-import { afterEach, describe, expect, test } from 'vitest';
-import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import path from 'node:path';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
-import { generateShowcase, rootCss, type RegistryIndex } from './generator';
+import path from 'node:path';
+import { afterEach, describe, expect, test } from 'vitest';
+import { generateShowcase, type RegistryIndex, rootCss } from './generator';
 
 const roots: string[] = [];
 afterEach(async () =>
@@ -51,8 +51,8 @@ describe('showcase generation', () => {
         'keeps the component typography cascade intact in %s mode',
         (installPath) => {
             const css = rootCss(installPath);
-            expect(css).toContain("@import '@fontsource/dm-sans/latin-400.css';");
-            expect(css).toContain("@import '@fontsource/dm-sans/latin-700.css';");
+            expect(css).toContain("@import '@fontsource/inter/latin-400.css';");
+            expect(css).toContain("@import '@fontsource/inter/latin-700.css';");
             expect(css).toContain('@layer base { button, input { font: inherit; } }');
             expect(css).toContain(
                 'body { font-size: var(--font-size-body); font-weight: var(--font-weight-body); line-height: 1.5; }'

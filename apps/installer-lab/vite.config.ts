@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-    plugins: [sveltekit(), tailwindcss()],
+    plugins: [tailwindcss(), sveltekit()],
     server: { host: '127.0.0.1', port: 5174 },
     preview: { host: '127.0.0.1', port: 5174 },
     test: {

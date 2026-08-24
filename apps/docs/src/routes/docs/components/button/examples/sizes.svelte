@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
     import Heart from '@lucide/svelte/icons/heart';
+    import { Button } from '@sivir-ui/svelte/components/button';
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4">

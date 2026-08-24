@@ -1,15 +1,15 @@
 <script lang="ts">
-    import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
     import Trash from '@lucide/svelte/icons/trash-2';
+    import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
 </script>
 
 <div class="grid place-items-center">
-    <AlertDialog.Root error>
+    <AlertDialog.Root error orientation="vertical">
         <AlertDialog.Trigger variant="destructive">
             <Trash size={14} />
             Delete workspace
         </AlertDialog.Trigger>
-        <AlertDialog.Content class="max-w-[28rem]">
+        <AlertDialog.Content>
             <AlertDialog.Header>
                 <AlertDialog.Title>Delete this workspace?</AlertDialog.Title>
                 <AlertDialog.Description>

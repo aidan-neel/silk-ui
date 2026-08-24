@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
-    import MousePointer2 from '@lucide/svelte/icons/mouse-pointer-2';
     import Frame from '@lucide/svelte/icons/frame';
-    import Square from '@lucide/svelte/icons/square';
-    import PenTool from '@lucide/svelte/icons/pen-tool';
-    import Type from '@lucide/svelte/icons/type';
     import MessageCircle from '@lucide/svelte/icons/message-circle';
+    import MousePointer2 from '@lucide/svelte/icons/mouse-pointer-2';
+    import PenTool from '@lucide/svelte/icons/pen-tool';
+    import Square from '@lucide/svelte/icons/square';
+    import Type from '@lucide/svelte/icons/type';
+    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 
     let activeTool = $state<string>('move');
 

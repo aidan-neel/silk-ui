@@ -1,8 +1,8 @@
+import type { ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { stripVTControlCharacters } from 'node:util';
-import type { ChildProcess } from 'node:child_process';
 import type {
     CommandSummary,
     InstallPath,
@@ -13,6 +13,19 @@ import type {
     RunSource
 } from '$lib/run-types';
 import { isActivePhase } from '$lib/run-types';
+import {
+    type CommandSpec,
+    cliCommands,
+    commandLabel,
+    consumerInstallCommand,
+    previewCommand,
+    scaffoldCommands,
+    spawnDetached,
+    stagingInstallCommand,
+    verificationCommands
+} from './commands';
+import { RunEventHub } from './event-hub';
+import { generateShowcase, type RegistryIndex } from './generator';
 import {
     artifactRoot,
     consumerRoot,
@@ -26,20 +39,7 @@ import {
     snapshotPath,
     stagingRoot
 } from './paths';
-import {
-    cliCommands,
-    commandLabel,
-    consumerInstallCommand,
-    previewCommand,
-    scaffoldCommands,
-    spawnDetached,
-    stagingInstallCommand,
-    type CommandSpec,
-    verificationCommands
-} from './commands';
 import { findAvailablePort, waitForHttpReady } from './port';
-import { generateShowcase, type RegistryIndex } from './generator';
-import { RunEventHub } from './event-hub';
 import { assertTransition } from './state-machine';
 
 const TERMINAL_PHASES = new Set<RunPhase>(['ready', 'failed', 'cancelled', 'idle']);
@@ -202,7 +202,7 @@ export class RunManager {
 
     private async persistSnapshot() {
         await ensureCurrentRoot();
-        await writeFile(snapshotPath, JSON.stringify(this.currentSnapshot(), null, '\t') + '\n');
+        await writeFile(snapshotPath, `${JSON.stringify(this.currentSnapshot(), null, '\t')}\n`);
     }
 
     private async patchSnapshot(patch: Partial<RunSnapshot>) {
@@ -340,11 +340,11 @@ export class RunManager {
             await mkdir(stagingRoot, { recursive: true });
             await writeFile(
                 path.join(stagingRoot, 'package.json'),
-                JSON.stringify(
+                `${JSON.stringify(
                     { name: 'installer-lab-artifact-stage', private: true },
                     null,
                     '\t'
-                ) + '\n'
+                )}\n`
             );
             const tarballPath = path.join(stagingRoot, 'sivir-ui.tgz');
             if (source === 'local') {

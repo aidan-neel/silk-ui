@@ -1,7 +1,7 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import { travelingHighlight } from '@sivir-ui/svelte/utils';
+    import type { Snippet } from 'svelte';
     import { getCommandContext } from './context.svelte';
 
     const command = getCommandContext();

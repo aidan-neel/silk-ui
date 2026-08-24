@@ -11,6 +11,7 @@ ENV LEFTHOOK=0
 RUN bun install --frozen-lockfile --ignore-scripts
 
 COPY apps/docs ./apps/docs
+COPY changelog ./changelog
 COPY packages/sivir ./packages/sivir
 
 WORKDIR /repo/apps/docs

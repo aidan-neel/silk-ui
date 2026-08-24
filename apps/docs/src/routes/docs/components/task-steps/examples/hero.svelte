@@ -1,6 +1,6 @@
 <script lang="ts">
+    import { type TaskStep, TaskSteps } from '@sivir-ui/svelte/components/task-steps';
     import { onMount } from 'svelte';
-    import { TaskSteps, type TaskStep } from '@sivir-ui/svelte/components/task-steps';
 
     const steps: TaskStep[] = [
         { id: 'queue', label: 'Queued', meta: '0.2s' },

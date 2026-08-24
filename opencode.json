@@ -9,6 +9,89 @@
             }
         }
     },
+    "plugin": ["opencode-goal-plugin"],
+    "subagent_depth": 2,
+    "command": {
+        "goal": {
+            "description": "Set a session-scoped goal and auto-continue until complete.",
+            "template": "$ARGUMENTS",
+            "agent": "build"
+        }
+    },
+    "agent": {
+        "feature": {
+            "description": "Plan, implement, review, and repair a complete feature.",
+            "mode": "subagent",
+            "hidden": false,
+            "model": "openai/gpt-5.6-terra",
+            "variant": "high",
+            "permission": {
+                "read": "allow",
+                "glob": "allow",
+                "grep": "allow",
+                "edit": "deny",
+                "bash": "deny",
+                "task": {
+                    "*": "deny",
+                    "planner": "allow",
+                    "implementer": "allow",
+                    "reviewer": "allow"
+                }
+            },
+            "prompt": "You are the feature orchestrator. For every request: (1) invoke planner with the full objective and use its plan; (2) invoke implementer with the plan and full objective; (3) invoke reviewer with the original objective and ask it to inspect the final working-tree diff; (4) if reviewer returns findings, invoke a new implementer task containing the review findings and require it to fix them; (5) invoke reviewer once more; (6) report completion only after APPROVED or after clearly reporting an unresolved blocker. Run implementation tasks sequentially. Never run multiple writing agents in parallel."
+        },
+        "planner": {
+            "description": "GPT-5.6 Sol feature planning worker.",
+            "mode": "subagent",
+            "hidden": true,
+            "model": "opencode/gpt-5.6-sol",
+            "variant": "high",
+            "permission": {
+                "read": "allow",
+                "glob": "allow",
+                "grep": "allow",
+                "edit": "deny",
+                "bash": "deny",
+                "task": "deny"
+            },
+            "prompt": "You are a planning worker. Inspect the relevant repository code and return a precise, implementation-ready plan for the assigned objective. Identify affected files, behavioral changes, constraints, and validation steps. Do not change files or delegate work."
+        },
+        "implementer": {
+            "description": "DeepSeek implementation worker.",
+            "mode": "subagent",
+            "hidden": true,
+            "model": "opencode/deepseek-v4-flash-free",
+            "permission": {
+                "read": "allow",
+                "glob": "allow",
+                "grep": "allow",
+                "edit": "allow",
+                "bash": "allow",
+                "task": "deny"
+            },
+            "prompt": "You are an implementation worker. Execute only the assigned objective and plan. Inspect relevant code, modify files, and run appropriate tests. Return a concise summary of changed files, validation performed, and any remaining uncertainty."
+        },
+        "reviewer": {
+            "description": "GPT-5.6 Sol isolated code reviewer.",
+            "mode": "subagent",
+            "hidden": true,
+            "model": "opencode/gpt-5.6-sol",
+            "variant": "high",
+            "permission": {
+                "read": "allow",
+                "glob": "allow",
+                "grep": "allow",
+                "edit": "deny",
+                "bash": {
+                    "*": "deny",
+                    "git diff*": "allow",
+                    "git status*": "allow"
+                },
+                "task": "deny"
+            },
+            "prompt": "You are an independent, read-only reviewer. Inspect the current working-tree diff and relevant surrounding code against the stated feature objective. Identify only concrete defects or missing requirements. Return findings ordered by severity with file and line references. Return exactly APPROVED when there are no actionable findings. Do not change files."
+        }
+    },
     "lsp": {
         "typescript": {
             "command": ["typescript-language-server", "--stdio"],

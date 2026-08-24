@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
-
-    import Hero from './examples/hero.svelte';
-    import HeroSrc from './examples/hero.svelte?raw';
+    import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Basic from './examples/basic.svelte';
     import BasicSrc from './examples/basic.svelte?raw';
+    import Hero from './examples/hero.svelte';
+    import HeroSrc from './examples/hero.svelte?raw';
     import Compact from './examples/size-compact.svelte';
     import CompactSrc from './examples/size-compact.svelte?raw';
     import Large from './examples/size-large.svelte';
@@ -26,7 +26,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -40,6 +40,7 @@
                 A low-level overlay primitive for building custom dialog surfaces.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->
@@ -68,7 +69,7 @@
         </h2>
         <p class="text-sm text-foreground-muted">Import Modal and use it in your component:</p>
         <CodeBlock
-            code={`import * as Modal from '$lib/sivir/components/modal';\n\n<Modal.Root open={isOpen}>\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Header>\n      <Modal.Title>Title</Modal.Title>\n    </Modal.Header>\n  </Modal.Content>\n</Modal.Root>`}
+            code={`import * as Modal from '$lib/sivir/components/modal';\n\n<Modal.Root open={isOpen} orientation="horizontal">\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Header>\n      <Modal.Title>Title</Modal.Title>\n    </Modal.Header>\n  </Modal.Content>\n</Modal.Root>`}
             lang="svelte"
             copy="overlay"
         />

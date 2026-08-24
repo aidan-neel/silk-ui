@@ -1,8 +1,8 @@
 <script lang="ts">
+    import X from '@lucide/svelte/icons/x';
+    import Button from '@sivir-ui/svelte/components/button';
     import { cn } from '@sivir-ui/svelte/utils';
     import type { SheetHeaderProps } from '.';
-    import Button from '@sivir-ui/svelte/components/button';
-    import X from '@lucide/svelte/icons/x';
     import { getSheetContext } from './context.svelte';
 
     let { class: className, children, ...rest }: SheetHeaderProps = $props();

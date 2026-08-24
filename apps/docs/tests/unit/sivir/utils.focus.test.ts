@@ -1,5 +1,6 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { getFocusableElements, trapFocus, clickOutside } from '@sivir-ui/svelte/utils';
+import { clickOutside, getFocusableElements, trapFocus } from '@sivir-ui/svelte/utils';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { queryRequired } from '../../test-utils';
 
 // offsetParent and element.animate are stubbed globally in tests/setup.ts.
 // See that file for the rationale.
@@ -163,22 +164,22 @@ describe('trapFocus', () => {
     });
 
     it('focuses initialFocus when provided (P3-F4 fixed)', async () => {
-        const mid = dialog.querySelector<HTMLElement>('#mid')!;
+        const mid = queryRequired<HTMLElement>(dialog, '#mid');
         cleanup = trapFocus(dialog, { initialFocus: mid });
         await new Promise((r) => queueMicrotask(() => r(undefined)));
         expect(document.activeElement).toBe(mid);
     });
 
     it('focuses first descendant when initialFocus is not provided', async () => {
-        const first = dialog.querySelector<HTMLElement>('#first')!;
+        const first = queryRequired<HTMLElement>(dialog, '#first');
         cleanup = trapFocus(dialog);
         await new Promise((r) => queueMicrotask(() => r(undefined)));
         expect(document.activeElement).toBe(first);
     });
 
     it('cycles forward from last to first on Tab', async () => {
-        const first = dialog.querySelector<HTMLElement>('#first')!;
-        const last = dialog.querySelector<HTMLElement>('#last')!;
+        const first = queryRequired<HTMLElement>(dialog, '#first');
+        const last = queryRequired<HTMLElement>(dialog, '#last');
         cleanup = trapFocus(dialog);
         await new Promise((r) => queueMicrotask(() => r(undefined)));
 
@@ -191,8 +192,8 @@ describe('trapFocus', () => {
     });
 
     it('cycles backward from first to last on Shift+Tab', async () => {
-        const first = dialog.querySelector<HTMLElement>('#first')!;
-        const last = dialog.querySelector<HTMLElement>('#last')!;
+        const first = queryRequired<HTMLElement>(dialog, '#first');
+        const last = queryRequired<HTMLElement>(dialog, '#last');
         cleanup = trapFocus(dialog);
         await new Promise((r) => queueMicrotask(() => r(undefined)));
 
@@ -213,7 +214,7 @@ describe('trapFocus', () => {
         expect(document.activeElement).toBe(outsideButton);
 
         cleanup = trapFocus(dialog);
-        const first = dialog.querySelector<HTMLElement>('#first')!;
+        const first = queryRequired<HTMLElement>(dialog, '#first');
         first.focus();
         expect(document.activeElement).toBe(first);
 
@@ -257,7 +258,7 @@ describe('clickOutside', () => {
 
         await new Promise((r) => setTimeout(r, 1));
 
-        const inside = node.querySelector<HTMLButtonElement>('#inside')!;
+        const inside = queryRequired<HTMLButtonElement>(node, '#inside');
         inside.click();
         expect(callback).not.toHaveBeenCalled();
     });
@@ -272,7 +273,7 @@ describe('clickOutside', () => {
 
         await new Promise((r) => setTimeout(r, 1));
 
-        const excButton = excluded.querySelector<HTMLButtonElement>('#exc')!;
+        const excButton = queryRequired<HTMLButtonElement>(excluded, '#exc');
         excButton.click();
         expect(callback).not.toHaveBeenCalled();
 
@@ -290,7 +291,7 @@ describe('clickOutside', () => {
 
         await new Promise((r) => setTimeout(r, 1));
 
-        const floatButton = floating.querySelector<HTMLButtonElement>('#float')!;
+        const floatButton = queryRequired<HTMLButtonElement>(floating, '#float');
         floatButton.click();
         expect(callback).not.toHaveBeenCalled();
 

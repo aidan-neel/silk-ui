@@ -1,16 +1,15 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
     import Info from '@lucide/svelte/icons/info';
     import Sparkles from '@lucide/svelte/icons/sparkles';
-
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
+    import csharp from './snippets/quickstart.cs.txt?raw';
+    import go from './snippets/quickstart.go.txt?raw';
+    import java from './snippets/quickstart.java.txt?raw';
+    import javascript from './snippets/quickstart.js.txt?raw';
     // Loaded as raw text so the sample `import` lines aren't seen by the bundler.
     import python from './snippets/quickstart.py.txt?raw';
-    import javascript from './snippets/quickstart.js.txt?raw';
-    import java from './snippets/quickstart.java.txt?raw';
-    import go from './snippets/quickstart.go.txt?raw';
-    import csharp from './snippets/quickstart.cs.txt?raw';
 </script>
 
 <CodeBlock.Root class="max-w-2xl" value="javascript">

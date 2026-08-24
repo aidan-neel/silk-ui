@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import { Markdown } from '@sivir-ui/svelte/components/markdown';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
     import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import { Markdown } from '@sivir-ui/svelte/components/markdown';
 
     const chunks = [
         '### Incident update\n\nThe elevated error rate is isolated to image transformations in `fra1`.',

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
-    import { Button } from '@sivir-ui/svelte/components/button';
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
     import ExternalLink from '@lucide/svelte/icons/external-link';
     import RefreshCw from '@lucide/svelte/icons/refresh-cw';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 
     const code = `SELECT id, email, created_at
 FROM users

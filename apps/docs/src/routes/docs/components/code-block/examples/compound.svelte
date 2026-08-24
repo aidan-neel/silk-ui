@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
-    import { Button } from '@sivir-ui/svelte/components/button';
     import Download from '@lucide/svelte/icons/download';
+    import { Button } from '@sivir-ui/svelte/components/button';
+    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
 
     const sh = `npm install @sivir-ui/svelte
 npx sivir add code-block`;

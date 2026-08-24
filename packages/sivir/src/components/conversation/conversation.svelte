@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
     import type { ConversationRootProps } from '.';
-    import { setConversationContext, type ConversationContext } from './context.svelte';
+    import { type ConversationContext, setConversationContext } from './context.svelte';
 
     let {
         follow = $bindable(true),

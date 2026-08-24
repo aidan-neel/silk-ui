@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
     import { setContext } from 'svelte';
-    import type { ToggleGroupProps, ToggleGroupContext } from '.';
+    import type { ToggleGroupContext, ToggleGroupProps } from '.';
 
     let {
         class: className,

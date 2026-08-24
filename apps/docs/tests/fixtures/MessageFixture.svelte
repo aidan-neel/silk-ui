@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as Message from '@sivir-ui/svelte/components/message';
     import type { MessageFrom, MessageStatus } from '@sivir-ui/svelte/components/message';
+    import * as Message from '@sivir-ui/svelte/components/message';
 
     let { from = 'assistant', status = 'idle' }: { from?: MessageFrom; status?: MessageStatus } =
         $props();

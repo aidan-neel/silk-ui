@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
+import { describe, expect, it } from 'vitest';
 import TextareaComposerFixture from '../../fixtures/TextareaComposerFixture.svelte';
+import { queryRequired } from '../../test-utils';
 
 describe('Textarea -- basic rendering', () => {
     it('renders a textarea element', () => {
@@ -54,7 +55,7 @@ describe('Textarea -- value binding', () => {
 
     it('updates the DOM value when the user types', async () => {
         const { container } = render(Textarea);
-        const textarea = container.querySelector('textarea')!;
+        const textarea = queryRequired<HTMLTextAreaElement>(container, 'textarea');
         const user = userEvent.setup();
         await user.type(textarea, 'multi\nline');
         expect(textarea.value).toBe('multi\nline');
@@ -62,7 +63,7 @@ describe('Textarea -- value binding', () => {
 
     it('grows to its content when autoresize is enabled', async () => {
         const { container } = render(Textarea, { props: { autoresize: true } });
-        const textarea = container.querySelector('textarea')!;
+        const textarea = queryRequired<HTMLTextAreaElement>(container, 'textarea');
         Object.defineProperty(textarea, 'scrollHeight', { configurable: true, value: 144 });
         const user = userEvent.setup();
         await user.type(textarea, 'A longer message');

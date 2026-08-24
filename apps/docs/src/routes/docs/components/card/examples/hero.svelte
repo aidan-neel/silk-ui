@@ -1,7 +1,7 @@
 <script lang="ts">
+    import GitBranch from '@lucide/svelte/icons/git-branch';
     import { Button } from '@sivir-ui/svelte/components/button';
     import * as Card from '@sivir-ui/svelte/components/card';
-    import GitBranch from '@lucide/svelte/icons/git-branch';
 </script>
 
 <Card.Root class="w-full max-w-[28rem]">

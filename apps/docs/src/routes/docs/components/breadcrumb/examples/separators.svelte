@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
     import ChevronRight from '@lucide/svelte/icons/chevron-right';
+    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
 </script>
 
 <div class="flex flex-col gap-6">

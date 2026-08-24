@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
-    import { cn, pressable } from '@sivir-ui/svelte/utils';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import type { AccordionTriggerProps, AccordionContext } from '.';
+    import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import { getContext } from 'svelte';
+    import type { AccordionContext, AccordionTriggerProps } from '.';
 
     let { class: className, children, ...rest }: AccordionTriggerProps = $props();
 
