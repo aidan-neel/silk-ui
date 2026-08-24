@@ -8,6 +8,7 @@
     import { injectAnalytics } from '@vercel/analytics/sveltekit';
     import type { Snippet } from 'svelte';
     import { dev } from '$app/environment';
+    import { afterNavigate } from '$app/navigation';
     import { page } from '$app/stores';
     import { DEFAULT_FONT, fonts, selectedFont } from '$lib/fonts.svelte';
 
@@ -32,6 +33,13 @@
     // That override (stored as `sivir-live-theme-css`) was masking the baked
     // default theme from ui.css "no matter what". Live theming is a Studio-only
     // concern now (rebuilt in Plan 3); docs always render the shipped default.
+
+    let docsScrollEl = $state<HTMLDivElement>();
+
+    afterNavigate(() => {
+        docsScrollEl?.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    });
 </script>
 
 <svelte:head>
@@ -81,6 +89,7 @@
             >
                 <DocsToolbar starCount={data?.starCount ?? null} />
                 <div
+                    bind:this={docsScrollEl}
                     class={`mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 px-4 md:px-6 lg:flex-row lg:gap-0 ${isDocs ? 'min-h-0 overflow-y-auto' : ''}`}
                 >
                     {@render children?.()}

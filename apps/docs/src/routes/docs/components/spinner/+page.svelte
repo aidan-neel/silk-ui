@@ -1,6 +1,7 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
@@ -16,7 +17,7 @@
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -31,6 +32,7 @@
                 feeling active.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <section id="hero" class="scroll-mt-20 flex flex-col gap-4">

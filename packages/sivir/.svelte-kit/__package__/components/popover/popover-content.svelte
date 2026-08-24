@@ -252,6 +252,13 @@
         }
     });
 
+    $effect(() => {
+        if (popoverState.open && popover && refElement) {
+            void refElement;
+            updatePosition();
+        }
+    });
+
     /**
      * Traps Tab focus inside the panel while open. Hoverable surfaces (tooltip,
      * hover-card) are excluded: they are not keyboard-modal, and stealing focus

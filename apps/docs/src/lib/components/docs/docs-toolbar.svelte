@@ -27,7 +27,8 @@
     function formatSegment(segment: string): string {
         const labels: Record<string, string> = {
             docs: 'Docs',
-            components: 'Components'
+            components: 'Components',
+            'prompt-composer': 'Composer'
         };
 
         if (labels[segment]) {

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Basic from './examples/basic.svelte';
     import BasicSrc from './examples/basic.svelte?raw';
     import Disabled from './examples/disabled.svelte';
@@ -23,7 +24,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -37,6 +38,7 @@
                 A range slider with keyboard and drag support.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

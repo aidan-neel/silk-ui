@@ -7,3 +7,4 @@
 - Ensure documentation pages retain bottom scroll room after overflowing content, and improve vertical alert-dialog icon spacing.
 - Apply the documentation entrance animation to the home-page hero.
 - Allow commits containing only Biome-ignored generated package artifacts to pass the pre-commit hook.
+- Fix Tailwind CSS processing for SvelteKit development and test builds by ordering the Vite plugins correctly.

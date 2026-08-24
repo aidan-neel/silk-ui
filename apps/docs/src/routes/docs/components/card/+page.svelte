@@ -1,6 +1,7 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import ContentOnly from './examples/content-only.svelte';
     import ContentOnlySrc from './examples/content-only.svelte?raw';
     import Full from './examples/full.svelte';
@@ -22,7 +23,7 @@
 
 <div data-docs-page class="flex flex-col gap-10">
     <!-- ─── Header ────────────────────────────────────────────────── -->
-    <header class="flex flex-col gap-4">
+    <header class="flex items-start justify-between gap-4">
         <div>
             <h1
                 class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
@@ -36,6 +37,7 @@
                 A surface for grouping related content, composed of header, content, and footer.
             </p>
         </div>
+        <DocsPager />
     </header>
 
     <!-- ─── Hero Example ──────────────────────────────────────────── -->

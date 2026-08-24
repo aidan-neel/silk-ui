@@ -86,7 +86,7 @@
                 data-ui="modal-overlay"
                 class={cn(
                     overlayClass, // token-lint-disable-next-line no-literal-length
-                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-sm backdrop-brightness-90 [backface-visibility:hidden] [transform:translateZ(0)]'
+                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-[2px] backdrop-brightness-90 [backface-visibility:hidden] [transform:translateZ(0)]'
                 )}
             ></div>
             <div

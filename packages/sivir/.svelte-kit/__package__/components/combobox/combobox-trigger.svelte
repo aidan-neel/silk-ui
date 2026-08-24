@@ -75,6 +75,19 @@
         comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
     }
 
+    function toggle() {
+        if (disabled) {
+            return;
+        }
+        if (comboboxState.open) {
+            comboboxState.open = false;
+        } else {
+            onopen?.();
+            comboboxState.open = true;
+        }
+        onclick?.();
+    }
+
     function open() {
         if (disabled || comboboxState.open) {
             return;
@@ -140,10 +153,11 @@
 <div
     bind:this={triggerElement}
     data-state={comboboxState.open ? 'open' : 'closed'}
+    onclick={toggle}
     class={cn(
         className,
         button({ variant, size }),
-        'relative px-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
+        'relative select-none px-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
         disabled && 'pointer-events-none opacity-40'
     )}
 >
@@ -166,10 +180,16 @@
         aria-controls={`combobox-${id}-listbox`}
         aria-expanded={comboboxState.open}
         aria-activedescendant={activeDescendant}
-        onclick={open}
+        onclick={(event) => {
+            event.stopPropagation();
+            toggle();
+        }}
         oninput={handleInput}
         onkeydown={handleInputKeydown}
-        class="h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted"
+        class={cn(
+            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted',
+            (searchPlacement === 'menu' || !comboboxState.open) && 'select-none'
+        )}
     />
     <ChevronDown
         size={18}

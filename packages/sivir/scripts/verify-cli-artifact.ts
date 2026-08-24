@@ -94,7 +94,7 @@ async function writeCliConsumer(cwd: string, tarball: string) {
     );
     await writeFile(
         path.join(cwd, 'vite.config.ts'),
-        "import tailwindcss from '@tailwindcss/vite';\nimport { sveltekit } from '@sveltejs/kit/vite';\nimport { defineConfig } from 'vite';\n\nexport default defineConfig({ plugins: [sveltekit(), tailwindcss()] });\n"
+        "import tailwindcss from '@tailwindcss/vite';\nimport { sveltekit } from '@sveltejs/kit/vite';\nimport { defineConfig } from 'vite';\n\nexport default defineConfig({ plugins: [tailwindcss(), sveltekit()] });\n"
     );
     await writeFile(
         path.join(cwd, 'tsconfig.json'),

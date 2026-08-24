@@ -32,6 +32,10 @@ use that server for local verification instead of starting another one.
 
 # Styling
 
+Read and follow [`DESIGN.md`](DESIGN.md) for all UI and visual design work. It
+is the repository's authority for composition, typography, rhythm, restraint,
+responsive behavior, and visual review.
+
 Use Tailwind CSS exclusively for styling. Never write raw CSS unless it is
 absolutely required for the implementation.
 

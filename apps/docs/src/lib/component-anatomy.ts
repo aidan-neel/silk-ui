@@ -30,20 +30,6 @@ export const componentAnatomy = {
         { name: 'AlertDialog.Footer', description: 'Groups dialog actions.' },
         { name: 'AlertDialog.Confirm', description: 'Confirms and closes the dialog.' }
     ],
-    'approval-request': [
-        { name: 'ApprovalRequest.Root', description: 'Controls approval request visibility.' },
-        { name: 'ApprovalRequest.Content', description: 'Renders the approval request surface.' },
-        { name: 'ApprovalRequest.Header', description: 'Groups request summary content.' },
-        { name: 'ApprovalRequest.Status', description: 'Displays the request status.' },
-        { name: 'ApprovalRequest.Icon', description: 'Displays the request icon.' },
-        { name: 'ApprovalRequest.Risk', description: 'Displays the request risk level.' },
-        { name: 'ApprovalRequest.Title', description: 'Renders the request title.' },
-        { name: 'ApprovalRequest.Description', description: 'Renders the request description.' },
-        { name: 'ApprovalRequest.Details', description: 'Displays request details.' },
-        { name: 'ApprovalRequest.Footer', description: 'Groups request actions.' },
-        { name: 'ApprovalRequest.Cancel', description: 'Cancels and closes the request.' },
-        { name: 'ApprovalRequest.Confirm', description: 'Confirms and closes the request.' }
-    ],
     attachment: [
         { name: 'Attachment.Root', description: 'Manages selected files.' },
         { name: 'Attachment.Trigger', description: 'Opens the file picker.' },
@@ -188,17 +174,6 @@ export const componentAnatomy = {
         { name: 'PromptComposer.Toolbar', description: 'Groups composer controls.' },
         { name: 'PromptComposer.Actions', description: 'Groups composer actions.' },
         { name: 'PromptComposer.Submit', description: 'Submits or stops the prompt.' }
-    ],
-    question: [
-        { name: 'Question.Root', description: 'Manages answer state and submission.' },
-        { name: 'Question.Title', description: 'Labels the question fieldset.' },
-        { name: 'Question.Description', description: 'Adds context for the decision.' },
-        { name: 'Question.Options', description: 'Groups structured answer choices.' },
-        { name: 'Question.Option', description: 'Defines one answer choice.' },
-        { name: 'Question.Input', description: 'Accepts a free-text answer.' },
-        { name: 'Question.Actions', description: 'Groups question actions.' },
-        { name: 'Question.Cancel', description: 'Skips or defers the question.' },
-        { name: 'Question.Submit', description: 'Submits the current answer.' }
     ],
     'radio-group': [
         { name: 'RadioGroup.Root', description: 'Manages a single selection.' },
