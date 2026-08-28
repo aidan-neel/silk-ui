@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'conversation',
-    version: '1.1.0',
+    version: '1.1.1',
     visibility: 'public',
     description: 'Auto-following conversation transcript with empty and jump-to-latest states.',
     files: [
@@ -14,7 +14,7 @@ export const manifest: Manifest = {
         'components/conversation/index.ts',
         'components/conversation/manifest.ts'
     ],
-    components: [],
+    components: ['scroll-area'],
     shared: ['utils.cn', 'utils.createContext', 'utils.pressable'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

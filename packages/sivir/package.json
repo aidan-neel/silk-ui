@@ -1,6 +1,6 @@
 {
     "name": "@sivir-ui/svelte",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
     "license": "MIT",
     "repository": {

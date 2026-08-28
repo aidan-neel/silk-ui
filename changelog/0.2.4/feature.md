@@ -1,0 +1,1 @@
+- Add an installable `sivir` coding-agent skill with live `llms.txt` API discovery, version-aware package and source-copy workflows, AI component composition guidance, and Sivir design principles. Install it with `npx skills add aidan-neel/sivir-ui --skill sivir`.

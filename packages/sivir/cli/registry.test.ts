@@ -2,10 +2,10 @@ import { describe, expect, test } from 'bun:test';
 import { existsSync, readFileSync } from 'node:fs';
 import {
     BASE_PEER_DEPENDENCIES,
-    ResolveError,
     installableFiles,
     loadRegistryIndex,
     loadRegistryThemes,
+    ResolveError,
     registryFilePath,
     resolveInstallPlan,
     rewriteImports,
@@ -136,6 +136,13 @@ describe('registry snapshot', () => {
         expect(snapshot.components.some((component) => component.name === 'panel')).toBe(false);
         expect(snapshot.components.some((component) => component.name === 'marquee')).toBe(false);
         expect(snapshot.components.some((component) => component.name === 'separator')).toBe(false);
+    });
+
+    test('installs Scroll Area with Conversation', async () => {
+        const snapshot = await loadRegistryIndex();
+        const plan = resolveInstallPlan(snapshot, ['conversation']);
+
+        expect(plan.components.map((component) => component.name)).toContain('scroll-area');
     });
 
     test('index loads and every referenced file exists', async () => {

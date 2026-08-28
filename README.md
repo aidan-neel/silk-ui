@@ -14,6 +14,15 @@ A focused set of Svelte components for building interfaces with a clear visual s
 
 Visit https://sivir.dev/docs/introduction to view the documentation.
 
+## Agent Skill
+
+Install the Sivir skill to give supported coding agents live, version-aware component guidance,
+AI interface composition patterns, and Sivir's design language:
+
+```sh
+npx skills add aidan-neel/sivir-ui --skill sivir
+```
+
 ## Contributing
 
 Please open an issue or pull request to contribute.

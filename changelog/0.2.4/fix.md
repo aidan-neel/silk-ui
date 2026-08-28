@@ -1,0 +1,2 @@
+- Include `ScrollArea` when installing `Conversation` through the source-copy CLI so fresh transcript installations resolve their internal component import.
+- Bump `@sivir-ui/svelte` to `0.2.4`.
