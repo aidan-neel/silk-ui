@@ -126,7 +126,7 @@
         return Array.from(event.dataTransfer?.types ?? []).includes('Files');
     }
 
-    const context = setAttachmentContext({
+    setAttachmentContext({
         get files() {
             return files;
         },

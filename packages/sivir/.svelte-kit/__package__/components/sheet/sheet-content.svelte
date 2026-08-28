@@ -77,8 +77,8 @@
                 role="dialog"
                 aria-modal="true"
                 id={`sheet-${id}`}
-                aria-labelledby={id + '-title'}
-                aria-describedby={id + '-desc'}
+                aria-labelledby={`${id}-title`}
+                aria-describedby={`${id}-desc`}
                 tabindex="-1"
                 {...rest}
             >

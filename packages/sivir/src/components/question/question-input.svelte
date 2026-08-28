@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Textarea } from '@sivir-ui/svelte/components/textarea';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { HTMLTextareaAttributes } from 'svelte/elements';
     import type { QuestionInputProps } from '.';
     import { getQuestionContext } from './context.svelte';
 
