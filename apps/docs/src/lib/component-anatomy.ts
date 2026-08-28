@@ -30,6 +30,24 @@ export const componentAnatomy = {
         { name: 'AlertDialog.Footer', description: 'Groups dialog actions.' },
         { name: 'AlertDialog.Confirm', description: 'Confirms and closes the dialog.' }
     ],
+    'approval-request': [
+        { name: 'ApprovalRequest.Root', description: 'Provides approval state.' },
+        { name: 'ApprovalRequest.Header', description: 'Introduces the approval action.' },
+        { name: 'ApprovalRequest.Icon', description: 'Displays the approval risk icon.' },
+        { name: 'ApprovalRequest.Status', description: 'Displays the current approval status.' },
+        { name: 'ApprovalRequest.Title', description: 'Renders the approval title.' },
+        {
+            name: 'ApprovalRequest.Description',
+            description: 'Describes the approval context.'
+        },
+        { name: 'ApprovalRequest.Details', description: 'Adds optional supporting details.' },
+        { name: 'ApprovalRequest.Content', description: 'Contains approval body content.' },
+        { name: 'ApprovalRequest.Footer', description: 'Groups approval actions.' },
+        { name: 'ApprovalRequest.Cancel', description: 'Cancels the approval flow.' },
+        { name: 'ApprovalRequest.Confirm', description: 'Confirms and submits approval.' },
+        { name: 'ApprovalRequest.Risk', description: 'Displays a risk signal.' },
+        { name: 'ApprovalRequest.Error', description: 'Renders an approval error state.' }
+    ],
     attachment: [
         { name: 'Attachment.Root', description: 'Manages selected files.' },
         { name: 'Attachment.Trigger', description: 'Opens the file picker.' },
@@ -174,6 +192,17 @@ export const componentAnatomy = {
         { name: 'PromptComposer.Toolbar', description: 'Groups composer controls.' },
         { name: 'PromptComposer.Actions', description: 'Groups composer actions.' },
         { name: 'PromptComposer.Submit', description: 'Submits or stops the prompt.' }
+    ],
+    question: [
+        { name: 'Question.Root', description: 'Renders a full question form.' },
+        { name: 'Question.Title', description: 'Shows the question heading.' },
+        { name: 'Question.Description', description: 'Explains the question context.' },
+        { name: 'Question.Options', description: 'Wraps answer option items.' },
+        { name: 'Question.Option', description: 'Represents a question option.' },
+        { name: 'Question.Input', description: 'Collects a free-form response.' },
+        { name: 'Question.Actions', description: 'Groups cancellation and submit actions.' },
+        { name: 'Question.Cancel', description: 'Cancels question submission.' },
+        { name: 'Question.Submit', description: 'Submits the selected answer.' }
     ],
     'radio-group': [
         { name: 'RadioGroup.Root', description: 'Manages a single selection.' },

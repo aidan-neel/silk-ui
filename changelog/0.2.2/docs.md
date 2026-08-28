@@ -9,3 +9,4 @@
 - Re-add Back / Next pager buttons opposite the header title on every docs page
   (`/docs/introduction`, `/docs/installation`, `/docs/theming`, `/docs/components`, and all
   `/docs/components/*` pages) via `DocsPager` in `apps/docs/src/lib/components/docs/docs-pager.svelte:1`.
+- Update the package metadata version for `@sivir-ui/svelte` to `0.2.2` for the next release.

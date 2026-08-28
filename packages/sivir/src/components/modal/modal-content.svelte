@@ -23,19 +23,19 @@
 
     const modal = getModalContext();
     const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' ? 'lg' : 'md'));
-    const sizeClass = $derived(
+    const maxWidth = $derived(
         (modal.state.orientation === 'horizontal'
             ? {
-                  sm: 'max-w-[23rem]',
-                  md: 'max-w-[27rem]',
-                  lg: 'max-w-[35rem]',
-                  xl: 'max-w-[41rem]'
+                  sm: '23rem',
+                  md: '27rem',
+                  lg: '35rem',
+                  xl: '41rem'
               }
             : {
-                  sm: 'max-w-[17rem]',
-                  md: 'max-w-[23rem]',
-                  lg: 'max-w-[27rem]',
-                  xl: 'max-w-[35rem]'
+                  sm: '17rem',
+                  md: '23rem',
+                  lg: '27rem',
+                  xl: '35rem'
               })[resolvedSize]
     );
     const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);
@@ -100,16 +100,16 @@
                     'origin-center bg-panel text-foreground shadow-[var(--elevation-modal)]',
                     'rounded-[var(--radius-lg)] border border-border',
                     'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
-                    sizeClass,
                     isDestructiveAlert && 'shadow-[var(--elevation-alert-error)]'
                 )}
                 {role}
+                style={`max-width: ${maxWidth};`}
                 data-orientation={modal.state.orientation}
                 data-destructive={isDestructiveAlert || undefined}
                 aria-modal="true"
                 id={contentId}
-                aria-labelledby={modal.id + '-title'}
-                aria-describedby={modal.id + '-desc'}
+                aria-labelledby={`${modal.id}-title`}
+                aria-describedby={`${modal.id}-desc`}
                 tabindex="-1"
                 {...rest}
             >
