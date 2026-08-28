@@ -1,0 +1,2 @@
+- Fix `bun audit` high-severity advisories by overriding `deepmerge-ts` to `8.0.2` (GHSA-ggr8-5vv4-36mx) and `nanoid` to `3.3.18` (GHSA-2v37-7h3g-55p8) with no application code changes.
+- Bump `@sivir-ui/svelte` to `0.2.3`.
