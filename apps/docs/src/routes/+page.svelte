@@ -32,7 +32,7 @@
     <title>Sivir UI · Themed Svelte components</title>
     <meta
         name="description"
-        content="55 Svelte 5 components. Restyle all of them from a handful of design tokens, with no forks or overrides."
+        content="54 Svelte 5 components. Restyle all of them from a handful of design tokens, with no forks or overrides."
     />
 </svelte:head>
 
@@ -99,14 +99,14 @@
         <p
             class="mt-6 max-w-[33rem] text-base leading-[1.6] text-foreground-muted motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:45ms] motion-safe:[transform-origin:top_center]"
         >
-            Choose from 55 Svelte 5 components that take on your visual system without forks,
+            Choose from 54 Svelte 5 components that take on your visual system without forks,
             overrides, or a fight.
         </p>
         <div
             class="mt-8 flex flex-wrap justify-center gap-3 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:80ms] motion-safe:[transform-origin:top_center]"
         >
             <Button href={resolve('/docs/components')} size="lg" class="max-sm:flex-1">
-                Browse all 55 components
+                Browse all 54 components
                 <ArrowRight size={16} />
             </Button>
             <Button

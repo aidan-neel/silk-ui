@@ -18,7 +18,6 @@ export { default as BrandMark } from './brand-mark.svelte';
 export * as Accordion from './components/accordion';
 export * as Alert from './components/alert';
 export * as AlertDialog from './components/alert-dialog';
-export * as ApprovalRequest from './components/approval-request';
 export * as Attachment from './components/attachment';
 export * as Avatar from './components/avatar';
 export { Badge } from './components/badge';

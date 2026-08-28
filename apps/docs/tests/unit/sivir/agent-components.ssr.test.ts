@@ -2,7 +2,6 @@ import { Markdown } from '@sivir-ui/svelte/components/markdown';
 import type { Component } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import ApprovalRequestFixture from '../../fixtures/ApprovalRequestFixture.svelte';
 import AttachmentFixture from '../../fixtures/AttachmentFixture.svelte';
 import ConversationFixture from '../../fixtures/ConversationFixture.svelte';
 import MessageFixture from '../../fixtures/MessageFixture.svelte';
@@ -50,12 +49,5 @@ describe('Sivir agent components SSR', () => {
         const body = renderBody(AttachmentFixture);
         expect(body).toContain('data-ui="attachment"');
         expect(body).not.toContain('data-ui="attachment-item"');
-    });
-
-    it('renders ApprovalRequest without throwing', () => {
-        expect(() => renderBody(ApprovalRequestFixture)).not.toThrow();
-        expect(renderBody(ApprovalRequestFixture, { open: true })).toContain(
-            'Deploy to production?'
-        );
     });
 });

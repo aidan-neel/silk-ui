@@ -1,0 +1,1 @@
+- Expand agent-facing Markdown with Brand Mark usage, package-only Toolbar installation guidance, and migration notes for removed Approval Request, Marquee, Panel, and Separator components.

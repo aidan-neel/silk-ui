@@ -30,24 +30,6 @@ export const componentAnatomy = {
         { name: 'AlertDialog.Footer', description: 'Groups dialog actions.' },
         { name: 'AlertDialog.Confirm', description: 'Confirms and closes the dialog.' }
     ],
-    'approval-request': [
-        { name: 'ApprovalRequest.Root', description: 'Provides approval state.' },
-        { name: 'ApprovalRequest.Header', description: 'Introduces the approval action.' },
-        { name: 'ApprovalRequest.Icon', description: 'Displays the approval risk icon.' },
-        { name: 'ApprovalRequest.Status', description: 'Displays the current approval status.' },
-        { name: 'ApprovalRequest.Title', description: 'Renders the approval title.' },
-        {
-            name: 'ApprovalRequest.Description',
-            description: 'Describes the approval context.'
-        },
-        { name: 'ApprovalRequest.Details', description: 'Adds optional supporting details.' },
-        { name: 'ApprovalRequest.Content', description: 'Contains approval body content.' },
-        { name: 'ApprovalRequest.Footer', description: 'Groups approval actions.' },
-        { name: 'ApprovalRequest.Cancel', description: 'Cancels the approval flow.' },
-        { name: 'ApprovalRequest.Confirm', description: 'Confirms and submits approval.' },
-        { name: 'ApprovalRequest.Risk', description: 'Displays a risk signal.' },
-        { name: 'ApprovalRequest.Error', description: 'Renders an approval error state.' }
-    ],
     attachment: [
         { name: 'Attachment.Root', description: 'Manages selected files.' },
         { name: 'Attachment.Trigger', description: 'Opens the file picker.' },

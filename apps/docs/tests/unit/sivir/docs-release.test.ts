@@ -3,13 +3,14 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { changelogMarkdown, changelogVersions } from '$lib/changelog';
 import { components } from '$lib/components';
-import { componentMarkdown } from '$lib/llms';
+import { brandMarkMarkdown, componentMarkdown, componentsMarkdown } from '$lib/llms';
 import { GET as getChangelog } from '../../../src/routes/changelog/[version]/+server';
 import { GET as getLlms } from '../../../src/routes/llms.txt/+server';
 import { GET as getRobots } from '../../../src/routes/robots.txt/+server';
 import { GET as getSitemap } from '../../../src/routes/sitemap.xml/+server';
 
 const root = resolve(process.cwd(), '../..');
+const removedComponents = ['approval-request', 'marquee', 'panel', 'separator'];
 
 function directoryNames(path: string): string[] {
     return readdirSync(path, { withFileTypes: true })
@@ -77,6 +78,8 @@ describe('docs release contracts', () => {
 
         expect(response.headers.get('content-type')).toContain('text/markdown');
         expect(index).toContain('https://preview.example/docs/introduction.md');
+        expect(index).toContain('https://preview.example/docs/brand-mark.md');
+        expect(index).toContain(`The current catalog contains ${components.length} components`);
         for (const version of changelogVersions) {
             expect(index).toContain(`https://preview.example/changelog/${version}`);
         }
@@ -86,6 +89,42 @@ describe('docs release contracts', () => {
             expect(reference).toMatch(/^# .+/);
             expect(reference).toContain('## API');
             expect(reference).toContain('## Install');
+        }
+        for (const removed of removedComponents) {
+            expect(index).not.toContain(`/docs/components/${removed}.md`);
+        }
+    });
+
+    it('documents package-only and removed component contracts accurately', () => {
+        const brandMark = brandMarkMarkdown();
+        const toolbar = componentMarkdown('toolbar');
+        const componentIndex = componentsMarkdown();
+
+        expect(brandMark).toContain("import { BrandMark } from '@sivir-ui/svelte'");
+        expect(brandMark).toContain('`label?: string`');
+        expect(toolbar).toContain('not a standalone CLI registry target');
+        expect(toolbar).toContain('bun add @sivir-ui/svelte');
+        expect(toolbar).not.toContain('sivir add toolbar');
+        expect(componentIndex).toContain('**Approval Request:**');
+        expect(componentIndex).toContain('Compose `AlertDialog` directly');
+        expect(componentIndex).toContain('Card.Root variant="panel"');
+        expect(componentIndex).toContain('**Marquee:**');
+        expect(componentIndex).toContain('**Separator:**');
+
+        for (const removed of removedComponents) {
+            expect(componentMarkdown(removed)).toBeUndefined();
+            expect(componentIndex).not.toContain(`/docs/components/${removed}.md`);
+        }
+    });
+
+    it('uses CLI installation only for registry-public components', () => {
+        for (const component of components) {
+            const reference = componentMarkdown(component);
+            if (component === 'toolbar') {
+                expect(reference).not.toContain(`sivir add ${component}`);
+                continue;
+            }
+            expect(reference).toContain(`sivir add ${component}`);
         }
     });
 

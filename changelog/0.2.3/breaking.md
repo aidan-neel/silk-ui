@@ -1,0 +1,1 @@
+- Remove `ApprovalRequest`, its `@sivir-ui/svelte/components/approval-request` entrypoint, and the `sivir add approval-request` CLI target. Compose `AlertDialog` directly for approval workflows.

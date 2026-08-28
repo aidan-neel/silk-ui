@@ -28,7 +28,7 @@ bunx --package @sivir-ui/svelte sivir add button`;
             <p
                 class="mt-2 text-[1rem] text-foreground leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
             >
-                Sivir UI is a component library for Svelte 5 and Tailwind v4. It ships 55
+                Sivir UI is a component library for Svelte 5 and Tailwind v4. It ships 54
                 components, a CSS token sheet, and a small CLI.
             </p>
         </div>

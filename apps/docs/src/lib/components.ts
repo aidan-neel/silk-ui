@@ -2,7 +2,6 @@ export const components = [
     'accordion',
     'alert',
     'alert-dialog',
-    'approval-request',
     'attachment',
     'avatar',
     'badge',

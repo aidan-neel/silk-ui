@@ -4,10 +4,33 @@ import { components, sanitizeComponent } from '$lib/components';
 type ComponentManifest = {
     name: string;
     version: string;
+    visibility: 'public' | 'internal';
     description: string;
     components: string[];
     shared: string[];
 };
+
+const removedComponents = [
+    {
+        name: 'Approval Request',
+        guidance:
+            'Compose `AlertDialog` directly with the review details and confirmation actions required by your workflow.'
+    },
+    {
+        name: 'Marquee',
+        guidance:
+            'Use a restrained Tailwind animation around the content only when continuous motion is essential.'
+    },
+    {
+        name: 'Panel',
+        guidance: 'Use `Card.Root variant="panel"` for the former framed panel treatment.'
+    },
+    {
+        name: 'Separator',
+        guidance:
+            'Use a semantic `<hr>` or a Tailwind border utility. Compound component separator parts remain available where documented.'
+    }
+] as const;
 
 const manifests = import.meta.glob<{ manifest: ComponentManifest }>(
     '../../../../packages/sivir/src/components/*/manifest.ts',
@@ -59,6 +82,14 @@ export function componentMarkdown(component: string): string | undefined {
         .sort(([left], [right]) => left.localeCompare(right));
     const dependencies = manifest.components.length ? manifest.components.join(', ') : 'None';
     const shared = manifest.shared.length ? manifest.shared.join(', ') : 'None';
+    const install =
+        manifest.visibility === 'public'
+            ? fence('sh', `bunx --package @sivir-ui/svelte sivir add ${component}`)
+            : [
+                  'This component is available from the package API but is not a standalone CLI registry target.',
+                  '',
+                  fence('sh', 'bun add @sivir-ui/svelte')
+              ].join('\n');
 
     return [
         `# ${sanitizeComponent(component)}`,
@@ -72,7 +103,7 @@ export function componentMarkdown(component: string): string | undefined {
         '',
         '## Install',
         '',
-        fence('sh', `bunx --package @sivir-ui/svelte sivir add ${component}`),
+        install,
         '',
         '## API',
         '',
@@ -93,6 +124,34 @@ export function componentMarkdown(component: string): string | undefined {
             : []),
         '',
         `For the rendered reference, visit [/docs/components/${component}](/docs/components/${component}).`,
+        ''
+    ].join('\n');
+}
+
+export function brandMarkMarkdown(): string {
+    return [
+        '# Brand Mark',
+        '',
+        'The Sivir brand mark is a package-only visual asset. It is exported from the package root and the dedicated `brand-mark` path, but it is not a CLI registry component.',
+        '',
+        '## Install',
+        '',
+        fence('sh', 'bun add @sivir-ui/svelte'),
+        '',
+        '## API',
+        '',
+        '- `size?: number` sets both dimensions in pixels and defaults to `30`.',
+        '- `class?: string` adds utility classes to the outer `span`.',
+        '- `label?: string` gives the mark an accessible image name. Without a label, the mark is decorative and hidden from assistive technology.',
+        '',
+        '## Example',
+        '',
+        fence(
+            'svelte',
+            `import { BrandMark } from '@sivir-ui/svelte';\n\n<BrandMark size={36} label="Sivir" />`
+        ),
+        '',
+        'For a narrower import, use `@sivir-ui/svelte/brand-mark`.',
         ''
     ].join('\n');
 }
@@ -161,6 +220,7 @@ export function llmsTxt(origin: string): string {
         ['Installation', '/docs/installation.md'],
         ['Theming', '/docs/theming.md'],
         ['Components index', '/docs/components.md'],
+        ['Brand Mark', '/docs/brand-mark.md'],
         ...changelogVersions.map((version) => [`Changelog ${version}`, `/changelog/${version}`]),
         ...components.map((component) => [
             sanitizeComponent(component),
@@ -172,6 +232,8 @@ export function llmsTxt(origin: string): string {
         '# Sivir UI',
         '',
         'Svelte 5 and Tailwind CSS v4 component library. Use these Markdown resources for implementation details, public APIs, runnable examples, and version-specific upgrade notes.',
+        '',
+        `The current catalog contains ${components.length} components. Brand Mark is a package-only asset. Approval Request, Marquee, Panel, and Separator were removed as standalone components; migration guidance is in the components index.`,
         '',
         '## Documentation',
         '',
@@ -189,6 +251,16 @@ export function componentsMarkdown(): string {
         ...components.map(
             (component) => `- [${sanitizeComponent(component)}](/docs/components/${component}.md)`
         ),
+        '',
+        '## Package assets',
+        '',
+        '- [Brand Mark](/docs/brand-mark.md) - package-only logo component; not available through `sivir add`.',
+        '',
+        '## Removed components',
+        '',
+        'These names are no longer standalone package exports or CLI installation targets.',
+        '',
+        ...removedComponents.map(({ name, guidance }) => `- **${name}:** ${guidance}`),
         ''
     ].join('\n');
 }

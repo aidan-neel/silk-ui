@@ -94,7 +94,7 @@ import {Button} from '@sivir-ui/svelte/components/button'; import * as AlertDial
 
 ## What's exported
 
-- **Named:** `ApprovalRequest`, `Badge`, `Button`, `Checkbox`, `CodeBlock`,
+- **Named:** `Badge`, `Button`, `Checkbox`, `CodeBlock`,
   `CopyButton`, `Input`, `Label`, `Markdown`, `Pagination`, `Progress`, `Reasoning`,
   `ReorderList`, `ResponseStream`, `ScrollArea`, `Shortcut`, `Skeleton`, `SkeletonSwap`,
   `Slider`, `Spinner`, `Switch`, `TaskSteps`, `Textarea`, `Toggle`, `Toolbar`, and the toast API (`Toast`, `Toaster`,
