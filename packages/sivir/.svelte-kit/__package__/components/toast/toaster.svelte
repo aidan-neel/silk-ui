@@ -132,7 +132,7 @@
                     style:opacity={getOpacity(i)}
                     style:z-index={reversedToasts.length - i}
                     style:pointer-events={i < MAX_VISIBLE || expanded ? 'auto' : 'none'}
-                    bind:clientHeight={heights[toast.id!]}
+                    bind:clientHeight={heights[toast.id ?? -1]}
                 >
                     <!--
 						Transition wrapper: only Svelte in/out, NO CSS transform transitions.

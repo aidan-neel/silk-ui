@@ -168,7 +168,9 @@ describe('AlertDialog -- urgency and layout', () => {
         expect(dialog.getAttribute('data-orientation')).toBe('horizontal');
         expect(dialog.className).toContain('max-w-xl');
         expect(header.className).toContain('flex-row');
-        expect(page.getByText('Delete').element().className).toContain('sm:w-fit');
+        expect(page.getByRole('button', { name: 'Delete' }).element().className).toContain(
+            'sm:w-fit'
+        );
     });
 });
 

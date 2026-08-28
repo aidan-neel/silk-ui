@@ -23,19 +23,19 @@
 
     const modal = getModalContext();
     const resolvedSize = $derived(size ?? (modal.state.orientation === 'horizontal' ? 'lg' : 'md'));
-    const maxWidth = $derived(
+    const sizeClass = $derived(
         (modal.state.orientation === 'horizontal'
             ? {
-                  sm: '23rem',
-                  md: '27rem',
-                  lg: '35rem',
-                  xl: '41rem'
+                  sm: 'max-w-sm',
+                  md: 'max-w-md',
+                  lg: 'max-w-xl',
+                  xl: 'max-w-2xl'
               }
             : {
-                  sm: '17rem',
-                  md: '23rem',
-                  lg: '27rem',
-                  xl: '35rem'
+                  sm: 'max-w-xs',
+                  md: 'max-w-sm',
+                  lg: 'max-w-md',
+                  xl: 'max-w-xl'
               })[resolvedSize]
     );
     const isDestructiveAlert = $derived(role === 'alertdialog' && modal.state.error);
@@ -97,13 +97,13 @@
                 class={cn(
                     contentClass,
                     className, // token-lint-disable-next-line no-literal-length
+                    isDestructiveAlert && 'shadow-[var(--elevation-alert-error)]',
                     'origin-center bg-panel text-foreground shadow-[var(--elevation-modal)]',
                     'rounded-[var(--radius-lg)] border border-border',
                     'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
-                    isDestructiveAlert && 'shadow-[var(--elevation-alert-error)]'
+                    sizeClass
                 )}
                 {role}
-                style={`max-width: ${maxWidth};`}
                 data-orientation={modal.state.orientation}
                 data-destructive={isDestructiveAlert || undefined}
                 aria-modal="true"

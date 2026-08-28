@@ -345,7 +345,14 @@
                     <Button variant="outline" size="sm" onclick={() => (detailOpen = false)}
                         >Close</Button
                     >
-                    <Button size="sm" onclick={() => applyTheme(detailTheme!)}>
+                    <Button
+                        size="sm"
+                        onclick={() => {
+                            if (detailTheme) {
+                                applyTheme(detailTheme);
+                            }
+                        }}
+                    >
                         <Sparkles size={14} />
                         Apply theme
                     </Button>

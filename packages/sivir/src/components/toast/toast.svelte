@@ -125,7 +125,11 @@
         {#if toast.exitable && toast.id !== undefined}
             <button
                 type="button"
-                onclick={() => dismissToast(toast.id!)}
+                onclick={() => {
+                    if (toast.id !== undefined) {
+                        dismissToast(toast.id);
+                    }
+                }}
                 class={cn(
                     'mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-md',
                     'text-foreground-muted opacity-0 transition-[opacity,background-color,color] [transition-duration:var(--motion-duration-hover)] ease-[var(--ease-out)] motion-reduce:transition-none',

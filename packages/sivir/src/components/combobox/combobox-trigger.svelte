@@ -153,7 +153,6 @@
 <div
     bind:this={triggerElement}
     data-state={comboboxState.open ? 'open' : 'closed'}
-    onclick={toggle}
     class={cn(
         className,
         button({ variant, size }),
