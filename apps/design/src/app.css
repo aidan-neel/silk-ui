@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+@import '@sivir-ui/svelte/ui.css';
+@source './**/*.{svelte,ts}';
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        min-width: 320px;
+        min-height: 100%;
+        background: var(--color-background);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: var(--color-background);
+        color: var(--color-foreground);
+        font-family: var(--font-sans), sans-serif;
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-body);
+        line-height: 1.5;
+        text-rendering: optimizeLegibility;
+    }
+}

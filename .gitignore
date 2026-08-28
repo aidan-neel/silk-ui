@@ -24,6 +24,7 @@ dist/
 coverage/
 .vitest-attachments/
 playwright-report/
+.playwright-cli/
 test-results/
 .sandbox/
 

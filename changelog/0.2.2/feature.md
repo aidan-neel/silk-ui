@@ -1,0 +1,1 @@
+- Add Sivir Design, a local-first responsive Svelte interface editor with a blank Figma-style canvas, Sivir-native controls and typography, a curated component catalog, shallow semantic layers, breakpoint-aware properties, isolated preview, undo and redo, IndexedDB recovery, portable project files, and deterministic Svelte and Tailwind export.
