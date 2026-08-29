@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { resolve } from '$app/paths';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
@@ -36,27 +37,16 @@ bunx --package @sivir-ui/svelte sivir list`;
 <div data-docs-page class="flex flex-col gap-16">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Installation
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1 class="m-0">Installation</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Install Sivir UI into your project.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
 
     <section id="prerequisites" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Prerequisites
-        </h2>
+        <Typography.H2 class="docs-section-heading">Prerequisites</Typography.H2>
         <ul
             class="m-0 flex list-disc flex-col gap-1.5 pl-5 text-[1rem] text-foreground leading-relaxed"
         >
@@ -66,131 +56,95 @@ bunx --package @sivir-ui/svelte sivir list`;
     </section>
 
     <section id="package-import" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Option A: Package import
-        </h2>
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
+        <Typography.H2 class="docs-section-heading">Option A: Package import</Typography.H2>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
             Install the library and import components from
-            <code class="font-mono">@sivir-ui/svelte</code>.
-        </p>
+            <Typography.InlineCode>@sivir-ui/svelte</Typography.InlineCode>.
+        </Typography.Text>
         <CodeBlock code={packageInstall} lang="shell" copy="overlay" />
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
             Import the stylesheet once (for example in
-            <code class="font-mono">src/app.css</code>):
-        </p>
+            <Typography.InlineCode>src/app.css</Typography.InlineCode>):
+        </Typography.Text>
         <CodeBlock code={packageCss} lang="css" copy="overlay" />
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">Use a component:</p>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">Use a component:</Typography.Text>
         <CodeBlock code={packageUse} lang="svelte" copy="overlay" />
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
             Compound components use a namespace export (for example
-            <code class="font-mono">Modal</code>
+            <Typography.InlineCode>Modal</Typography.InlineCode>
             with
-            <code class="font-mono">Modal.Root</code>,
-            <code class="font-mono">Modal.Content</code>, …).
-        </p>
+            <Typography.InlineCode>Modal.Root</Typography.InlineCode>,
+            <Typography.InlineCode>Modal.Content</Typography.InlineCode>, …).
+        </Typography.Text>
     </section>
 
     <section id="cli-source-copy" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Option B: CLI source copy
-        </h2>
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
+        <Typography.H2 class="docs-section-heading">Option B: CLI source copy</Typography.H2>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
             The CLI copies source into your project. The package name is
-            <code class="font-mono">@sivir-ui/svelte</code>; the binary is
-            <code class="font-mono">sivir</code>.
-        </p>
+            <Typography.InlineCode>@sivir-ui/svelte</Typography.InlineCode>; the binary is
+            <Typography.InlineCode>sivir</Typography.InlineCode>.
+        </Typography.Text>
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
+        <Typography.H3 class="m-0 docs-subsection-heading">
             1. Create a project (optional)
-        </h3>
+        </Typography.H3>
         <CodeBlock code="bunx sv create my-app" lang="shell" copy="overlay" />
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
-            2. Add Tailwind v4
-        </h3>
+        <Typography.H3 class="m-0 docs-subsection-heading">2. Add Tailwind v4</Typography.H3>
         <CodeBlock code="cd my-app && bunx sv add tailwindcss" lang="shell" copy="overlay" />
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
-            3. Initialize Sivir
-        </h3>
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed max-w-2xl">
-            Creates <code class="font-mono">src/lib/sivir/</code> (tokens + utilities) and
-            <code class="font-mono">sivir.json</code>.
-        </p>
+        <Typography.H3 class="m-0 docs-subsection-heading">3. Initialize Sivir</Typography.H3>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
+            Creates <Typography.InlineCode>src/lib/sivir/</Typography.InlineCode> (tokens +
+            utilities) and <Typography.InlineCode>sivir.json</Typography.InlineCode>.
+        </Typography.Text>
         <CodeBlock
             code="bunx --package @sivir-ui/svelte sivir init -y"
             lang="shell"
             copy="overlay"
         />
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
+        <Typography.H3 class="m-0 docs-subsection-heading">
             4. Import the stylesheet
-        </h3>
+        </Typography.H3>
         <CodeBlock code={cliCss} lang="css" copy="overlay" />
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
-            5. Add components
-        </h3>
+        <Typography.H3 class="m-0 docs-subsection-heading">5. Add components</Typography.H3>
         <CodeBlock code={cliAdd} lang="shell" copy="overlay" />
 
-        <h3
-            class="m-0 text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-        >
-            6. Use them
-        </h3>
+        <Typography.H3 class="m-0 docs-subsection-heading">6. Use them</Typography.H3>
         <CodeBlock code={cliUse} lang="svelte" copy="overlay" />
     </section>
 
     <section id="notes" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Notes
-        </h2>
+        <Typography.H2 class="docs-section-heading">Notes</Typography.H2>
         <ul
             class="m-0 flex list-disc flex-col gap-1.5 pl-5 text-[1rem] text-foreground leading-relaxed"
         >
             <li>
                 Tailwind v3 is not supported. Sivir needs v4
-                <code class="font-mono">@theme</code>
+                <Typography.InlineCode>@theme</Typography.InlineCode>
                 and
-                <code class="font-mono">color-mix</code>.
+                <Typography.InlineCode>color-mix</Typography.InlineCode>.
             </li>
             <li>
-                Dark mode uses a <code class="font-mono">.dark</code> class on
-                <code class="font-mono">&lt;html&gt;</code>.
+                Dark mode uses a <Typography.InlineCode>.dark</Typography.InlineCode> class on
+                <Typography.InlineCode>&lt;html&gt;</Typography.InlineCode>.
             </li>
             <li>
                 Built-in theme presets install with
-                <code class="font-mono"
-                    >bunx --package @sivir-ui/svelte sivir add theme &lt;slug&gt;</code
+                <Typography.InlineCode
+                    >bunx --package @sivir-ui/svelte sivir add theme &lt;slug&gt;</Typography.InlineCode
                 >
-                (for example <code class="font-mono">default</code>).
+                (for example <Typography.InlineCode>default</Typography.InlineCode>).
             </li>
         </ul>
     </section>
 
     <section id="next" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Next
-        </h2>
-        <p class="m-0 text-[1rem] text-foreground leading-relaxed">
+        <Typography.H2 class="docs-section-heading">Next</Typography.H2>
+        <Typography.Text variant="body" class="m-0">
             <a class="text-foreground underline underline-offset-2" href={resolve('/docs/theming')}
                 >Theming</a
             >
@@ -200,6 +154,6 @@ bunx --package @sivir-ui/svelte sivir list`;
                 href={resolve('/docs/components')}
                 >Components</a
             >
-        </p>
+        </Typography.Text>
     </section>
 </div>

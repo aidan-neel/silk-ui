@@ -1,5 +1,6 @@
 <script lang="ts">
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { resolve } from '$app/paths';
     import { components, sanitizeComponent } from '$lib/components';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
@@ -9,25 +10,18 @@
     <title>Sivir · Components</title>
     <meta
         name="description"
-        content="Browse all 54 accessible, themeable Svelte 5 components in Sivir UI."
+        content="Browse all 55 accessible, themeable Svelte 5 components in Sivir UI."
     />
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-16">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Components
-            </h1>
+            <Typography.H1 class="m-0">Components</Typography.H1>
 
-            <p
-                class="mt-2 text-[1rem] text-foreground leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Build with easy-to-style UI components.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>

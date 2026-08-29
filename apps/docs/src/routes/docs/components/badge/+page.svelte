@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
@@ -36,17 +37,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Badge
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Badge </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A compact label for status, counts, and tags.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -60,22 +54,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">Import the Badge and use it in your component:</p>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Import the Badge and use it in your component:
+        </Typography.Text>
         <CodeBlock
             code={`import { Badge } from '$lib/sivir/components/badge';\n\n<Badge>New</Badge>\n<Badge variant="outline" dot>Label</Badge>\n<Badge variant="success">Active</Badge>\n<Badge variant="error">Failed</Badge>`}
             lang="svelte"
@@ -86,110 +74,70 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Explore Badge variants for different use cases.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="variant-primary" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Primary
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Primary </Typography.H3>
             <ComponentPreview code={VariantPrimarySrc}>
                 <VariantPrimary />
             </ComponentPreview>
         </div>
 
         <div id="variant-secondary" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Secondary
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Secondary </Typography.H3>
             <ComponentPreview code={VariantSecondarySrc}>
                 <VariantSecondary />
             </ComponentPreview>
         </div>
 
         <div id="variant-ghost" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Ghost
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Ghost </Typography.H3>
             <ComponentPreview code={VariantGhostSrc}>
                 <VariantGhost />
             </ComponentPreview>
         </div>
 
         <div id="variant-outline" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Outline
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Outline </Typography.H3>
             <ComponentPreview code={VariantOutlineSrc}>
                 <VariantOutline />
             </ComponentPreview>
         </div>
 
         <div id="variant-destructive" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Destructive
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Destructive </Typography.H3>
             <ComponentPreview code={VariantDestructiveSrc}>
                 <VariantDestructive />
             </ComponentPreview>
         </div>
 
         <div id="variant-info" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Info
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Info </Typography.H3>
             <ComponentPreview code={VariantInfoSrc}>
                 <VariantInfo />
             </ComponentPreview>
         </div>
 
         <div id="variant-success" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Success
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Success </Typography.H3>
             <ComponentPreview code={VariantSuccessSrc}>
                 <VariantSuccess />
             </ComponentPreview>
         </div>
 
         <div id="variant-warning" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Warning
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Warning </Typography.H3>
             <ComponentPreview code={VariantWarningSrc}>
                 <VariantWarning />
             </ComponentPreview>
         </div>
 
         <div id="variant-error" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Error
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Error </Typography.H3>
             <ComponentPreview code={VariantErrorSrc}>
                 <VariantError />
             </ComponentPreview>

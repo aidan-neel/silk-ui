@@ -262,5 +262,18 @@ export const componentAnatomy = {
         { name: 'Tooltip.Root', description: 'Controls tooltip state.' },
         { name: 'Tooltip.Content', description: 'Renders tooltip content.' },
         { name: 'Tooltip.Trigger', description: 'Opens the tooltip.' }
+    ],
+    typography: [
+        { name: 'Typography.Title', description: 'Renders an explicit heading level.' },
+        { name: 'Typography.H1', description: 'Renders the primary document heading.' },
+        { name: 'Typography.H2', description: 'Renders a document section heading.' },
+        { name: 'Typography.H3', description: 'Renders a document subsection heading.' },
+        { name: 'Typography.H4', description: 'Renders a fourth-level document heading.' },
+        { name: 'Typography.H5', description: 'Renders a subdued fifth-level heading.' },
+        { name: 'Typography.H6', description: 'Renders a subdued sixth-level heading.' },
+        { name: 'Typography.Text', description: 'Renders lead, body, or supporting prose.' },
+        { name: 'Typography.InlineCode', description: 'Renders code within prose.' },
+        { name: 'Typography.Description', description: 'Renders supporting text.' },
+        { name: 'Typography.Metadata', description: 'Renders compact secondary information.' }
     ]
 } satisfies Record<ComponentSlug, ComponentPart[]>;

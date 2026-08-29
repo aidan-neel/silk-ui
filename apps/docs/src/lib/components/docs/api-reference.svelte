@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import type { ApiReferenceItem } from './api-reference-types';
 
     const {
@@ -16,8 +17,8 @@
 
 <div class="w-full flex flex-col gap-6">
     <header class="flex flex-col gap-4">
-        <h1
-            class="h2 bg-secondary font-mono w-fit rounded-lg px-3 py-1 text-lg"
+        <Typography.H2
+            class="w-fit rounded-lg bg-secondary px-3 py-1 font-mono text-lg"
             data-toc-label={component}
         >
             <span class="text-foreground-muted">
@@ -27,10 +28,10 @@
             >
                 {component}
             </span>
-        </h1>
-        <p class="text-[0.98rem] leading-7 text-foreground-muted">
+        </Typography.H2>
+        <Typography.Text variant="lead">
             {description}
-        </p>
+        </Typography.Text>
     </header>
 
     {#if items.length !== 0}

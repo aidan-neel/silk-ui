@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Compound from './examples/compound.svelte';
@@ -44,17 +45,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Code Block
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Code Block </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A code viewer with syntax highlighting, a language switcher, and a copy button.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -68,122 +62,82 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
-        <p class="text-sm text-foreground-muted">
-            The component depends on <code class="font-mono text-foreground">highlight.js</code>.
-            Install it if your project doesn't have it yet:
-        </p>
+        <Typography.Text variant="supporting">
+            The component depends on
+            <Typography.InlineCode>highlight.js</Typography.InlineCode>. Install it if your project
+            doesn't have it yet:
+        </Typography.Text>
         <InstallCommand command="bun add highlight.js" />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Pass a <code class="font-mono text-foreground">tabs</code> array for the multi-language
-            form, or
-            <code class="font-mono text-foreground">code</code>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Pass a <Typography.InlineCode>tabs</Typography.InlineCode> array for the multi-language
+            form, or <Typography.InlineCode>code</Typography.InlineCode>
             +
-            <code class="font-mono text-foreground">lang</code>
+            <Typography.InlineCode>lang</Typography.InlineCode>
             for a single snippet:
-        </p>
+        </Typography.Text>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>
 
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 From a single highlighted snippet to fully composed, multi-language blocks.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="single" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Single snippet
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Single snippet </Typography.H3>
             <ComponentPreview code={SingleSrc}>
                 <Single />
             </ComponentPreview>
         </div>
 
         <div id="multi-language" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Multiple languages
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Multiple languages </Typography.H3>
             <ComponentPreview code={MultiLanguageSrc}>
                 <MultiLanguage />
             </ComponentPreview>
         </div>
 
         <div id="line-numbers" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Line numbers
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Line numbers </Typography.H3>
             <ComponentPreview code={LineNumbersSrc}>
                 <LineNumbers />
             </ComponentPreview>
         </div>
 
         <div id="custom-actions" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Custom actions
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Custom actions </Typography.H3>
             <ComponentPreview code={CustomActionsSrc}>
                 <CustomActions />
             </ComponentPreview>
         </div>
 
         <div id="copy-overlay" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Copy placement: overlay
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Copy placement: overlay </Typography.H3>
             <ComponentPreview code={CopyOverlaySrc}>
                 <CopyOverlay />
             </ComponentPreview>
         </div>
 
         <div id="copy-inline" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Copy placement: inline
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Copy placement: inline </Typography.H3>
             <ComponentPreview code={CopyInlineSrc}>
                 <CopyInline />
             </ComponentPreview>
         </div>
 
         <div id="compound" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Compound API
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Compound API </Typography.H3>
             <ComponentPreview code={CompoundSrc}>
                 <Compound />
             </ComponentPreview>

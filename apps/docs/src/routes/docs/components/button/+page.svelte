@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import AsLink from './examples/as-link.svelte';
@@ -48,18 +49,11 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Button
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Button </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A clickable action in several variants and sizes. Pick a variant for what the action
                 means.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -73,26 +67,18 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Use <code>status</code> for async feedback. Every label occupies the same grid cell, so
-            state changes never resize the button; success and error switch to a matching semantic
-            surface.
-        </p>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Use <Typography.InlineCode>status</Typography.InlineCode> for async feedback. Every
+            label occupies the same grid cell, so state changes never resize the button; success and
+            error switch to a matching semantic surface.
+        </Typography.Text>
         <CodeBlock
             code={`import { Button } from '$lib/sivir/components/button';
 
@@ -109,89 +95,57 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Explore the Button in different variants, sizes, and compositions.
-            </p>
+            </Typography.Text>
         </div>
 
         <!-- Variants — each its own example piece -->
         <div id="variant-primary" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Primary
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Primary </Typography.H3>
             <ComponentPreview code={VariantPrimarySrc}>
                 <VariantPrimary />
             </ComponentPreview>
         </div>
 
         <div id="variant-secondary" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Secondary
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Secondary </Typography.H3>
             <ComponentPreview code={VariantSecondarySrc}>
                 <VariantSecondary />
             </ComponentPreview>
         </div>
 
         <div id="variant-outline" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Outline
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Outline </Typography.H3>
             <ComponentPreview code={VariantOutlineSrc}>
                 <VariantOutline />
             </ComponentPreview>
         </div>
 
         <div id="variant-ghost" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Ghost
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Ghost </Typography.H3>
             <ComponentPreview code={VariantGhostSrc}>
                 <VariantGhost />
             </ComponentPreview>
         </div>
 
         <div id="variant-quiet" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Quiet
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Quiet </Typography.H3>
             <ComponentPreview code={VariantQuietSrc}>
                 <VariantQuiet />
             </ComponentPreview>
         </div>
 
         <div id="variant-destructive" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Destructive
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Destructive </Typography.H3>
             <ComponentPreview code={VariantDestructiveSrc}>
                 <VariantDestructive />
             </ComponentPreview>
         </div>
 
         <div id="variant-panel" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Panel
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Panel </Typography.H3>
             <ComponentPreview code={VariantPanelSrc}>
                 <VariantPanel />
             </ComponentPreview>
@@ -199,11 +153,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- Sizes (consolidated) -->
         <div id="sizes" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Sizes
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Sizes </Typography.H3>
             <ComponentPreview code={SizesSrc}>
                 <Sizes />
             </ComponentPreview>
@@ -211,11 +161,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- Disabled -->
         <div id="disabled" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Disabled
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Disabled </Typography.H3>
             <ComponentPreview code={DisabledSrc}>
                 <Disabled />
             </ComponentPreview>
@@ -224,11 +170,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
         <!-- Composition -->
         <!-- Leading icon -->
         <div id="comp-leading" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Leading icon
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Leading icon </Typography.H3>
             <ComponentPreview code={LeadingIconSrc}>
                 <LeadingIcon />
             </ComponentPreview>
@@ -236,11 +178,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- Trailing icon -->
         <div id="comp-trailing" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Trailing icon
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Trailing icon </Typography.H3>
             <ComponentPreview code={TrailingIconSrc}>
                 <TrailingIcon />
             </ComponentPreview>
@@ -248,11 +186,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- Loading -->
         <div id="comp-loading" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Loading
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Loading </Typography.H3>
             <ComponentPreview code={LoadingSrc}>
                 <Loading />
             </ComponentPreview>
@@ -260,11 +194,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- As link -->
         <div id="comp-link" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                As link
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> As link </Typography.H3>
             <ComponentPreview code={AsLinkSrc}>
                 <AsLink />
             </ComponentPreview>
@@ -272,11 +202,7 @@ let status = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 
         <!-- Icon group -->
         <div id="comp-group" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Icon group
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Icon group </Typography.H3>
             <ComponentPreview code={IconGroupSrc}>
                 <IconGroup />
             </ComponentPreview>

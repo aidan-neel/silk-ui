@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import ContextWindow from './examples/context-window.svelte';
@@ -23,18 +24,11 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Gauge
-            </h1>
-            <p
-                class="mt-2 max-w-2xl text-[1rem] text-foreground-muted leading-relaxed font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Gauge </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A compact circular meter for bounded quantities such as context remaining, API
                 usage, storage, and seats.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -44,26 +38,20 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Use <code>value</code> and <code>max</code> for the filled portion. Provide
-            <code>label</code>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Use <Typography.InlineCode>value</Typography.InlineCode> and
+            <Typography.InlineCode>max</Typography.InlineCode>
+            for the filled portion. Provide
+            <Typography.InlineCode>label</Typography.InlineCode>
             to name the meter for screen-reader users; children can replace the default numeric
             center text.
-        </p>
+        </Typography.Text>
         <CodeBlock
             code={`import { Gauge } from '@sivir-ui/svelte/components/gauge';
 
@@ -76,31 +64,19 @@
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Use Gauge for agent context and product limits.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="context-window" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Context window
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Context window </Typography.H3>
             <ComponentPreview code={ContextWindowSrc}><ContextWindow /></ComponentPreview>
         </div>
 
         <div id="usage-limit" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Usage limit
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Usage limit </Typography.H3>
             <ComponentPreview code={UsageLimitSrc}><UsageLimit /></ComponentPreview>
         </div>
     </section>

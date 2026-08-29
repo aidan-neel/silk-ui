@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Card from './examples/card.svelte';
@@ -25,17 +26,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                {TITLE}
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1>{TITLE}</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Delay the placeholder, hold it long enough to read, then swap into reserved content.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -49,25 +43,18 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Use <code>SkeletonSwap</code> around asynchronous content. Fast responses skip the
-            placeholder; once shown, it stays visible long enough to avoid a flash.
-        </p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Use <Typography.InlineCode>SkeletonSwap</Typography.InlineCode> around asynchronous
+            content. Fast responses skip the placeholder; once shown, it stays visible long enough
+            to avoid a flash.
+        </Typography.Text>
         <CodeBlock
             code={`import { SkeletonSwap } from '$lib/sivir/components/skeleton';
 
@@ -82,23 +69,15 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Use the static Skeleton primitive when you need to compose a custom placeholder.
-            </p>
+            </Typography.Text>
         </div>
 
         <!-- Rectangle -->
         <div id="rectangle" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Rectangle
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Rectangle</Typography.H3>
             <ComponentPreview code={RectangleSrc}>
                 <Rectangle />
             </ComponentPreview>
@@ -106,11 +85,7 @@
 
         <!-- Circle -->
         <div id="circle" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Circle
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Circle</Typography.H3>
             <ComponentPreview code={CircleSrc}>
                 <Circle />
             </ComponentPreview>
@@ -118,11 +93,7 @@
 
         <!-- Card composition -->
         <div id="card" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Card composition
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Card composition</Typography.H3>
             <ComponentPreview code={CardSrc}>
                 <Card />
             </ComponentPreview>

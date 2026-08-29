@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
@@ -26,19 +27,12 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Composer
-            </h1>
+            <Typography.H1> Composer </Typography.H1>
 
-            <p
-                class="mt-2 max-w-2xl text-[1rem] leading-relaxed font-[var(--font-weight-description,450)] text-foreground-muted"
-            >
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A focused prompt surface with growing input, composable actions, and submission
                 state.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -48,24 +42,16 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
             Bind the prompt value and handle submission on the root. The component awaits async
             handlers and shows its submitting state automatically.
-        </p>
+        </Typography.Text>
         <CodeBlock
             code={`import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
 
@@ -88,49 +74,34 @@ async function sendPrompt(prompt: string) {
             lang="svelte"
             copy="overlay"
         />
-        <p class="text-sm text-foreground-muted">
+        <Typography.Text variant="supporting">
             By default, <kbd>Enter</kbd> submits and <kbd>Shift</kbd> + <kbd>Enter</kbd> inserts a
-            new line. Set <code>submitOnEnter={false}</code> on <code>Input</code> when Enter should
-            always create a new line.
-        </p>
+            new line. Set <Typography.InlineCode>submitOnEnter={false}</Typography.InlineCode> on
+            <Typography.InlineCode>Input</Typography.InlineCode>
+            when Enter should always create a new line.
+        </Typography.Text>
     </section>
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Use explicit states when submission is managed outside the component.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="idle" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Idle
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Idle</Typography.H3>
             <ComponentPreview code={IdleSrc}><Idle /></ComponentPreview>
         </div>
 
         <div id="submitting" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Submitting
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Submitting</Typography.H3>
             <ComponentPreview code={SubmittingSrc}><Submitting /></ComponentPreview>
         </div>
 
         <div id="error" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Error
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Error</Typography.H3>
             <ComponentPreview code={ErrorSrc} refreshable><ErrorExample /></ComponentPreview>
         </div>
     </section>

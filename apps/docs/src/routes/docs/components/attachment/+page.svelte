@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
@@ -22,18 +23,11 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Attachment
-            </h1>
-            <p
-                class="mt-2 max-w-2xl text-[1rem] leading-relaxed font-[var(--font-weight-description,450)] text-foreground-muted"
-            >
+            <Typography.H1> Attachment </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Select, validate, preview, and remove local files before your application uploads
                 them.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -43,24 +37,17 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Bind selected files on the root and report rejected files from <code>onReject</code>.
-            Selection is local only; your application owns uploading and upload state.
-        </p>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Bind selected files on the root and report rejected files from
+            <Typography.InlineCode>onReject</Typography.InlineCode>. Selection is local only; your
+            application owns uploading and upload state.
+        </Typography.Text>
         <CodeBlock
             code={`import * as Attachment from '@sivir-ui/svelte/components/attachment';
 import type { AttachmentRejection } from '@sivir-ui/svelte/components/attachment';
@@ -88,22 +75,14 @@ function handleReject(rejections: AttachmentRejection[]) {
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Render standalone items when your upload client owns progress and completion state.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="status-variants" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Upload status
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Upload status </Typography.H3>
             <ComponentPreview code={StatusVariantsSrc}><StatusVariants /></ComponentPreview>
         </div>
     </section>

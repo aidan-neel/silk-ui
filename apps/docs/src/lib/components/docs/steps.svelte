@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import type { Snippet } from 'svelte';
 
     interface StepItem {
@@ -40,9 +41,9 @@
                     </h3>
                 {/if}
                 {#if step.description}
-                    <p class="text-sm text-foreground-muted">
+                    <Typography.Text variant="supporting">
                         {step.description}
-                    </p>
+                    </Typography.Text>
                 {/if}
                 {#if index === 0 && children}
                     <div class="mt-2">

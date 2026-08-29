@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import ComposerTakeover from './examples/composer-takeover.svelte';
@@ -42,18 +43,11 @@ let answer = $state<QuestionAnswer>();
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Question
-            </h1>
-            <p
-                class="mt-2 max-w-2xl text-[1rem] leading-relaxed font-[var(--font-weight-description,450)] text-foreground-muted"
-            >
+            <Typography.H1> Question </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Pause an agent conversation for one structured answer, then return control to the
                 prompt composer.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -63,74 +57,55 @@ let answer = $state<QuestionAnswer>();
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Render <code>Question.Root</code> in the same layout slot as
-            <code>PromptComposer.Root</code>. Keep the prompt value in their shared parent so
-            swapping the forms never clears an unsent draft.
-        </p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Render <Typography.InlineCode>Question.Root</Typography.InlineCode> in the same layout
+            slot as <Typography.InlineCode>PromptComposer.Root</Typography.InlineCode>. Keep the
+            prompt value in their shared parent so swapping the forms never clears an unsent draft.
+        </Typography.Text>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
-        <p class="text-sm text-foreground-muted">
-            Use <code>type="single"</code> for one option, <code>type="multiple"</code> for several,
-            or <code>type="text"</code> with <code>Question.Input</code>. Async submit handlers are
-            awaited and cannot run twice while unresolved. Changing <code>type</code> resets the
-            bound answer to the new mode's empty value.
-        </p>
+        <Typography.Text variant="supporting">
+            Use <Typography.InlineCode>type="single"</Typography.InlineCode> for one option,
+            <Typography.InlineCode>type="multiple"</Typography.InlineCode>
+            for several, or
+            <Typography.InlineCode>type="text"</Typography.InlineCode>
+            with
+            <Typography.InlineCode>Question.Input</Typography.InlineCode>. Async submit handlers are
+            awaited and cannot run twice while unresolved. Changing
+            <Typography.InlineCode>type</Typography.InlineCode>
+            resets the bound answer to the new mode's empty value.
+        </Typography.Text>
     </section>
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Collect multiple selections or place the question directly beneath a live
                 transcript.
-            </p>
+            </Typography.Text>
         </div>
 
         <div id="multiple-choice" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Multiple choice
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Multiple choice</Typography.H3>
             <ComponentPreview code={MultipleChoiceSrc}><MultipleChoice /></ComponentPreview>
         </div>
 
         <div id="free-text" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Free text
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Free text</Typography.H3>
             <ComponentPreview code={FreeTextSrc}><FreeText /></ComponentPreview>
         </div>
 
         <div id="composer-takeover" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Conversation takeover
-            </h3>
-            <p class="text-sm text-foreground-muted">
+            <Typography.H3 class="docs-subsection-heading">Conversation takeover</Typography.H3>
+            <Typography.Text variant="supporting">
                 Answer or skip the question to restore the composer with its draft intact.
-            </p>
+            </Typography.Text>
             <ComponentPreview code={ComposerTakeoverSrc}>
                 <ComposerTakeover />
             </ComponentPreview>

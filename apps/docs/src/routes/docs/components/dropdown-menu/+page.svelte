@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import BasicMenu from './examples/basic-menu.svelte';
@@ -34,17 +35,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Dropdown Menu
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Dropdown Menu </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A menu of actions anchored to a button.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -58,24 +52,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
             Import Dropdown Menu and compose it with sub-components:
-        </p>
+        </Typography.Text>
         <CodeBlock
             code={`import * as DropdownMenu from '$lib/sivir/components/dropdown-menu';\n\n<DropdownMenu.Root>\n  <DropdownMenu.Trigger>Menu</DropdownMenu.Trigger>\n  <DropdownMenu.Content>\n    <DropdownMenu.Item callback={handleClick}>\n      Action\n    </DropdownMenu.Item>\n  </DropdownMenu.Content>\n</DropdownMenu.Root>`}
             lang="svelte"
@@ -86,23 +72,15 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Dropdown menus in common patterns and real-world use cases.
-            </p>
+            </Typography.Text>
         </div>
 
         <!-- Basic menu -->
         <div id="basic-menu" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Basic menu
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Basic menu </Typography.H3>
             <ComponentPreview code={BasicMenuSrc}>
                 <BasicMenu />
             </ComponentPreview>
@@ -110,11 +88,7 @@
 
         <!-- Grouped (user) menu -->
         <div id="user-menu" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Grouped items
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Grouped items </Typography.H3>
             <ComponentPreview code={UserMenuSrc}>
                 <UserMenu />
             </ComponentPreview>
@@ -122,11 +96,7 @@
 
         <!-- Row actions -->
         <div id="row-actions" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Row actions
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Row actions </Typography.H3>
             <ComponentPreview code={RowActionsSrc}>
                 <RowActions />
             </ComponentPreview>
@@ -134,11 +104,7 @@
 
         <!-- Share menu -->
         <div id="share-menu" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Share menu
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Share menu </Typography.H3>
             <ComponentPreview code={ShareMenuSrc}>
                 <ShareMenu />
             </ComponentPreview>
@@ -146,25 +112,17 @@
 
         <!-- Sort menu -->
         <div id="sort-menu" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Sort menu
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Sort menu </Typography.H3>
             <ComponentPreview code={SortMenuSrc}>
                 <SortMenu />
             </ComponentPreview>
         </div>
 
         <div id="configuration-menu" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Configuration submenu
-            </h3>
-            <p class="text-sm text-foreground-muted">
+            <Typography.H3 class="docs-subsection-heading"> Configuration submenu </Typography.H3>
+            <Typography.Text variant="supporting">
                 Nested choices for configuring a model, effort level, and response speed.
-            </p>
+            </Typography.Text>
             <ComponentPreview code={ConfigurationSrc}>
                 <Configuration />
             </ComponentPreview>

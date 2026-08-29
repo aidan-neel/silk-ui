@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Disabled from './examples/disabled.svelte';
@@ -28,17 +29,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                {TITLE}
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1>{TITLE}</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A button with an on/off pressed state. Comes in several sizes.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -52,22 +46,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">Import Toggle and bind its pressed state:</p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Import Toggle and bind its pressed state:
+        </Typography.Text>
         <CodeBlock
             code={`import { Toggle } from '$lib/sivir/components/toggle';\n\n<Toggle bind:pressed={bold}>\n  <Bold size={14} />\n</Toggle>`}
             lang="svelte"
@@ -78,23 +66,15 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Toggle in different sizes and variants.
-            </p>
+            </Typography.Text>
         </div>
 
         <!-- Icon toggle -->
         <div id="icon" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Icon toggle
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Icon toggle</Typography.H3>
             <ComponentPreview code={IconSrc}>
                 <Icon />
             </ComponentPreview>
@@ -102,11 +82,7 @@
 
         <!-- Text toggle -->
         <div id="text" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Text toggle
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Text toggle</Typography.H3>
             <ComponentPreview code={TextSrc}>
                 <Text />
             </ComponentPreview>
@@ -114,11 +90,7 @@
 
         <!-- Sizes -->
         <div id="sizes" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Sizes
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Sizes</Typography.H3>
             <ComponentPreview code={SizesSrc}>
                 <Sizes />
             </ComponentPreview>
@@ -126,11 +98,7 @@
 
         <!-- Disabled -->
         <div id="disabled" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Disabled
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Disabled</Typography.H3>
             <ComponentPreview code={DisabledSrc}>
                 <Disabled />
             </ComponentPreview>

@@ -1,0 +1,2 @@
+- Redesign the documentation shell with an inset navigation rail, responsive mobile navigation, aligned breadcrumbs, and a centered reading column.
+- Refresh the home page around a clearer component-library introduction, direct documentation links, and a copyable package install command.

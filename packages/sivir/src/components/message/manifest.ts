@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'message',
-    version: '1.0.0',
+    version: '1.0.1',
     visibility: 'public',
     description: 'Role-aware conversation messages with readable content and contextual actions.',
     files: [
@@ -13,7 +13,7 @@ export const manifest: Manifest = {
         'components/message/index.ts',
         'components/message/manifest.ts'
     ],
-    components: [],
+    components: ['typography'],
     shared: ['utils.cn', 'utils.createContext'],
     peerDependencies: {
         cnfast: '^0.0.8',

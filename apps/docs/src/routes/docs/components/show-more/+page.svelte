@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Capped from './examples/capped.svelte';
@@ -19,17 +20,10 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                {TITLE}
-            </h1>
-            <p
-                class="mt-2 max-w-2xl text-[1rem] font-[var(--font-weight-description,450)] text-foreground-muted leading-relaxed"
-            >
+            <Typography.H1>{TITLE}</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Keeps long content scannable, then reveals the complete detail in place.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -41,25 +35,18 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            The disclosure is shown only when content exceeds <code>lines</code>. Bind
-            <code>expanded</code>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            The disclosure is shown only when content exceeds
+            <Typography.InlineCode>lines</Typography.InlineCode>. Bind
+            <Typography.InlineCode>expanded</Typography.InlineCode>
             when another control needs to coordinate the state.
-        </p>
+        </Typography.Text>
         <CodeBlock
             code={`import { ShowMore } from '$lib/sivir/components/show-more';
 
@@ -75,23 +62,16 @@ let expanded = $state(false);
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
         </div>
 
         <div id="capped" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Capped content
-            </h3>
-            <p class="text-sm text-foreground-muted">
-                When expanded content exceeds <code>maxHeight</code>, it becomes a
+            <Typography.H3 class="docs-subsection-heading">Capped content</Typography.H3>
+            <Typography.Text variant="supporting">
+                When expanded content exceeds
+                <Typography.InlineCode>maxHeight</Typography.InlineCode>, it becomes a
                 keyboard-focusable scroll region.
-            </p>
+            </Typography.Text>
             <ComponentPreview code={CappedSrc}>
                 <Capped />
             </ComponentPreview>

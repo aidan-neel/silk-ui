@@ -10,18 +10,25 @@
 
     import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
     import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+    import Logo from '../logo.svelte';
     import SideNavbar from './side-navbar.svelte';
 
     const { starCount = null }: { starCount?: number | null } = $props();
     let mobileMenuOpen = $state(false);
 
     const breadcrumbs = $derived.by(() => {
-        const segments = page.url.pathname.split('/').filter(Boolean);
+        const pathnameSegments = page.url.pathname.split('/').filter(Boolean);
+        const isDocsPath = pathnameSegments[0] === 'docs';
+        const segments = isDocsPath ? pathnameSegments.slice(1) : pathnameSegments;
+        const basePath = isDocsPath ? '/docs' : '';
 
-        return segments.map((segment, index) => ({
-            href: `/${segments.slice(0, index + 1).join('/')}`,
-            label: formatSegment(segment)
-        }));
+        return [
+            { href: '/', label: 'Sivir UI' },
+            ...segments.map((segment, index) => ({
+                href: `${basePath}/${segments.slice(0, index + 1).join('/')}`,
+                label: formatSegment(segment)
+            }))
+        ];
     });
 
     function formatSegment(segment: string): string {
@@ -62,9 +69,12 @@
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
     <header
-        class="sticky top-0 z-20 flex min-h-[3.75rem] w-full items-center justify-between gap-4 border-b border-border bg-background/72 px-4 py-3 backdrop-blur-[14px] sm:px-5"
+        class="z-20 mx-auto flex h-[4.75rem] w-full max-w-[960px] items-center justify-between gap-4 px-2 sm:px-5 lg:px-10"
     >
-        <FullscreenNav.Trigger class="size-9 rounded-[var(--radius-md)] sm:hidden" />
+        <div class="flex min-w-0 items-center gap-2 sm:hidden">
+            <FullscreenNav.Trigger class="size-9 rounded-[var(--radius-md)]" />
+            <Logo />
+        </div>
 
         <nav aria-label="Breadcrumb" class="hidden min-w-0 sm:block">
             <ol
@@ -92,9 +102,10 @@
             </ol>
         </nav>
 
-        <div class="flex shrink-0 items-center gap-1">
-            <a
-                class="inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-[0.55rem] text-[0.8125rem] font-[var(--font-weight-label,500)] tabular-nums text-foreground-muted no-underline transition-colors duration-150 hover:cursor-default hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+        <div class="flex shrink-0 items-center gap-1.5">
+            <Button
+                class="h-9 gap-1.5 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem] tabular-nums"
+                variant="outline"
                 href="https://github.com/aidan-neel/sivir-ui"
                 target="_blank"
                 rel="noreferrer"
@@ -108,11 +119,11 @@
                     class="size-[0.9375rem]"
                 />
                 <span>{formatStarCount(starCount)}</span>
-            </a>
+            </Button>
 
             <Button
                 class="size-9 rounded-[var(--radius-md)]"
-                variant="ghost"
+                variant="outline"
                 onclick={() => {
                     toggleMode();
                 }}

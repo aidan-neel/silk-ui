@@ -1,40 +1,49 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'svelte/server';
-import type { Component } from 'svelte';
-
-// Tier 1 + Tier 2 components and fixtures, imported by name.
-import Button from '@sivir-ui/svelte/components/button/button.svelte';
 import Alert from '@sivir-ui/svelte/components/alert/alert.svelte';
 import Badge from '@sivir-ui/svelte/components/badge/badge.svelte';
-import Input from '@sivir-ui/svelte/components/input/input.svelte';
-import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
+// Tier 1 + Tier 2 components and fixtures, imported by name.
+import Button from '@sivir-ui/svelte/components/button/button.svelte';
 import Checkbox from '@sivir-ui/svelte/components/checkbox/checkbox.svelte';
-import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
-import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
-import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
-import Progress from '@sivir-ui/svelte/components/progress/progress.svelte';
-import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
-import Skeleton from '@sivir-ui/svelte/components/skeleton/skeleton.svelte';
+import Input from '@sivir-ui/svelte/components/input/input.svelte';
 import Label from '@sivir-ui/svelte/components/label/label.svelte';
+import Pagination from '@sivir-ui/svelte/components/pagination/pagination.svelte';
+import Progress from '@sivir-ui/svelte/components/progress/progress.svelte';
 import Shortcut from '@sivir-ui/svelte/components/shortcut/shortcut.svelte';
-
-import ModalFixture from '../../fixtures/ModalFixture.svelte';
-import SheetFixture from '../../fixtures/SheetFixture.svelte';
-import PopoverFixture from '../../fixtures/PopoverFixture.svelte';
+import Skeleton from '@sivir-ui/svelte/components/skeleton/skeleton.svelte';
+import Slider from '@sivir-ui/svelte/components/slider/slider.svelte';
+import Switch from '@sivir-ui/svelte/components/switch/switch.svelte';
+import Textarea from '@sivir-ui/svelte/components/textarea/textarea.svelte';
+import Toggle from '@sivir-ui/svelte/components/toggle/toggle.svelte';
+import TypographyDescription from '@sivir-ui/svelte/components/typography/typography-description.svelte';
+import TypographyH1 from '@sivir-ui/svelte/components/typography/typography-h1.svelte';
+import TypographyH2 from '@sivir-ui/svelte/components/typography/typography-h2.svelte';
+import TypographyH3 from '@sivir-ui/svelte/components/typography/typography-h3.svelte';
+import TypographyH4 from '@sivir-ui/svelte/components/typography/typography-h4.svelte';
+import TypographyH5 from '@sivir-ui/svelte/components/typography/typography-h5.svelte';
+import TypographyH6 from '@sivir-ui/svelte/components/typography/typography-h6.svelte';
+import TypographyInlineCode from '@sivir-ui/svelte/components/typography/typography-inline-code.svelte';
+import TypographyMetadata from '@sivir-ui/svelte/components/typography/typography-metadata.svelte';
+import TypographyText from '@sivir-ui/svelte/components/typography/typography-text.svelte';
+import TypographyTitle from '@sivir-ui/svelte/components/typography/typography-title.svelte';
+import type { Component } from 'svelte';
+import { render } from 'svelte/server';
+import { describe, expect, it } from 'vitest';
+import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
 import AlertDialogFixture from '../../fixtures/AlertDialogFixture.svelte';
-import DropdownMenuFixture from '../../fixtures/DropdownMenuFixture.svelte';
-import SelectFixture from '../../fixtures/SelectFixture.svelte';
+import AvatarFixture from '../../fixtures/AvatarFixture.svelte';
+import CollapsibleFixture from '../../fixtures/CollapsibleFixture.svelte';
+import ColorPickerFixture from '../../fixtures/ColorPickerFixture.svelte';
 import ComboboxFixture from '../../fixtures/ComboboxFixture.svelte';
 import CommandFixture from '../../fixtures/CommandFixture.svelte';
 import ContextMenuFixture from '../../fixtures/ContextMenuFixture.svelte';
-import ColorPickerFixture from '../../fixtures/ColorPickerFixture.svelte';
-import TabsFixture from '../../fixtures/TabsFixture.svelte';
-import AccordionFixture from '../../fixtures/AccordionFixture.svelte';
-import CollapsibleFixture from '../../fixtures/CollapsibleFixture.svelte';
+import DropdownMenuFixture from '../../fixtures/DropdownMenuFixture.svelte';
+import ModalFixture from '../../fixtures/ModalFixture.svelte';
+import PopoverFixture from '../../fixtures/PopoverFixture.svelte';
 import RadioGroupFixture from '../../fixtures/RadioGroupFixture.svelte';
-import ToggleGroupFixture from '../../fixtures/ToggleGroupFixture.svelte';
-import AvatarFixture from '../../fixtures/AvatarFixture.svelte';
+import SelectFixture from '../../fixtures/SelectFixture.svelte';
+import SheetFixture from '../../fixtures/SheetFixture.svelte';
+import TabsFixture from '../../fixtures/TabsFixture.svelte';
 import ToasterFixture from '../../fixtures/ToasterFixture.svelte';
+import ToggleGroupFixture from '../../fixtures/ToggleGroupFixture.svelte';
 
 /*
  * SSR tier -- strategy Sec.6 and pattern guide Sec.14.2.
@@ -80,6 +89,17 @@ describe('SSR -- leaf components (Tier 1)', () => {
     ssrShouldNotThrow('skeleton', Skeleton, {});
     ssrShouldNotThrow('label', Label, {});
     ssrShouldNotThrow('shortcut', Shortcut, { shortcut: 'cmd+k' });
+    ssrShouldNotThrow('typography title', TypographyTitle, { level: 2 });
+    ssrShouldNotThrow('typography h1', TypographyH1, {});
+    ssrShouldNotThrow('typography h2', TypographyH2, {});
+    ssrShouldNotThrow('typography h3', TypographyH3, {});
+    ssrShouldNotThrow('typography h4', TypographyH4, {});
+    ssrShouldNotThrow('typography h5', TypographyH5, {});
+    ssrShouldNotThrow('typography h6', TypographyH6, {});
+    ssrShouldNotThrow('typography text', TypographyText, {});
+    ssrShouldNotThrow('typography inline code', TypographyInlineCode, {});
+    ssrShouldNotThrow('typography description', TypographyDescription, {});
+    ssrShouldNotThrow('typography metadata', TypographyMetadata, {});
 });
 
 describe('SSR -- overlay primitives (Tier 1)', () => {

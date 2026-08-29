@@ -1,0 +1,2 @@
+- Remove the red outline from destructive Alert Dialog surfaces while retaining destructive action styling and browser chrome signaling.
+- Reduce the default Alert Dialog width while preserving explicit size overrides.

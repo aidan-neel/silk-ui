@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
@@ -26,18 +27,11 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                {TITLE}
-            </h1>
-            <p
-                class="mt-2 max-w-2xl text-[1rem] text-foreground-muted leading-relaxed font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1>{TITLE}</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 Group related tool calls into one compact task summary without overwhelming the
                 transcript.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -47,23 +41,16 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Use <code>Item</code> to list the commands, searches, and reads completed within a task.
-        </p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Use <Typography.InlineCode>Item</Typography.InlineCode> to list the commands, searches,
+            and reads completed within a task.
+        </Typography.Text>
         <CodeBlock
             code={`import * as Tool from '@sivir-ui/svelte/components/tool';\n\n<Tool.Root name="1 file, 1 search, and 1 command" state="complete" duration="6s" variant="quiet">\n  <Tool.Item name="Bash" detail="pnpm lint" />\n  <Tool.Item name="Grep" detail="InputBar" kind="search" />\n  <Tool.Item name="Read" detail="/lib/input-bar.tsx" kind="read" />\n</Tool.Root>`}
             lang="svelte"
@@ -73,38 +60,24 @@
 
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
         </div>
         <div id="research-assistant" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Research assistant
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Research assistant</Typography.H3>
             <ComponentPreview code={HeroSrc}><Hero /></ComponentPreview>
         </div>
         <div id="tool-states" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
+            <Typography.H3 class="docs-subsection-heading">
                 Tool states in a support flow
-            </h3>
+            </Typography.H3>
             <ComponentPreview code={ToolStatesSrc}><ToolStates /></ComponentPreview>
         </div>
         <div id="quiet" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Quiet
-            </h3>
-            <p class="text-sm text-foreground-muted">
-                Use <code>variant="quiet"</code> when tool details should stay visually secondary to
-                the response.
-            </p>
+            <Typography.H3 class="docs-subsection-heading">Quiet</Typography.H3>
+            <Typography.Text variant="supporting">
+                Use <Typography.InlineCode>variant="quiet"</Typography.InlineCode> when tool details
+                should stay visually secondary to the response.
+            </Typography.Text>
             <ComponentPreview code={QuietSrc}><Quiet /></ComponentPreview>
         </div>
     </section>

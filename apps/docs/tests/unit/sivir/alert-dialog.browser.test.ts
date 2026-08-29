@@ -148,14 +148,15 @@ describe('AlertDialog -- non-dismissible backdrop (distinctive from Modal)', () 
 });
 
 describe('AlertDialog -- urgency and layout', () => {
-    it('adds a two-layer destructive ring when error is set', async () => {
+    it('marks the dialog as destructive without adding an error outline', async () => {
         render(AlertDialogFixture, { open: true, error: true });
         await flush();
 
         const dialog = document.querySelector('[role="alertdialog"]') as HTMLElement;
 
         expect(dialog.getAttribute('data-destructive')).toBe('true');
-        expect(dialog.className).toContain('shadow-[var(--elevation-alert-error)]');
+        expect(dialog.className).toContain('shadow-[var(--elevation-modal)]');
+        expect(dialog.className).not.toContain('elevation-alert-error');
     });
 
     it('uses the horizontal width and action layout when requested', async () => {

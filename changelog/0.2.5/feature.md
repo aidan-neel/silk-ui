@@ -1,0 +1,2 @@
+- Add non-interactive `leading` and `trailing` snippet adornments to text-entry `Input` controls, with support for icons, units, and short text inside both visual variants.
+- Add a complete document and interface typography family with `H1` through `H6`, role-based `Text`, `InlineCode`, `Title`, `Description`, and `Metadata`. Documentation pages and Markdown now share these primitives, while Card, Modal, and Message consume the compact interface recipes.

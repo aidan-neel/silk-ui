@@ -1,6 +1,7 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import type { MarkdownTableCell, MarkdownToken } from './_types';
     import Self from './markdown-token.svelte';
 
@@ -80,35 +81,29 @@
     <!-- Markdown spacing and reference definitions do not produce visible nodes. -->
     {:else if token.type === 'heading'}
         {#if token.depth === 1}
-            <h1
-                class="mb-3 mt-7 text-[1.25rem] leading-[1.2] font-semibold tracking-[-0.02em] text-balance text-foreground"
-            >
+            <Typography.H1 class="mb-3 mt-7">
                 <Self tokens={token.tokens ?? []} />
-            </h1>
+            </Typography.H1>
         {:else if token.depth === 2}
-            <h2
-                class="mb-2.5 mt-6 text-[1.1rem] leading-[1.25] font-semibold tracking-[-0.015em] text-balance text-foreground"
-            >
+            <Typography.H2 class="mb-2.5 mt-6">
                 <Self tokens={token.tokens ?? []} />
-            </h2>
+            </Typography.H2>
         {:else if token.depth === 3}
-            <h3
-                class="mb-2 mt-5 text-[0.95rem] leading-snug font-semibold text-balance text-foreground"
-            >
+            <Typography.H3 class="mb-2 mt-5">
                 <Self tokens={token.tokens ?? []} />
-            </h3>
+            </Typography.H3>
         {:else if token.depth === 4}
-            <h4 class="mb-2 mt-5 font-semibold text-balance text-foreground">
+            <Typography.H4 class="mb-2 mt-5">
                 <Self tokens={token.tokens ?? []} />
-            </h4>
+            </Typography.H4>
         {:else if token.depth === 5}
-            <h5 class="mb-2 mt-4 font-semibold text-balance text-foreground-muted">
+            <Typography.H5 class="mb-2 mt-4">
                 <Self tokens={token.tokens ?? []} />
-            </h5>
+            </Typography.H5>
         {:else}
-            <h6 class="mb-2 mt-4 font-medium text-balance text-foreground-muted">
+            <Typography.H6 class="mb-2 mt-4">
                 <Self tokens={token.tokens ?? []} />
-            </h6>
+            </Typography.H6>
         {/if}
     {:else if token.type === 'paragraph'}
         <p class="my-3 text-pretty">
@@ -127,10 +122,7 @@
             <Self tokens={token.tokens ?? [{ type: 'text', text: token.text ?? '' }]} />
         </del>
     {:else if token.type === 'codespan'}
-        <code
-            class="rounded-[var(--radius-sm)] bg-secondary px-1.5 py-0.5 font-mono text-[0.875em] font-medium text-foreground [box-decoration-break:clone] [overflow-wrap:anywhere]"
-            >{token.text ?? ''}</code
-        >
+        <Typography.InlineCode>{token.text ?? ''}</Typography.InlineCode>
     {:else if token.type === 'code'}
         <CodeBlock
             code={token.text ?? ''}

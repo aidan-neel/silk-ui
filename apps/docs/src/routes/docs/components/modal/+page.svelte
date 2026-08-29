@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Basic from './examples/basic.svelte';
@@ -28,17 +29,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Modal
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Modal </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A low-level overlay primitive for building custom dialog surfaces.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -52,22 +46,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">Import Modal and use it in your component:</p>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Import Modal and use it in your component:
+        </Typography.Text>
         <CodeBlock
             code={`import * as Modal from '$lib/sivir/components/modal';\n\n<Modal.Root open={isOpen} orientation="horizontal">\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Header>\n      <Modal.Title>Title</Modal.Title>\n    </Modal.Header>\n  </Modal.Content>\n</Modal.Root>`}
             lang="svelte"
@@ -78,53 +66,35 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">Modal with various structures.</p>
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
+                Modal with various structures.
+            </Typography.Text>
         </div>
 
         <div id="basic" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Basic
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Basic </Typography.H3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
             </ComponentPreview>
         </div>
 
         <div id="size-compact" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Compact
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Compact </Typography.H3>
             <ComponentPreview code={CompactSrc}>
                 <Compact />
             </ComponentPreview>
         </div>
 
         <div id="size-large" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Large
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Large </Typography.H3>
             <ComponentPreview code={LargeSrc}>
                 <Large />
             </ComponentPreview>
         </div>
 
         <div id="size-wide" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Wide
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Wide </Typography.H3>
             <ComponentPreview code={WideSrc}>
                 <Wide />
             </ComponentPreview>

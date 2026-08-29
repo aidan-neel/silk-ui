@@ -52,7 +52,8 @@ export const components = [
     'toggle-group',
     'tool',
     'toolbar',
-    'tooltip'
+    'tooltip',
+    'typography'
 ] as const;
 
 export const sanitizeComponent = (name: string) => {

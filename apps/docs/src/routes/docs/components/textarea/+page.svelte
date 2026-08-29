@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Basic from './examples/basic.svelte';
@@ -25,17 +26,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                {TITLE}
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1>{TITLE}</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A multi-line text input that shares the Input styling.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -49,25 +43,18 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
-            Import Textarea and bind its value. Add <code>autoresize</code> for message composers
-            that grow with their content.
-        </p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Import Textarea and bind its value. Add
+            <Typography.InlineCode>autoresize</Typography.InlineCode>
+            for message composers that grow with their content.
+        </Typography.Text>
         <CodeBlock
             code={`import { Textarea } from '$lib/sivir/components/textarea';\n\n<Textarea bind:value autoresize label="Message" />`}
             lang="svelte"
@@ -78,21 +65,15 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">Textarea in different configurations.</p>
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
+                Textarea in different configurations.
+            </Typography.Text>
         </div>
 
         <!-- Basic -->
         <div id="basic" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Basic
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Basic</Typography.H3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
             </ComponentPreview>
@@ -100,11 +81,9 @@
 
         <!-- With label and description -->
         <div id="labeled" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
+            <Typography.H3 class="docs-subsection-heading">
                 With label and description
-            </h3>
+            </Typography.H3>
             <ComponentPreview code={LabeledSrc}>
                 <Labeled />
             </ComponentPreview>
@@ -112,11 +91,7 @@
 
         <!-- Disabled -->
         <div id="disabled" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Disabled
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Disabled</Typography.H3>
             <ComponentPreview code={DisabledSrc}>
                 <Disabled />
             </ComponentPreview>

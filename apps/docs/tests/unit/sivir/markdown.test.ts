@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest';
-import { render, screen, within } from '@testing-library/svelte';
 import { Markdown } from '@sivir-ui/svelte/components/markdown';
+import { render, screen, within } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
 
 describe('Markdown', () => {
     it('renders representative GFM structures', () => {
         const content = [
-            '# Release status',
+            '# Release status with `details`',
             '',
             '| Check | Result |',
             '| --- | --- |',
@@ -21,8 +21,12 @@ describe('Markdown', () => {
         const { container } = render(Markdown, { props: { content } });
 
         expect(
-            screen.getByRole('heading', { level: 1, name: 'Release status' })
+            screen.getByRole('heading', { level: 1, name: 'Release status with details' })
         ).toBeInTheDocument();
+        expect(container.querySelector('[data-ui="typography-h1"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-ui="typography-inline-code"]')).toHaveTextContent(
+            'details'
+        );
         const table = within(screen.getByRole('region', { name: 'Markdown table' })).getByRole(
             'table'
         );

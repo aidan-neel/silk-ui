@@ -69,28 +69,31 @@
 <Toaster />
 
 <main
-    class={`w-screen bg-background p-3 ${isDocs ? 'h-[100svh] overflow-hidden' : 'min-h-screen'}`}
+    class={`w-screen bg-background ${isDocs ? 'h-[100svh] overflow-hidden p-3' : 'min-h-screen p-3'}`}
 >
     {#if isHome}
         <div class="relative mx-auto flex min-h-[calc(100vh-1.5rem)] w-full max-w-none flex-col">
             {@render children?.()}
         </div>
+    {:else if isDocs}
+        <div class="flex h-[calc(100svh-1.5rem)] w-full gap-3">
+            <SideNavbar class="hidden h-full w-[17.5rem] shrink-0 px-3 pt-5 lg:flex" />
+            <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
+                <DocsToolbar starCount={data?.starCount ?? null} />
+                <div bind:this={docsScrollEl} class="min-h-0 flex-1 overflow-y-auto">
+                    {@render children?.()}
+                </div>
+            </div>
+        </div>
     {:else}
-        <div
-            class={`flex w-full gap-3 ${isDocs ? 'h-[calc(100svh-1.5rem)]' : 'min-h-[calc(100svh-1.5rem)]'}`}
-        >
-            {#if isDocs}
-                <SideNavbar
-                    class="hidden h-[calc(100svh-1.5rem)] w-64 flex-shrink-0 pt-5 pr-4 lg:flex"
-                />
-            {/if}
+        <div class="flex min-h-[calc(100svh-1.5rem)] w-full gap-3">
             <div
                 class="flex min-w-0 flex-1 flex-col overflow-clip rounded-[calc(var(--radius-lg)+0.5rem)] border border-border bg-background"
             >
                 <DocsToolbar starCount={data?.starCount ?? null} />
                 <div
                     bind:this={docsScrollEl}
-                    class={`mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 px-4 md:px-6 lg:flex-row lg:gap-0 ${isDocs ? 'min-h-0 overflow-y-auto' : ''}`}
+                    class="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 px-4 md:px-6 lg:flex-row lg:gap-0"
                 >
                     {@render children?.()}
                 </div>
