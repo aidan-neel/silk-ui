@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-svelte';
 import ReorderListFixture from '../../fixtures/ReorderListFixture.svelte';
 
@@ -50,9 +50,31 @@ describe('ReorderList pointer reordering', () => {
     it('moves and commits a row dragged over another row', async () => {
         render(ReorderListFixture);
 
-        await userEvent.dragAndDrop(
-            page.getByRole('button', { name: 'First' }),
-            page.getByRole('button', { name: 'Third' })
+        const first = page.getByRole('button', { name: 'First' }).element() as HTMLButtonElement;
+        const third = page.getByRole('button', { name: 'Third' }).element() as HTMLButtonElement;
+        const list = first.closest('ol') as HTMLOListElement;
+        list.setPointerCapture = () => {};
+        list.hasPointerCapture = () => false;
+
+        const firstRect = first.getBoundingClientRect();
+        const thirdRect = third.getBoundingClientRect();
+        const pointerId = 1;
+        first.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                bubbles: true,
+                button: 0,
+                clientY: firstRect.top + firstRect.height / 2,
+                pointerId
+            })
+        );
+        // Drop clearly above the target's center so the landing slot does not
+        // depend on subpixel rounding at the exact midpoint boundary.
+        const dropY = thirdRect.top + thirdRect.height * 0.25;
+        window.dispatchEvent(
+            new PointerEvent('pointermove', { bubbles: true, clientY: dropY, pointerId })
+        );
+        window.dispatchEvent(
+            new PointerEvent('pointerup', { bubbles: true, clientY: dropY, pointerId })
         );
 
         await expect

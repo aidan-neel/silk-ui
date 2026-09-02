@@ -304,7 +304,7 @@ describe('Combobox -- menu search', () => {
         expect(searchField).not.toBeNull();
         expect(searchField).toHaveAttribute('data-variant', 'secondary');
         expect(searchField).toHaveClass(
-            'h-[calc(var(--size-control-sm)+var(--sivir-space-1))]',
+            'h-[calc(var(--size-control-sm)+var(--spacing))]',
             'rounded-[var(--radius-lg)]',
             'bg-secondary'
         );

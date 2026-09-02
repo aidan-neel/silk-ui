@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page } from 'vitest/browser';
 import { tick } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { page } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import MenuItemContractFixture from '../../fixtures/MenuItemContractFixture.svelte';
 
 /*
@@ -42,7 +42,10 @@ describe('menu-item stylesheet contract', () => {
         expect(style.display).toBe('flex');
         expect(style.justifyContent).toBe('space-between');
         expect(style.textAlign).toBe('left');
-        expect(style.height).toBe('32px');
+        const unit = parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue('--sivir-space-unit')
+        );
+        expect(parseFloat(style.height)).toBeCloseTo(unit * 8, 0);
     });
 
     it('lets a consumer utility class win over the contract', async () => {
@@ -53,8 +56,11 @@ describe('menu-item stylesheet contract', () => {
         const plain = getComputedStyle(rowFor('plain-item'));
         const overridden = getComputedStyle(rowFor('override-item'));
 
-        expect(plain.height).toBe('32px');
-        expect(overridden.height).toBe('64px');
+        const unit = parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue('--sivir-space-unit')
+        );
+        expect(parseFloat(plain.height)).toBeCloseTo(unit * 8, 0);
+        expect(parseFloat(overridden.height)).toBeCloseTo(unit * 16, 0);
         expect(overridden.justifyContent).toBe('flex-start');
     });
 });

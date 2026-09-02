@@ -2,3 +2,4 @@
 - Density, type, and status tokens now drive component chrome instead of leftover Tailwind defaults and hardcoded lengths.
 - Color Picker and other portaled layers stay interactive inside Modal.
 - Refresh release and Tabs tests for the simplified hero copy and the hairline token.
+- Refresh Combobox and menu-item browser tests for the density-driven spacing scale, and make the reorder drag test land off the midpoint boundary.
