@@ -37,7 +37,9 @@
                 <p class="font-[var(--font-weight-label)] text-foreground">{title}</p>
             {/if}
             {#if description}
-                <p class="mt-1 max-w-xs text-sm leading-6 text-foreground-muted">{description}</p>
+                <p class="mt-1 max-w-xs text-sm leading-body text-foreground-muted">
+                    {description}
+                </p>
             {/if}
             {#if action}
                 <div class="mt-4">{@render action()}</div>

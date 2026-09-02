@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button } from '@sivir-ui/svelte/components/button';
-    import { isPointInSubmenuTriangle, positionFloatingPanel } from '@sivir-ui/svelte/utils';
+    import { cn, isPointInSubmenuTriangle, positionFloatingPanel } from '@sivir-ui/svelte/utils';
     import { onMount, tick } from 'svelte';
     import type { Placement, PopoverTriggerProps } from '.';
     import { getPopoverContext } from './context.svelte';
@@ -107,7 +107,10 @@
 <Button
     bind:element
     {...rest}
-    class={classProp}
+    class={cn(
+        classProp,
+        popoverState.open && !popoverState.hoverable && popoverState.inert && 'relative z-[130]'
+    )}
     {style}
     onclick={() => {
         if (popoverState.open) {

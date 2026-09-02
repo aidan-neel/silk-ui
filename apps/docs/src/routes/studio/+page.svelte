@@ -1,9 +1,6 @@
 <script lang="ts">
     import Bell from '@lucide/svelte/icons/bell';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
-    import CircleDollarSign from '@lucide/svelte/icons/circle-dollar-sign';
-    import CreditCard from '@lucide/svelte/icons/credit-card';
-    import Download from '@lucide/svelte/icons/download';
     import FileText from '@lucide/svelte/icons/file-text';
     import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
     import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
@@ -12,23 +9,28 @@
     import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
     import Search from '@lucide/svelte/icons/search';
     import Settings from '@lucide/svelte/icons/settings';
-    import Users from '@lucide/svelte/icons/users';
-    import WalletCards from '@lucide/svelte/icons/wallet-cards';
+    import * as Accordion from '@sivir-ui/svelte/components/accordion';
     import * as Alert from '@sivir-ui/svelte/components/alert';
     import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
     import * as Avatar from '@sivir-ui/svelte/components/avatar';
     import { Badge } from '@sivir-ui/svelte/components/badge';
-    import * as Breadcrumb from '@sivir-ui/svelte/components/breadcrumb';
     import { Button } from '@sivir-ui/svelte/components/button';
     import * as Card from '@sivir-ui/svelte/components/card';
     import { Checkbox } from '@sivir-ui/svelte/components/checkbox';
     import * as ColorPicker from '@sivir-ui/svelte/components/color-picker';
+    import * as Combobox from '@sivir-ui/svelte/components/combobox';
+    import * as Command from '@sivir-ui/svelte/components/command';
+    import * as ContextMenu from '@sivir-ui/svelte/components/context-menu';
+    import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import { Gauge } from '@sivir-ui/svelte/components/gauge';
+    import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
     import { Input } from '@sivir-ui/svelte/components/input';
     import * as Modal from '@sivir-ui/svelte/components/modal';
     import { Pagination } from '@sivir-ui/svelte/components/pagination';
+    import * as Popover from '@sivir-ui/svelte/components/popover';
     import { Progress, type ProgressProps } from '@sivir-ui/svelte/components/progress';
+    import * as RadioGroup from '@sivir-ui/svelte/components/radio-group';
     import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
     import * as Select from '@sivir-ui/svelte/components/select';
     import * as Sheet from '@sivir-ui/svelte/components/sheet';
@@ -36,8 +38,10 @@
     import { Slider, type SliderProps } from '@sivir-ui/svelte/components/slider';
     import { Switch } from '@sivir-ui/svelte/components/switch';
     import * as Tabs from '@sivir-ui/svelte/components/tabs';
+    import { TaskSteps } from '@sivir-ui/svelte/components/task-steps';
+    import { Textarea } from '@sivir-ui/svelte/components/textarea';
     import { toast } from '@sivir-ui/svelte/components/toast';
-    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
+    import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
     import {
@@ -56,6 +60,31 @@
     import { mode, setMode } from 'mode-watcher';
     import { onMount } from 'svelte';
     import { fonts } from '$lib/fonts.svelte';
+    import {
+        type AnimationTokenDefinition,
+        type AnimationTokenName,
+        animationTokenDefinitions,
+        animationTokenGroups,
+        type ColorTokenDefinition,
+        type ColorTokenName,
+        colorTokenDefinitions,
+        colorTokenGroups,
+        easingOptions,
+        formatCssColor,
+        formatMs,
+        formatPx,
+        formatScale,
+        matchingEase,
+        normalizeEase,
+        parseCssColor,
+        parseDurationMs,
+        parsePxLength,
+        parseScale,
+        type SpacingTokenDefinition,
+        type SpacingTokenName,
+        spacingTokenDefinitions,
+        spacingTokenGroups
+    } from '$lib/studio-advanced-tokens';
 
     type FoundationPalette = {
         base: string;
@@ -70,6 +99,8 @@
         dark: FoundationPalette;
     };
 
+    type InteractiveCursor = 'default' | 'pointer';
+
     type StudioExtensions = {
         presetSlug: string;
         headerSize: number;
@@ -77,6 +108,9 @@
         roleWeights: RoleWeights;
         foundationColors: FoundationColors;
         advancedTokens: AdvancedTokens;
+        shadows: boolean;
+        primaryStroke: boolean;
+        interactiveCursor: InteractiveCursor;
     };
 
     type AdvancedTab = 'colors' | 'spacing' | 'animation';
@@ -115,6 +149,7 @@
         description: '400'
     };
     const fontWeights = ['400', '500', '600', '700'] as const;
+    const cursorChoices = ['default', 'pointer'] as const;
 
     const brandSwatches = [
         { label: 'Sivir blue', value: '#1f9be6' },
@@ -154,182 +189,6 @@
         { label: 'Coal', value: '#1a1a1a' }
     ];
 
-    const colorTokenDefinitions = [
-        { name: '--sivir-neutral-0', fallback: 'hsl(0 0% 100%)', darkFallback: 'hsl(0 0% 5%)' },
-        { name: '--sivir-neutral-10', fallback: 'hsl(60 11.1% 99.2%)' },
-        {
-            name: '--sivir-neutral-50',
-            fallback: 'hsl(60 11.1% 96.5%)',
-            darkFallback: 'hsl(0 0% 10%)'
-        },
-        {
-            name: '--sivir-neutral-100',
-            fallback: 'hsl(60 6.2% 93.7%)',
-            darkFallback: 'hsl(0 0% 13%)'
-        },
-        {
-            name: '--sivir-neutral-150',
-            fallback: 'hsl(60 4.2% 90.6%)',
-            darkFallback: 'hsl(0 0% 15.7%)'
-        },
-        {
-            name: '--sivir-neutral-300',
-            fallback: 'hsl(60 4.4% 82.4%)',
-            darkFallback: 'hsl(0 0% 22.7%)'
-        },
-        {
-            name: '--sivir-neutral-500',
-            fallback: 'hsl(60 3% 41.5%)',
-            darkFallback: 'hsl(0 0% 65%)'
-        },
-        {
-            name: '--sivir-neutral-900',
-            fallback: 'hsl(60 5.7% 10.4%)',
-            darkFallback: 'hsl(0 0% 93%)'
-        },
-        {
-            name: '--sivir-blue-50',
-            fallback: 'hsl(218.8 100% 96.7%)',
-            darkFallback: 'hsl(217.1 52.5% 15.7%)'
-        },
-        {
-            name: '--sivir-blue-500',
-            fallback: 'hsl(212.2 100% 64.5%)',
-            darkFallback: 'hsl(216.6 100% 67.8%)'
-        },
-        {
-            name: '--sivir-success',
-            fallback: 'hsl(148.7 42.2% 42.7%)',
-            darkFallback: 'hsl(149.7 39.4% 49.2%)'
-        },
-        {
-            name: '--sivir-warning',
-            fallback: 'hsl(36.1 64.8% 47.8%)',
-            darkFallback: 'hsl(37.3 72.6% 55.7%)'
-        },
-        {
-            name: '--sivir-error',
-            fallback: 'hsl(0 57.7% 56.5%)',
-            darkFallback: 'hsl(0 66.7% 63.5%)'
-        },
-        {
-            name: '--color-background',
-            fallback: 'var(--sivir-neutral-10)',
-            darkFallback: 'hsl(0 0% 4%)'
-        },
-        { name: '--color-card', fallback: 'var(--sivir-neutral-0)', darkFallback: 'hsl(0 0% 9%)' },
-        {
-            name: '--color-panel',
-            fallback: 'var(--sivir-neutral-0)',
-            darkFallback: 'hsl(0 0% 11.5%)'
-        },
-        {
-            name: '--color-muted',
-            fallback: 'var(--sivir-neutral-50)',
-            darkFallback: 'hsl(0 0% 7%)'
-        },
-        {
-            name: '--color-secondary',
-            fallback: 'var(--sivir-neutral-100)',
-            darkFallback: 'hsl(0 0% 14.5%)'
-        },
-        {
-            name: '--color-border',
-            fallback: 'var(--sivir-neutral-150)',
-            darkFallback: 'hsl(0 0% 16.5%)'
-        },
-        {
-            name: '--color-border-strong',
-            fallback: 'var(--sivir-neutral-300)',
-            darkFallback: 'hsl(0 0% 26%)'
-        },
-        {
-            name: '--color-input',
-            fallback: 'var(--sivir-neutral-300)',
-            darkFallback: 'hsl(0 0% 24%)'
-        },
-        { name: '--color-foreground', fallback: 'var(--sivir-neutral-900)' },
-        { name: '--color-foreground-muted', fallback: 'var(--sivir-neutral-500)' },
-        { name: '--color-primary', fallback: '#1f9be6' },
-        { name: '--color-primary-hover', fallback: '#1270ad' },
-        { name: '--color-on-primary', fallback: 'hsl(0 0% 100%)' },
-        { name: '--color-accent-tint', fallback: 'var(--sivir-blue-50)' },
-        {
-            name: '--color-ring',
-            fallback: 'color-mix(in srgb, var(--color-primary) 30%, transparent)'
-        },
-        {
-            name: '--color-overlay',
-            fallback: 'rgb(0 0 0 / 0.18)',
-            darkFallback: 'rgb(0 0 0 / 0.55)'
-        },
-        { name: '--color-success', fallback: 'var(--sivir-success)' },
-        { name: '--color-warning', fallback: 'var(--sivir-warning)' },
-        { name: '--color-error', fallback: 'var(--sivir-error)' },
-        { name: '--color-info', fallback: 'var(--sivir-blue-500)' },
-        { name: '--color-tooltip', fallback: 'var(--sivir-neutral-900)' },
-        { name: '--color-tooltip-foreground', fallback: 'var(--sivir-neutral-0)' },
-        {
-            name: '--color-field',
-            fallback: 'var(--color-card)',
-            darkFallback: 'var(--color-secondary)'
-        },
-        {
-            name: '--color-field-hover',
-            fallback: 'var(--color-muted)',
-            darkFallback: 'hsl(0 0% 17.5%)'
-        },
-        { name: '--color-field-foreground', fallback: 'var(--color-foreground)' }
-    ] as const;
-    const spacingTokenDefinitions = [
-        { name: '--sivir-space-unit', fallback: '3.6px' },
-        { name: '--sivir-space-1', fallback: 'calc(var(--sivir-space-unit) * 1)' },
-        { name: '--sivir-space-2', fallback: 'calc(var(--sivir-space-unit) * 2)' },
-        { name: '--sivir-space-3', fallback: 'calc(var(--sivir-space-unit) * 3)' },
-        { name: '--sivir-space-4', fallback: 'calc(var(--sivir-space-unit) * 4)' },
-        { name: '--sivir-space-5', fallback: 'calc(var(--sivir-space-unit) * 5)' },
-        { name: '--sivir-space-6', fallback: 'calc(var(--sivir-space-unit) * 6)' },
-        { name: '--sivir-space-8', fallback: 'calc(var(--sivir-space-unit) * 8)' },
-        { name: '--sivir-space-10', fallback: 'calc(var(--sivir-space-unit) * 10)' },
-        { name: '--size-control-sm', fallback: 'var(--sivir-space-8)' },
-        {
-            name: '--size-control-md',
-            fallback: 'calc(var(--sivir-space-8) + var(--sivir-space-2))'
-        },
-        { name: '--size-control-lg', fallback: 'var(--sivir-space-10)' },
-        { name: '--size-icon-md', fallback: 'var(--sivir-space-8)' },
-        { name: '--radius-sm', fallback: '6px' },
-        { name: '--radius-md', fallback: '8px' },
-        { name: '--radius-lg', fallback: '10px' },
-        { name: '--radius-xl', fallback: '14px' },
-        { name: '--border-size', fallback: '1px' }
-    ] as const;
-    const animationTokenDefinitions = [
-        { name: '--motion-duration-hover', fallback: '120ms' },
-        { name: '--motion-duration-menu', fallback: '40ms' },
-        { name: '--motion-duration-panel', fallback: '180ms' },
-        { name: '--motion-duration-sheet', fallback: '320ms' },
-        { name: '--motion-duration-sheet-out', fallback: '220ms' },
-        { name: '--motion-duration-overlay', fallback: '120ms' },
-        { name: '--motion-duration-toast-in', fallback: '320ms' },
-        { name: '--motion-duration-toast-out', fallback: '240ms' },
-        { name: '--motion-panel-y', fallback: '2px' },
-        { name: '--motion-panel-scale-start', fallback: '0.97' },
-        { name: '--motion-duration-panel-in', fallback: '110ms' },
-        { name: '--motion-duration-panel-out', fallback: '150ms' },
-        { name: '--motion-duration-modal-in', fallback: '180ms' },
-        { name: '--motion-duration-modal-out', fallback: '110ms' },
-        { name: '--motion-press-px', fallback: '2px' },
-        { name: '--motion-duration-press', fallback: '160ms' },
-        { name: '--motion-duration-item', fallback: '160ms' },
-        { name: '--ease-out', fallback: 'cubic-bezier(0.23, 1, 0.32, 1)' },
-        { name: '--ease-press', fallback: 'cubic-bezier(0.22, 1, 0.36, 1)' },
-        { name: '--ease-in-out', fallback: 'cubic-bezier(0.77, 0, 0.175, 1)' }
-    ] as const;
-
-    type ColorTokenName = (typeof colorTokenDefinitions)[number]['name'];
-    type SpacingTokenName = (typeof spacingTokenDefinitions)[number]['name'];
-    type AnimationTokenName = (typeof animationTokenDefinitions)[number]['name'];
     type AdvancedTokens = {
         colors: Record<'light' | 'dark', Partial<Record<ColorTokenName, string>>>;
         spacing: Partial<Record<SpacingTokenName, string>>;
@@ -372,49 +231,17 @@
         default: '3.6px',
         comfortable: '4px'
     } as const;
-    const dashboardNavItems = [
-        { label: 'Overview', icon: LayoutDashboard },
-        { label: 'Invoices', icon: FileText, badge: '9' },
-        { label: 'Payments', icon: CreditCard },
-        { label: 'Customers', icon: Users },
-        { label: 'Accounts', icon: WalletCards },
-        { label: 'Settings', icon: Settings }
-    ];
-    const dashboardStats = [
-        {
-            label: 'Outstanding',
-            value: '$48,120',
-            detail: 'Across 9 invoices',
-            change: '+8.4%',
-            progress: 64,
-            destructive: false
-        },
-        {
-            label: 'Collected',
-            value: '$112,400',
-            detail: '82% of monthly target',
-            change: '+12.1%',
-            progress: 82,
-            destructive: false
-        },
-        {
-            label: 'Overdue',
-            value: '$9,860',
-            detail: '3 invoices need action',
-            change: '-2.6%',
-            progress: 22,
-            destructive: true
-        },
-        {
-            label: 'Available cash',
-            value: '$186,240',
-            detail: 'Across 4 accounts',
-            change: '+4.3%',
-            progress: 72,
-            destructive: false
-        }
-    ];
-    const invoices = [
+    type InvoiceStatus = 'Paid' | 'Due soon' | 'Overdue' | 'Sent' | 'Draft';
+    type Invoice = {
+        client: string;
+        initials: string;
+        reference: string;
+        due: string;
+        amount: string;
+        status: InvoiceStatus;
+    };
+    const INVOICE_PAGE_SIZE = 4;
+    const initialInvoices: Invoice[] = [
         {
             client: 'Northwind Trading',
             initials: 'NT',
@@ -454,17 +281,31 @@
             due: 'Sep 21',
             amount: '$4,280',
             status: 'Draft'
-        }
-    ] as const;
-    const collectionActivity = [
-        {
-            initials: 'KL',
-            client: 'Kestrel Logistics',
-            detail: 'Reminder scheduled',
-            time: '12 min'
         },
-        { initials: 'HS', client: 'Halcyon Studio', detail: 'Invoice viewed', time: '1 hr' },
-        { initials: 'NT', client: 'Northwind Trading', detail: 'Payment reconciled', time: '3 hr' }
+        {
+            client: 'Riverline Press',
+            initials: 'RP',
+            reference: 'INV-2261',
+            due: 'Sep 24',
+            amount: '$2,940',
+            status: 'Sent'
+        },
+        {
+            client: 'Oak & Pine',
+            initials: 'OP',
+            reference: 'INV-2254',
+            due: 'Aug 19',
+            amount: '$7,110',
+            status: 'Overdue'
+        },
+        {
+            client: 'Fieldwork Labs',
+            initials: 'FL',
+            reference: 'INV-2248',
+            due: 'Sep 28',
+            amount: '$5,600',
+            status: 'Due soon'
+        }
     ];
     let theme = $state<Theme>({
         ...DEFAULT_THEME,
@@ -488,23 +329,51 @@
         dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
     });
     let advancedTokens = $state<AdvancedTokens>(emptyAdvancedTokens());
+    let shadows = $state(true);
+    let primaryStroke = $state(false);
+    let interactiveCursor = $state<InteractiveCursor>('default');
     let advancedTab = $state<AdvancedTab>('colors');
     let moreOptionsOpen = $state(false);
     let pendingPreset = $state<string | null>(null);
     let presetDialogOpen = $state(false);
-    let activeDashboardNav = $state('Overview');
+    let studioView = $state('invoices');
     let dashboardRange = $state('30d');
+    let invoices = $state<Invoice[]>(initialInvoices.map((invoice) => ({ ...invoice })));
     let invoiceQuery = $state('');
     let invoiceStatus = $state('all');
     let invoicePage = $state(1);
+    let invoiceModalOpen = $state(false);
+    let newInvoiceCustomer = $state('');
+    let newInvoiceNotes = $state('');
     let autoReconcile = $state(true);
-    let selectedInvoices = $state<Record<(typeof invoices)[number]['reference'], boolean>>({
-        'INV-2291': false,
-        'INV-2288': false,
-        'INV-2279': false,
-        'INV-2274': false,
-        'INV-2268': false
-    });
+    let reminderCadence = $state('weekly');
+    let reminderDays = $state(3);
+    let companyName = $state('Northstar Ledger');
+    let selectedInvoices = $state<Record<string, boolean>>(
+        Object.fromEntries(initialInvoices.map((invoice) => [invoice.reference, false]))
+    );
+    let notifications = $state([
+        {
+            id: 'overdue',
+            title: 'Kestrel Logistics is overdue',
+            detail: '$9,860 · INV-2279',
+            read: false
+        },
+        {
+            id: 'viewed',
+            title: 'Halcyon Studio viewed INV-2288',
+            detail: '14 minutes ago',
+            read: false
+        },
+        {
+            id: 'paid',
+            title: 'Northwind Trading paid INV-2291',
+            detail: '$12,400 received',
+            read: true
+        }
+    ]);
+    let commandOpen = $state(false);
+    let settingsSections = $state<string[]>(['workspace', 'reminders']);
     let copiedKey = $state<'css' | 'json' | null>(null);
     let hydrated = $state(false);
     const appMode = $derived(mode.current === 'dark' ? 'dark' : 'light');
@@ -533,6 +402,44 @@
             return matchesQuery && matchesStatus;
         })
     );
+    const invoicePageCount = $derived(
+        Math.max(1, Math.ceil(visibleInvoices.length / INVOICE_PAGE_SIZE))
+    );
+    const pagedInvoices = $derived(
+        visibleInvoices.slice(
+            (invoicePage - 1) * INVOICE_PAGE_SIZE,
+            invoicePage * INVOICE_PAGE_SIZE
+        )
+    );
+    const allVisibleSelected = $derived(
+        pagedInvoices.length > 0 &&
+            pagedInvoices.every((invoice) => selectedInvoices[invoice.reference])
+    );
+    const unreadNotificationCount = $derived(
+        notifications.filter((notification) => !notification.read).length
+    );
+    const overdueCount = $derived(
+        invoices.filter((invoice) => invoice.status === 'Overdue').length
+    );
+    const outstandingTotal = $derived(
+        invoices
+            .filter((invoice) => invoice.status !== 'Paid')
+            .reduce(
+                (sum, invoice) => sum + Number.parseFloat(invoice.amount.replace(/[$,]/g, '')),
+                0
+            )
+    );
+    const coverageValue = $derived(
+        dashboardRange === '7d' ? 54 : dashboardRange === 'Quarter' ? 81 : 72
+    );
+    const customers = $derived([...new Set(invoices.map((invoice) => invoice.client))].sort());
+    const collectionSteps = [
+        { id: 'scan', label: 'Scan overdue', meta: 'Open invoices' },
+        { id: 'remind', label: 'Send reminders', meta: 'Today' },
+        { id: 'collect', label: 'Record payments' },
+        { id: 'reconcile', label: 'Reconcile' }
+    ];
+    const collectionStep = $derived(autoReconcile ? 2 : 1);
 
     const foundationColorChanges = $derived(
         (['light', 'dark'] as const).reduce((count, colorMode) => {
@@ -564,11 +471,14 @@
             advancedTokenChanges +
             (headerSize === 16 ? 0 : 1) +
             (headerWeight === '600' ? 0 : 1) +
-            roleWeightChanges
+            roleWeightChanges +
+            (shadows ? 0 : 1) +
+            (primaryStroke ? 1 : 0) +
+            (interactiveCursor === 'default' ? 0 : 1)
     );
     const dirty = $derived(changedAxisCount > 0);
     const generatedCss = $derived(
-        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${foundationCssBlock(':root', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}`
+        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${foundationCssBlock(':root', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}${chromeCssBlock()}`
     );
     const generatedJson = $derived(
         JSON.stringify(
@@ -580,7 +490,10 @@
                     headerWeight,
                     roleWeights,
                     foundationColors,
-                    advancedTokens
+                    advancedTokens,
+                    shadows,
+                    primaryStroke,
+                    interactiveCursor
                 },
                 css: generatedCss
             },
@@ -613,6 +526,28 @@
         ];
 
         return `${selector} {\n${declarations.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
+    }
+
+    function chromeCssBlock() {
+        const declarations = [
+            `--ui-cursor-interactive: ${interactiveCursor};`,
+            `--color-primary-stroke: ${
+                primaryStroke
+                    ? 'color-mix(in srgb, var(--color-on-primary) 32%, transparent)'
+                    : 'transparent'
+            };`
+        ];
+        if (!shadows) {
+            declarations.push(
+                '--elevation-1: none;',
+                '--elevation-float: none;',
+                '--elevation-modal: none;',
+                '--elevation-control: none;',
+                '--elevation-button-outline: none;'
+            );
+        }
+
+        return `:root,\n.dark {\n${declarations.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
     }
 
     function tokenOverridesCssBlock<T extends string>(
@@ -714,6 +649,15 @@
                     animation: { ...value.advancedTokens.animation }
                 };
             }
+            if (typeof value.shadows === 'boolean') {
+                shadows = value.shadows;
+            }
+            if (typeof value.primaryStroke === 'boolean') {
+                primaryStroke = value.primaryStroke;
+            }
+            if (value.interactiveCursor === 'default' || value.interactiveCursor === 'pointer') {
+                interactiveCursor = value.interactiveCursor;
+            }
         } catch {
             localStorage.removeItem(STUDIO_EXTENSIONS_KEY);
         }
@@ -736,7 +680,10 @@
                 },
                 spacing: { ...advancedTokens.spacing },
                 animation: { ...advancedTokens.animation }
-            }
+            },
+            shadows,
+            primaryStroke,
+            interactiveCursor
         };
         localStorage.setItem(STUDIO_EXTENSIONS_KEY, JSON.stringify(extensions));
     }
@@ -760,6 +707,9 @@
             dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
         };
         advancedTokens = emptyAdvancedTokens();
+        shadows = true;
+        primaryStroke = false;
+        interactiveCursor = 'default';
         syncFontSelections(theme);
     }
 
@@ -778,6 +728,9 @@
             dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
         };
         advancedTokens = emptyAdvancedTokens();
+        shadows = true;
+        primaryStroke = false;
+        interactiveCursor = 'default';
         syncFontSelections(theme);
     }
 
@@ -831,11 +784,127 @@
         };
     }
 
-    function colorTokenFallback(definition: (typeof colorTokenDefinitions)[number]) {
-        if (appMode === 'dark' && 'darkFallback' in definition) {
+    function colorTokenFallback(definition: ColorTokenDefinition) {
+        if (appMode === 'dark' && 'darkFallback' in definition && definition.darkFallback) {
             return definition.darkFallback;
         }
+
         return definition.fallback;
+    }
+
+    function readCssVar(name: string) {
+        if (typeof document === 'undefined') {
+            return '';
+        }
+
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function resolveTokenRaw(name: string) {
+        const colorOverride = advancedTokens.colors[appMode][name as ColorTokenName];
+        if (colorOverride?.trim()) {
+            return colorOverride.trim();
+        }
+
+        const spacingOverride = advancedTokens.spacing[name as SpacingTokenName];
+        if (spacingOverride?.trim()) {
+            return spacingOverride.trim();
+        }
+
+        const animationOverride = advancedTokens.animation[name as AnimationTokenName];
+        if (animationOverride?.trim()) {
+            return animationOverride.trim();
+        }
+
+        const computed = readCssVar(name);
+        if (computed) {
+            return computed;
+        }
+
+        const colorDefinition = colorTokenDefinitions.find((item) => item.name === name);
+        if (colorDefinition) {
+            return colorTokenFallback(colorDefinition);
+        }
+
+        const spacingDefinition = spacingTokenDefinitions.find((item) => item.name === name);
+        if (spacingDefinition) {
+            return spacingDefinition.fallback;
+        }
+
+        const animationDefinition = animationTokenDefinitions.find((item) => item.name === name);
+        if (animationDefinition) {
+            return animationDefinition.fallback;
+        }
+
+        return '';
+    }
+
+    function resolveColorToken(definition: ColorTokenDefinition) {
+        const override = advancedTokens.colors[appMode][definition.name]?.trim() ?? '';
+        const raw = override || readCssVar(definition.name) || colorTokenFallback(definition);
+        const parsed = parseCssColor(raw, resolveTokenRaw);
+        if (parsed) {
+            return parsed;
+        }
+
+        return {
+            hex: '#000000',
+            alpha: 1
+        };
+    }
+
+    function resolveSpacingToken(definition: SpacingTokenDefinition) {
+        const override = advancedTokens.spacing[definition.name]?.trim() ?? '';
+        const raw = override || readCssVar(definition.name) || definition.fallback;
+        return parsePxLength(raw, resolveTokenRaw);
+    }
+
+    function resolveAnimationRaw(definition: AnimationTokenDefinition) {
+        const override = advancedTokens.animation[definition.name]?.trim() ?? '';
+        return override || readCssVar(definition.name) || definition.fallback;
+    }
+
+    function animationSliderValue(definition: AnimationTokenDefinition) {
+        const raw = resolveAnimationRaw(definition);
+        if (definition.kind === 'duration') {
+            return parseDurationMs(raw);
+        }
+
+        if (definition.kind === 'scale') {
+            return parseScale(raw);
+        }
+
+        return parsePxLength(raw, resolveTokenRaw);
+    }
+
+    function animationSliderDisplay(definition: AnimationTokenDefinition, value: number) {
+        if (definition.kind === 'duration') {
+            return formatMs(value);
+        }
+
+        if (definition.kind === 'scale') {
+            return formatScale(value);
+        }
+
+        return formatPx(value);
+    }
+
+    function commitAnimationSlider(definition: AnimationTokenDefinition, value: number) {
+        if (definition.kind === 'duration') {
+            updateAdvancedAnimationToken(definition.name, formatMs(value));
+            return;
+        }
+
+        if (definition.kind === 'scale') {
+            updateAdvancedAnimationToken(definition.name, formatScale(value));
+            return;
+        }
+
+        updateAdvancedAnimationToken(definition.name, formatPx(value));
+    }
+
+    function animationEaseValue(definition: AnimationTokenDefinition) {
+        return matchingEase(resolveAnimationRaw(definition));
     }
 
     function headerSliderProps(): SliderProps {
@@ -886,9 +955,98 @@
         }, 1200);
     }
 
-    function runDashboardAction(title: string, description: string) {
-        toast({ title, description, type: 'success', duration: 1800 });
+    function runDashboardAction(
+        title: string,
+        description: string,
+        type: 'success' | 'error' = 'success'
+    ) {
+        toast({ title, description, type, duration: 1800 });
     }
+
+    function invoiceBadgeVariant(status: InvoiceStatus) {
+        if (status === 'Paid') {
+            return 'success';
+        }
+        if (status === 'Overdue') {
+            return 'error';
+        }
+        if (status === 'Due soon') {
+            return 'warning';
+        }
+        return 'secondary';
+    }
+
+    function toggleSelectAll(next: boolean) {
+        for (const invoice of pagedInvoices) {
+            selectedInvoices[invoice.reference] = next;
+        }
+    }
+
+    function markInvoicePaid(reference: string) {
+        invoices = invoices.map((invoice) =>
+            invoice.reference === reference ? { ...invoice, status: 'Paid' } : invoice
+        );
+        runDashboardAction('Payment recorded', `${reference} is marked paid.`);
+    }
+
+    function createInvoice() {
+        const client = newInvoiceCustomer.trim();
+        if (client === '') {
+            runDashboardAction(
+                'Customer is required',
+                'Add a customer name to draft the invoice.',
+                'error'
+            );
+            invoiceModalOpen = true;
+            return;
+        }
+
+        const nextNumber = 2300 + invoices.length;
+        const reference = `INV-${nextNumber}`;
+        const initials = client
+            .split(' ')
+            .map((part) => part[0])
+            .join('')
+            .slice(0, 2)
+            .toUpperCase();
+
+        invoices = [
+            {
+                client,
+                initials,
+                reference,
+                due: 'Sep 30',
+                amount: '$0',
+                status: 'Draft'
+            },
+            ...invoices
+        ];
+        selectedInvoices[reference] = false;
+        newInvoiceCustomer = '';
+        newInvoiceNotes = '';
+        invoiceModalOpen = false;
+        studioView = 'invoices';
+        invoicePage = 1;
+        runDashboardAction('Invoice drafted', `${reference} is in the queue.`);
+    }
+
+    function markNotificationRead(id: string) {
+        notifications = notifications.map((notification) =>
+            notification.id === id ? { ...notification, read: true } : notification
+        );
+    }
+
+    $effect(() => {
+        invoiceQuery;
+        invoiceStatus;
+        invoicePage = 1;
+    });
+
+    $effect(() => {
+        if (invoicePage > invoicePageCount) {
+            invoicePage = invoicePageCount;
+        }
+    });
 
     onMount(() => {
         const storedTheme = loadStudioTheme();
@@ -970,7 +1128,9 @@
     {@const selection = valueBinding(value, onChange)}
     <div role="group" aria-label={label}>
         <Tabs.Root bind:value={selection.value} variant="segmented" class="w-full">
-            <Tabs.List class={`grid w-full ${values.length === 4 ? 'grid-cols-4' : 'grid-cols-3'}`}>
+            <Tabs.List
+                class={`grid w-full ${values.length === 2 ? 'grid-cols-2' : values.length === 4 ? 'grid-cols-4' : 'grid-cols-3'}`}
+            >
                 {#each values as option (option)}
                     <Tabs.Trigger value={option} class="w-full">
                         {formatChoice(option)}
@@ -1016,27 +1176,64 @@
     </div>
 {/snippet}
 
-{#snippet tokenField(
-    name: string,
-    value: string | undefined,
-    placeholder: string,
-    onChange: (value: string) => void
+{#snippet advancedColorField(label: string, value: string, onChange: (value: string) => void)}
+    <div class="flex min-w-0 flex-col gap-2" role="group" aria-label={`${label} color`}>
+        <span class="text-[13px] font-medium text-foreground-muted">{label}</span>
+        <ColorPicker.Root {value} onValueChange={onChange}>
+            <ColorPicker.Trigger class="h-[34px] w-full" />
+            <ColorPicker.Content />
+        </ColorPicker.Root>
+    </div>
+{/snippet}
+
+{#snippet sliderTokenField(
+    label: string,
+    value: number,
+    min: number,
+    max: number,
+    step: number,
+    display: string,
+    onChange: (value: number) => void
 )}
-    <Input
-        label={name}
-        value={value ?? ''}
-        {placeholder}
-        class="font-mono text-xs"
-        autocomplete="off"
-        oninput={(event) => {
-            onChange(event.currentTarget.value);
-        }}
-    />
+    <div class="flex min-w-0 flex-col gap-2">
+        <div class="flex items-baseline justify-between gap-2">
+            <span class="text-[13px] font-medium text-foreground-muted">{label}</span>
+            <span class="font-mono text-xs tabular-nums text-foreground-muted">{display}</span>
+        </div>
+        <Slider {value} {min} {max} {step} {label} class="h-4" onValueChange={onChange} />
+    </div>
+{/snippet}
+
+{#snippet easeTokenField(label: string, value: string, onChange: (value: string) => void)}
+    <div class="flex min-w-0 flex-col gap-2">
+        <span class="text-[13px] font-medium text-foreground-muted">{label}</span>
+        <Select.Root {value} onValueChange={onChange}>
+            <Select.Trigger
+                class="h-[34px] min-w-0 px-[9px] text-[13px]"
+                variant="outline"
+                aria-label={label}
+            >
+                <span class="truncate">
+                    {easingOptions.find((option) => option.value === value)?.label ?? 'Custom'}
+                </span>
+            </Select.Trigger>
+            <Select.Content class="min-w-[max(16rem,var(--popover-trigger-width))]">
+                {#each easingOptions as option (option.value)}
+                    <Select.Item value={option.value} label={option.label}>
+                        {option.label}
+                    </Select.Item>
+                {/each}
+                {#if !easingOptions.some((option) => normalizeEase(option.value) === normalizeEase(value))}
+                    <Select.Item {value} label="Custom">Custom</Select.Item>
+                {/if}
+            </Select.Content>
+        </Select.Root>
+    </div>
 {/snippet}
 
 {#snippet inspector()}
     <ScrollArea class="hide-scrollbar-all h-full min-h-0 flex-1 bg-background" showCues={false}>
-        <div class="flex min-h-full flex-col gap-5 px-2 py-4">
+        <div class="flex min-h-full flex-col gap-8 px-2 py-4">
             <div class="flex shrink-0 flex-col gap-3">
                 <div class="flex min-w-0 items-center gap-2">
                     <span class="shrink-0 text-sm font-semibold tracking-[-0.015em]"
@@ -1097,170 +1294,135 @@
                 </Button>
             </div>
 
-            <Card.Root
-                class="shrink-0 overflow-hidden !rounded-[var(--radius-xl)] !border-0 p-0 shadow-[var(--elevation-1)]"
-            >
-                <div class="flex items-center justify-between gap-2 px-2 pt-3 pb-1">
-                    <h2 class="text-sm font-semibold tracking-[-0.015em]">Color</h2>
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between gap-2">
+                    <Typography.Title level={3}>Color</Typography.Title>
                     {@render moreOptionsButton('colors', 'More color options')}
                 </div>
-                <Card.Content class="gap-4 px-2 pb-3">
-                    {@render colorPickerControl('Brand', theme.brand, brandSwatches, updateBrand)}
-                    <div class="grid grid-cols-2 gap-2">
-                        {@render colorPickerControl('Base', foundationColors[appMode].base, baseSwatches, (value) => {
+                {@render colorPickerControl('Brand', theme.brand, brandSwatches, updateBrand)}
+                <div class="grid grid-cols-2 gap-2">
+                    {@render colorPickerControl(
+                        'Base',
+                        foundationColors[appMode].base,
+                        baseSwatches,
+                        (value) => {
                             updateFoundationColor('base', value);
-                        })}
-                        {@render colorPickerControl('Border', foundationColors[appMode].border, borderSwatches, (value) => {
+                        }
+                    )}
+                    {@render colorPickerControl(
+                        'Border',
+                        foundationColors[appMode].border,
+                        borderSwatches,
+                        (value) => {
                             updateFoundationColor('border', value);
-                        })}
-                        {@render colorPickerControl('Background', foundationColors[appMode].background, backgroundSwatches, (value) => {
+                        }
+                    )}
+                    {@render colorPickerControl(
+                        'Background',
+                        foundationColors[appMode].background,
+                        backgroundSwatches,
+                        (value) => {
                             updateFoundationColor('background', value);
-                        })}
-                        {@render colorPickerControl('Secondary', foundationColors[appMode].secondary, secondarySwatches, (value) => {
+                        }
+                    )}
+                    {@render colorPickerControl(
+                        'Secondary',
+                        foundationColors[appMode].secondary,
+                        secondarySwatches,
+                        (value) => {
                             updateFoundationColor('secondary', value);
-                        })}
-                        <div class="col-span-2">
-                            {@render colorPickerControl('Muted', foundationColors[appMode].muted, mutedSwatches, (value) => {
+                        }
+                    )}
+                    <div class="col-span-2">
+                        {@render colorPickerControl(
+                            'Muted',
+                            foundationColors[appMode].muted,
+                            mutedSwatches,
+                            (value) => {
                                 updateFoundationColor('muted', value);
-                            })}
-                        </div>
+                            }
+                        )}
                     </div>
-                </Card.Content>
-            </Card.Root>
+                </div>
+            </div>
 
-            <Card.Root
-                class="shrink-0 overflow-hidden !rounded-[var(--radius-xl)] !border-0 p-0 shadow-[var(--elevation-1)]"
-            >
-                <div class="flex items-center justify-between gap-2 px-2 pt-3 pb-1">
-                    <h2 class="text-sm font-semibold tracking-[-0.015em]">Shape & density</h2>
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between gap-2">
+                    <Typography.Title level={3}>Shape & density</Typography.Title>
                     {@render moreOptionsButton('spacing', 'More shape and density options')}
                 </div>
-                <Card.Content class="gap-4 px-2 pb-3">
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-baseline justify-between gap-2">
-                            <span class="text-[13px] font-medium text-foreground-muted"
-                                >Radius</span
-                            >
-                            <span class="font-mono text-xs tabular-nums text-foreground-muted">
-                                {radiusValues[theme.radius]}
-                            </span>
-                        </div>
-                        {@render segmentedChoice(radiusScales, theme.radius, 'Radius scale', (value) => {
-                            if (radiusScales.includes(value as Theme['radius'])) {
-                                theme = { ...theme, radius: value as Theme['radius'] };
-                            }
-                        })}
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-baseline justify-between gap-2">
+                        <Typography.Metadata>Radius</Typography.Metadata>
+                        <Typography.Metadata>{radiusValues[theme.radius]}</Typography.Metadata>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-baseline justify-between gap-2">
-                            <span class="text-[13px] font-medium text-foreground-muted"
-                                >Density</span
-                            >
-                            <span class="font-mono text-xs tabular-nums text-foreground-muted">
-                                {densityValues[theme.density]}
-                            </span>
-                        </div>
-                        {@render segmentedChoice(densities, theme.density, 'Interface density', (value) => {
+                    {@render segmentedChoice(radiusScales, theme.radius, 'Radius scale', (value) => {
+                        if (radiusScales.includes(value as Theme['radius'])) {
+                            theme = { ...theme, radius: value as Theme['radius'] };
+                        }
+                    })}
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-baseline justify-between gap-2">
+                        <Typography.Metadata>Density</Typography.Metadata>
+                        <Typography.Metadata>{densityValues[theme.density]}</Typography.Metadata>
+                    </div>
+                    {@render segmentedChoice(
+                        densities,
+                        theme.density,
+                        'Interface density',
+                        (value) => {
                             if (densities.includes(value as Theme['density'])) {
                                 theme = { ...theme, density: value as Theme['density'] };
                             }
-                        })}
-                    </div>
-                </Card.Content>
-            </Card.Root>
-
-            <Card.Root
-                class="shrink-0 overflow-hidden !rounded-[var(--radius-xl)] !border-0 p-0 shadow-[var(--elevation-1)]"
-            >
-                <div class="px-2 pt-3 pb-1">
-                    <h2 class="text-sm font-semibold tracking-[-0.015em]">Typography</h2>
+                        }
+                    )}
                 </div>
-                <Card.Content class="gap-4 px-2 pb-3">
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="flex min-w-0 flex-col gap-2">
-                            <span class="text-[13px] font-medium text-foreground-muted">Sans</span>
-                            <Select.Root bind:value={selectedSans}>
-                                <Select.Trigger
-                                    class="h-[34px] min-w-0 px-[9px] text-[13px]"
-                                    variant="outline"
-                                    aria-label="Sans font"
-                                >
-                                    <span class="truncate">
-                                        {sansFonts.find((font) => font.key === selectedSans)?.label}
-                                    </span>
-                                </Select.Trigger>
-                                <Select.Content
-                                    class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
-                                >
-                                    <Select.Label>Sans serif</Select.Label>
-                                    {#each sansFonts as font (font.key)}
-                                        <Select.Item value={font.key} label={font.label}
-                                            >{font.label}</Select.Item
-                                        >
-                                    {/each}
-                                </Select.Content>
-                            </Select.Root>
-                        </div>
-                        <div class="flex min-w-0 flex-col gap-2">
-                            <span class="text-[13px] font-medium text-foreground-muted"
-                                >Header</span
-                            >
-                            <Select.Root bind:value={selectedHeader}>
-                                <Select.Trigger
-                                    class="h-[34px] min-w-0 px-[9px] text-[13px]"
-                                    variant="outline"
-                                    aria-label="Header font"
-                                >
-                                    <span
-                                        class="truncate"
-                                        style:font-family={headerFonts.find(
-                                            (font) => font.key === selectedHeader
-                                        )?.value}
-                                    >
-                                        {headerFonts.find((font) => font.key === selectedHeader)?.label}
-                                    </span>
-                                </Select.Trigger>
-                                <Select.Content
-                                    class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
-                                >
-                                    <Select.Item value="same-as-sans" label="Same as sans">
-                                        <span style:font-family="var(--font-sans)"
-                                            >Same as sans</span
-                                        >
-                                    </Select.Item>
-                                    <Select.Label>Serif</Select.Label>
-                                    {#each serifFonts as font (font.key)}
-                                        <Select.Item value={font.key} label={font.label}>
-                                            <span style:font-family={font.value}>{font.label}</span>
-                                        </Select.Item>
-                                    {/each}
-                                    <Select.Label>Sans serif</Select.Label>
-                                    {#each sansFonts as font (font.key)}
-                                        <Select.Item value={font.key} label={font.label}>
-                                            <span style:font-family={font.value}>{font.label}</span>
-                                        </Select.Item>
-                                    {/each}
-                                </Select.Content>
-                            </Select.Root>
-                        </div>
-                    </div>
+                <Switch
+                    bind:checked={shadows}
+                    label="Shadows"
+                    description="Lift on cards, menus, and overlays."
+                />
+                <Switch
+                    bind:checked={primaryStroke}
+                    label="Primary stroke"
+                    description="A light inset edge on primary buttons."
+                />
+                <div class="flex flex-col gap-2">
+                    <Typography.Metadata>Hover cursor</Typography.Metadata>
+                    {@render segmentedChoice(
+                        cursorChoices,
+                        interactiveCursor,
+                        'Hover cursor',
+                        (value) => {
+                            if (value === 'default' || value === 'pointer') {
+                                interactiveCursor = value;
+                            }
+                        }
+                    )}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <Typography.Title level={3}>Typography</Typography.Title>
+                <div class="grid grid-cols-2 gap-2">
                     <div class="flex min-w-0 flex-col gap-2">
-                        <span class="text-[13px] font-medium text-foreground-muted">Mono</span>
-                        <Select.Root bind:value={selectedMono}>
+                        <Typography.Metadata>Sans</Typography.Metadata>
+                        <Select.Root bind:value={selectedSans}>
                             <Select.Trigger
-                                class="h-[34px] min-w-0 px-[9px] font-mono text-[13px]"
+                                class="h-[34px] min-w-0 px-[9px] text-[13px]"
                                 variant="outline"
-                                aria-label="Monospace font"
+                                aria-label="Sans font"
                             >
                                 <span class="truncate">
-                                    {monoFonts.find((font) => font.key === selectedMono)?.label}
+                                    {sansFonts.find((font) => font.key === selectedSans)?.label}
                                 </span>
                             </Select.Trigger>
                             <Select.Content
                                 class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
                             >
-                                <Select.Label>Mono</Select.Label>
-                                {#each monoFonts as font (font.key)}
+                                <Select.Label>Sans serif</Select.Label>
+                                {#each sansFonts as font (font.key)}
                                     <Select.Item value={font.key} label={font.label}
                                         >{font.label}</Select.Item
                                     >
@@ -1268,180 +1430,263 @@
                             </Select.Content>
                         </Select.Root>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-baseline justify-between gap-2">
-                            <span class="text-[13px] font-medium text-foreground-muted"
-                                >Header size</span
+                    <div class="flex min-w-0 flex-col gap-2">
+                        <Typography.Metadata>Header</Typography.Metadata>
+                        <Select.Root bind:value={selectedHeader}>
+                            <Select.Trigger
+                                class="h-[34px] min-w-0 px-[9px] text-[13px]"
+                                variant="outline"
+                                aria-label="Header font"
                             >
-                            <span class="font-mono text-xs tabular-nums text-foreground-muted"
-                                >{headerSize}px</span
+                                <span
+                                    class="truncate"
+                                    style:font-family={headerFonts.find(
+                                            (font) => font.key === selectedHeader
+                                        )?.value}
+                                >
+                                    {headerFonts.find((font) => font.key === selectedHeader)?.label}
+                                </span>
+                            </Select.Trigger>
+                            <Select.Content
+                                class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
                             >
-                        </div>
-                        <Slider {...headerSliderProps()} />
+                                <Select.Item value="same-as-sans" label="Same as sans">
+                                    <span style:font-family="var(--font-sans)">Same as sans</span>
+                                </Select.Item>
+                                <Select.Label>Serif</Select.Label>
+                                {#each serifFonts as font (font.key)}
+                                    <Select.Item value={font.key} label={font.label}>
+                                        <span style:font-family={font.value}>{font.label}</span>
+                                    </Select.Item>
+                                {/each}
+                                <Select.Label>Sans serif</Select.Label>
+                                {#each sansFonts as font (font.key)}
+                                    <Select.Item value={font.key} label={font.label}>
+                                        <span style:font-family={font.value}>{font.label}</span>
+                                    </Select.Item>
+                                {/each}
+                            </Select.Content>
+                        </Select.Root>
                     </div>
-                    <div class="flex flex-col gap-2.5">
-                        <span class="text-[13px] font-medium text-foreground-muted"
-                            >Font weights</span
+                </div>
+                <div class="flex min-w-0 flex-col gap-2">
+                    <Typography.Metadata>Mono</Typography.Metadata>
+                    <Select.Root bind:value={selectedMono}>
+                        <Select.Trigger
+                            class="h-[34px] min-w-0 px-[9px] font-mono text-[13px]"
+                            variant="outline"
+                            aria-label="Monospace font"
                         >
-                        {@render weightControl('Header', headerWeight, (value) => {
+                            <span class="truncate">
+                                {monoFonts.find((font) => font.key === selectedMono)?.label}
+                            </span>
+                        </Select.Trigger>
+                        <Select.Content
+                            class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                        >
+                            <Select.Label>Mono</Select.Label>
+                            {#each monoFonts as font (font.key)}
+                                <Select.Item value={font.key} label={font.label}
+                                    >{font.label}</Select.Item
+                                >
+                            {/each}
+                        </Select.Content>
+                    </Select.Root>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-baseline justify-between gap-2">
+                        <Typography.Metadata>Header size</Typography.Metadata>
+                        <Typography.Metadata>{headerSize}px</Typography.Metadata>
+                    </div>
+                    <Slider {...headerSliderProps()} />
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <Typography.Metadata>Font weights</Typography.Metadata>
+                    {@render weightControl('Header', headerWeight, (value) => {
                             headerWeight = value;
                         })}
-                        {@render weightControl('Body', roleWeights.body, (value) => {
+                    {@render weightControl('Body', roleWeights.body, (value) => {
                             updateRoleWeight('body', value);
                         })}
-                        {@render weightControl('Label', roleWeights.label, (value) => {
+                    {@render weightControl('Label', roleWeights.label, (value) => {
                             updateRoleWeight('label', value);
                         })}
-                        {@render weightControl('Button', roleWeights.button, (value) => {
+                    {@render weightControl('Button', roleWeights.button, (value) => {
                             updateRoleWeight('button', value);
                         })}
-                        {@render weightControl('Badge', roleWeights.badge, (value) => {
+                    {@render weightControl('Badge', roleWeights.badge, (value) => {
                             updateRoleWeight('badge', value);
                         })}
-                        {@render weightControl('Description', roleWeights.description, (value) => {
+                    {@render weightControl('Description', roleWeights.description, (value) => {
                             updateRoleWeight('description', value);
                         })}
-                    </div>
-                </Card.Content>
-            </Card.Root>
+                </div>
+            </div>
 
-            <Card.Root
-                class="shrink-0 overflow-hidden !rounded-[var(--radius-xl)] !border-0 p-0 shadow-[var(--elevation-1)]"
-            >
-                <div class="flex items-center justify-between gap-2 px-2 pt-3 pb-1">
-                    <h2 class="text-sm font-semibold tracking-[-0.015em]">Motion</h2>
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between gap-2">
+                    <Typography.Title level={3}>Motion</Typography.Title>
                     {@render moreOptionsButton('animation', 'More motion options')}
                 </div>
-                <Card.Content class="gap-4 px-2 pb-3">
-                    {@render segmentedChoice(motionFeels, theme.motion, 'Motion feel', (value) => {
-                        if (motionFeels.includes(value as Theme['motion'])) {
-                            theme = { ...theme, motion: value as Theme['motion'] };
-                        }
-                    })}
-                </Card.Content>
-            </Card.Root>
+                {@render segmentedChoice(motionFeels, theme.motion, 'Motion feel', (value) => {
+                    if (motionFeels.includes(value as Theme['motion'])) {
+                        theme = { ...theme, motion: value as Theme['motion'] };
+                    }
+                })}
+            </div>
         </div>
     </ScrollArea>
 {/snippet}
 
 {#snippet dashboardPreview()}
-    <div
-        class="flex h-full min-h-[720px] overflow-hidden rounded-[var(--radius-xl)] border border-border bg-background"
-    >
-        <aside
-            class="m-3 mr-0 hidden min-h-0 w-[196px] shrink-0 overflow-hidden rounded-[var(--radius-xl)] bg-panel shadow-[var(--elevation-1)] min-[820px]:flex"
-        >
-            <ScrollArea class="hide-scrollbar-all h-full min-h-0" showCues={false}>
-                <div class="flex min-h-full flex-col p-3">
-                    <DropdownMenu.Root>
-                        <DropdownMenu.Trigger variant="quiet" class="w-full justify-between px-2">
-                            <span class="flex min-w-0 items-center gap-2">
-                                <Avatar.Root size="sm" shape="square" class="shrink-0">
-                                    <Avatar.Fallback>NL</Avatar.Fallback>
-                                </Avatar.Root>
-                                <span class="truncate text-left text-sm font-medium"
-                                    >Northstar Ledger</span
-                                >
-                            </span>
-                            <ChevronDown size={14} class="shrink-0 text-foreground-muted" />
-                        </DropdownMenu.Trigger>
-                        <DropdownMenu.Content class="min-w-[190px]">
-                            <DropdownMenu.Label>Workspaces</DropdownMenu.Label>
-                            <DropdownMenu.Item>Northstar Ledger</DropdownMenu.Item>
-                            <DropdownMenu.Item>Personal books</DropdownMenu.Item>
-                            <DropdownMenu.Separator />
-                            <DropdownMenu.Item
-                                callback={() =>
-                            runDashboardAction('Workspace created', 'A blank ledger is ready.')}
-                                >Create workspace</DropdownMenu.Item
-                            >
-                        </DropdownMenu.Content>
-                    </DropdownMenu.Root>
-
-                    <nav aria-label="Ledger navigation" class="mt-4 flex flex-col gap-1">
-                        {#each dashboardNavItems as item (item.label)}
-                            <Button
-                                variant={activeDashboardNav === item.label ? 'secondary' : 'ghost'}
-                                class="w-full justify-start"
-                                onclick={() => (activeDashboardNav = item.label)}
-                            >
-                                <item.icon size={15} />
-                                <span class="flex-1 text-left">{item.label}</span>
-                                {#if item.badge}
-                                    <Badge variant="secondary" class="ml-auto">{item.badge}</Badge>
-                                {/if}
-                            </Button>
-                        {/each}
-                    </nav>
-
-                    <div class="mt-auto flex flex-col gap-3">
-                        <Card.Root
-                            class="gap-2 !rounded-[var(--radius-xl)] !border-0 p-3 shadow-[var(--elevation-1)]"
+    <ScrollArea class="h-full min-h-0" showCues={false}>
+        <div class="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-8">
+            <Toolbar class="gap-2 p-0">
+                <DropdownMenu.Root>
+                    <DropdownMenu.Trigger variant="quiet" class="min-w-0 justify-start">
+                        <Avatar.Root size="sm" shape="square">
+                            <Avatar.Fallback>NL</Avatar.Fallback>
+                        </Avatar.Root>
+                        <Typography.Text variant="supporting" class="truncate text-foreground">
+                            {companyName}
+                        </Typography.Text>
+                        <ChevronDown size={14} class="text-foreground-muted" />
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                        <DropdownMenu.Label>Workspace</DropdownMenu.Label>
+                        <DropdownMenu.Item>Northstar Ledger</DropdownMenu.Item>
+                        <DropdownMenu.Item>Personal books</DropdownMenu.Item>
+                        <DropdownMenu.Separator />
+                        <DropdownMenu.Item
+                            callback={() =>
+                                runDashboardAction(
+                                    'Workspace created',
+                                    'A blank ledger is ready.'
+                                )}
                         >
-                            <div class="flex items-center justify-between gap-2">
-                                <Typography.Metadata>Monthly volume</Typography.Metadata>
-                                <Typography.Metadata>72%</Typography.Metadata>
-                            </div>
-                            <Progress value={72} />
-                            <Typography.Description class="text-xs">
-                                $186k of the $260k plan
-                            </Typography.Description>
-                        </Card.Root>
-                        <DropdownMenu.Root>
-                            <DropdownMenu.Trigger variant="ghost" class="w-full justify-start px-2">
-                                <Avatar.Root size="sm" class="shrink-0">
-                                    <Avatar.Fallback>AN</Avatar.Fallback>
-                                </Avatar.Root>
-                                <span class="min-w-0 flex-1 text-left">
-                                    <span class="block truncate text-sm font-medium"
-                                        >Avery Nguyen</span
+                            Create workspace
+                        </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Root>
+                <Command.Root bind:open={commandOpen}>
+                    <Command.Trigger variant="outline" class="min-w-0 max-w-64">
+                        <Search size={14} />
+                        Search
+                        <Shortcut
+                            shortcut="cmd+k"
+                            ontrigger={() => {
+                                commandOpen = true;
+                            }}
+                        />
+                    </Command.Trigger>
+                    <Command.Content>
+                        <Command.Search placeholder="Search ledger…" />
+                        <Command.Results>
+                            <Command.Group heading="Go to">
+                                <Command.Item
+                                    name="Overview"
+                                    callback={() => {
+                                        studioView = 'overview';
+                                    }}
+                                >
+                                    <LayoutDashboard size={14} />
+                                    Overview
+                                </Command.Item>
+                                <Command.Item
+                                    name="Invoices"
+                                    callback={() => {
+                                        studioView = 'invoices';
+                                    }}
+                                >
+                                    <FileText size={14} />
+                                    Invoices
+                                </Command.Item>
+                                <Command.Item
+                                    name="Settings"
+                                    callback={() => {
+                                        studioView = 'settings';
+                                    }}
+                                >
+                                    <Settings size={14} />
+                                    Settings
+                                </Command.Item>
+                            </Command.Group>
+                            <Command.Separator />
+                            <Command.Group heading="Actions">
+                                <Command.Item
+                                    name="New invoice"
+                                    callback={() => {
+                                        studioView = 'invoices';
+                                        invoiceModalOpen = true;
+                                    }}
+                                >
+                                    <Plus size={14} />
+                                    New invoice
+                                </Command.Item>
+                            </Command.Group>
+                            <Command.Group heading="Invoices">
+                                {#each invoices as invoice (invoice.reference)}
+                                    <Command.Item
+                                        name={`${invoice.client} ${invoice.reference}`}
+                                        callback={() => {
+                                            studioView = 'invoices';
+                                            invoiceQuery = invoice.reference;
+                                        }}
                                     >
-                                    <span class="block truncate text-xs text-foreground-muted"
-                                        >Finance admin</span
-                                    >
-                                </span>
-                                <ChevronDown size={14} class="text-foreground-muted" />
-                            </DropdownMenu.Trigger>
-                            <DropdownMenu.Content class="min-w-[190px]">
-                                <DropdownMenu.Item>Account settings</DropdownMenu.Item>
-                                <DropdownMenu.Item>Billing</DropdownMenu.Item>
-                                <DropdownMenu.Separator />
-                                <DropdownMenu.Item>Sign out</DropdownMenu.Item>
-                            </DropdownMenu.Content>
-                        </DropdownMenu.Root>
-                    </div>
-                </div>
-            </ScrollArea>
-        </aside>
-
-        <div class="flex min-w-0 flex-1 flex-col">
-            <header
-                class="mx-3 mt-3 flex h-[54px] shrink-0 items-center justify-between gap-3 rounded-[var(--radius-xl)] bg-card px-4 shadow-[var(--elevation-1)]"
-            >
-                <Breadcrumb.Root>
-                    <Breadcrumb.Item>Finance</Breadcrumb.Item>
-                    <Breadcrumb.Separator>/</Breadcrumb.Separator>
-                    <Breadcrumb.Item>{activeDashboardNav}</Breadcrumb.Item>
-                </Breadcrumb.Root>
-                <div class="flex min-w-0 items-center gap-2">
-                    <Input
-                        bind:value={invoiceQuery}
-                        class="hidden w-[220px] text-sm sm:block"
-                        placeholder="Search ledger…"
-                        aria-label="Search ledger"
-                    >
-                        {#snippet leading()}
-                            <Search size={14} />
-                        {/snippet}
-                    </Input>
-                    <Tooltip.Root placement="bottom">
-                        <Tooltip.Trigger>
-                            <Button variant="ghost" size="icon" aria-label="Notifications">
-                                <Bell size={16} />
-                            </Button>
-                        </Tooltip.Trigger>
-                        <Tooltip.Content>3 unread notifications</Tooltip.Content>
-                    </Tooltip.Root>
+                                        {invoice.client}
+                                        <Typography.Metadata>
+                                            {invoice.reference}
+                                        </Typography.Metadata>
+                                    </Command.Item>
+                                {/each}
+                            </Command.Group>
+                        </Command.Results>
+                    </Command.Content>
+                </Command.Root>
+                <div class="ml-auto flex items-center gap-1">
+                    <Popover.Root placement="bottom-end" inert={false}>
+                        <Popover.Trigger
+                            variant="ghost"
+                            size="icon"
+                            class="relative"
+                            aria-label="Notifications"
+                        >
+                            <Bell size={16} />
+                            {#if unreadNotificationCount > 0}
+                                <Badge
+                                    variant="error"
+                                    class="pointer-events-none absolute top-1 right-1 size-4 min-w-4 p-0 text-[length:var(--font-size-meta)] leading-none"
+                                >
+                                    {unreadNotificationCount}
+                                </Badge>
+                            {/if}
+                        </Popover.Trigger>
+                        <Popover.Content class="w-72" lockScroll={false}>
+                            <Popover.Title>Notifications</Popover.Title>
+                            {#each notifications as notification (notification.id)}
+                                <Button
+                                    variant="ghost"
+                                    class="h-auto w-full justify-start py-2"
+                                    onclick={() => markNotificationRead(notification.id)}
+                                >
+                                    <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+                                        <Typography.Text
+                                            variant="supporting"
+                                            class="text-left text-foreground"
+                                        >
+                                            {notification.title}
+                                        </Typography.Text>
+                                        <Typography.Metadata>
+                                            {notification.detail}
+                                        </Typography.Metadata>
+                                    </span>
+                                    {#if !notification.read}
+                                        <Badge variant="info">New</Badge>
+                                    {/if}
+                                </Button>
+                            {/each}
+                        </Popover.Content>
+                    </Popover.Root>
                     <DropdownMenu.Root>
                         <DropdownMenu.Trigger
                             variant="quiet"
@@ -1452,380 +1697,366 @@
                                 <Avatar.Fallback>AN</Avatar.Fallback>
                             </Avatar.Root>
                         </DropdownMenu.Trigger>
-                        <DropdownMenu.Content class="min-w-[170px]">
+                        <DropdownMenu.Content>
                             <DropdownMenu.Label>Avery Nguyen</DropdownMenu.Label>
-                            <DropdownMenu.Item>Profile</DropdownMenu.Item>
-                            <DropdownMenu.Item>Preferences</DropdownMenu.Item>
+                            <DropdownMenu.Item callback={() => (studioView = 'settings')}>
+                                Preferences
+                            </DropdownMenu.Item>
                             <DropdownMenu.Separator />
-                            <DropdownMenu.Item>Sign out</DropdownMenu.Item>
+                            <DropdownMenu.Item
+                                callback={() =>
+                                    runDashboardAction('Signed out', 'The session ended.')}
+                            >
+                                Sign out
+                            </DropdownMenu.Item>
                         </DropdownMenu.Content>
                     </DropdownMenu.Root>
                 </div>
-            </header>
+            </Toolbar>
 
-            <ScrollArea class="min-h-0 flex-1" showCues={false}>
-                <div class="flex min-h-full flex-col gap-4 p-4 sm:p-5">
-                    <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-                        <div>
-                            <Typography.Title level={1}>{activeDashboardNav}</Typography.Title>
+            <Tabs.Root bind:value={studioView} variant="ghost">
+                <Tabs.List>
+                    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+                    <Tabs.Trigger value="invoices">Invoices</Tabs.Trigger>
+                    <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+                </Tabs.List>
+
+                <Tabs.Content value="overview" class="flex flex-col gap-6 pt-6">
+                    <div>
+                        <Typography.Title level={1}>Overview</Typography.Title>
+                        <Typography.Description>
+                            Cash on hand and collection risk for {companyName}.
+                        </Typography.Description>
+                    </div>
+                    <Tabs.Root bind:value={dashboardRange} variant="segmented">
+                        <Tabs.List class="w-fit">
+                            <Tabs.Trigger value="7d">7 days</Tabs.Trigger>
+                            <Tabs.Trigger value="30d">30 days</Tabs.Trigger>
+                            <Tabs.Trigger value="Quarter">Quarter</Tabs.Trigger>
+                        </Tabs.List>
+                    </Tabs.Root>
+                    {#if overdueCount > 0}
+                        <Alert.Root variant="warning">
+                            <Alert.Title>
+                                {overdueCount}
+                                {overdueCount === 1 ? 'invoice is' : 'invoices are'}
+                                overdue
+                            </Alert.Title>
+                            <Alert.Description>
+                                ${outstandingTotal.toLocaleString('en-US')}
+                                is still open. The next collection run starts tomorrow at 9:00 AM.
+                            </Alert.Description>
+                        </Alert.Root>
+                    {/if}
+                    <Card.Root>
+                        <Card.Header>
+                            <Typography.Title level={2}>Cash coverage</Typography.Title>
                             <Typography.Description>
-                                Track cash, collect invoices, and reconcile every account from one
-                                workspace.
+                                Funds available for the selected range.
+                            </Typography.Description>
+                        </Card.Header>
+                        <Card.Content class="flex flex-col gap-4">
+                            <Gauge
+                                value={coverageValue}
+                                label="Cash coverage"
+                                tone="success"
+                                size={72}
+                            >
+                                {coverageValue}%
+                            </Gauge>
+                            <Progress {...progressProps(coverageValue)} />
+                            <Switch
+                                bind:checked={autoReconcile}
+                                label="Auto-reconcile"
+                                description="Match confirmed bank payments as they arrive."
+                            />
+                            <TaskSteps
+                                label="Collection run"
+                                steps={collectionSteps}
+                                current={collectionStep}
+                            />
+                        </Card.Content>
+                    </Card.Root>
+                </Tabs.Content>
+
+                <Tabs.Content value="invoices" class="flex flex-col gap-6 pt-6">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <Typography.Title level={1}>Invoices</Typography.Title>
+                            <Typography.Description>
+                                Review, remind, and record payment.
                             </Typography.Description>
                         </div>
-                        <div class="flex w-full flex-wrap items-center justify-end gap-2 lg:w-auto">
-                            <div role="group" aria-label="Dashboard range">
-                                <Tabs.Root bind:value={dashboardRange} variant="segmented">
-                                    <Tabs.List>
-                                        {#each ['7d', '30d', 'Quarter'] as range (range)}
-                                            <Tabs.Trigger
-                                                value={range}
-                                                class="min-h-8 px-2 py-0 text-xs"
-                                                >{range}</Tabs.Trigger
-                                            >
-                                        {/each}
-                                    </Tabs.List>
-                                </Tabs.Root>
-                            </div>
-                            <Button
-                                variant="outline"
-                                onclick={() =>
-                                    runDashboardAction(
-                                        'Report exported',
-                                        'The current ledger report is ready.'
-                                    )}
-                            >
-                                <Download size={15} />
-                                Export
-                            </Button>
-                            <Button
-                                onclick={() =>
-                                    runDashboardAction(
-                                        'Invoice draft created',
-                                        'Add a customer and line items to continue.'
-                                    )}
-                            >
+                        <Modal.Root bind:open={invoiceModalOpen}>
+                            <Modal.Trigger>
                                 <Plus size={15} />
                                 New invoice
-                            </Button>
-                        </div>
-                    </div>
-
-                    <Alert.Root variant="warning">
-                        <Alert.Title>Three invoices are overdue</Alert.Title>
-                        <Alert.Description>
-                            $9,860 is past due. The next collection run starts tomorrow at 9:00 AM.
-                        </Alert.Description>
-                    </Alert.Root>
-
-                    <section
-                        aria-label="Ledger summary"
-                        class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
-                    >
-                        {#each dashboardStats as stat (stat.label)}
-                            <Card.Root
-                                class="gap-3 !rounded-[var(--radius-xl)] !border-0 p-4 shadow-[var(--elevation-1)]"
-                            >
-                                <div class="flex items-center justify-between gap-2">
-                                    <Typography.Metadata>{stat.label}</Typography.Metadata>
-                                    <Badge variant={stat.destructive ? 'error' : 'success'}>
-                                        {stat.change}
-                                    </Badge>
-                                </div>
-                                <Typography.H2 class="tabular-nums">{stat.value}</Typography.H2>
-                                <Progress {...progressProps(stat.progress, stat.destructive)} />
-                                <Typography.Description class="text-xs">
-                                    {stat.detail}
-                                </Typography.Description>
-                            </Card.Root>
-                        {/each}
-                    </section>
-
-                    <div
-                        class="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(240px,0.8fr)]"
-                    >
-                        <Card.Root
-                            class="min-h-0 overflow-hidden !rounded-[var(--radius-xl)] !border-0 p-0 shadow-[var(--elevation-1)]"
-                        >
-                            <div
-                                class="flex flex-col gap-3 p-4 lg:flex-row lg:items-center lg:justify-between"
-                            >
-                                <div>
-                                    <Typography.Title level={2}>Invoice queue</Typography.Title>
-                                    <Typography.Description>
-                                        Review, collect, and reconcile customer invoices.
-                                    </Typography.Description>
-                                </div>
-                                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+                            </Modal.Trigger>
+                            <Modal.Content>
+                                <Modal.Header>
+                                    <Modal.Title>New invoice</Modal.Title>
+                                    <Modal.Description>
+                                        Draft a customer invoice. You can add line items later.
+                                    </Modal.Description>
+                                </Modal.Header>
+                                <Modal.Body class="gap-4">
                                     <Input
-                                        bind:value={invoiceQuery}
-                                        class="w-full text-sm sm:w-[190px]"
-                                        placeholder="Client or invoice…"
-                                        aria-label="Search invoices"
-                                    >
-                                        {#snippet leading()}
-                                            <Search size={14} />
-                                        {/snippet}
-                                    </Input>
-                                    <Select.Root bind:value={invoiceStatus}>
-                                        <Select.Trigger
-                                            class="w-full min-w-[126px] text-sm sm:w-auto"
-                                            variant="outline"
-                                            aria-label="Invoice status"
-                                        >
-                                            {invoiceStatus === 'all'
-                                                ? 'All statuses'
-                                                : invoiceStatus === 'open'
-                                                  ? 'Open'
-                                                  : formatChoice(invoiceStatus)}
-                                        </Select.Trigger>
-                                        <Select.Content>
-                                            <Select.Item value="all" label="All statuses"
-                                                >All statuses</Select.Item
-                                            >
-                                            <Select.Item value="open" label="Open"
-                                                >Open</Select.Item
-                                            >
-                                            <Select.Item value="paid" label="Paid"
-                                                >Paid</Select.Item
-                                            >
-                                            <Select.Item value="overdue" label="Overdue"
-                                                >Overdue</Select.Item
-                                            >
-                                        </Select.Content>
-                                    </Select.Root>
-                                </div>
-                            </div>
-
-                            <div class="overflow-x-auto">
-                                <table
-                                    class="w-full min-w-[760px] border-collapse text-left text-sm"
-                                >
-                                    <thead>
-                                        <tr class="border-b border-border/40 text-foreground-muted">
-                                            <th class="w-10 px-4 py-2 font-medium">
-                                                <Checkbox
-                                                    checked={false}
-                                                    label="Select all invoices"
-                                                    class="[&>div]:sr-only"
-                                                />
-                                            </th>
-                                            <th class="px-2 py-2 font-medium">Customer</th>
-                                            <th class="px-3 py-2 font-medium">Invoice</th>
-                                            <th class="px-3 py-2 font-medium">Due</th>
-                                            <th class="px-3 py-2 text-right font-medium">Amount</th>
-                                            <th class="px-3 py-2 font-medium">Status</th>
-                                            <th class="w-12 px-3 py-2">
-                                                <span class="sr-only">Actions</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {#each visibleInvoices as invoice (invoice.reference)}
-                                            <tr
-                                                class="border-b border-border/40 last:border-b-0 hover:bg-muted"
-                                            >
-                                                <td class="px-4 py-2.5">
-                                                    <Checkbox
-                                                        bind:checked={selectedInvoices[invoice.reference]}
-                                                        label={`Select ${invoice.reference}`}
-                                                        class="[&>div]:sr-only"
-                                                    />
-                                                </td>
-                                                <td class="px-2 py-2.5">
-                                                    <div class="flex items-center gap-2.5">
-                                                        <Avatar.Root size="sm" shape="square">
-                                                            <Avatar.Fallback
-                                                                >{invoice.initials}</Avatar.Fallback
-                                                            >
-                                                        </Avatar.Root>
-                                                        <span class="font-medium"
-                                                            >{invoice.client}</span
-                                                        >
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-3 py-2.5 font-mono text-xs text-foreground-muted"
-                                                >
-                                                    {invoice.reference}
-                                                </td>
-                                                <td class="px-3 py-2.5 text-foreground-muted">
-                                                    {invoice.due}
-                                                </td>
-                                                <td
-                                                    class="px-3 py-2.5 text-right font-medium tabular-nums"
-                                                >
-                                                    {invoice.amount}
-                                                </td>
-                                                <td class="px-3 py-2.5">
-                                                    <Badge
-                                                        variant={invoice.status === 'Paid'
-                                                            ? 'success'
-                                                            : invoice.status === 'Overdue'
-                                                              ? 'error'
-                                                              : invoice.status === 'Due soon'
-                                                                ? 'warning'
-                                                                : 'secondary'}
-                                                        >{invoice.status}</Badge
-                                                    >
-                                                </td>
-                                                <td class="px-3 py-2.5">
-                                                    <DropdownMenu.Root>
-                                                        <DropdownMenu.Trigger
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            aria-label={`Actions for ${invoice.reference}`}
-                                                        >
-                                                            <MoreHorizontal size={16} />
-                                                        </DropdownMenu.Trigger>
-                                                        <DropdownMenu.Content class="min-w-[160px]">
-                                                            <DropdownMenu.Item
-                                                                >Open invoice</DropdownMenu.Item
-                                                            >
-                                                            <DropdownMenu.Item
-                                                                >Send reminder</DropdownMenu.Item
-                                                            >
-                                                            <DropdownMenu.Item
-                                                                >Record payment</DropdownMenu.Item
-                                                            >
-                                                            <DropdownMenu.Separator />
-                                                            <DropdownMenu.Item
-                                                                >Duplicate</DropdownMenu.Item
-                                                            >
-                                                        </DropdownMenu.Content>
-                                                    </DropdownMenu.Root>
-                                                </td>
-                                            </tr>
-                                        {:else}
-                                            <tr>
-                                                <td colspan="7" class="p-4">
-                                                    <Alert.Root variant="info">
-                                                        <Alert.Title>No invoices found</Alert.Title>
-                                                        <Alert.Description>
-                                                            Change the search or status filter to
-                                                            see more invoices.
-                                                        </Alert.Description>
-                                                    </Alert.Root>
-                                                </td>
-                                            </tr>
-                                        {/each}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div
-                                class="flex flex-col gap-3 border-t border-border/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
-                            >
-                                <Typography.Metadata>
-                                    Showing {visibleInvoices.length} of {invoices.length} invoices
-                                </Typography.Metadata>
-                                <Pagination bind:page={invoicePage} total={4} />
-                            </div>
-                        </Card.Root>
-
-                        <div class="flex min-w-0 flex-col gap-4">
-                            <Card.Root
-                                class="gap-4 !rounded-[var(--radius-xl)] !border-0 p-4 shadow-[var(--elevation-1)]"
-                            >
-                                <div class="flex items-start justify-between gap-3">
-                                    <div>
-                                        <Typography.Title level={2}>Cash coverage</Typography.Title>
-                                        <Typography.Description>
-                                            Funds available for the next 30 days.
-                                        </Typography.Description>
-                                    </div>
-                                    <Gauge value={72} label="Cash coverage" tone="success" size={64}
-                                        >72%</Gauge
-                                    >
-                                </div>
-                                <div class="flex flex-col gap-3">
-                                    <div>
-                                        <div class="mb-1.5 flex items-center justify-between gap-2">
-                                            <Typography.Metadata
-                                                >Operating account</Typography.Metadata
-                                            >
-                                            <Typography.Metadata>$142,600</Typography.Metadata>
-                                        </div>
-                                        <Progress value={78} />
-                                    </div>
-                                    <div>
-                                        <div class="mb-1.5 flex items-center justify-between gap-2">
-                                            <Typography.Metadata>Tax reserve</Typography.Metadata>
-                                            <Typography.Metadata>$43,640</Typography.Metadata>
-                                        </div>
-                                        <Progress value={38} />
-                                    </div>
-                                </div>
-                                <Switch
-                                    bind:switched={autoReconcile}
-                                    label="Auto-reconcile"
-                                    description="Match confirmed bank payments."
-                                />
-                            </Card.Root>
-
-                            <Card.Root
-                                class="gap-4 !rounded-[var(--radius-xl)] !border-0 p-4 shadow-[var(--elevation-1)]"
-                            >
-                                <div class="flex items-center justify-between gap-2">
-                                    <div>
-                                        <Typography.Title level={2}
-                                            >Collection activity</Typography.Title
-                                        >
-                                        <Typography.Description
-                                            >Latest invoice events.</Typography.Description
-                                        >
-                                    </div>
-                                    <CircleDollarSign size={18} class="text-foreground-muted" />
-                                </div>
-                                <div class="flex flex-col gap-3">
-                                    {#each collectionActivity as activity (activity.client)}
-                                        <div class="flex items-start gap-2.5">
-                                            <Avatar.Root size="sm" shape="square" class="shrink-0">
-                                                <Avatar.Fallback
-                                                    >{activity.initials}</Avatar.Fallback
-                                                >
-                                            </Avatar.Root>
-                                            <div class="min-w-0 flex-1">
-                                                <Typography.Text
-                                                    variant="supporting"
-                                                    class="truncate text-foreground"
-                                                >
-                                                    {activity.client}
-                                                </Typography.Text>
-                                                <Typography.Metadata
-                                                    >{activity.detail}</Typography.Metadata
-                                                >
-                                            </div>
-                                            <Typography.Metadata class="shrink-0"
-                                                >{activity.time}</Typography.Metadata
-                                            >
-                                        </div>
-                                    {/each}
-                                </div>
-                                <Button variant="secondary" class="w-full">View activity</Button>
-                            </Card.Root>
-                        </div>
+                                        bind:value={newInvoiceCustomer}
+                                        label="Customer"
+                                        placeholder="Studio name"
+                                    />
+                                    <Textarea
+                                        bind:value={newInvoiceNotes}
+                                        label="Notes"
+                                        placeholder="Optional context for the draft"
+                                        autoresize
+                                    />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Modal.Close>
+                                        Cancel
+                                        <Shortcut shortcut="esc" />
+                                    </Modal.Close>
+                                    <Modal.Confirm onclick={createInvoice}>
+                                        Create draft
+                                        <Shortcut shortcut="enter" />
+                                    </Modal.Confirm>
+                                </Modal.Footer>
+                            </Modal.Content>
+                        </Modal.Root>
                     </div>
-                </div>
-            </ScrollArea>
+                    <Toolbar class="gap-2 p-0">
+                        <Combobox.Root bind:value={invoiceQuery}>
+                            <Combobox.Trigger
+                                placeholder="Search customer"
+                                class="min-w-0 flex-1"
+                            />
+                            <Combobox.Content>
+                                <Combobox.Results>
+                                    {#each customers as customer (customer)}
+                                        <Combobox.Item value={customer} label={customer} />
+                                    {/each}
+                                </Combobox.Results>
+                            </Combobox.Content>
+                        </Combobox.Root>
+                        <Select.Root bind:value={invoiceStatus}>
+                            <Select.Trigger variant="outline" aria-label="Invoice status">
+                                {invoiceStatus === 'all'
+                                    ? 'All statuses'
+                                    : invoiceStatus === 'open'
+                                      ? 'Open'
+                                      : formatChoice(invoiceStatus)}
+                            </Select.Trigger>
+                            <Select.Content>
+                                <Select.Item value="all" label="All statuses">
+                                    All statuses
+                                </Select.Item>
+                                <Select.Item value="open" label="Open">Open</Select.Item>
+                                <Select.Item value="paid" label="Paid">Paid</Select.Item>
+                                <Select.Item value="overdue" label="Overdue">Overdue</Select.Item>
+                            </Select.Content>
+                        </Select.Root>
+                    </Toolbar>
+                    {#if pagedInvoices.length > 0}
+                        <Checkbox
+                            checked={allVisibleSelected}
+                            label="Select visible invoices"
+                            onCheckedChange={toggleSelectAll}
+                        />
+                    {/if}
+                    {#each pagedInvoices as invoice (invoice.reference)}
+                        <ContextMenu.Root>
+                            <ContextMenu.Trigger class="block">
+                                <div
+                                    class="flex items-start gap-3 border-b border-border py-3 last:border-b-0"
+                                >
+                                    <Checkbox
+                                        bind:checked={selectedInvoices[invoice.reference]}
+                                        label={invoice.client}
+                                        description={`${invoice.reference} · due ${invoice.due}`}
+                                    />
+                                    <HoverCard.Root>
+                                        <HoverCard.Trigger class="ml-auto shrink-0">
+                                            <Badge variant={invoiceBadgeVariant(invoice.status)}>
+                                                {invoice.status}
+                                            </Badge>
+                                        </HoverCard.Trigger>
+                                        <HoverCard.Content>
+                                            <HoverCard.Title>{invoice.client}</HoverCard.Title>
+                                            <HoverCard.Description>
+                                                {invoice.reference}
+                                                is {invoice.amount}, due {invoice.due}.
+                                            </HoverCard.Description>
+                                        </HoverCard.Content>
+                                    </HoverCard.Root>
+                                    <Typography.Metadata class="shrink-0 tabular-nums">
+                                        {invoice.amount}
+                                    </Typography.Metadata>
+                                    <CopyButton
+                                        text={invoice.reference}
+                                        label="Copy invoice number"
+                                    />
+                                    <DropdownMenu.Root>
+                                        <DropdownMenu.Trigger
+                                            variant="ghost"
+                                            size="icon"
+                                            aria-label={`Actions for ${invoice.reference}`}
+                                        >
+                                            <MoreHorizontal size={16} />
+                                        </DropdownMenu.Trigger>
+                                        <DropdownMenu.Content>
+                                            <DropdownMenu.Item
+                                                callback={() =>
+                                                    runDashboardAction(
+                                                        'Reminder sent',
+                                                        `${invoice.client} will be notified.`
+                                                    )}
+                                            >
+                                                Send reminder
+                                            </DropdownMenu.Item>
+                                            <DropdownMenu.Item
+                                                callback={() => markInvoicePaid(invoice.reference)}
+                                            >
+                                                Record payment
+                                            </DropdownMenu.Item>
+                                            <DropdownMenu.Separator />
+                                            <DropdownMenu.Item
+                                                callback={() =>
+                                                    runDashboardAction(
+                                                        'Invoice duplicated',
+                                                        `${invoice.reference} copied as a draft.`
+                                                    )}
+                                            >
+                                                Duplicate
+                                            </DropdownMenu.Item>
+                                        </DropdownMenu.Content>
+                                    </DropdownMenu.Root>
+                                </div>
+                            </ContextMenu.Trigger>
+                            <ContextMenu.Content>
+                                <ContextMenu.Item
+                                    callback={() =>
+                                        runDashboardAction(
+                                            'Reminder sent',
+                                            `${invoice.client} will be notified.`
+                                        )}
+                                >
+                                    Send reminder
+                                </ContextMenu.Item>
+                                <ContextMenu.Item
+                                    callback={() => markInvoicePaid(invoice.reference)}
+                                >
+                                    Record payment
+                                </ContextMenu.Item>
+                                <ContextMenu.Separator />
+                                <ContextMenu.Item
+                                    callback={() =>
+                                        runDashboardAction(
+                                            'Invoice duplicated',
+                                            `${invoice.reference} copied as a draft.`
+                                        )}
+                                >
+                                    Duplicate
+                                </ContextMenu.Item>
+                            </ContextMenu.Content>
+                        </ContextMenu.Root>
+                    {:else}
+                        <Alert.Root variant="info">
+                            <Alert.Title>No invoices found</Alert.Title>
+                            <Alert.Description>
+                                Change the search or status filter to see more invoices.
+                            </Alert.Description>
+                        </Alert.Root>
+                    {/each}
+                    <Toolbar class="p-0">
+                        <Typography.Metadata>
+                            Showing {pagedInvoices.length} of {visibleInvoices.length}
+                        </Typography.Metadata>
+                        <Pagination bind:page={invoicePage} total={invoicePageCount} />
+                    </Toolbar>
+                </Tabs.Content>
+
+                <Tabs.Content value="settings" class="flex flex-col gap-6 pt-6">
+                    <div>
+                        <Typography.Title level={1}>Settings</Typography.Title>
+                        <Typography.Description>
+                            Collection defaults for this workspace.
+                        </Typography.Description>
+                    </div>
+                    <Accordion.Root type="multiple" bind:value={settingsSections}>
+                        <Accordion.Item value="workspace">
+                            <Accordion.Trigger>Workspace</Accordion.Trigger>
+                            <Accordion.Content>
+                                <div class="flex flex-col gap-4">
+                                    <Input bind:value={companyName} label="Workspace name" />
+                                    <Switch
+                                        bind:checked={autoReconcile}
+                                        label="Auto-reconcile"
+                                        description="Match confirmed bank payments as they arrive."
+                                    />
+                                </div>
+                            </Accordion.Content>
+                        </Accordion.Item>
+                        <Accordion.Item value="reminders">
+                            <Accordion.Trigger>Reminders</Accordion.Trigger>
+                            <Accordion.Content>
+                                <div class="flex flex-col gap-4">
+                                    <RadioGroup.Root
+                                        bind:value={reminderCadence}
+                                        name="reminder-cadence"
+                                    >
+                                        <RadioGroup.Item
+                                            value="off"
+                                            label="Off"
+                                            description="Send reminders yourself."
+                                        />
+                                        <RadioGroup.Item
+                                            value="weekly"
+                                            label="Weekly"
+                                            description="Every Monday for open invoices."
+                                        />
+                                        <RadioGroup.Item
+                                            value="due"
+                                            label="Before due"
+                                            description="Once, a few days before the due date."
+                                        />
+                                    </RadioGroup.Root>
+                                    {#if reminderCadence === 'due'}
+                                        <Slider
+                                            value={reminderDays}
+                                            min={1}
+                                            max={14}
+                                            step={1}
+                                            label={`Remind ${reminderDays} days before due`}
+                                            onValueChange={(value) => {
+                                            reminderDays = value;
+                                        }}
+                                        />
+                                    {/if}
+                                </div>
+                            </Accordion.Content>
+                        </Accordion.Item>
+                    </Accordion.Root>
+                </Tabs.Content>
+            </Tabs.Root>
         </div>
-    </div>
+    </ScrollArea>
 {/snippet}
 
 <div data-docs-page class="flex min-h-0 min-w-0 flex-1 flex-col bg-background text-foreground">
-    <section
-        aria-label="Theme workspace"
-        class="flex min-h-0 flex-1 gap-3 bg-background min-[1100px]:pl-3"
-    >
+    <section aria-label="Theme workspace" class="flex min-h-0 flex-1 bg-background">
         <aside
             aria-label="Theme configuration"
-            class="my-3 hidden min-h-0 w-[328px] shrink-0 overflow-hidden rounded-[var(--radius-xl)] border border-border bg-background p-1 shadow-[var(--elevation-1)] min-[1100px]:flex min-[1100px]:flex-col"
+            class="hidden min-h-0 w-[328px] shrink-0 px-4 py-3 min-[1100px]:flex min-[1100px]:flex-col"
         >
             {@render inspector()}
         </aside>
 
-        <div class="min-w-0 flex-1 overflow-auto p-3 min-[1100px]:pl-0">
-            <div class="h-full min-h-0 font-[var(--font-sans)] text-foreground" id="theme-preview">
+        <div class="min-w-0 flex-1 py-3 pr-3 pl-0">
+            <div
+                class="h-full min-h-0 overflow-hidden rounded-[var(--radius-xl)] border border-border bg-background font-[var(--font-sans)] text-foreground"
+                id="theme-preview"
+            >
                 {@render dashboardPreview()}
             </div>
         </div>
@@ -1843,7 +2074,7 @@
                 <Sheet.Title>Theme configuration</Sheet.Title>
                 <Sheet.Description>Configure the live Sivir theme preview.</Sheet.Description>
             </Sheet.Header>
-            <div class="-m-4 min-h-0 flex-1 overflow-hidden">
+            <div class="-my-4 min-h-0 flex-1 overflow-hidden px-6">
                 {@render inspector()}
             </div>
         </Sheet.Content>
@@ -1852,14 +2083,14 @@
     <Modal.Root bind:open={moreOptionsOpen} orientation="vertical">
         <Modal.Content
             size="xl"
-            contentClass="!h-[min(44rem,calc(var(--sivir-viewport-height)-2rem))] !max-h-[min(44rem,calc(var(--sivir-viewport-height)-2rem))]"
+            contentClass="!h-[min(44rem,calc(var(--sivir-viewport-height)-2rem))] !max-h-[min(44rem,calc(var(--sivir-viewport-height)-2rem))] !max-w-5xl"
             surfaceClass="!overflow-hidden"
         >
             <Modal.Header class="shrink-0">
-                <Modal.Title>Advanced theme tokens</Modal.Title>
+                <Modal.Title>Advanced options</Modal.Title>
                 <Modal.Description>
-                    Override any token directly. Empty values continue to inherit from the selected
-                    preset and the primary studio controls.
+                    Fine-tune colors, spacing, and motion. Changes override the sidebar controls and
+                    the selected preset.
                 </Modal.Description>
             </Modal.Header>
             <Modal.Body class="min-h-0 flex-1 overflow-hidden">
@@ -1894,16 +2125,30 @@
                             </Tabs.Root>
                         </div>
                         <ScrollArea class="min-h-0 flex-1 pr-2">
-                            <div class="grid gap-3 pb-2 sm:grid-cols-2">
-                                {#each colorTokenDefinitions as definition (definition.name)}
-                                    {@render tokenField(
-                                        definition.name,
-                                        advancedTokens.colors[appMode][definition.name],
-                                        colorTokenFallback(definition),
-                                        (value) => {
-                                            updateAdvancedColorToken(definition.name, value);
-                                        }
-                                    )}
+                            <div class="flex flex-col gap-5 pb-2">
+                                {#each colorTokenGroups as group (group.label)}
+                                    <div class="flex flex-col gap-3">
+                                        <h3 class="text-sm font-semibold tracking-[-0.015em]">
+                                            {group.label}
+                                        </h3>
+                                        <div
+                                            class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3"
+                                        >
+                                            {#each group.tokens as definition (definition.name)}
+                                                {@const resolved = resolveColorToken(definition)}
+                                                {@render advancedColorField(
+                                                    definition.label,
+                                                    resolved.hex,
+                                                    (hex) => {
+                                                        updateAdvancedColorToken(
+                                                            definition.name,
+                                                            formatCssColor(hex, resolved.alpha)
+                                                        );
+                                                    }
+                                                )}
+                                            {/each}
+                                        </div>
+                                    </div>
                                 {/each}
                             </div>
                         </ScrollArea>
@@ -1914,16 +2159,35 @@
                         class="flex min-h-0 flex-1 flex-col overflow-hidden"
                     >
                         <ScrollArea class="min-h-0 flex-1 pr-2">
-                            <div class="grid gap-3 pb-2 sm:grid-cols-2">
-                                {#each spacingTokenDefinitions as definition (definition.name)}
-                                    {@render tokenField(
-                                        definition.name,
-                                        advancedTokens.spacing[definition.name],
-                                        definition.fallback,
-                                        (value) => {
-                                            updateAdvancedSpacingToken(definition.name, value);
-                                        }
-                                    )}
+                            <div class="flex flex-col gap-5 pb-2">
+                                {#each spacingTokenGroups as group (group.label)}
+                                    <div class="flex flex-col gap-3">
+                                        <h3 class="text-sm font-semibold tracking-[-0.015em]">
+                                            {group.label}
+                                        </h3>
+                                        <div
+                                            class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3"
+                                        >
+                                            {#each group.tokens as definition (definition.name)}
+                                                {@const spacingValue =
+                                                    resolveSpacingToken(definition)}
+                                                {@render sliderTokenField(
+                                                    definition.label,
+                                                    spacingValue,
+                                                    definition.min,
+                                                    definition.max,
+                                                    definition.step,
+                                                    formatPx(spacingValue),
+                                                    (value) => {
+                                                        updateAdvancedSpacingToken(
+                                                            definition.name,
+                                                            formatPx(value)
+                                                        );
+                                                    }
+                                                )}
+                                            {/each}
+                                        </div>
+                                    </div>
                                 {/each}
                             </div>
                         </ScrollArea>
@@ -1934,16 +2198,51 @@
                         class="flex min-h-0 flex-1 flex-col overflow-hidden"
                     >
                         <ScrollArea class="min-h-0 flex-1 pr-2">
-                            <div class="grid gap-3 pb-2 sm:grid-cols-2">
-                                {#each animationTokenDefinitions as definition (definition.name)}
-                                    {@render tokenField(
-                                        definition.name,
-                                        advancedTokens.animation[definition.name],
-                                        definition.fallback,
-                                        (value) => {
-                                            updateAdvancedAnimationToken(definition.name, value);
-                                        }
-                                    )}
+                            <div class="flex flex-col gap-5 pb-2">
+                                {#each animationTokenGroups as group (group.label)}
+                                    <div class="flex flex-col gap-3">
+                                        <h3 class="text-sm font-semibold tracking-[-0.015em]">
+                                            {group.label}
+                                        </h3>
+                                        <div
+                                            class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3"
+                                        >
+                                            {#each group.tokens as definition (definition.name)}
+                                                {#if definition.kind === 'ease'}
+                                                    {@render easeTokenField(
+                                                        definition.label,
+                                                        animationEaseValue(definition),
+                                                        (value) => {
+                                                            updateAdvancedAnimationToken(
+                                                                definition.name,
+                                                                value
+                                                            );
+                                                        }
+                                                    )}
+                                                {:else}
+                                                    {@const motionValue =
+                                                        animationSliderValue(definition)}
+                                                    {@render sliderTokenField(
+                                                        definition.label,
+                                                        motionValue,
+                                                        definition.min,
+                                                        definition.max,
+                                                        definition.step,
+                                                        animationSliderDisplay(
+                                                            definition,
+                                                            motionValue
+                                                        ),
+                                                        (value) => {
+                                                            commitAnimationSlider(
+                                                                definition,
+                                                                value
+                                                            );
+                                                        }
+                                                    )}
+                                                {/if}
+                                            {/each}
+                                        </div>
+                                    </div>
                                 {/each}
                             </div>
                         </ScrollArea>

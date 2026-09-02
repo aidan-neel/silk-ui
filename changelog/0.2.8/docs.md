@@ -1,0 +1,16 @@
+- Rebuild Theme Studio advanced options with color pickers, sliders, and named easing menus, plain-language labels, filled defaults, and a three-column wide modal.
+- Add Ease in, Standard, Decelerate, Accelerate, Snappy, Soft, and Emphasized to the Theme Studio easing menu.
+- Rebuild the Theme Studio preview as a working ledger of Sivir components, with real search, filters, paging, and invoice actions.
+- Frame the Theme Studio preview with a full-height bordered canvas and leave the configuration rail unboxed.
+- Add Escape and Enter shortcuts to the New invoice modal, use a compact segmented range control, and pin a small unread count on notifications.
+- Remove cards around Theme Studio sidebar controls so the rail stays inset.
+- Expand the Theme Studio ledger with Command, Combobox, context menus, copy, accordion settings, and collection steps.
+- Simplify the home hero to a bottom-left, left-aligned heading and description, without a component-count badge or install command.
+- Group the home navbar links beside a plain wordmark on the left, styled like the docs outline buttons and sharing the hero's horizontal padding so their edges align.
+- Add a dark and light mode toggle to the home navbar.
+- Add a GitHub star button to the home hero and move it with the theme toggle to the far right of the navbar.
+- Add an oversized component-name marquee to the right of the home hero, with each row drifting at its own speed and direction.
+- Give the Theme Studio mobile sidebar wider horizontal padding.
+- Match the docs mobile menu to the main navbar menu and raise the docs toolbar.
+- Pair the home hero heading and description tightly at a matching size and weight, with breathing room before the buttons.
+- Give the home hero the same staggered fade-and-blur entrance as docs content.

@@ -23,6 +23,7 @@
         "@vercel/analytics": "^2.0.1",
         "clsx": "^2.1.1",
         "mode-watcher": "^1.1.0",
+        "ogl": "^1.0.11",
         "svelte-persisted-state": "^1.4.0",
         "tailwind-variants": "^3.2.2",
       },
@@ -94,7 +95,7 @@
     },
     "packages/sivir": {
       "name": "@sivir-ui/svelte",
-      "version": "0.2.7",
+      "version": "0.2.8",
       "bin": {
         "sivir": "dist/index.js",
       },
@@ -990,6 +991,8 @@
     "nopt": ["nopt@8.1.0", "", { "dependencies": { "abbrev": "^3.0.0" }, "bin": { "nopt": "bin/nopt.js" } }, "sha512-ieGu42u/Qsa4TFktmaKEwM6MQH0pOWnaB3htzh0JRtx84+Mebc0cbZYN5bC+6WTZ4+77xrL9Pn5m7CV6VIkV7A=="],
 
     "obug": ["obug@2.1.1", "", {}, "sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ=="],
+
+    "ogl": ["ogl@1.0.11", "", {}, "sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA=="],
 
     "ohash": ["ohash@2.0.11", "", {}, "sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ=="],
 

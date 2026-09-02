@@ -1,0 +1,3 @@
+- Bump `@sivir-ui/svelte` to `0.2.8`.
+- Density, type, and status tokens now drive component chrome instead of leftover Tailwind defaults and hardcoded lengths.
+- Color Picker and other portaled layers stay interactive inside Modal.

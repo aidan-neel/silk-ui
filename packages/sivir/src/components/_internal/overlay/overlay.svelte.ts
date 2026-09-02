@@ -81,11 +81,11 @@ export function useOverlay(opts: OverlayOptions) {
         });
 
         return () => {
+            releaseInert?.();
             cleanupTrap?.();
             co.destroy();
             releaseEscape();
             releaseScroll?.();
-            releaseInert?.();
         };
     });
 }

@@ -10,11 +10,24 @@
 
     import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
     import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
+    import { components, sanitizeComponent } from '$lib/components';
     import Logo from '../logo.svelte';
-    import SideNavbar from './side-navbar.svelte';
 
     const { starCount = null }: { starCount?: number | null } = $props();
     let mobileMenuOpen = $state(false);
+
+    const navItems = [
+        { href: '/docs/introduction', label: 'Docs' },
+        { href: '/docs/components', label: 'Components' },
+        { href: '/studio', label: 'Studio' }
+    ];
+    const docsPages = [
+        { title: 'Introduction', href: resolve('/docs/introduction') },
+        { title: 'Installation', href: resolve('/docs/installation') },
+        { title: 'Theming', href: resolve('/docs/theming') },
+        { title: 'Changelog', href: resolve('/docs/changelog') },
+        { title: 'Components', href: resolve('/docs/components') }
+    ];
 
     const breadcrumbs = $derived.by(() => {
         const pathnameSegments = page.url.pathname.split('/').filter(Boolean);
@@ -61,15 +74,11 @@
 
         return String(count);
     }
-
-    function closeMobileMenu() {
-        mobileMenuOpen = false;
-    }
 </script>
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
     <header
-        class="z-20 mx-auto flex h-[4.75rem] w-full max-w-[960px] items-center justify-between gap-4 px-2 sm:px-5 lg:px-10"
+        class="z-20 mx-auto flex h-16 w-full max-w-[960px] items-center justify-between gap-4 px-2 sm:px-5 lg:px-10"
     >
         <div class="flex min-w-0 items-center gap-2 sm:hidden">
             <FullscreenNav.Trigger class="size-9 rounded-[var(--radius-md)]" />
@@ -155,7 +164,7 @@
         </div>
     </header>
 
-    <FullscreenNav.Content label="Browse documentation" class="p-0 sm:hidden">
+    <FullscreenNav.Content label="Browse Sivir UI" class="p-0 sm:hidden">
         <header
             class="flex shrink-0 items-center justify-between border-b border-border/70 px-4 py-3"
         >
@@ -165,6 +174,26 @@
             <FullscreenNav.Close />
         </header>
 
-        <SideNavbar class="min-h-0 flex-1 px-4 pt-5" onNavigate={closeMobileMenu} />
+        <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
+            <FullscreenNav.Group heading="Navigate">
+                {#each navItems as item (item.href)}
+                    <FullscreenNav.Link href={item.href}>{item.label}</FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+
+            <FullscreenNav.Group heading="Getting Started" class="mt-10">
+                {#each docsPages as item (item.href)}
+                    <FullscreenNav.Link href={item.href}>{item.title}</FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+
+            <FullscreenNav.Group heading="Components" class="mt-10">
+                {#each components as component (component)}
+                    <FullscreenNav.Link href={`/docs/components/${component}`}>
+                        {sanitizeComponent(component)}
+                    </FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+        </div>
     </FullscreenNav.Content>
 </FullscreenNav.Root>

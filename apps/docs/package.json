@@ -50,11 +50,12 @@
     },
     "dependencies": {
         "@floating-ui/dom": "^1.7.6",
-        "@sivir-ui/svelte": "workspace:*",
         "@lucide/svelte": "^1.7.0",
+        "@sivir-ui/svelte": "workspace:*",
         "@vercel/analytics": "^2.0.1",
         "clsx": "^2.1.1",
         "mode-watcher": "^1.1.0",
+        "ogl": "^1.0.11",
         "svelte-persisted-state": "^1.4.0",
         "tailwind-variants": "^3.2.2"
     },

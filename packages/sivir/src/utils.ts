@@ -201,6 +201,21 @@ function isOverlayRoot(element: Element) {
     );
 }
 
+function isInExternalLayer(target: EventTarget | Node | null, container: HTMLElement) {
+    const el =
+        target instanceof Element ? target : target instanceof Node ? target.parentElement : null;
+    if (!el) {
+        return false;
+    }
+
+    const layer = el.closest('[data-floating-content], [data-overlay-root]');
+    if (!layer) {
+        return false;
+    }
+
+    return !container.contains(layer) && !layer.contains(container);
+}
+
 function isScrollOverflow(value: string) {
     return value === 'auto' || value === 'scroll' || value === 'overlay';
 }
@@ -592,8 +607,12 @@ export function trapFocus(
             return;
         }
 
-        const focusable = getFocusableElements(dialogEl);
         const active = document.activeElement as HTMLElement | null;
+        if (isInExternalLayer(active, dialogEl)) {
+            return;
+        }
+
+        const focusable = getFocusableElements(dialogEl);
 
         if (focusable.length === 0) {
             e.preventDefault();
@@ -619,7 +638,7 @@ export function trapFocus(
 
     const handleFocusIn = (e: FocusEvent) => {
         const target = e.target as Node | null;
-        if (!target || dialogEl.contains(target)) {
+        if (!target || dialogEl.contains(target) || isInExternalLayer(target, dialogEl)) {
             return;
         }
         if (options?.initialFocus) {
@@ -643,7 +662,13 @@ export function trapFocus(
     return () => {
         document.removeEventListener('keydown', handleKeydown, true);
         document.removeEventListener('focusin', handleFocusIn, true);
-        previouslyFocused?.focus();
+        const restore = previouslyFocused;
+        queueMicrotask(() => {
+            if (!restore?.isConnected) {
+                return;
+            }
+            restore.focus();
+        });
     };
 }
 

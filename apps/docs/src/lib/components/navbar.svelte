@@ -26,7 +26,6 @@
 
     let scrolled = $state(false);
     let mobileMenuOpen = $state(false);
-    const isHome = $derived($page.url.pathname === '/');
     const isDocs = $derived(
         $page.url.pathname.startsWith('/docs') || $page.url.pathname.startsWith('/fonts')
     );
@@ -70,11 +69,7 @@
     >
         <div
             class={`relative mx-auto flex h-16 w-full items-center justify-between ${
-                isHome
-                    ? 'max-w-[1400px] px-4 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] md:px-6'
-                    : isDocs
-                      ? 'max-w-[1400px] px-4 md:px-6'
-                      : 'px-4 md:px-6'
+                isDocs ? 'max-w-[1400px] px-4 md:px-6' : 'px-4 md:px-6'
             }`}
         >
             <div class="flex min-w-0 flex-row items-center gap-2 md:gap-5">

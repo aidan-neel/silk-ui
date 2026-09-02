@@ -68,8 +68,8 @@ changelog:
 
 `changelog/<next-release-version>/<change-type>.md`
 
-The version is the next release to ship. If `0.2.7` is current and the next
-release is `0.2.8`, write to `changelog/0.2.8/`. Use a change-type filename that
+The version is the next release to ship. If `0.2.8` is current and the next
+release is `0.2.9`, write to `changelog/0.2.9/`. Use a change-type filename that
 matches the work: `feature.md`, `fix.md`, `breaking.md`, or `docs.md`.
 
 That file is the human changelog. It compiles into `/docs/changelog` and

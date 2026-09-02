@@ -10,10 +10,6 @@
     let { children, class: className, ...rest }: Props = $props();
 </script>
 
-<div
-    {...rest}
-    data-ui="menu-separator"
-    class={cn(className, 'mx-1 my-1 h-[var(--border-size)] rounded-[var(--radius-xl)] bg-border')}
->
+<div {...rest} data-ui="menu-separator" class={cn(className, 'sivir-menu-separator')}>
     {@render children?.()}
 </div>

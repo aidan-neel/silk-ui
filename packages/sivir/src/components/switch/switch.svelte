@@ -22,7 +22,7 @@
     const descriptionId = `${id}-description`;
 
     const buttonClasses =
-        'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[0.55]';
+        'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]';
 
     function toggle(event: Event) {
         if (disabled) {
@@ -39,7 +39,7 @@
     }
 </script>
 
-<div class="flex min-h-11 flex-row items-start gap-2.5 md:min-h-0">
+<div class="flex min-h-[var(--size-touch)] flex-row items-start gap-2.5 md:min-h-0">
     <button
         bind:this={element}
         {...rest as HTMLButtonAttributes}
@@ -90,7 +90,7 @@
             {#if label}
                 <span
                     id={labelId}
-                    class="text-[length:var(--text-sm)] [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] text-foreground [font-family:var(--font-sans),sans-serif]"
+                    class="[font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] text-foreground [font-family:var(--font-sans),sans-serif]"
                 >
                     {label}
                 </span>
@@ -98,7 +98,7 @@
             {#if description}
                 <span
                     id={descriptionId}
-                    class="leading-6 [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="leading-body [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                 >
                     {description}
                 </span>

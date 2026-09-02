@@ -25,7 +25,7 @@
     {...rest}
     class={cn(
         classProp,
-        'min-h-11 md:min-h-0',
+        'min-h-[var(--size-touch)] md:min-h-0',
         checkbox({ variant, disabled: disabled ?? false, checked: checked ?? false })
     )}
 >
@@ -89,7 +89,7 @@
             </span>
             {#if description}
                 <span
-                    class="text-text [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="text-text [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                 >
                     {description}
                 </span>

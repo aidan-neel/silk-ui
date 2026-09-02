@@ -1,3 +1,9 @@
+## Overlay close
+
+Release page `inert` before returning focus. `trapFocus` restores the trigger on a microtask so overlay and popover teardown can clear inert first. Do not focus the trigger while its branch is still inert — Chromium will ignore that and leave focus on `body`.
+
+Popover's full-viewport dismiss scrim sits at `z-[129]`. While open, the trigger is `relative z-[130]` so it stays clickable above that layer. Do not cover the trigger with the dismiss surface.
+
 ## Modal dark frame
 
 In dark mode, `sivir-modal-frame` keeps its inset padding and inner well border, but the outer chrome stroke is transparent. Do not add a dark-mode frame border back on Modal or Alert Dialog. Code Block `sivir-inset-frame` still draws its outer border.

@@ -1,0 +1,1 @@
+- Theme Studio can flatten component shadows, add a light primary-button stroke, and switch the hover cursor between default and pointer.

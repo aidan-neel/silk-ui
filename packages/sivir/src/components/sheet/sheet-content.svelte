@@ -55,7 +55,7 @@
                 data-ui="sheet-overlay"
                 class={cn(
                     // token-lint-disable-next-line no-literal-length
-                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-[2px] [backface-visibility:hidden] [transform:translateZ(0)]'
+                    'sivir-overlay-scrim absolute inset-0'
                 )}
                 aria-hidden="true"
             ></div>

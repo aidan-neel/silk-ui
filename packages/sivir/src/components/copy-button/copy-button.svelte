@@ -80,13 +80,13 @@
             <span class="relative grid size-4 place-items-center">
                 <Copy
                     size={15}
-                    class={`col-start-1 row-start-1 transition-[transform,opacity] duration-200 ease-[var(--ease-out)] ${
+                    class={`col-start-1 row-start-1 transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
                         copied ? '-rotate-90 scale-50 opacity-0' : 'rotate-0 scale-100 opacity-100'
                     }`}
                 />
                 <Check
                     size={15}
-                    class={`col-start-1 row-start-1 text-[var(--color-success)] transition-[transform,opacity] duration-200 ease-[var(--ease-out)] ${
+                    class={`col-start-1 row-start-1 text-[var(--color-success)] transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
                         copied ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-50 opacity-0'
                     }`}
                 />
