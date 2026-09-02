@@ -1,4 +1,5 @@
 - Bump `@sivir-ui/svelte` to `0.2.6`.
+- Fix `bun audit` high-severity advisory by overriding `mysql2` to `3.22.0` (GHSA-3f6p-5ww8-9rcr) with no application code changes.
 - Soften secondary Button hover and open fills so they still darken without going so gray.
 - Invert Modal's inset surface in dark mode so the inner well is darker than the frame.
 - Make Popover, Modal, Sheet, Alert Dialog, Command, and Fullscreen Nav inert the page, trap focus, and lock nested overflow containers while open.
