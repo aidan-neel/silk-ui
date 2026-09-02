@@ -19,6 +19,7 @@
         '/docs/introduction',
         '/docs/installation',
         '/docs/theming',
+        '/docs/changelog',
         '/docs/components'
     ];
 </script>

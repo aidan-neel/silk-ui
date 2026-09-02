@@ -7,6 +7,7 @@ const staticPaths = [
     '/docs/introduction',
     '/docs/installation',
     '/docs/theming',
+    '/docs/changelog',
     '/docs/components',
     '/studio',
     ...changelogVersions.map((version) => `/changelog/${version}`)

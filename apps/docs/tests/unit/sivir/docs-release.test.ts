@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { changelogMarkdown, changelogVersions } from '$lib/changelog';
+import { changelogDocsMarkdown, changelogMarkdown, changelogVersions } from '$lib/changelog';
 import { components } from '$lib/components';
 import { brandMarkMarkdown, componentMarkdown, componentsMarkdown } from '$lib/llms';
 import { GET as getChangelog } from '../../../src/routes/changelog/[version]/+server';
@@ -60,8 +60,9 @@ describe('docs release contracts', () => {
             );
         }
         expect(body).toContain('<loc>https://preview.example/docs/components</loc>');
-        // home + intro + install + theming + components index + Theme Studio.
-        expect(body.match(/<url>/g)).toHaveLength(components.length + 6 + changelogVersions.length);
+        // home + intro + install + theming + changelog + components index + Theme Studio.
+        expect(body.match(/<url>/g)).toHaveLength(components.length + 7 + changelogVersions.length);
+        expect(body).toContain('<loc>https://preview.example/docs/changelog</loc>');
         expect(body).toContain('<loc>https://preview.example/studio</loc>');
         for (const version of changelogVersions) {
             expect(body).toContain(`<loc>https://preview.example/changelog/${version}</loc>`);
@@ -131,6 +132,7 @@ describe('docs release contracts', () => {
 
     it('serves every release as compiled Markdown for integrations', async () => {
         expect(changelogVersions).toContain('0.2.1');
+        expect(changelogVersions).toContain('0.2.6');
         expect(changelogMarkdown('missing')).toBeUndefined();
 
         const response = (await getChangelog({
@@ -141,6 +143,8 @@ describe('docs release contracts', () => {
         expect(await response.text()).toContain('# @sivir-ui/svelte 0.2.1 changelog');
         expect(changelogMarkdown('0.2.1')).toContain('## Feature');
         expect(changelogMarkdown('0.2.1')).toContain('versioned Markdown changelog');
+        expect(changelogMarkdown('0.2.6')).toContain('inset frame');
+        expect(changelogDocsMarkdown()).toContain('## 0.2.6');
     });
 
     it('derives LLM references from current component manifests, APIs, and examples', () => {

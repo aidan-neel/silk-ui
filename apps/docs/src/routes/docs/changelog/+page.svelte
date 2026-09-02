@@ -1,0 +1,29 @@
+<script lang="ts">
+    import { Markdown } from '@sivir-ui/svelte/components/markdown';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
+    import { changelogDocsMarkdown } from '$lib/changelog';
+    import DocsPager from '$lib/components/docs/docs-pager.svelte';
+
+    const content = changelogDocsMarkdown();
+</script>
+
+<svelte:head>
+    <title>Sivir · Changelog</title>
+    <meta name="description" content="Release notes for each @sivir-ui/svelte version." />
+</svelte:head>
+
+<div data-docs-page class="flex flex-col gap-16">
+    <header class="flex items-start justify-between gap-4">
+        <div>
+            <Typography.H1 class="m-0">Changelog</Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
+                Release notes for each @sivir-ui/svelte version.
+            </Typography.Text>
+        </div>
+        <DocsPager />
+    </header>
+
+    <section id="releases" class="scroll-mt-20">
+        <Markdown {content} />
+    </section>
+</div>

@@ -40,6 +40,7 @@
         { title: 'Introduction', href: resolve('/docs/introduction') },
         { title: 'Installation', href: resolve('/docs/installation') },
         { title: 'Theming', href: resolve('/docs/theming') },
+        { title: 'Changelog', href: resolve('/docs/changelog') },
         { title: 'Components', href: resolve('/docs/components') }
     ];
 

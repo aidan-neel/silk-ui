@@ -63,3 +63,23 @@ export function changelogMarkdown(version: string): string | undefined {
         ''
     ].join('\n');
 }
+
+export function changelogDocsMarkdown(): string {
+    return changelogVersions
+        .flatMap((version) => {
+            const entries = entriesFor(version);
+            if (!entries.length) {
+                return [];
+            }
+
+            return [
+                `## ${version}`,
+                '',
+                ...entries.flatMap((entry) => {
+                    return [`### ${titleFromType(entry.type)}`, '', entry.content, ''];
+                })
+            ];
+        })
+        .join('\n')
+        .trim();
+}

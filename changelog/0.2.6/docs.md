@@ -1,4 +1,5 @@
 - Add a Studio link to the documentation sidebar and toolbar.
+- Add a Changelog docs page that renders compiled release notes with Markdown.
 - Refine Theme Studio inspector hierarchy: drop the unused Publish action and change counters, move advanced options into header icon buttons, tighten horizontal padding, increase vertical spacing, enlarge group headings, mute item labels, and scroll both sidebars with hidden scrollbars.
 - Add height-capped Select and Combobox examples whose long lists scroll inside ScrollArea with edge-blur cues.
 - Widen Alert Dialog examples to `size="lg"` so titles and actions are not cramped.
