@@ -17,6 +17,7 @@ export type AlertDialogState = {
 };
 export type AlertDialogProps = {
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     /** Sets supported browser chrome to red while the alert dialog is open. */
     error?: boolean;
     /** Controls the default width and action layout. Defaults to `vertical`. */

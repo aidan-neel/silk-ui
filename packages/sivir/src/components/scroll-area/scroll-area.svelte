@@ -53,7 +53,7 @@
 <div
     data-ui="scroll-area"
     data-orientation={orientation}
-    class={cn(className, 'relative min-h-0 overflow-hidden')}
+    class={cn(className, 'relative min-h-0 max-h-inherit overflow-hidden')}
 >
     <div
         bind:this={element}

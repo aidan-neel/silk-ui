@@ -63,18 +63,43 @@ Components must meet a high quality bar:
 
 # Changelog
 
-After every completed task, add or update a release-note entry in
-`changelog/<next-release-version>/<change-type>.md`. The version must be the
-next release to ship; for example, when `0.2.0` is current and the next release
-is `0.2.1`, write to `changelog/0.2.1/feature.md` for a feature. Use a
-change-type filename that accurately describes the work, such as `fix.md`,
-`feature.md`, `breaking.md`, or `docs.md`.
+After every completed task, always write a release-note bullet to the docs
+changelog:
 
-These entries are the source material for the website's
-`/changelog/<package-version>` route, which compiles that release's files into
-a single LLM-consumable update. Keep each entry concise, factual, and focused
-on externally relevant behavior, integration requirements, and breaking
-changes.
+`changelog/<next-release-version>/<change-type>.md`
+
+The version is the next release to ship. If `0.2.6` is current and the next
+release is `0.2.7`, write to `changelog/0.2.7/`. Use a change-type filename that
+matches the work: `feature.md`, `fix.md`, `breaking.md`, or `docs.md`.
+
+That file is the human changelog. It compiles into `/docs/changelog` and
+`/changelog/<package-version>.md`. Keep bullets concise, factual, and focused on
+externally relevant behavior. One concern per bullet. Do not narrate
+implementation, file paths, or migration walkthroughs there.
+
+## Docs changelog vs LLM changelog
+
+Always write the docs changelog bullet. Also write
+`changelog/<next-release-version>/llm.md` when a coding agent would need more
+than that bullet to upgrade, compose, or avoid a footgun.
+
+Write the LLM changelog for:
+
+- Breaking or default-behavior changes (new required structure, inverted
+  defaults, removed exports).
+- Shared visual or overlay contracts other components must copy, not invent.
+- Migrations where the old call site would still type-check but behave wrong.
+- Changes an agent would mis-implement from a one-line note.
+
+Do not write `llm.md` for copy tweaks, docs-only navigation, routine visual
+polish, or dependency bumps that do not change how agents use Sivir.
+
+`llm.md` is prose for agents, not a second bullet list. Explain the new
+contract, what to stop doing, and how to compose the result. Do not paste the
+docs changelog into it. The compiled page is `/changelog/<version>/llm.md`.
+
+If `llm.md` already exists for that version, add a section for the new change
+instead of creating another file.
 
 # Formatting
 

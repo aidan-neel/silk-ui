@@ -29,9 +29,11 @@ export type PopoverContentProps = {
 export type PopoverProps = {
     children?: Snippet;
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     placement?: Placement;
     /** Stable identifier used to connect trigger and content ARIA attributes. */
     state_key?: string;
+    stateKey?: string;
     hoverable?: boolean;
     delay?: number;
     closeDelay?: number;

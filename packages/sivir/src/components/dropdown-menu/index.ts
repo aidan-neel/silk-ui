@@ -1,3 +1,4 @@
+import type { ButtonProps } from '@sivir-ui/svelte/components/button';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
@@ -13,6 +14,17 @@ import Sub from './dropdown-menu-sub.svelte';
 import SubContent from './dropdown-menu-sub-content.svelte';
 import SubTrigger from './dropdown-menu-sub-trigger.svelte';
 import Trigger from './dropdown-menu-trigger.svelte';
+
+export type DropdownMenuProps = {
+    inverted?: boolean;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    children?: Snippet;
+};
+
+export type DropdownMenuItemProps = {
+    callback?: () => void;
+} & ButtonProps;
 
 export type DropdownMenuRadioGroupProps = {
     value?: string;

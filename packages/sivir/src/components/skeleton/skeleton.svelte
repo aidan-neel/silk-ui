@@ -1,6 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
+    import type { SkeletonProps } from '.';
 
     let {
         children,
@@ -9,28 +9,7 @@
         h: height,
         unit = 'px',
         ...rest
-    }: {
-        children?: Snippet;
-        class?: string;
-        w?: number;
-        h?: number;
-        unit?:
-            | 'px'
-            | 'rem'
-            | 'em'
-            | '%'
-            | 'vh'
-            | 'vw'
-            | 'vmin'
-            | 'vmax'
-            | 'ch'
-            | 'ex'
-            | 'cm'
-            | 'mm'
-            | 'in'
-            | 'pt'
-            | 'pc';
-    } = $props();
+    }: SkeletonProps = $props();
 </script>
 
 <!-- token-lint-disable-next-line -->

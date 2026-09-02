@@ -5,9 +5,11 @@
 
     let {
         open = $bindable(false),
+        onOpenChange,
         placement = 'bottom',
         children,
         state_key,
+        stateKey,
         hoverable,
         delay = 0,
         closeDelay = 150,
@@ -17,7 +19,7 @@
     const generatedKey = $props.id();
     const initial = untrack(() => {
         return {
-            key: state_key ?? generatedKey,
+            key: stateKey ?? state_key ?? generatedKey,
             placement,
             hoverable: hoverable ?? false,
             delay,
@@ -54,6 +56,9 @@
 
     $effect(() => {
         popoverState.placement = placement;
+    });
+
+    $effect(() => {
         popoverState.hoverable = hoverable ?? false;
         popoverState.delay = delay;
         popoverState.closeDelay = closeDelay;
@@ -68,6 +73,7 @@
         if (popoverState.open !== syncedOpen) {
             syncedOpen = popoverState.open;
             open = popoverState.open;
+            onOpenChange?.(popoverState.open);
         }
     });
 

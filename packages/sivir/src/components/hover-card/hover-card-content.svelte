@@ -1,23 +1,26 @@
 <script lang="ts">
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { cn } from '@sivir-ui/svelte/utils';
+    import { getContext } from 'svelte';
+    import type { Placement } from '../popover';
     import type { HoverCardContentProps } from '.';
 
-    /**
-     * As of 2.0.0 hover-card collapses to a popover wrapper and popover owns
-     * placement at the Root level. `side` and `align` on HoverCardContentProps
-     * are kept for type-API stability but are not consumed: placement comes from
-     * the Root prop on Popover.Root, and HoverCard.Root forwards none today, so
-     * it defaults to `bottom`. A future minor release can wire them through or
-     * deprecate them.
-     */
-    let {
-        class: className,
-        children,
-        side: _side,
-        align: _align,
-        ...rest
-    }: HoverCardContentProps = $props();
+    const hoverCard = getContext<{ setPlacement: (next: Placement) => void }>('sivir-hover-card');
+
+    let { class: className, children, side, align, ...rest }: HoverCardContentProps = $props();
+
+    $effect(() => {
+        if (side === undefined && align === undefined) {
+            return;
+        }
+        const resolvedSide = side ?? 'bottom';
+        const resolvedAlign = align ?? 'center';
+        hoverCard?.setPlacement(
+            (resolvedAlign === 'center'
+                ? resolvedSide
+                : `${resolvedSide}-${resolvedAlign}`) as Placement
+        );
+    });
 </script>
 
 <Popover.Content

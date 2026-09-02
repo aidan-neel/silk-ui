@@ -1,5 +1,6 @@
-import { changelogVersions } from '$lib/changelog';
+import { changelogLlmVersions, changelogVersions } from '$lib/changelog';
 import { components, sanitizeComponent } from '$lib/components';
+import { sivirGuideMarkdown } from '$lib/skill';
 
 type ComponentManifest = {
     name: string;
@@ -219,9 +220,18 @@ export function llmsTxt(origin: string): string {
         ['Introduction', '/docs/introduction.md'],
         ['Installation', '/docs/installation.md'],
         ['Theming', '/docs/theming.md'],
+        ['Changelog', '/docs/changelog.md'],
         ['Components index', '/docs/components.md'],
         ['Brand Mark', '/docs/brand-mark.md'],
-        ...changelogVersions.map((version) => [`Changelog ${version}`, `/changelog/${version}`]),
+        ['Sivir skill', '/docs/skill.md'],
+        ['Component selection', '/docs/component-selection.md'],
+        ['Design language', '/docs/design-language.md'],
+        ['XML sitemap', '/sitemap.xml'],
+        ...changelogVersions.map((version) => [`Changelog ${version}`, `/changelog/${version}.md`]),
+        ...changelogLlmVersions.map((version) => [
+            `Changelog ${version} LLM context`,
+            `/changelog/${version}/llm.md`
+        ]),
         ...components.map((component) => [
             sanitizeComponent(component),
             `/docs/components/${component}.md`
@@ -234,6 +244,18 @@ export function llmsTxt(origin: string): string {
         'Svelte 5 and Tailwind CSS v4 component library. Use these Markdown resources for implementation details, public APIs, runnable examples, and version-specific upgrade notes.',
         '',
         `The current catalog contains ${components.length} components. Brand Mark is a package-only asset. Approval Request, Marquee, Panel, and Separator were removed as standalone components; migration guidance is in the components index.`,
+        '',
+        '## Agent skill',
+        '',
+        'Install the Sivir skill to give supported coding agents live, version-aware component guidance, AI interface composition patterns, and Sivir design language:',
+        '',
+        fence('sh', 'npx skills add aidan-neel/sivir-ui --skill sivir'),
+        '',
+        `The skill fetches ${origin}/llms.txt as the live catalog. If you are reading this file directly, follow the usage guide below, then load only the Markdown pages you need.`,
+        '',
+        '## How to use Sivir',
+        '',
+        sivirGuideMarkdown(origin),
         '',
         '## Documentation',
         '',

@@ -15,6 +15,7 @@ import { computePosition, offset, flip, shift } from '@floating-ui/dom';
 let bubble = null;
 let measurer = null;
 let label = null;
+let currentClass = '';
 let visible = false;
 let currentText = '';
 let activeRef = null;
@@ -50,6 +51,18 @@ function ensure() {
     bubble = el;
     measurer = m;
     label = span;
+}
+function applyBubbleClass(className = '') {
+    if (!bubble) {
+        return;
+    }
+    currentClass = className;
+    bubble.className = className ? `sivir-tooltip ${className}` : 'sivir-tooltip';
+    if (measurer) {
+        measurer.className = className
+            ? `sivir-tooltip-measure ${className}`
+            : 'sivir-tooltip-measure';
+    }
 }
 /** Sizes the bubble to the measured width of `text` so the change can transition. */
 function applyWidth(text) {
@@ -111,7 +124,7 @@ function reposition(ref, placement, animated) {
         .catch(() => { });
 }
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
-function present(ref, text, placement) {
+function present(ref, text, placement, className = '') {
     if (!bubble || !label) {
         return;
     }
@@ -120,12 +133,13 @@ function present(ref, text, placement) {
     activeRef = ref;
     label.textContent = text;
     currentText = text;
+    applyBubbleClass(className);
     applyWidth(text);
     reposition(ref, placement, morph);
     visible = true;
 }
 /** Hover/focus a trigger: show after `delay`, or morph instantly if one is already up. */
-export function showTooltip(ref, text, placement = 'top', delay = 125) {
+export function showTooltip(ref, text, placement = 'top', delay = 125, className = '') {
     if (typeof document === 'undefined' || !text) {
         return;
     }
@@ -133,10 +147,10 @@ export function showTooltip(ref, text, placement = 'top', delay = 125) {
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
     if (visible || delay <= 0) {
-        present(ref, text, placement);
+        present(ref, text, placement, className);
     }
     else {
-        openTimer = setTimeout(() => present(ref, text, placement), delay);
+        openTimer = setTimeout(() => present(ref, text, placement, className), delay);
     }
 }
 /** Re-label the active bubble in place (for example, a Copy→Copied flip). */
@@ -148,14 +162,21 @@ export function updateTooltipText(ref, text) {
     currentText = text;
     applyWidth(text);
 }
+export function updateTooltipClass(ref, className) {
+    if (!visible || activeRef !== ref || className === currentClass) {
+        return;
+    }
+    applyBubbleClass(className);
+    applyWidth(currentText);
+}
 /** Force the bubble up now and, unless the pointer is over the trigger, auto-hide after `holdMs`. */
-export function flashTooltip(ref, text, placement = 'top', holdMs = 1500) {
+export function flashTooltip(ref, text, placement = 'top', holdMs = 1500, className = '') {
     if (typeof document === 'undefined' || !text) {
         return;
     }
     ensure();
     clearTimeout(openTimer);
-    present(ref, text, placement);
+    present(ref, text, placement, className);
     const hovered = typeof ref.matches === 'function' && ref.matches(':hover');
     if (!hovered) {
         clearTimeout(closeTimer);
@@ -193,6 +214,7 @@ export function resetSharedTooltipForTests() {
     visible = false;
     activeRef = null;
     currentText = '';
+    currentClass = '';
     lastCenter = 'translateX(-50%)';
     bubble?.remove();
     measurer?.remove();

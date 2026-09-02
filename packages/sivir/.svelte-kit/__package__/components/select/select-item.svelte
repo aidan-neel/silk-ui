@@ -1,20 +1,14 @@
 <script lang="ts">
     import Check from '@lucide/svelte/icons/check';
-    import type { ButtonProps } from '@sivir-ui/svelte/components/button';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { onMount, type Snippet } from 'svelte';
+    import { onMount } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import type { SelectItemProps } from '.';
     import { getSelectContext } from './context.svelte';
 
     const { id, state: selectState, labels, values } = getSelectContext();
     const { state: popoverState } = getPopoverContext();
-
-    type Props = {
-        value: string;
-        label?: string;
-        children?: Snippet;
-    } & ButtonProps;
 
     let {
         children,
@@ -23,7 +17,7 @@
         label,
         onclick: userOnclick,
         ...rest
-    }: Props = $props();
+    }: SelectItemProps = $props();
     let element = $state<HTMLButtonElement | HTMLAnchorElement | undefined>();
 
     function resolveLabel() {

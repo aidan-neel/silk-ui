@@ -1,16 +1,10 @@
 <script lang="ts">
     import * as Modal from '@sivir-ui/svelte/components/modal';
-    import { type Snippet, untrack } from 'svelte';
-    import type { CommandState } from '.';
+    import { untrack } from 'svelte';
+    import type { CommandProps, CommandState } from '.';
     import { resetCommand, setCommandContext } from './context.svelte';
 
-    let {
-        open = $bindable(false),
-        children
-    }: {
-        open?: boolean;
-        children?: Snippet;
-    } = $props();
+    let { open = $bindable(false), onOpenChange, children }: CommandProps = $props();
     const id = $props.id();
 
     const command = $state<CommandState>({
@@ -30,4 +24,4 @@
     });
 </script>
 
-<Modal.Root bind:open> {@render children?.()} </Modal.Root>
+<Modal.Root bind:open {onOpenChange}> {@render children?.()} </Modal.Root>

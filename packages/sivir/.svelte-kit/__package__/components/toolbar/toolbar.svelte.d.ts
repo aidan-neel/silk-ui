@@ -1,6 +1,4 @@
-import { type DefaultProps } from '@sivir-ui/svelte/utils';
-import type { HTMLAttributes } from 'svelte/elements';
-type $$ComponentProps = DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>;
-declare const Toolbar: import("svelte").Component<$$ComponentProps, {}, "">;
+import type { ToolbarProps } from '.';
+declare const Toolbar: import("svelte").Component<ToolbarProps, {}, "">;
 type Toolbar = ReturnType<typeof Toolbar>;
 export default Toolbar;

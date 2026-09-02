@@ -9,7 +9,7 @@
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
 
-    const { id, state: comboboxState } = getComboboxContext();
+    const { id, state: comboboxState, selectItem } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
 
     type Props = Omit<PopoverTriggerProps, 'children'> & {
@@ -134,9 +134,7 @@
             const active =
                 available.find((item) => item.value === comboboxState.activeValue) ?? available[0];
             if (active) {
-                comboboxState.selected = active;
-                comboboxState.open = false;
-                active.callback?.();
+                selectItem(active);
             }
         }
     }

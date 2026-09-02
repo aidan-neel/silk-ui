@@ -1,10 +1,4 @@
-import type { ButtonProps } from '@sivir-ui/svelte/components/button';
-import { type Snippet } from 'svelte';
-type Props = {
-    value: string;
-    label?: string;
-    children?: Snippet;
-} & ButtonProps;
-declare const SelectItem: import("svelte").Component<Props, {}, "">;
+import type { SelectItemProps } from '.';
+declare const SelectItem: import("svelte").Component<SelectItemProps, {}, "">;
 type SelectItem = ReturnType<typeof SelectItem>;
 export default SelectItem;

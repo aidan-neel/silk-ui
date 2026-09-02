@@ -32,6 +32,7 @@
     import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
     import * as Select from '@sivir-ui/svelte/components/select';
     import * as Sheet from '@sivir-ui/svelte/components/sheet';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import { Slider, type SliderProps } from '@sivir-ui/svelte/components/slider';
     import { Switch } from '@sivir-ui/svelte/components/switch';
     import * as Tabs from '@sivir-ui/svelte/components/tabs';
@@ -830,21 +831,6 @@
         };
     }
 
-    function resetAdvancedTab() {
-        if (advancedTab === 'colors') {
-            advancedTokens = {
-                ...advancedTokens,
-                colors: { ...advancedTokens.colors, [appMode]: {} }
-            };
-            return;
-        }
-        if (advancedTab === 'spacing') {
-            advancedTokens = { ...advancedTokens, spacing: {} };
-            return;
-        }
-        advancedTokens = { ...advancedTokens, animation: {} };
-    }
-
     function colorTokenFallback(definition: (typeof colorTokenDefinitions)[number]) {
         if (appMode === 'dark' && 'darkFallback' in definition) {
             return definition.darkFallback;
@@ -1092,7 +1078,7 @@
                             · Sivir UI
                         </span>
                     </Select.Trigger>
-                    <Select.Content>
+                    <Select.Content class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]">
                         {#each builtInThemePresets as preset (preset.slug)}
                             <Select.Item value={preset.slug} label={preset.name}>
                                 {preset.name}
@@ -1203,7 +1189,10 @@
                                         {sansFonts.find((font) => font.key === selectedSans)?.label}
                                     </span>
                                 </Select.Trigger>
-                                <Select.Content>
+                                <Select.Content
+                                    class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                                >
+                                    <Select.Label>Sans serif</Select.Label>
                                     {#each sansFonts as font (font.key)}
                                         <Select.Item value={font.key} label={font.label}
                                             >{font.label}</Select.Item
@@ -1231,13 +1220,25 @@
                                         {headerFonts.find((font) => font.key === selectedHeader)?.label}
                                     </span>
                                 </Select.Trigger>
-                                <Select.Content>
-                                    {#each headerFonts as font (font.key)}
-                                        <Select.Item value={font.key} label={font.label}
-                                            ><span style:font-family={font.value}
-                                                >{font.label}</span
-                                            ></Select.Item
+                                <Select.Content
+                                    class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                                >
+                                    <Select.Item value="same-as-sans" label="Same as sans">
+                                        <span style:font-family="var(--font-sans)"
+                                            >Same as sans</span
                                         >
+                                    </Select.Item>
+                                    <Select.Label>Serif</Select.Label>
+                                    {#each serifFonts as font (font.key)}
+                                        <Select.Item value={font.key} label={font.label}>
+                                            <span style:font-family={font.value}>{font.label}</span>
+                                        </Select.Item>
+                                    {/each}
+                                    <Select.Label>Sans serif</Select.Label>
+                                    {#each sansFonts as font (font.key)}
+                                        <Select.Item value={font.key} label={font.label}>
+                                            <span style:font-family={font.value}>{font.label}</span>
+                                        </Select.Item>
                                     {/each}
                                 </Select.Content>
                             </Select.Root>
@@ -1255,7 +1256,10 @@
                                     {monoFonts.find((font) => font.key === selectedMono)?.label}
                                 </span>
                             </Select.Trigger>
-                            <Select.Content>
+                            <Select.Content
+                                class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                            >
+                                <Select.Label>Mono</Select.Label>
                                 {#each monoFonts as font (font.key)}
                                     <Select.Item value={font.key} label={font.label}
                                         >{font.label}</Select.Item
@@ -1947,10 +1951,14 @@
                 </Tabs.Root>
             </Modal.Body>
             <Modal.Footer class="shrink-0">
-                <Button variant="outline" class="w-full sm:flex-1" onclick={resetAdvancedTab}>
-                    Reset {formatChoice(advancedTab)} overrides
-                </Button>
-                <Modal.Close variant="primary" class="w-full sm:flex-1">Done</Modal.Close>
+                <Modal.Close>
+                    Cancel
+                    <Shortcut shortcut="esc" />
+                </Modal.Close>
+                <Modal.Confirm>
+                    Done
+                    <Shortcut shortcut="enter" />
+                </Modal.Confirm>
             </Modal.Footer>
         </Modal.Content>
     </Modal.Root>

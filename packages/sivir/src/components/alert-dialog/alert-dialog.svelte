@@ -4,10 +4,11 @@
 
     let {
         open = $bindable(false),
+        onOpenChange,
         error = false,
         orientation = 'vertical',
         children
     }: AlertDialogProps = $props();
 </script>
 
-<Modal.Root bind:open {error} {orientation}> {@render children?.()} </Modal.Root>
+<Modal.Root bind:open {onOpenChange} {error} {orientation}> {@render children?.()} </Modal.Root>

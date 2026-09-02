@@ -11,6 +11,7 @@ import type { ButtonProps } from '../button';
 import type { Snippet } from 'svelte';
 export type SheetProps = {
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     children?: Snippet;
 };
 export type SheetTriggerProps = ButtonProps;

@@ -7,6 +7,7 @@
         children,
         class: className,
         value = $bindable(''),
+        onValueChange,
         orientation = 'horizontal',
         variant = 'default',
         ...rest
@@ -55,6 +56,7 @@
         if (nextValue !== syncedValue) {
             syncedValue = nextValue;
             value = nextValue;
+            onValueChange?.(nextValue);
         }
     });
 </script>

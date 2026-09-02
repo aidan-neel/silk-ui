@@ -1,23 +1,24 @@
 <script lang="ts">
     import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { CheckboxProps } from '.';
     import { checkbox, checkboxBox, checkboxText } from './variants';
 
     let {
-        checked = $bindable<boolean>(),
+        checked = $bindable(false),
         label,
         description,
         disabled,
         variant = 'default',
         class: classProp,
+        onCheckedChange,
         ...rest
-    }: {
-        checked: boolean;
-        label?: string;
-        description?: string;
-        disabled?: boolean;
-        variant?: 'default' | 'primary';
-        class?: string;
-    } = $props();
+    }: CheckboxProps = $props();
+
+    function handleChange(event: Event) {
+        const next = (event.currentTarget as HTMLInputElement).checked;
+        checked = next;
+        onCheckedChange?.(next);
+    }
 </script>
 
 <label
@@ -39,8 +40,9 @@
         <input
             type="checkbox"
             class="peer absolute size-4 opacity-0"
-            bind:checked
+            {checked}
             aria-checked={checked}
+            oninput={handleChange}
         />
     {/if}
 

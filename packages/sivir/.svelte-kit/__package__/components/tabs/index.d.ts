@@ -12,6 +12,7 @@ export type TabsState = {
 };
 export type TabsProps = {
     value?: string;
+    onValueChange?: (value: string) => void;
     orientation?: 'horizontal' | 'vertical';
     variant?: TabsVariant;
 } & DefaultProps;

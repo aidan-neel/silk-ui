@@ -1,17 +1,12 @@
 <script lang="ts">
-    import { Button, type ButtonProps } from '@sivir-ui/svelte/components/button';
+    import { Button } from '@sivir-ui/svelte/components/button';
     import { closeMenuLayers, cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
     import { getPopoverContext } from '../popover/context.svelte';
+    import type { DropdownMenuItemProps } from '.';
     import { getDropdownMenuContext } from './context.svelte';
 
     const { state: popoverState } = getPopoverContext();
     const { ancestors } = getDropdownMenuContext();
-
-    type Props = {
-        children?: Snippet;
-        callback?: () => void;
-    } & ButtonProps;
 
     let {
         children,
@@ -20,7 +15,7 @@
         onclick: userOnclick,
         element = $bindable(),
         ...rest
-    }: Props = $props();
+    }: DropdownMenuItemProps = $props();
 </script>
 
 <Button

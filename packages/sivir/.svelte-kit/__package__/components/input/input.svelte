@@ -1,7 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
-    import type { HTMLInputAttributes } from 'svelte/elements';
+    import type { InputProps } from '.';
     import { input } from './variants';
 
     const nonAdornableInputTypes = new Set([
@@ -33,20 +32,7 @@
         checked = $bindable<boolean | undefined>(),
         files = $bindable<FileList | undefined>(),
         ...rest
-    }: {
-        placeholder?: string;
-        label?: string;
-        description?: string;
-        type?: string;
-        variant?: 'outline' | 'secondary';
-        class?: string;
-        leading?: Snippet;
-        trailing?: Snippet;
-        element?: HTMLInputElement | undefined;
-        value?: string | number | boolean | FileList | undefined;
-        checked?: boolean | undefined;
-        files?: FileList | undefined;
-    } & HTMLInputAttributes = $props();
+    }: InputProps = $props();
 
     const normalizedType = $derived(type.toLowerCase());
     const hasAdornment = $derived(
@@ -59,14 +45,7 @@
     );
 </script>
 
-<label class="flex w-full flex-col gap-1">
-    {#if label}
-        <span
-            class="text-[length:var(--text-sm)] mb-0.5 select-none [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] leading-none text-foreground [font-family:var(--font-sans),sans-serif]"
-            >{label}</span
-        >
-    {/if}
-
+{#snippet field()}
     {#if hasAdornment}
         <span
             data-ui="input-control"
@@ -141,11 +120,30 @@
             {placeholder}
         />
     {/if}
+{/snippet}
 
+{#snippet meta()}
+    {#if label}
+        <span
+            class="text-[length:var(--text-sm)] mb-0.5 select-none [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] leading-none text-foreground [font-family:var(--font-sans),sans-serif]"
+            >{label}</span
+        >
+    {/if}
+    {@render field()}
     {#if description}
         <span
             class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
             >{description}</span
         >
     {/if}
-</label>
+{/snippet}
+
+{#if label}
+    <label class="flex w-full flex-col gap-1"> {@render meta()} </label>
+{:else if description}
+    <div class="flex w-full flex-col gap-1">
+        {@render meta()}
+    </div>
+{:else}
+    {@render field()}
+{/if}

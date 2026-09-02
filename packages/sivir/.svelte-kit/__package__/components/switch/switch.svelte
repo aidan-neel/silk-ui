@@ -4,7 +4,8 @@
     import type { SwitchProps } from '.';
 
     let {
-        switched = $bindable(false),
+        switched = $bindable<boolean | undefined>(undefined),
+        checked = $bindable<boolean | undefined>(undefined),
         label,
         description,
         disabled = false,
@@ -13,6 +14,8 @@
         onclick: userOnclick,
         ...rest
     }: SwitchProps & { onclick?: (e: MouseEvent) => void } = $props();
+
+    const isOn = $derived(checked ?? switched ?? false);
 
     const id = $props.id();
     const labelId = `${id}-label`;
@@ -25,7 +28,13 @@
         if (disabled) {
             return;
         }
-        switched = !switched;
+        const next = !isOn;
+        if (checked !== undefined || switched === undefined) {
+            checked = next;
+        }
+        if (switched !== undefined || checked === undefined) {
+            switched = next;
+        }
         userOnclick?.(event as MouseEvent);
     }
 </script>
@@ -37,16 +46,16 @@
         type={(rest as HTMLButtonAttributes).type ?? 'button'}
         role="switch"
         aria-label={!label ? (rest as HTMLButtonAttributes)['aria-label'] : undefined}
-        aria-checked={switched}
+        aria-checked={isOn}
         aria-labelledby={label ? labelId : undefined}
         aria-describedby={description ? descriptionId : undefined}
         data-ui="switch"
-        data-state={switched ? 'checked' : 'unchecked'}
+        data-state={isOn ? 'checked' : 'unchecked'}
         {disabled}
         class={cn(
             className,
             buttonClasses,
-            switched
+            isOn
                 ? 'border-[color-mix(in_srgb,var(--color-primary)_78%,black)] bg-primary'
                 : 'border-[color-mix(in_srgb,var(--color-border-strong)_88%,transparent)] bg-[color-mix(in_srgb,var(--color-foreground)_18%,transparent)] dark:bg-[color-mix(in_srgb,var(--color-foreground)_24%,transparent)]'
         )}
@@ -54,10 +63,10 @@
     >
         <span
             aria-hidden="true"
-            data-state={switched ? 'checked' : 'unchecked'}
+            data-state={isOn ? 'checked' : 'unchecked'}
             class={cn(
                 'block size-3.5 rounded-full bg-white ring-1 ring-inset ring-black/[0.08] will-change-transform transition-transform [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none',
-                switched ? 'translate-x-4' : 'translate-x-0'
+                isOn ? 'translate-x-4' : 'translate-x-0'
             )}
         ></span>
     </button>

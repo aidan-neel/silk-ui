@@ -18,16 +18,18 @@
 </script>
 
 <Popover.Content
+    {...rest}
     {role}
     tabindex={-1}
     focusTrap={false}
     lockScroll={false}
     data-ui="dropdown-menu-content"
     class={cn(className, 'min-w-[var(--popover-trigger-width)] w-max', inverted && INVERTED_MENU)}
-    surfaceClass="overflow-hidden p-0"
-    {...rest}
+    surfaceClass="flex min-h-0 flex-col overflow-hidden p-0"
 >
-    <div use:travelingHighlight class="flex h-full min-h-0 flex-1 flex-col gap-0 p-1">
-        <ScrollArea class="h-full min-h-0"> {@render children?.()} </ScrollArea>
+    <div use:travelingHighlight class="flex min-h-0 min-w-0 flex-1 flex-col p-1">
+        <ScrollArea class={cn(className, 'min-h-0 min-w-0 flex-1')}>
+            {@render children?.()}
+        </ScrollArea>
     </div>
 </Popover.Content>

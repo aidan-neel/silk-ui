@@ -1,16 +1,10 @@
 <!-- token-lint-disable-file -->
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import { onMount, type Snippet } from 'svelte';
-    import type { HTMLAttributes } from 'svelte/elements';
+    import { onMount } from 'svelte';
+    import type { ShortcutProps } from '.';
 
-    type Props = Omit<HTMLAttributes<HTMLElement>, 'children'> & {
-        children?: Snippet;
-        shortcut: string;
-        ontrigger?: (event: KeyboardEvent) => void;
-    };
-
-    let { children, class: className, shortcut = '', ontrigger, ...rest }: Props = $props();
+    let { children, class: className, shortcut = '', ontrigger, ...rest }: ShortcutProps = $props();
     let element: HTMLElement;
 
     /** Maps keybinding tokens to the glyphs people recognise from native menus. */

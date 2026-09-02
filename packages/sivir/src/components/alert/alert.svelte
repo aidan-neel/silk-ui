@@ -4,21 +4,10 @@
     import Info from '@lucide/svelte/icons/info';
     import Warning from '@lucide/svelte/icons/triangle-alert';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
+    import type { AlertProps } from '.';
     import { alert, alertIcon } from './variants';
 
-    type Variant = 'info' | 'error' | 'success' | 'warning';
-
-    let {
-        variant = 'info',
-        children,
-        class: classProp,
-        ...rest
-    }: {
-        variant?: Variant;
-        children: Snippet;
-        class?: string;
-    } = $props();
+    let { variant = 'info', children, class: classProp, ...rest }: AlertProps = $props();
 
     const Icon = $derived(
         variant === 'success'

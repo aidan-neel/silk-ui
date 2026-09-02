@@ -1,6 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Component, Snippet } from 'svelte';
+    import type { BadgeProps } from '.';
     import { badge } from './variants';
 
     let {
@@ -12,24 +12,7 @@
         iconSize = 13,
         dot = false,
         ...rest
-    }: {
-        variant?:
-            | 'primary'
-            | 'secondary'
-            | 'ghost'
-            | 'outline'
-            | 'destructive'
-            | 'info'
-            | 'success'
-            | 'warning'
-            | 'error';
-        children?: Snippet;
-        class?: string;
-        href?: string;
-        icon?: Component<{ size?: number | string; class?: string }>;
-        iconSize?: number | string;
-        dot?: boolean;
-    } & Record<string, unknown> = $props();
+    }: BadgeProps = $props();
 </script>
 
 {#snippet inner()}

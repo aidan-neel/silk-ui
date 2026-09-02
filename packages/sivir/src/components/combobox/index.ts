@@ -1,3 +1,4 @@
+import type { PopoverProps } from '@sivir-ui/svelte/components/popover';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './combobox.svelte';
 import Content from './combobox-content.svelte';
@@ -25,7 +26,10 @@ export type ComboboxState = {
     selected?: ComboboxItem;
 };
 
-export type ComboboxRootProps = DefaultProps;
+export type ComboboxRootProps = PopoverProps & {
+    value?: string;
+    onValueChange?: (value: string) => void;
+};
 
 export type ComboboxTriggerProps = {
     class?: string;

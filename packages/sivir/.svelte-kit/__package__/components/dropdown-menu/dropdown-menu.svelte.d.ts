@@ -1,8 +1,4 @@
-import type { Snippet } from 'svelte';
-type Props = {
-    children: Snippet;
-    inverted?: boolean;
-};
-declare const DropdownMenu: import("svelte").Component<Props, {}, "">;
+import type { DropdownMenuProps } from '.';
+declare const DropdownMenu: import("svelte").Component<DropdownMenuProps, {}, "open">;
 type DropdownMenu = ReturnType<typeof DropdownMenu>;
 export default DropdownMenu;

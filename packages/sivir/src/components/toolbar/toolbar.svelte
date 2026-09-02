@@ -1,12 +1,8 @@
 <script lang="ts">
-    import { cn, type DefaultProps } from '@sivir-ui/svelte/utils';
-    import type { HTMLAttributes } from 'svelte/elements';
+    import { cn } from '@sivir-ui/svelte/utils';
+    import type { ToolbarProps } from '.';
 
-    let {
-        children,
-        class: classProp,
-        ...rest
-    }: DefaultProps & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> = $props();
+    let { children, class: classProp, ...rest }: ToolbarProps = $props();
 </script>
 
 <div

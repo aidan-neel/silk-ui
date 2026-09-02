@@ -1,9 +1,4 @@
-import type { Snippet } from 'svelte';
-type $$ComponentProps = {
-    children: Snippet;
-    class?: string;
-    variant?: 'default' | 'panel';
-};
-declare const Card: import("svelte").Component<$$ComponentProps, {}, "">;
+import type { CardProps } from '.';
+declare const Card: import("svelte").Component<CardProps, {}, "">;
 type Card = ReturnType<typeof Card>;
 export default Card;

@@ -156,7 +156,7 @@
     });
 </script>
 
-<ScrollArea class="h-full min-h-0 flex-1" onscroll={scheduleMeasure}>
+<ScrollArea class="min-h-0 min-w-0 max-h-inherit flex-1" onscroll={scheduleMeasure}>
     <div
         bind:this={resultsElement}
         role="listbox"

@@ -50,6 +50,7 @@
 
     let {
         open = $bindable(false),
+        onOpenChange,
         error = false,
         orientation = 'horizontal',
         children
@@ -98,6 +99,7 @@
         if (modalState.open !== syncedOpen) {
             syncedOpen = modalState.open;
             open = modalState.open;
+            onOpenChange?.(modalState.open);
         }
     });
 

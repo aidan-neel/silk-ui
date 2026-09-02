@@ -1,9 +1,10 @@
 import { createContext } from '@sivir-ui/svelte/utils';
-import type { ComboboxState } from '.';
+import type { ComboboxItem, ComboboxState } from '.';
 
 export type ComboboxContext = {
     id: string;
     state: ComboboxState;
+    selectItem: (item: ComboboxItem) => void;
 };
 
 const { set: setComboboxContext, get: getComboboxContext } =

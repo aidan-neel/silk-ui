@@ -7,7 +7,7 @@
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
 
-    const { id, state: comboboxState } = getComboboxContext();
+    const { id, state: comboboxState, selectItem } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
     const localId = $props.id();
     const optionId = `combobox-${id}-option-${localId}`;
@@ -34,11 +34,8 @@
     );
 
     function close() {
-        comboboxState.selected = item;
-        comboboxState.activeValue = item.value;
-        comboboxState.open = false;
+        selectItem(item);
         popoverState.buttonRef?.focus();
-        callback?.();
     }
 
     onMount(() => {

@@ -348,7 +348,7 @@
             <div
                 class={cn(
                     surfaceClass,
-                    'min-h-0 flex-1 overflow-auto overscroll-contain bg-panel p-3'
+                    'min-h-0 max-h-inherit flex-1 overflow-auto overscroll-contain bg-panel p-3'
                 )}
             >
                 {@render children?.()}

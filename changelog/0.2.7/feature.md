@@ -1,0 +1,10 @@
+- HoverCard `side` and `align` now set placement.
+- Combobox accepts `bind:value` and `onValueChange`.
+- ColorPicker `value` is bindable and still reports `onValueChange`.
+- Prop types are exported from `@sivir-ui/svelte` (`ButtonProps`, `InputProps`, and the rest).
+- Select, Tabs, DropdownMenu, Modal, Sheet, AlertDialog, Command, and Checkbox accept `onOpenChange` / `onValueChange` / `onCheckedChange` alongside bindable state.
+- Checkbox `checked` defaults to `false`.
+- `stateKey` aliases `state_key`, Toggle `outline` aliases `outlined`, and Switch `checked` aliases `switched`.
+- Input and Textarea render a naked control unless `label` or `description` is set.
+- Tooltip.Content `class` styles the shared bubble.
+- Command.Item accepts `value` as well as `name`.
