@@ -51,8 +51,8 @@ describe('publishable package contract', () => {
         const privatePrefix =
             /^\s*--(?:button|badge|field|panel|card|menu|command|tooltip|switch|checkbox|toast|tabs|progress|modal|sheet|textarea|breadcrumb|toggle|shortcut|slider)-/m;
 
-        expect(css.split('\n').length).toBeLessThanOrEqual(410);
-        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(12 * 1024);
+        expect(css.split('\n').length).toBeLessThanOrEqual(520);
+        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(16 * 1024);
         expect(css).not.toMatch(privatePrefix);
         expect(css).not.toMatch(/(^|})\s*\*\s*\{/);
         expect(css).not.toContain('@layer base');

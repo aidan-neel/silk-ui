@@ -1,0 +1,4 @@
+- Cap Theme Studio preset and font select menus at a fixed height so long lists scroll like the Select docs example.
+- Give the Theme Studio advanced-token modal the same Cancel/Done footer shortcuts as Modal docs.
+- Group Theme Studio font menus with Sans serif, Serif, and Mono labels.
+- Serve versioned changelogs at `/changelog/<version>.md` so they can coexist with `/changelog/<version>/llm.md`.

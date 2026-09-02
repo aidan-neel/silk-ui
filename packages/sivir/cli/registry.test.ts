@@ -145,6 +145,16 @@ describe('registry snapshot', () => {
         expect(plan.components.map((component) => component.name)).toContain('scroll-area');
     });
 
+    test.each(['card', 'markdown', 'message', 'modal'])(
+        'installs Typography with %s',
+        async (name) => {
+            const snapshot = await loadRegistryIndex();
+            const plan = resolveInstallPlan(snapshot, [name]);
+
+            expect(plan.components.map((component) => component.name)).toContain('typography');
+        }
+    );
+
     test('index loads and every referenced file exists', async () => {
         const snapshot = await loadRegistryIndex();
         expect(snapshot.components.length).toBeGreaterThan(30);

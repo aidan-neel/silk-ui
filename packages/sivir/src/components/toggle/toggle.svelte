@@ -14,6 +14,10 @@
         ...rest
     }: ToggleProps = $props();
 
+    const resolvedVariant = $derived(
+        variant === 'outlined' || variant === 'outline' ? 'outlined' : 'default'
+    );
+
     function togglePressed() {
         if (disabled) {
             return;
@@ -31,7 +35,7 @@
     aria-pressed={pressed}
     {disabled}
     onclick={togglePressed}
-    class={cn(className, toggle({ variant, pressed, size }))}
+    class={cn(className, toggle({ variant: resolvedVariant, pressed, size }))}
     {...rest}
 >
     {@render children?.()}

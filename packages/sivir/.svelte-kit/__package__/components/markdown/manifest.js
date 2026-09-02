@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'markdown',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Safe GFM markdown renderer for dense agent output, with token-based rendering and Sivir code blocks.',
     files: [
@@ -10,7 +10,7 @@ export const manifest = {
         'components/markdown/index.ts',
         'components/markdown/manifest.ts'
     ],
-    components: ['code-block'],
+    components: ['code-block', 'typography'],
     shared: ['utils.cn'],
     peerDependencies: {
         cnfast: '^0.0.8',

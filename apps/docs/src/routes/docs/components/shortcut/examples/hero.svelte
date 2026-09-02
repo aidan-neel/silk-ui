@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Button } from '@sivir-ui/svelte/components/button';
     import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import { toast } from '@sivir-ui/svelte/components/toast';
 
@@ -12,7 +13,14 @@
     }
 </script>
 
-<div class="flex flex-col items-center gap-4">
+<div class="flex flex-wrap items-center justify-center gap-3">
+    <Button variant="ghost">
+        Cancel
+        <Shortcut shortcut="esc" />
+    </Button>
+    <Button>
+        Save
+        <Shortcut shortcut="enter" />
+    </Button>
     <Shortcut shortcut="K" {ontrigger} />
-    <p class="m-0 text-sm text-foreground-muted">Press <kbd class="font-mono">K</kbd> to trigger</p>
 </div>

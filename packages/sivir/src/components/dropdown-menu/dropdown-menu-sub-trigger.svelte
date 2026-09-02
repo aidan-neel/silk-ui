@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ChevronRight } from '@lucide/svelte';
+    import ChevronRight from '@lucide/svelte/icons/chevron-right';
     import * as Popover from '@sivir-ui/svelte/components/popover';
     import { cn } from '@sivir-ui/svelte/utils';
     import { onDestroy, type Snippet } from 'svelte';

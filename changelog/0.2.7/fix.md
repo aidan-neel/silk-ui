@@ -1,0 +1,6 @@
+- Bump `@sivir-ui/svelte` to `0.2.7`.
+- Select and Combobox menus scroll when Content is capped with `max-h-*`, not only an explicit `h-*`.
+- Fix `bun audit` advisories by overriding `mysql2` to `3.23.1` and `fast-uri` to `3.1.6`.
+- Remove the Modal and Alert Dialog frame border in dark mode.
+- Restore focus to the overlay trigger after close instead of leaving it on the document body.
+- Keep the Popover trigger clickable above the dismiss layer.

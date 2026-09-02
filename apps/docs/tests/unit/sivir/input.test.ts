@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { queryRequired } from '../../test-utils';
+import InputAdornments from './input-adornments.svelte';
 
 describe('Input -- basic rendering', () => {
     it('renders a text input by default', () => {
@@ -103,6 +104,46 @@ describe('Input -- value binding', () => {
         const { container } = render(Input, { props: { disabled: true } });
         const input = queryRequired<HTMLInputElement>(container, 'input');
         expect(input).toBeDisabled();
+    });
+});
+
+describe('Input -- adornments', () => {
+    it('renders leading and trailing snippets around the native input', () => {
+        const { container } = render(InputAdornments);
+        const control = queryRequired(container, '[data-ui="input-control"]');
+        const input = queryRequired<HTMLInputElement>(control, 'input');
+
+        expect(screen.getByTestId('leading')).toHaveTextContent('$');
+        expect(input).toHaveClass('border-0');
+        expect(input).not.toHaveClass('border');
+        expect(input).toHaveValue('120');
+        expect(screen.getByTestId('trailing')).toHaveTextContent('USD');
+    });
+
+    it('keeps class on the native input', () => {
+        const { container } = render(InputAdornments, {
+            props: { class: 'adorned-input' }
+        });
+
+        expect(container.querySelector('input')?.className).toContain('adorned-input');
+    });
+
+    it('does not render adornments for non-text input types', () => {
+        const { container } = render(InputAdornments, {
+            props: { type: 'hidden' }
+        });
+
+        expect(container.querySelector('[data-ui="input-control"]')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('leading')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('trailing')).not.toBeInTheDocument();
+    });
+
+    it('matches native case-insensitive input type behavior', () => {
+        const { container } = render(InputAdornments, {
+            props: { type: 'TEXT' }
+        });
+
+        expect(container.querySelector('[data-ui="input-control"]')).toBeInTheDocument();
     });
 });
 

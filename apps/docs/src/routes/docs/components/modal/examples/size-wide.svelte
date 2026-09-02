@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as Modal from '@sivir-ui/svelte/components/modal';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
 
     let open = $state(false);
 </script>
@@ -31,8 +32,14 @@
             </div>
         </Modal.Body>
         <Modal.Footer>
-            <Modal.Close>Cancel</Modal.Close>
-            <Modal.Confirm>Import</Modal.Confirm>
+            <Modal.Close>
+                Cancel
+                <Shortcut shortcut="esc" />
+            </Modal.Close>
+            <Modal.Confirm>
+                Import
+                <Shortcut shortcut="enter" />
+            </Modal.Confirm>
         </Modal.Footer>
     </Modal.Content>
 </Modal.Root>

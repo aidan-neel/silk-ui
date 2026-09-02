@@ -23,7 +23,7 @@
     onclick={() => ctx.toggle(item.value)}
     class={cn(
         className,
-        'sivir-press flex w-full items-center justify-between gap-3 py-4 text-left text-[0.95rem] [font-weight:var(--font-weight-button,500)] [letter-spacing:var(--tracking-button,0em)] text-foreground transition-[color,transform,scale] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-press)] motion-reduce:transition-none hover:underline focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-50' // token-lint-disable-line no-literal-length
+        'sivir-press flex w-full items-center justify-between gap-3 py-4 text-left text-[length:var(--font-size-header)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground transition-[color,transform,scale] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-press)] motion-reduce:transition-none hover:underline focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]'
     )}
     {...rest}
 >

@@ -19,7 +19,7 @@
         data-ui="menu-separator"
         class={cn(
             className,
-            'mx-6 my-1 h-[var(--border-size)] rounded-[var(--radius-xl)] bg-border'
+            'sivir-menu-separator mx-6'
         )}
     >
         {@render children?.()}

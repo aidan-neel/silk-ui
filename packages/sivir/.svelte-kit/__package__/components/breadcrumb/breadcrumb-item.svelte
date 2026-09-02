@@ -11,7 +11,7 @@
     {href}
     class={cn(
         className,
-        `${page.url.pathname === href ? 'text-foreground [font-size:var(--font-size-body,16px)] font-semibold [letter-spacing:var(--tracking-body,0em)]' : 'text-foreground-muted hover:text-foreground duration-200'} [font-size:var(--font-size-body,16px)]`
+        `${page.url.pathname === href ? 'text-foreground [font-size:var(--font-size-body)] [font-weight:var(--font-weight-header)] [letter-spacing:var(--tracking-body)]' : 'text-foreground-muted hover:text-foreground [transition-duration:var(--motion-duration-panel)]'} [font-size:var(--font-size-body)]`
     )}
 >
     {@render children?.()}

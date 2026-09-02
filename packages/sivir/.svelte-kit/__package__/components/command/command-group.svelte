@@ -19,7 +19,7 @@
         <p
             class={cn(
                 className,
-                'px-2.5 py-1.5 text-[length:var(--text-xs)] [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] text-foreground-muted select-none'
+                'sivir-menu-label'
             )}
         >
             {heading}

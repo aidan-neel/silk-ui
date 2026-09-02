@@ -1,9 +1,9 @@
 <script lang="ts">
     import { Button } from '@sivir-ui/svelte/components/button';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { onMount, type Snippet } from 'svelte';
+    import { onMount } from 'svelte';
     import { getModalContext } from '../modal/context.svelte';
-    import type { CommandItem } from '.';
+    import type { CommandItem, CommandItemProps } from '.';
     import { getCommandContext } from './context.svelte';
 
     const command = getCommandContext();
@@ -11,30 +11,23 @@
     const localId = $props.id();
     const itemId = `${command.id}-option-${localId}`;
 
-    type Props = {
-        class?: string;
-        name: string;
-        children?: Snippet;
-        callback?: () => void;
-        disabled?: boolean;
-        href?: string;
-        onclick?: () => void;
-    };
-
     let {
         children,
         name,
+        value,
         class: className,
         callback,
         disabled = false,
         href,
         onclick
-    }: Props = $props();
+    }: CommandItemProps = $props();
+
+    const resolvedName = $derived(value ?? name ?? '');
     let el = $state<HTMLButtonElement | HTMLAnchorElement | undefined>();
     const item = {
         id: itemId,
         get name() {
-            return name;
+            return resolvedName;
         },
         get callback() {
             return callback;

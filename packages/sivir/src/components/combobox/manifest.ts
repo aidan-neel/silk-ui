@@ -12,7 +12,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: 'combobox',
-    version: '2.1.0',
+    version: '2.2.0',
     visibility: 'public',
     description: 'Searchable popover-based picker with fuzzy results via fuse.js.',
     files: [
@@ -27,7 +27,7 @@ export const manifest: Manifest = {
         'components/combobox/index.ts',
         'components/combobox/manifest.ts'
     ],
-    components: ['popover', 'button'],
+    components: ['popover', 'button', 'scroll-area'],
     shared: ['utils.cn', 'utils.createContext'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

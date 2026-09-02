@@ -4,13 +4,7 @@
     import { getCssDuration } from '@sivir-ui/svelte/transition';
     import { cn } from '@sivir-ui/svelte/utils';
 
-    type SpinnerProps = {
-        size?: number;
-        ready?: boolean;
-        class?: string;
-        'aria-label'?: string;
-        'aria-hidden'?: boolean | 'true' | 'false';
-    };
+    import type { SpinnerProps } from '.';
 
     type SpinnerPhase = 'loading' | 'success' | 'exiting' | 'hidden';
 

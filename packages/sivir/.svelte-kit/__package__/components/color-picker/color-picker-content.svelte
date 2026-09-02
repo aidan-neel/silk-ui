@@ -236,7 +236,7 @@
 
 <svelte:window onpointerup={(e) => finishDrag(e)} onpointercancel={(e) => finishDrag(e, false)} />
 
-<Popover.Content class="w-[244px]" surfaceClass="overflow-hidden !p-0">
+<Popover.Content class="w-[244px] select-none" surfaceClass="overflow-hidden !p-0">
     <!-- SB picker (large) -->
     <div
         bind:this={sbEl}
@@ -280,7 +280,7 @@
             >
                 <span class="font-mono text-[0.78rem] text-foreground-muted">#</span>
                 <input
-                    class="h-6 min-w-0 flex-1 bg-transparent font-mono text-[0.78rem] uppercase text-foreground outline-none"
+                    class="h-6 min-w-0 flex-1 select-text bg-transparent font-mono text-[0.78rem] uppercase text-foreground outline-none"
                     value={hexInput.replace(/^#/, '')}
                     placeholder="000000"
                     spellcheck={false}
@@ -308,7 +308,7 @@
                           : `hsl(${hslH}, ${hslS}%, ${channel.value}%)`}
                 <div class="flex items-center gap-2">
                     <span
-                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                     >
                         {channel.label}
                     </span>
@@ -338,7 +338,7 @@
             {#each [{ key: 'r', label: 'R', value: rgbR }, { key: 'g', label: 'G', value: rgbG }, { key: 'b', label: 'B', value: rgbB }] as channel (channel.key)}
                 <div class="flex items-center gap-2">
                     <span
-                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                         >{channel.label}</span
                     >
                     <input
@@ -366,7 +366,7 @@
             {#each [{ key: 'h', label: 'H', max: 360, value: hue, unit: '°' }, { key: 's', label: 'S', max: 100, value: sat, unit: '%' }, { key: 'v', label: 'V', max: 100, value: val, unit: '%' }] as channel (channel.key)}
                 <div class="flex items-center gap-2">
                     <span
-                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                        class="w-3 shrink-0 font-mono [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                         >{channel.label}</span
                     >
                     <input

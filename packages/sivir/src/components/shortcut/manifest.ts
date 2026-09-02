@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'shortcut',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description:
         'Keyboard shortcut indicator. Activates its nearest interactive owner or an explicit ontrigger callback.',

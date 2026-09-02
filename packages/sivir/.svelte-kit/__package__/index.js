@@ -70,3 +70,4 @@ export * as ToggleGroup from './components/toggle-group';
 export * as Tool from './components/tool';
 export { Toolbar } from './components/toolbar';
 export * as Tooltip from './components/tooltip';
+export * as Typography from './components/typography';

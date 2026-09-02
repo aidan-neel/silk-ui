@@ -1,15 +1,15 @@
 <script lang="ts">
     import * as Popover from '@sivir-ui/svelte/components/popover';
-    import type { Snippet } from 'svelte';
     import { untrack } from 'svelte';
+    import type { DropdownMenuProps } from '.';
     import { setDropdownMenuContext } from './context.svelte';
 
-    type Props = {
-        children: Snippet;
-        inverted?: boolean;
-    };
-
-    let { children, inverted = false }: Props = $props();
+    let {
+        children,
+        inverted = false,
+        open = $bindable(false),
+        onOpenChange
+    }: DropdownMenuProps = $props();
 
     /**
      * Must run during init: Content reads this via `getContext()` while it
@@ -18,4 +18,6 @@
     setDropdownMenuContext({ inverted: untrack(() => inverted), ancestors: [], submenus: [] });
 </script>
 
-<Popover.Root placement="bottom-start"> {@render children?.()} </Popover.Root>
+<Popover.Root placement="bottom-start" bind:open {onOpenChange}>
+    {@render children?.()}
+</Popover.Root>

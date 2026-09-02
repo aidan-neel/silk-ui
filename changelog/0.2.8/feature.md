@@ -1,0 +1,1 @@
+- Theme Studio can flatten component shadows without losing inset borders, add a mode-aware primary-button stroke, and switch the hover cursor between default and pointer.

@@ -53,4 +53,37 @@ describe('ResponseStream', () => {
         const segment = container.querySelector<HTMLSpanElement>('.sivir-response-stream-segment');
         expect(segment?.style.getPropertyValue('--response-stream-segment-delay')).toBe('20ms');
     });
+
+    it('shows a waiting caret until the first live chunk arrives', async () => {
+        let release!: () => void;
+        const gate = new Promise<void>((resolve) => {
+            release = resolve;
+        });
+
+        async function* delayed() {
+            await gate;
+            yield 'Hello';
+        }
+
+        const { container } = render(ResponseStream, {
+            props: { textStream: delayed() }
+        });
+
+        await waitFor(() => {
+            expect(container.querySelector('[data-ui="response-stream"]')).toHaveAttribute(
+                'data-state',
+                'waiting'
+            );
+        });
+        expect(container.querySelector('[data-ui="response-stream-caret"]')).not.toBeNull();
+
+        release();
+
+        await waitFor(() => expect(container).toHaveTextContent('Hello'));
+        expect(container.querySelector('[data-ui="response-stream-caret"]')).toBeNull();
+        expect(container.querySelector('[data-ui="response-stream"]')).not.toHaveAttribute(
+            'data-state',
+            'waiting'
+        );
+    });
 });

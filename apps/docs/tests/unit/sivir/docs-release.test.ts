@@ -1,10 +1,17 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { changelogMarkdown, changelogVersions } from '$lib/changelog';
+import {
+    changelogDocsMarkdown,
+    changelogLlmMarkdown,
+    changelogLlmVersions,
+    changelogMarkdown,
+    changelogVersions
+} from '$lib/changelog';
 import { components } from '$lib/components';
 import { brandMarkMarkdown, componentMarkdown, componentsMarkdown } from '$lib/llms';
-import { GET as getChangelog } from '../../../src/routes/changelog/[version]/+server';
+import { sivirGuideMarkdown, skillMarkdown } from '$lib/skill';
+import { GET as getChangelog } from '../../../src/routes/changelog/[version].md/+server';
 import { GET as getLlms } from '../../../src/routes/llms.txt/+server';
 import { GET as getRobots } from '../../../src/routes/robots.txt/+server';
 import { GET as getSitemap } from '../../../src/routes/sitemap.xml/+server';
@@ -33,7 +40,8 @@ describe('docs release contracts', () => {
     it('uses the live component count in homepage copy', () => {
         const homepage = readFileSync(resolve(root, 'apps/docs/src/routes/+page.svelte'), 'utf8');
         const readme = readFileSync(resolve(root, 'README.md'), 'utf8');
-        expect(homepage.match(new RegExp(`${components.length} Svelte`, 'g'))).toHaveLength(2);
+        expect(homepage.match(new RegExp(`${components.length} Svelte`, 'g'))).toHaveLength(1);
+        expect(homepage).toContain(`Restyle ${components.length} components`);
         expect(homepage).toContain(`Browse all ${components.length} components`);
         expect(readme).toContain(`badge/Components-${components.length}-`);
     });
@@ -60,10 +68,28 @@ describe('docs release contracts', () => {
             );
         }
         expect(body).toContain('<loc>https://preview.example/docs/components</loc>');
-        // home + intro + install + theming + components index; themes gallery is post-v1.
-        expect(body.match(/<url>/g)).toHaveLength(components.length + 5 + changelogVersions.length);
+        expect(body.match(/<url>/g)).toHaveLength(
+            components.length * 2 + 17 + changelogVersions.length + changelogLlmVersions.length
+        );
+        expect(body).toContain('<loc>https://preview.example/docs/changelog</loc>');
+        expect(body).toContain('<loc>https://preview.example/docs/changelog.md</loc>');
+        expect(body).toContain('<loc>https://preview.example/llms.txt</loc>');
+        expect(body).toContain('<loc>https://preview.example/docs/skill.md</loc>');
+        expect(body).toContain('<loc>https://preview.example/docs/component-selection.md</loc>');
+        expect(body).toContain('<loc>https://preview.example/docs/design-language.md</loc>');
+        expect(body).toContain('<loc>https://preview.example/studio</loc>');
         for (const version of changelogVersions) {
-            expect(body).toContain(`<loc>https://preview.example/changelog/${version}</loc>`);
+            expect(body).toContain(`<loc>https://preview.example/changelog/${version}.md</loc>`);
+        }
+        for (const version of changelogLlmVersions) {
+            expect(body).toContain(
+                `<loc>https://preview.example/changelog/${version}/llm.md</loc>`
+            );
+        }
+        for (const component of components) {
+            expect(body).toContain(
+                `<loc>https://preview.example/docs/components/${component}.md</loc>`
+            );
         }
         expect(body).not.toContain('/themes</loc>');
         expect(body).not.toContain('/themes/studio');
@@ -79,9 +105,25 @@ describe('docs release contracts', () => {
         expect(response.headers.get('content-type')).toContain('text/markdown');
         expect(index).toContain('https://preview.example/docs/introduction.md');
         expect(index).toContain('https://preview.example/docs/brand-mark.md');
+        expect(index).toContain('https://preview.example/docs/changelog.md');
+        expect(index).toContain('https://preview.example/docs/skill.md');
+        expect(index).toContain('https://preview.example/sitemap.xml');
+        expect(index).toContain('npx skills add aidan-neel/sivir-ui --skill sivir');
+        expect(index).toContain('## How to use Sivir');
+        expect(index).toContain('### Step 1: Establish the Project State');
+        expect(index).toContain('This file is the live Sivir index.');
         expect(index).toContain(`The current catalog contains ${components.length} components`);
+        expect(skillMarkdown('https://preview.example')).toContain(
+            'Fetch `https://preview.example/llms.txt`'
+        );
+        expect(sivirGuideMarkdown('https://preview.example')).toContain(
+            'https://preview.example/docs/component-selection.md'
+        );
         for (const version of changelogVersions) {
-            expect(index).toContain(`https://preview.example/changelog/${version}`);
+            expect(index).toContain(`https://preview.example/changelog/${version}.md`);
+        }
+        for (const version of changelogLlmVersions) {
+            expect(index).toContain(`https://preview.example/changelog/${version}/llm.md`);
         }
         for (const component of components) {
             expect(index).toContain(`https://preview.example/docs/components/${component}.md`);
@@ -130,6 +172,7 @@ describe('docs release contracts', () => {
 
     it('serves every release as compiled Markdown for integrations', async () => {
         expect(changelogVersions).toContain('0.2.1');
+        expect(changelogVersions).toContain('0.2.6');
         expect(changelogMarkdown('missing')).toBeUndefined();
 
         const response = (await getChangelog({
@@ -140,6 +183,16 @@ describe('docs release contracts', () => {
         expect(await response.text()).toContain('# @sivir-ui/svelte 0.2.1 changelog');
         expect(changelogMarkdown('0.2.1')).toContain('## Feature');
         expect(changelogMarkdown('0.2.1')).toContain('versioned Markdown changelog');
+        expect(changelogMarkdown('0.2.6')).toContain('inset frame');
+        expect(changelogMarkdown('0.2.6')).toContain('/changelog/0.2.6/llm.md');
+        expect(changelogMarkdown('0.2.6')).not.toContain('## Llm');
+        expect(changelogDocsMarkdown()).toContain('## 0.2.6');
+        expect(changelogDocsMarkdown()).not.toContain(
+            'Do not rebuild these as a flat bordered card'
+        );
+        expect(changelogLlmVersions).toContain('0.2.6');
+        expect(changelogLlmMarkdown('0.2.1')).toBeUndefined();
+        expect(changelogLlmMarkdown('0.2.6')).toContain('sivir-inset-frame');
     });
 
     it('derives LLM references from current component manifests, APIs, and examples', () => {

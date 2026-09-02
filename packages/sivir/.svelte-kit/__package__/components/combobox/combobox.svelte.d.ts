@@ -1,6 +1,4 @@
-import * as Popover from '@sivir-ui/svelte/components/popover';
-interface Props extends Popover.PopoverProps {
-}
-declare const Combobox: import("svelte").Component<Props, {}, "open">;
+import type { ComboboxRootProps } from '.';
+declare const Combobox: import("svelte").Component<ComboboxRootProps, {}, "value" | "open">;
 type Combobox = ReturnType<typeof Combobox>;
 export default Combobox;

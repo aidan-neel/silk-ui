@@ -171,7 +171,7 @@
         className,
         'relative inline-flex',
         vertical ? 'flex-col items-stretch' : 'items-center',
-        variant === 'segmented' && 'rounded-[var(--radius-xl)] bg-secondary p-[3px]',
+        variant === 'segmented' && 'rounded-[var(--radius-xl)] bg-secondary p-1',
         variant === 'ghost' && 'gap-1',
         variant === 'default' && (vertical ? 'gap-1 pe-1' : 'gap-1 pb-1')
     )}
@@ -220,8 +220,8 @@
                 class={cn(
                     'pointer-events-none absolute rounded-full bg-foreground [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none',
                     vertical
-                        ? 'end-0 w-0.5 transition-[top,height]'
-                        : 'bottom-0 h-0.5 transition-[left,width]'
+                        ? 'end-0 w-[var(--size-hairline)] transition-[top,height]'
+                        : 'bottom-0 h-[var(--size-hairline)] transition-[left,width]'
                 )}
                 style:left={vertical ? undefined : `${indicator.left}px`}
                 style:top={vertical ? `${indicator.top}px` : undefined}
@@ -233,7 +233,7 @@
             <!-- elevated white pill on the muted track (iOS-style segmented control) -->
             <div
                 aria-hidden="true"
-                class="pointer-events-none absolute rounded-[var(--radius-lg)] bg-card ring-1 ring-border/50 transition-[left,top,width,height] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none"
+                class="pointer-events-none absolute rounded-[calc(var(--radius-xl)-var(--spacing))] bg-card ring-1 ring-border/50 transition-[left,top,width,height] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none"
                 style:left={`${indicator.left}px`}
                 style:top={`${indicator.top}px`}
                 style:width={`${indicator.width}px`}

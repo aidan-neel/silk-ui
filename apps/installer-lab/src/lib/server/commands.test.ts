@@ -41,7 +41,7 @@ describe('installer command construction', () => {
         expect(commands[1].args).toContain('--no-install');
         expect(commands[2]).toMatchObject({
             bin: 'bun',
-            args: ['add', '@fontsource/inter@5.3.0']
+            args: ['add', '@fontsource/dm-sans@5.3.0']
         });
     });
 });

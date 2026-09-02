@@ -73,14 +73,6 @@ blockquote {
         font-synthesis-weight: none;
         text-rendering: optimizeLegibility;
     }
-
-    [data-docs-page] :where(p, li) > code {
-        border-radius: var(--radius-sm);
-        background-color: var(--color-secondary);
-        padding: 0.1em 0.35em;
-        font-family: var(--font-mono), monospace;
-        font-size: 0.875em;
-    }
 }
 
 ::selection {
@@ -89,42 +81,6 @@ blockquote {
 
 pre {
     background-color: transparent;
-}
-
-.h1 {
-    font-size: 1.3rem;
-    font-weight: var(--font-weight-header, 500);
-    font-family: var(--font-header), sans-serif;
-    letter-spacing: var(--tracking-header, -0.02em);
-    line-height: 1.1;
-    margin-bottom: 0.6rem;
-}
-
-.h2 {
-    font-size: 1rem;
-    font-family: var(--font-header), sans-serif;
-    font-weight: var(--font-weight-header, 600);
-    letter-spacing: var(--tracking-header, -0.02em);
-    line-height: 1.15;
-    margin-bottom: 0.5rem;
-}
-
-.docs-section-heading {
-    font-size: 1.0625rem;
-    font-family: var(--font-header), sans-serif;
-    font-weight: var(--font-weight-header, 600);
-    letter-spacing: var(--tracking-header, -0.015em);
-    line-height: 1.3;
-    color: var(--color-foreground);
-}
-
-.docs-subsection-heading {
-    font-size: 1rem;
-    font-family: var(--font-header), sans-serif;
-    font-weight: var(--font-weight-header, 600);
-    letter-spacing: var(--tracking-header, -0.02em);
-    line-height: 1.2;
-    color: var(--color-foreground);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -164,6 +120,15 @@ pre {
         opacity: 1;
         transform: translateY(0) scale(1);
         filter: blur(0);
+    }
+}
+
+@keyframes hero-cloud-drift {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
     }
 }
 

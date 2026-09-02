@@ -5,22 +5,26 @@
 
     let {
         open = $bindable(false),
+        onOpenChange,
         placement = 'bottom',
         children,
         state_key,
+        stateKey,
         hoverable,
         delay = 0,
-        closeDelay = 150
+        closeDelay = 150,
+        inert = true
     }: PopoverProps = $props();
 
     const generatedKey = $props.id();
     const initial = untrack(() => {
         return {
-            key: state_key ?? generatedKey,
+            key: stateKey ?? state_key ?? generatedKey,
             placement,
             hoverable: hoverable ?? false,
             delay,
-            closeDelay
+            closeDelay,
+            inert
         };
     });
     const popoverState = $state<PopoverState>({
@@ -34,7 +38,8 @@
         closeTimeout: undefined,
         hoverable: initial.hoverable,
         delay: initial.delay,
-        closeDelay: initial.closeDelay
+        closeDelay: initial.closeDelay,
+        inert: initial.inert
     });
     const key = initial.key;
     let syncedOpen = $state(open);
@@ -46,13 +51,18 @@
         popoverState.hoverable = hoverable ?? false;
         popoverState.delay = delay;
         popoverState.closeDelay = closeDelay;
+        popoverState.inert = inert;
     });
 
     $effect(() => {
         popoverState.placement = placement;
+    });
+
+    $effect(() => {
         popoverState.hoverable = hoverable ?? false;
         popoverState.delay = delay;
         popoverState.closeDelay = closeDelay;
+        popoverState.inert = inert;
         if (open !== syncedOpen) {
             syncedOpen = open;
             popoverState.open = open;
@@ -63,6 +73,7 @@
         if (popoverState.open !== syncedOpen) {
             syncedOpen = popoverState.open;
             open = popoverState.open;
+            onOpenChange?.(popoverState.open);
         }
     });
 

@@ -2,7 +2,7 @@
     import type { SheetProps, SheetState } from '.';
     import { setSheetContext } from './context.svelte';
 
-    let { open = $bindable(false), children }: SheetProps = $props();
+    let { open = $bindable(false), onOpenChange, children }: SheetProps = $props();
 
     const id = $props.id();
     const sheetState = $state<SheetState>({
@@ -23,6 +23,7 @@
         if (sheetState.open !== syncedOpen) {
             syncedOpen = sheetState.open;
             open = sheetState.open;
+            onOpenChange?.(sheetState.open);
         }
     });
 </script>

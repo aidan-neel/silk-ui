@@ -1,10 +1,13 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import Scrollable from './examples/scrollable.svelte';
+    import ScrollableSrc from './examples/scrollable.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add select';
 </script>
@@ -18,17 +21,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Select
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Select </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A dropdown for choosing one option from a short list.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -42,22 +38,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">Import Select and use it in your component:</p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Import Select and use it in your component:
+        </Typography.Text>
         <CodeBlock
             code={`import * as Select from '$lib/sivir/components/select';\n\n<Select.Root value={role}>\n  <Select.Trigger>Designer</Select.Trigger>\n  <Select.Content>\n    <Select.Item value="designer">Designer</Select.Item>\n  </Select.Content>\n</Select.Root>`}
             lang="svelte"
@@ -68,22 +58,26 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">Select in common configurations.</p>
+            <Typography.H2 class="docs-section-heading">Examples</Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
+                Select in common configurations.
+            </Typography.Text>
         </div>
 
         <div id="basic" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Basic
-            </h3>
+            <Typography.H3 class="docs-subsection-heading">Basic</Typography.H3>
             <ComponentPreview code={HeroSrc}>
                 <Hero />
+            </ComponentPreview>
+        </div>
+
+        <div id="scrollable" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading">Scrollable</Typography.H3>
+            <Typography.Text variant="supporting">
+                Long option lists stay in a height-capped menu and scroll inside it.
+            </Typography.Text>
+            <ComponentPreview code={ScrollableSrc}>
+                <Scrollable />
             </ComponentPreview>
         </div>
     </section>

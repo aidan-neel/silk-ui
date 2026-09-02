@@ -1,39 +1,25 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import { getContext, onDestroy, type Snippet } from 'svelte';
+    import { getContext, onDestroy } from 'svelte';
+    import type { TooltipState, TooltipTriggerProps } from '.';
     import {
         flashTooltip,
         hideTooltip,
         isActiveTooltip,
         showTooltip,
+        updateTooltipClass,
         updateTooltipText
     } from './shared-tooltip';
 
-    type Placement = 'top' | 'left' | 'bottom' | 'right';
+    let { children, class: className, showOnClick = false }: TooltipTriggerProps = $props();
 
-    let {
-        children,
-        class: className,
-        showOnClick = false
-    }: {
-        children?: Snippet;
-        class?: string;
-        /** Also reveal the tooltip on click (e.g. Copy buttons fired by touch/keyboard). */
-        showOnClick?: boolean;
-    } = $props();
-
-    const tip = getContext('sivir-tooltip') as {
-        text: string;
-        placement: Placement;
-        delay: number;
-        closeDelay: number;
-    };
+    const tip = getContext('sivir-tooltip') as TooltipState;
 
     let el = $state<HTMLElement>();
 
     function open() {
         if (el) {
-            showTooltip(el, tip.text, tip.placement, tip.delay);
+            showTooltip(el, tip.text, tip.placement, tip.delay, tip.className);
         }
     }
     function close() {
@@ -41,19 +27,21 @@
     }
     function clickOpen() {
         if (showOnClick && el) {
-            flashTooltip(el, tip.text, tip.placement);
+            flashTooltip(el, tip.text, tip.placement, 1500, tip.className);
         }
     }
 
-    /**
-     * Keeps the bubble's label in sync while this trigger owns it, so a label
-     * that changes mid-hover (Copy to Copied) morphs in place instead of going
-     * stale.
-     */
     $effect(() => {
         const text = tip.text;
         if (el && isActiveTooltip(el)) {
             updateTooltipText(el, text);
+        }
+    });
+
+    $effect(() => {
+        const bubbleClass = tip.className;
+        if (el && isActiveTooltip(el)) {
+            updateTooltipClass(el, bubbleClass);
         }
     });
 

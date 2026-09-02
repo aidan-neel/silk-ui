@@ -15,10 +15,10 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: 'modal',
-    version: '1.1.0',
+    version: '1.2.0',
     visibility: 'public',
     description:
-        'Centered dialog overlay with portal, focus trap, click-outside, and Svelte transitions. Composes _internal/overlay for shared mechanics.',
+        'Centered dialog overlay with portal, inert background, focus trap, click-outside, and Svelte transitions. Composes _internal/overlay for shared mechanics.',
     role: 'dialog',
     files: [
         'components/modal/modal.svelte',
@@ -35,8 +35,8 @@ export const manifest: Manifest = {
         'components/modal/index.ts',
         'components/modal/manifest.ts'
     ],
-    components: ['button', '_internal/overlay'],
-    shared: ['utils.cn', 'utils.createContext', 'is-dark', 'transition'],
+    components: ['button', '_internal/overlay', 'typography'],
+    shared: ['utils.cn', 'utils.createContext', 'transition'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

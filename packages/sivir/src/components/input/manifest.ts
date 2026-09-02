@@ -13,13 +13,14 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 4.0.0: renamed variant `outlined` → `outline` to align with field taxonomy.
  *        Both variants now use the public semantic field and motion tokens.
  *        Default remains `outline`.
+ * 5.0.0: added optional `leading` and `trailing` adornment snippets.
  */
 export const manifest: Manifest = {
     name: 'input',
-    version: '4.0.0',
+    version: '5.0.0',
     visibility: 'public',
     description:
-        'Text input wrapping a native <input>. 2 variants. Forwards file/checkbox/text/number/etc. types.',
+        'Text input wrapping a native <input>. Supports labels, descriptions, adornments, 2 variants, and native input types.',
     files: [
         'components/input/input.svelte',
         'components/input/variants.ts',

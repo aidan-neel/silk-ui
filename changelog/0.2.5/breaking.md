@@ -1,0 +1,1 @@
+- Popover now makes outside document content inert by default for non-hover interactions, including non-portaled content. Set `inert={false}` on `Popover.Root` to preserve the previous non-modal outside interaction behavior.

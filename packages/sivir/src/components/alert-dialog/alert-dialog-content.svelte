@@ -5,7 +5,7 @@
     type Props = {
         allowEscape?: boolean;
         ariaBusy?: boolean;
-        /** Max-width preset. Defaults to `md`. */
+        /** Max-width preset. Defaults to `sm`. */
         size?: 'sm' | 'md' | 'lg' | 'xl';
     } & DefaultProps;
 
@@ -13,7 +13,7 @@
         class: className,
         allowEscape = true,
         ariaBusy,
-        size,
+        size = 'sm',
         children,
         ...rest
     }: Props = $props();

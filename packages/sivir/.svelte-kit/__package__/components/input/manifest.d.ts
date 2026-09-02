@@ -12,5 +12,6 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 4.0.0: renamed variant `outlined` → `outline` to align with field taxonomy.
  *        Both variants now use the public semantic field and motion tokens.
  *        Default remains `outline`.
+ * 5.0.0: added optional `leading` and `trailing` adornment snippets.
  */
 export declare const manifest: Manifest;

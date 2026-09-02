@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
 
     // The canonical command is the `bunx …` form (every page passes that). Other
     // package managers are derived by swapping the leading runner, so call sites
@@ -26,6 +27,8 @@
 </script>
 
 <div class="flex flex-col gap-2">
-    <p class="text-sm text-foreground-muted">Copy the command below and run it in your terminal.</p>
+    <Typography.Text variant="supporting">
+        Copy the command below and run it in your terminal.
+    </Typography.Text>
     <CodeBlock {tabs} />
 </div>

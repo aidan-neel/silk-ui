@@ -1,12 +1,12 @@
-import Root from './popover.svelte';
-import Trigger from './popover-trigger.svelte';
-import Content from './popover-content.svelte';
-import Title from './popover-title.svelte';
+import type { VirtualElement } from '@floating-ui/dom';
+import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
-import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
-import type { VirtualElement } from '@floating-ui/dom';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
+import Root from './popover.svelte';
+import Content from './popover-content.svelte';
+import Title from './popover-title.svelte';
+import Trigger from './popover-trigger.svelte';
 export type PopoverContentProps = {
     children: Snippet;
     class?: string;
@@ -26,12 +26,16 @@ export type PopoverContentProps = {
 export type PopoverProps = {
     children?: Snippet;
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     placement?: Placement;
     /** Stable identifier used to connect trigger and content ARIA attributes. */
     state_key?: string;
+    stateKey?: string;
     hoverable?: boolean;
     delay?: number;
     closeDelay?: number;
+    /** Make document content outside an open non-hover popover inert. Defaults to `true`. */
+    inert?: boolean;
 };
 export type PopoverTriggerProps = {
     icon?: boolean;
@@ -65,5 +69,6 @@ export type PopoverState = {
     hovering?: boolean;
     delay: number | undefined;
     closeDelay: number | undefined;
+    inert: boolean;
 };
-export { Root, Trigger, Content, Title };
+export { Content, Root, Title, Trigger };

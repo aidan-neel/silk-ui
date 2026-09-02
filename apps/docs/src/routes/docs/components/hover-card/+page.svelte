@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Definition from './examples/definition.svelte';
@@ -27,17 +28,10 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Hover Card
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            <Typography.H1> Hover Card </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A preview card that opens on hover or focus.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -51,24 +45,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
             Import Hover Card and compose it with sub-components:
-        </p>
+        </Typography.Text>
         <CodeBlock
             code={`import * as HoverCard from '$lib/sivir/components/hover-card';\nimport * as Avatar from '$lib/sivir/components/avatar';\n\n<HoverCard.Root>\n  <HoverCard.Trigger>@username</HoverCard.Trigger>\n  <HoverCard.Content>\n    <HoverCard.Title>Full name</HoverCard.Title>\n    <HoverCard.Description>Bio or description</HoverCard.Description>\n  </HoverCard.Content>\n</HoverCard.Root>`}
             lang="svelte"
@@ -79,23 +65,15 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
-            <p class="mt-2 text-sm text-foreground-muted">
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
+            <Typography.Text variant="supporting" class="mt-2">
                 Explore Hover Card in different compositions and use cases.
-            </p>
+            </Typography.Text>
         </div>
 
         <!-- User mention preview -->
         <div id="user-preview" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                User mention preview
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> User mention preview </Typography.H3>
             <ComponentPreview code={UserPreviewSrc}>
                 <UserPreview />
             </ComponentPreview>
@@ -103,11 +81,7 @@
 
         <!-- Link preview -->
         <div id="link-preview" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Link preview
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Link preview </Typography.H3>
             <ComponentPreview code={LinkPreviewSrc}>
                 <LinkPreview />
             </ComponentPreview>
@@ -115,11 +89,7 @@
 
         <!-- Simple definition -->
         <div id="definition" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Definition or term
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Definition or term </Typography.H3>
             <ComponentPreview code={DefinitionSrc}>
                 <Definition />
             </ComponentPreview>

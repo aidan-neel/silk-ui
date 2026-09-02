@@ -99,6 +99,6 @@
     }}
     class={cn(
         className,
-        'min-h-12 max-h-52 w-full resize-none overflow-y-hidden bg-transparent px-3.5 pt-3 pb-2 [font-size:var(--font-size-body,16px)] leading-6 text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed disabled:opacity-50 read-only:cursor-default'
+        'min-h-12 max-h-52 w-full resize-none overflow-y-hidden bg-transparent px-3.5 pt-3 pb-2 [font-size:var(--font-size-body)] leading-body text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] read-only:cursor-default'
     )}
 ></textarea>

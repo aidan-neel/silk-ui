@@ -26,19 +26,20 @@
 
     let scrolled = $state(false);
     let mobileMenuOpen = $state(false);
-    const isHome = $derived($page.url.pathname === '/');
     const isDocs = $derived(
         $page.url.pathname.startsWith('/docs') || $page.url.pathname.startsWith('/fonts')
     );
 
     const navItems = [
-        { href: '/', label: 'Home' },
-        { href: '/docs/introduction', label: 'Docs' }
+        { href: '/docs/introduction', label: 'Docs' },
+        { href: '/docs/components', label: 'Components' },
+        { href: '/studio', label: 'Studio' }
     ];
     const docsPages = [
         { title: 'Introduction', href: resolve('/docs/introduction') },
         { title: 'Installation', href: resolve('/docs/installation') },
         { title: 'Theming', href: resolve('/docs/theming') },
+        { title: 'Changelog', href: resolve('/docs/changelog') },
         { title: 'Components', href: resolve('/docs/components') }
     ];
 
@@ -54,10 +55,6 @@
             window.removeEventListener('scroll', updateScroll);
         };
     });
-
-    function openGithub() {
-        window.open('https://github.com/aidan-neel/sivir-ui', '_blank', 'noopener,noreferrer');
-    }
 </script>
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
@@ -72,11 +69,7 @@
     >
         <div
             class={`relative mx-auto flex h-16 w-full items-center justify-between ${
-                isHome
-                    ? 'nav-home-in max-w-[1400px] px-4 md:px-6'
-                    : isDocs
-                      ? 'max-w-[1400px] px-4 md:px-6'
-                      : 'px-4 md:px-6'
+                isDocs ? 'max-w-[1400px] px-4 md:px-6' : 'px-4 md:px-6'
             }`}
         >
             <div class="flex min-w-0 flex-row items-center gap-2 md:gap-5">
@@ -94,14 +87,13 @@
                     {#each navItems as item (item.href)}
                         <Navbutton href={item.href}>{item.label}</Navbutton>
                     {/each}
-                    <Navbutton href={resolve('/docs/components/accordion')}>Components</Navbutton>
                 </div>
             </div>
 
-            <div class="flex flex-row items-center gap-2 md:gap-2.5">
+            <div class="flex flex-row items-center gap-1.5">
                 <Button
-                    class="size-9 rounded-lg"
-                    variant="ghost"
+                    class="size-9 rounded-[var(--radius-md)]"
+                    variant="outline"
                     onclick={() => {
                         toggleMode();
                     }}
@@ -130,9 +122,11 @@
                     </span>
                 </Button>
                 <Button
-                    class="h-9 gap-1.5 rounded-lg px-2.5 md:px-3"
-                    variant="ghost"
-                    onclick={openGithub}
+                    class="h-9 gap-1.5 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem] tabular-nums"
+                    variant="outline"
+                    href="https://github.com/aidan-neel/sivir-ui"
+                    target="_blank"
+                    rel="noreferrer"
                     aria-label="Star Sivir UI on GitHub"
                 >
                     <img
@@ -140,10 +134,7 @@
                         alt="GitHub"
                         class="size-4 flex items-center justify-center"
                     />
-                    <span
-                        class="mt-[1px] font-mono text-[14px] tabular-nums text-foreground-muted [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)]"
-                        >{formatStarCount(starCount)}</span
-                    >
+                    <span>{formatStarCount(starCount)}</span>
                 </Button>
             </div>
         </div>
@@ -182,18 +173,3 @@
         </div>
     </FullscreenNav.Content>
 </FullscreenNav.Root>
-
-<style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(.nav-home-in) {
-            animation: nav-home-in 0.35s var(--ease-out) 0.04s both;
-        }
-    }
-
-    @keyframes nav-home-in {
-        from {
-            opacity: 0;
-            transform: translateY(-6px);
-        }
-    }
-</style>

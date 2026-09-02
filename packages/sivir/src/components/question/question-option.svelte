@@ -83,13 +83,13 @@
         </span>
         <span class="min-w-0 flex-1">
             <span
-                class="block [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] leading-snug text-foreground"
+                class="block [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] leading-snug text-foreground"
             >
                 {label}
             </span>
             {#if description}
                 <span
-                    class="mt-0.5 block [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] leading-snug text-foreground-muted"
+                    class="mt-0.5 block [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] leading-snug text-foreground-muted"
                 >
                     {description}
                 </span>

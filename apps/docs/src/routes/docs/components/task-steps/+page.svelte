@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Hero from './examples/hero.svelte';
@@ -16,15 +17,10 @@
 <div data-docs-page class="flex flex-col gap-10">
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
-                Task Steps
-            </h1>
-            <p class="mt-2 max-w-2xl text-[1rem] leading-relaxed text-foreground-muted">
+            <Typography.H1> Task Steps </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 The system narrates its work one settled step at a time.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -34,16 +30,16 @@
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2 class="docs-section-heading">Installation</h2>
+        <Typography.H2 class="docs-section-heading">Installation</Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2 class="docs-section-heading">Usage</h2>
-        <p class="text-sm text-foreground-muted">
-            Set <code>current</code> to the running step. Values before it are complete; the array
-            length means the whole run is complete.
-        </p>
+        <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
+        <Typography.Text variant="supporting">
+            Set <Typography.InlineCode>current</Typography.InlineCode> to the running step. Values
+            before it are complete; the array length means the whole run is complete.
+        </Typography.Text>
         <CodeBlock
             lang="svelte"
             copy="overlay"

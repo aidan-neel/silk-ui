@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
     import Basic from './examples/basic.svelte';
@@ -8,6 +9,8 @@
     import HeroSrc from './examples/hero.svelte?raw';
     import MenuSearch from './examples/menu-search.svelte';
     import MenuSearchSrc from './examples/menu-search.svelte?raw';
+    import Scrollable from './examples/scrollable.svelte';
+    import ScrollableSrc from './examples/scrollable.svelte?raw';
 
     const TITLE = 'Combobox';
     const SLUG = 'combobox';
@@ -24,17 +27,12 @@
     <!-- ─── Header ────────────────────────────────────────────────── -->
     <header class="flex items-start justify-between gap-4">
         <div>
-            <h1
-                class="m-0 text-[1.875rem] font-[var(--font-weight-header,600)] tracking-[-0.02em] text-foreground leading-tight"
-                style="font-family: var(--font-header);"
-            >
+            <Typography.H1>
                 {TITLE}
-            </h1>
-            <p
-                class="mt-2 text-[1rem] text-foreground-muted leading-relaxed max-w-2xl font-[var(--font-weight-description,450)]"
-            >
+            </Typography.H1>
+            <Typography.Text variant="lead" class="mt-2 max-w-2xl">
                 A searchable dropdown that filters options as you type.
-            </p>
+            </Typography.Text>
         </div>
         <DocsPager />
     </header>
@@ -48,22 +46,16 @@
 
     <!-- ─── Installation ──────────────────────────────────────────── -->
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Installation
-        </h2>
+        <Typography.H2 class="docs-section-heading"> Installation </Typography.H2>
         <InstallCommand command={installCommand} />
     </section>
 
     <!-- ─── Usage ─────────────────────────────────────────────────── -->
     <section id="usage" class="scroll-mt-20 flex flex-col gap-4">
-        <h2
-            class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-        >
-            Usage
-        </h2>
-        <p class="text-sm text-foreground-muted">Import and use the Combobox components:</p>
+        <Typography.H2 class="docs-section-heading"> Usage </Typography.H2>
+        <Typography.Text variant="supporting">
+            Import and use the Combobox components:
+        </Typography.Text>
         <CodeBlock
             code={`import * as Combobox from '$lib/sivir/components/combobox';\n\nlet selected = $state('next');\n\n<Combobox.Root>\n  <Combobox.Trigger>{selected}</Combobox.Trigger>\n  <Combobox.Content>\n    <Combobox.Results>\n      <Combobox.Item value="next" label="Next.js" callback={() => (selected = 'next')} />\n    </Combobox.Results>\n  </Combobox.Content>\n</Combobox.Root>`}
             lang="svelte"
@@ -74,36 +66,34 @@
     <!-- ─── Examples ──────────────────────────────────────────────── -->
     <section id="examples" class="scroll-mt-20 flex flex-col gap-10">
         <div>
-            <h2
-                class="text-[1.25rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-section-heading"
-            >
-                Examples
-            </h2>
+            <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
         </div>
 
         <!-- Basic -->
         <div id="basic" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Basic usage
-            </h3>
+            <Typography.H3 class="docs-subsection-heading"> Basic usage </Typography.H3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
             </ComponentPreview>
         </div>
 
         <div id="menu-search" class="scroll-mt-20 flex flex-col gap-3">
-            <h3
-                class="text-[1rem] font-[var(--font-weight-header,600)] tracking-tight text-foreground docs-subsection-heading"
-            >
-                Search in the menu
-            </h3>
-            <p class="text-sm text-foreground-muted">
+            <Typography.H3 class="docs-subsection-heading"> Search in the menu </Typography.H3>
+            <Typography.Text variant="supporting">
                 Keep the trigger select-like and place the search field in the menu.
-            </p>
+            </Typography.Text>
             <ComponentPreview code={MenuSearchSrc}>
                 <MenuSearch />
+            </ComponentPreview>
+        </div>
+
+        <div id="scrollable" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Scrollable </Typography.H3>
+            <Typography.Text variant="supporting">
+                Long result lists stay in a height-capped menu and scroll inside it.
+            </Typography.Text>
+            <ComponentPreview code={ScrollableSrc}>
+                <Scrollable />
             </ComponentPreview>
         </div>
     </section>

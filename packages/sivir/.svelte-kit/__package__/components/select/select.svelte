@@ -1,16 +1,17 @@
 <script lang="ts">
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import type { Snippet } from 'svelte';
+    import type { SelectProps } from '.';
     import { setSelectContext } from './context.svelte';
 
     const key = $props.id();
 
-    type Props = {
-        children: Snippet;
-        value?: string;
-    };
-
-    let { children, value = $bindable('') }: Props = $props();
+    let {
+        children,
+        value = $bindable(''),
+        open = $bindable(false),
+        onValueChange,
+        onOpenChange
+    }: SelectProps = $props();
 
     /**
      * Plain Maps and Sets live on context, never inside `$state`, so item
@@ -44,8 +45,9 @@
         if (nextValue !== syncedValue) {
             syncedValue = nextValue;
             value = nextValue;
+            onValueChange?.(nextValue);
         }
     });
 </script>
 
-<DropdownMenu.Root> {@render children?.()} </DropdownMenu.Root>
+<DropdownMenu.Root bind:open {onOpenChange}> {@render children?.()} </DropdownMenu.Root>

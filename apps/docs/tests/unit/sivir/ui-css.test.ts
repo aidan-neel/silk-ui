@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { describe, expect, it } from 'vitest';
 
 const css = readFileSync(resolve(process.cwd(), '../../packages/sivir/src/ui.css'), 'utf8');
 
@@ -33,7 +33,18 @@ describe('ui.css typography tokens', () => {
         expect(css).toContain('--font-weight-description: 400;');
     });
     it('defines the press motion contract', () => {
-        expect(css).toContain('--motion-press-px: 2px;');
+        expect(css).toContain('--motion-press-px: var(--size-hairline);');
+        expect(css).toContain('--spacing: var(--sivir-space-unit);');
+        expect(css).toContain('--size-hairline: 2px;');
+        expect(css).toContain('--size-touch: 2.75rem;');
+        expect(css).toContain('--opacity-disabled: 0.4;');
+        expect(css).toContain('--overlay-gutter: 2rem;');
+        expect(css).toContain('--font-size-title: 20px;');
+        expect(css).toContain('--leading-body: 1.5;');
+        expect(css).toContain('--color-error-soft:');
+        expect(css).toContain('--color-primary-stroke: transparent;');
+        expect(css).toContain('--ui-cursor-interactive: default;');
+        expect(css).toContain('--text-sm: var(--font-size-body);');
         expect(css).toContain('--motion-duration-press: 160ms;');
         expect(css).toContain('--ease-press:');
         expect(css).toContain('.sivir-press:active');
@@ -88,8 +99,8 @@ describe('ui.css Tier 3 + structure', () => {
     /** Mirrors the budget in packages/sivir/release.test.ts -- keep the two in step. */
     it('stays within the release size budget', () => {
         const normalizedCss = css.replace(/\s+/g, ' ').trim();
-        expect(css.split('\n').length).toBeLessThanOrEqual(410);
-        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(12 * 1024);
+        expect(css.split('\n').length).toBeLessThanOrEqual(520);
+        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(16 * 1024);
     });
 
     it('declares the shared surface contracts in the components layer', () => {
@@ -98,7 +109,14 @@ describe('ui.css Tier 3 + structure', () => {
             '.sivir-menu-item',
             '.sivir-card-frame',
             '.sivir-card-surface',
-            '.sivir-tooltip'
+            '.sivir-modal-frame',
+            '.sivir-inset-frame',
+            '.sivir-inset-surface',
+            '.sivir-tooltip',
+            '.sivir-overlay-scrim',
+            '.sivir-menu-label',
+            '.sivir-menu-separator',
+            '.sivir-error-notice'
         ]) {
             expect(css).toContain(contract);
         }

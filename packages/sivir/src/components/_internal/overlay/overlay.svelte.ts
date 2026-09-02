@@ -1,6 +1,7 @@
 import {
     clickOutside,
     getFocusableElements,
+    inertOutside,
     lockBodyScroll,
     pushEscapeLayer,
     trapFocus
@@ -14,6 +15,7 @@ import {
  *   - Click-outside detection (panel boundary; respects allowClickOutside).
  *   - Escape key handler (panel-scoped, fires onClose).
  *   - Body scroll lock while open (shared refcount with Popover).
+ *   - Inert background while open (shared refcount with Popover).
  *
  * Consumer owns:
  *   - The panel DOM element (bind via `panelEl` getter).
@@ -38,6 +40,8 @@ export type OverlayOptions = {
     returnFocus?: () => HTMLElement | undefined;
     /** Lock body scroll while open. Defaults to true. */
     lockScroll?: boolean;
+    /** Make document content outside the overlay inert. Defaults to true. */
+    inert?: boolean;
 };
 
 export function useOverlay(opts: OverlayOptions) {
@@ -54,6 +58,7 @@ export function useOverlay(opts: OverlayOptions) {
         }
 
         const lockScroll = opts.lockScroll !== false;
+        const inert = opts.inert !== false;
 
         const cleanupTrap = trapFocus(panel, {
             initialFocus: getFocusableElements(panel)[0] ?? null,
@@ -61,6 +66,7 @@ export function useOverlay(opts: OverlayOptions) {
         });
 
         const releaseScroll = lockScroll ? lockBodyScroll() : undefined;
+        const releaseInert = inert ? inertOutside([panel]) : undefined;
 
         const co = clickOutside(panel, () => {
             if (opts.allowClickOutside?.() ?? true) {
@@ -75,6 +81,7 @@ export function useOverlay(opts: OverlayOptions) {
         });
 
         return () => {
+            releaseInert?.();
             cleanupTrap?.();
             co.destroy();
             releaseEscape();

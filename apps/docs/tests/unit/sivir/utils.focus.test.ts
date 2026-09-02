@@ -209,7 +209,24 @@ describe('trapFocus', () => {
         expect(document.activeElement).toBe(last);
     });
 
-    it('restores focus to the previously focused element on cleanup', () => {
+    it('keeps Tab inside an empty container', () => {
+        dialog.replaceChildren();
+        dialog.tabIndex = -1;
+        cleanup = trapFocus(dialog);
+        dialog.focus();
+        expect(document.activeElement).toBe(dialog);
+
+        const event = new KeyboardEvent('keydown', {
+            key: 'Tab',
+            bubbles: true,
+            cancelable: true
+        });
+        document.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(true);
+        expect(document.activeElement).toBe(dialog);
+    });
+
+    it('restores focus to the previously focused element on cleanup', async () => {
         outsideButton.focus();
         expect(document.activeElement).toBe(outsideButton);
 
@@ -220,7 +237,54 @@ describe('trapFocus', () => {
 
         cleanup?.();
         cleanup = undefined;
+        await Promise.resolve();
         expect(document.activeElement).toBe(outsideButton);
+    });
+
+    it('restores focus after the return target stops being inert', async () => {
+        outsideButton.focus();
+        const host = document.createElement('div');
+        host.append(outsideButton);
+        document.body.append(host);
+        host.inert = true;
+
+        cleanup = trapFocus(dialog, { returnFocus: outsideButton });
+        const first = queryRequired<HTMLElement>(dialog, '#first');
+        first.focus();
+
+        cleanup?.();
+        cleanup = undefined;
+        host.inert = false;
+        await Promise.resolve();
+
+        expect(document.activeElement).toBe(outsideButton);
+        host.remove();
+    });
+
+    it('leaves focus in a portaled floating layer', async () => {
+        const first = queryRequired<HTMLElement>(dialog, '#first');
+        const layer = document.createElement('div');
+        layer.setAttribute('data-floating-content', '');
+        const layerButton = makeButton(layer, { id: 'nested' });
+        document.body.append(layer);
+
+        cleanup = trapFocus(dialog);
+        await new Promise((r) => queueMicrotask(() => r(undefined)));
+        expect(document.activeElement).toBe(first);
+
+        layerButton.focus();
+        expect(document.activeElement).toBe(layerButton);
+
+        const event = new KeyboardEvent('keydown', {
+            key: 'Tab',
+            bubbles: true,
+            cancelable: true
+        });
+        document.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(false);
+        expect(document.activeElement).toBe(layerButton);
+
+        layer.remove();
     });
 });
 

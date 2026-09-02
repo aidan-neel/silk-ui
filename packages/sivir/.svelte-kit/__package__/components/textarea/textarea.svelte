@@ -1,8 +1,7 @@
 <script lang="ts">
     import { input } from '@sivir-ui/svelte/components/input/variants';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
-    import type { HTMLTextareaAttributes } from 'svelte/elements';
+    import type { TextareaProps } from '.';
 
     let {
         placeholder,
@@ -16,17 +15,7 @@
         value = $bindable<string | number | null | undefined>(),
         oninput,
         ...rest
-    }: {
-        placeholder?: string;
-        label?: string;
-        description?: string;
-        variant?: 'outline' | 'secondary';
-        autoresize?: boolean;
-        class?: string;
-        children?: Snippet;
-        element?: HTMLTextAreaElement | undefined;
-        value?: string | number | null | undefined;
-    } & HTMLTextareaAttributes = $props();
+    }: TextareaProps = $props();
 
     function resize() {
         if (!autoresize || !element) {
@@ -50,37 +39,29 @@
     );
 </script>
 
-<label class="flex flex-col gap-1">
-    {#if label}
-        <span
-            class="text-[length:var(--text-sm)] [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] text-foreground [font-family:var(--font-sans),sans-serif]"
-        >
-            {label}
-        </span>
-    {/if}
+{#snippet field()}
+    <textarea
+        bind:this={element}
+        bind:value
+        oninput={(event) => {
+            oninput?.(event);
+            resize();
+        }}
+        data-ui="textarea"
+        data-variant={variant}
+        class={cn(
+            classProp,
+            children && 'rounded-none border-0 bg-transparent focus-visible:shadow-none',
+            autoresize && 'resize-none overflow-y-hidden',
+            'min-h-16 resize-y py-2.5 leading-body',
+            input({ variant })
+        )}
+        {...rest}
+        {placeholder}
+    ></textarea>
+{/snippet}
 
-    {#snippet field()}
-        <textarea
-            bind:this={element}
-            bind:value
-            oninput={(event) => {
-                oninput?.(event);
-                resize();
-            }}
-            data-ui="textarea"
-            data-variant={variant}
-            class={cn(
-                classProp,
-                children && 'rounded-none border-0 bg-transparent focus-visible:shadow-none',
-                autoresize && 'resize-none overflow-y-hidden',
-                'min-h-16 resize-y py-2.5 leading-6',
-                input({ variant })
-            )}
-            {...rest}
-            {placeholder}
-        ></textarea>
-    {/snippet}
-
+{#snippet control()}
     {#if children}
         <div
             data-ui="textarea-composer"
@@ -96,11 +77,31 @@
     {:else}
         {@render field()}
     {/if}
+{/snippet}
 
+{#snippet meta()}
+    {#if label}
+        <span
+            class="[font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] text-foreground [font-family:var(--font-sans),sans-serif]"
+        >
+            {label}
+        </span>
+    {/if}
+    {@render control()}
     {#if description}
         <span
-            class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+            class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
             >{description}</span
         >
     {/if}
-</label>
+{/snippet}
+
+{#if label}
+    <label class="flex flex-col gap-1"> {@render meta()} </label>
+{:else if description}
+    <div class="flex flex-col gap-1">
+        {@render meta()}
+    </div>
+{:else}
+    {@render control()}
+{/if}

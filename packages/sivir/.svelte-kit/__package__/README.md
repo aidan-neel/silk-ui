@@ -6,7 +6,7 @@ Small, copyable UI primitives and supporting theme utilities.
 
 - `components/`: Svelte components plus small TypeScript entrypoints and variant definitions.
 - `themes/`: Theme utility types, CSS generation, and live theme hydration helpers.
-- `ui.css`: Design tokens plus the shared surface contracts (`.sivir-menu-item`, `.sivir-card-frame`, `.sivir-card-surface`, `.sivir-tooltip`).
+- `ui.css`: Design tokens plus the shared surface contracts (`.sivir-menu-item`, `.sivir-card-frame`, `.sivir-card-surface`, `.sivir-modal-frame`, `.sivir-inset-frame`, `.sivir-inset-surface`, `.sivir-tooltip`).
 - `utils.ts`: Shared class, context, focus, and interaction helpers.
 - `transition.ts`: Panel, dialog, overlay, and sheet transitions driven by CSS motion variables.
 - `is-dark.svelte.ts`: Reactive `.dark` detection for the components that branch on colour scheme.

@@ -150,7 +150,7 @@
     });
 </script>
 
-<div class="flex h-11 w-full items-center gap-2.5 border-b border-border px-3">
+<div class="flex h-[var(--size-touch)] w-full items-center gap-2.5 border-b border-border px-3">
     <Search size={15} strokeWidth={1.75} class="shrink-0 text-foreground-muted" />
     <input
         bind:this={searchInput}
@@ -171,7 +171,7 @@
         {...rest}
     />
     <span
-        class="min-w-[3ch] text-right font-mono text-[10.5px] tabular-nums text-foreground-muted"
+        class="min-w-[3ch] text-right font-mono text-[length:var(--font-size-meta)] tabular-nums text-foreground-muted"
         aria-hidden="true"
     >
         {getCommandResults(command).length}

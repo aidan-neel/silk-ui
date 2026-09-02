@@ -27,7 +27,7 @@
         "vitest": "^4.1.7"
     },
     "dependencies": {
-        "@fontsource/inter": "^5.3.0",
+        "@fontsource/dm-sans": "^5.3.0",
         "@sivir-ui/svelte": "workspace:*"
     }
 }

@@ -11,6 +11,7 @@
         { href: '/docs/introduction', label: 'Introduction' },
         { href: '/docs/installation', label: 'Installation' },
         { href: '/docs/theming', label: 'Theming' },
+        { href: '/docs/changelog', label: 'Changelog' },
         { href: '/docs/components', label: 'Components' }
     ];
 

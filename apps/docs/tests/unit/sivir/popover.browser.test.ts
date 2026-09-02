@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
+import { describe, expect, it } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import PopoverFixture from '../../fixtures/PopoverFixture.svelte';
 
 /*
@@ -26,6 +26,17 @@ async function flush() {
 async function openViaTrigger() {
     await page.getByTestId('popover-trigger-label').click();
     await flush();
+}
+
+function isInertTree(element: HTMLElement | null) {
+    let current = element;
+    while (current) {
+        if (current.inert) {
+            return true;
+        }
+        current = current.parentElement;
+    }
+    return false;
 }
 
 describe('Popover -- mount and unmount', () => {
@@ -92,24 +103,11 @@ describe('Popover -- close paths', () => {
         await openViaTrigger();
         await expect.element(page.getByText('Popover Title')).toBeInTheDocument();
 
-        const outside = document.createElement('div');
-        outside.textContent = 'outside';
-        outside.style.position = 'absolute';
-        outside.style.top = '400px';
-        outside.style.left = '400px';
-        outside.style.width = '100px';
-        outside.style.height = '50px';
-        let clicked = false;
-        outside.onclick = () => {
-            clicked = true;
-        };
-        document.body.appendChild(outside);
-
-        outside.click();
+        const dismiss = document.querySelector('[data-ui="popover-dismiss"]') as HTMLElement;
+        expect(dismiss).toBeTruthy();
+        dismiss.click();
         await flush();
         await expect.element(page.getByText('Popover Title')).not.toBeInTheDocument();
-        expect(clicked).toBe(false);
-        outside.remove();
     });
 
     it('does not close when clicking inside content', async () => {
@@ -121,6 +119,65 @@ describe('Popover -- close paths', () => {
         await page.getByTestId('inside-popover').click();
         await flush();
         await expect.element(page.getByText('Popover Title')).toBeInTheDocument();
+    });
+});
+
+describe('Popover -- inert, focus, and nested scroll', () => {
+    it('inerts outside document content while keeping the trigger active', async () => {
+        render(PopoverFixture, { open: false });
+        await flush();
+
+        const outside = document.createElement('a');
+        outside.href = '#outside';
+        outside.textContent = 'Outside';
+        document.body.append(outside);
+
+        await openViaTrigger();
+
+        const trigger = document.querySelector(
+            '[data-testid="popover-trigger-label"]'
+        ) as HTMLElement;
+        expect(outside.inert).toBe(true);
+        expect(isInertTree(trigger)).toBe(false);
+        expect(isInertTree(document.querySelector('[data-ui="popover-content"]'))).toBe(false);
+
+        outside.remove();
+    });
+
+    it('traps focus inside the panel', async () => {
+        render(PopoverFixture, { open: false });
+        await flush();
+        await openViaTrigger();
+        await new Promise((r) => setTimeout(r, 50));
+
+        const panel = document.querySelector('[data-ui="popover-content"]') as HTMLElement;
+        expect(panel.contains(document.activeElement)).toBe(true);
+
+        const inside = document.querySelector('[data-testid="inside-popover"]') as HTMLElement;
+        inside.focus();
+        await userEvent.keyboard('{Tab}');
+        await flush();
+        expect(panel.contains(document.activeElement)).toBe(true);
+    });
+
+    it('locks nested overflow containers while open', async () => {
+        const scroller = document.createElement('div');
+        scroller.style.overflow = 'auto';
+        scroller.style.height = '40px';
+        const inner = document.createElement('div');
+        inner.style.height = '200px';
+        scroller.append(inner);
+        document.body.append(scroller);
+
+        render(PopoverFixture, { open: false });
+        await flush();
+        await openViaTrigger();
+        expect(scroller.style.overflow).toBe('hidden');
+
+        await userEvent.keyboard('{Escape}');
+        await flush();
+        expect(scroller.style.overflow).toBe('auto');
+        scroller.remove();
     });
 });
 

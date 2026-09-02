@@ -166,7 +166,8 @@ describe('Modal -- ARIA contract in browser', () => {
         expect(dialog.getAttribute('data-orientation')).toBe('vertical');
         expect(dialog.className).toContain('max-w-sm');
         expect(header.getAttribute('data-orientation')).toBe('vertical');
-        expect(page.getByText('Confirm').element().className).toContain('sm:flex-1');
+        expect(header.className).toContain('flex-col');
+        expect(page.getByText('Confirm').element().className).toContain('ml-auto');
     });
 
     it('uses the horizontal layout and wide width by default', async () => {
@@ -179,8 +180,8 @@ describe('Modal -- ARIA contract in browser', () => {
         expect(dialog.getAttribute('data-orientation')).toBe('horizontal');
         expect(dialog.className).toContain('max-w-xl');
         expect(header.getAttribute('data-orientation')).toBe('horizontal');
-        expect(header.className).toContain('flex-row');
-        expect(page.getByText('Confirm').element().className).toContain('sm:w-fit');
+        expect(header.className).toContain('flex-col');
+        expect(page.getByText('Confirm').element().className).toContain('ml-auto');
     });
 
     it('uses the dedicated centered dialog motion', async () => {
@@ -272,6 +273,25 @@ describe('Modal -- body scroll lock in browser', () => {
         await page.getByText('Close').click();
         await flush();
         expect(document.body.style.overflow).toBe('');
+    });
+
+    it('inerts the page outside the dialog', async () => {
+        render(ModalFixture, { open: true });
+        await flush();
+
+        const trigger = document.querySelector('[data-testid="trigger"]') as HTMLElement;
+        const dialog = document.querySelector('[role="dialog"]') as HTMLElement;
+        let triggerBranch: HTMLElement | null = trigger;
+        let triggerIsInert = false;
+        while (triggerBranch) {
+            if (triggerBranch.inert) {
+                triggerIsInert = true;
+                break;
+            }
+            triggerBranch = triggerBranch.parentElement;
+        }
+        expect(triggerIsInert).toBe(true);
+        expect(dialog.inert).not.toBe(true);
     });
 });
 

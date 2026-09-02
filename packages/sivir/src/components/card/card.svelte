@@ -1,17 +1,8 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { Snippet } from 'svelte';
+    import type { CardProps } from '.';
 
-    let {
-        children,
-        class: classProp,
-        variant = 'default',
-        ...rest
-    }: {
-        children: Snippet;
-        class?: string;
-        variant?: 'default' | 'panel';
-    } = $props();
+    let { children, class: classProp, variant = 'default', ...rest }: CardProps = $props();
 </script>
 
 {#if variant === 'panel'}

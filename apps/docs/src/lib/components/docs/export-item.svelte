@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { cn } from '@sivir-ui/svelte/utils';
+    import * as Typography from '@sivir-ui/svelte/components/typography';
     import type { Snippet } from 'svelte';
 
     let {
@@ -14,7 +14,7 @@
     } = $props();
 </script>
 
-<p {...rest} class={cn(classProp, `text-foreground-muted`)}>
+<Typography.Text {...rest} variant="supporting" class={classProp}>
     <span class="text-foreground px-3">•</span
     ><span
         class="text-foreground [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] [font-family:var(--font-header),sans-serif]"
@@ -22,4 +22,4 @@
         -</span
     >
     {@render children?.()}
-</p>
+</Typography.Text>

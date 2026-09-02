@@ -133,7 +133,7 @@
                         aria-hidden={row.status !== 'done'}
                         class={cn(
                             // token-lint-disable-next-line no-literal-length
-                            'shrink-0 font-mono text-[10.5px] tabular-nums text-foreground-muted transition-opacity [transition-duration:var(--motion-duration-press)]',
+                            'shrink-0 font-mono text-[length:var(--font-size-meta)] tabular-nums text-foreground-muted transition-opacity [transition-duration:var(--motion-duration-press)]',
                             row.status === 'done' ? 'opacity-100' : 'opacity-0'
                         )}
                     >

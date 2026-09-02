@@ -15,14 +15,12 @@
     focusTrap={false}
     data-ui="combobox-content"
     class={cn(className, 'min-w-[var(--popover-trigger-width)] w-[var(--popover-trigger-width)]')}
-    surfaceClass="p-0"
+    surfaceClass="flex min-h-0 flex-col overflow-hidden p-0"
 >
-    {#if comboboxState.searchPlacement === 'menu'}
-        <div class="flex max-h-[var(--popover-available-height)] flex-col">
+    <div class={cn(className, 'flex min-h-0 min-w-0 flex-1 flex-col')}>
+        {#if comboboxState.searchPlacement === 'menu'}
             <ComboboxSearch />
-            {@render children?.()}
-        </div>
-    {:else}
+        {/if}
         {@render children?.()}
-    {/if}
+    </div>
 </Popover.Content>

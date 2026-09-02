@@ -6,6 +6,7 @@ export type SwitchState = {
 };
 
 export type SwitchProps = {
+    checked?: boolean;
     switched?: boolean;
     label?: string;
     description?: string;

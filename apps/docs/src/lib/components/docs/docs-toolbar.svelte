@@ -10,18 +10,38 @@
 
     import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
     import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
-    import SideNavbar from './side-navbar.svelte';
+    import { components, sanitizeComponent } from '$lib/components';
+    import Logo from '../logo.svelte';
 
     const { starCount = null }: { starCount?: number | null } = $props();
     let mobileMenuOpen = $state(false);
 
-    const breadcrumbs = $derived.by(() => {
-        const segments = page.url.pathname.split('/').filter(Boolean);
+    const navItems = [
+        { href: '/docs/introduction', label: 'Docs' },
+        { href: '/docs/components', label: 'Components' },
+        { href: '/studio', label: 'Studio' }
+    ];
+    const docsPages = [
+        { title: 'Introduction', href: resolve('/docs/introduction') },
+        { title: 'Installation', href: resolve('/docs/installation') },
+        { title: 'Theming', href: resolve('/docs/theming') },
+        { title: 'Changelog', href: resolve('/docs/changelog') },
+        { title: 'Components', href: resolve('/docs/components') }
+    ];
 
-        return segments.map((segment, index) => ({
-            href: `/${segments.slice(0, index + 1).join('/')}`,
-            label: formatSegment(segment)
-        }));
+    const breadcrumbs = $derived.by(() => {
+        const pathnameSegments = page.url.pathname.split('/').filter(Boolean);
+        const isDocsPath = pathnameSegments[0] === 'docs';
+        const segments = isDocsPath ? pathnameSegments.slice(1) : pathnameSegments;
+        const basePath = isDocsPath ? '/docs' : '';
+
+        return [
+            { href: '/', label: 'Sivir UI' },
+            ...segments.map((segment, index) => ({
+                href: `${basePath}/${segments.slice(0, index + 1).join('/')}`,
+                label: formatSegment(segment)
+            }))
+        ];
     });
 
     function formatSegment(segment: string): string {
@@ -54,17 +74,16 @@
 
         return String(count);
     }
-
-    function closeMobileMenu() {
-        mobileMenuOpen = false;
-    }
 </script>
 
 <FullscreenNav.Root bind:open={mobileMenuOpen}>
     <header
-        class="sticky top-0 z-20 flex min-h-[3.75rem] w-full items-center justify-between gap-4 border-b border-border bg-background/72 px-4 py-3 backdrop-blur-[14px] sm:px-5"
+        class="z-20 mx-auto flex h-16 w-full max-w-[960px] items-center justify-between gap-4 px-2 sm:px-5 lg:px-10"
     >
-        <FullscreenNav.Trigger class="size-9 rounded-[var(--radius-md)] sm:hidden" />
+        <div class="flex min-w-0 items-center gap-2 sm:hidden">
+            <FullscreenNav.Trigger class="size-9 rounded-[var(--radius-md)]" />
+            <Logo />
+        </div>
 
         <nav aria-label="Breadcrumb" class="hidden min-w-0 sm:block">
             <ol
@@ -92,9 +111,17 @@
             </ol>
         </nav>
 
-        <div class="flex shrink-0 items-center gap-1">
-            <a
-                class="inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-[0.55rem] text-[0.8125rem] font-[var(--font-weight-label,500)] tabular-nums text-foreground-muted no-underline transition-colors duration-150 hover:cursor-default hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+        <div class="flex shrink-0 items-center gap-1.5">
+            <Button
+                class="h-9 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem]"
+                variant="outline"
+                href={resolve('/studio')}
+            >
+                Studio
+            </Button>
+            <Button
+                class="h-9 gap-1.5 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem] tabular-nums"
+                variant="outline"
                 href="https://github.com/aidan-neel/sivir-ui"
                 target="_blank"
                 rel="noreferrer"
@@ -108,11 +135,11 @@
                     class="size-[0.9375rem]"
                 />
                 <span>{formatStarCount(starCount)}</span>
-            </a>
+            </Button>
 
             <Button
                 class="size-9 rounded-[var(--radius-md)]"
-                variant="ghost"
+                variant="outline"
                 onclick={() => {
                     toggleMode();
                 }}
@@ -137,7 +164,7 @@
         </div>
     </header>
 
-    <FullscreenNav.Content label="Browse documentation" class="p-0 sm:hidden">
+    <FullscreenNav.Content label="Browse Sivir UI" class="p-0 sm:hidden">
         <header
             class="flex shrink-0 items-center justify-between border-b border-border/70 px-4 py-3"
         >
@@ -147,6 +174,26 @@
             <FullscreenNav.Close />
         </header>
 
-        <SideNavbar class="min-h-0 flex-1 px-4 pt-5" onNavigate={closeMobileMenu} />
+        <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
+            <FullscreenNav.Group heading="Navigate">
+                {#each navItems as item (item.href)}
+                    <FullscreenNav.Link href={item.href}>{item.label}</FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+
+            <FullscreenNav.Group heading="Getting Started" class="mt-10">
+                {#each docsPages as item (item.href)}
+                    <FullscreenNav.Link href={item.href}>{item.title}</FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+
+            <FullscreenNav.Group heading="Components" class="mt-10">
+                {#each components as component (component)}
+                    <FullscreenNav.Link href={`/docs/components/${component}`}>
+                        {sanitizeComponent(component)}
+                    </FullscreenNav.Link>
+                {/each}
+            </FullscreenNav.Group>
+        </div>
     </FullscreenNav.Content>
 </FullscreenNav.Root>

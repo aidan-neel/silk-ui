@@ -1,9 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
 import { tick } from 'svelte';
-import DropdownMenuSubFixture from '../../fixtures/DropdownMenuSubFixture.svelte';
+import { describe, expect, it, vi } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-svelte';
 import ContextMenuSubFixture from '../../fixtures/ContextMenuSubFixture.svelte';
+import DropdownMenuSubFixture from '../../fixtures/DropdownMenuSubFixture.svelte';
 
 async function flush() {
     await tick();
@@ -20,7 +20,7 @@ async function settleAnimations() {
 async function hover(testId: string) {
     const el = page.getByTestId(testId).element() as HTMLElement;
     const target = (el.closest('button') as HTMLElement | null) ?? el;
-    await userEvent.hover(target);
+    target.dispatchEvent(new MouseEvent('mouseenter'));
     await flush();
     await settleAnimations();
 }
@@ -198,7 +198,8 @@ describe('DropdownMenu submenu cone', () => {
         await hover('dd-share');
         await hover('dd-social');
 
-        await page.getByTestId('dd-twitter').click();
+        const twitter = page.getByTestId('dd-twitter').element();
+        (twitter.closest('button') as HTMLButtonElement).click();
         await flush();
         expect(onTwitter).toHaveBeenCalledTimes(1);
         await expect.element(page.getByTestId('dd-share')).not.toBeInTheDocument();

@@ -19,7 +19,7 @@
     data-ui="fullscreen-nav-link"
     class={cn(
         className,
-        '-mx-2 rounded-[var(--radius-md)] px-2 py-1.5 text-[length:var(--text-xl)] font-medium tracking-tight transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]'
+        '-mx-2 rounded-[var(--radius-md)] px-2 py-1.5 text-[length:var(--text-xl)] font-label tracking-tight transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]'
     )}
     style={`--fullscreen-nav-link-delay:${animationDelay}ms;${styleName ?? ''}`}
     onclick={(event) => {

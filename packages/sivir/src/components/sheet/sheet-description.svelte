@@ -12,7 +12,7 @@
     id={`${id}-desc`}
     class={cn(
         className,
-        '[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-pretty text-foreground-muted'
+        '[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-pretty text-foreground-muted'
     )}
 >
     {@render children?.()}

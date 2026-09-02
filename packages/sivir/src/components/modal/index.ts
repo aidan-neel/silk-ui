@@ -46,6 +46,7 @@ export type ModalContentProps = {
 
 export type ModalProps = {
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     /** Sets supported browser chrome to red while the modal is open. */
     error?: boolean;
     /** Controls the default width and action layout. Defaults to `horizontal`. */

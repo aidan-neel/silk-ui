@@ -1,8 +1,8 @@
 import '@sivir-ui/svelte/ui.css';
-import { afterEach, beforeEach } from 'vitest';
-import { userEvent } from 'vitest/browser';
 import { resetSharedTooltipForTests } from '@sivir-ui/svelte/components/tooltip/shared-tooltip';
 import { resetBodyLocksForTests, resetEscapeStackForTests } from '@sivir-ui/svelte/utils';
+import { afterEach, beforeEach } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 function pointerParkingTarget() {
     let target = document.querySelector<HTMLElement>('[data-pointer-parking-target]');
@@ -18,7 +18,10 @@ function pointerParkingTarget() {
 }
 
 async function resetBrowserState() {
-    await userEvent.hover(pointerParkingTarget());
+    const target = pointerParkingTarget();
+    if (!target.inert) {
+        await userEvent.hover(target);
+    }
     document.documentElement.classList.remove('dark');
     resetSharedTooltipForTests();
     resetBodyLocksForTests();

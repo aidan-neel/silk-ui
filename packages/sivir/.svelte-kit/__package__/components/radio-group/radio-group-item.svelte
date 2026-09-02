@@ -23,7 +23,7 @@
     for={inputId}
     class={cn(
         className,
-        'flex min-h-11 cursor-[var(--ui-cursor-interactive)] items-start gap-2.5 md:min-h-0',
+        'flex min-h-[var(--size-touch)] cursor-[var(--ui-cursor-interactive)] items-start gap-2.5 md:min-h-0',
         isDisabled && 'cursor-not-allowed opacity-50'
     )}
 >
@@ -61,13 +61,13 @@
         <span class="flex flex-col gap-0.5 leading-tight">
             {#if label}
                 <span
-                    class="[font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] text-foreground"
+                    class="[font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] text-foreground"
                     >{label}</span
                 >
             {/if}
             {#if description}
                 <span
-                    class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                     >{description}</span
                 >
             {/if}

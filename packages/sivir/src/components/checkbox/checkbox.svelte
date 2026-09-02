@@ -1,30 +1,31 @@
 <script lang="ts">
     import { cn, pressable } from '@sivir-ui/svelte/utils';
+    import type { CheckboxProps } from '.';
     import { checkbox, checkboxBox, checkboxText } from './variants';
 
     let {
-        checked = $bindable<boolean>(),
+        checked = $bindable(false),
         label,
         description,
         disabled,
         variant = 'default',
         class: classProp,
+        onCheckedChange,
         ...rest
-    }: {
-        checked: boolean;
-        label?: string;
-        description?: string;
-        disabled?: boolean;
-        variant?: 'default' | 'primary';
-        class?: string;
-    } = $props();
+    }: CheckboxProps = $props();
+
+    function handleChange(event: Event) {
+        const next = (event.currentTarget as HTMLInputElement).checked;
+        checked = next;
+        onCheckedChange?.(next);
+    }
 </script>
 
 <label
     {...rest}
     class={cn(
         classProp,
-        'min-h-11 md:min-h-0',
+        'min-h-[var(--size-touch)] md:min-h-0',
         checkbox({ variant, disabled: disabled ?? false, checked: checked ?? false })
     )}
 >
@@ -39,8 +40,9 @@
         <input
             type="checkbox"
             class="peer absolute size-4 opacity-0"
-            bind:checked
+            {checked}
             aria-checked={checked}
+            oninput={handleChange}
         />
     {/if}
 
@@ -87,7 +89,7 @@
             </span>
             {#if description}
                 <span
-                    class="text-text [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="text-text [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                 >
                     {description}
                 </span>

@@ -1,15 +1,7 @@
-import { changelogVersions } from '$lib/changelog';
-import { components } from '$lib/components';
+import { sitemapPaths } from '$lib/sitemap';
 import type { RequestHandler } from './$types';
 
-const staticPaths = [
-    '/',
-    '/docs/introduction',
-    '/docs/installation',
-    '/docs/theming',
-    '/docs/components',
-    ...changelogVersions.map((version) => `/changelog/${version}`)
-];
+export const prerender = true;
 
 function escapeXml(value: string): string {
     return value.replace(/[&<>"']/g, (character) => {
@@ -24,11 +16,7 @@ function escapeXml(value: string): string {
 }
 
 export const GET: RequestHandler = ({ url }) => {
-    const paths = [
-        ...staticPaths,
-        ...components.map((component) => `/docs/components/${component}`)
-    ];
-    const urls = paths
+    const urls = sitemapPaths()
         .map((path) => `  <url><loc>${escapeXml(new URL(path, url.origin).href)}</loc></url>`)
         .join('\n');
 

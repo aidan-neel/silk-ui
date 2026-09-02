@@ -1,4 +1,4 @@
 import Root from './alert.svelte';
-import Title from './alert-title.svelte';
 import Description from './alert-description.svelte';
-export { Root, Title, Description };
+import Title from './alert-title.svelte';
+export { Description, Root, Title };

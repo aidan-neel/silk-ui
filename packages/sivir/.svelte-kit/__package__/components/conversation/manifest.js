@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'conversation',
-    version: '1.1.0',
+    version: '1.1.1',
     visibility: 'public',
     description: 'Auto-following conversation transcript with empty and jump-to-latest states.',
     files: [
@@ -12,7 +12,7 @@ export const manifest = {
         'components/conversation/index.ts',
         'components/conversation/manifest.ts'
     ],
-    components: [],
+    components: ['scroll-area'],
     shared: ['utils.cn', 'utils.createContext', 'utils.pressable'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

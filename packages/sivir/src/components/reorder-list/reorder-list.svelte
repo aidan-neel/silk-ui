@@ -339,7 +339,7 @@
                     }}
                     class={cn(
                         'relative flex w-full touch-pan-x select-none items-center gap-2.5 rounded-[var(--radius-lg)] border border-border bg-card px-3 py-2.5 text-left text-foreground outline-none transition-[background-color,border-color,box-shadow,translate] [transition-duration:var(--motion-duration-item)] ease-[var(--ease-out)]',
-                        'disabled:cursor-not-allowed disabled:opacity-50',
+                        'disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]',
                         // token-lint-disable-next-line no-literal-length
                         'focus-visible:bg-[color-mix(in_srgb,var(--color-primary)_6%,var(--color-card))] focus-visible:shadow-[inset_0_0_0_1px_var(--color-primary)]',
                         lifted

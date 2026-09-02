@@ -9,7 +9,7 @@
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
 
-    const { id, state: comboboxState } = getComboboxContext();
+    const { id, state: comboboxState, selectItem } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
 
     type Props = Omit<PopoverTriggerProps, 'children'> & {
@@ -58,6 +58,11 @@
         searchPlacement === 'trigger' && comboboxState.open
             ? comboboxState.searchContent
             : (comboboxState.selected?.label ?? '')
+    );
+    const valueColor = $derived(
+        (searchPlacement === 'trigger' && comboboxState.open) || comboboxState.selected
+            ? 'text-foreground'
+            : 'text-foreground-muted'
     );
 
     onMount(() => {
@@ -129,9 +134,7 @@
             const active =
                 available.find((item) => item.value === comboboxState.activeValue) ?? available[0];
             if (active) {
-                comboboxState.selected = active;
-                comboboxState.open = false;
-                active.callback?.();
+                selectItem(active);
             }
         }
     }
@@ -186,7 +189,8 @@
         oninput={handleInput}
         onkeydown={handleInputKeydown}
         class={cn(
-            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted',
+            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] outline-none placeholder:text-foreground-muted',
+            valueColor,
             (searchPlacement === 'menu' || !comboboxState.open) && 'select-none'
         )}
     />

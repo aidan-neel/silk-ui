@@ -4,6 +4,7 @@ export type SwitchState = {
     switched: boolean;
 };
 export type SwitchProps = {
+    checked?: boolean;
     switched?: boolean;
     label?: string;
     description?: string;

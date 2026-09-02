@@ -49,8 +49,10 @@ describe('ScrollArea -- orientation prop', () => {
         const root = queryRequired(container, '[data-ui="scroll-area"]');
         const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
         expect(root.getAttribute('data-orientation')).toBe('vertical');
+        expect(root.className).toContain('max-h-inherit');
         expect(viewport.className).toContain('overflow-y-auto');
         expect(viewport.className).toContain('overflow-x-hidden');
+        expect(viewport.className).toContain('max-h-inherit');
     });
 
     it('applies overflow-x-auto for orientation="horizontal"', () => {

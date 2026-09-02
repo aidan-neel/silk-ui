@@ -34,7 +34,7 @@ Load documentation progressively:
 | Choosing components | Components index, then candidate component pages |
 | Implementing a component | That component's Markdown page and every Sivir dependency needed for custom composition |
 | AI or coding-agent UI | Candidate AI component pages plus `references/component-selection.md` from this skill |
-| Upgrading or resolving an API mismatch | Installed version, relevant changelog entries, and component pages |
+| Upgrading or resolving an API mismatch | Installed version, the compiled changelog, the LLM changelog page when linked, and component pages |
 | Visual design or review | `references/design-language.md` from this skill |
 
 Each generated component page contains its current version, dependencies, install command, public `index.ts` API, and runnable examples. Read the exact page before using a component that is new to the project. Never invent a part, prop, event, variant, slot/snippet contract, or import path.

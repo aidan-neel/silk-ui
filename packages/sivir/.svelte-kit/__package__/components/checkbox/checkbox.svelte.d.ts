@@ -1,11 +1,4 @@
-type $$ComponentProps = {
-    checked: boolean;
-    label?: string;
-    description?: string;
-    disabled?: boolean;
-    variant?: 'default' | 'primary';
-    class?: string;
-};
-declare const Checkbox: import("svelte").Component<$$ComponentProps, {}, "checked">;
+import type { CheckboxProps } from '.';
+declare const Checkbox: import("svelte").Component<CheckboxProps, {}, "checked">;
 type Checkbox = ReturnType<typeof Checkbox>;
 export default Checkbox;
