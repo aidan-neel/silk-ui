@@ -1,8 +1,8 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Root from './tabs.svelte';
+import Content from './tabs-content.svelte';
 import List from './tabs-list.svelte';
 import Trigger from './tabs-trigger.svelte';
-import Content from './tabs-content.svelte';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
 export type TabsVariant = 'default' | 'ghost' | 'segmented';
 export type TabsState = {
     id: string;
@@ -25,4 +25,4 @@ export type TabsContentProps = {
     value: string;
     forceMount?: boolean;
 } & DefaultProps;
-export { Root, List, Trigger, Content };
+export { Content, List, Root, Trigger };

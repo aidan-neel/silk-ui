@@ -1,6 +1,6 @@
+import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
-import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import Toggle from './toggle.svelte';
 export type ToggleProps = {
     pressed?: boolean;

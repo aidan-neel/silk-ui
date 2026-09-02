@@ -11,7 +11,7 @@
  *
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
-import { computePosition, offset, flip, shift } from '@floating-ui/dom';
+import { computePosition, flip, offset, shift } from '@floating-ui/dom';
 let bubble = null;
 let measurer = null;
 let label = null;

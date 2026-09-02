@@ -1,8 +1,8 @@
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
 import type { Snippet } from 'svelte';
+import Content from './color-picker-content.svelte';
 import Root from './color-picker-root.svelte';
 import Trigger from './color-picker-trigger.svelte';
-import Content from './color-picker-content.svelte';
 import type { ColorFormat, ColorOption } from './context';
 export type { ColorFormat, ColorOption, ColorPickerContext } from './context';
 export type ColorPickerProps = {
@@ -13,4 +13,4 @@ export type ColorPickerProps = {
     format?: ColorFormat;
     children?: Snippet;
 } & DefaultProps;
-export { Root, Trigger, Content };
+export { Content, Root, Trigger };

@@ -1,3 +1,4 @@
+- Bump `@sivir-ui/svelte` to `0.2.7`.
 - Select and Combobox menus scroll when Content is capped with `max-h-*`, not only an explicit `h-*`.
 - Fix `bun audit` advisories by overriding `mysql2` to `3.23.1` and `fast-uri` to `3.1.6`.
 - Remove the Modal and Alert Dialog frame border in dark mode.

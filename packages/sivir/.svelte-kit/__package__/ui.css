@@ -288,6 +288,7 @@
     }
 
     .sivir-modal-frame:where(.dark, .dark *) {
+        border-color: transparent;
         background-color: var(--color-card);
     }
 
