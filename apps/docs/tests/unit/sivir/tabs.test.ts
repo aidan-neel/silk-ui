@@ -135,7 +135,7 @@ describe('Tabs -- variants', () => {
     it('segmented triggers render taller (min-height token) from first paint', () => {
         render(TabsFixture, { props: { value: 'one', variant: 'segmented' } });
         const trigger = queryRequired(document, '[role="tab"]');
-        expect(trigger.className).toContain('min-h-[32px]');
+        expect(trigger.className).toContain('min-h-8');
     });
 
     it('ghost has no bordered container', () => {
@@ -150,7 +150,7 @@ describe('Tabs -- variants', () => {
         await waitFor(() => {
             const list = queryRequired(document, '[data-ui="tabs-list"]');
             const indicator = list.querySelector('div[aria-hidden="true"]');
-            expect(indicator?.className).toContain('h-0.5');
+            expect(indicator?.className).toContain('h-[var(--size-hairline)]');
         });
     });
 
