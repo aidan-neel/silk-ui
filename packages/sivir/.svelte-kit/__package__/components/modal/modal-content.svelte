@@ -85,8 +85,8 @@
                 out:overlayOut
                 data-ui="modal-overlay"
                 class={cn(
-                    overlayClass, // token-lint-disable-next-line no-literal-length
-                    'absolute inset-0 bg-[var(--color-overlay)] backdrop-blur-[2px] backdrop-brightness-90 [backface-visibility:hidden] [transform:translateZ(0)]'
+                    overlayClass,
+                    'sivir-overlay-scrim absolute inset-0'
                 )}
             ></div>
             <div
@@ -96,9 +96,10 @@
                 data-motion="dialog"
                 class={cn(
                     contentClass,
-                    className, // token-lint-disable-next-line no-literal-length
+                    className,
                     'sivir-modal-frame origin-center text-foreground shadow-[var(--elevation-modal)]',
-                    'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
+                    // token-lint-disable-next-line no-literal-length
+                    'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-var(--overlay-gutter))] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-var(--overlay-gutter))]',
                     sizeClass
                 )}
                 {role}

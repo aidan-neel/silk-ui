@@ -72,14 +72,14 @@
     )}
 >
     <div
-        class="relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-[var(--radius-md)] bg-secondary text-foreground-muted ring-1 ring-inset ring-black/10 dark:ring-white/10"
+        class="relative grid size-[var(--size-touch)] shrink-0 place-items-center overflow-hidden rounded-[var(--radius-md)] bg-secondary text-foreground-muted ring-1 ring-inset ring-black/10 dark:ring-white/10"
     >
         {#if file.type.startsWith('image/')}
             <img {@attach preview} alt="" draggable="false" class="size-full object-cover" />
         {:else}
             <FileText size={18} strokeWidth={1.75} aria-hidden="true" />
             <span
-                class="absolute inset-x-0 bottom-0 truncate bg-card/90 px-1 py-0.5 text-center text-xs font-semibold leading-none text-foreground-muted"
+                class="absolute inset-x-0 bottom-0 truncate bg-card/90 px-1 py-0.5 text-center text-xs [font-weight:var(--font-weight-header)] leading-none text-foreground-muted"
             >
                 {extension}
             </span>
@@ -88,7 +88,7 @@
 
     <div class={cn('flex min-w-0 flex-1 flex-col', status === 'uploading' ? 'gap-2' : 'gap-1')}>
         <div class="flex min-w-0 items-baseline gap-2">
-            <span class="min-w-0 flex-1 truncate text-sm font-medium" title={file.name}
+            <span class="min-w-0 flex-1 truncate text-sm font-label" title={file.name}
                 >{file.name}</span
             >
             <span

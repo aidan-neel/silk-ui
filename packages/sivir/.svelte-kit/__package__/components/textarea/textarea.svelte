@@ -53,7 +53,7 @@
             classProp,
             children && 'rounded-none border-0 bg-transparent focus-visible:shadow-none',
             autoresize && 'resize-none overflow-y-hidden',
-            'min-h-16 resize-y py-2.5 leading-6',
+            'min-h-16 resize-y py-2.5 leading-body',
             input({ variant })
         )}
         {...rest}
@@ -82,7 +82,7 @@
 {#snippet meta()}
     {#if label}
         <span
-            class="text-[length:var(--text-sm)] [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] text-foreground [font-family:var(--font-sans),sans-serif]"
+            class="[font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] text-foreground [font-family:var(--font-sans),sans-serif]"
         >
             {label}
         </span>
@@ -90,7 +90,7 @@
     {@render control()}
     {#if description}
         <span
-            class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+            class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
             >{description}</span
         >
     {/if}

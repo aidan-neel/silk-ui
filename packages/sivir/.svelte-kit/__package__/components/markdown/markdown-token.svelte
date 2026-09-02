@@ -110,7 +110,7 @@
             <Self tokens={token.tokens ?? [{ type: 'text', text: token.text ?? '' }]} />
         </p>
     {:else if token.type === 'strong'}
-        <strong class="font-semibold text-foreground">
+        <strong class="[font-weight:var(--font-weight-header)] text-foreground">
             <Self tokens={token.tokens ?? [{ type: 'text', text: token.text ?? '' }]} />
         </strong>
     {:else if token.type === 'em'}
@@ -228,7 +228,7 @@
                         {#each token.header ?? [] as cell, column (cellKey(cell, column))}
                             <th
                                 scope="col"
-                                class={`border-b border-border px-3 py-2 font-semibold ${alignmentClass(token.align?.[column])}`}
+                                class={`border-b border-border px-3 py-2 [font-weight:var(--font-weight-header)] ${alignmentClass(token.align?.[column])}`}
                             >
                                 <Self tokens={cellTokens(cell)} />
                             </th>

@@ -258,7 +258,7 @@
     aria-busy={streaming || !isComplete}
     class={cn(
         className,
-        'whitespace-pre-wrap text-[length:var(--font-size-body)] leading-6 text-foreground'
+        'whitespace-pre-wrap text-[length:var(--font-size-body)] leading-body text-foreground'
     )}
     {...rest}
 >

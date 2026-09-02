@@ -84,13 +84,13 @@
 
         <div class="flex min-w-0 flex-1 flex-col gap-0.5">
             <p
-                class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] leading-snug tracking-[-0.015em] text-foreground"
+                class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] leading-snug tracking-[-0.015em] text-foreground"
             >
                 {toast.title}
             </p>
             {#if toast.description}
                 <p
-                    class="[font-size:var(--font-size-body,16px)] leading-[1.45] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="[font-size:var(--font-size-body)] leading-body [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                 >
                     {toast.description}
                 </p>
@@ -103,7 +103,7 @@
                             variant={action.variant ?? 'ghost'}
                             size="sm"
                             class={cn(
-                                '!h-auto min-h-0 rounded-[var(--radius-sm)] !bg-transparent px-0 py-0 [font-size:var(--font-size-label)] [font-weight:var(--font-weight-button,600)] underline-offset-2 hover:!bg-transparent hover:underline',
+                                '!h-auto min-h-0 rounded-[var(--radius-sm)] !bg-transparent px-0 py-0 [font-size:var(--font-size-label)] [font-weight:var(--font-weight-button)] underline-offset-2 hover:!bg-transparent hover:underline',
                                 i === 0
                                     ? 'text-[var(--color-primary)] hover:text-[var(--color-primary)]'
                                     : 'text-foreground-muted hover:text-foreground'
@@ -146,7 +146,7 @@
     {#if !toast.persistent && toast.duration}
         <div
             class={cn(
-                'absolute bottom-0 left-0 h-[2px] w-full origin-left opacity-40',
+                'absolute bottom-0 left-0 h-[var(--size-hairline)] w-full origin-left opacity-40',
                 'animate-[sivir-toast-progress_linear_forwards] motion-reduce:animate-none',
                 toast.paused ? '[animation-play-state:paused]' : '[animation-play-state:running]',
                 progressColorClass

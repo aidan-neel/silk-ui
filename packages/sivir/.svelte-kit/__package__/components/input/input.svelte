@@ -16,7 +16,7 @@
         'submit'
     ]);
     const adornedInputClass =
-        'flex min-h-0 min-w-0 flex-1 self-stretch rounded-none border-0 bg-transparent px-0 py-0 text-base text-[var(--color-field-foreground)] [font-size:var(--font-size-body)] shadow-none outline-none placeholder:text-foreground-muted focus-visible:border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none disabled:cursor-not-allowed disabled:opacity-100 md:text-sm';
+        'flex min-h-0 min-w-0 flex-1 self-stretch rounded-none border-0 bg-transparent px-0 py-0 text-[var(--color-field-foreground)] [font-size:var(--font-size-body)] shadow-none outline-none placeholder:text-foreground-muted focus-visible:border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none disabled:cursor-not-allowed disabled:opacity-100 md:text-sm';
 
     let {
         placeholder,
@@ -51,8 +51,7 @@
             data-ui="input-control"
             data-variant={variant}
             class={cn(
-                // token-lint-disable-next-line no-primitive-leak: density-aware control spacing
-                'flex min-h-[var(--size-control-md)] w-full items-center gap-[var(--sivir-space-2)] rounded-[var(--radius-lg)] border px-[var(--sivir-space-3)] text-[var(--color-field-foreground)] transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-out)] motion-reduce:transition-none has-[:focus-visible]:shadow-[var(--focus-ring)] has-[input:disabled]:cursor-not-allowed has-[input:disabled]:opacity-[0.55]',
+                'flex min-h-[var(--size-control-md)] w-full items-center gap-2 rounded-[var(--radius-lg)] border px-3 text-[var(--color-field-foreground)] transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-out)] motion-reduce:transition-none has-[:focus-visible]:shadow-[var(--focus-ring)] has-[input:disabled]:cursor-not-allowed has-[input:disabled]:opacity-[var(--opacity-disabled)]',
                 controlClass
             )}
         >
@@ -125,14 +124,14 @@
 {#snippet meta()}
     {#if label}
         <span
-            class="text-[length:var(--text-sm)] mb-0.5 select-none [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] leading-none text-foreground [font-family:var(--font-sans),sans-serif]"
+            class="mb-0.5 select-none [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] leading-none text-foreground [font-family:var(--font-sans),sans-serif]"
             >{label}</span
         >
     {/if}
     {@render field()}
     {#if description}
         <span
-            class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+            class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
             >{description}</span
         >
     {/if}

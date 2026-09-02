@@ -117,6 +117,17 @@ const inertRecords = new Map();
 function isOverlayRoot(element) {
     return (element.hasAttribute('data-floating-content') || element.hasAttribute('data-overlay-root'));
 }
+function isInExternalLayer(target, container) {
+    const el = target instanceof Element ? target : target instanceof Node ? target.parentElement : null;
+    if (!el) {
+        return false;
+    }
+    const layer = el.closest('[data-floating-content], [data-overlay-root]');
+    if (!layer) {
+        return false;
+    }
+    return !container.contains(layer) && !layer.contains(container);
+}
 function isScrollOverflow(value) {
     return value === 'auto' || value === 'scroll' || value === 'overlay';
 }
@@ -442,8 +453,11 @@ export function trapFocus(dialogEl, options) {
         if (e.key !== 'Tab') {
             return;
         }
-        const focusable = getFocusableElements(dialogEl);
         const active = document.activeElement;
+        if (isInExternalLayer(active, dialogEl)) {
+            return;
+        }
+        const focusable = getFocusableElements(dialogEl);
         if (focusable.length === 0) {
             e.preventDefault();
             dialogEl.focus();
@@ -466,7 +480,7 @@ export function trapFocus(dialogEl, options) {
     };
     const handleFocusIn = (e) => {
         const target = e.target;
-        if (!target || dialogEl.contains(target)) {
+        if (!target || dialogEl.contains(target) || isInExternalLayer(target, dialogEl)) {
             return;
         }
         if (options?.initialFocus) {
@@ -489,7 +503,13 @@ export function trapFocus(dialogEl, options) {
     return () => {
         document.removeEventListener('keydown', handleKeydown, true);
         document.removeEventListener('focusin', handleFocusIn, true);
-        previouslyFocused?.focus();
+        const restore = previouslyFocused;
+        queueMicrotask(() => {
+            if (!restore?.isConnected) {
+                return;
+            }
+            restore.focus();
+        });
     };
 }
 const PRESS_FLOOR = 0.94;

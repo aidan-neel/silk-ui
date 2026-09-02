@@ -51,8 +51,7 @@
     );
     const displayErrorMessage = $derived(validationMessage || errorMessage);
     const interactiveDisabled = $derived(disabled || effectiveStatus === 'submitting');
-    const errorNoticeClass =
-        'relative z-10 flex w-fit translate-y-2 scale-95 items-center gap-1.5 rounded-t-[var(--radius-md)] rounded-b-none px-2.5 py-1.5 text-xs font-medium text-[var(--color-error)] opacity-0 transition-[opacity,scale,translate] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none data-[state=error]:-translate-y-px data-[state=error]:scale-100 data-[state=error]:opacity-100'; // token-lint-disable-line no-literal-length
+    const errorNoticeClass = 'sivir-error-notice';
 
     const context = setQuestionContext({
         get type() {

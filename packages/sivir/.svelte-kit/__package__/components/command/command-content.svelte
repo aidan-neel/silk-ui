@@ -31,7 +31,7 @@
     aria-describedby={undefined}
     class={cn(
         className,
-        'fixed top-[var(--sivir-viewport-center)] flex max-h-[min(28rem,calc(var(--sivir-viewport-height)-2rem))] min-h-20 w-[calc(100%-2rem)] max-w-[32.5rem] flex-col overflow-hidden rounded-[var(--radius-xl)]' // token-lint-disable-line no-literal-length
+        'fixed top-[var(--sivir-viewport-center)] flex max-h-[min(28rem,calc(var(--sivir-viewport-height)-var(--overlay-gutter)))] min-h-20 w-[calc(100%-var(--overlay-gutter))] max-w-[32.5rem] flex-col overflow-hidden rounded-[var(--radius-xl)]'
     )}
     surfaceClass="min-h-0 flex-1 gap-0 overflow-hidden p-0"
     {...rest}

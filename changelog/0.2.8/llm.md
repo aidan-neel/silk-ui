@@ -25,11 +25,11 @@ Keep `rounded-full`, measured overlay geometry, SVG path data, color-picker spec
 
 ## Chrome tokens
 
-`--color-primary-stroke` is transparent by default. Primary buttons paint it as an inset hairline (`inset 0 0 0 var(--border-size)`). Set it to a mix of `--color-on-primary` for a light edge; do not add a separate border on `variant="primary"`.
+`--color-primary-stroke` is transparent by default. Primary buttons paint it as an inset hairline (`inset 0 0 0 var(--border-size)`). Set it to a dark mix in light mode and a light mix in `.dark`; do not add a separate border on `variant="primary"`.
 
 `--ui-cursor-interactive` is `default`. Set it to `pointer` to use the hand on buttons, tabs, and other interactive chrome. Do not hard-code `cursor-pointer` on those controls.
 
-To flatten lift, set `--elevation-1`, `--elevation-float`, `--elevation-modal`, `--elevation-control`, and `--elevation-button-outline` to `none`. Leave `--focus-ring` alone.
+To flatten lift, set `--elevation-1`, `--elevation-float`, and `--elevation-modal` to `none`, and reduce `--elevation-control` and `--elevation-button-outline` to `inset 0 0 0 1px var(--color-border)` so inset strokes survive. Leave `--focus-ring` alone.
 
 ## Nested overlay focus
 

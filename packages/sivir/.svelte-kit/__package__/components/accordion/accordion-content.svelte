@@ -20,7 +20,7 @@
         transition:themedSlide={{ durationVar: '--motion-duration-panel', fallback: 220 }}
         class={cn(
             className,
-            'overflow-hidden [font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted'
+            'overflow-hidden [font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted'
         )}
         {...rest}
     >

@@ -224,7 +224,7 @@
             class="pointer-events-none absolute inset-1 z-10 grid place-items-center rounded-[var(--radius-lg)] border-2 border-dashed border-primary/60 bg-[color-mix(in_srgb,var(--color-primary)_10%,var(--color-card))] text-primary shadow-[var(--elevation-1)]"
         >
             <span
-                class="flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-sm font-medium shadow-[var(--elevation-control)]"
+                class="flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-sm font-label shadow-[var(--elevation-control)]"
             >
                 <Paperclip size={16} strokeWidth={2} />
                 Drop files to attach

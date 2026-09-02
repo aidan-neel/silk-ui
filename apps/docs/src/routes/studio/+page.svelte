@@ -529,25 +529,30 @@
     }
 
     function chromeCssBlock() {
-        const declarations = [
-            `--ui-cursor-interactive: ${interactiveCursor};`,
-            `--color-primary-stroke: ${
-                primaryStroke
-                    ? 'color-mix(in srgb, var(--color-on-primary) 32%, transparent)'
-                    : 'transparent'
-            };`
-        ];
+        const shared = [`--ui-cursor-interactive: ${interactiveCursor};`];
         if (!shadows) {
-            declarations.push(
+            shared.push(
                 '--elevation-1: none;',
                 '--elevation-float: none;',
                 '--elevation-modal: none;',
-                '--elevation-control: none;',
-                '--elevation-button-outline: none;'
+                '--elevation-control: inset 0 0 0 1px var(--color-border);',
+                '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
             );
         }
+        const light = [
+            `--color-primary-stroke: ${
+                primaryStroke ? 'color-mix(in srgb, black 14%, transparent)' : 'transparent'
+            };`,
+            ...shared
+        ];
+        const dark = [
+            `--color-primary-stroke: ${
+                primaryStroke ? 'color-mix(in srgb, white 24%, transparent)' : 'transparent'
+            };`,
+            ...shared
+        ];
 
-        return `:root,\n.dark {\n${declarations.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
+        return `:root {\n${light.map((declaration) => `\t${declaration}`).join('\n')}\n}\n.dark {\n${dark.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
     }
 
     function tokenOverridesCssBlock<T extends string>(

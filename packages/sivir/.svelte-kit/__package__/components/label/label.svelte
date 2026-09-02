@@ -9,7 +9,7 @@
     data-ui="label"
     class={cn(
         className,
-        'text-[length:var(--text-sm)] select-none [font-size:var(--font-size-label,14px)] [font-weight:var(--font-weight-label,500)] [letter-spacing:var(--tracking-label,0em)] leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-60'
+        'select-none [font-size:var(--font-size-label)] [font-weight:var(--font-weight-label)] [letter-spacing:var(--tracking-label)] leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-[var(--opacity-disabled)]'
     )}
     {...rest}
 >

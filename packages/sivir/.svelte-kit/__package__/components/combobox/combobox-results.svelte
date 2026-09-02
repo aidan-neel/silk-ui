@@ -178,7 +178,7 @@
         {#if comboboxState.searchContent !== '' && comboboxState.results.size === 0}
             <div class="flex w-full items-center justify-center p-3">
                 <p
-                    class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                    class="[font-size:var(--font-size-body)] [font-weight:var(--font-weight-body)] [letter-spacing:var(--tracking-body)] text-foreground-muted"
                 >
                     No results found
                 </p>

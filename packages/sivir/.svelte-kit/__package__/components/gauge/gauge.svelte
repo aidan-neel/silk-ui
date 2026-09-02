@@ -67,7 +67,7 @@
             stroke-dashoffset={offset}
             class={cn(
                 toneClasses[tone],
-                'stroke-current transition-[stroke-dashoffset] duration-200 ease-out motion-reduce:transition-none'
+                'stroke-current transition-[stroke-dashoffset] [transition-duration:var(--motion-duration-panel)] ease-out motion-reduce:transition-none'
             )}
         />
     </svg>

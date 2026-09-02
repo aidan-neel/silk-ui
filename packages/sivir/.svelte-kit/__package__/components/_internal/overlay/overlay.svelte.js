@@ -30,11 +30,11 @@ export function useOverlay(opts) {
             }
         });
         return () => {
+            releaseInert?.();
             cleanupTrap?.();
             co.destroy();
             releaseEscape();
             releaseScroll?.();
-            releaseInert?.();
         };
     });
 }
