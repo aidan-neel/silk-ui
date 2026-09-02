@@ -34,8 +34,7 @@
     const navItems = [
         { href: '/docs/introduction', label: 'Docs' },
         { href: '/docs/components', label: 'Components' },
-        { href: '/themes', label: 'Themes' },
-        { href: '/fonts', label: 'Fonts' }
+        { href: '/studio', label: 'Studio' }
     ];
     const docsPages = [
         { title: 'Introduction', href: resolve('/docs/introduction') },

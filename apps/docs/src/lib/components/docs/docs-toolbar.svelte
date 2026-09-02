@@ -104,6 +104,13 @@
 
         <div class="flex shrink-0 items-center gap-1.5">
             <Button
+                class="h-9 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem]"
+                variant="outline"
+                href={resolve('/studio')}
+            >
+                Studio
+            </Button>
+            <Button
                 class="h-9 gap-1.5 rounded-[var(--radius-md)] px-2.5 text-[0.8125rem] tabular-nums"
                 variant="outline"
                 href="https://github.com/aidan-neel/sivir-ui"

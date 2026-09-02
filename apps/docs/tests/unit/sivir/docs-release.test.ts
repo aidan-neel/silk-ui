@@ -60,8 +60,9 @@ describe('docs release contracts', () => {
             );
         }
         expect(body).toContain('<loc>https://preview.example/docs/components</loc>');
-        // home + intro + install + theming + components index; themes gallery is post-v1.
-        expect(body.match(/<url>/g)).toHaveLength(components.length + 5 + changelogVersions.length);
+        // home + intro + install + theming + components index + Theme Studio.
+        expect(body.match(/<url>/g)).toHaveLength(components.length + 6 + changelogVersions.length);
+        expect(body).toContain('<loc>https://preview.example/studio</loc>');
         for (const version of changelogVersions) {
             expect(body).toContain(`<loc>https://preview.example/changelog/${version}</loc>`);
         }

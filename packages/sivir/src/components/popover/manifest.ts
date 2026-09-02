@@ -20,13 +20,19 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *        - Removed onpointerenter/onpointerleave from PopoverTriggerProps
  *          (button 3.0.0 deleted the typed props; consumers use the
  *          spread attribute path if they need them).
+ * 3.0.0 -- Popover.Root gained inert outside-document behavior, enabled by
+ *          default for non-hover popovers and safe across nested and portaled
+ *          layers. Set inert={false} to preserve non-modal outside interaction.
+ * 3.0.1 -- Inert, focus trap, and scroll lock share the overlay primitives so
+ *          nested page overflow containers lock and sibling overlay roots stay
+ *          interactive.
  */
 export const manifest: Manifest = {
     name: 'popover',
-    version: '2.0.0',
+    version: '3.0.1',
     visibility: 'public',
     description:
-        'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, click-outside + Escape dismiss, optional portal.',
+        'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, inert outside content, click-outside + Escape dismiss, optional portal.',
     role: 'dialog',
     files: [
         'components/popover/popover.svelte',
@@ -34,6 +40,7 @@ export const manifest: Manifest = {
         'components/popover/popover-content.svelte',
         'components/popover/popover-title.svelte',
         'components/popover/context.svelte.ts',
+        'components/popover/inert.ts',
         'components/popover/index.ts',
         'components/popover/manifest.ts'
     ],
@@ -42,6 +49,7 @@ export const manifest: Manifest = {
         'utils.clickOutside',
         'utils.cn',
         'utils.createContext',
+        'utils.inertOutside',
         'utils.lockBodyBackground',
         'utils.lockBodyScroll',
         'utils.positionFloatingPanel',

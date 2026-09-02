@@ -1,2 +1,9 @@
 - Remove the red outline from destructive Alert Dialog surfaces while retaining destructive action styling and browser chrome signaling.
 - Reduce the default Alert Dialog width while preserving explicit size overrides.
+- Make an open Color Picker modal to focus and pointer interaction, blocking selects, dropdowns, popovers, and text selection elsewhere while keeping the hex field selectable.
+- Fix Theme Studio font menus failing Svelte compilation because their calculated heights used a component directive instead of a supported style prop.
+- Fix Advanced Theme Options token lists not scrolling by constraining the editor to a viewport-capped height while keeping its header and footer fixed.
+- Fix Theme Studio segmented controls, color pickers, and invoice selection labels to use their supported component contracts so the documentation app passes Svelte validation without changing interaction behavior.
+- Restore release-contract homepage copy and make typography recipes pass design-token enforcement without changing their rendered size scale.
+- Preserve Theme Studio preset identity across reloads, avoid nested main landmarks, expose purpose-specific control labels, and include generated CSS in copied JSON drafts.
+- Keep Popover triggers and nested floating layers interactive while unrelated page branches are inert.

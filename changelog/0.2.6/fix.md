@@ -1,0 +1,10 @@
+- Invert Modal's inset surface in dark mode so the inner well is darker than the frame.
+- Make Popover, Modal, Sheet, Alert Dialog, Command, and Fullscreen Nav inert the page, trap focus, and lock nested overflow containers while open.
+- Import Lucide icons from per-icon paths in Select, Dropdown Menu, and Context Menu instead of the package barrel.
+- Derive Segmented Tabs pill and trigger radii from the track radius minus the 3px inset so nested corners stay concentric across radius scales.
+- Show Select and Combobox placeholders in muted foreground, and always render a selected value's label in foreground text.
+- Darken secondary Button hover and open fills instead of lightening them.
+- Make ScrollArea honor a parent's max-height so Select and Combobox menus can cap and scroll.
+- Scroll overflowing Dropdown Menu, Select, and Combobox lists inside ScrollArea so edge-blur cues appear.
+- Equalize Modal inset padding, darken the outer frame, and size the inner radius as outer minus border minus padding.
+- Give Modal's inner surface a border, reduce the frame inset, and add vertical padding to footer actions.

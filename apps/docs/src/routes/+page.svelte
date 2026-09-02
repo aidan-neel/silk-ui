@@ -21,7 +21,7 @@
 </svelte:head>
 
 <section
-    class="flex min-h-[calc(100svh-1.5rem)] flex-col overflow-hidden bg-background"
+    class="flex min-h-screen flex-col overflow-hidden bg-background"
     aria-label="Sivir UI introduction"
 >
     <Navbar starCount={data.starCount ?? null} />
@@ -45,14 +45,14 @@
         <p
             class="mt-7 max-w-[38rem] text-[1.0625rem] leading-[1.65] text-foreground-muted motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:80ms] motion-safe:[transform-origin:top_center] sm:text-lg"
         >
-            Choose from 55 Svelte 5 components that take on your visual system without forks,
-            overrides, or a fight.
+            Choose from the full library of 55 components that take on your visual system without
+            forks, overrides, or a fight.
         </p>
         <div
             class="mt-9 flex w-full max-w-[28rem] flex-wrap justify-center gap-3 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:115ms] motion-safe:[transform-origin:top_center]"
         >
             <Button href={resolve('/docs/components')} size="lg" class="max-sm:flex-1">
-                Browse components
+                Browse all 55 components
                 <ArrowRight size={16} />
             </Button>
             <Button

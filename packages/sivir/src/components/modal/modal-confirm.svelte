@@ -7,9 +7,6 @@
     const modal = getModalContext();
     let { class: className, children, onclick, variant, ...rest }: ModalConfirmProps = $props();
     const confirmVariant = $derived(variant ?? (modal.state.error ? 'destructive' : 'primary'));
-    const actionWidthClass = $derived(
-        modal.state.orientation === 'vertical' ? 'w-full sm:flex-1' : 'w-full sm:w-fit'
-    );
 </script>
 
 <Button
@@ -19,7 +16,7 @@
         modal.state.open = false;
         onclick?.(event);
     }}
-    class={cn(className, 'flex flex-row items-center justify-center gap-2', actionWidthClass)}
+    class={cn(className, 'ml-auto flex flex-row items-center justify-center gap-2')}
 >
     {@render children?.()}
 </Button>

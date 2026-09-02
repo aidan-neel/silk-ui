@@ -28,7 +28,7 @@
         <div>
             <Typography.H1>{TITLE}</Typography.H1>
             <Typography.Text variant="lead" class="mt-2 max-w-2xl">
-                A small badge for displaying keyboard shortcuts inline.
+                A key chip for keyboard shortcuts, including inside buttons.
             </Typography.Text>
         </div>
         <DocsPager />

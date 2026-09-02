@@ -144,7 +144,7 @@
         inset-inline: 0;
         bottom: 0;
         height: 2.25rem;
-        background: linear-gradient(to top, var(--color-background), transparent);
+        background: linear-gradient(to top, var(--color-card), transparent);
         opacity: 0;
         transition: opacity var(--motion-duration-press) var(--ease-out);
     }

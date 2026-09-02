@@ -32,6 +32,8 @@ export type PopoverProps = {
     hoverable?: boolean;
     delay?: number;
     closeDelay?: number;
+    /** Make document content outside an open non-hover popover inert. Defaults to `true`. */
+    inert?: boolean;
 };
 export type PopoverTriggerProps = {
     icon?: boolean;
@@ -65,5 +67,6 @@ export type PopoverState = {
     hovering?: boolean;
     delay: number | undefined;
     closeDelay: number | undefined;
+    inert: boolean;
 };
 export { Root, Trigger, Content, Title };

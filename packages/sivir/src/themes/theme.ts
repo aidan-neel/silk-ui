@@ -47,7 +47,7 @@ export const DEFAULT_THEME: Theme = {
     radius: 'default',
     density: 'default',
     motion: 'default',
-    fontSans: "'Inter', sans-serif",
+    fontSans: "'DM Sans', sans-serif",
     fontMono: "'JetBrains Mono', monospace",
     fontHeader: 'var(--font-sans)'
 };

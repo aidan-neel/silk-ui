@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
     import { onMount, type Snippet, tick } from 'svelte';
     import { getComboboxContext } from './context.svelte';
 
@@ -155,34 +156,33 @@
     });
 </script>
 
-<div
-    bind:this={resultsElement}
-    role="listbox"
-    id={`combobox-${id}-listbox`}
-    tabindex={-1}
-    data-ui="combobox-results"
-    onpointerover={activateHoveredItem}
-    onscroll={scheduleMeasure}
-    class={comboboxState.searchPlacement === 'menu'
-        ? 'sivir-collection-surface flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto p-1'
-        : 'sivir-collection-surface flex max-h-full flex-col gap-0 overflow-y-auto p-1'}
->
-    <span
-        class={['sivir-item-highlight', filtering && 'transition-none']}
-        data-ready={highlightReady}
-        aria-hidden="true"
-        style={highlightStyle}
-    ></span>
+<ScrollArea class="h-full min-h-0 flex-1" onscroll={scheduleMeasure}>
+    <div
+        bind:this={resultsElement}
+        role="listbox"
+        id={`combobox-${id}-listbox`}
+        tabindex={-1}
+        data-ui="combobox-results"
+        onpointerover={activateHoveredItem}
+        class="sivir-collection-surface flex flex-col gap-0 p-1"
+    >
+        <span
+            class={['sivir-item-highlight', filtering && 'transition-none']}
+            data-ready={highlightReady}
+            aria-hidden="true"
+            style={highlightStyle}
+        ></span>
 
-    {@render children?.()}
+        {@render children?.()}
 
-    {#if comboboxState.searchContent !== '' && comboboxState.results.size === 0}
-        <div class="flex w-full items-center justify-center p-3">
-            <p
-                class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
-            >
-                No results found
-            </p>
-        </div>
-    {/if}
-</div>
+        {#if comboboxState.searchContent !== '' && comboboxState.results.size === 0}
+            <div class="flex w-full items-center justify-center p-3">
+                <p
+                    class="[font-size:var(--font-size-body,16px)] [font-weight:var(--font-weight-body,400)] [letter-spacing:var(--tracking-body,0em)] text-foreground-muted"
+                >
+                    No results found
+                </p>
+            </div>
+        {/if}
+    </div>
+</ScrollArea>

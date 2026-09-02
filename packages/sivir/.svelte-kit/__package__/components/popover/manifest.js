@@ -18,12 +18,15 @@
  *        - Removed onpointerenter/onpointerleave from PopoverTriggerProps
  *          (button 3.0.0 deleted the typed props; consumers use the
  *          spread attribute path if they need them).
+ * 3.0.0 -- Popover.Root gained inert outside-document behavior, enabled by
+ *          default for non-hover popovers and safe across nested and portaled
+ *          layers. Set inert={false} to preserve non-modal outside interaction.
  */
 export const manifest = {
     name: 'popover',
-    version: '2.0.0',
+    version: '3.0.0',
     visibility: 'public',
-    description: 'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, click-outside + Escape dismiss, optional portal.',
+    description: 'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, inert outside content, click-outside + Escape dismiss, optional portal.',
     role: 'dialog',
     files: [
         'components/popover/popover.svelte',
@@ -31,6 +34,7 @@ export const manifest = {
         'components/popover/popover-content.svelte',
         'components/popover/popover-title.svelte',
         'components/popover/context.svelte.ts',
+        'components/popover/inert.ts',
         'components/popover/index.ts',
         'components/popover/manifest.ts'
     ],

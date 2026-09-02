@@ -12,6 +12,7 @@
         { href: '/docs/introduction', label: 'Introduction' },
         { href: '/docs/installation', label: 'Installation' },
         { href: '/docs/theming', label: 'Theming' },
+        { href: '/studio', label: 'Studio' },
         { href: '/docs/components', label: 'Components' }
     ];
 

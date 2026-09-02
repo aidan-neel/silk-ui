@@ -64,10 +64,10 @@
             '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-[color-mix(in_srgb,var(--color-foreground)_18%,transparent)] [&::-webkit-scrollbar-thumb]:bg-clip-padding',
             '[&::-webkit-scrollbar-thumb:hover]:bg-[color-mix(in_srgb,var(--color-foreground)_32%,transparent)] [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding',
             orientation === 'horizontal'
-                ? 'overflow-x-auto overflow-y-hidden'
+                ? 'max-w-inherit overflow-x-auto overflow-y-hidden'
                 : orientation === 'vertical'
-                  ? 'overflow-y-auto overflow-x-hidden'
-                  : 'overflow-auto'
+                  ? 'max-h-inherit overflow-y-auto overflow-x-hidden'
+                  : 'max-h-inherit max-w-inherit overflow-auto'
         )}
         onscroll={(event) => {
             measure();

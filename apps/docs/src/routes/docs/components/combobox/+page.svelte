@@ -9,6 +9,8 @@
     import HeroSrc from './examples/hero.svelte?raw';
     import MenuSearch from './examples/menu-search.svelte';
     import MenuSearchSrc from './examples/menu-search.svelte?raw';
+    import Scrollable from './examples/scrollable.svelte';
+    import ScrollableSrc from './examples/scrollable.svelte?raw';
 
     const TITLE = 'Combobox';
     const SLUG = 'combobox';
@@ -82,6 +84,16 @@
             </Typography.Text>
             <ComponentPreview code={MenuSearchSrc}>
                 <MenuSearch />
+            </ComponentPreview>
+        </div>
+
+        <div id="scrollable" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Scrollable </Typography.H3>
+            <Typography.Text variant="supporting">
+                Long result lists stay in a height-capped menu and scroll inside it.
+            </Typography.Text>
+            <ComponentPreview code={ScrollableSrc}>
+                <Scrollable />
             </ComponentPreview>
         </div>
     </section>

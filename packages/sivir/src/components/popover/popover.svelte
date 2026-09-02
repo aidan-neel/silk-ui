@@ -10,7 +10,8 @@
         state_key,
         hoverable,
         delay = 0,
-        closeDelay = 150
+        closeDelay = 150,
+        inert = true
     }: PopoverProps = $props();
 
     const generatedKey = $props.id();
@@ -20,7 +21,8 @@
             placement,
             hoverable: hoverable ?? false,
             delay,
-            closeDelay
+            closeDelay,
+            inert
         };
     });
     const popoverState = $state<PopoverState>({
@@ -34,7 +36,8 @@
         closeTimeout: undefined,
         hoverable: initial.hoverable,
         delay: initial.delay,
-        closeDelay: initial.closeDelay
+        closeDelay: initial.closeDelay,
+        inert: initial.inert
     });
     const key = initial.key;
     let syncedOpen = $state(open);
@@ -46,6 +49,7 @@
         popoverState.hoverable = hoverable ?? false;
         popoverState.delay = delay;
         popoverState.closeDelay = closeDelay;
+        popoverState.inert = inert;
     });
 
     $effect(() => {
@@ -53,6 +57,7 @@
         popoverState.hoverable = hoverable ?? false;
         popoverState.delay = delay;
         popoverState.closeDelay = closeDelay;
+        popoverState.inert = inert;
         if (open !== syncedOpen) {
             syncedOpen = open;
             popoverState.open = open;

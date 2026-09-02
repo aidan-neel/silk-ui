@@ -26,8 +26,8 @@
         opt: '⌥',
         enter: '↵',
         return: '↵',
-        esc: 'Esc',
-        escape: 'Esc',
+        esc: 'esc',
+        escape: 'esc',
         tab: '⇥',
         space: 'Space',
         up: '↑',
@@ -145,7 +145,15 @@
     }
 
     function handleKey(event: KeyboardEvent) {
-        if (!parsed || event.repeat || isEditableTarget(event.target)) {
+        if (!parsed || event.repeat) {
+            return;
+        }
+
+        const fromInput =
+            event.target instanceof HTMLInputElement && event.target.type !== 'hidden';
+        const allowFromInput = parsed.key === 'enter' || parsed.key === 'escape';
+
+        if (isEditableTarget(event.target) && !(allowFromInput && fromInput)) {
             return;
         }
 
@@ -183,7 +191,9 @@
     {...rest}
     class={cn(
         className,
-        'inline select-none align-middle font-mono text-[0.875em] leading-none text-foreground-muted [letter-spacing:0.04em]'
+        'inline-flex h-4 min-w-4 shrink-0 select-none items-center justify-center rounded-[var(--radius-sm)] border border-border bg-card px-1 align-middle font-sans text-[10px] font-medium leading-none text-foreground-muted',
+        '[[data-variant=primary]_&]:border-transparent [[data-variant=primary]_&]:bg-[color-mix(in_oklab,var(--color-on-primary)_18%,transparent)] [[data-variant=primary]_&]:text-[var(--color-on-primary)]',
+        '[[data-variant=destructive]_&]:border-transparent [[data-variant=destructive]_&]:bg-[color-mix(in_oklab,currentColor_16%,transparent)] [[data-variant=destructive]_&]:text-current'
     )}
 >
     {#if children}

@@ -97,7 +97,6 @@
                 class={cn(
                     contentClass,
                     className, // token-lint-disable-next-line no-literal-length
-                    isDestructiveAlert && 'shadow-[var(--elevation-alert-error)]',
                     'origin-center bg-panel text-foreground shadow-[var(--elevation-modal)]',
                     'rounded-[var(--radius-lg)] border border-border',
                     'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length

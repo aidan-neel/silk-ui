@@ -196,7 +196,11 @@ export const componentAnatomy = {
         { name: 'Reasoning.Content', description: 'Contains reasoning content.' }
     ],
     'response-stream': [
-        { name: 'ResponseStream', description: 'Renders a streamed text response.' }
+        {
+            name: 'ResponseStream',
+            description:
+                'Renders a streamed text response and a caret while waiting for the first chunk.'
+        }
     ],
     'reorder-list': [
         {

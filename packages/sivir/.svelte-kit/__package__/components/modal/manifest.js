@@ -13,7 +13,7 @@
  */
 export const manifest = {
     name: 'modal',
-    version: '1.1.0',
+    version: '1.1.1',
     visibility: 'public',
     description: 'Centered dialog overlay with portal, focus trap, click-outside, and Svelte transitions. Composes _internal/overlay for shared mechanics.',
     role: 'dialog',
@@ -32,7 +32,7 @@ export const manifest = {
         'components/modal/index.ts',
         'components/modal/manifest.ts'
     ],
-    components: ['button', '_internal/overlay'],
+    components: ['button', '_internal/overlay', 'typography'],
     shared: ['utils.cn', 'utils.createContext', 'is-dark', 'transition'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

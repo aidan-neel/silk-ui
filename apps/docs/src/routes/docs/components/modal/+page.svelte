@@ -57,7 +57,7 @@
             Import Modal and use it in your component:
         </Typography.Text>
         <CodeBlock
-            code={`import * as Modal from '$lib/sivir/components/modal';\n\n<Modal.Root open={isOpen} orientation="horizontal">\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Header>\n      <Modal.Title>Title</Modal.Title>\n    </Modal.Header>\n  </Modal.Content>\n</Modal.Root>`}
+            code={`import * as Modal from '$lib/sivir/components/modal';\nimport Shortcut from '$lib/sivir/components/shortcut';\n\n<Modal.Root open={isOpen} orientation="horizontal">\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Header>\n      <Modal.Title>Title</Modal.Title>\n    </Modal.Header>\n    <Modal.Footer>\n      <Modal.Close>Cancel <Shortcut shortcut="esc" /></Modal.Close>\n      <Modal.Confirm>Save <Shortcut shortcut="enter" /></Modal.Confirm>\n    </Modal.Footer>\n  </Modal.Content>\n</Modal.Root>`}
             lang="svelte"
             copy="overlay"
         />

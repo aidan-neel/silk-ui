@@ -19,5 +19,8 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *        - Removed onpointerenter/onpointerleave from PopoverTriggerProps
  *          (button 3.0.0 deleted the typed props; consumers use the
  *          spread attribute path if they need them).
+ * 3.0.0 -- Popover.Root gained inert outside-document behavior, enabled by
+ *          default for non-hover popovers and safe across nested and portaled
+ *          layers. Set inert={false} to preserve non-modal outside interaction.
  */
 export declare const manifest: Manifest;

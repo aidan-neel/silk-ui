@@ -1,6 +1,5 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import { titleClasses } from '../typography/variants';
     import type { ModalTitleProps } from '.';
     import { getModalContext } from './context.svelte';
 
@@ -14,8 +13,7 @@
     id={`${modal.id}-title`}
     class={cn(
         className,
-        'text-center sm:text-left',
-        titleClasses
+        'font-[family-name:var(--font-header)] text-xl font-[var(--font-weight-header,600)] tracking-[var(--tracking-header,-0.02em)] leading-snug text-balance text-foreground'
     )}
 >
     {@render children?.()}

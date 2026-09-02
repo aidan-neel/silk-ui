@@ -12,6 +12,7 @@
     import { onDestroy, onMount } from 'svelte';
     import type { Placement, PopoverContentProps } from '.';
     import { getPopoverContext } from './context.svelte';
+    import { inertOutsidePopover } from './inert';
 
     const {
         children,
@@ -33,6 +34,7 @@
 
     let popover = $state<HTMLElement | undefined>();
     let panelEl = $state<HTMLElement | undefined>();
+    let dismissEl = $state<HTMLElement | undefined>();
     let positionFrame: number | undefined;
     let mounted = false;
 
@@ -146,6 +148,16 @@
     });
 
     $effect(() => {
+        if (!dismissEl || typeof document === 'undefined') {
+            return;
+        }
+        document.body.appendChild(dismissEl);
+        return () => {
+            dismissEl?.remove();
+        };
+    });
+
+    $effect(() => {
         if (!popoverState.open || !allowClickOutside || !popover) {
             return;
         }
@@ -203,11 +215,9 @@
     /**
      * Locks body scroll whenever the popover is open.
      *
-     * Unlike Modal and Sheet, a Popover keeps its trigger and the outside document
-     * interactive so users can toggle or dismiss it. The scroll lock is shared with
-     * Modal and Sheet so a nested teardown cannot clear another layer's lock. This must not gate on
-     * `popover` existing -- a controlled `open=true` has to lock even before the
-     * wrapper finishes binding.
+     * The scroll lock is shared with Modal and Sheet so a nested teardown cannot
+     * clear another layer's lock. This must not gate on `popover` existing -- a
+     * controlled `open=true` has to lock even before the wrapper finishes binding.
      */
     $effect(() => {
         if (typeof document === 'undefined') {
@@ -219,6 +229,20 @@
                 releaseScroll();
             };
         }
+    });
+
+    $effect(() => {
+        if (
+            typeof document === 'undefined' ||
+            !popoverState.open ||
+            popoverState.hoverable ||
+            !popoverState.inert ||
+            !popover
+        ) {
+            return;
+        }
+
+        return inertOutsidePopover(popover, popoverState.buttonRef);
     });
 
     /**
@@ -266,11 +290,23 @@
      */
     $effect(() => {
         if (popoverState.open && panelEl && !popoverState.hoverable && focusTrap) {
-            const cleanup = trapFocus(panelEl);
+            const cleanup = trapFocus(panelEl, {
+                returnFocus: popoverState.buttonRef
+            });
             return cleanup;
         }
     });
 </script>
+
+{#if popoverState.open && !popoverState.hoverable && popoverState.inert && allowClickOutside}
+    <div
+        bind:this={dismissEl}
+        data-overlay-root
+        data-ui="popover-dismiss"
+        class="fixed inset-0 z-[129]"
+        aria-hidden="true"
+    ></div>
+{/if}
 
 <div
     role="presentation"

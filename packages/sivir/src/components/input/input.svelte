@@ -72,6 +72,7 @@
             data-ui="input-control"
             data-variant={variant}
             class={cn(
+                // token-lint-disable-next-line no-primitive-leak: density-aware control spacing
                 'flex min-h-[var(--size-control-md)] w-full items-center gap-[var(--sivir-space-2)] rounded-[var(--radius-lg)] border px-[var(--sivir-space-3)] text-[var(--color-field-foreground)] transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-out)] motion-reduce:transition-none has-[:focus-visible]:shadow-[var(--focus-ring)] has-[input:disabled]:cursor-not-allowed has-[input:disabled]:opacity-[0.55]',
                 controlClass
             )}

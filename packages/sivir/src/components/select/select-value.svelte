@@ -25,7 +25,11 @@
 <span
     data-ui="select-value"
     data-placeholder={hasValue ? undefined : ''}
-    class={cn(className, 'min-w-0 truncate', !hasValue && 'text-foreground-muted')}
+    class={cn(
+        className,
+        'min-w-0 truncate',
+        hasValue ? 'text-foreground' : 'text-foreground-muted'
+    )}
 >
     {text}
 </span>

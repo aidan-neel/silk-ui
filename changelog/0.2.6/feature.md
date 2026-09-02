@@ -1,0 +1,6 @@
+- Show a waiting caret on Response Stream until the first live chunk arrives.
+- Change the default Sivir and generated-app font from Inter to DM Sans.
+- Select and Combobox menus now use ScrollArea by default so long option lists scroll inside the panel.
+- Restyle Modal and Alert Dialog as an inset frame: larger title, quieter close control, and footer actions outside the inner card.
+- Restyle Code Block to the same inset frame as Modal: tabs and actions sit in the outer chrome, and the snippet uses the concentric inner surface.
+- Restyle Shortcut as a bordered key chip that inverts on primary and destructive buttons.

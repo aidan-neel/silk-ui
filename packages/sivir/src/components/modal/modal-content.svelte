@@ -97,12 +97,12 @@
                 class={cn(
                     contentClass,
                     className, // token-lint-disable-next-line no-literal-length
-                    'origin-center bg-panel text-foreground shadow-[var(--elevation-modal)]',
-                    'rounded-[var(--radius-lg)] border border-border',
+                    'sivir-modal-frame origin-center text-foreground shadow-[var(--elevation-modal)]',
                     'fixed top-[var(--sivir-viewport-center)] left-1/2 z-[120] m-auto flex min-h-20 w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden md:top-[calc(var(--sivir-viewport-center)-3rem)] md:w-full max-h-[calc(var(--sivir-viewport-height)-2rem)]', // token-lint-disable-line no-literal-length
                     sizeClass
                 )}
                 {role}
+                data-ui="modal-panel"
                 data-orientation={modal.state.orientation}
                 data-destructive={isDestructiveAlert || undefined}
                 aria-modal="true"
@@ -115,9 +115,10 @@
                 <div
                     class={cn(
                         surfaceClass,
-                        'bg-panel',
-                        'relative flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain p-5'
+                        'relative flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain p-5',
+                        showClose && '[&_[data-ui=modal-header]]:pr-8'
                     )}
+                    data-ui="modal-surface"
                 >
                     {#if showClose}
                         <button
@@ -126,13 +127,26 @@
                                 modal.state.open = false;
                             }}
                             aria-label="Close"
-                            class="absolute top-1.5 right-1.5 inline-flex size-11 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] md:top-2.5 md:right-2.5 md:size-7"
+                            class="absolute top-3 right-3 z-[2] inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
                         >
                             <X size={16} />
                         </button>
                     {/if}
                     {@render children?.()}
                 </div>
+                {#if modal.footerSlot}
+                    <div
+                        {...modal.footerSlot.rest}
+                        data-ui="modal-footer"
+                        data-orientation={modal.state.orientation}
+                        class={cn(
+                            modal.footerSlot.className,
+                            'flex w-full flex-row items-center px-1 py-1.5'
+                        )}
+                    >
+                        {@render modal.footerSlot.children?.()}
+                    </div>
+                {/if}
             </div>
         </div>
     {/if}

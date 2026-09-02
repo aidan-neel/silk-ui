@@ -6,6 +6,8 @@
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import Scrollable from './examples/scrollable.svelte';
+    import ScrollableSrc from './examples/scrollable.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add select';
 </script>
@@ -66,6 +68,16 @@
             <Typography.H3 class="docs-subsection-heading">Basic</Typography.H3>
             <ComponentPreview code={HeroSrc}>
                 <Hero />
+            </ComponentPreview>
+        </div>
+
+        <div id="scrollable" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading">Scrollable</Typography.H3>
+            <Typography.Text variant="supporting">
+                Long option lists stay in a height-capped menu and scroll inside it.
+            </Typography.Text>
+            <ComponentPreview code={ScrollableSrc}>
+                <Scrollable />
             </ComponentPreview>
         </div>
     </section>

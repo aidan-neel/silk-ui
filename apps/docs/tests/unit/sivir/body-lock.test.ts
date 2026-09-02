@@ -1,4 +1,3 @@
-import { afterEach, describe, expect, it } from 'vitest';
 import {
     lockBodyBackground,
     lockBodyScroll,
@@ -6,6 +5,7 @@ import {
     resetBodyLocksForTests,
     resetEscapeStackForTests
 } from '@sivir-ui/svelte/utils';
+import { afterEach, describe, expect, it } from 'vitest';
 
 afterEach(() => {
     resetBodyLocksForTests();
@@ -39,7 +39,27 @@ describe('body scroll lock', () => {
         expect(document.body.style.overflow).toBe('scroll');
     });
 
-    it('background lock skips floating overlays and clears only when idle', () => {
+    it('locks nested overflow containers and skips overlay roots', () => {
+        const scroller = document.createElement('div');
+        scroller.style.overflow = 'auto';
+        const overlay = document.createElement('div');
+        overlay.setAttribute('data-overlay-root', '');
+        overlay.style.overflow = 'auto';
+        document.body.append(scroller, overlay);
+
+        const release = lockBodyScroll();
+        expect(document.documentElement.style.overflow).toBe('hidden');
+        expect(document.body.style.overflow).toBe('hidden');
+        expect(scroller.style.overflow).toBe('hidden');
+        expect(overlay.style.overflow).toBe('auto');
+
+        release();
+        expect(scroller.style.overflow).toBe('auto');
+        expect(document.body.style.overflow).toBe('');
+        expect(document.documentElement.style.overflow).toBe('');
+    });
+
+    it('background lock inerts page branches and skips overlay roots', () => {
         const main = document.createElement('main');
         const floating = document.createElement('div');
         floating.setAttribute('data-floating-content', '');
@@ -48,16 +68,16 @@ describe('body scroll lock', () => {
         document.body.append(main, floating, modalPortal);
 
         const releaseA = lockBodyBackground();
-        expect(main.classList.contains('pointer-events-none')).toBe(true);
-        expect(floating.classList.contains('pointer-events-none')).toBe(false);
-        expect(modalPortal.classList.contains('pointer-events-none')).toBe(false);
+        expect(main.inert).toBe(true);
+        expect(floating.inert).not.toBe(true);
+        expect(modalPortal.inert).not.toBe(true);
 
         const releaseB = lockBodyBackground();
         releaseA();
-        expect(main.classList.contains('pointer-events-none')).toBe(true);
+        expect(main.inert).toBe(true);
 
         releaseB();
-        expect(main.classList.contains('pointer-events-none')).toBe(false);
+        expect(main.inert).toBe(false);
     });
 });
 

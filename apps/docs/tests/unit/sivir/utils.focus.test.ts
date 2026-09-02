@@ -209,6 +209,23 @@ describe('trapFocus', () => {
         expect(document.activeElement).toBe(last);
     });
 
+    it('keeps Tab inside an empty container', () => {
+        dialog.replaceChildren();
+        dialog.tabIndex = -1;
+        cleanup = trapFocus(dialog);
+        dialog.focus();
+        expect(document.activeElement).toBe(dialog);
+
+        const event = new KeyboardEvent('keydown', {
+            key: 'Tab',
+            bubbles: true,
+            cancelable: true
+        });
+        document.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(true);
+        expect(document.activeElement).toBe(dialog);
+    });
+
     it('restores focus to the previously focused element on cleanup', () => {
         outsideButton.focus();
         expect(document.activeElement).toBe(outsideButton);

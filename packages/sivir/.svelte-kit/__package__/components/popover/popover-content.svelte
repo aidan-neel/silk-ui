@@ -12,6 +12,7 @@
     import { onDestroy, onMount } from 'svelte';
     import type { Placement, PopoverContentProps } from '.';
     import { getPopoverContext } from './context.svelte';
+    import { inertOutsidePopover } from './inert';
 
     const {
         children,
@@ -203,11 +204,9 @@
     /**
      * Locks body scroll whenever the popover is open.
      *
-     * Unlike Modal and Sheet, a Popover keeps its trigger and the outside document
-     * interactive so users can toggle or dismiss it. The scroll lock is shared with
-     * Modal and Sheet so a nested teardown cannot clear another layer's lock. This must not gate on
-     * `popover` existing -- a controlled `open=true` has to lock even before the
-     * wrapper finishes binding.
+     * The scroll lock is shared with Modal and Sheet so a nested teardown cannot
+     * clear another layer's lock. This must not gate on `popover` existing -- a
+     * controlled `open=true` has to lock even before the wrapper finishes binding.
      */
     $effect(() => {
         if (typeof document === 'undefined') {
@@ -219,6 +218,20 @@
                 releaseScroll();
             };
         }
+    });
+
+    $effect(() => {
+        if (
+            typeof document === 'undefined' ||
+            !popoverState.open ||
+            popoverState.hoverable ||
+            !popoverState.inert ||
+            !popover
+        ) {
+            return;
+        }
+
+        return inertOutsidePopover(popover, popoverState.buttonRef);
     });
 
     /**

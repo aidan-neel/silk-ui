@@ -14,13 +14,16 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *   1.0.0 -- initial release. Extracted from the duplicated focus-trap /
  *           click-outside / Escape / body-overflow logic that lived in
  *           modal-content.svelte and sheet-content.svelte (resolves F-30).
+ *   1.2.0 -- inert the background while open; scroll lock also covers nested
+ *           overflow containers so page regions other than `document.body`
+ *           cannot scroll behind the overlay.
  */
 export const manifest: Manifest = {
     name: '_internal/overlay',
-    version: '1.1.0',
+    version: '1.2.0',
     visibility: 'internal',
     description:
-        'Shared overlay primitive owning focus trap, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',
+        'Shared overlay primitive owning focus trap, inert background, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',
     files: [
         'components/_internal/overlay/overlay.svelte.ts',
         'components/_internal/overlay/index.ts',
@@ -30,6 +33,7 @@ export const manifest: Manifest = {
     shared: [
         'utils.clickOutside',
         'utils.getFocusableElements',
+        'utils.inertOutside',
         'utils.trapFocus',
         'utils.lockBodyScroll',
         'utils.pushEscapeLayer'

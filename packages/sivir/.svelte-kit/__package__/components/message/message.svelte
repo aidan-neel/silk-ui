@@ -1,5 +1,6 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
+    import { metadataClasses } from '../typography/variants';
     import type { MessageRootProps } from '.';
     import { type MessageContext, setMessageContext } from './context.svelte';
 
@@ -62,7 +63,8 @@
             <header
                 data-ui="message-metadata"
                 class={cn(
-                    'flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 px-0.5 text-xs text-foreground-muted',
+                    'flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 px-0.5',
+                    metadataClasses,
                     from === 'user' && 'justify-end',
                     from === 'system' && 'justify-center'
                 )}

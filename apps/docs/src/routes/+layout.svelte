@@ -1,12 +1,14 @@
 <script lang="ts">
     import { Toaster } from '@sivir-ui/svelte/components/toast';
+    import { getStoredLiveThemeCss, hydrateLiveThemeCss } from '@sivir-ui/svelte/themes/live';
     import { ModeWatcher } from 'mode-watcher';
     import DocsToolbar from '$lib/components/docs/docs-toolbar.svelte';
     import SideNavbar from '$lib/components/docs/side-navbar.svelte';
+    import Navbar from '$lib/components/navbar.svelte';
     import '@sivir-ui/svelte/ui.css';
     import '../app.css';
     import { injectAnalytics } from '@vercel/analytics/sveltekit';
-    import type { Snippet } from 'svelte';
+    import { onMount, type Snippet } from 'svelte';
     import { dev } from '$app/environment';
     import { afterNavigate } from '$app/navigation';
     import { page } from '$app/stores';
@@ -20,19 +22,23 @@
 
     const isHome = $derived($page.url.pathname === '/');
     const isDocs = $derived($page.url.pathname.startsWith('/docs'));
+    const isThemeStudio = $derived($page.url.pathname.startsWith('/studio'));
 
     // `--font-header` defaults to `var(--font-sans)`, so one custom property re-skins every page.
     $effect(() => {
+        if (getStoredLiveThemeCss()) {
+            document.documentElement.style.removeProperty('--font-sans');
+            return;
+        }
         const font =
             fonts.find((entry) => entry.name === selectedFont.current) ??
             fonts.find((entry) => entry.name === DEFAULT_FONT);
         if (font) document.documentElement.style.setProperty('--font-sans', font.family);
     });
 
-    // NOTE: the global docs no longer re-apply a persisted Studio theme on load.
-    // That override (stored as `sivir-live-theme-css`) was masking the baked
-    // default theme from ui.css "no matter what". Live theming is a Studio-only
-    // concern now (rebuilt in Plan 3); docs always render the shipped default.
+    onMount(() => {
+        hydrateLiveThemeCss();
+    });
 
     let docsScrollEl = $state<HTMLDivElement>();
 
@@ -69,10 +75,10 @@
 <Toaster />
 
 <main
-    class={`w-screen bg-background ${isDocs ? 'h-[100svh] overflow-hidden p-3' : 'min-h-screen p-3'}`}
+    class={`w-screen bg-background ${isDocs ? 'h-[100svh] overflow-hidden p-3' : isThemeStudio ? 'h-[100svh] overflow-hidden' : isHome ? 'min-h-screen' : 'min-h-screen p-3'}`}
 >
     {#if isHome}
-        <div class="relative mx-auto flex min-h-[calc(100vh-1.5rem)] w-full max-w-none flex-col">
+        <div class="relative mx-auto flex min-h-screen w-full max-w-none flex-col">
             {@render children?.()}
         </div>
     {:else if isDocs}
@@ -83,6 +89,15 @@
                 <div bind:this={docsScrollEl} class="min-h-0 flex-1 overflow-y-auto">
                     {@render children?.()}
                 </div>
+            </div>
+        </div>
+    {:else if isThemeStudio}
+        <div class="flex h-[100svh] w-full flex-col overflow-hidden bg-background">
+            <div class="shrink-0">
+                <Navbar starCount={data?.starCount ?? null} />
+            </div>
+            <div class="flex min-h-0 flex-1">
+                {@render children?.()}
             </div>
         </div>
     {:else}

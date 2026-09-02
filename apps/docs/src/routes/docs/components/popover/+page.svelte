@@ -51,6 +51,12 @@
         <Typography.Text variant="supporting">
             Import Popover and compose it with sub-components:
         </Typography.Text>
+        <Typography.Text variant="supporting">
+            Open non-hover popovers make outside document content inert by default. Set
+            <Typography.InlineCode>{'inert={false}'}</Typography.InlineCode>
+            on <Typography.InlineCode>Popover.Root</Typography.InlineCode> only when the surrounding
+            page must remain interactive.
+        </Typography.Text>
         <CodeBlock
             code={`import * as Popover from '$lib/sivir/components/popover';\n\n<Popover.Root>\n  <Popover.Trigger>Open</Popover.Trigger>\n  <Popover.Content class="w-64">\n    Content here\n  </Popover.Content>\n</Popover.Root>`}
             lang="svelte"

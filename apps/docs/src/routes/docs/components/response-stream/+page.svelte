@@ -33,7 +33,7 @@
     </header>
 
     <section id="hero" class="scroll-mt-20 flex flex-col gap-4">
-        <ComponentPreview code={HeroSrc}><Hero /></ComponentPreview>
+        <ComponentPreview code={HeroSrc} refreshable><Hero /></ComponentPreview>
     </section>
 
     <section id="installation" class="scroll-mt-20 flex flex-col gap-4">
@@ -47,8 +47,8 @@
             <div>
                 <Typography.H3>Live responses</Typography.H3>
                 <Typography.Text variant="supporting" class="mt-1">
-                    Pass the async iterable returned by your model. Chunks render as soon as they
-                    arrive.
+                    Pass the async iterable returned by your model. A caret marks the wait before
+                    the first chunk; later chunks render as soon as they arrive.
                 </Typography.Text>
             </div>
             <CodeBlock

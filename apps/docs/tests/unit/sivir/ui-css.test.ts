@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { describe, expect, it } from 'vitest';
 
 const css = readFileSync(resolve(process.cwd(), '../../packages/sivir/src/ui.css'), 'utf8');
 
@@ -88,8 +88,8 @@ describe('ui.css Tier 3 + structure', () => {
     /** Mirrors the budget in packages/sivir/release.test.ts -- keep the two in step. */
     it('stays within the release size budget', () => {
         const normalizedCss = css.replace(/\s+/g, ' ').trim();
-        expect(css.split('\n').length).toBeLessThanOrEqual(410);
-        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(12 * 1024);
+        expect(css.split('\n').length).toBeLessThanOrEqual(460);
+        expect(Buffer.byteLength(normalizedCss)).toBeLessThanOrEqual(14 * 1024);
     });
 
     it('declares the shared surface contracts in the components layer', () => {
@@ -98,6 +98,9 @@ describe('ui.css Tier 3 + structure', () => {
             '.sivir-menu-item',
             '.sivir-card-frame',
             '.sivir-card-surface',
+            '.sivir-modal-frame',
+            '.sivir-inset-frame',
+            '.sivir-inset-surface',
             '.sivir-tooltip'
         ]) {
             expect(css).toContain(contract);

@@ -1,3 +1,4 @@
+import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes } from 'svelte/elements';
 type $$ComponentProps = {
     placeholder?: string;
@@ -6,6 +7,8 @@ type $$ComponentProps = {
     type?: string;
     variant?: 'outline' | 'secondary';
     class?: string;
+    leading?: Snippet;
+    trailing?: Snippet;
     element?: HTMLInputElement | undefined;
     value?: string | number | boolean | FileList | undefined;
     checked?: boolean | undefined;

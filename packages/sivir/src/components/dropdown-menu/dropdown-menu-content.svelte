@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as Popover from '@sivir-ui/svelte/components/popover';
+    import { ScrollArea } from '@sivir-ui/svelte/components/scroll-area';
     import { cn, travelingHighlight } from '@sivir-ui/svelte/utils';
     import type { Snippet } from 'svelte';
     import { getDropdownMenuContext } from './context.svelte';
@@ -23,10 +24,10 @@
     lockScroll={false}
     data-ui="dropdown-menu-content"
     class={cn(className, 'min-w-[var(--popover-trigger-width)] w-max', inverted && INVERTED_MENU)}
-    surfaceClass="p-0"
+    surfaceClass="overflow-hidden p-0"
     {...rest}
 >
-    <div use:travelingHighlight class="flex flex-col gap-0 p-1">
-        {@render children?.()}
+    <div use:travelingHighlight class="flex h-full min-h-0 flex-1 flex-col gap-0 p-1">
+        <ScrollArea class="h-full min-h-0"> {@render children?.()} </ScrollArea>
     </div>
 </Popover.Content>

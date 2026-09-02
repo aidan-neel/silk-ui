@@ -233,7 +233,7 @@
             <!-- elevated white pill on the muted track (iOS-style segmented control) -->
             <div
                 aria-hidden="true"
-                class="pointer-events-none absolute rounded-[var(--radius-lg)] bg-card ring-1 ring-border/50 transition-[left,top,width,height] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none"
+                class="pointer-events-none absolute rounded-[calc(var(--radius-xl)-3px)] bg-card ring-1 ring-border/50 transition-[left,top,width,height] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none"
                 style:left={`${indicator.left}px`}
                 style:top={`${indicator.top}px`}
                 style:width={`${indicator.width}px`}

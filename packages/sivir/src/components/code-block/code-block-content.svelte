@@ -72,10 +72,11 @@
     inert={!isActive}
     class={cn(
         className,
-        'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto rounded-[var(--radius-md)] bg-card font-mono font-medium text-foreground shadow-[var(--elevation-1)] ring-1 ring-[color-mix(in_oklab,var(--color-border)_50%,transparent)]',
+        'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto font-mono font-medium text-foreground',
+        !registry?.contained && 'sivir-inset-surface',
         !isActive && !registry?.contained && 'hidden',
         registry?.contained &&
-            'max-h-none overflow-visible rounded-none bg-transparent shadow-none transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none will-change-[transform,opacity]',
+            'max-h-none overflow-visible rounded-none border-0 bg-transparent shadow-none ring-0 transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none will-change-[transform,opacity]',
         registry?.contained && isActive && 'relative z-[1]',
         registry?.contained && !isActive && 'pointer-events-none absolute inset-0 block'
     )}

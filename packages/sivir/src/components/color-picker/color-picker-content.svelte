@@ -236,7 +236,7 @@
 
 <svelte:window onpointerup={(e) => finishDrag(e)} onpointercancel={(e) => finishDrag(e, false)} />
 
-<Popover.Content class="w-[244px]" surfaceClass="overflow-hidden !p-0">
+<Popover.Content class="w-[244px] select-none" surfaceClass="overflow-hidden !p-0">
     <!-- SB picker (large) -->
     <div
         bind:this={sbEl}
@@ -280,7 +280,7 @@
             >
                 <span class="font-mono text-[0.78rem] text-foreground-muted">#</span>
                 <input
-                    class="h-6 min-w-0 flex-1 bg-transparent font-mono text-[0.78rem] uppercase text-foreground outline-none"
+                    class="h-6 min-w-0 flex-1 select-text bg-transparent font-mono text-[0.78rem] uppercase text-foreground outline-none"
                     value={hexInput.replace(/^#/, '')}
                     placeholder="000000"
                     spellcheck={false}

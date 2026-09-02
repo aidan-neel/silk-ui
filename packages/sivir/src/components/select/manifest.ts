@@ -11,7 +11,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  */
 export const manifest: Manifest = {
     name: 'select',
-    version: '2.1.0',
+    version: '2.2.0',
     visibility: 'public',
     description: 'Listbox-based single-select with bindable value and Item/Label/Content subparts.',
     role: 'listbox',
@@ -26,7 +26,7 @@ export const manifest: Manifest = {
         'components/select/index.ts',
         'components/select/manifest.ts'
     ],
-    components: ['popover', 'button'],
+    components: ['popover', 'button', 'scroll-area'],
     shared: ['utils.cn', 'utils.createContext', 'utils.travelingHighlight'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

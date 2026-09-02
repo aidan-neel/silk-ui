@@ -301,13 +301,16 @@ describe('public API contract (v1 freeze)', () => {
 
         expect(css).toContain('.sivir-card-frame');
         expect(css).toContain('.sivir-card-surface');
+        expect(css).toContain('.sivir-inset-frame');
+        expect(css).toContain('.sivir-inset-surface');
         expect(existsSync(path.join(componentsDir, 'card/surface.ts'))).toBe(false);
 
-        for (const source of [cardRoot, codeBlock]) {
-            expect(source).toContain('sivir-card-frame');
-            expect(source).toContain('sivir-card-surface');
-            expect(source).not.toContain('CARD_PANEL_');
-        }
+        expect(cardRoot).toContain('sivir-card-frame');
+        expect(cardRoot).toContain('sivir-card-surface');
+        expect(codeBlock).toContain('sivir-inset-frame');
+        expect(codeBlock).toContain('sivir-inset-surface');
+        expect(cardRoot).not.toContain('CARD_PANEL_');
+        expect(codeBlock).not.toContain('CARD_PANEL_');
 
         expect(cardRoot).toMatch(/variant\s*=\s*['"]default['"]/);
         expect(cardRoot).toContain("'panel'");
