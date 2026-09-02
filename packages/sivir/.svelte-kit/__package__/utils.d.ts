@@ -48,14 +48,26 @@ export declare function isPointInSubmenuTriangle(point: {
     y: number;
 }, trigger: DOMRect, panel: DOMRect, placement: Placement): boolean;
 /**
+ * Inerts document branches outside the given roots.
+ *
+ * Ancestors of each root stay active so a popover trigger can still dismiss,
+ * while sibling branches, other overlay roots, and nodes added later are
+ * excluded from pointer and keyboard interaction.
+ */
+export declare function inertOutside(activeRoots: HTMLElement[]): () => void;
+/**
  * Locks document scrolling and returns a disposer.
  *
  * The lock is refcounted and shared by modal, sheet, and popover so nested
  * overlays cannot clear each other's lock on teardown -- only the last active
- * lock restores the original overflow and scrollbar padding.
+ * lock restores the original overflow and scrollbar padding. Overlay roots keep
+ * their own overflow so dialog surfaces can still scroll.
  */
 export declare function lockBodyScroll(): () => void;
-/** Marks non-overlay body children as non-interactive while a floating layer is open. */
+/**
+ * Marks non-overlay body children as non-interactive while a floating layer is
+ * open. Overlay roots already portaled onto `document.body` stay active.
+ */
 export declare function lockBodyBackground(): () => void;
 /** Test isolation for the process-local body locks. */
 export declare function resetBodyLocksForTests(): void;

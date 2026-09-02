@@ -1,4 +1,4 @@
-import { clickOutside, getFocusableElements, lockBodyScroll, pushEscapeLayer, trapFocus } from '@sivir-ui/svelte/utils';
+import { clickOutside, getFocusableElements, inertOutside, lockBodyScroll, pushEscapeLayer, trapFocus } from '@sivir-ui/svelte/utils';
 export function useOverlay(opts) {
     $effect(() => {
         if (!opts.isOpen()) {
@@ -12,11 +12,13 @@ export function useOverlay(opts) {
             return;
         }
         const lockScroll = opts.lockScroll !== false;
+        const inert = opts.inert !== false;
         const cleanupTrap = trapFocus(panel, {
             initialFocus: getFocusableElements(panel)[0] ?? null,
             returnFocus: opts.returnFocus?.()
         });
         const releaseScroll = lockScroll ? lockBodyScroll() : undefined;
+        const releaseInert = inert ? inertOutside([panel]) : undefined;
         const co = clickOutside(panel, () => {
             if (opts.allowClickOutside?.() ?? true) {
                 opts.onClose();
@@ -32,6 +34,7 @@ export function useOverlay(opts) {
             co.destroy();
             releaseEscape();
             releaseScroll?.();
+            releaseInert?.();
         };
     });
 }

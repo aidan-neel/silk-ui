@@ -6,6 +6,7 @@
  *   - Click-outside detection (panel boundary; respects allowClickOutside).
  *   - Escape key handler (panel-scoped, fires onClose).
  *   - Body scroll lock while open (shared refcount with Popover).
+ *   - Inert background while open (shared refcount with Popover).
  *
  * Consumer owns:
  *   - The panel DOM element (bind via `panelEl` getter).
@@ -30,5 +31,7 @@ export type OverlayOptions = {
     returnFocus?: () => HTMLElement | undefined;
     /** Lock body scroll while open. Defaults to true. */
     lockScroll?: boolean;
+    /** Make document content outside the overlay inert. Defaults to true. */
+    inert?: boolean;
 };
 export declare function useOverlay(opts: OverlayOptions): void;

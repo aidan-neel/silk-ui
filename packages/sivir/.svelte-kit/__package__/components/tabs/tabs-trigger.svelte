@@ -30,6 +30,9 @@
      */
     const segmented = $derived(tabsState.variant === 'segmented');
     const vertical = $derived(tabsState.orientation === 'vertical');
+    const radiusClass = $derived(
+        segmented ? 'rounded-[calc(var(--radius-xl)-3px)]' : 'rounded-[var(--radius-lg)]'
+    );
 </script>
 
 <button
@@ -45,8 +48,9 @@
     {disabled}
     class={cn(
         className,
+        radiusClass,
         vertical && 'w-full justify-start text-left',
-        'sivir-press relative z-10 select-none rounded-[var(--radius-lg)] hover:cursor-[var(--ui-cursor-interactive)] px-[var(--sivir-space-3)] py-[var(--sivir-space-2)] text-sm [font-weight:var(--font-weight-button,500)] [letter-spacing:var(--tracking-button,0em)] leading-tight transition-[color,box-shadow,transform,scale] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-press)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-50',
+        'sivir-press relative z-10 select-none hover:cursor-[var(--ui-cursor-interactive)] px-[var(--sivir-space-3)] py-[var(--sivir-space-2)] text-sm [font-weight:var(--font-weight-button,500)] [letter-spacing:var(--tracking-button,0em)] leading-tight transition-[color,box-shadow,transform,scale] [transition-duration:var(--motion-duration-press)] ease-[var(--ease-press)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-50',
         active ? 'text-foreground' : 'text-foreground-muted hover:text-foreground',
         ghostActive && '[font-weight:600]',
 

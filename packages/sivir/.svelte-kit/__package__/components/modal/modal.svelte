@@ -46,7 +46,7 @@
 
 <script lang="ts">
     import type { ModalProps, ModalState } from '.';
-    import { setModalContext } from './context.svelte';
+    import { type ModalFooterSlot, setModalContext } from './context.svelte';
 
     let {
         open = $bindable(false),
@@ -65,7 +65,8 @@
         id,
         contentId: `modal-${id}`,
         returnFocusEl: undefined as HTMLElement | undefined,
-        state: modalState
+        state: modalState,
+        footerSlot: undefined as ModalFooterSlot | undefined
     });
     let syncedOpen = $state(open);
     let wasOpen = $state(false);

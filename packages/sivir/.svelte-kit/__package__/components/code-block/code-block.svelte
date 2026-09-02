@@ -75,7 +75,7 @@
     data-ui="code-block"
     class={cn(
         className,
-        'sivir-card-frame flex max-h-[var(--code-block-max-height)] w-full flex-col overflow-hidden text-foreground',
+        'sivir-inset-frame flex max-h-[var(--code-block-max-height)] w-full flex-col overflow-hidden text-foreground',
         '[--code-block-gutter:var(--color-foreground-muted)] [--code-block-padding-x:1.1rem] [--code-block-padding-y:0.9rem] [--code-block-line-height:1.7] [--code-block-max-height:min(32rem,70vh)] [--code-block-slide:1.25rem]',
         '[--code-block-token-comment:#b0b0b0] [--code-block-token-keyword:#565656] [--code-block-token-string:#565656] [--code-block-token-number:#868686] [--code-block-token-function:#565656] [--code-block-token-property:#868686] [--code-block-token-builtin:#868686] [--code-block-token-meta:#868686]',
         'dark:[--code-block-token-comment:#a0a0a0] dark:[--code-block-token-keyword:#7ec4ff] dark:[--code-block-token-string:#ffc966] dark:[--code-block-token-number:#ffc966] dark:[--code-block-token-function:#7ec4ff] dark:[--code-block-token-property:#7ec4ff] dark:[--code-block-token-builtin:#7ec4ff] dark:[--code-block-token-meta:#a0a0a0]'
@@ -100,8 +100,9 @@
                 <!-- The static card: holds the background/ring while only the text
 				     panels slide inside it (and clips the slide). -->
                 <div
+                    data-ui="code-block-surface"
                     class={cn(
-                        'sivir-card-surface relative flex min-h-0 w-full self-stretch flex-1 overflow-auto'
+                        'sivir-inset-surface relative flex min-h-0 w-full self-stretch flex-1 overflow-auto'
                     )}
                 >
                     {#if hasTabRow}

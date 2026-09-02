@@ -59,6 +59,11 @@
             ? comboboxState.searchContent
             : (comboboxState.selected?.label ?? '')
     );
+    const valueColor = $derived(
+        (searchPlacement === 'trigger' && comboboxState.open) || comboboxState.selected
+            ? 'text-foreground'
+            : 'text-foreground-muted'
+    );
 
     onMount(() => {
         popoverState.buttonRef = triggerElement ?? null;
@@ -186,7 +191,8 @@
         oninput={handleInput}
         onkeydown={handleInputKeydown}
         class={cn(
-            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] text-foreground outline-none placeholder:text-foreground-muted',
+            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] outline-none placeholder:text-foreground-muted',
+            valueColor,
             (searchPlacement === 'menu' || !comboboxState.open) && 'select-none'
         )}
     />

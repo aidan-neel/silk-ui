@@ -112,101 +112,224 @@ export function isPointInSubmenuTriangle(point, trigger, panel, placement) {
             return pointInTriangle(point, { x: trigger.right + contactMargin, y: triggerCenter.y }, { x: panel.left - contactMargin, y: panel.top }, { x: panel.left - contactMargin, y: panel.bottom });
     }
 }
-let bodyScrollLocks = 0;
-let savedBodyOverflow = '';
-let savedBodyPaddingRight = '';
-let bodyInertLocks = 0;
+const overflowLocks = new Map();
+const inertRecords = new Map();
+function isOverlayRoot(element) {
+    return (element.hasAttribute('data-floating-content') || element.hasAttribute('data-overlay-root'));
+}
+function isScrollOverflow(value) {
+    return value === 'auto' || value === 'scroll' || value === 'overlay';
+}
+function hasScrollableOverflow(element) {
+    const style = getComputedStyle(element);
+    return (isScrollOverflow(style.overflowY) ||
+        isScrollOverflow(style.overflowX) ||
+        isScrollOverflow(element.style.overflowY) ||
+        isScrollOverflow(element.style.overflowX) ||
+        isScrollOverflow(element.style.overflow));
+}
+function retainOverflowLock(element, extra) {
+    const record = overflowLocks.get(element);
+    if (record) {
+        record.count += 1;
+        return;
+    }
+    overflowLocks.set(element, {
+        count: 1,
+        overflow: element.style.overflow,
+        paddingRight: element.style.paddingRight
+    });
+    if (extra?.paddingRight) {
+        element.style.paddingRight = extra.paddingRight;
+    }
+    element.style.overflow = 'hidden';
+}
+function releaseOverflowLock(element) {
+    const record = overflowLocks.get(element);
+    if (!record) {
+        return;
+    }
+    record.count -= 1;
+    if (record.count > 0) {
+        return;
+    }
+    element.style.overflow = record.overflow;
+    element.style.paddingRight = record.paddingRight;
+    overflowLocks.delete(element);
+}
+function retainInert(element) {
+    const record = inertRecords.get(element);
+    if (record) {
+        record.count += 1;
+        return;
+    }
+    inertRecords.set(element, {
+        count: 1,
+        wasInert: element.inert === true
+    });
+    element.inert = true;
+}
+function releaseInert(element) {
+    const record = inertRecords.get(element);
+    if (!record) {
+        return;
+    }
+    record.count -= 1;
+    if (record.count > 0) {
+        return;
+    }
+    element.inert = record.wasInert;
+    inertRecords.delete(element);
+}
 /**
- * Whether an element is (or contains) a floating overlay root.
+ * Inerts document branches outside the given roots.
  *
- * Modal and sheet portal wrappers do not always carry an id on the outer node,
- * so this checks the marker attributes, then a descendant query, then the id
- * prefixes each overlay assigns.
+ * Ancestors of each root stay active so a popover trigger can still dismiss,
+ * while sibling branches, other overlay roots, and nodes added later are
+ * excluded from pointer and keyboard interaction.
  */
-function isFloatingOverlayElement(el) {
-    if (el.hasAttribute('data-floating-content') ||
-        el.hasAttribute('data-overlay-root') ||
-        el.getAttribute('data-ui') === 'modal-overlay' ||
-        el.getAttribute('data-ui') === 'sheet-overlay') {
-        return true;
+export function inertOutside(activeRoots) {
+    if (typeof document === 'undefined') {
+        return () => { };
     }
-    if (el.querySelector?.('[data-floating-content], [data-overlay-root], [role="dialog"], [role="alertdialog"], [data-ui="modal-overlay"], [data-ui="sheet-overlay"]')) {
-        return true;
+    const retained = new Set();
+    const retainIfOutside = (element) => {
+        if (retained.has(element) ||
+            element.closest('[data-floating-content], [data-overlay-root]') ||
+            activeRoots.some((root) => {
+                return element === root || element.contains(root) || root.contains(element);
+            })) {
+            return;
+        }
+        retained.add(element);
+        retainInert(element);
+    };
+    for (const root of activeRoots) {
+        let branch = root;
+        while (branch.parentElement) {
+            const parent = branch.parentElement;
+            for (const sibling of parent.children) {
+                if (sibling instanceof HTMLElement && sibling !== branch) {
+                    retainIfOutside(sibling);
+                }
+            }
+            if (parent === document.body) {
+                break;
+            }
+            branch = parent;
+        }
     }
-    const id = el.id;
-    return (id.startsWith('popover-') ||
-        id.startsWith('modal-') ||
-        id.startsWith('dialog-') ||
-        id.startsWith('sheet-') ||
-        id.startsWith('command-') ||
-        id.startsWith('alert-dialog-'));
+    const observer = new MutationObserver((records) => {
+        for (const record of records) {
+            for (const node of record.addedNodes) {
+                if (node instanceof HTMLElement) {
+                    retainIfOutside(node);
+                }
+            }
+        }
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    return () => {
+        observer.disconnect();
+        for (const element of retained) {
+            releaseInert(element);
+        }
+    };
 }
 /**
  * Locks document scrolling and returns a disposer.
  *
  * The lock is refcounted and shared by modal, sheet, and popover so nested
  * overlays cannot clear each other's lock on teardown -- only the last active
- * lock restores the original overflow and scrollbar padding.
+ * lock restores the original overflow and scrollbar padding. Overlay roots keep
+ * their own overflow so dialog surfaces can still scroll.
  */
 export function lockBodyScroll() {
     if (typeof document === 'undefined') {
         return () => { };
     }
-    if (bodyScrollLocks === 0) {
-        savedBodyOverflow = document.body.style.overflow;
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        if (scrollbarWidth > 0) {
-            savedBodyPaddingRight = document.body.style.paddingRight;
-            document.body.style.paddingRight = `${scrollbarWidth}px`;
+    const locked = [];
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+    retainOverflowLock(html);
+    locked.push(html);
+    retainOverflowLock(body, scrollbarWidth > 0
+        ? {
+            paddingRight: `${scrollbarWidth}px`
         }
-        document.body.style.overflow = 'hidden';
-    }
-    bodyScrollLocks += 1;
+        : undefined);
+    locked.push(body);
+    const walk = (parent) => {
+        for (const child of parent.children) {
+            if (!(child instanceof HTMLElement)) {
+                continue;
+            }
+            if (isOverlayRoot(child)) {
+                continue;
+            }
+            if (hasScrollableOverflow(child)) {
+                retainOverflowLock(child);
+                locked.push(child);
+            }
+            walk(child);
+        }
+    };
+    walk(body);
     return () => {
-        bodyScrollLocks = Math.max(0, bodyScrollLocks - 1);
-        if (bodyScrollLocks === 0) {
-            document.body.style.overflow = savedBodyOverflow;
-            document.body.style.paddingRight = savedBodyPaddingRight;
-            savedBodyOverflow = '';
-            savedBodyPaddingRight = '';
+        for (const element of locked) {
+            releaseOverflowLock(element);
         }
     };
 }
-/** Marks non-overlay body children as non-interactive while a floating layer is open. */
+/**
+ * Marks non-overlay body children as non-interactive while a floating layer is
+ * open. Overlay roots already portaled onto `document.body` stay active.
+ */
 export function lockBodyBackground() {
     if (typeof document === 'undefined') {
         return () => { };
     }
-    if (bodyInertLocks === 0) {
-        for (const el of Array.from(document.body.children)) {
-            if (isFloatingOverlayElement(el)) {
-                continue;
-            }
-            el.classList.add('pointer-events-none');
+    const roots = [];
+    for (const child of document.body.children) {
+        if (child instanceof HTMLElement && isOverlayRoot(child)) {
+            roots.push(child);
         }
     }
-    bodyInertLocks += 1;
-    return () => {
-        bodyInertLocks = Math.max(0, bodyInertLocks - 1);
-        if (bodyInertLocks === 0) {
-            for (const el of Array.from(document.body.children)) {
-                el.classList.remove('pointer-events-none');
-            }
-        }
-    };
+    return inertOutside(roots);
 }
 /** Test isolation for the process-local body locks. */
 export function resetBodyLocksForTests() {
-    bodyScrollLocks = 0;
-    bodyInertLocks = 0;
-    savedBodyOverflow = '';
-    savedBodyPaddingRight = '';
-    if (typeof document !== 'undefined') {
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        for (const el of Array.from(document.body.children)) {
-            el.classList.remove('pointer-events-none');
+    if (typeof document === 'undefined') {
+        overflowLocks.clear();
+        inertRecords.clear();
+        return;
+    }
+    for (const element of Array.from(overflowLocks.keys())) {
+        const record = overflowLocks.get(element);
+        if (!record) {
+            continue;
         }
+        element.style.overflow = record.overflow;
+        element.style.paddingRight = record.paddingRight;
+    }
+    overflowLocks.clear();
+    for (const element of Array.from(inertRecords.keys())) {
+        const record = inertRecords.get(element);
+        if (!record) {
+            continue;
+        }
+        element.inert = record.wasInert;
+    }
+    inertRecords.clear();
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    for (const el of Array.from(document.body.children)) {
+        el.classList.remove('pointer-events-none');
     }
 }
 const escapeStack = [];
@@ -320,23 +443,25 @@ export function trapFocus(dialogEl, options) {
             return;
         }
         const focusable = getFocusableElements(dialogEl);
+        const active = document.activeElement;
         if (focusable.length === 0) {
+            e.preventDefault();
+            dialogEl.focus();
             return;
         }
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        const active = document.activeElement;
+        const focusIsOutside = !active || !dialogEl.contains(active);
+        const focusIsOnContainer = active === dialogEl;
         if (e.shiftKey) {
-            if (!active || !dialogEl.contains(active) || active === first) {
+            if (focusIsOutside || focusIsOnContainer || active === first) {
                 e.preventDefault();
                 last.focus();
             }
         }
-        else {
-            if (!active || !dialogEl.contains(active) || active === last) {
-                e.preventDefault();
-                first.focus();
-            }
+        else if (focusIsOutside || focusIsOnContainer || active === last) {
+            e.preventDefault();
+            first.focus();
         }
     };
     const handleFocusIn = (e) => {

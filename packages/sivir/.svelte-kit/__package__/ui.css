@@ -4,7 +4,7 @@
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-    --font-sans: 'Inter', sans-serif;
+    --font-sans: 'DM Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-header: var(--font-sans);
 
@@ -252,7 +252,7 @@
         background-color: color-mix(in oklab, var(--color-foreground) 8%, transparent);
     }
 
-    /* Card/CodeBlock concentric frame: hairline border + foreground-tinted fill. */
+    /* Card concentric frame: hairline border + foreground-tinted fill. */
     .sivir-card-frame {
         padding: calc(var(--spacing) * 0.5);
         border: var(--border-size) solid var(--color-border);
@@ -270,6 +270,40 @@
         border-radius: calc(var(--radius-lg) - 2px);
         background-color: var(--color-card);
         box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-border) 50%, transparent);
+    }
+
+    /* Modal/CodeBlock inset frame. Inner radius = outer − border − inset. */
+    .sivir-modal-frame,
+    .sivir-inset-frame {
+        --sivir-modal-inset: var(--spacing);
+        gap: var(--sivir-modal-inset);
+        padding: var(--sivir-modal-inset);
+        border: var(--border-size) solid var(--color-border);
+        border-radius: var(--radius-xl);
+        background-color: var(--color-secondary);
+    }
+
+    .sivir-inset-frame:where(.dark, .dark *) {
+        background-color: var(--color-muted);
+    }
+
+    .sivir-modal-frame:where(.dark, .dark *) {
+        background-color: var(--color-card);
+    }
+
+    .sivir-modal-frame > [data-ui='modal-surface'],
+    .sivir-inset-surface {
+        border: var(--border-size) solid var(--color-border);
+        border-radius: calc(
+            var(--radius-xl) -
+            var(--border-size) -
+            var(--sivir-modal-inset, var(--spacing))
+        );
+        background-color: var(--color-card);
+    }
+
+    .sivir-modal-frame:where(.dark, .dark *) > [data-ui='modal-surface'] {
+        background-color: var(--color-muted);
     }
 
     /* The single shared tooltip bubble and its off-screen width twin, both built

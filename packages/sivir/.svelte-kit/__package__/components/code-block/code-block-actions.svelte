@@ -11,7 +11,7 @@
     data-ui="code-block-actions"
     class={cn(
         className,
-        'ml-auto flex items-center gap-0.5 py-1.5 text-[var(--color-foreground-muted)]'
+        'ml-auto flex items-center gap-0.5 text-[var(--color-foreground-muted)]'
     )}
     {...rest}
 >

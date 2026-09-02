@@ -22,5 +22,8 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 3.0.0 -- Popover.Root gained inert outside-document behavior, enabled by
  *          default for non-hover popovers and safe across nested and portaled
  *          layers. Set inert={false} to preserve non-modal outside interaction.
+ * 3.0.1 -- Inert, focus trap, and scroll lock share the overlay primitives so
+ *          nested page overflow containers lock and sibling overlay roots stay
+ *          interactive.
  */
 export declare const manifest: Manifest;

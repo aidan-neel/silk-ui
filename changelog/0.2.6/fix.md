@@ -1,3 +1,4 @@
+- Bump `@sivir-ui/svelte` to `0.2.6`.
 - Invert Modal's inset surface in dark mode so the inner well is darker than the frame.
 - Make Popover, Modal, Sheet, Alert Dialog, Command, and Fullscreen Nav inert the page, trap focus, and lock nested overflow containers while open.
 - Import Lucide icons from per-icon paths in Select, Dropdown Menu, and Context Menu instead of the package barrel.

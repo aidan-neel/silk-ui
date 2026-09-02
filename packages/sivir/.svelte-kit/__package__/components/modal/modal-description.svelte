@@ -9,14 +9,6 @@
     const modal = getModalContext();
 </script>
 
-<p
-    {...rest}
-    id={`${modal.id}-desc`}
-    class={cn(
-        className,
-        'text-center sm:text-left',
-        descriptionClasses
-    )}
->
+<p {...rest} id={`${modal.id}-desc`} class={cn(className, descriptionClasses)}>
     {@render children?.()}
 </p>

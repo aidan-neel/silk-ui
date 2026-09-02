@@ -94,7 +94,7 @@
     },
     "packages/sivir": {
       "name": "@sivir-ui/svelte",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "bin": {
         "sivir": "dist/index.js",
       },

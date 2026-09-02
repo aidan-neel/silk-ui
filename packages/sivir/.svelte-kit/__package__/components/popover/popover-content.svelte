@@ -34,6 +34,7 @@
 
     let popover = $state<HTMLElement | undefined>();
     let panelEl = $state<HTMLElement | undefined>();
+    let dismissEl = $state<HTMLElement | undefined>();
     let positionFrame: number | undefined;
     let mounted = false;
 
@@ -144,6 +145,16 @@
             popoverState.popoverRef?.remove();
             popover?.remove();
         });
+    });
+
+    $effect(() => {
+        if (!dismissEl || typeof document === 'undefined') {
+            return;
+        }
+        document.body.appendChild(dismissEl);
+        return () => {
+            dismissEl?.remove();
+        };
     });
 
     $effect(() => {
@@ -279,11 +290,23 @@
      */
     $effect(() => {
         if (popoverState.open && panelEl && !popoverState.hoverable && focusTrap) {
-            const cleanup = trapFocus(panelEl);
+            const cleanup = trapFocus(panelEl, {
+                returnFocus: popoverState.buttonRef
+            });
             return cleanup;
         }
     });
 </script>
+
+{#if popoverState.open && !popoverState.hoverable && popoverState.inert && allowClickOutside}
+    <div
+        bind:this={dismissEl}
+        data-overlay-root
+        data-ui="popover-dismiss"
+        class="fixed inset-0 z-[129]"
+        aria-hidden="true"
+    ></div>
+{/if}
 
 <div
     role="presentation"

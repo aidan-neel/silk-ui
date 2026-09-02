@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'alert-dialog',
-    version: '1.1.0',
+    version: '1.2.0',
     visibility: 'public',
     description: 'Confirmation dialog with role="alertdialog", default allowClickOutside=false, and Exit/Confirm buttons (no Close).',
     role: 'alertdialog',
@@ -18,7 +18,7 @@ export const manifest = {
         'components/alert-dialog/manifest.ts'
     ],
     components: ['modal', 'button'],
-    shared: ['utils.cn', 'is-dark'],
+    shared: ['utils.cn'],
     peerDependencies: {
         cnfast: '^0.0.8',
         svelte: '^5.0.0'
