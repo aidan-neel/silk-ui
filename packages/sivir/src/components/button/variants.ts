@@ -12,7 +12,7 @@ export const button = tv({
             primary:
                 'bg-primary text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] data-[state=open]:bg-[var(--color-primary-hover)]',
             secondary:
-                'bg-secondary text-foreground hover:bg-[color-mix(in_srgb,var(--color-secondary)_82%,black)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-secondary)_82%,black)]',
+                'bg-secondary text-foreground hover:bg-[color-mix(in_srgb,var(--color-secondary)_92%,black)] data-[state=open]:bg-[color-mix(in_srgb,var(--color-secondary)_92%,black)]',
             ghost: 'bg-transparent text-foreground hover:bg-foreground/[0.08] data-[state=open]:bg-foreground/[0.08]',
             quiet: 'bg-transparent text-foreground',
             /**
