@@ -53,6 +53,8 @@ describe('showcase generation', () => {
             const css = rootCss(installPath);
             expect(css).toContain("@import '@fontsource/dm-sans/latin-400.css';");
             expect(css).toContain("@import '@fontsource/dm-sans/latin-700.css';");
+            expect(css).toContain("@import '@fontsource/jetbrains-mono/latin-400.css';");
+            expect(css).toContain("@import '@fontsource/jetbrains-mono/latin-700.css';");
             expect(css).toContain('@layer base { button, input { font: inherit; } }');
             expect(css).toContain(
                 'body { font-size: var(--font-size-body); font-weight: var(--font-weight-body); line-height: 1.5; }'

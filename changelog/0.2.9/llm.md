@@ -1,0 +1,5 @@
+## Self-hosted default fonts
+
+The default theme uses DM Sans (`--font-sans`, `--font-header`) and JetBrains Mono (`--font-mono`), and both now ship with the package. `ui.css` imports the `latin-400/500/600/700` stylesheets from `@fontsource/dm-sans` and `@fontsource/jetbrains-mono`, which are real `dependencies` of `@sivir-ui/svelte`, so the bundler emits local `woff2` files. There is no Google Fonts request and no runtime network requirement.
+
+Stop doing the old workarounds: do not add a `<link>` to `fonts.googleapis.com`, do not `@import url(...)` remote font CSS, and do not tell consumers to install only `@fontsource/dm-sans` — the mono face is required too. Package-mode consumers get both fonts transitively; `sivir init` treats both `@fontsource` packages as base dependencies alongside `sidenav` peers like `tailwindcss`. Overriding `--font-sans` / `--font-mono` / `--font-header` with another family remains the way to rebrand, and any non-default family (including Theme Studio presets such as Geist or Lora) is still consumer-supplied.

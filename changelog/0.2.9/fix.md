@@ -1,0 +1,1 @@
+- Bundle the default DM Sans and JetBrains Mono faces as self-hosted Fontsource stylesheets in `ui.css`, so package and CLI installs render the intended typefaces with no Google Fonts request and no runtime network access.
