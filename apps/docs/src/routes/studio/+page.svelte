@@ -1280,7 +1280,9 @@
                             · Sivir UI
                         </span>
                     </Select.Trigger>
-                    <Select.Content class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]">
+                    <Select.Content
+                        class="max-h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                    >
                         {#each builtInThemePresets as preset (preset.slug)}
                             <Select.Item value={preset.slug} label={preset.name}>
                                 {preset.name}

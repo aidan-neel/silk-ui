@@ -45,6 +45,7 @@
 </script>
 
 <script lang="ts">
+    import { onDestroy } from 'svelte';
     import type { ModalProps, ModalState } from '.';
     import { type ModalFooterSlot, setModalContext } from './context.svelte';
 
@@ -109,6 +110,15 @@
         }
         applyErrorThemeColor();
         return restoreThemeColor;
+    });
+
+    onDestroy(() => {
+        if (!open && !modalState.open) {
+            return;
+        }
+        modalState.open = false;
+        open = false;
+        onOpenChange?.(false);
     });
 </script>
 

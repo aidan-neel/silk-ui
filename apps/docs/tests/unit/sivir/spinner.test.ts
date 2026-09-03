@@ -3,12 +3,25 @@ import { act, render } from '@testing-library/svelte';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Spinner', () => {
-    it('renders a LoaderCircle icon with the spin animation', () => {
+    it('renders a LoaderCircle icon with a continuous spin at the default speed', () => {
         const { container } = render(Spinner, { props: { size: 20 } });
         const spinner = container.querySelector('[data-ui="spinner"]');
         const loader = spinner?.querySelector('svg');
         expect(loader).toHaveAttribute('width', '20');
         expect(loader?.getAttribute('class')).toContain('animate-spin');
+        expect(loader).toHaveStyle({ animationDuration: '850ms' });
+    });
+
+    it('renders the curved spin animation when curved is set', () => {
+        const { container } = render(Spinner, { props: { curved: true } });
+        const loader = container.querySelector('[data-ui="spinner"] svg');
+        expect(loader?.getAttribute('class')).toContain('animate-[sivir-spinner-spin');
+    });
+
+    it('scales the spin duration with the speed multiplier', () => {
+        const { container } = render(Spinner, { props: { speed: 2 } });
+        const loader = container.querySelector('[data-ui="spinner"] svg');
+        expect(loader).toHaveStyle({ animationDuration: '425ms' });
     });
 
     it('holds the checkmark, then collapses before unmounting when ready', async () => {

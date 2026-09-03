@@ -12,10 +12,13 @@
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
 import { computePosition, flip, offset, type Placement, shift } from '@floating-ui/dom';
+import '@scritto/core';
+import type { Scritto as ScrittoElement } from '@scritto/core';
 
 let bubble: HTMLDivElement | null = null;
 let measurer: HTMLSpanElement | null = null;
 let label: HTMLSpanElement | null = null;
+let roller: ScrittoElement | null = null;
 let currentClass = '';
 
 let visible = false;
@@ -29,11 +32,52 @@ const SHOW = 'scale(1)';
 const HIDE = 'scale(0.94)';
 
 /**
+ * Whether this platform can drive a Scritto roll. The unit-test DOM has no
+ * `matchMedia` or Web Animations `getAnimations`, so it keeps the plain
+ * textContent swap there while real browsers roll.
+ */
+function supportsRoll(): boolean {
+    return (
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        typeof Element !== 'undefined' &&
+        typeof Element.prototype.getAnimations === 'function'
+    );
+}
+
+/**
+ * Writes `text` into the bubble label. Single-word labels ride the roller
+ * (rolling when `animate`, set instantly otherwise); anything with whitespace
+ * keeps the plain textContent swap so multi-word rows never hit the roller's
+ * word layout.
+ */
+function setLabel(text: string, animate: boolean) {
+    if (!label) {
+        return;
+    }
+    if (roller && !/\s/.test(text)) {
+        if (roller.parentNode !== label) {
+            label.replaceChildren(roller);
+        }
+        if (animate) {
+            roller.update(text);
+        } else {
+            roller.value = text;
+        }
+        return;
+    }
+    label.textContent = text;
+}
+
+/**
  * Lazily builds the bubble, its label span, and the off-screen measuring twin.
  *
  * The twin exists so `applyWidth` can read a target width before the label
  * swaps, letting the bubble transition its shape instead of snapping when the
  * new label is a different length.
+ *
+ * The label span hosts a `<scritto-text>` roller when the platform supports
+ * it; `setLabel` routes single-word labels through it.
  */
 function ensure() {
     if (bubble || typeof document === 'undefined') {
@@ -59,6 +103,13 @@ function ensure() {
     bubble = el;
     measurer = m;
     label = span;
+
+    if (supportsRoll()) {
+        const host = document.createElement('scritto-text') as ScrittoElement;
+        host.setOptions({ transition: { duration: 300 } });
+        span.appendChild(host);
+        roller = host;
+    }
 }
 
 function applyBubbleClass(className = '') {
@@ -143,7 +194,7 @@ function present(ref: HTMLElement, text: string, placement: Placement, className
     clearTimeout(closeTimer);
     const morph = visible;
     activeRef = ref;
-    label.textContent = text;
+    setLabel(text, false);
     currentText = text;
     applyBubbleClass(className);
     applyWidth(text);
@@ -177,7 +228,7 @@ export function updateTooltipText(ref: HTMLElement, text: string) {
     if (!visible || activeRef !== ref || !label || !text || text === currentText) {
         return;
     }
-    label.textContent = text;
+    setLabel(text, true);
     currentText = text;
     applyWidth(text);
 }
@@ -251,6 +302,7 @@ export function resetSharedTooltipForTests() {
     bubble = null;
     measurer = null;
     label = null;
+    roller = null;
 }
 
 export function isActiveTooltip(ref: HTMLElement) {

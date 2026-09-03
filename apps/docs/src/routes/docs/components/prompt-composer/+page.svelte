@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
@@ -75,8 +76,11 @@ async function sendPrompt(prompt: string) {
             copy="overlay"
         />
         <Typography.Text variant="supporting">
-            By default, <kbd>Enter</kbd> submits and <kbd>Shift</kbd> + <kbd>Enter</kbd> inserts a
-            new line. Set <Typography.InlineCode>submitOnEnter={false}</Typography.InlineCode> on
+            By default, <Shortcut shortcut="enter" /> submits and
+            <Shortcut shortcut="shift+enter" />
+            inserts a new line. Set
+            <Typography.InlineCode>submitOnEnter={false}</Typography.InlineCode>
+            on
             <Typography.InlineCode>Input</Typography.InlineCode>
             when Enter should always create a new line.
         </Typography.Text>

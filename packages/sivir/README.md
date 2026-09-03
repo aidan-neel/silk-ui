@@ -45,8 +45,8 @@ Make sure that CSS file is imported once at the root (a fresh
 
 ## Fonts
 
-Sivir's default theme sets `--font-sans` to DM Sans and `--font-mono` to
-JetBrains Mono. Both faces ship with the package through `@fontsource/dm-sans`
+Sivir's default theme sets `--font-sans` to Inter and `--font-mono` to
+JetBrains Mono. Both faces ship with the package through `@fontsource/inter`
 and `@fontsource/jetbrains-mono`, which `ui.css` imports as self-hosted
 `latin-400/500/600/700` stylesheets. Your bundler serves the `woff2` files
 locally, so screens render the intended typefaces with no Google Fonts request

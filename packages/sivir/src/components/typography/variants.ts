@@ -32,4 +32,4 @@ export const textClasses = {
 
 export const inlineCodeClasses =
     // token-lint-disable-next-line no-literal-length: inline code scales with surrounding text
-    'rounded-[var(--radius-sm)] bg-secondary px-1.5 py-0.5 font-mono text-[0.875em] font-label text-foreground [box-decoration-break:clone] [overflow-wrap:anywhere]';
+    'rounded-[var(--radius-sm)] bg-secondary px-1.5 py-0.5 font-mono text-[0.875em] font-medium text-foreground [box-decoration-break:clone] [overflow-wrap:anywhere]';

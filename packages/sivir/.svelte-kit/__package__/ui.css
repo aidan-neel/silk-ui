@@ -1,10 +1,18 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-600.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
 @import 'tailwindcss';
 @source './**/*.{svelte,ts,js}';
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-    --font-sans: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-header: var(--font-sans);
 

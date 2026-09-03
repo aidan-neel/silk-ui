@@ -880,6 +880,49 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     };
 }
 
+function overlayRootOf(node: Node | null) {
+    if (node instanceof Element) {
+        return node.closest('[data-overlay-root]');
+    }
+    return node?.parentElement?.closest('[data-overlay-root]') ?? null;
+}
+
+let overlayPointerGesture = false;
+let overlayPointerGestureTimeout: ReturnType<typeof setTimeout> | undefined;
+
+function markOverlayPointerGesture() {
+    overlayPointerGesture = true;
+    if (overlayPointerGestureTimeout !== undefined) {
+        clearTimeout(overlayPointerGestureTimeout);
+    }
+    overlayPointerGestureTimeout = setTimeout(() => {
+        overlayPointerGesture = false;
+        overlayPointerGestureTimeout = undefined;
+    }, 0);
+}
+
+/** Test isolation for the overlay click-outside gesture lock. */
+export function resetClickOutsideForTests() {
+    overlayPointerGesture = false;
+    if (overlayPointerGestureTimeout !== undefined) {
+        clearTimeout(overlayPointerGestureTimeout);
+        overlayPointerGestureTimeout = undefined;
+    }
+}
+
+function overlayRootFromEvent(event: Event, path: EventTarget[]) {
+    for (const entry of path) {
+        if (entry instanceof Element && entry.hasAttribute('data-overlay-root')) {
+            return entry;
+        }
+    }
+    const target = event.target;
+    if (target instanceof Element) {
+        return target.closest('[data-overlay-root]');
+    }
+    return null;
+}
+
 /**
  * Runs a callback when a pointer event lands outside the node and any excluded
  * nodes.
@@ -890,6 +933,15 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
  * listener runs, so the now-detached node drops out of `composedPath()`. The
  * target's own ancestor chain stays intact after the wrapper is detached, so it
  * serves as the fallback and keeps a parent overlay from being dismissed too.
+ *
+ * Nested overlays portal as sibling `[data-overlay-root]` hosts. A click inside
+ * a different overlay root belongs to that layer, so this listener must not
+ * treat it as an outside dismiss — otherwise Cancel on a nested modal closes
+ * the parent too.
+ *
+ * Select, Combobox, and Dropdown Menu dismiss on pointerdown. That unmounts
+ * their dismiss scrim before the following `click`, which would otherwise hit
+ * the parent Modal overlay and close it. One pointer gesture peels one layer.
  */
 export function clickOutside(node: Node, callback: () => void, exclude: Node[] = []) {
     let destroyed = false;
@@ -907,7 +959,11 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
         const isInsideFloating =
             path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
             targetEl?.closest('[data-floating-content]') != null;
-        return !isInsideNode && !isInsideExcluded && !isInsideFloating;
+        const clickRoot = overlayRootFromEvent(event, path);
+        const nodeRoot = overlayRootOf(node);
+        const isInsideOtherOverlay =
+            clickRoot != null && nodeRoot != null && clickRoot !== nodeRoot;
+        return !isInsideNode && !isInsideExcluded && !isInsideFloating && !isInsideOtherOverlay;
     }
 
     function dismiss(event: Event) {
@@ -919,6 +975,7 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
     const handlePointerDown = (event: PointerEvent) => {
         if (isOutside(event)) {
             dismissedByPointer = true;
+            markOverlayPointerGesture();
             dismiss(event);
         }
     };
@@ -927,6 +984,11 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
         if (dismissedByPointer) {
             dismissedByPointer = false;
             dismiss(event);
+            return;
+        }
+        if (overlayPointerGesture) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
             return;
         }
         if (isOutside(event)) {

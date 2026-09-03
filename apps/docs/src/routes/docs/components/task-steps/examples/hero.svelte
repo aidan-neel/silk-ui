@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as Card from '@sivir-ui/svelte/components/card';
     import { type TaskStep, TaskSteps } from '@sivir-ui/svelte/components/task-steps';
     import { onMount } from 'svelte';
 
@@ -20,11 +21,11 @@
     });
 </script>
 
-<div
-    class="w-full max-w-sm rounded-[var(--radius-xl)] border border-border bg-card p-4 shadow-[var(--elevation-1)]"
->
-    <div class="mb-3">
-        <p class="font-medium text-foreground">Deploy release</p>
-    </div>
-    <TaskSteps {steps} {current} label="Deploy progress" />
-</div>
+<Card.Root class="w-full max-w-sm">
+    <Card.Header>
+        <Card.Title>Deploy release</Card.Title>
+    </Card.Header>
+    <Card.Content>
+        <TaskSteps {steps} {current} label="Deploy progress" />
+    </Card.Content>
+</Card.Root>

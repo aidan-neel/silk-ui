@@ -39,7 +39,7 @@
 <div class="flex items-center justify-center p-10">
     <ScrollArea
         aria-label="Recent chats"
-        class="h-72 w-72 rounded-[var(--radius-lg)] border border-border bg-card"
+        class="h-72 w-72 rounded-[var(--radius-lg)] border border-border bg-panel"
     >
         <div class="flex flex-col p-2">
             {#each groupedChats as group (group.date)}

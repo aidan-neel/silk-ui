@@ -63,7 +63,7 @@
             Import Dropdown Menu and compose it with sub-components:
         </Typography.Text>
         <CodeBlock
-            code={`import * as DropdownMenu from '$lib/sivir/components/dropdown-menu';\n\n<DropdownMenu.Root>\n  <DropdownMenu.Trigger>Menu</DropdownMenu.Trigger>\n  <DropdownMenu.Content>\n    <DropdownMenu.Item callback={handleClick}>\n      Action\n    </DropdownMenu.Item>\n  </DropdownMenu.Content>\n</DropdownMenu.Root>`}
+            code={`import * as DropdownMenu from '$lib/sivir/components/dropdown-menu';\nimport Shortcut from '$lib/sivir/components/shortcut';\n\n<DropdownMenu.Root>\n  <DropdownMenu.Trigger>Menu</DropdownMenu.Trigger>\n  <DropdownMenu.Content>\n    <DropdownMenu.Item callback={handleClick}>\n      Action\n      <Shortcut shortcut="cmd+K" />\n    </DropdownMenu.Item>\n  </DropdownMenu.Content>\n</DropdownMenu.Root>`}
             lang="svelte"
             copy="overlay"
         />

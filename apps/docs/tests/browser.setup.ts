@@ -1,6 +1,11 @@
 import '@sivir-ui/svelte/ui.css';
+import { resetOverlayStackForTests } from '@sivir-ui/svelte/components/_internal/overlay';
 import { resetSharedTooltipForTests } from '@sivir-ui/svelte/components/tooltip/shared-tooltip';
-import { resetBodyLocksForTests, resetEscapeStackForTests } from '@sivir-ui/svelte/utils';
+import {
+    resetBodyLocksForTests,
+    resetClickOutsideForTests,
+    resetEscapeStackForTests
+} from '@sivir-ui/svelte/utils';
 import { afterEach, beforeEach } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
@@ -26,6 +31,8 @@ async function resetBrowserState() {
     resetSharedTooltipForTests();
     resetBodyLocksForTests();
     resetEscapeStackForTests();
+    resetClickOutsideForTests();
+    resetOverlayStackForTests();
 }
 
 beforeEach(resetBrowserState);

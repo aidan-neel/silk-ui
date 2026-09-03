@@ -13,6 +13,8 @@
     let {
         size = 16,
         ready = false,
+        speed = 1,
+        curved = false,
         class: classProp,
         'aria-label': ariaLabel,
         'aria-hidden': ariaHidden
@@ -21,6 +23,7 @@
     let indicator = $state<HTMLSpanElement>();
     let phase = $state<SpinnerPhase>('loading');
     let entered = $state(false);
+    const spinDuration = $derived(`${850 / (speed > 0 ? speed : 1)}ms`);
     const showCheckmark = $derived(phase === 'success' || phase === 'exiting');
     const collapsed = $derived(!entered || phase === 'exiting');
     const loaderBlur = $derived(showCheckmark || !entered ? 'blur(2px)' : 'blur(0px)');
@@ -87,12 +90,12 @@
         <LoaderCircle
             {size}
             aria-hidden="true"
-            class={`absolute inset-0 m-auto animate-spin transition-[filter,opacity,transform] duration-[var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:animate-none motion-reduce:transition-none ${
+            class={`absolute inset-0 m-auto ${curved ? 'animate-[sivir-spinner-spin_linear_infinite]' : 'animate-spin'} transition-[filter,opacity,transform] duration-[var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:animate-none motion-reduce:transition-none ${
                 showCheckmark || !entered
                     ? '-rotate-90 scale-75 opacity-0'
                     : 'rotate-0 scale-100 opacity-100'
             }`}
-            style={`filter: ${loaderBlur};`}
+            style={`filter: ${loaderBlur}; animation-duration: ${spinDuration};`}
         />
         <Check
             {size}
@@ -108,3 +111,37 @@
         />
     </span>
 {/if}
+
+<style>
+    :global {
+        @keyframes sivir-spinner-spin {
+            0% {
+                rotate: 0deg;
+            }
+            12.5% {
+                rotate: 36.9deg;
+            }
+            25% {
+                rotate: 78.5deg;
+            }
+            37.5% {
+                rotate: 126.9deg;
+            }
+            50% {
+                rotate: 180deg;
+            }
+            62.5% {
+                rotate: 233.1deg;
+            }
+            75% {
+                rotate: 281.5deg;
+            }
+            87.5% {
+                rotate: 323.1deg;
+            }
+            100% {
+                rotate: 360deg;
+            }
+        }
+    }
+</style>

@@ -1,0 +1,4 @@
+- Add a nested Modal example that opens a second same-size dialog from the first.
+- Narrow the Show More hero so the two-line clamp hides real content, and rebuild the Task Steps and Tooltip heroes on the standard Card surface with no shadow.
+- Match Installation heading-to-command spacing with Usage on every docs page.
+- Render keyboard hints with Shortcut instead of muted text or raw `kbd` in Tooltip, Command, Prompt Composer, and the Dropdown Menu usage snippet.

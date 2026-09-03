@@ -30,6 +30,8 @@ export type CodeBlockRegistry = {
     order: string[];
     /** Whether the high-level root owns the shared panel surface. */
     contained: boolean;
+    /** Set by List: a tab row is present, so language switches roll instead of sliding. */
+    tabbed: boolean;
 };
 export type CodeBlockProps = {
     /** Active tab id (bindable). Defaults to the first tab. */

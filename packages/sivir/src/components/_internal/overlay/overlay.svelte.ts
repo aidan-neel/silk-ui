@@ -7,6 +7,71 @@ import {
     trapFocus
 } from '@sivir-ui/svelte/utils';
 
+type OverlayKind = 'modal' | 'sheet' | 'other';
+
+type OverlayLayer = {
+    panel: HTMLElement;
+    kind: OverlayKind;
+};
+
+const overlayStack: OverlayLayer[] = [];
+
+function overlayKind(panel: HTMLElement): OverlayKind {
+    const ui = panel.dataset.ui;
+    if (ui === 'modal-panel') {
+        return 'modal';
+    }
+    if (ui === 'sheet-content') {
+        return 'sheet';
+    }
+    return 'other';
+}
+
+function modalScrim(panel: HTMLElement) {
+    return panel
+        .closest('[data-overlay-root]')
+        ?.querySelector<HTMLElement>('[data-ui="modal-overlay"]');
+}
+
+function clearModalStackAttrs(panel: HTMLElement) {
+    panel.removeAttribute('data-stacked');
+    panel.closest('[data-overlay-root]')?.removeAttribute('aria-hidden');
+    modalScrim(panel)?.removeAttribute('data-nested');
+}
+
+function syncStackedModals() {
+    const modals = overlayStack.filter((layer) => layer.kind === 'modal');
+    for (const layer of overlayStack) {
+        if (layer.kind !== 'modal') {
+            continue;
+        }
+        const modalIndex = modals.indexOf(layer);
+        const behind = modalIndex >= 0 && modalIndex < modals.length - 1;
+        const nested = modalIndex > 0;
+        const root = layer.panel.closest('[data-overlay-root]');
+        const scrim = modalScrim(layer.panel);
+        if (behind) {
+            layer.panel.setAttribute('data-stacked', 'behind');
+            root?.setAttribute('aria-hidden', 'true');
+            layer.panel.setAttribute('aria-modal', 'false');
+        } else {
+            layer.panel.removeAttribute('data-stacked');
+            root?.removeAttribute('aria-hidden');
+            layer.panel.setAttribute('aria-modal', 'true');
+        }
+        if (nested) {
+            scrim?.setAttribute('data-nested', '');
+        } else {
+            scrim?.removeAttribute('data-nested');
+        }
+    }
+}
+
+/** Test isolation for the process-local nested overlay stack. */
+export function resetOverlayStackForTests() {
+    overlayStack.length = 0;
+}
+
 /**
  * Shared overlay primitive for modal-content and sheet-content.
  *
@@ -16,6 +81,7 @@ import {
  *   - Escape key handler (panel-scoped, fires onClose).
  *   - Body scroll lock while open (shared refcount with Popover).
  *   - Inert background while open (shared refcount with Popover).
+ *   - Nested modal stacking (recede the earlier panel, lighter nested scrim).
  *
  * Consumer owns:
  *   - The panel DOM element (bind via `panelEl` getter).
@@ -59,6 +125,12 @@ export function useOverlay(opts: OverlayOptions) {
 
         const lockScroll = opts.lockScroll !== false;
         const inert = opts.inert !== false;
+        const layer = {
+            panel,
+            kind: overlayKind(panel)
+        };
+        overlayStack.push(layer);
+        syncStackedModals();
 
         const cleanupTrap = trapFocus(panel, {
             initialFocus: getFocusableElements(panel)[0] ?? null,
@@ -81,6 +153,12 @@ export function useOverlay(opts: OverlayOptions) {
         });
 
         return () => {
+            const index = overlayStack.lastIndexOf(layer);
+            if (index >= 0) {
+                overlayStack.splice(index, 1);
+            }
+            clearModalStackAttrs(panel);
+            syncStackedModals();
             releaseInert?.();
             cleanupTrap?.();
             co.destroy();

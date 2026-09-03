@@ -127,11 +127,13 @@ describe('ScrollArea -- edge cues', () => {
         expect(viewport.className).toContain('rounded-[inherit]');
         expect(topCue.className).toContain('backdrop-blur-sm');
         expect(topCue.className).toContain('-top-px');
+        expect(topCue.className).toContain('rounded-t-[inherit]');
         expect(topCue.className).toContain(
             '[mask-image:linear-gradient(to_bottom,#000_0%,#000_40%,transparent_100%)]'
         );
         expect(bottomCue.className).toContain('backdrop-blur-sm');
         expect(bottomCue.className).toContain('-bottom-px');
+        expect(bottomCue.className).toContain('rounded-b-[inherit]');
         expect(bottomCue.className).toContain(
             '[mask-image:linear-gradient(to_top,#000_0%,#000_40%,transparent_100%)]'
         );

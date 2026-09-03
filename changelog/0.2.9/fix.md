@@ -1,1 +1,6 @@
+- Keep Modal open when a nested Select, Combobox, or Dropdown Menu dismisses: one pointer gesture peels only the top layer.
 - Bundle the default DM Sans and JetBrains Mono faces as self-hosted Fontsource stylesheets in `ui.css`, so package and CLI installs render the intended typefaces with no Google Fonts request and no runtime network access.
+- Round the ScrollArea edge-fade cues to the container radius, and put the docs chat-list example on the panel surface so the fade melts into its background in dark mode instead of reading as a blurred strip.
+- Stop `tailwind-merge` from dropping `font-mono`/`font-sans` where they share a class string with `font-label`, which left rolling code blocks (and masked inline code, code panels, and shortcut chips) on the wrong typeface.
+- Size the Theme Studio preset menu to its four options with `max-h-56` instead of a fixed `h-56`, so Default, Graphite, Grove, and Linen render without empty scroll space.
+- Stop unstyled menu Buttons from advertising `data-variant=primary`, which made Shortcut chips inside Dropdown Menu, Context Menu, and Command rows render as white-on-white.

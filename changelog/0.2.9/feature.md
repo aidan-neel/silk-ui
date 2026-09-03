@@ -1,0 +1,9 @@
+- Enter Toast by sharpening from a 2px blur instead of fading opacity in.
+- Nest Modal inside Modal: the earlier dialog scales to 0.925, the new scrim uses less blur, and dismiss peels only the top layer.
+- Give Spinner an optional curved rotation that varies speed without ever stalling, defaulting to the continuous spin.
+- Give Spinner a speed multiplier prop and a slightly faster default spin.
+- Roll Tooltip in-place re-labels such as Copy→Copied with Scritto instead of swapping the label instantly.
+- Roll single-line Code Block tabs (install commands) with Scritto; multi-line language switches keep highlighted source and ease panel height.
+- Ease the Code Block panel height through language switches so taller snippets open the block smoothly instead of snapping.
+- Stretch the Switch thumb on press so the toggle feels like a physical control.
+- Give Shortcut chips a hair more vertical padding so the glyphs aren’t tight to the border.

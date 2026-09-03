@@ -26,7 +26,7 @@
     );
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-4">
     <Typography.Text variant="supporting">
         Copy the command below and run it in your terminal.
     </Typography.Text>
