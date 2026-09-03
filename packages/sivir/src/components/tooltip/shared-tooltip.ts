@@ -11,7 +11,7 @@
  *
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
-import { computePosition, flip, offset, type Placement, shift } from '@floating-ui/dom';
+import { autoUpdate, computePosition, flip, offset, type Placement, shift } from '@floating-ui/dom';
 import '@scritto/core';
 import type { Scritto as ScrittoElement } from '@scritto/core';
 
@@ -27,6 +27,7 @@ let activeRef: HTMLElement | null = null;
 let lastCenter = 'translateX(-50%)';
 let openTimer: ReturnType<typeof setTimeout> | undefined;
 let closeTimer: ReturnType<typeof setTimeout> | undefined;
+let stopTracking: (() => void) | undefined;
 
 const SHOW = 'scale(1)';
 const HIDE = 'scale(0.94)';
@@ -186,6 +187,23 @@ function reposition(ref: HTMLElement, placement: Placement, animated: boolean) {
         .catch(() => {});
 }
 
+/**
+ * Keeps the open bubble glued to `ref` across scroll, resize, and layout
+ * shifts. The update only moves `left`/`top`, so the bubble glides on its
+ * existing transition instead of replaying the show animation.
+ */
+function trackPosition(ref: HTMLElement, placement: Placement) {
+    stopTracking?.();
+    if (!bubble) {
+        return;
+    }
+    stopTracking = autoUpdate(ref, bubble, () => {
+        if (activeRef === ref) {
+            reposition(ref, placement, true);
+        }
+    });
+}
+
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref: HTMLElement, text: string, placement: Placement, className = '') {
     if (!bubble || !label) {
@@ -199,6 +217,7 @@ function present(ref: HTMLElement, text: string, placement: Placement, className
     applyBubbleClass(className);
     applyWidth(text);
     reposition(ref, placement, morph);
+    trackPosition(ref, placement);
     visible = true;
 }
 
@@ -266,6 +285,8 @@ function dismiss() {
     if (!bubble) {
         return;
     }
+    stopTracking?.();
+    stopTracking = undefined;
     visible = false;
     activeRef = null;
     bubble.style.opacity = '0';
@@ -290,6 +311,8 @@ export function hideTooltip(ref: HTMLElement | null, closeDelay = 100) {
 export function resetSharedTooltipForTests() {
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
+    stopTracking?.();
+    stopTracking = undefined;
     openTimer = undefined;
     closeTimer = undefined;
     visible = false;

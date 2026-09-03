@@ -59,7 +59,7 @@ describe('ui.css Tier 2 semantic', () => {
     it('maps semantic color tokens to neutral/blue primitives', () => {
         expect(css).toContain('--color-background: var(--sivir-neutral-10)');
         expect(css).toContain('--color-card: var(--sivir-neutral-0)');
-        expect(css).toContain('--color-primary: #1f9be6');
+        expect(css).toContain('--color-primary: #1e78e6');
         expect(css).toContain(
             '--color-ring: color-mix(in srgb, var(--color-primary) 30%, transparent)'
         );

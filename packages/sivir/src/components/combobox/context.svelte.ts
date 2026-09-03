@@ -5,6 +5,7 @@ export type ComboboxContext = {
     id: string;
     state: ComboboxState;
     selectItem: (item: ComboboxItem) => void;
+    clearSelection: () => void;
 };
 
 const { set: setComboboxContext, get: getComboboxContext } =

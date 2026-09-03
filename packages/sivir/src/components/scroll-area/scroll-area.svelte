@@ -53,21 +53,21 @@
 <div
     data-ui="scroll-area"
     data-orientation={orientation}
-    class={cn(className, 'relative min-h-0 max-h-inherit overflow-hidden')}
+    class={cn(className, 'relative flex min-h-0 min-w-0 flex-col overflow-hidden max-h-[inherit] max-w-[inherit]')}
 >
     <div
         bind:this={element}
         data-ui="scroll-area-viewport"
         class={cn(
-            'relative size-full min-h-0 rounded-[inherit] overscroll-contain [scrollbar-color:color-mix(in_srgb,var(--color-foreground)_22%,transparent)_transparent] [scrollbar-width:thin]',
+            'relative min-h-0 min-w-0 w-full flex-1 rounded-[inherit] overscroll-contain [scrollbar-color:color-mix(in_srgb,var(--color-foreground)_22%,transparent)_transparent] [scrollbar-width:thin]',
             '[&::-webkit-scrollbar]:size-2.5 [&::-webkit-scrollbar-track]:bg-transparent',
             '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-[color-mix(in_srgb,var(--color-foreground)_18%,transparent)] [&::-webkit-scrollbar-thumb]:bg-clip-padding',
             '[&::-webkit-scrollbar-thumb:hover]:bg-[color-mix(in_srgb,var(--color-foreground)_32%,transparent)] [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding',
             orientation === 'horizontal'
-                ? 'max-w-inherit overflow-x-auto overflow-y-hidden'
+                ? 'max-w-[inherit] overflow-x-auto overflow-y-hidden'
                 : orientation === 'vertical'
-                  ? 'max-h-inherit overflow-y-auto overflow-x-hidden'
-                  : 'max-h-inherit max-w-inherit overflow-auto'
+                  ? 'max-h-[inherit] overflow-y-auto overflow-x-hidden'
+                  : 'max-h-[inherit] max-w-[inherit] overflow-auto'
         )}
         onscroll={(event) => {
             measure();

@@ -49,10 +49,10 @@ describe('ScrollArea -- orientation prop', () => {
         const root = queryRequired(container, '[data-ui="scroll-area"]');
         const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
         expect(root.getAttribute('data-orientation')).toBe('vertical');
-        expect(root.className).toContain('max-h-inherit');
+        expect(root.className).toContain('max-h-[inherit]');
         expect(viewport.className).toContain('overflow-y-auto');
         expect(viewport.className).toContain('overflow-x-hidden');
-        expect(viewport.className).toContain('max-h-inherit');
+        expect(viewport.className).toContain('max-h-[inherit]');
     });
 
     it('applies overflow-x-auto for orientation="horizontal"', () => {
@@ -137,6 +137,33 @@ describe('ScrollArea -- edge cues', () => {
         expect(bottomCue.className).toContain(
             '[mask-image:linear-gradient(to_top,#000_0%,#000_40%,transparent_100%)]'
         );
+    });
+});
+
+describe('ScrollArea -- max-height scrolling without explicit height', () => {
+    it('sizes the viewport with flex instead of h-full so max-h caps scroll', () => {
+        const { container } = render(ScrollArea, {
+            props: { children: textSnippet('x') }
+        });
+        const root = queryRequired(container, '[data-ui="scroll-area"]');
+        const viewport = queryRequired(container, '[data-ui="scroll-area-viewport"]');
+        expect(root.className).toContain('flex');
+        expect(root.className).toContain('flex-col');
+        expect(root.className).toContain('min-w-0');
+        expect(root.className).toContain('max-w-[inherit]');
+        expect(viewport.className).toContain('flex-1');
+        expect(viewport.className).toContain('w-full');
+        expect(viewport.className).toContain('min-w-0');
+        expect(viewport.className.split(/\s+/)).not.toContain('size-full');
+    });
+
+    it('lets a consumer max-h override win over the inherited cap', () => {
+        const { container } = render(ScrollArea, {
+            props: { class: 'max-h-56', children: textSnippet('x') } as never
+        });
+        const root = queryRequired(container, '[data-ui="scroll-area"]');
+        expect(root.className).toContain('max-h-56');
+        expect(root.className.split(/\s+/)).not.toContain('max-h-[inherit]');
     });
 });
 

@@ -370,11 +370,14 @@ function onDocumentEscape(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
     let topIndex = escapeStack.length - 1;
+    let topRank = escapeStack[topIndex]?.rank ?? 0;
     let topDepth = domDepth(escapeStack[topIndex]?.element);
     for (let index = escapeStack.length - 2; index >= 0; index -= 1) {
+        const rank = escapeStack[index]?.rank ?? 0;
         const depth = domDepth(escapeStack[index]?.element);
-        if (depth > topDepth) {
+        if (rank > topRank || (rank === topRank && depth > topDepth)) {
             topIndex = index;
+            topRank = rank;
             topDepth = depth;
         }
     }
@@ -391,12 +394,16 @@ function ensureEscapeListener() {
  * Registers a close handler while a layer is open and returns a disposer.
  * Modal, sheet, and popover push on open and pop on teardown.
  */
-export function pushEscapeLayer(close, element) {
+export function pushEscapeLayer(close, element, rank = 0) {
     if (typeof document === 'undefined') {
         return () => { };
     }
     ensureEscapeListener();
-    const layer = { close, element };
+    const layer = {
+        close,
+        element,
+        rank
+    };
     escapeStack.push(layer);
     return () => {
         const index = escapeStack.lastIndexOf(layer);
@@ -692,6 +699,44 @@ export function travelingHighlight(node, options = {}) {
         }
     };
 }
+function overlayRootOf(node) {
+    if (node instanceof Element) {
+        return node.closest('[data-overlay-root]');
+    }
+    return node?.parentElement?.closest('[data-overlay-root]') ?? null;
+}
+let overlayPointerGesture = false;
+let overlayPointerGestureTimeout;
+function markOverlayPointerGesture() {
+    overlayPointerGesture = true;
+    if (overlayPointerGestureTimeout !== undefined) {
+        clearTimeout(overlayPointerGestureTimeout);
+    }
+    overlayPointerGestureTimeout = setTimeout(() => {
+        overlayPointerGesture = false;
+        overlayPointerGestureTimeout = undefined;
+    }, 0);
+}
+/** Test isolation for the overlay click-outside gesture lock. */
+export function resetClickOutsideForTests() {
+    overlayPointerGesture = false;
+    if (overlayPointerGestureTimeout !== undefined) {
+        clearTimeout(overlayPointerGestureTimeout);
+        overlayPointerGestureTimeout = undefined;
+    }
+}
+function overlayRootFromEvent(event, path) {
+    for (const entry of path) {
+        if (entry instanceof Element && entry.hasAttribute('data-overlay-root')) {
+            return entry;
+        }
+    }
+    const target = event.target;
+    if (target instanceof Element) {
+        return target.closest('[data-overlay-root]');
+    }
+    return null;
+}
 /**
  * Runs a callback when a pointer event lands outside the node and any excluded
  * nodes.
@@ -702,6 +747,15 @@ export function travelingHighlight(node, options = {}) {
  * listener runs, so the now-detached node drops out of `composedPath()`. The
  * target's own ancestor chain stays intact after the wrapper is detached, so it
  * serves as the fallback and keeps a parent overlay from being dismissed too.
+ *
+ * Nested overlays portal as sibling `[data-overlay-root]` hosts. A click inside
+ * a different overlay root belongs to that layer, so this listener must not
+ * treat it as an outside dismiss — otherwise Cancel on a nested modal closes
+ * the parent too.
+ *
+ * Select, Combobox, and Dropdown Menu dismiss on pointerdown. That unmounts
+ * their dismiss scrim before the following `click`, which would otherwise hit
+ * the parent Modal overlay and close it. One pointer gesture peels one layer.
  */
 export function clickOutside(node, callback, exclude = []) {
     let destroyed = false;
@@ -714,7 +768,10 @@ export function clickOutside(node, callback, exclude = []) {
         const targetEl = target instanceof Element ? target : null;
         const isInsideFloating = path.some((el) => el instanceof Element && el.hasAttribute('data-floating-content')) ||
             targetEl?.closest('[data-floating-content]') != null;
-        return !isInsideNode && !isInsideExcluded && !isInsideFloating;
+        const clickRoot = overlayRootFromEvent(event, path);
+        const nodeRoot = overlayRootOf(node);
+        const isInsideOtherOverlay = clickRoot != null && nodeRoot != null && clickRoot !== nodeRoot;
+        return !isInsideNode && !isInsideExcluded && !isInsideFloating && !isInsideOtherOverlay;
     }
     function dismiss(event) {
         event.preventDefault();
@@ -724,6 +781,7 @@ export function clickOutside(node, callback, exclude = []) {
     const handlePointerDown = (event) => {
         if (isOutside(event)) {
             dismissedByPointer = true;
+            markOverlayPointerGesture();
             dismiss(event);
         }
     };
@@ -731,6 +789,11 @@ export function clickOutside(node, callback, exclude = []) {
         if (dismissedByPointer) {
             dismissedByPointer = false;
             dismiss(event);
+            return;
+        }
+        if (overlayPointerGesture) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
             return;
         }
         if (isOutside(event)) {

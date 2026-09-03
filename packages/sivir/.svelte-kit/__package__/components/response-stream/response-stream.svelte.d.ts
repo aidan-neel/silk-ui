@@ -1,4 +1,5 @@
+import { type Component } from 'svelte';
 import type { ResponseStreamProps } from '.';
-declare const ResponseStream: import("svelte").Component<ResponseStreamProps, {}, "">;
+declare const ResponseStream: Component<ResponseStreamProps, {}, "">;
 type ResponseStream = ReturnType<typeof ResponseStream>;
 export default ResponseStream;

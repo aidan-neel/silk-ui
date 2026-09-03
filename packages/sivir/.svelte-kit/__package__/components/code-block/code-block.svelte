@@ -60,6 +60,7 @@
      */
     const registry = $state({
         codes: {},
+        langs: {},
         active: untrack(() => value ?? ''),
         order: [],
         contained: untrack(() => isHighLevel),

@@ -75,10 +75,10 @@
 <Toaster />
 
 <main
-    class={`w-screen bg-background ${isDocs ? 'h-[100svh] overflow-hidden p-3' : isThemeStudio ? 'h-[100svh] overflow-hidden' : isHome ? 'min-h-screen' : 'min-h-screen p-3'}`}
+    class={`w-screen bg-background ${isDocs ? 'h-[100svh] overflow-hidden p-3' : isThemeStudio ? 'h-[100svh] overflow-hidden' : isHome ? 'h-[100svh] overflow-hidden' : 'min-h-screen p-3'}`}
 >
     {#if isHome}
-        <div class="relative mx-auto flex min-h-screen w-full max-w-none flex-col">
+        <div class="relative mx-auto flex h-[100svh] w-full max-w-none flex-col overflow-hidden">
             {@render children?.()}
         </div>
     {:else if isDocs}

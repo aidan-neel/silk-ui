@@ -15,6 +15,13 @@ export type PopoverContentProps = {
      * background overrides. The `class` prop styles the outer Panel frame. */
     surfaceClass?: string;
     allowClickOutside?: boolean;
+    /**
+     * Render the full-viewport dismiss layer under the panel while open.
+     * Defaults to `true`. Set to `false` for triggers that must stay
+     * clickable while open (e.g. an input-style combobox trigger);
+     * outside pointer dismissal still applies via `allowClickOutside`.
+     */
+    dismissLayer?: boolean;
     portal?: boolean;
     refElement?: VirtualElement;
     role?: 'dialog' | 'alertdialog' | 'menu' | 'listbox' | 'none';

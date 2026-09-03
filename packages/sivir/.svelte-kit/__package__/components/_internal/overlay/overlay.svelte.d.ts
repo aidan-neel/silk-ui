@@ -1,3 +1,5 @@
+/** Test isolation for the process-local nested overlay stack. */
+export declare function resetOverlayStackForTests(): void;
 /**
  * Shared overlay primitive for modal-content and sheet-content.
  *
@@ -7,6 +9,7 @@
  *   - Escape key handler (panel-scoped, fires onClose).
  *   - Body scroll lock while open (shared refcount with Popover).
  *   - Inert background while open (shared refcount with Popover).
+ *   - Nested modal stacking (recede the earlier panel, lighter nested scrim).
  *
  * Consumer owns:
  *   - The panel DOM element (bind via `panelEl` getter).

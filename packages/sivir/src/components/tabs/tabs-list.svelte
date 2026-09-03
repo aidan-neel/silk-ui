@@ -32,11 +32,23 @@
     const ghostRect = $derived(hovering && hover ? hover : indicator);
 
     function rectOf(el: HTMLElement): Rect {
+        const host = listEl;
+        if (!host) {
+            return {
+                left: el.offsetLeft,
+                top: el.offsetTop,
+                width: el.offsetWidth,
+                height: el.offsetHeight
+            };
+        }
+        const hostRect = host.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+
         return {
-            left: el.offsetLeft,
-            top: el.offsetTop,
-            width: el.offsetWidth,
-            height: el.offsetHeight
+            left: rect.left - hostRect.left - host.clientLeft + host.scrollLeft,
+            top: rect.top - hostRect.top - host.clientTop + host.scrollTop,
+            width: rect.width,
+            height: rect.height
         };
     }
 

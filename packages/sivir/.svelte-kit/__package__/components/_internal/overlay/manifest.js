@@ -15,12 +15,16 @@
  *   1.2.0 -- inert the background while open; scroll lock also covers nested
  *           overflow containers so page regions other than `document.body`
  *           cannot scroll behind the overlay.
+ *   1.3.0 -- nested modal stacking: recede the earlier panel, lighten the
+ *           nested scrim, and dismiss only the top layer. Click-outside
+ *           peels one layer per pointer gesture so Select inside Modal
+ *           does not close the dialog.
  */
 export const manifest = {
     name: '_internal/overlay',
-    version: '1.2.0',
+    version: '1.3.0',
     visibility: 'internal',
-    description: 'Shared overlay primitive owning focus trap, inert background, click-outside, Escape handling, and body-scroll lock. Consumed by modal and sheet; not directly installable.',
+    description: 'Shared overlay primitive owning focus trap, inert background, click-outside, Escape handling, body-scroll lock, and nested modal stacking. Consumed by modal and sheet; not directly installable.',
     files: [
         'components/_internal/overlay/overlay.svelte.ts',
         'components/_internal/overlay/index.ts',

@@ -75,7 +75,7 @@ export declare function resetBodyLocksForTests(): void;
  * Registers a close handler while a layer is open and returns a disposer.
  * Modal, sheet, and popover push on open and pop on teardown.
  */
-export declare function pushEscapeLayer(close: () => void, element?: Element): () => void;
+export declare function pushEscapeLayer(close: () => void, element?: Element, rank?: number): () => void;
 /** Test isolation for the escape stack. */
 export declare function resetEscapeStackForTests(): void;
 /** Returns the visible, interactive descendants inside a container. */
@@ -107,6 +107,8 @@ type TravelingHighlightOptions = {
 export declare function travelingHighlight(node: HTMLElement, options?: TravelingHighlightOptions): {
     destroy(): void;
 };
+/** Test isolation for the overlay click-outside gesture lock. */
+export declare function resetClickOutsideForTests(): void;
 /**
  * Runs a callback when a pointer event lands outside the node and any excluded
  * nodes.
@@ -117,6 +119,15 @@ export declare function travelingHighlight(node: HTMLElement, options?: Travelin
  * listener runs, so the now-detached node drops out of `composedPath()`. The
  * target's own ancestor chain stays intact after the wrapper is detached, so it
  * serves as the fallback and keeps a parent overlay from being dismissed too.
+ *
+ * Nested overlays portal as sibling `[data-overlay-root]` hosts. A click inside
+ * a different overlay root belongs to that layer, so this listener must not
+ * treat it as an outside dismiss — otherwise Cancel on a nested modal closes
+ * the parent too.
+ *
+ * Select, Combobox, and Dropdown Menu dismiss on pointerdown. That unmounts
+ * their dismiss scrim before the following `click`, which would otherwise hit
+ * the parent Modal overlay and close it. One pointer gesture peels one layer.
  */
 export declare function clickOutside(node: Node, callback: () => void, exclude?: Node[]): {
     destroy(): void;

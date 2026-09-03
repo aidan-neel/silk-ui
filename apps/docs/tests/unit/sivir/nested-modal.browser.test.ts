@@ -50,7 +50,9 @@ describe('Nested Modal stacking', () => {
         await page.getByTestId('inner-cancel').click();
         await flush();
         await page.getByTestId('outer-cancel').click();
-        await flush();
+        await expect
+            .element(page.getByText('Change the name, or transfer this project.'))
+            .not.toBeInTheDocument();
         expect(document.querySelectorAll('[data-ui="modal-panel"]').length).toBe(0);
 
         await page.getByTestId('open-outer').click();
@@ -68,9 +70,9 @@ describe('Nested Modal stacking', () => {
         render(NestedModalFixture, { outerOpen: true, innerOpen: true });
         await flush();
 
-        const overlays = document.querySelectorAll('[data-ui="modal-overlay"]');
-        expect(overlays.length).toBe(2);
-        (overlays[1] as HTMLElement).click();
+        const nestedScrim = document.querySelector('[data-ui="modal-overlay"][data-nested]');
+        expect(nestedScrim).toBeTruthy();
+        (nestedScrim as HTMLElement).click();
         await flush();
 
         await expect
@@ -88,6 +90,7 @@ describe('Nested Modal stacking', () => {
         const behind = document.querySelector('[data-ui="modal-panel"][data-stacked="behind"]');
         const nestedScrim = document.querySelector('[data-ui="modal-overlay"][data-nested]');
         expect(behind).toBeTruthy();
+        expect(behind?.textContent).toContain('Change the name, or transfer this project.');
         expect(nestedScrim).toBeTruthy();
     });
 

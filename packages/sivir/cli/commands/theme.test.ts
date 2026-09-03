@@ -9,7 +9,7 @@ afterEach(() => {
 });
 
 describe('resolveThemeCss', () => {
-    test('validates and renders a remote version-2 theme', async () => {
+    test('validates and renders a remote versioned theme', async () => {
         globalThis.fetch = (() =>
             Promise.resolve(
                 new Response(JSON.stringify({ ...DEFAULT_THEME, slug: 'ocean', brand: '#0066cc' }))
@@ -27,7 +27,7 @@ describe('resolveThemeCss', () => {
             )) as unknown as typeof fetch;
 
         expect(resolveThemeCss('legacy-theme', 'https://registry.example')).rejects.toThrow(
-            /invalid v2 theme/
+            /invalid theme/
         );
     });
 });

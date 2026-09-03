@@ -26,10 +26,13 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 3.0.1 -- Inert, focus trap, and scroll lock share the overlay primitives so
  *          nested page overflow containers lock and sibling overlay roots stay
  *          interactive.
+ * 3.1.0 -- Content gained `dismissLayer` (default true). Set it false for
+ *          triggers that must stay clickable while open; outside pointer
+ *          dismissal still applies via `allowClickOutside`.
  */
 export const manifest: Manifest = {
     name: 'popover',
-    version: '3.0.1',
+    version: '3.1.0',
     visibility: 'public',
     description:
         'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, inert outside content, click-outside + Escape dismiss, optional portal.',

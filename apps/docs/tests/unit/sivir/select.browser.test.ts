@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-svelte';
 import SelectFixture from '../../fixtures/SelectFixture.svelte';
+import SelectScrollableFixture from '../../fixtures/SelectScrollableFixture.svelte';
 
 async function flush() {
     await tick();
@@ -115,5 +116,31 @@ describe('Select -- ARIA', () => {
 
         const options = document.querySelectorAll('[role="option"]');
         expect(options.length).toBe(3);
+    });
+});
+
+describe('Select -- max-h-56 scrolling without explicit height', () => {
+    it('caps the menu at max-h and scrolls the overflow', async () => {
+        render(SelectScrollableFixture, {});
+        await flush();
+        await page.getByTestId('select-scrollable-trigger').click();
+        await flush();
+
+        const root = document.querySelector<HTMLElement>('[data-ui="scroll-area"]');
+        const viewport = document.querySelector<HTMLElement>('[data-ui="scroll-area-viewport"]');
+        expect(root).not.toBeNull();
+        expect(viewport).not.toBeNull();
+        if (!root || !viewport) {
+            return;
+        }
+
+        // max-h-56 caps the menu instead of growing with all 30 options.
+        expect(root.clientHeight).toBeLessThanOrEqual(240);
+        // The viewport overflows, so the list scrolls inside the menu.
+        expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+
+        viewport.scrollTop = 100;
+        await flush();
+        expect(viewport.scrollTop).toBeGreaterThan(0);
     });
 });

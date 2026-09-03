@@ -19,6 +19,8 @@
       "dependencies": {
         "@floating-ui/dom": "^1.7.6",
         "@lucide/svelte": "^1.7.0",
+        "@scritto/core": "^0.1.0",
+        "@scritto/svelte": "^0.1.0",
         "@sivir-ui/svelte": "workspace:*",
         "@vercel/analytics": "^2.0.1",
         "clsx": "^2.1.1",
@@ -96,7 +98,7 @@
     },
     "packages/sivir": {
       "name": "@sivir-ui/svelte",
-      "version": "0.2.8",
+      "version": "0.2.9",
       "bin": {
         "sivir": "dist/index.js",
       },
@@ -106,7 +108,7 @@
         "@fontsource/jetbrains-mono": "^5.3.0",
         "@lucide/svelte": "^1.7.0",
         "@scritto/core": "^0.1.0",
-        "@scritto/svelte": "0.1.0",
+        "@scritto/svelte": "^0.1.0",
         "cnfast": "^0.0.8",
         "fuse.js": "^7.1.0",
         "highlight.js": "^11.11.1",

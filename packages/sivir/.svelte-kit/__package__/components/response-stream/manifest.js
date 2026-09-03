@@ -1,8 +1,8 @@
 export const manifest = {
     name: 'response-stream',
-    version: '1.0.0',
+    version: '2.0.0',
     visibility: 'public',
-    description: 'Animated AI response text with typewriter and word-fade modes.',
+    description: 'Animated AI response text that rolls arrivals in and eases height as lines wrap.',
     role: 'status',
     files: [
         'components/response-stream/response-stream.svelte',
@@ -12,6 +12,8 @@ export const manifest = {
     components: [],
     shared: ['utils.cn'],
     peerDependencies: {
+        '@scritto/core': '^0.1.0',
+        '@scritto/svelte': '^0.1.0',
         cnfast: '^0.0.8',
         svelte: '^5.0.0',
         'tailwind-merge': '^3.0.0'

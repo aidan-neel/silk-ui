@@ -1,0 +1,1 @@
+- Response Stream drops the `mode`, `fadeDuration`, and `segmentDelay` props along with the `Mode` and `Segment` types: rolling is now the only behavior, paced by `speed`, and the text renders medium by default.

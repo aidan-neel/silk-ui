@@ -2,7 +2,7 @@
 <script lang="ts">
     import type { TabsState } from '@sivir-ui/svelte/components/tabs';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { getContext } from 'svelte';
+    import { getContext, untrack } from 'svelte';
     import { toTabIdPart } from '../tabs/id';
     import type { CodeBlockContentProps, CodeBlockRegistry } from '.';
     import Copy from './code-block-copy.svelte';
@@ -25,10 +25,13 @@
     const tabs = getContext<TabsState>('tabs');
 
     if (registry) {
-        registry.codes[value] = code;
-        if (!registry.order.includes(value)) {
-            registry.order = [...registry.order, value];
-        }
+        untrack(() => {
+            registry.codes[value] = code;
+            registry.langs[value] = lang ?? '';
+            if (!registry.order.includes(value)) {
+                registry.order = [...registry.order, value];
+            }
+        });
     }
 
     /**
@@ -40,11 +43,13 @@
             return;
         }
         registry.codes[value] = code;
+        registry.langs[value] = lang ?? '';
         if (!registry.order.includes(value)) {
             registry.order = [...registry.order, value];
         }
         return () => {
             delete registry.codes[value];
+            delete registry.langs[value];
         };
     });
 

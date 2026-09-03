@@ -11,7 +11,7 @@
  *
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
-import { computePosition, flip, offset, shift } from '@floating-ui/dom';
+import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 import '@scritto/core';
 let bubble = null;
 let measurer = null;
@@ -24,6 +24,7 @@ let activeRef = null;
 let lastCenter = 'translateX(-50%)';
 let openTimer;
 let closeTimer;
+let stopTracking;
 const SHOW = 'scale(1)';
 const HIDE = 'scale(0.94)';
 /**
@@ -169,6 +170,22 @@ function reposition(ref, placement, animated) {
     })
         .catch(() => { });
 }
+/**
+ * Keeps the open bubble glued to `ref` across scroll, resize, and layout
+ * shifts. The update only moves `left`/`top`, so the bubble glides on its
+ * existing transition instead of replaying the show animation.
+ */
+function trackPosition(ref, placement) {
+    stopTracking?.();
+    if (!bubble) {
+        return;
+    }
+    stopTracking = autoUpdate(ref, bubble, () => {
+        if (activeRef === ref) {
+            reposition(ref, placement, true);
+        }
+    });
+}
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref, text, placement, className = '') {
     if (!bubble || !label) {
@@ -182,6 +199,7 @@ function present(ref, text, placement, className = '') {
     applyBubbleClass(className);
     applyWidth(text);
     reposition(ref, placement, morph);
+    trackPosition(ref, placement);
     visible = true;
 }
 /** Hover/focus a trigger: show after `delay`, or morph instantly if one is already up. */
@@ -233,6 +251,8 @@ function dismiss() {
     if (!bubble) {
         return;
     }
+    stopTracking?.();
+    stopTracking = undefined;
     visible = false;
     activeRef = null;
     bubble.style.opacity = '0';
@@ -255,6 +275,8 @@ export function hideTooltip(ref, closeDelay = 100) {
 export function resetSharedTooltipForTests() {
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
+    stopTracking?.();
+    stopTracking = undefined;
     openTimer = undefined;
     closeTimer = undefined;
     visible = false;

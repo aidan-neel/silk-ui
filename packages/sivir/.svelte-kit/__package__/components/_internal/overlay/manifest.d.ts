@@ -16,5 +16,9 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *   1.2.0 -- inert the background while open; scroll lock also covers nested
  *           overflow containers so page regions other than `document.body`
  *           cannot scroll behind the overlay.
+ *   1.3.0 -- nested modal stacking: recede the earlier panel, lighten the
+ *           nested scrim, and dismiss only the top layer. Click-outside
+ *           peels one layer per pointer gesture so Select inside Modal
+ *           does not close the dialog.
  */
 export declare const manifest: Manifest;

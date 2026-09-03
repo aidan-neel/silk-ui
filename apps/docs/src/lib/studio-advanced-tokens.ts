@@ -172,13 +172,13 @@ export const colorTokenDefinitions = [
         name: '--color-primary',
         label: 'Brand',
         group: 'Brand',
-        fallback: '#1f9be6'
+        fallback: '#1e78e6'
     },
     {
         name: '--color-primary-hover',
         label: 'Brand hover',
         group: 'Brand',
-        fallback: '#1270ad'
+        fallback: 'color-mix(in srgb, var(--color-primary) 78%, black)'
     },
     {
         name: '--color-on-primary',

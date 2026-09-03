@@ -6,15 +6,44 @@ import {
     pushEscapeLayer,
     trapFocus
 } from '@sivir-ui/svelte/utils';
+import { getContext, setContext } from 'svelte';
 
 type OverlayKind = 'modal' | 'sheet' | 'other';
+
+const OVERLAY_DEPTH = Symbol('sivir-overlay-depth');
 
 type OverlayLayer = {
     panel: HTMLElement;
     kind: OverlayKind;
+    depth: number;
 };
 
 const overlayStack: OverlayLayer[] = [];
+
+function overlayNestingDepth() {
+    const parentDepth = getContext<number>(OVERLAY_DEPTH) ?? 0;
+    const depth = parentDepth + 1;
+    setContext(OVERLAY_DEPTH, depth);
+    return depth;
+}
+
+function applyOverlayRootLayer(panel: HTMLElement, depth: number) {
+    const root = panel.closest('[data-overlay-root]');
+    if (!(root instanceof HTMLElement)) {
+        return;
+    }
+    root.style.position = 'relative';
+    root.style.zIndex = String(100 + depth);
+}
+
+function clearOverlayRootLayer(panel: HTMLElement) {
+    const root = panel.closest('[data-overlay-root]');
+    if (!(root instanceof HTMLElement)) {
+        return;
+    }
+    root.style.removeProperty('position');
+    root.style.removeProperty('z-index');
+}
 
 function overlayKind(panel: HTMLElement): OverlayKind {
     const ui = panel.dataset.ui;
@@ -40,16 +69,17 @@ function clearModalStackAttrs(panel: HTMLElement) {
 }
 
 function syncStackedModals() {
-    const modals = overlayStack.filter((layer) => layer.kind === 'modal');
-    for (const layer of overlayStack) {
-        if (layer.kind !== 'modal') {
-            continue;
-        }
+    const modals = overlayStack
+        .filter((layer) => layer.kind === 'modal')
+        .slice()
+        .sort((a, b) => a.depth - b.depth);
+    for (const layer of modals) {
         const modalIndex = modals.indexOf(layer);
         const behind = modalIndex >= 0 && modalIndex < modals.length - 1;
         const nested = modalIndex > 0;
         const root = layer.panel.closest('[data-overlay-root]');
         const scrim = modalScrim(layer.panel);
+        applyOverlayRootLayer(layer.panel, layer.depth);
         if (behind) {
             layer.panel.setAttribute('data-stacked', 'behind');
             root?.setAttribute('aria-hidden', 'true');
@@ -111,6 +141,8 @@ export type OverlayOptions = {
 };
 
 export function useOverlay(opts: OverlayOptions) {
+    const depth = overlayNestingDepth();
+
     $effect(() => {
         if (!opts.isOpen()) {
             return;
@@ -127,9 +159,12 @@ export function useOverlay(opts: OverlayOptions) {
         const inert = opts.inert !== false;
         const layer = {
             panel,
-            kind: overlayKind(panel)
+            kind: overlayKind(panel),
+            depth
         };
         overlayStack.push(layer);
+        overlayStack.sort((a, b) => a.depth - b.depth);
+        applyOverlayRootLayer(panel, depth);
         syncStackedModals();
 
         const cleanupTrap = trapFocus(panel, {
@@ -146,17 +181,22 @@ export function useOverlay(opts: OverlayOptions) {
             }
         });
 
-        const releaseEscape = pushEscapeLayer(() => {
-            if (opts.allowEscape?.() ?? true) {
-                opts.onClose();
-            }
-        });
+        const releaseEscape = pushEscapeLayer(
+            () => {
+                if (opts.allowEscape?.() ?? true) {
+                    opts.onClose();
+                }
+            },
+            panel,
+            depth
+        );
 
         return () => {
             const index = overlayStack.lastIndexOf(layer);
             if (index >= 0) {
                 overlayStack.splice(index, 1);
             }
+            clearOverlayRootLayer(panel);
             clearModalStackAttrs(panel);
             syncStackedModals();
             releaseInert?.();

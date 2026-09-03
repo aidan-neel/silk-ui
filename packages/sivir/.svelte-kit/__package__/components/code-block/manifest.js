@@ -20,6 +20,7 @@ export const manifest = {
     components: ['tabs', 'copy-button', 'card'],
     shared: ['utils.cn'],
     peerDependencies: {
+        '@scritto/core': '^0.1.0',
         '@scritto/svelte': '^0.1.0',
         'highlight.js': '^11.0.0',
         cnfast: '^0.0.8',

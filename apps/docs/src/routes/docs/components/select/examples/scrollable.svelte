@@ -40,7 +40,7 @@
         <Select.Trigger class="min-w-[240px]" variant="outline">
             {selected?.label ?? 'Select timezone'}
         </Select.Trigger>
-        <Select.Content class="h-56">
+        <Select.Content class="max-h-56">
             {#each timezones as timezone (timezone.value)}
                 <Select.Item
                     value={timezone.value}

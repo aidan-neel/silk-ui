@@ -80,7 +80,7 @@ describe('GET /themes', () => {
         expect(res.status).toBe(200);
         const body = (await res.json()) as { slug: string; name: string }[];
         const slugs = body.map((t) => t.slug).sort();
-        expect(slugs).toEqual(['default', 'graphite', 'grove', 'linen']);
+        expect(slugs).toEqual(['bitsy', 'default', 'magic']);
         // Sorted by display name.
         const names = body.map((t) => t.name);
         expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
@@ -97,10 +97,10 @@ describe('GET /themes', () => {
     });
 
     it('omits default themes that have been hidden', async () => {
-        db.hiddenDefault.findMany = async () => [{ slug: 'linen' }];
+        db.hiddenDefault.findMany = async () => [{ slug: 'magic' }];
         const res = await get('/themes');
         const body = (await res.json()) as { slug: string }[];
-        expect(body.map((t) => t.slug)).not.toContain('linen');
+        expect(body.map((t) => t.slug)).not.toContain('magic');
     });
 });
 

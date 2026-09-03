@@ -34,7 +34,7 @@ export async function resolveThemeCss(slug: string, registry: string) {
         theme = parseTheme(await response.json());
     } catch (error) {
         throw new Error(
-            `theme registry returned an invalid v2 theme for "${slug}": ${error instanceof Error ? error.message : String(error)}`
+            `theme registry returned an invalid theme for "${slug}": ${error instanceof Error ? error.message : String(error)}`
         );
     }
     return { css: themeToCss(theme), source: 'registry' };

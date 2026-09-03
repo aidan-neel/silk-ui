@@ -136,8 +136,8 @@
     --color-input: var(--sivir-neutral-300);
     --color-foreground: var(--sivir-neutral-900);
     --color-foreground-muted: var(--sivir-neutral-500);
-    --color-primary: #1f9be6;
-    --color-primary-hover: #1270ad;
+    --color-primary: #1e78e6;
+    --color-primary-hover: color-mix(in srgb, var(--color-primary) 78%, black);
     --color-on-primary: hsl(0 0% 100%);
     --color-primary-stroke: transparent;
     --color-accent-tint: var(--sivir-blue-50);
@@ -160,6 +160,7 @@
 
 .dark {
     --sivir-neutral-0: hsl(0 0% 5%);
+    --sivir-neutral-10: hsl(60 11.1% 7%);
     --sivir-neutral-50: hsl(0 0% 10%);
     --sivir-neutral-100: hsl(0 0% 13%);
     --sivir-neutral-150: hsl(0 0% 15.7%);

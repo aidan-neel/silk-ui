@@ -228,7 +228,7 @@ export type {
 export * as Reasoning from './components/reasoning';
 export type { ReorderListProps } from './components/reorder-list';
 export { ReorderList } from './components/reorder-list';
-export type { Mode, ResponseStreamProps, Segment } from './components/response-stream';
+export type { ResponseStreamProps } from './components/response-stream';
 export { ResponseStream } from './components/response-stream';
 export type { ScrollAreaProps } from './components/scroll-area';
 export { ScrollArea } from './components/scroll-area';

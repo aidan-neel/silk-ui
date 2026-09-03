@@ -13,6 +13,7 @@
     role="none"
     tabindex={-1}
     focusTrap={false}
+    dismissLayer={comboboxState.appearance !== 'input'}
     data-ui="combobox-content"
     class={cn(className, 'min-w-[var(--popover-trigger-width)] w-[var(--popover-trigger-width)]')}
     surfaceClass="flex min-h-0 flex-col overflow-hidden p-0"

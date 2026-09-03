@@ -25,6 +25,7 @@
         searchContent: '',
         searchPlacement: 'trigger',
         threshold: 0.28,
+        appearance: 'button',
         activeValue: undefined
     });
     let syncedOpen = $state(untrack(() => open));
@@ -38,10 +39,19 @@
         item.callback?.();
     }
 
-    setComboboxContext({ id: key, state: comboboxState, selectItem });
+    function clearSelection() {
+        comboboxState.selected = undefined;
+        comboboxState.activeValue = undefined;
+        comboboxState.searchContent = '';
+        comboboxState.results = new SvelteSet();
+        value = '';
+        onValueChange?.('');
+    }
+
+    setComboboxContext({ id: key, state: comboboxState, selectItem, clearSelection });
 
     $effect(() => {
-        if (comboboxState.open) {
+        if (comboboxState.open && comboboxState.appearance !== 'input') {
             comboboxState.searchContent = '';
             comboboxState.activeValue = untrack(() => comboboxState.selected?.value);
         }

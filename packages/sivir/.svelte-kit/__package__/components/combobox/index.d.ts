@@ -1,5 +1,6 @@
 import type { PopoverProps } from '@sivir-ui/svelte/components/popover';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 import Root from './combobox.svelte';
 import Content from './combobox-content.svelte';
 import Item from './combobox-item.svelte';
@@ -20,6 +21,7 @@ export type ComboboxState = {
     searchContent: string;
     searchPlacement: 'trigger' | 'menu';
     threshold: number;
+    appearance: 'button' | 'input';
     activeValue?: string;
     selected?: ComboboxItem;
 };
@@ -29,8 +31,10 @@ export type ComboboxRootProps = PopoverProps & {
 };
 export type ComboboxTriggerProps = {
     class?: string;
+    trailing?: Snippet;
     placeholder?: string;
     searchPlacement?: 'trigger' | 'menu';
     threshold?: number;
+    appearance?: 'button' | 'input';
 } & DefaultProps;
 export { Content, Item, Label, Results, Root, Trigger };

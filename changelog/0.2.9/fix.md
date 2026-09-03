@@ -1,6 +1,24 @@
-- Keep Modal open when a nested Select, Combobox, or Dropdown Menu dismisses: one pointer gesture peels only the top layer.
-- Bundle the default DM Sans and JetBrains Mono faces as self-hosted Fontsource stylesheets in `ui.css`, so package and CLI installs render the intended typefaces with no Google Fonts request and no runtime network access.
+ - Bump `@sivir-ui/svelte` to `0.2.9`.
+ - Keep a nested Modal above its parent when both open together, so Cancel, click-outside, and Escape peel only the top layer.
+ - Keep Modal open when a nested Select, Combobox, or Dropdown Menu dismisses: one pointer gesture peels only the top layer.
+ - Bundle the default Inter and JetBrains Mono faces as self-hosted Fontsource stylesheets in `ui.css`, so package and CLI installs render the intended typefaces with no Google Fonts request and no runtime network access.
 - Round the ScrollArea edge-fade cues to the container radius, and put the docs chat-list example on the panel surface so the fade melts into its background in dark mode instead of reading as a blurred strip.
 - Stop `tailwind-merge` from dropping `font-mono`/`font-sans` where they share a class string with `font-label`, which left rolling code blocks (and masked inline code, code panels, and shortcut chips) on the wrong typeface.
 - Size the Theme Studio preset menu to its four options with `max-h-56` instead of a fixed `h-56`, so Default, Graphite, Grove, and Linen render without empty scroll space.
 - Stop unstyled menu Buttons from advertising `data-variant=primary`, which made Shortcut chips inside Dropdown Menu, Context Menu, and Command rows render as white-on-white.
+- Scope Theme Studio light-mode color overrides to `:root:not(.dark)` so they no longer leak into dark mode, and re-resolve the Advanced colors swatches once the deferred theme class lands, so the picker buttons update when switching light/dark.
+- Measure the Tabs active indicator with fractional rects instead of rounded offsets, so the segmented pill sits evenly in its track at fractional densities.
+- Update the default "Sivir blue" brand color from `#1f9be6` to `#1e78e6` across the theme, base stylesheet, Studio swatches, and tests.
+- Keep the shared Tooltip bubble glued to its trigger across scroll, resize, and layout shifts, so it stays on top of the button instead of freezing mid-viewport.
+- Space the Theme Studio Color pickers row-by-row like the Typography controls instead of cramming them into one tight grid.
+- Fix the warm-neutral dark ramp emitting a near-white `--sivir-neutral-10`, which leaked a light token into dark mode.
+- Keep the input-style Combobox trigger clickable while its menu is open by lifting it above the popover dismiss layer (mirroring Popover.Trigger), and preserve the selected label as the editable query when reopening, so clicking a selection refines it instead of clearing it.
+- Show `esc` and `enter` shortcut hints on the Theme Studio replace-draft dialog actions, matching the other dialogs.
+- Clean up the Theme Studio preview topbar: the view switcher uses segmented tabs while the sidebar and dialog controls use the ghost variant, the workspace trigger drops its padding, search sits beside the tabs, and the profile menu gains account context, shortcuts, and a wider layout.
+- Derive the primary-button hover from the brand color everywhere instead of the hardcoded `#1270ad`, so hover reads as a darker version of the same hue rather than shifting teal.
+- Rebuild Theme Studio notification rows on unstyled buttons and give both badges solid fills, so rows keep their own layout and the count and New markers stay legible in dark mode.
+- Close the mobile fullscreen navigation whenever the route changes, so going to a page never leaves the menu open behind it.
+ - Cap Select, Combobox, and Dropdown Menu lists at `max-h-*` without requiring an explicit `h-*`: ScrollArea now sizes its viewport with flex and inherits the menu's max-height, so `max-h-56` shrinks to short lists and scrolls long ones with edge cues.
+ - Guard ResponseStream's height animation when `matchMedia` is unavailable, so unit tests render without a browser API.
+ - Add the missing dark `--sivir-neutral-10` token to `ui.css`, restoring computed-style parity with generated themes.
+ - Update the registry theme expectations to the current built-ins (`bitsy`, `default`, `magic`).

@@ -474,6 +474,7 @@ export function resetBodyLocksForTests() {
 type EscapeLayer = {
     close: () => void;
     element?: Element;
+    rank: number;
 };
 
 const escapeStack: EscapeLayer[] = [];
@@ -507,11 +508,14 @@ function onDocumentEscape(event: KeyboardEvent) {
     event.stopImmediatePropagation();
 
     let topIndex = escapeStack.length - 1;
+    let topRank = escapeStack[topIndex]?.rank ?? 0;
     let topDepth = domDepth(escapeStack[topIndex]?.element);
     for (let index = escapeStack.length - 2; index >= 0; index -= 1) {
+        const rank = escapeStack[index]?.rank ?? 0;
         const depth = domDepth(escapeStack[index]?.element);
-        if (depth > topDepth) {
+        if (rank > topRank || (rank === topRank && depth > topDepth)) {
             topIndex = index;
+            topRank = rank;
             topDepth = depth;
         }
     }
@@ -531,12 +535,16 @@ function ensureEscapeListener() {
  * Registers a close handler while a layer is open and returns a disposer.
  * Modal, sheet, and popover push on open and pop on teardown.
  */
-export function pushEscapeLayer(close: () => void, element?: Element) {
+export function pushEscapeLayer(close: () => void, element?: Element, rank = 0) {
     if (typeof document === 'undefined') {
         return () => {};
     }
     ensureEscapeListener();
-    const layer = { close, element };
+    const layer = {
+        close,
+        element,
+        rank
+    };
     escapeStack.push(layer);
     return () => {
         const index = escapeStack.lastIndexOf(layer);
