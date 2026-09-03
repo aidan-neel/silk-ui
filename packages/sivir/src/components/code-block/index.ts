@@ -1,13 +1,13 @@
-import type { Snippet } from 'svelte';
 import type { DefaultProps } from '@sivir-ui/svelte/utils';
+import type { Snippet } from 'svelte';
 
 import Root from './code-block.svelte';
+import Actions from './code-block-actions.svelte';
+import Content from './code-block-content.svelte';
+import Copy from './code-block-copy.svelte';
 import Header from './code-block-header.svelte';
 import List from './code-block-list.svelte';
 import Trigger from './code-block-trigger.svelte';
-import Actions from './code-block-actions.svelte';
-import Copy from './code-block-copy.svelte';
-import Content from './code-block-content.svelte';
 
 /** One language entry for the high-level `tabs` prop. */
 export type CodeBlockTab = {
@@ -28,12 +28,16 @@ export type CodeBlockCopyPlacement = 'actionbar' | 'overlay' | 'inline';
 export type CodeBlockRegistry = {
     /** Raw code per tab value, registered by each `Content` (Copy reads the active one). */
     codes: Record<string, string>;
+    /** Highlight.js language id per tab value. */
+    langs: Record<string, string>;
     /** The currently-active tab value. */
     active: string;
     /** Tab values in source order — drives the directional slide on swap. */
     order: string[];
     /** Whether the high-level root owns the shared panel surface. */
     contained: boolean;
+    /** Set by List: a tab row is present, so language switches roll instead of sliding. */
+    tabbed: boolean;
 };
 
 export type CodeBlockProps = {
@@ -88,6 +92,6 @@ export type CodeBlockContentProps = {
     copyPlacement?: 'overlay' | 'inline';
 } & DefaultProps;
 
-export { Root, Header, List, Trigger, Actions, Copy, Content };
 export { default as CodeBlock } from './code-block.svelte';
+export { Actions, Content, Copy, Header, List, Root, Trigger };
 export default Root;

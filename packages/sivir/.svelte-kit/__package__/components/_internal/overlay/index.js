@@ -1,1 +1,1 @@
-export { useOverlay } from './overlay.svelte';
+export { resetOverlayStackForTests, useOverlay } from './overlay.svelte';

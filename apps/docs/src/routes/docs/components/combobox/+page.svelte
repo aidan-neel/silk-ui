@@ -7,6 +7,8 @@
     import BasicSrc from './examples/basic.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import InputSearch from './examples/input-search.svelte';
+    import InputSearchSrc from './examples/input-search.svelte?raw';
     import MenuSearch from './examples/menu-search.svelte';
     import MenuSearchSrc from './examples/menu-search.svelte?raw';
     import Scrollable from './examples/scrollable.svelte';
@@ -74,6 +76,20 @@
             <Typography.H3 class="docs-subsection-heading"> Basic usage </Typography.H3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
+            </ComponentPreview>
+        </div>
+
+        <div id="input-search" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Input search </Typography.H3>
+            <Typography.Text variant="supporting">
+                Set <Typography.InlineCode>appearance="input"</Typography.InlineCode> for a
+                field-styled trigger that stays editable and opens on focus or typing instead of
+                click-toggle. Pass a
+                <Typography.InlineCode>trailing</Typography.InlineCode>
+                snippet for an adornment; there is no chevron by default.
+            </Typography.Text>
+            <ComponentPreview code={InputSearchSrc}>
+                <InputSearch />
             </ComponentPreview>
         </div>
 

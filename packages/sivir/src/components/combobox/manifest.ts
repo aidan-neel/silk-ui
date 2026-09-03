@@ -9,10 +9,16 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  *        inner combobox-results wrapper with an explicit id
  *        (combobox-${key}-listbox); combobox-trigger now provides a
  *        robust aria-label fallback when no selection is made.
+ * 2.3.0: trigger gains `appearance="input"` (field-styled, always-editable,
+ *        opens on focus/typing instead of click-toggle, no chevron) plus an
+ *        optional `trailing` adornment snippet. Input appearance shows a
+ *        built-in clear button while a query or selection is present,
+ *        preserves the selection as the editable query on open, and skips
+ *        the popover dismiss layer so the trigger stays clickable.
  */
 export const manifest: Manifest = {
     name: 'combobox',
-    version: '2.2.0',
+    version: '2.3.0',
     visibility: 'public',
     description: 'Searchable popover-based picker with fuzzy results via fuse.js.',
     files: [
@@ -27,7 +33,7 @@ export const manifest: Manifest = {
         'components/combobox/index.ts',
         'components/combobox/manifest.ts'
     ],
-    components: ['popover', 'button', 'scroll-area'],
+    components: ['popover', 'button', 'input', 'scroll-area'],
     shared: ['utils.cn', 'utils.createContext'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',

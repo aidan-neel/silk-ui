@@ -1,14 +1,18 @@
 <script lang="ts">
     import Bell from '@lucide/svelte/icons/bell';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import CreditCard from '@lucide/svelte/icons/credit-card';
     import FileText from '@lucide/svelte/icons/file-text';
     import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
+    import LifeBuoy from '@lucide/svelte/icons/life-buoy';
+    import LogOut from '@lucide/svelte/icons/log-out';
     import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
     import Palette from '@lucide/svelte/icons/palette';
     import Plus from '@lucide/svelte/icons/plus';
     import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
     import Search from '@lucide/svelte/icons/search';
     import Settings from '@lucide/svelte/icons/settings';
+    import User from '@lucide/svelte/icons/user';
     import * as Accordion from '@sivir-ui/svelte/components/accordion';
     import * as Alert from '@sivir-ui/svelte/components/alert';
     import * as AlertDialog from '@sivir-ui/svelte/components/alert-dialog';
@@ -24,7 +28,6 @@
     import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import { Gauge } from '@sivir-ui/svelte/components/gauge';
-    import * as HoverCard from '@sivir-ui/svelte/components/hover-card';
     import { Input } from '@sivir-ui/svelte/components/input';
     import * as Modal from '@sivir-ui/svelte/components/modal';
     import { Pagination } from '@sivir-ui/svelte/components/pagination';
@@ -42,6 +45,7 @@
     import { Textarea } from '@sivir-ui/svelte/components/textarea';
     import { toast } from '@sivir-ui/svelte/components/toast';
     import { Toolbar } from '@sivir-ui/svelte/components/toolbar';
+    import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
     import {
@@ -152,7 +156,7 @@
     const cursorChoices = ['default', 'pointer'] as const;
 
     const brandSwatches = [
-        { label: 'Sivir blue', value: '#1f9be6' },
+        { label: 'Sivir blue', value: '#1e78e6' },
         { label: 'Graphite', value: '#4d607f' },
         { label: 'Grove', value: '#2f7a54' },
         { label: 'Linen', value: '#a44a2f' },
@@ -376,6 +380,7 @@
     let settingsSections = $state<string[]>(['workspace', 'reminders']);
     let copiedKey = $state<'css' | 'json' | null>(null);
     let hydrated = $state(false);
+    let appliedDark = $state(false);
     const appMode = $derived(mode.current === 'dark' ? 'dark' : 'light');
     const appModeBinding = {
         get value() {
@@ -478,7 +483,7 @@
     );
     const dirty = $derived(changedAxisCount > 0);
     const generatedCss = $derived(
-        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${foundationCssBlock(':root', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}${chromeCssBlock()}`
+        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${foundationCssBlock(':root:not(.dark)', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root:not(.dark)', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}${chromeCssBlock()}`
     );
     const generatedJson = $derived(
         JSON.stringify(
@@ -552,7 +557,7 @@
             ...shared
         ];
 
-        return `:root {\n${light.map((declaration) => `\t${declaration}`).join('\n')}\n}\n.dark {\n${dark.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
+        return `:root:not(.dark) {\n${light.map((declaration) => `\t${declaration}`).join('\n')}\n}\n.dark {\n${dark.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
     }
 
     function tokenOverridesCssBlock<T extends string>(
@@ -845,8 +850,10 @@
     }
 
     function resolveColorToken(definition: ColorTokenDefinition) {
+        const domReady = (appliedDark ? 'dark' : 'light') === appMode;
         const override = advancedTokens.colors[appMode][definition.name]?.trim() ?? '';
-        const raw = override || readCssVar(definition.name) || colorTokenFallback(definition);
+        const computed = domReady ? readCssVar(definition.name) : '';
+        const raw = override || computed || colorTokenFallback(definition);
         const parsed = parseCssColor(raw, resolveTokenRaw);
         if (parsed) {
             return parsed;
@@ -1061,6 +1068,14 @@
         }
         loadStudioExtensions();
         hydrated = true;
+        const root = document.documentElement;
+        appliedDark = root.classList.contains('dark');
+        const observer = new MutationObserver(() => {
+            appliedDark = root.classList.contains('dark');
+        });
+        observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+
+        return () => observer.disconnect();
     });
 
     $effect(() => {
@@ -1132,7 +1147,7 @@
 )}
     {@const selection = valueBinding(value, onChange)}
     <div role="group" aria-label={label}>
-        <Tabs.Root bind:value={selection.value} variant="segmented" class="w-full">
+        <Tabs.Root bind:value={selection.value} variant="ghost" class="w-full">
             <Tabs.List
                 class={`grid w-full ${values.length === 2 ? 'grid-cols-2' : values.length === 4 ? 'grid-cols-4' : 'grid-cols-3'}`}
             >
@@ -1154,7 +1169,7 @@
     {@const selection = valueBinding(value, onChange)}
     <div class="flex items-center gap-2" role="group" aria-label={`${label} weight`}>
         <span class="w-[76px] shrink-0 text-[13px] font-medium text-foreground-muted">{label}</span>
-        <Tabs.Root bind:value={selection.value} variant="segmented" class="min-w-0 flex-1">
+        <Tabs.Root bind:value={selection.value} variant="ghost" class="min-w-0 flex-1">
             <Tabs.List class="grid w-full grid-cols-4">
                 {#each fontWeights as weight (weight)}
                     <Tabs.Trigger value={weight} class="min-h-7 w-full px-1 py-0 text-xs"
@@ -1280,7 +1295,9 @@
                             · Sivir UI
                         </span>
                     </Select.Trigger>
-                    <Select.Content class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]">
+                    <Select.Content
+                        class="max-h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                    >
                         {#each builtInThemePresets as preset (preset.slug)}
                             <Select.Item value={preset.slug} label={preset.name}>
                                 {preset.name}
@@ -1322,6 +1339,8 @@
                             updateFoundationColor('border', value);
                         }
                     )}
+                </div>
+                <div class="grid grid-cols-2 gap-2">
                     {@render colorPickerControl(
                         'Background',
                         foundationColors[appMode].background,
@@ -1338,17 +1357,15 @@
                             updateFoundationColor('secondary', value);
                         }
                     )}
-                    <div class="col-span-2">
-                        {@render colorPickerControl(
-                            'Muted',
-                            foundationColors[appMode].muted,
-                            mutedSwatches,
-                            (value) => {
-                                updateFoundationColor('muted', value);
-                            }
-                        )}
-                    </div>
                 </div>
+                {@render colorPickerControl(
+                    'Muted',
+                    foundationColors[appMode].muted,
+                    mutedSwatches,
+                    (value) => {
+                        updateFoundationColor('muted', value);
+                    }
+                )}
             </div>
 
             <div class="flex flex-col gap-4">
@@ -1424,7 +1441,7 @@
                                 </span>
                             </Select.Trigger>
                             <Select.Content
-                                class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                                class="max-h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
                             >
                                 <Select.Label>Sans serif</Select.Label>
                                 {#each sansFonts as font (font.key)}
@@ -1453,7 +1470,7 @@
                                 </span>
                             </Select.Trigger>
                             <Select.Content
-                                class="h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
+                                class="max-h-56 min-w-[max(16rem,var(--popover-trigger-width))]"
                             >
                                 <Select.Item value="same-as-sans" label="Same as sans">
                                     <span style:font-family="var(--font-sans)">Same as sans</span>
@@ -1548,7 +1565,7 @@
         <div class="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-8">
             <Toolbar class="gap-2 p-0">
                 <DropdownMenu.Root>
-                    <DropdownMenu.Trigger variant="quiet" class="min-w-0 justify-start">
+                    <DropdownMenu.Trigger variant="quiet" class="min-w-0 justify-start px-0">
                         <Avatar.Root size="sm" shape="square">
                             <Avatar.Fallback>NL</Avatar.Fallback>
                         </Avatar.Root>
@@ -1573,81 +1590,6 @@
                         </DropdownMenu.Item>
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
-                <Command.Root bind:open={commandOpen}>
-                    <Command.Trigger variant="outline" class="min-w-0 max-w-64">
-                        <Search size={14} />
-                        Search
-                        <Shortcut
-                            shortcut="cmd+k"
-                            ontrigger={() => {
-                                commandOpen = true;
-                            }}
-                        />
-                    </Command.Trigger>
-                    <Command.Content>
-                        <Command.Search placeholder="Search ledger…" />
-                        <Command.Results>
-                            <Command.Group heading="Go to">
-                                <Command.Item
-                                    name="Overview"
-                                    callback={() => {
-                                        studioView = 'overview';
-                                    }}
-                                >
-                                    <LayoutDashboard size={14} />
-                                    Overview
-                                </Command.Item>
-                                <Command.Item
-                                    name="Invoices"
-                                    callback={() => {
-                                        studioView = 'invoices';
-                                    }}
-                                >
-                                    <FileText size={14} />
-                                    Invoices
-                                </Command.Item>
-                                <Command.Item
-                                    name="Settings"
-                                    callback={() => {
-                                        studioView = 'settings';
-                                    }}
-                                >
-                                    <Settings size={14} />
-                                    Settings
-                                </Command.Item>
-                            </Command.Group>
-                            <Command.Separator />
-                            <Command.Group heading="Actions">
-                                <Command.Item
-                                    name="New invoice"
-                                    callback={() => {
-                                        studioView = 'invoices';
-                                        invoiceModalOpen = true;
-                                    }}
-                                >
-                                    <Plus size={14} />
-                                    New invoice
-                                </Command.Item>
-                            </Command.Group>
-                            <Command.Group heading="Invoices">
-                                {#each invoices as invoice (invoice.reference)}
-                                    <Command.Item
-                                        name={`${invoice.client} ${invoice.reference}`}
-                                        callback={() => {
-                                            studioView = 'invoices';
-                                            invoiceQuery = invoice.reference;
-                                        }}
-                                    >
-                                        {invoice.client}
-                                        <Typography.Metadata>
-                                            {invoice.reference}
-                                        </Typography.Metadata>
-                                    </Command.Item>
-                                {/each}
-                            </Command.Group>
-                        </Command.Results>
-                    </Command.Content>
-                </Command.Root>
                 <div class="ml-auto flex items-center gap-1">
                     <Popover.Root placement="bottom-end" inert={false}>
                         <Popover.Trigger
@@ -1660,36 +1602,58 @@
                             {#if unreadNotificationCount > 0}
                                 <Badge
                                     variant="error"
-                                    class="pointer-events-none absolute top-1 right-1 size-4 min-w-4 p-0 text-[length:var(--font-size-meta)] leading-none"
+                                    class="pointer-events-none absolute top-0.5 right-0.5 size-3.5 min-w-3.5 bg-[var(--color-error)] p-0 text-[length:var(--font-size-meta)] text-[var(--color-on-primary)] leading-none"
                                 >
                                     {unreadNotificationCount}
                                 </Badge>
                             {/if}
                         </Popover.Trigger>
-                        <Popover.Content class="w-72" lockScroll={false}>
-                            <Popover.Title>Notifications</Popover.Title>
-                            {#each notifications as notification (notification.id)}
-                                <Button
-                                    variant="ghost"
-                                    class="h-auto w-full justify-start py-2"
-                                    onclick={() => markNotificationRead(notification.id)}
+                        <Popover.Content class="w-80" surfaceClass="p-2" lockScroll={false}>
+                            <div class="flex items-center justify-between px-2 pt-1 pb-1.5">
+                                <Popover.Title
+                                    class="text-[length:var(--font-size-body)] leading-snug"
                                 >
-                                    <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-                                        <Typography.Text
-                                            variant="supporting"
-                                            class="text-left text-foreground"
+                                    Notifications
+                                </Popover.Title>
+                                {#if unreadNotificationCount > 0}
+                                    <Typography.Metadata class="tabular-nums">
+                                        {unreadNotificationCount}
+                                        new
+                                    </Typography.Metadata>
+                                {/if}
+                            </div>
+                            <div class="flex flex-col gap-0.5">
+                                {#each notifications as notification (notification.id)}
+                                    <Button
+                                        unstyled
+                                        class="flex w-full items-start justify-start gap-3 rounded-[var(--radius-md)] px-2 py-2 text-left select-none transition-[background-color,border-color,color] [transition-duration:var(--motion-duration-hover)] hover:cursor-[var(--ui-cursor-interactive)] hover:bg-foreground/[0.08] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+                                        onclick={() => markNotificationRead(notification.id)}
+                                    >
+                                        <span
+                                            class="flex min-w-0 flex-1 flex-col items-start gap-0.5"
                                         >
-                                            {notification.title}
-                                        </Typography.Text>
-                                        <Typography.Metadata>
-                                            {notification.detail}
-                                        </Typography.Metadata>
-                                    </span>
-                                    {#if !notification.read}
-                                        <Badge variant="info">New</Badge>
-                                    {/if}
-                                </Button>
-                            {/each}
+                                            <span
+                                                class="w-full text-left text-[length:var(--font-size-body)] leading-snug text-pretty text-foreground {notification.read
+                                                    ? 'font-normal'
+                                                    : 'font-medium'}"
+                                            >
+                                                {notification.title}
+                                            </span>
+                                            <Typography.Metadata class="tabular-nums">
+                                                {notification.detail}
+                                            </Typography.Metadata>
+                                        </span>
+                                        {#if !notification.read}
+                                            <Badge
+                                                variant="secondary"
+                                                class="mt-0.5 shrink-0 self-start"
+                                            >
+                                                New
+                                            </Badge>
+                                        {/if}
+                                    </Button>
+                                {/each}
+                            </div>
                         </Popover.Content>
                     </Popover.Root>
                     <DropdownMenu.Root>
@@ -1702,29 +1666,156 @@
                                 <Avatar.Fallback>AN</Avatar.Fallback>
                             </Avatar.Root>
                         </DropdownMenu.Trigger>
-                        <DropdownMenu.Content>
-                            <DropdownMenu.Label>Avery Nguyen</DropdownMenu.Label>
+                        <DropdownMenu.Content class="min-w-[16rem]">
+                            <DropdownMenu.Label>
+                                <span class="text-[0.7rem] text-foreground-muted">
+                                    avery@northstar.dev
+                                </span>
+                            </DropdownMenu.Label>
                             <DropdownMenu.Item callback={() => (studioView = 'settings')}>
-                                Preferences
+                                <span class="flex items-center gap-2">
+                                    <User size={13} />
+                                    Profile
+                                </span>
+                                <Shortcut shortcut="shift+cmd+P" />
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item callback={() => (studioView = 'settings')}>
+                                <span class="flex items-center gap-2">
+                                    <Settings size={13} />
+                                    Preferences
+                                </span>
+                                <Shortcut shortcut="cmd+," />
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item
+                                callback={() =>
+                                    runDashboardAction(
+                                        'Billing opened',
+                                        'The billing portal is on its way.'
+                                    )}
+                            >
+                                <span class="flex items-center gap-2">
+                                    <CreditCard size={13} />
+                                    Billing
+                                </span>
+                                <Shortcut shortcut="cmd+B" />
                             </DropdownMenu.Item>
                             <DropdownMenu.Separator />
                             <DropdownMenu.Item
                                 callback={() =>
+                                    runDashboardAction(
+                                        'Support pinged',
+                                        'We will follow up shortly.'
+                                    )}
+                            >
+                                <span class="flex items-center gap-2">
+                                    <LifeBuoy size={13} />
+                                    Help & feedback
+                                </span>
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item
+                                callback={() =>
                                     runDashboardAction('Signed out', 'The session ended.')}
                             >
-                                Sign out
+                                <span class="flex items-center gap-2 text-[var(--color-error)]">
+                                    <LogOut size={13} />
+                                    Sign out
+                                </span>
+                                <Shortcut shortcut="shift+cmd+Q" />
                             </DropdownMenu.Item>
                         </DropdownMenu.Content>
                     </DropdownMenu.Root>
                 </div>
             </Toolbar>
 
-            <Tabs.Root bind:value={studioView} variant="ghost">
-                <Tabs.List>
-                    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-                    <Tabs.Trigger value="invoices">Invoices</Tabs.Trigger>
-                    <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
-                </Tabs.List>
+            <Tabs.Root bind:value={studioView} variant="segmented">
+                <div class="flex flex-wrap items-center gap-2">
+                    <Tabs.List>
+                        <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+                        <Tabs.Trigger value="invoices">Invoices</Tabs.Trigger>
+                        <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+                    </Tabs.List>
+                    <Command.Root bind:open={commandOpen}>
+                        <Command.Trigger
+                            variant="outline"
+                            class="ml-auto min-w-0 w-52 shrink-0 justify-between gap-2"
+                        >
+                            <span class="flex min-w-0 items-center gap-2">
+                                <Search size={14} />
+                                <span class="truncate">Search</span>
+                            </span>
+                            <Shortcut
+                                shortcut="cmd+k"
+                                class="shrink-0"
+                                ontrigger={() => {
+                                    commandOpen = true;
+                                }}
+                            />
+                        </Command.Trigger>
+                        <Command.Content>
+                            <Command.Search placeholder="Search ledger…" />
+                            <Command.Results>
+                                <Command.Group heading="Go to">
+                                    <Command.Item
+                                        name="Overview"
+                                        callback={() => {
+                                            studioView = 'overview';
+                                        }}
+                                    >
+                                        <LayoutDashboard size={14} />
+                                        Overview
+                                    </Command.Item>
+                                    <Command.Item
+                                        name="Invoices"
+                                        callback={() => {
+                                            studioView = 'invoices';
+                                        }}
+                                    >
+                                        <FileText size={14} />
+                                        Invoices
+                                    </Command.Item>
+                                    <Command.Item
+                                        name="Settings"
+                                        callback={() => {
+                                            studioView = 'settings';
+                                        }}
+                                    >
+                                        <Settings size={14} />
+                                        Settings
+                                    </Command.Item>
+                                </Command.Group>
+                                <Command.Separator />
+                                <Command.Group heading="Actions">
+                                    <Command.Item
+                                        name="New invoice"
+                                        callback={() => {
+                                            studioView = 'invoices';
+                                            invoiceModalOpen = true;
+                                        }}
+                                    >
+                                        <Plus size={14} />
+                                        New invoice
+                                    </Command.Item>
+                                </Command.Group>
+                                <Command.Group heading="Invoices">
+                                    {#each invoices as invoice (invoice.reference)}
+                                        <Command.Item
+                                            name={`${invoice.client} ${invoice.reference}`}
+                                            callback={() => {
+                                                studioView = 'invoices';
+                                                invoiceQuery = invoice.reference;
+                                            }}
+                                        >
+                                            {invoice.client}
+                                            <Typography.Metadata>
+                                                {invoice.reference}
+                                            </Typography.Metadata>
+                                        </Command.Item>
+                                    {/each}
+                                </Command.Group>
+                            </Command.Results>
+                        </Command.Content>
+                    </Command.Root>
+                </div>
 
                 <Tabs.Content value="overview" class="flex flex-col gap-6 pt-6">
                     <div>
@@ -1733,7 +1824,7 @@
                             Cash on hand and collection risk for {companyName}.
                         </Typography.Description>
                     </div>
-                    <Tabs.Root bind:value={dashboardRange} variant="segmented">
+                    <Tabs.Root bind:value={dashboardRange} variant="ghost">
                         <Tabs.List class="w-fit">
                             <Tabs.Trigger value="7d">7 days</Tabs.Trigger>
                             <Tabs.Trigger value="30d">30 days</Tabs.Trigger>
@@ -1833,9 +1924,14 @@
                     <Toolbar class="gap-2 p-0">
                         <Combobox.Root bind:value={invoiceQuery}>
                             <Combobox.Trigger
+                                appearance="input"
                                 placeholder="Search customer"
                                 class="min-w-0 flex-1"
-                            />
+                            >
+                                {#snippet trailing()}
+                                    <Search size={16} />
+                                {/snippet}
+                            </Combobox.Trigger>
                             <Combobox.Content>
                                 <Combobox.Results>
                                     {#each customers as customer (customer)}
@@ -1873,28 +1969,25 @@
                         <ContextMenu.Root>
                             <ContextMenu.Trigger class="block">
                                 <div
-                                    class="flex items-start gap-3 border-b border-border py-3 last:border-b-0"
+                                    class="flex items-center gap-3 border-b border-border py-3 last:border-b-0"
                                 >
                                     <Checkbox
                                         bind:checked={selectedInvoices[invoice.reference]}
                                         label={invoice.client}
                                         description={`${invoice.reference} · due ${invoice.due}`}
+                                        class="min-w-0 flex-1"
                                     />
-                                    <HoverCard.Root>
-                                        <HoverCard.Trigger class="ml-auto shrink-0">
+                                    <Tooltip.Root>
+                                        <Tooltip.Trigger class="ml-auto shrink-0">
                                             <Badge variant={invoiceBadgeVariant(invoice.status)}>
                                                 {invoice.status}
                                             </Badge>
-                                        </HoverCard.Trigger>
-                                        <HoverCard.Content>
-                                            <HoverCard.Title>{invoice.client}</HoverCard.Title>
-                                            <HoverCard.Description>
-                                                {invoice.reference}
-                                                is {invoice.amount}, due {invoice.due}.
-                                            </HoverCard.Description>
-                                        </HoverCard.Content>
-                                    </HoverCard.Root>
-                                    <Typography.Metadata class="shrink-0 tabular-nums">
+                                        </Tooltip.Trigger>
+                                        <Tooltip.Content>Due {invoice.due}</Tooltip.Content>
+                                    </Tooltip.Root>
+                                    <Typography.Metadata
+                                        class="w-16 shrink-0 text-right tabular-nums"
+                                    >
                                         {invoice.amount}
                                     </Typography.Metadata>
                                     <CopyButton
@@ -2101,7 +2194,7 @@
             <Modal.Body class="min-h-0 flex-1 overflow-hidden">
                 <Tabs.Root
                     bind:value={advancedTab}
-                    variant="segmented"
+                    variant="ghost"
                     class="flex min-h-0 flex-1 flex-col overflow-hidden"
                 >
                     <Tabs.List class="mb-3 w-full shrink-0">
@@ -2118,7 +2211,7 @@
                             <p class="text-sm text-foreground-muted">
                                 Editing {formatChoice(appMode)} mode
                             </p>
-                            <Tabs.Root bind:value={appModeBinding.value} variant="segmented">
+                            <Tabs.Root bind:value={appModeBinding.value} variant="ghost">
                                 <Tabs.List>
                                     <Tabs.Trigger value="light" class="min-h-7 px-2 py-0 text-xs"
                                         >Light</Tabs.Trigger
@@ -2279,12 +2372,14 @@
                 </AlertDialog.Description>
             </AlertDialog.Header>
             <AlertDialog.Footer>
-                <AlertDialog.Exit onclick={() => (pendingPreset = null)}
-                    >Keep draft</AlertDialog.Exit
-                >
-                <AlertDialog.Confirm onclick={confirmPresetChange}
-                    >Replace draft</AlertDialog.Confirm
-                >
+                <AlertDialog.Exit onclick={() => (pendingPreset = null)}>
+                    Keep draft
+                    <Shortcut shortcut="esc" />
+                </AlertDialog.Exit>
+                <AlertDialog.Confirm onclick={confirmPresetChange}>
+                    Replace draft
+                    <Shortcut shortcut="enter" />
+                </AlertDialog.Confirm>
             </AlertDialog.Footer>
         </AlertDialog.Content>
     </AlertDialog.Root>

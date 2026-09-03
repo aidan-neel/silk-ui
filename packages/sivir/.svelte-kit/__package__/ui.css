@@ -1,10 +1,18 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-600.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
 @import 'tailwindcss';
 @source './**/*.{svelte,ts,js}';
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Public theme contract: semantic color, type, radius, density, elevation, and motion axes. */
 @theme {
-    --font-sans: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-header: var(--font-sans);
 
@@ -128,8 +136,8 @@
     --color-input: var(--sivir-neutral-300);
     --color-foreground: var(--sivir-neutral-900);
     --color-foreground-muted: var(--sivir-neutral-500);
-    --color-primary: #1f9be6;
-    --color-primary-hover: #1270ad;
+    --color-primary: #1e78e6;
+    --color-primary-hover: color-mix(in srgb, var(--color-primary) 78%, black);
     --color-on-primary: hsl(0 0% 100%);
     --color-primary-stroke: transparent;
     --color-accent-tint: var(--sivir-blue-50);
@@ -152,6 +160,7 @@
 
 .dark {
     --sivir-neutral-0: hsl(0 0% 5%);
+    --sivir-neutral-10: hsl(60 11.1% 7%);
     --sivir-neutral-50: hsl(0 0% 10%);
     --sivir-neutral-100: hsl(0 0% 13%);
     --sivir-neutral-150: hsl(0 0% 15.7%);
@@ -384,6 +393,20 @@
         transform: translateZ(0);
     }
 
+    [data-ui='modal-panel'] {
+        transition-property: scale;
+        transition-duration: var(--motion-duration-modal-in);
+        transition-timing-function: var(--ease-out);
+    }
+
+    [data-ui='modal-panel'][data-stacked='behind'] {
+        scale: 0.925;
+    }
+
+    [data-ui='modal-overlay'][data-nested] {
+        --overlay-blur: 0px;
+    }
+
     .sivir-menu-label {
         padding-inline: calc(var(--spacing) * 2);
         padding-block: calc(var(--spacing) * 1);
@@ -473,7 +496,8 @@
     .sivir-menu-item,
     .sivir-item-highlight,
     .sivir-tooltip,
-    .sivir-error-notice {
+    .sivir-error-notice,
+    [data-ui='modal-panel'] {
         transition: none;
     }
 }

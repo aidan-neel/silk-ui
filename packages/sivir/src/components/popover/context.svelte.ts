@@ -8,4 +8,4 @@ export type PopoverContext = {
 
 const { set: setPopoverContext, get: getPopoverContext } = createContext<PopoverContext>('popover');
 
-export { setPopoverContext, getPopoverContext };
+export { getPopoverContext, setPopoverContext };

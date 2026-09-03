@@ -4,4 +4,4 @@ export type PopoverContext = {
     state: PopoverState;
 };
 declare const setPopoverContext: (value: PopoverContext) => PopoverContext, getPopoverContext: () => PopoverContext;
-export { setPopoverContext, getPopoverContext };
+export { getPopoverContext, setPopoverContext };

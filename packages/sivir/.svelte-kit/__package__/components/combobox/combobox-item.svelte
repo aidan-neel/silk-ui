@@ -39,11 +39,14 @@
     }
 
     onMount(() => {
-        comboboxState.items.add(item);
+        const added = item;
+        comboboxState.items.add(added);
         if (comboboxState.open && comboboxState.activeValue === undefined) {
-            comboboxState.activeValue = item.value;
+            comboboxState.activeValue = added.value;
         }
-        return () => comboboxState.items.delete(item);
+        return () => {
+            comboboxState.items.delete(added);
+        };
     });
 </script>
 

@@ -14,10 +14,7 @@
 
 <svelte:head>
     <title>Sivir · {TITLE}</title>
-    <meta
-        name="description"
-        content="Animate AI response text with typewriter and word-fade modes."
-    />
+    <meta name="description" content="Rolling AI response text that eases open as lines wrap." />
 </svelte:head>
 
 <div data-docs-page class="flex flex-col gap-10">

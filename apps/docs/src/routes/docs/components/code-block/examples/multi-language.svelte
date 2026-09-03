@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as CodeBlock from '@sivir-ui/svelte/components/code-block';
+    import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
 
     const ts = `export async function getUser(id: string) {
   const res = await fetch(\`/api/users/\${id}\`);
@@ -25,16 +25,12 @@ async def get_user(id: str):
 }`;
 </script>
 
-<CodeBlock.Root class="max-w-xl" value="typescript">
-    <CodeBlock.Header>
-        <CodeBlock.List>
-            <CodeBlock.Trigger value="typescript">TypeScript</CodeBlock.Trigger>
-            <CodeBlock.Trigger value="python">Python</CodeBlock.Trigger>
-            <CodeBlock.Trigger value="go">Go</CodeBlock.Trigger>
-        </CodeBlock.List>
-        <CodeBlock.Actions />
-    </CodeBlock.Header>
-    <CodeBlock.Content value="typescript" code={ts} lang="typescript" />
-    <CodeBlock.Content value="python" code={py} lang="python" />
-    <CodeBlock.Content value="go" code={go} lang="go" />
-</CodeBlock.Root>
+<CodeBlock
+    class="max-w-xl"
+    value="typescript"
+    tabs={[
+        { label: 'TypeScript', lang: 'typescript', code: ts },
+        { label: 'Python', lang: 'python', code: py },
+        { label: 'Go', lang: 'go', code: go }
+    ]}
+/>

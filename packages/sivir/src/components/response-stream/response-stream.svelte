@@ -1,15 +1,15 @@
 <script lang="ts">
+    import type { ScrittoProps } from '@scritto/core';
+    import { getCssDuration } from '@sivir-ui/svelte/transition';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { onDestroy } from 'svelte';
-    import type { ResponseStreamProps, Segment } from '.';
+    import { type Component, onDestroy } from 'svelte';
+    import type { HTMLAttributes } from 'svelte/elements';
+    import type { ResponseStreamProps } from '.';
 
     let {
         textStream,
         streaming = false,
-        mode = 'typewriter',
         speed = 20,
-        fadeDuration,
-        segmentDelay,
         characterChunkSize,
         onComplete,
         onError,
@@ -19,18 +19,105 @@
     }: ResponseStreamProps = $props();
 
     let displayedText = $state('');
-    let segments = $state<Segment[]>([]);
     let isComplete = $state(false);
-    let isLive = $state(false);
     let isWaiting = $state(false);
     let currentIndex = 0;
     let streamId = 0;
-    let snapshotSession = 0;
     let sourceKind: 'static' | 'snapshot' | 'finalized-snapshot' | 'async' | undefined;
     let previousSource: string | AsyncIterable<string> | undefined;
     let previousSnapshot = '';
     let animationFrame: number | undefined;
     let abortController: AbortController | undefined;
+
+    type ScrittoComponent = Component<ScrittoProps & HTMLAttributes<HTMLElement>>;
+    let Scritto = $state<ScrittoComponent | null>(null);
+
+    const canRoll =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        typeof Element !== 'undefined' &&
+        typeof Element.prototype.getAnimations === 'function';
+
+    const rollTransition = $derived({
+        duration: getRollDuration(),
+        easing: 'cubic-bezier(0.23, 1, 0.32, 1)'
+    });
+
+    $effect(() => {
+        if (!canRoll) {
+            return;
+        }
+        let cancelled = false;
+        import('@scritto/svelte').then((module) => {
+            if (!cancelled) {
+                Scritto = module.default as ScrittoComponent;
+            }
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    });
+
+    let box: HTMLElement | undefined;
+
+    $effect(() => {
+        const el = box;
+        if (!el || typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+            return;
+        }
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+        let target = el.offsetHeight;
+        let flight: Animation | undefined;
+        const settle = () => {
+            const grown = el.scrollHeight;
+            if (grown === target) {
+                flight = undefined;
+                el.style.overflow = '';
+                return;
+            }
+            play(Math.round(el.getBoundingClientRect().height), grown);
+        };
+        const play = (from: number, to: number) => {
+            if (from === to) {
+                return;
+            }
+            target = to;
+            flight?.cancel();
+            el.style.overflow = 'hidden';
+            const animation = el.animate([{ height: `${from}px` }, { height: `${to}px` }], {
+                duration: getCssDuration(el, '--motion-duration-panel', 180),
+                easing: 'cubic-bezier(0.23, 1, 0.32, 1)'
+            });
+            flight = animation;
+            animation.onfinish = settle;
+            animation.oncancel = () => {
+                if (flight === animation) {
+                    flight = undefined;
+                }
+            };
+        };
+        const observer = new ResizeObserver(() => {
+            if (flight) {
+                return;
+            }
+            const height = el.offsetHeight;
+            if (height === target) {
+                return;
+            }
+            play(target, height);
+        });
+        observer.observe(el);
+
+        return () => {
+            observer.disconnect();
+            flight?.cancel();
+            flight = undefined;
+            el.style.overflow = '';
+        };
+    });
 
     function getChunkSize() {
         if (typeof characterChunkSize === 'number') {
@@ -42,48 +129,11 @@
     }
 
     function getProcessingDelay() {
-        if (typeof segmentDelay === 'number') {
-            return Math.max(0, segmentDelay);
-        }
         return Math.max(1, Math.round(100 / Math.sqrt(Math.min(100, Math.max(1, speed)))));
     }
 
-    function getFadeDuration() {
-        if (typeof fadeDuration === 'number') {
-            return Math.max(10, fadeDuration);
-        }
+    function getRollDuration() {
         return Math.round(1000 / Math.sqrt(Math.min(100, Math.max(1, speed))));
-    }
-
-    function getSegmentDelay() {
-        if (typeof segmentDelay === 'number') {
-            return Math.max(0, segmentDelay);
-        }
-        return 0;
-    }
-
-    function updateSegments(text: string, snapshot = false) {
-        if (mode !== 'fade') {
-            return;
-        }
-        try {
-            const segmenter = new Intl.Segmenter(navigator.language, { granularity: 'word' });
-            segments = Array.from(segmenter.segment(text), (segment, index) => ({
-                text: segment.segment,
-                index,
-                key: snapshot ? `${snapshotSession}-${index}` : `${index}-${segment.segment}`
-            }));
-        } catch (error) {
-            segments = text
-                .split(/(\s+)/)
-                .filter(Boolean)
-                .map((text, index) => ({
-                    text,
-                    index,
-                    key: snapshot ? `${snapshotSession}-${index}` : `${index}-${text}`
-                }));
-            onError?.(error);
-        }
     }
 
     function complete() {
@@ -108,17 +158,12 @@
         stopStreaming();
         currentIndex = 0;
         displayedText = '';
-        segments = [];
         isComplete = false;
         isWaiting = false;
     }
 
-    function applySnapshot(text: string, fresh = false) {
-        if (fresh) {
-            snapshotSession += 1;
-        }
+    function applySnapshot(text: string) {
         displayedText = text;
-        updateSegments(text, true);
         previousSnapshot = text;
         isWaiting = text.length === 0;
     }
@@ -138,7 +183,6 @@
 
             const endIndex = Math.min(currentIndex + getChunkSize(), text.length);
             displayedText = text.slice(0, endIndex);
-            updateSegments(displayedText);
             currentIndex = endIndex;
 
             if (endIndex < text.length) {
@@ -164,7 +208,6 @@
                 if (displayedText.length > 0) {
                     isWaiting = false;
                 }
-                updateSegments(displayedText);
             }
             complete();
         } catch (error) {
@@ -178,7 +221,6 @@
     function startAsync(stream: AsyncIterable<string>) {
         reset();
         const id = ++streamId;
-        isLive = true;
         isWaiting = true;
         sourceKind = 'async';
         renderAsync(stream, id);
@@ -198,15 +240,14 @@
             if (fresh) {
                 reset();
                 sourceKind = 'snapshot';
-                isLive = true;
-                applySnapshot(textStream, true);
+                applySnapshot(textStream);
                 return;
             }
             if (textStream === previousSnapshot) {
                 return;
             }
             if (!textStream.startsWith(previousSnapshot)) {
-                applySnapshot(textStream, true);
+                applySnapshot(textStream);
                 return;
             }
             applySnapshot(textStream);
@@ -216,9 +257,8 @@
         if (sourceKind === 'snapshot') {
             stopStreaming();
             if (textStream !== previousSnapshot) {
-                applySnapshot(textStream, !textStream.startsWith(previousSnapshot));
+                applySnapshot(textStream);
             }
-            isLive = false;
             sourceKind = 'finalized-snapshot';
             complete();
             return;
@@ -232,7 +272,6 @@
         const id = ++streamId;
         sourceKind = 'static';
         previousSource = textStream;
-        isLive = false;
         renderString(textStream, id);
     });
 
@@ -251,27 +290,19 @@
 
 <svelte:element
     this={as}
+    bind:this={box}
     data-ui="response-stream"
-    data-mode={mode}
     data-state={streamState}
     aria-live="polite"
     aria-busy={streaming || !isComplete}
     class={cn(
         className,
-        'whitespace-pre-wrap text-[length:var(--font-size-body)] leading-body text-foreground'
+        'block font-medium whitespace-pre-wrap text-[length:var(--font-size-body)] leading-body text-foreground'
     )}
     {...rest}
 >
-    {#if mode === 'fade'}
-        {#each segments as segment (segment.key)}
-            <span
-                class="sivir-response-stream-segment"
-                style:--response-stream-fade-duration={`${getFadeDuration()}ms`}
-                style:--response-stream-segment-delay={`${isLive ? getSegmentDelay() : segment.index * getSegmentDelay()}ms`}
-            >
-                {segment.text}
-            </span>
-        {/each}
+    {#if Scritto}
+        <Scritto value={displayedText} transition={rollTransition} />
     {:else}
         {displayedText}
     {/if}
@@ -285,24 +316,8 @@
 </svelte:element>
 
 <style>
-    .sivir-response-stream-segment {
-        display: inline-block;
-        filter: blur(3px);
-        opacity: 0;
-        animation: sivir-response-stream-fade-in var(--response-stream-fade-duration)
-            var(--ease-out) forwards;
-        animation-delay: var(--response-stream-segment-delay);
-    }
-
     .sivir-response-stream-caret {
         animation: sivir-response-stream-caret 1.1s steps(1, end) infinite;
-    }
-
-    @keyframes sivir-response-stream-fade-in {
-        to {
-            filter: blur(0);
-            opacity: 1;
-        }
     }
 
     @keyframes sivir-response-stream-caret {
@@ -312,12 +327,6 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .sivir-response-stream-segment {
-            animation: none;
-            filter: none;
-            opacity: 1;
-        }
-
         .sivir-response-stream-caret {
             animation: none;
         }

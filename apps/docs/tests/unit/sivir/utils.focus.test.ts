@@ -344,6 +344,65 @@ describe('clickOutside', () => {
         excluded.remove();
     });
 
+    it('does not fire on clicks inside a sibling overlay root', async () => {
+        const nodeRoot = document.createElement('div');
+        nodeRoot.setAttribute('data-overlay-root', '');
+        nodeRoot.append(node);
+        document.body.append(nodeRoot);
+
+        const otherRoot = document.createElement('div');
+        otherRoot.setAttribute('data-overlay-root', '');
+        const otherButton = makeButton(otherRoot, { id: 'other-overlay' });
+        document.body.append(otherRoot);
+
+        const callback = vi.fn();
+        action = clickOutside(node, callback);
+
+        await new Promise((r) => setTimeout(r, 1));
+
+        otherButton.click();
+        expect(callback).not.toHaveBeenCalled();
+
+        otherRoot.remove();
+        nodeRoot.remove();
+        document.body.append(node);
+    });
+
+    it('does not dismiss a parent overlay on the click after a nested pointerdown dismiss', async () => {
+        const parentRoot = document.createElement('div');
+        parentRoot.setAttribute('data-overlay-root', '');
+        parentRoot.append(node);
+        document.body.append(parentRoot);
+
+        const nestedPanel = document.createElement('div');
+        nestedPanel.setAttribute('data-floating-content', '');
+        document.body.append(nestedPanel);
+
+        const nestedDismiss = document.createElement('div');
+        nestedDismiss.setAttribute('data-overlay-root', '');
+        document.body.append(nestedDismiss);
+
+        const parentCallback = vi.fn();
+        const nestedCallback = vi.fn();
+        action = clickOutside(node, parentCallback);
+        const nestedAction = clickOutside(nestedPanel, nestedCallback);
+
+        await new Promise((r) => setTimeout(r, 1));
+
+        nestedDismiss.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+        expect(nestedCallback).toHaveBeenCalled();
+        expect(parentCallback).not.toHaveBeenCalled();
+
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        expect(parentCallback).not.toHaveBeenCalled();
+
+        nestedAction.destroy();
+        nestedDismiss.remove();
+        nestedPanel.remove();
+        parentRoot.remove();
+        document.body.append(node);
+    });
+
     it('does not fire on clicks inside [data-floating-content] elements', async () => {
         const floating = document.createElement('div');
         floating.setAttribute('data-floating-content', '');

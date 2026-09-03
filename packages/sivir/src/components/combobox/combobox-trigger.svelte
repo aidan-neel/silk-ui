@@ -1,27 +1,33 @@
 <script lang="ts">
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
+    import X from '@lucide/svelte/icons/x';
     import type { PopoverTriggerProps } from '@sivir-ui/svelte/components/popover';
     import { cn } from '@sivir-ui/svelte/utils';
     import Fuse from 'fuse.js';
-    import { onMount, tick } from 'svelte';
+    import { onMount, type Snippet, tick } from 'svelte';
     import { button } from '../button/variants';
+    import { input } from '../input/variants';
     import { getPopoverContext } from '../popover/context.svelte';
     import type { ComboboxItem } from '.';
     import { getComboboxContext } from './context.svelte';
 
-    const { id, state: comboboxState, selectItem } = getComboboxContext();
+    const { id, state: comboboxState, selectItem, clearSelection } = getComboboxContext();
     const { state: popoverState } = getPopoverContext();
 
     type Props = Omit<PopoverTriggerProps, 'children'> & {
+        trailing?: Snippet;
         placeholder?: string;
         searchPlacement?: 'trigger' | 'menu';
         threshold?: number;
+        appearance?: 'button' | 'input';
     };
     let {
+        trailing,
         class: className,
         placeholder = 'Select…',
         searchPlacement = 'trigger',
         threshold = 0.28,
+        appearance = 'button',
         variant = 'outline',
         size = 'md',
         disabled = false,
@@ -31,12 +37,15 @@
         ...rest
     }: Props = $props();
 
+    const isInputAppearance = $derived(appearance === 'input');
+
     let triggerElement = $state<HTMLDivElement>();
     let inputElement = $state<HTMLInputElement>();
 
     $effect(() => {
         comboboxState.searchPlacement = searchPlacement;
         comboboxState.threshold = threshold;
+        comboboxState.appearance = appearance;
     });
     const fuse = $derived(
         new Fuse(Array.from(comboboxState.items), {
@@ -69,15 +78,22 @@
         popoverState.buttonRef = triggerElement ?? null;
     });
 
+    function runTriggerSearch(text: string) {
+        comboboxState.searchContent = text;
+        comboboxState.results = new Set<ComboboxItem>(
+            fuse.search(text).map((result) => result.item)
+        );
+        comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
+    }
+
     function handleInput(event: Event) {
         if (searchPlacement === 'menu') {
             return;
         }
-        comboboxState.searchContent = (event.currentTarget as HTMLInputElement).value;
-        comboboxState.results = new Set<ComboboxItem>(
-            fuse.search(comboboxState.searchContent).map((result) => result.item)
-        );
-        comboboxState.activeValue = Array.from(comboboxState.results)[0]?.value;
+        if (isInputAppearance) {
+            show();
+        }
+        runTriggerSearch((event.currentTarget as HTMLInputElement).value);
     }
 
     function toggle() {
@@ -93,13 +109,49 @@
         onclick?.();
     }
 
+    function clearTriggerSearch() {
+        comboboxState.searchContent = '';
+        comboboxState.results = new Set<ComboboxItem>();
+        comboboxState.activeValue = undefined;
+    }
+
+    function clearSearch() {
+        clearSelection();
+        show();
+        void tick().then(() => {
+            inputElement?.focus({ preventScroll: true });
+        });
+    }
+
+    function seedTriggerSearch() {
+        if (comboboxState.selected) {
+            runTriggerSearch(comboboxState.selected.label);
+        } else {
+            clearTriggerSearch();
+        }
+    }
+
     function open() {
         if (disabled || comboboxState.open) {
             return;
         }
+        if (isInputAppearance) {
+            seedTriggerSearch();
+        }
         onopen?.();
         comboboxState.open = true;
         onclick?.();
+    }
+
+    function show() {
+        if (disabled || comboboxState.open) {
+            return;
+        }
+        if (isInputAppearance) {
+            seedTriggerSearch();
+        }
+        onopen?.();
+        comboboxState.open = true;
     }
 
     function handleInputKeydown(event: KeyboardEvent) {
@@ -136,6 +188,11 @@
             if (active) {
                 selectItem(active);
             }
+            return;
+        }
+        if (event.key === 'Escape' && comboboxState.open) {
+            event.preventDefault();
+            comboboxState.open = false;
         }
     }
 
@@ -156,10 +213,16 @@
 <div
     bind:this={triggerElement}
     data-state={comboboxState.open ? 'open' : 'closed'}
+    data-appearance={appearance}
     class={cn(
         className,
-        button({ variant, size }),
-        'relative select-none px-0 focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
+        isInputAppearance
+            ? input({ variant: variant === 'secondary' ? 'secondary' : 'outline' })
+            : button({ variant, size }),
+        'relative select-none',
+        isInputAppearance
+            ? 'items-center gap-2 focus-within:shadow-[var(--focus-ring)]'
+            : 'focus-within:shadow-[var(--focus-ring),var(--elevation-button-outline)]',
         disabled && 'pointer-events-none opacity-40'
     )}
 >
@@ -169,7 +232,7 @@
         type="text"
         role="combobox"
         value={displayValue}
-        readonly={searchPlacement === 'menu' || !comboboxState.open}
+        readonly={searchPlacement === 'menu' || (!comboboxState.open && !isInputAppearance)}
         {disabled}
         placeholder={comboboxState.open || !comboboxState.selected ? placeholder : undefined}
         autocomplete="off"
@@ -184,19 +247,58 @@
         aria-activedescendant={activeDescendant}
         onclick={(event) => {
             event.stopPropagation();
-            toggle();
+            if (isInputAppearance) {
+                show();
+            } else {
+                toggle();
+            }
+        }}
+        onfocus={() => {
+            if (isInputAppearance) {
+                show();
+            }
         }}
         oninput={handleInput}
         onkeydown={handleInputKeydown}
         class={cn(
-            'h-full min-w-0 flex-1 cursor-[var(--ui-cursor-interactive)] bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] outline-none placeholder:text-foreground-muted',
+            'min-w-0 flex-1 bg-transparent text-left text-[length:var(--font-size-button)] [font-weight:var(--font-weight-button)] [letter-spacing:var(--tracking-button)] outline-none placeholder:text-foreground-muted',
+            isInputAppearance ? 'h-auto cursor-text' : 'h-full cursor-[var(--ui-cursor-interactive)]',
             valueColor,
-            (searchPlacement === 'menu' || !comboboxState.open) && 'select-none'
+            trailing && !isInputAppearance && 'pr-5',
+            (searchPlacement === 'menu' || (!comboboxState.open && !isInputAppearance)) &&
+                'select-none'
         )}
     />
-    <ChevronDown
-        size={18}
-        class="pointer-events-none absolute top-1/2 right-3 shrink-0 -translate-y-1/2 text-foreground-muted"
-        aria-hidden="true"
-    />
+    {#if isInputAppearance && (comboboxState.searchContent !== '' || comboboxState.selected)}
+        <button
+            type="button"
+            aria-label="Clear search"
+            data-ui="combobox-trigger-clear"
+            class="flex shrink-0 cursor-pointer items-center rounded-full text-foreground-muted transition-colors outline-none hover:text-foreground focus-visible:shadow-[var(--focus-ring)] [&_svg]:size-4 [&_svg]:shrink-0"
+            onmousedown={(event) => event.preventDefault()}
+            onclick={(event) => {
+                event.stopPropagation();
+                clearSearch();
+            }}
+        >
+            <X size={16} aria-hidden="true" />
+        </button>
+    {:else if trailing}
+        <span
+            data-ui="combobox-trigger-trailing"
+            class={cn(
+                'flex shrink-0 items-center text-foreground-muted [&_svg]:size-4 [&_svg]:shrink-0',
+                !isInputAppearance && 'absolute top-1/2 right-3 -translate-y-1/2'
+            )}
+            aria-hidden="true"
+        >
+            {@render trailing()}
+        </span>
+    {:else if !isInputAppearance}
+        <ChevronDown
+            size={18}
+            class="pointer-events-none absolute top-1/2 right-3 shrink-0 -translate-y-1/2 text-foreground-muted"
+            aria-hidden="true"
+        />
+    {/if}
 </div>

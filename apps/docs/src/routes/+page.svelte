@@ -3,9 +3,11 @@
     import Moon from '@lucide/svelte/icons/moon';
     import Sun from '@lucide/svelte/icons/sun';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import * as FullscreenNav from '@sivir-ui/svelte/components/fullscreen-nav';
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { mode, toggleMode } from 'mode-watcher';
     import { resolve } from '$app/paths';
+    import { page } from '$app/state';
     import GitHubBlack from '$lib/assets/GitHub_Invertocat_Black.svg';
     import GitHubWhite from '$lib/assets/GitHub_Invertocat_White.svg';
     import { components } from '$lib/components';
@@ -47,6 +49,13 @@
 
     const cloudRows = chunkNames(components.map(pascalCase), 5);
     const rowDurations = [72, 54, 78, 48, 84, 60, 66, 50, 76, 56, 68];
+
+    let mobileMenuOpen = $state(false);
+
+    $effect(() => {
+        page.url.pathname;
+        mobileMenuOpen = false;
+    });
 </script>
 
 <svelte:head>
@@ -58,21 +67,24 @@
 </svelte:head>
 
 <section
-    class="relative flex min-h-screen flex-col overflow-hidden bg-background"
+    class="relative flex h-full flex-col overflow-hidden bg-background"
     aria-label="Sivir UI introduction"
 >
-    <header
-        class="relative z-10 flex w-full items-center justify-between px-8 py-4 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both]"
-    >
-        <div class="flex items-center">
-            <a
-                href={resolve('/')}
-                class="font-semibold tracking-tight text-foreground no-underline"
-                aria-label="Sivir UI home"
-            >
-                Sivir UI
-            </a>
-            <nav aria-label="Primary" class="ml-6 flex items-center gap-2">
+    <FullscreenNav.Root bind:open={mobileMenuOpen}>
+        <header
+            class="relative z-10 flex w-full items-center justify-between px-4 py-3 sm:px-8 sm:py-4 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both]"
+        >
+            <div class="flex min-w-0 flex-1 items-center gap-2">
+                <FullscreenNav.Trigger class="sm:hidden" />
+                <a
+                    href={resolve('/')}
+                    class="shrink-0 whitespace-nowrap font-semibold tracking-tight text-foreground no-underline"
+                    aria-label="Sivir UI home"
+                >
+                    Sivir UI
+                </a>
+            </div>
+            <nav aria-label="Primary" class="ml-6 hidden items-center gap-2 sm:flex">
                 <Button
                     variant="outline"
                     size="sm"
@@ -98,60 +110,84 @@
                     <span class="text-label">Studio</span>
                 </Button>
             </nav>
-        </div>
-        <div class="flex items-center gap-2 bg-background p-1">
-            <Button
-                variant="outline"
-                size="sm"
-                style="border-radius: var(--radius-md);"
-                href="https://github.com/aidan-neel/sivir-ui"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Star Sivir UI on GitHub"
-            >
-                <img
-                    src={mode.current === 'dark' ? GitHubWhite : GitHubBlack}
-                    alt="GitHub"
-                    class="size-4"
-                />
-                <span class="text-label tabular-nums"
-                    >{formatStarCount(data.starCount ?? null)}</span
+            <div class="flex shrink-0 items-center gap-2 bg-background p-1">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    style="border-radius: var(--radius-md);"
+                    href="https://github.com/aidan-neel/sivir-ui"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Star Sivir UI on GitHub"
                 >
-            </Button>
-            <Button
-                variant="outline"
-                size="icon"
-                style="border-radius: var(--radius-md);"
-                onclick={() => {
+                    <img
+                        src={mode.current === 'dark' ? GitHubWhite : GitHubBlack}
+                        alt="GitHub"
+                        class="size-4"
+                    />
+                    <span class="text-label tabular-nums"
+                        >{formatStarCount(data.starCount ?? null)}</span
+                    >
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    style="border-radius: var(--radius-md);"
+                    onclick={() => {
                         toggleMode();
                     }}
-                aria-label={mode.current === 'dark'
+                    aria-label={mode.current === 'dark'
                     ? 'Switch to light mode'
                     : 'Switch to dark mode'}
-            >
-                <span class="relative size-4" aria-hidden="true">
-                    <Sun
-                        size="16"
-                        class={`absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
+                >
+                    <span class="relative size-4" aria-hidden="true">
+                        <Sun
+                            size="16"
+                            class={`absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
                             mode.current === 'dark'
                                 ? 'scale-[0.25] opacity-0 blur-[4px]'
                                 : 'scale-100 opacity-100 blur-0'
                         }`}
-                    />
-                    <Moon
-                        size="16"
-                        class={`absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
+                        />
+                        <Moon
+                            size="16"
+                            class={`absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${
                             mode.current === 'dark'
                                 ? 'scale-100 opacity-100 blur-0'
                                 : 'scale-[0.25] opacity-0 blur-[4px]'
                         }`}
-                    />
-                </span>
-            </Button>
-        </div>
-    </header>
+                        />
+                    </span>
+                </Button>
+            </div>
+        </header>
+        <FullscreenNav.Content label="Browse Sivir UI" class="p-0 sm:hidden">
+            <header
+                class="flex shrink-0 items-center justify-between border-b border-border/70 px-4 py-3"
+            >
+                <a
+                    href={resolve('/')}
+                    class="font-semibold tracking-tight text-foreground no-underline"
+                >
+                    Sivir UI
+                </a>
+                <FullscreenNav.Close />
+            </header>
+            <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
+                <FullscreenNav.Group heading="Navigate">
+                    <FullscreenNav.Link href={resolve('/docs/introduction')}>
+                        Docs
+                    </FullscreenNav.Link>
+                    <FullscreenNav.Link href={resolve('/docs/components')}>
+                        Components
+                    </FullscreenNav.Link>
+                    <FullscreenNav.Link href={resolve('/studio')}>Studio</FullscreenNav.Link>
+                </FullscreenNav.Group>
+            </div>
+        </FullscreenNav.Content>
+    </FullscreenNav.Root>
     <div
-        class="relative flex w-full flex-1 flex-col items-start justify-end px-8 pt-16 pb-16 text-left"
+        class="relative flex w-full flex-1 flex-col items-start justify-end px-4 pt-8 pb-8 text-left sm:px-8 sm:pt-16 sm:pb-16"
     >
         <Typography.H1
             class="motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both]"
@@ -166,9 +202,13 @@
             Restyle 55 components from a handful of tokens.
         </Typography.Description>
         <div
-            class="mt-3 flex flex-wrap justify-start gap-3 motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:115ms]"
+            class="mt-3 flex w-full flex-col justify-start gap-3 sm:w-auto sm:flex-row sm:flex-wrap motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:115ms]"
         >
-            <Button href={resolve('/docs/components')} size="lg">
+            <Button
+                href={resolve('/docs/components')}
+                size="lg"
+                class="w-full justify-center sm:w-auto"
+            >
                 Browse all 55 components
                 <ArrowRight size={16} />
             </Button>
@@ -178,6 +218,7 @@
                 rel="noreferrer"
                 variant="outline"
                 size="lg"
+                class="w-full justify-center sm:w-auto"
             >
                 View on GitHub
             </Button>

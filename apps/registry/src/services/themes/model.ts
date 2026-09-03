@@ -1,7 +1,7 @@
-import { t, type Static } from 'elysia';
+import { type Static, t } from 'elysia';
 
 export const themeSchema = t.Object({
-    version: t.Literal(2),
+    version: t.Union([t.Literal(2), t.Literal(3)]),
     slug: t.String({
         minLength: 1,
         maxLength: 80,

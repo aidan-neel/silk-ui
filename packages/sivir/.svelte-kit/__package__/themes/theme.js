@@ -1,8 +1,12 @@
-export const THEME_VERSION = 2;
+export const THEME_VERSION = 3;
+/** Versions accepted by parseTheme. v2 themes keep working; v3 adds optional extensions. */
+export const SUPPORTED_THEME_VERSIONS = [2, 3];
 export const neutralTemperatures = ['cool', 'true', 'warm'];
 export const radiusScales = ['sharp', 'default', 'rounded'];
 export const densities = ['compact', 'default', 'comfortable'];
 export const motionFeels = ['none', 'subtle', 'default', 'expressive'];
+export const themeFontWeights = ['400', '500', '600', '700'];
+export const interactiveCursors = ['default', 'pointer'];
 /** Matches the public axes baked into ui.css exactly. */
 export const DEFAULT_THEME = {
     version: THEME_VERSION,
@@ -10,12 +14,12 @@ export const DEFAULT_THEME = {
     name: 'Default',
     description: 'Sivir default — a calm, warm-neutral interface system.',
     publisher: 'Sivir UI',
-    brand: '#1f9be6',
+    brand: '#1e78e6',
     neutral: 'warm',
     radius: 'default',
     density: 'default',
     motion: 'default',
-    fontSans: "'DM Sans', sans-serif",
+    fontSans: "'Inter', sans-serif",
     fontMono: "'JetBrains Mono', monospace",
     fontHeader: 'var(--font-sans)'
 };
@@ -83,7 +87,7 @@ const NEUTRALS = {
         },
         dark: {
             0: 'hsl(0 0% 5%)',
-            10: 'hsl(60 11.1% 99.2%)',
+            10: 'hsl(60 11.1% 7%)',
             50: 'hsl(0 0% 10%)',
             100: 'hsl(0 0% 13%)',
             150: 'hsl(0 0% 15.7%)',
@@ -147,8 +151,8 @@ function brandDeclarations(brand, mode) {
     const isDefault = brand.toLowerCase() === DEFAULT_THEME.brand;
     return [
         `--color-primary: ${brand};`,
-        // Keep default hover in lockstep with baked ui.css and WCAG AA on white labels.
-        `--color-primary-hover: ${isDefault ? '#1270ad' : `color-mix(in srgb, ${brand} 78%, black)`};`,
+        // Darken the brand itself so hover keeps its hue instead of shifting teal.
+        `--color-primary-hover: color-mix(in srgb, ${brand} 78%, black);`,
         `--color-ring: color-mix(in srgb, ${brand} 30%, transparent);`,
         `--sivir-blue-500: ${isDefault
             ? mode === 'light'
@@ -169,6 +173,87 @@ function scaleMotionMs(value, factor) {
         return value;
     }
     return `${Math.round(n * factor)}ms`;
+}
+const FOUNDATION_TOKEN_MAP = {
+    base: ['--color-card', '--color-panel'],
+    border: ['--color-border'],
+    background: ['--color-background'],
+    secondary: ['--color-secondary'],
+    muted: ['--color-muted']
+};
+function foundationDeclarations(palette) {
+    const declarations = [];
+    const keys = Object.keys(FOUNDATION_TOKEN_MAP).sort();
+    for (const key of keys) {
+        const value = palette[key];
+        if (typeof value !== 'string' || value.trim() === '') {
+            continue;
+        }
+        for (const token of FOUNDATION_TOKEN_MAP[key]) {
+            declarations.push(`${token}: ${value.trim()};`);
+        }
+    }
+    return declarations;
+}
+function tokenMapDeclarations(map) {
+    if (!map) {
+        return [];
+    }
+    return Object.keys(map)
+        .sort()
+        .map((name) => `${name}: ${map[name].trim()};`);
+}
+function typographyDeclarations(typography) {
+    if (!typography) {
+        return [];
+    }
+    const declarations = [];
+    if (typeof typography.headerSize === 'number') {
+        declarations.push(`--font-size-header: ${typography.headerSize}px;`);
+    }
+    if (typeof typography.headerWeight === 'string') {
+        declarations.push(`--font-weight-header: ${typography.headerWeight};`);
+    }
+    const roles = typography.roleWeights;
+    if (roles) {
+        const roleKeys = ['body', 'label', 'button', 'badge', 'description'];
+        for (const role of roleKeys) {
+            const weight = roles[role];
+            if (typeof weight === 'string') {
+                declarations.push(`--font-weight-${role}: ${weight};`);
+            }
+        }
+    }
+    return declarations;
+}
+function chromeBlocks(chrome) {
+    if (!chrome) {
+        return '';
+    }
+    const shared = [`--ui-cursor-interactive: ${chrome.interactiveCursor ?? 'default'};`];
+    const elevationOff = [
+        '--elevation-1: none;',
+        '--elevation-float: none;',
+        '--elevation-modal: none;',
+        '--elevation-control: inset 0 0 0 1px var(--color-border);',
+        '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
+    ];
+    const withElevations = (declarations) => chrome.shadows === false ? [...declarations, ...elevationOff] : declarations;
+    const light = withElevations([
+        `--color-primary-stroke: ${chrome.primaryStroke ? 'color-mix(in srgb, black 14%, transparent)' : 'transparent'};`,
+        ...shared
+    ]);
+    const dark = withElevations([
+        `--color-primary-stroke: ${chrome.primaryStroke ? 'color-mix(in srgb, white 24%, transparent)' : 'transparent'};`,
+        ...shared
+    ]);
+    const hasChromeWork = chrome.shadows === false ||
+        chrome.primaryStroke === true ||
+        chrome.interactiveCursor === 'pointer';
+    if (!hasChromeWork) {
+        return '';
+    }
+    return block(':root:not(.dark)', light) + block('.dark', dark);
 }
 /** Generates complete, acyclic overrides for every public theme axis. */
 export function themeToCss(themeInput) {
@@ -193,7 +278,7 @@ export function themeToCss(themeInput) {
         `--motion-duration-toast-in: ${motion.toastIn};`,
         `--motion-duration-toast-out: ${motion.toastOut};`
     ];
-    return (block(':root,\n.dark', shared) +
+    let css = block(':root,\n.dark', shared) +
         block(':root', [
             ...brandDeclarations(theme.brand, 'light'),
             ...neutralDeclarations(NEUTRALS[theme.neutral].light)
@@ -201,7 +286,43 @@ export function themeToCss(themeInput) {
         block('.dark', [
             ...brandDeclarations(theme.brand, 'dark'),
             ...neutralDeclarations(NEUTRALS[theme.neutral].dark)
-        ]));
+        ]);
+    const typography = typographyDeclarations(theme.typography);
+    if (typography.length > 0) {
+        css += block(':root,\n.dark', typography);
+    }
+    if (theme.foundation?.light) {
+        const declarations = foundationDeclarations(theme.foundation.light);
+        if (declarations.length > 0) {
+            css += block(':root:not(.dark)', declarations);
+        }
+    }
+    if (theme.foundation?.dark) {
+        const declarations = foundationDeclarations(theme.foundation.dark);
+        if (declarations.length > 0) {
+            css += block('.dark', declarations);
+        }
+    }
+    if (theme.tokens?.shared) {
+        const declarations = tokenMapDeclarations(theme.tokens.shared);
+        if (declarations.length > 0) {
+            css += block(':root,\n.dark', declarations);
+        }
+    }
+    if (theme.tokens?.light) {
+        const declarations = tokenMapDeclarations(theme.tokens.light);
+        if (declarations.length > 0) {
+            css += block(':root:not(.dark)', declarations);
+        }
+    }
+    if (theme.tokens?.dark) {
+        const declarations = tokenMapDeclarations(theme.tokens.dark);
+        if (declarations.length > 0) {
+            css += block('.dark', declarations);
+        }
+    }
+    css += chromeBlocks(theme.chrome);
+    return css;
 }
 function isRecord(value) {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -218,14 +339,151 @@ function enumValue(value, field, values) {
     }
     return value;
 }
+function cssValue(value, field) {
+    if (typeof value !== 'string' || value.trim() === '') {
+        throw new TypeError(`Invalid theme: ${field} must be a non-empty string.`);
+    }
+    const trimmed = value.trim();
+    if (trimmed.length > 500 || /[{};]/.test(trimmed)) {
+        throw new TypeError(`Invalid theme: ${field} must be a plain CSS value.`);
+    }
+    return trimmed;
+}
+function tokenName(value, field) {
+    if (!/^--[a-z0-9-]+$/.test(value)) {
+        throw new TypeError(`Invalid theme: ${field} keys must look like --token-name.`);
+    }
+    return value;
+}
+function optionalTokenMap(value, field) {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (!isRecord(value)) {
+        throw new TypeError(`Invalid theme: ${field} must be an object.`);
+    }
+    const entries = Object.entries(value);
+    if (entries.length === 0) {
+        return undefined;
+    }
+    if (entries.length > 200) {
+        throw new TypeError(`Invalid theme: ${field} must have at most 200 entries.`);
+    }
+    const map = {};
+    for (const [name, raw] of entries) {
+        tokenName(name, field);
+        map[name] = cssValue(raw, `${field}.${name}`);
+    }
+    return map;
+}
+function optionalFoundation(value) {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (!isRecord(value)) {
+        throw new TypeError('Invalid theme: foundation must be an object.');
+    }
+    const paletteKeys = ['base', 'border', 'background', 'secondary', 'muted'];
+    const parsePalette = (raw, field) => {
+        if (raw === undefined) {
+            return undefined;
+        }
+        if (!isRecord(raw)) {
+            throw new TypeError(`Invalid theme: ${field} must be an object.`);
+        }
+        const palette = {};
+        for (const key of paletteKeys) {
+            const candidate = raw[key];
+            if (candidate === undefined) {
+                continue;
+            }
+            palette[key] = cssValue(candidate, `${field}.${key}`);
+        }
+        return Object.keys(palette).length > 0 ? palette : undefined;
+    };
+    const foundation = {
+        light: parsePalette(value.light, 'foundation.light'),
+        dark: parsePalette(value.dark, 'foundation.dark')
+    };
+    if (!foundation.light && !foundation.dark) {
+        return undefined;
+    }
+    return foundation;
+}
+function optionalTypography(value) {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (!isRecord(value)) {
+        throw new TypeError('Invalid theme: typography must be an object.');
+    }
+    const typography = {};
+    if (value.headerSize !== undefined) {
+        if (typeof value.headerSize !== 'number' ||
+            !Number.isFinite(value.headerSize) ||
+            value.headerSize < 10 ||
+            value.headerSize > 32) {
+            throw new TypeError('Invalid theme: typography.headerSize must be 10-32.');
+        }
+        typography.headerSize = value.headerSize;
+    }
+    if (value.headerWeight !== undefined) {
+        typography.headerWeight = enumValue(value.headerWeight, 'typography.headerWeight', themeFontWeights);
+    }
+    if (value.roleWeights !== undefined) {
+        if (!isRecord(value.roleWeights)) {
+            throw new TypeError('Invalid theme: typography.roleWeights must be an object.');
+        }
+        const roles = {};
+        const roleKeys = ['body', 'label', 'button', 'badge', 'description'];
+        for (const role of roleKeys) {
+            const candidate = value.roleWeights[role];
+            if (candidate === undefined) {
+                continue;
+            }
+            roles[role] = enumValue(candidate, `typography.roleWeights.${role}`, themeFontWeights);
+        }
+        if (Object.keys(roles).length > 0) {
+            typography.roleWeights = roles;
+        }
+    }
+    return Object.keys(typography).length > 0 ? typography : undefined;
+}
+function optionalChrome(value) {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (!isRecord(value)) {
+        throw new TypeError('Invalid theme: chrome must be an object.');
+    }
+    const chrome = {};
+    if (value.shadows !== undefined) {
+        if (typeof value.shadows !== 'boolean') {
+            throw new TypeError('Invalid theme: chrome.shadows must be a boolean.');
+        }
+        chrome.shadows = value.shadows;
+    }
+    if (value.primaryStroke !== undefined) {
+        if (typeof value.primaryStroke !== 'boolean') {
+            throw new TypeError('Invalid theme: chrome.primaryStroke must be a boolean.');
+        }
+        chrome.primaryStroke = value.primaryStroke;
+    }
+    if (value.interactiveCursor !== undefined) {
+        chrome.interactiveCursor = enumValue(value.interactiveCursor, 'chrome.interactiveCursor', interactiveCursors);
+    }
+    return Object.keys(chrome).length > 0 ? chrome : undefined;
+}
 /** Validates untrusted registry/local-storage JSON and returns a normalized theme. */
 export function parseTheme(value) {
     if (!isRecord(value)) {
         throw new TypeError('Invalid theme: expected an object.');
     }
-    if (value.version !== THEME_VERSION) {
-        throw new TypeError(`Invalid theme: version must be ${THEME_VERSION}.`);
+    if (typeof value.version !== 'number' ||
+        !SUPPORTED_THEME_VERSIONS.includes(value.version)) {
+        throw new TypeError(`Invalid theme: version must be one of ${SUPPORTED_THEME_VERSIONS.join(', ')}.`);
     }
+    const version = value.version;
     const slug = requiredString(value.slug, 'slug');
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
         throw new TypeError('Invalid theme: slug must contain lowercase letters, numbers, or hyphens.');
@@ -235,7 +493,7 @@ export function parseTheme(value) {
         throw new TypeError('Invalid theme: brand must be a six-digit hex color.');
     }
     const theme = {
-        version: THEME_VERSION,
+        version,
         slug,
         name: requiredString(value.name, 'name'),
         description: typeof value.description === 'string' ? value.description : '',
@@ -251,7 +509,41 @@ export function parseTheme(value) {
     if (typeof value.publisher === 'string' && value.publisher.trim()) {
         theme.publisher = value.publisher;
     }
+    const foundation = optionalFoundation(value.foundation);
+    if (foundation) {
+        theme.foundation = foundation;
+    }
+    const tokens = isRecord(value.tokens)
+        ? {
+            light: optionalTokenMap(value.tokens.light, 'tokens.light'),
+            dark: optionalTokenMap(value.tokens.dark, 'tokens.dark'),
+            shared: optionalTokenMap(value.tokens.shared, 'tokens.shared')
+        }
+        : undefined;
+    if (tokens && (tokens.light || tokens.dark || tokens.shared)) {
+        theme.tokens = {
+            ...(tokens.light ? { light: tokens.light } : {}),
+            ...(tokens.dark ? { dark: tokens.dark } : {}),
+            ...(tokens.shared ? { shared: tokens.shared } : {})
+        };
+    }
+    const typography = optionalTypography(value.typography);
+    if (typography) {
+        theme.typography = typography;
+    }
+    const chrome = optionalChrome(value.chrome);
+    if (chrome) {
+        theme.chrome = chrome;
+    }
     return theme;
+}
+/** Upgrades a v2 theme to v3 without changing its rendered CSS. */
+export function migrateThemeV2ToV3(theme) {
+    const parsed = parseTheme(theme);
+    return {
+        ...parsed,
+        version: THEME_VERSION
+    };
 }
 export function isTheme(value) {
     try {

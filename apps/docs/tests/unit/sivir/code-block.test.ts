@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { Root } from '@sivir-ui/svelte/components/code-block';
 import { highlight } from '@sivir-ui/svelte/components/code-block/highlight';
+import { render, screen } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
 
 describe('CodeBlock highlighting safety', () => {
     it('escapes markup for an unknown language', () => {
@@ -17,5 +19,23 @@ describe('CodeBlock highlighting safety', () => {
         expect(html).not.toContain('<img');
         expect(html).toContain('&lt;');
         expect(html).toContain('&gt;');
+    });
+});
+
+describe('CodeBlock tabbed roll fallback', () => {
+    it('renders the active tab code as plain text without animation support', () => {
+        render(Root, {
+            props: {
+                value: 'a',
+                tabs: [
+                    { label: 'A', lang: 'a', code: 'aaa' },
+                    { label: 'B', lang: 'b', code: 'bbb' }
+                ]
+            }
+        });
+
+        const panel = screen.getByRole('tabpanel');
+        expect(panel).toHaveTextContent('aaa');
+        expect(panel.querySelector('scritto-text')).not.toBeInTheDocument();
     });
 });

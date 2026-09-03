@@ -5,6 +5,7 @@
     import PenTool from '@lucide/svelte/icons/pen-tool';
     import Square from '@lucide/svelte/icons/square';
     import Type from '@lucide/svelte/icons/type';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
 
     let activeTool = $state<string>('move');
@@ -20,7 +21,7 @@
 </script>
 
 <div class="flex items-center justify-center p-10">
-    <div class="flex gap-1 rounded-[var(--radius-lg)] border border-border bg-card p-1 shadow-sm">
+    <div class="flex gap-1 rounded-[var(--radius-lg)] border border-border bg-card p-1">
         {#each tools as tool (tool.id)}
             {@const Icon = tool.icon}
             <Tooltip.Root placement="top" delay={300}>
@@ -42,7 +43,7 @@
                 <Tooltip.Content>
                     <div class="flex items-center gap-2">
                         <span>{tool.label}</span>
-                        <span class="text-foreground-muted text-opacity-60">{tool.shortcut}</span>
+                        <Shortcut shortcut={tool.shortcut} />
                     </div>
                 </Tooltip.Content>
             </Tooltip.Root>

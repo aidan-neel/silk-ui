@@ -6,6 +6,8 @@
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import Pace from './examples/pace.svelte';
+    import PaceSrc from './examples/pace.svelte?raw';
     import ReadyState from './examples/ready-state.svelte';
     import ReadyStateSrc from './examples/ready-state.svelte?raw';
 
@@ -52,6 +54,16 @@
             lang="svelte"
             copy="overlay"
         />
+    </section>
+
+    <section id="pace" class="scroll-mt-20 flex flex-col gap-4">
+        <Typography.H2 class="docs-section-heading">Speed and curved rotation</Typography.H2>
+        <Typography.Text variant="supporting">
+            Pass <Typography.InlineCode>speed</Typography.InlineCode> to scale the rotation pace, or
+            <Typography.InlineCode>curved</Typography.InlineCode>
+            for a varying-speed rotation that never stalls. The default stays a continuous spin.
+        </Typography.Text>
+        <ComponentPreview code={PaceSrc}><Pace /></ComponentPreview>
     </section>
 
     <section id="ready-state" class="scroll-mt-20 flex flex-col gap-4">

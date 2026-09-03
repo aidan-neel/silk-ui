@@ -79,6 +79,16 @@ blockquote {
     background-color: color-mix(in srgb, var(--color-primary) 32%, transparent);
 }
 
+/* Docs page headers set slightly smaller, with a firmer and larger lead. */
+[data-docs-page] header h1 {
+    font-size: 28px;
+}
+
+[data-docs-page] header p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
 pre {
     background-color: transparent;
 }

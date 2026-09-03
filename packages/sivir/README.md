@@ -43,6 +43,20 @@ working too.
 Make sure that CSS file is imported once at the root (a fresh
 `sv add tailwindcss` already imports `app.css` in `src/routes/+layout.svelte`).
 
+## Fonts
+
+Sivir's default theme sets `--font-sans` to Inter and `--font-mono` to
+JetBrains Mono. Both faces ship with the package through `@fontsource/inter`
+and `@fontsource/jetbrains-mono`, which `ui.css` imports as self-hosted
+`latin-400/500/600/700` stylesheets. Your bundler serves the `woff2` files
+locally, so screens render the intended typefaces with no Google Fonts request
+and no network access at runtime — including containerized deployments.
+
+Do not add a remote font link to match older screenshots. To use a different
+face, override `--font-sans`, `--font-mono`, or `--font-header` in your own CSS
+and bring that font yourself; non-default Theme Studio presets already work
+this way.
+
 ## Use it
 
 Single-element components are named exports:

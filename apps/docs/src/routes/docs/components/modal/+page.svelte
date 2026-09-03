@@ -7,6 +7,8 @@
     import BasicSrc from './examples/basic.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import Nested from './examples/nested.svelte';
+    import NestedSrc from './examples/nested.svelte?raw';
     import Compact from './examples/size-compact.svelte';
     import CompactSrc from './examples/size-compact.svelte?raw';
     import Large from './examples/size-large.svelte';
@@ -76,6 +78,13 @@
             <Typography.H3 class="docs-subsection-heading"> Basic </Typography.H3>
             <ComponentPreview code={BasicSrc}>
                 <Basic />
+            </ComponentPreview>
+        </div>
+
+        <div id="nested" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Nested </Typography.H3>
+            <ComponentPreview code={NestedSrc}>
+                <Nested />
             </ComponentPreview>
         </div>
 

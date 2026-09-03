@@ -4,7 +4,14 @@ import { fileURLToPath } from 'node:url';
 import type { RegistryComponent, RegistryIndex, RegistryTheme } from './types';
 
 /** Dependencies installed by `sivir init` for shared files and theme tokens. */
-export const BASE_PEER_DEPENDENCIES = ['svelte', 'tailwindcss', 'cnfast', '@floating-ui/dom'];
+export const BASE_PEER_DEPENDENCIES = [
+    'svelte',
+    'tailwindcss',
+    'cnfast',
+    '@floating-ui/dom',
+    '@fontsource/inter',
+    '@fontsource/jetbrains-mono'
+];
 
 /**
  * The registry snapshot lives at the package root (next to dist/), so it

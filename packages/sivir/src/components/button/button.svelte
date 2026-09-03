@@ -147,7 +147,7 @@
         role={pending ? 'link' : undefined}
         tabindex={pending ? 0 : (rest as HTMLAnchorAttributes).tabindex}
         data-ui="button"
-        data-variant={variant}
+        data-variant={unstyled ? undefined : variant}
         data-size={size}
         class={styledClasses}
         aria-label={currentLabel}
@@ -173,7 +173,7 @@
         use:pressable
         type={(rest as HTMLButtonAttributes).type ?? 'button'}
         data-ui="button"
-        data-variant={variant}
+        data-variant={unstyled ? undefined : variant}
         data-size={size}
         class={styledClasses}
         aria-label={currentLabel}

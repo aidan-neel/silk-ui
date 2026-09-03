@@ -2,7 +2,7 @@
 <script lang="ts">
     import type { TabsState } from '@sivir-ui/svelte/components/tabs';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { getContext } from 'svelte';
+    import { getContext, untrack } from 'svelte';
     import { toTabIdPart } from '../tabs/id';
     import type { CodeBlockContentProps, CodeBlockRegistry } from '.';
     import Copy from './code-block-copy.svelte';
@@ -24,6 +24,16 @@
     const registry = getContext<CodeBlockRegistry>('code-block');
     const tabs = getContext<TabsState>('tabs');
 
+    if (registry) {
+        untrack(() => {
+            registry.codes[value] = code;
+            registry.langs[value] = lang ?? '';
+            if (!registry.order.includes(value)) {
+                registry.order = [...registry.order, value];
+            }
+        });
+    }
+
     /**
      * Registers the raw code -- Copy reads the active one -- and records source
      * order so the slide direction can be derived from tab position.
@@ -33,11 +43,13 @@
             return;
         }
         registry.codes[value] = code;
+        registry.langs[value] = lang ?? '';
         if (!registry.order.includes(value)) {
             registry.order = [...registry.order, value];
         }
         return () => {
             delete registry.codes[value];
+            delete registry.langs[value];
         };
     });
 
@@ -61,18 +73,19 @@
     const tabId = $derived(tabs ? `${tabs.id}-trigger-${toTabIdPart(value)}` : undefined);
 </script>
 
-<div
-    role="tabpanel"
-    id={panelId}
-    aria-labelledby={tabId}
-    data-ui="code-block-content"
-    data-state={isActive ? 'active' : 'inactive'}
-    data-layout={layout}
-    aria-hidden={!isActive}
-    inert={!isActive}
-    class={cn(
+{#if !registry?.tabbed}
+    <div
+        role="tabpanel"
+        id={panelId}
+        aria-labelledby={tabId}
+        data-ui="code-block-content"
+        data-state={isActive ? 'active' : 'inactive'}
+        data-layout={layout}
+        aria-hidden={!isActive}
+        inert={!isActive}
+        class={cn(
         className,
-        'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto font-mono font-label text-foreground',
+        'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto font-mono font-medium text-foreground',
         !registry?.contained && 'sivir-inset-surface',
         !isActive && !registry?.contained && 'hidden',
         registry?.contained &&
@@ -80,44 +93,45 @@
         registry?.contained && isActive && 'relative z-[1]',
         registry?.contained && !isActive && 'pointer-events-none absolute inset-0 block'
     )}
-    style:transform={`translateX(calc(${shift} * var(--code-block-slide)))`}
-    style:opacity={isActive ? '1' : '0'}
-    {...rest}
->
-    <div class="relative w-full overflow-x-auto">
-        <!-- Keep the highlighted markup on this element so the descendant Tailwind selectors apply. -->
-        {#if copyPlacement === 'inline'}
-            <div class={cn(CODE_SURFACE, 'w-full items-center')}>
-                <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
-                ><code
-                        >{@html html}</code
-                    ></pre>
-                <Copy class="mr-1.5 shrink-0" />
-            </div>
-        {:else}
-            <div class={cn(CODE_SURFACE, 'w-full')}>
-                {#if showLineNumbers}
+        style:transform={`translateX(calc(${shift} * var(--code-block-slide)))`}
+        style:opacity={isActive ? '1' : '0'}
+        {...rest}
+    >
+        <div class="relative w-full overflow-x-auto">
+            <!-- Keep the highlighted markup on this element so the descendant Tailwind selectors apply. -->
+            {#if copyPlacement === 'inline'}
+                <div class={cn(CODE_SURFACE, 'w-full items-center')}>
                     <pre
-                        aria-hidden="true"
-                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
-                    >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
-                                1}{newline}{/each}</pre>
-                {/if}
-                <pre
-                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
-                ><code
+                        class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
+                    ><code
                         >{@html html}</code
                     ></pre>
-            </div>
-        {/if}
-        {#if copyPlacement === 'overlay'}
-            <Copy
-                class={cn(
+                    <Copy class="mr-1.5 shrink-0" />
+                </div>
+            {:else}
+                <div class={cn(CODE_SURFACE, 'w-full')}>
+                    {#if showLineNumbers}
+                        <pre
+                            aria-hidden="true"
+                            class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
+                        >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
+                                1}{newline}{/each}</pre>
+                    {/if}
+                    <pre
+                        class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
+                    ><code
+                        >{@html html}</code
+                    ></pre>
+                </div>
+            {/if}
+            {#if copyPlacement === 'overlay'}
+                <Copy
+                    class={cn(
                     'absolute right-2 z-10 bg-card',
                     layout === 'single-line' ? 'top-1/2 -translate-y-1/2' : 'top-2'
                 )}
-            />
-        {/if}
+                />
+            {/if}
+        </div>
     </div>
-</div>
+{/if}

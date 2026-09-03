@@ -1,0 +1,15 @@
+- Response Stream rolls each arrival in with the Scritto roller from Copy→Copied, with `speed` driving the roll duration and the height easing open as lines wrap, in medium body text.
+- Enter Toast by sharpening from a 2px blur instead of fading opacity in.
+- Nest Modal inside Modal: the earlier dialog scales to 0.925, the new scrim uses less blur, and dismiss peels only the top layer.
+- Give Spinner an optional curved rotation that varies speed without ever stalling, defaulting to the continuous spin.
+- Give Spinner a speed multiplier prop and a slightly faster default spin.
+- Roll Tooltip in-place re-labels such as Copy→Copied with Scritto instead of swapping the label instantly.
+- Roll single-line Code Block tabs (install commands) with Scritto; multi-line language switches keep highlighted source and ease panel height.
+- Ease the Code Block panel height through language switches so taller snippets open the block smoothly instead of snapping.
+- Stretch the Switch thumb on press so the toggle feels like a physical control.
+- Give Shortcut chips a hair more vertical padding so the glyphs aren’t tight to the border.
+- Hide Shortcut chips below the `sm` breakpoint: keyboard hints are noise where there is no keyboard, and the keybinding still fires.
+- Extend themes to v3 with optional studio blocks (per-mode foundation colors, raw token overrides, typography, and chrome flags), so anything built in the Theme Studio round-trips as Theme JSON and copy-pasted CSS. v2 themes keep parsing unchanged.
+- Give Combobox.Trigger an `appearance="input"` mode: a field-styled, always-editable trigger that opens on focus or typing instead of click-toggle, with no chevron and an optional `trailing` adornment snippet. The Theme Studio invoice search now uses it.
+- Add the Magic built-in theme: a compact, subtle-motion indigo system on warm-neutral surfaces with flat chrome, alongside Default.
+- Add the Bitsy built-in theme: a comfortable, expressive rounded system with a graphite accent, DM Sans type, and flat stroked chrome.

@@ -8,50 +8,49 @@ async function* chunks() {
 }
 
 describe('ResponseStream', () => {
-    it('does not stagger fade segments unless configured', async () => {
+    it('renders a complete string in full', async () => {
         const { container } = render(ResponseStream, {
             props: {
                 textStream: 'First chunk',
-                mode: 'fade',
                 characterChunkSize: 20
             }
         });
 
         await waitFor(() => expect(container).toHaveTextContent('First chunk'));
-        const segments = container.querySelectorAll<HTMLSpanElement>(
-            '.sivir-response-stream-segment'
-        );
-
-        expect(segments[0]?.style.getPropertyValue('--response-stream-segment-delay')).toBe('0ms');
-        expect(segments[1]?.style.getPropertyValue('--response-stream-segment-delay')).toBe('0ms');
     });
 
-    it('applies the configured fade segment delay', async () => {
+    it('renders live chunks as they arrive', async () => {
+        const { container } = render(ResponseStream, {
+            props: { textStream: chunks(), speed: 1 }
+        });
+
+        await waitFor(() => expect(container).toHaveTextContent('First chunk'));
+    });
+
+    it('renders medium body text', async () => {
         const { container } = render(ResponseStream, {
             props: {
                 textStream: 'First chunk',
-                mode: 'fade',
-                segmentDelay: 20,
                 characterChunkSize: 20
             }
         });
 
         await waitFor(() => expect(container).toHaveTextContent('First chunk'));
-        const segments = container.querySelectorAll<HTMLSpanElement>(
-            '.sivir-response-stream-segment'
+        expect(container.querySelector('[data-ui="response-stream"]')?.className).toContain(
+            'font-medium'
         );
-
-        expect(segments[1]?.style.getPropertyValue('--response-stream-segment-delay')).toBe('20ms');
     });
 
-    it('renders live chunks with an optional minimal fade delay', async () => {
+    it('renders streamed text as plain text without animation support', async () => {
         const { container } = render(ResponseStream, {
-            props: { textStream: chunks(), mode: 'fade', speed: 1, segmentDelay: 20 }
+            props: {
+                textStream: 'First chunk',
+                characterChunkSize: 20
+            }
         });
 
         await waitFor(() => expect(container).toHaveTextContent('First chunk'));
-        const segment = container.querySelector<HTMLSpanElement>('.sivir-response-stream-segment');
-        expect(segment?.style.getPropertyValue('--response-stream-segment-delay')).toBe('20ms');
+        expect(container.querySelector('scritto-text')).not.toBeInTheDocument();
     });
 
     it('shows a waiting caret until the first live chunk arrives', async () => {

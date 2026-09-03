@@ -1,6 +1,6 @@
 {
     "name": "@sivir-ui/svelte",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "description": "SvelteKit component library inspired by shadcn/ui. Svelte 5 + Tailwind v4.",
     "license": "MIT",
     "repository": {
@@ -95,7 +95,11 @@
     },
     "dependencies": {
         "@floating-ui/dom": "^1.7.6",
+        "@fontsource/inter": "^5.3.0",
+        "@fontsource/jetbrains-mono": "^5.3.0",
         "@lucide/svelte": "^1.7.0",
+        "@scritto/core": "^0.1.0",
+        "@scritto/svelte": "^0.1.0",
         "cnfast": "^0.0.8",
         "fuse.js": "^7.1.0",
         "highlight.js": "^11.11.1",

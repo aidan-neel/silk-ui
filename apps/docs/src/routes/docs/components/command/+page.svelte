@@ -1,5 +1,6 @@
 <script lang="ts">
     import { CodeBlock } from '@sivir-ui/svelte/components/code-block';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
@@ -28,7 +29,8 @@
                 {TITLE}
             </Typography.H1>
             <Typography.Text variant="lead" class="mt-2 max-w-2xl">
-                A command palette with fuzzy search and grouped results. Often opened with Cmd+K.
+                A command palette with fuzzy search and grouped results. Often opened with
+                <Shortcut shortcut="cmd+K" />.
             </Typography.Text>
         </div>
         <DocsPager />

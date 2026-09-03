@@ -16,6 +16,11 @@
     const { starCount = null }: { starCount?: number | null } = $props();
     let mobileMenuOpen = $state(false);
 
+    $effect(() => {
+        page.url.pathname;
+        mobileMenuOpen = false;
+    });
+
     const navItems = [
         { href: '/docs/introduction', label: 'Docs' },
         { href: '/docs/components', label: 'Components' },

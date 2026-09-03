@@ -85,7 +85,7 @@
             easing: quartOut,
             css: (t: number) => {
                 return `
-					opacity: ${t};
+					filter: blur(${(1 - t) * 2}px);
 					transform: translateY(${(1 - t) * 16}px) scale(${0.985 + t * 0.015});
 				`;
             }
@@ -99,6 +99,7 @@
             easing: cubicOut,
             css: (t: number) => {
                 return `
+					filter: blur(${(1 - t) * 2}px);
 					opacity: ${t};
 					transform: translateY(${(1 - t) * 12}px) scale(${0.985 + t * 0.015});
 				`;
@@ -136,7 +137,7 @@
                 >
                     <!--
 						Transition wrapper: only Svelte in/out, NO CSS transform transitions.
-						Enter slides up + fade. Exit slides right + fade.
+						Enter slides up and sharpens from blur. Exit blurs and fades.
 						Completely independent of the stacking layer above.
 					-->
                     <div in:toastIn|global out:toastOut|global>

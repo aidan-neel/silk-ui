@@ -1,0 +1,8 @@
+- Add a nested Modal example that opens a second same-size dialog from the first.
+- Narrow the Show More hero so the two-line clamp hides real content, and rebuild the Task Steps and Tooltip heroes on the standard Card surface with no shadow.
+- Match Installation heading-to-command spacing with Usage on every docs page.
+- Render keyboard hints with Shortcut instead of muted text or raw `kbd` in Tooltip, Command, Prompt Composer, and the Dropdown Menu usage snippet.
+- Tighten the Theme Studio notifications preview with a compact header, aligned rows, and tabular details.
+- Keep the home page to a single viewport on mobile: the header swaps its link pills for the fullscreen navigation menu, the hero stays bottom-anchored with tighter padding, and the page no longer scrolls.
+- Rebuild the Components gallery around live search and category groups, with a Scritto-rolled result count, staggered card entrances, and a height-capped results menu.
+- Document the new Response Stream roll mode with a live example next to the word blur-fade hero.

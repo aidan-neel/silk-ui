@@ -51,6 +51,8 @@
     "dependencies": {
         "@floating-ui/dom": "^1.7.6",
         "@lucide/svelte": "^1.7.0",
+        "@scritto/core": "^0.1.0",
+        "@scritto/svelte": "^0.1.0",
         "@sivir-ui/svelte": "workspace:*",
         "@vercel/analytics": "^2.0.1",
         "clsx": "^2.1.1",

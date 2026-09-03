@@ -8,6 +8,7 @@
     import Content from './code-block-content.svelte';
     import Header from './code-block-header.svelte';
     import List from './code-block-list.svelte';
+    import Roll from './code-block-roll.svelte';
     import Trigger from './code-block-trigger.svelte';
 
     let {
@@ -59,9 +60,11 @@
      */
     const registry = $state({
         codes: {},
+        langs: {},
         active: untrack(() => value ?? ''),
         order: [],
-        contained: untrack(() => isHighLevel)
+        contained: untrack(() => isHighLevel),
+        tabbed: false
     } as CodeBlockRegistry);
     setContext('code-block', registry);
 
@@ -106,15 +109,7 @@
                     )}
                 >
                     {#if hasTabRow}
-                        {#each resolvedTabs as t (t.value)}
-                            <Content
-                                value={t.value as string}
-                                code={t.code}
-                                lang={t.lang}
-                                {showLineNumbers}
-                                copyPlacement={bodyCopy}
-                            />
-                        {/each}
+                        <Roll tabs={resolvedTabs} {showLineNumbers} copyPlacement={bodyCopy} />
                     {:else if code != null}
                         <Content
                             value={SINGLE}
@@ -128,6 +123,16 @@
             {/if}
         {:else}
             {@render children?.()}
+            {#if registry.tabbed}
+                <div
+                    data-ui="code-block-surface"
+                    class={cn(
+                        'sivir-inset-surface relative flex min-h-0 w-full self-stretch flex-1 overflow-auto'
+                    )}
+                >
+                    <Roll {showLineNumbers} copyPlacement={bodyCopy} />
+                </div>
+            {/if}
         {/if}
     </Tabs.Root>
 </div>

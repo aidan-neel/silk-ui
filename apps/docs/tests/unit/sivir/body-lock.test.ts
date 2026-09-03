@@ -96,4 +96,19 @@ describe('escape layer stack', () => {
 
         releaseOuter();
     });
+
+    it('closes the higher-rank layer even when it registered first', () => {
+        const closed: string[] = [];
+        const releaseInner = pushEscapeLayer(() => closed.push('inner'), undefined, 2);
+        const releaseOuter = pushEscapeLayer(() => closed.push('outer'), undefined, 1);
+
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        expect(closed).toEqual(['inner']);
+
+        releaseInner();
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        expect(closed).toEqual(['inner', 'outer']);
+
+        releaseOuter();
+    });
 });

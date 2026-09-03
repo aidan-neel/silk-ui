@@ -51,7 +51,7 @@
     <div class="w-[260px]">
         <Combobox.Root>
             <Combobox.Trigger placeholder="Select a country" class="w-full" />
-            <Combobox.Content class="h-56">
+            <Combobox.Content class="max-h-56">
                 <Combobox.Results>
                     {#each countries as country (country.value)}
                         <Combobox.Item

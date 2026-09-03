@@ -12,6 +12,7 @@
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
 import { type Placement } from '@floating-ui/dom';
+import '@scritto/core';
 /** Hover/focus a trigger: show after `delay`, or morph instantly if one is already up. */
 export declare function showTooltip(ref: HTMLElement, text: string, placement?: Placement, delay?: number, className?: string): void;
 /** Re-label the active bubble in place (for example, a Copy→Copied flip). */

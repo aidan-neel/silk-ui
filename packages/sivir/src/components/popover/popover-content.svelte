@@ -19,6 +19,7 @@
         class: classProp,
         surfaceClass,
         allowClickOutside = true,
+        dismissLayer = true,
         portal = true,
         refElement,
         role = 'dialog',
@@ -298,7 +299,7 @@
     });
 </script>
 
-{#if popoverState.open && !popoverState.hoverable && popoverState.inert && allowClickOutside}
+{#if popoverState.open && !popoverState.hoverable && popoverState.inert && allowClickOutside && dismissLayer}
     <div
         bind:this={dismissEl}
         data-overlay-root
@@ -348,7 +349,7 @@
             <div
                 class={cn(
                     surfaceClass,
-                    'min-h-0 max-h-inherit flex-1 overflow-auto overscroll-contain bg-panel p-3'
+                    'min-h-0 max-h-[inherit] flex-1 overflow-auto overscroll-contain bg-panel p-3'
                 )}
             >
                 {@render children?.()}

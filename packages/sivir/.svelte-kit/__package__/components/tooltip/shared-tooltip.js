@@ -11,10 +11,12 @@
  *
  * Presentation lives in `ui.css` under `.sivir-tooltip`.
  */
-import { computePosition, flip, offset, shift } from '@floating-ui/dom';
+import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+import '@scritto/core';
 let bubble = null;
 let measurer = null;
 let label = null;
+let roller = null;
 let currentClass = '';
 let visible = false;
 let currentText = '';
@@ -22,14 +24,53 @@ let activeRef = null;
 let lastCenter = 'translateX(-50%)';
 let openTimer;
 let closeTimer;
+let stopTracking;
 const SHOW = 'scale(1)';
 const HIDE = 'scale(0.94)';
+/**
+ * Whether this platform can drive a Scritto roll. The unit-test DOM has no
+ * `matchMedia` or Web Animations `getAnimations`, so it keeps the plain
+ * textContent swap there while real browsers roll.
+ */
+function supportsRoll() {
+    return (typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        typeof Element !== 'undefined' &&
+        typeof Element.prototype.getAnimations === 'function');
+}
+/**
+ * Writes `text` into the bubble label. Single-word labels ride the roller
+ * (rolling when `animate`, set instantly otherwise); anything with whitespace
+ * keeps the plain textContent swap so multi-word rows never hit the roller's
+ * word layout.
+ */
+function setLabel(text, animate) {
+    if (!label) {
+        return;
+    }
+    if (roller && !/\s/.test(text)) {
+        if (roller.parentNode !== label) {
+            label.replaceChildren(roller);
+        }
+        if (animate) {
+            roller.update(text);
+        }
+        else {
+            roller.value = text;
+        }
+        return;
+    }
+    label.textContent = text;
+}
 /**
  * Lazily builds the bubble, its label span, and the off-screen measuring twin.
  *
  * The twin exists so `applyWidth` can read a target width before the label
  * swaps, letting the bubble transition its shape instead of snapping when the
  * new label is a different length.
+ *
+ * The label span hosts a `<scritto-text>` roller when the platform supports
+ * it; `setLabel` routes single-word labels through it.
  */
 function ensure() {
     if (bubble || typeof document === 'undefined') {
@@ -51,6 +92,12 @@ function ensure() {
     bubble = el;
     measurer = m;
     label = span;
+    if (supportsRoll()) {
+        const host = document.createElement('scritto-text');
+        host.setOptions({ transition: { duration: 300 } });
+        span.appendChild(host);
+        roller = host;
+    }
 }
 function applyBubbleClass(className = '') {
     if (!bubble) {
@@ -123,6 +170,22 @@ function reposition(ref, placement, animated) {
     })
         .catch(() => { });
 }
+/**
+ * Keeps the open bubble glued to `ref` across scroll, resize, and layout
+ * shifts. The update only moves `left`/`top`, so the bubble glides on its
+ * existing transition instead of replaying the show animation.
+ */
+function trackPosition(ref, placement) {
+    stopTracking?.();
+    if (!bubble) {
+        return;
+    }
+    stopTracking = autoUpdate(ref, bubble, () => {
+        if (activeRef === ref) {
+            reposition(ref, placement, true);
+        }
+    });
+}
 /** Shows the bubble for `ref`; when one is already up it morphs to this label. */
 function present(ref, text, placement, className = '') {
     if (!bubble || !label) {
@@ -131,11 +194,12 @@ function present(ref, text, placement, className = '') {
     clearTimeout(closeTimer);
     const morph = visible;
     activeRef = ref;
-    label.textContent = text;
+    setLabel(text, false);
     currentText = text;
     applyBubbleClass(className);
     applyWidth(text);
     reposition(ref, placement, morph);
+    trackPosition(ref, placement);
     visible = true;
 }
 /** Hover/focus a trigger: show after `delay`, or morph instantly if one is already up. */
@@ -158,7 +222,7 @@ export function updateTooltipText(ref, text) {
     if (!visible || activeRef !== ref || !label || !text || text === currentText) {
         return;
     }
-    label.textContent = text;
+    setLabel(text, true);
     currentText = text;
     applyWidth(text);
 }
@@ -187,6 +251,8 @@ function dismiss() {
     if (!bubble) {
         return;
     }
+    stopTracking?.();
+    stopTracking = undefined;
     visible = false;
     activeRef = null;
     bubble.style.opacity = '0';
@@ -209,6 +275,8 @@ export function hideTooltip(ref, closeDelay = 100) {
 export function resetSharedTooltipForTests() {
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
+    stopTracking?.();
+    stopTracking = undefined;
     openTimer = undefined;
     closeTimer = undefined;
     visible = false;
@@ -221,6 +289,7 @@ export function resetSharedTooltipForTests() {
     bubble = null;
     measurer = null;
     label = null;
+    roller = null;
 }
 export function isActiveTooltip(ref) {
     return visible && activeRef === ref;
