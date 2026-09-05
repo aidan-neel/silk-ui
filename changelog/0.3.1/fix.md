@@ -1,0 +1,5 @@
+- Keep the collection item highlight when `travelingHighlight` is off; only the slide is disabled.
+- Fix Tag Input TypeScript types for forwarded input events and non-removable tags.
+- Accept theme schema v4 in the theme registry API.
+- Default `Attachment.Trigger` to `md` instead of `sm`, so every button-backed trigger (Button, Select, Dropdown Menu, Popover, Modal, Sheet, Alert Dialog, Combobox) renders at the default button size unless a size is passed. The docs examples drop their `sm`-height overrides, including the Prompt Composer Plan, Ask first, model, and Send controls.
+- Fix Theme Studio radius customization going stale: custom corner values no longer pin the radius after switching the Sharp/Default/Rounded scale, and a custom spacing unit no longer pins the density preset. Custom values still persist across reloads until the scale changes.

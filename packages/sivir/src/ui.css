@@ -266,14 +266,16 @@
         top: 0;
         left: 0;
         z-index: 0;
-        display: var(--sivir-traveling-highlight, block);
+        display: block;
         border-radius: var(--radius-lg);
         background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
         opacity: 0;
         transition-property: transform, width, height, opacity;
         transition-duration:
-            var(--motion-duration-item), var(--motion-duration-item), var(--motion-duration-item),
-            var(--motion-duration-hover);
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-hover));
         transition-timing-function: var(--ease-out);
         will-change: transform;
     }

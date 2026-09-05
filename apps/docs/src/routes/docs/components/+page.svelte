@@ -228,7 +228,7 @@
             <Typography.Text variant="supporting">
                 No components match “{query.trim()}”.
             </Typography.Text>
-            <Button variant="outline" size="sm" onclick={() => (query = '')}>Clear search</Button>
+            <Button variant="outline" size="md" onclick={() => (query = '')}>Clear search</Button>
         </section>
     {/if}
 

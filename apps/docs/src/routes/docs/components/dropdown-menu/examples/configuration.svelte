@@ -9,7 +9,7 @@
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger variant="outline" class="min-w-[11rem] justify-between">
+    <DropdownMenu.Trigger variant="outline" size="md" class="min-w-[11rem] justify-between">
         <span>Configuration</span>
         <ChevronDown size={15} class="text-foreground-muted" />
     </DropdownMenu.Trigger>

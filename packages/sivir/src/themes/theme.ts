@@ -62,7 +62,7 @@ export type ThemeChrome = {
     controlShadows?: boolean;
     /** Shadows on dialogs and sheets (`--elevation-modal`). */
     dialogShadows?: boolean;
-    /** Removes the traveling hover highlight from menus and collections. */
+    /** Keeps the item highlight but disables the slide between items. */
     travelingHighlight?: false;
     primaryStroke?: boolean;
     interactiveCursor?: InteractiveCursor;

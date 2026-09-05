@@ -19,7 +19,7 @@
                 <div class="min-w-0 flex-1">
                     <Input placeholder="Add people, emails or groups…" class="h-9 text-sm" />
                 </div>
-                <Button size="md" class="h-9 flex-shrink-0">Invite</Button>
+                <Button size="md" class="flex-shrink-0">Invite</Button>
             </div>
 
             <div class="h-px bg-border"></div>

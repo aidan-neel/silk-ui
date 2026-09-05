@@ -31,7 +31,9 @@
         context.setDraft((event.currentTarget as HTMLInputElement).value);
     }
 
-    function handleKeydown(event: KeyboardEvent) {
+    function handleKeydown(
+        event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement }
+    ) {
         onkeydown?.(event);
 
         if (event.defaultPrevented || disabled) {
@@ -93,7 +95,9 @@
         return candidates;
     }
 
-    function handlePaste(event: ClipboardEvent) {
+    function handlePaste(
+        event: ClipboardEvent & { currentTarget: EventTarget & HTMLInputElement }
+    ) {
         onpaste?.(event);
 
         if (event.defaultPrevented || disabled || !context.addOnPaste) {
@@ -123,7 +127,7 @@
         }
     }
 
-    function handleBlur(event: FocusEvent) {
+    function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement }) {
         onblur?.(event);
 
         if (event.defaultPrevented || disabled || !context.addOnBlur) {

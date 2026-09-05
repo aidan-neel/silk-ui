@@ -9,7 +9,7 @@
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger variant="ghost" class="h-9 gap-1.5 text-[0.82rem]">
+    <DropdownMenu.Trigger variant="ghost" size="md">
         <Star size={13} />
         {selected}
         <ChevronDown size={11} class="text-foreground-muted" />

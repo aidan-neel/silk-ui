@@ -3,7 +3,7 @@
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger>Open menu</DropdownMenu.Trigger>
+    <DropdownMenu.Trigger size="md">Open menu</DropdownMenu.Trigger>
     <DropdownMenu.Content>
         <DropdownMenu.Item>Action 1</DropdownMenu.Item>
         <DropdownMenu.Item>Action 2</DropdownMenu.Item>

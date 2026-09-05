@@ -251,6 +251,7 @@
         default: '10px lg',
         rounded: '18px lg'
     } as const;
+    const radiusTokenNames = ['--radius-sm', '--radius-md', '--radius-lg', '--radius-xl'] as const;
     const densityValues = {
         compact: '3.2px',
         default: '3.6px',
@@ -340,6 +341,8 @@
     let baseTheme = $state<Theme>({ ...DEFAULT_THEME });
     let selectedPreset = $state(DEFAULT_THEME.slug);
     let previousPreset = $state(DEFAULT_THEME.slug);
+    let previousRadius: Theme['radius'] = theme.radius;
+    let previousDensity: Theme['density'] = theme.density;
     let selectedSans = $state('inter');
     let previousSans = $state('inter');
     let selectedHeader = $state('same-as-sans');
@@ -713,10 +716,14 @@
                 };
             }
             if (value.advancedTokens) {
-                const { '--color-muted': _lightMuted, ...light } =
-                    value.advancedTokens.colors?.light ?? {};
-                const { '--color-muted': _darkMuted, ...dark } =
-                    value.advancedTokens.colors?.dark ?? {};
+                const lightTokens = {
+                    ...value.advancedTokens.colors?.light
+                } as Record<string, string | undefined>;
+                const darkTokens = {
+                    ...value.advancedTokens.colors?.dark
+                } as Record<string, string | undefined>;
+                const { '--color-muted': _lightMuted, ...light } = lightTokens;
+                const { '--color-muted': _darkMuted, ...dark } = darkTokens;
 
                 advancedTokens = {
                     colors: {
@@ -1157,6 +1164,8 @@
             syncFontSelections(theme);
         }
         loadStudioExtensions();
+        previousRadius = theme.radius;
+        previousDensity = theme.density;
         hydrated = true;
         const root = document.documentElement;
         appliedDark = root.classList.contains('dark');
@@ -1179,6 +1188,38 @@
         }
         previousPreset = nextPreset;
         applyPreset(nextPreset);
+    });
+
+    $effect(() => {
+        if (!hydrated) {
+            previousRadius = theme.radius;
+            previousDensity = theme.density;
+            return;
+        }
+        const radiusChanged = theme.radius !== previousRadius;
+        const densityChanged = theme.density !== previousDensity;
+        if (!radiusChanged && !densityChanged) {
+            return;
+        }
+        previousRadius = theme.radius;
+        previousDensity = theme.density;
+        const nextSpacing = { ...advancedTokens.spacing };
+        let changed = false;
+        if (radiusChanged) {
+            for (const name of radiusTokenNames) {
+                if (nextSpacing[name]?.trim()) {
+                    delete nextSpacing[name];
+                    changed = true;
+                }
+            }
+        }
+        if (densityChanged && nextSpacing['--sivir-space-unit']?.trim()) {
+            delete nextSpacing['--sivir-space-unit'];
+            changed = true;
+        }
+        if (changed) {
+            advancedTokens = { ...advancedTokens, spacing: nextSpacing };
+        }
     });
 
     $effect(() => {
@@ -1556,7 +1597,7 @@
                 <Switch
                     bind:checked={travelingHighlight}
                     label="Traveling highlight"
-                    description="The hover highlight that moves between menu items."
+                    description="Slide the hover highlight between items. Off keeps the fill without the motion."
                 />
                 <Switch
                     bind:checked={primaryStroke}

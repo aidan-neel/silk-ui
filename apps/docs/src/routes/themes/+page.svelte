@@ -146,7 +146,7 @@
                     </div>
                 {/if}
                 {#if searchQuery.trim()}
-                    <Button variant="ghost" size="sm" onclick={() => (searchQuery = '')}
+                    <Button variant="ghost" size="md" onclick={() => (searchQuery = '')}
                         >Clear search</Button
                     >
                 {/if}
@@ -212,12 +212,7 @@
                                 onkeydown={(e) => e.stopPropagation()}
                                 role="presentation"
                             >
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    class="h-8 text-[0.78rem]"
-                                    onclick={() => applyTheme(theme)}
-                                >
+                                <Button variant="ghost" size="md" onclick={() => applyTheme(theme)}>
                                     Apply
                                 </Button>
                             </div>
@@ -332,11 +327,11 @@
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm" onclick={() => (detailOpen = false)}
+                    <Button variant="outline" size="md" onclick={() => (detailOpen = false)}
                         >Close</Button
                     >
                     <Button
-                        size="sm"
+                        size="md"
                         onclick={() => {
                             if (detailTheme) {
                                 applyTheme(detailTheme);

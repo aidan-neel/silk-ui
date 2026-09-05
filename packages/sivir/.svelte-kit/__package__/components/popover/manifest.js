@@ -56,6 +56,7 @@ export const manifest = {
         'utils.lockBodyBackground',
         'utils.lockBodyScroll',
         'utils.positionFloatingPanel',
+        'utils.submenuPanelOffset',
         'utils.pushEscapeLayer',
         'utils.trapFocus',
         'transition'

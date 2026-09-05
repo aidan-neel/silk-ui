@@ -2,6 +2,7 @@
     import X from '@lucide/svelte/icons/x';
     import { Button } from '@sivir-ui/svelte/components/button';
     import { cn } from '@sivir-ui/svelte/utils';
+    import type { HTMLAttributes } from 'svelte/elements';
     import type { TagInputTagProps } from '.';
     import { getTagInputContext } from './context.svelte';
 
@@ -84,7 +85,7 @@
     </Button>
 {:else}
     <span
-        {...rest}
+        {...(rest as HTMLAttributes<HTMLSpanElement>)}
         data-ui="tag-input-tag"
         data-disabled={context.disabled || undefined}
         class={cn(

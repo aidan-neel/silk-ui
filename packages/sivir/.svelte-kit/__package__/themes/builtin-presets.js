@@ -18,15 +18,13 @@ export const magicTheme = {
             base: '#ffffff',
             border: '#dedede',
             background: '#fafafa',
-            secondary: '#efefee',
-            muted: '#f0f0f0'
+            secondary: '#efefee'
         },
         dark: {
             base: '#171717',
             border: '#1f1f1f',
             background: '#0f0f0f',
-            secondary: '#1f1f1f',
-            muted: '#1a1a1a'
+            secondary: '#1f1f1f'
         }
     },
     tokens: {
@@ -73,15 +71,13 @@ export const bitsyTheme = {
             base: '#ffffff',
             border: '#d4d4d4',
             background: '#fdfdfc',
-            secondary: '#efefee',
-            muted: '#f7f7f5'
+            secondary: '#efefee'
         },
         dark: {
             base: '#171717',
             border: '#2a2a2a',
             background: '#0a0a0a',
-            secondary: '#252525',
-            muted: '#1a1a1a'
+            secondary: '#252525'
         }
     },
     typography: {
@@ -101,5 +97,74 @@ export const bitsyTheme = {
         interactiveCursor: 'default'
     }
 };
-export const builtInThemePresets = [DEFAULT_THEME, magicTheme, bitsyTheme];
+export const openTheme = {
+    version: THEME_VERSION,
+    slug: 'open',
+    name: 'Open',
+    description: 'Calm warm-neutral system with a graphite accent, Geist type, and flat controls.',
+    publisher: 'Sivir UI',
+    brand: '#333333',
+    neutral: 'warm',
+    radius: 'rounded',
+    density: 'default',
+    motion: 'subtle',
+    fontSans: "'Geist', sans-serif",
+    fontMono: "'Roboto Mono', monospace",
+    fontHeader: 'var(--font-sans)',
+    foundation: {
+        light: {
+            base: '#ffffff',
+            border: '#ededed',
+            background: '#ffffff',
+            secondary: '#efefee',
+            foreground: '#1c1c1b',
+            foregroundMuted: '#787878',
+            onPrimary: '#ffffff'
+        },
+        dark: {
+            base: '#171717',
+            border: '#262626',
+            background: '#0a0a0a',
+            secondary: '#252525',
+            foreground: '#e6e6e6',
+            foregroundMuted: '#a3a3a3',
+            onPrimary: '#1a1a1a'
+        }
+    },
+    tokens: {
+        shared: {
+            '--sivir-space-unit': '3.4px',
+            '--radius-lg': '12px',
+            '--radius-md': '10px',
+            '--radius-xl': '14px',
+            '--radius-sm': '7px'
+        },
+        dark: {
+            '--color-primary': '#e6e6e6',
+            '--color-primary-hover': 'color-mix(in srgb, #e6e6e6 78%, black)',
+            '--color-ring': 'color-mix(in srgb, #e6e6e6 30%, transparent)'
+        }
+    },
+    typography: {
+        headerSize: 18,
+        headerWeight: '500',
+        roleWeights: {
+            body: '500',
+            label: '500',
+            button: '500',
+            badge: '500',
+            description: '500'
+        }
+    },
+    chrome: {
+        surfaceShadows: false,
+        controlShadows: false
+    }
+};
+export const builtInThemePresets = [
+    DEFAULT_THEME,
+    magicTheme,
+    bitsyTheme,
+    openTheme
+];
 export const defaultTheme = DEFAULT_THEME;

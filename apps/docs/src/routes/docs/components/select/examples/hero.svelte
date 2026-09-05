@@ -16,7 +16,7 @@
 <div class="flex flex-col gap-2">
     <span class="text-sm [font-weight:var(--font-weight-label,500)] text-foreground">Priority</span>
     <Select.Root value={selectedPriority}>
-        <Select.Trigger class="min-w-[220px]" variant="outline">
+        <Select.Trigger class="min-w-[220px]" variant="outline" size="md">
             {selected?.label ?? 'Select priority'}
         </Select.Trigger>
         <Select.Content>

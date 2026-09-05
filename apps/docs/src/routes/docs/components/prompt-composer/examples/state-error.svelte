@@ -25,7 +25,7 @@
         <PromptComposer.Actions>
             <span class="px-2 text-xs text-foreground-muted">Sivir 3.1</span>
         </PromptComposer.Actions>
-        <PromptComposer.Submit label="Send" class="!aspect-auto !gap-1.5 !rounded-lg !px-3 text-xs">
+        <PromptComposer.Submit label="Send" class="!aspect-auto !gap-1.5 !rounded-lg !px-3">
             {#snippet children()}
                 Send
                 <Shortcut shortcut="enter" />

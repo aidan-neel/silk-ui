@@ -66,7 +66,7 @@
                     <DropdownMenu.Trigger
                         variant="ghost"
                         size="md"
-                        class="!h-8 !w-24 !gap-1.5 !rounded-lg !px-2 text-xs"
+                        class="!w-24 !gap-1.5 !rounded-lg"
                     >
                         <Workflow size={14} aria-hidden="true" />
                         {mode}
@@ -93,7 +93,7 @@
                     <DropdownMenu.Trigger
                         variant="ghost"
                         size="md"
-                        class="!h-8 !w-36 !gap-1.5 !rounded-lg !px-2 text-xs"
+                        class="!w-36 !gap-1.5 !rounded-lg"
                     >
                         <ShieldCheck size={14} aria-hidden="true" />
                         {permission}
@@ -122,7 +122,7 @@
                     <DropdownMenu.Trigger
                         variant="ghost"
                         size="md"
-                        class="!h-8 !max-w-52 !gap-1.5 !rounded-lg !px-2 text-xs"
+                        class="!max-w-52 !gap-1.5 !rounded-lg"
                     >
                         <span class="truncate">{model}</span>
                         <span class="text-foreground-muted">{effort}</span>
@@ -163,10 +163,7 @@
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
 
-                <PromptComposer.Submit
-                    label="Send"
-                    class="!aspect-auto !gap-1.5 !rounded-lg !px-3 text-xs"
-                >
+                <PromptComposer.Submit label="Send" class="!aspect-auto !gap-1.5 !rounded-lg !px-3">
                     {#snippet children({ action })}
                         {#if action === 'stop'}
                             <Square size={8} fill="currentColor" aria-hidden="true" />

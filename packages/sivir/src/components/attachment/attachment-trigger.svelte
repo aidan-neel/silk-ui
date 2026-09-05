@@ -12,7 +12,7 @@
         class: className,
         'aria-label': ariaLabel = 'Add attachments',
         variant = 'ghost',
-        size = children ? 'sm' : 'icon',
+        size = children ? 'md' : 'icon',
         onclick,
         ...rest
     }: AttachmentTriggerProps = $props();

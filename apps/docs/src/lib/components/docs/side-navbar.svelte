@@ -8,6 +8,9 @@
     let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } =
         $props();
     const pageName = $derived($page.url.pathname);
+    const sortedComponents = $derived(
+        [...components].sort((a, b) => sanitizeComponent(a).localeCompare(sanitizeComponent(b)))
+    );
 
     const gettingStartedItems = [
         { href: '/docs/introduction', label: 'Introduction' },
@@ -39,12 +42,13 @@
                 {@const active = isActive(item.href)}
                 <Button
                     variant="quiet"
+                    size="md"
                     href={item.href}
                     onclick={onNavigate}
                     aria-current={active ? 'page' : undefined}
                     data-collection-item
                     data-collection-active={active ? 'true' : undefined}
-                    class={`h-8 w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
+                    class={`w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
                         active
                             ? 'text-foreground [font-weight:var(--font-weight-label,500)]'
                             : 'text-foreground-muted hover:bg-secondary/70 hover:text-foreground'
@@ -66,16 +70,17 @@
             >
         </div>
         <div use:travelingHighlight class="ml-2 flex flex-col border-l border-border pl-2">
-            {#each components as component (component)}
+            {#each sortedComponents as component (component)}
                 {@const active = pageName === `/docs/components/${component}`}
                 <Button
                     variant="quiet"
+                    size="md"
                     href={`/docs/components/${component}`}
                     onclick={onNavigate}
                     aria-current={active ? 'page' : undefined}
                     data-collection-item
                     data-collection-active={active ? 'true' : undefined}
-                    class={`h-8 w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
+                    class={`w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
                         active
                             ? 'text-foreground [font-weight:var(--font-weight-label,500)]'
                             : 'text-foreground-muted hover:bg-secondary/70 hover:text-foreground'

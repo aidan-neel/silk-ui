@@ -1,6 +1,11 @@
 <script lang="ts">
     import { Button } from '@sivir-ui/svelte/components/button';
-    import { cn, isPointInSubmenuTriangle, positionFloatingPanel } from '@sivir-ui/svelte/utils';
+    import {
+        cn,
+        isPointInSubmenuTriangle,
+        positionFloatingPanel,
+        submenuPanelOffset
+    } from '@sivir-ui/svelte/utils';
     import { onMount, tick } from 'svelte';
     import type { Placement, PopoverTriggerProps } from '.';
     import { getPopoverContext } from './context.svelte';
@@ -39,7 +44,12 @@
         const popover = popoverState.popoverRef;
 
         if (button && popover) {
-            positionFloatingPanel(button, popover, popoverState.placement);
+            positionFloatingPanel(
+                button,
+                popover,
+                popoverState.placement,
+                submenuPanelOffset(popoverState.placement, popoverState.hoverable)
+            );
         }
     }
 

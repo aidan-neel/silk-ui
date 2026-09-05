@@ -1,6 +1,6 @@
-export const THEME_VERSION = 3;
-/** Versions accepted by parseTheme. v2 themes keep working; v3 adds optional extensions. */
-export const SUPPORTED_THEME_VERSIONS = [2, 3];
+export const THEME_VERSION = 4;
+/** Versions accepted by parseTheme. Older theme payloads keep working. */
+export const SUPPORTED_THEME_VERSIONS = [2, 3, 4];
 export const neutralTemperatures = ['cool', 'true', 'warm'];
 export const radiusScales = ['sharp', 'default', 'rounded'];
 export const densities = ['compact', 'default', 'comfortable'];
@@ -176,10 +176,12 @@ function scaleMotionMs(value, factor) {
 }
 const FOUNDATION_TOKEN_MAP = {
     base: ['--color-card', '--color-panel'],
-    border: ['--color-border'],
+    border: ['--color-border', '--color-input'],
     background: ['--color-background'],
     secondary: ['--color-secondary'],
-    muted: ['--color-muted']
+    foreground: ['--color-foreground'],
+    foregroundMuted: ['--color-foreground-muted'],
+    onPrimary: ['--color-on-primary']
 };
 function foundationDeclarations(palette) {
     const declarations = [];
@@ -230,15 +232,25 @@ function chromeBlocks(chrome) {
     if (!chrome) {
         return '';
     }
+    const masterShadows = chrome.shadows !== false;
+    const surfaceShadows = masterShadows && chrome.surfaceShadows !== false;
+    const controlShadows = masterShadows && chrome.controlShadows !== false;
+    const dialogShadows = masterShadows && chrome.dialogShadows !== false;
+    const elevationOff = [];
+    if (!surfaceShadows) {
+        elevationOff.push('--elevation-1: none;', '--elevation-float: none;');
+    }
+    if (!dialogShadows) {
+        elevationOff.push('--elevation-modal: none;');
+    }
+    if (!controlShadows) {
+        elevationOff.push('--elevation-control: inset 0 0 0 1px var(--color-border);', '--elevation-button-outline: inset 0 0 0 1px var(--color-border);');
+    }
     const shared = [`--ui-cursor-interactive: ${chrome.interactiveCursor ?? 'default'};`];
-    const elevationOff = [
-        '--elevation-1: none;',
-        '--elevation-float: none;',
-        '--elevation-modal: none;',
-        '--elevation-control: inset 0 0 0 1px var(--color-border);',
-        '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
-    ];
-    const withElevations = (declarations) => chrome.shadows === false ? [...declarations, ...elevationOff] : declarations;
+    if (chrome.travelingHighlight === false) {
+        shared.push('--sivir-traveling-highlight: none;');
+    }
+    const withElevations = (declarations) => elevationOff.length > 0 ? [...declarations, ...elevationOff] : declarations;
     const light = withElevations([
         `--color-primary-stroke: ${chrome.primaryStroke ? 'color-mix(in srgb, black 14%, transparent)' : 'transparent'};`,
         ...shared
@@ -247,7 +259,10 @@ function chromeBlocks(chrome) {
         `--color-primary-stroke: ${chrome.primaryStroke ? 'color-mix(in srgb, white 24%, transparent)' : 'transparent'};`,
         ...shared
     ]);
-    const hasChromeWork = chrome.shadows === false ||
+    const hasChromeWork = !surfaceShadows ||
+        !controlShadows ||
+        !dialogShadows ||
+        chrome.travelingHighlight === false ||
         chrome.primaryStroke === true ||
         chrome.interactiveCursor === 'pointer';
     if (!hasChromeWork) {
@@ -278,6 +293,9 @@ export function themeToCss(themeInput) {
         `--motion-duration-toast-in: ${motion.toastIn};`,
         `--motion-duration-toast-out: ${motion.toastOut};`
     ];
+    if (theme.motion === 'none') {
+        shared.push('--motion-duration-panel-in: 0ms;', '--motion-duration-panel-out: 0ms;', '--motion-duration-modal-in: 0ms;', '--motion-duration-modal-out: 0ms;', '--motion-duration-press: 0ms;', '--motion-duration-item: 0ms;');
+    }
     let css = block(':root,\n.dark', shared) +
         block(':root', [
             ...brandDeclarations(theme.brand, 'light'),
@@ -383,7 +401,15 @@ function optionalFoundation(value) {
     if (!isRecord(value)) {
         throw new TypeError('Invalid theme: foundation must be an object.');
     }
-    const paletteKeys = ['base', 'border', 'background', 'secondary', 'muted'];
+    const paletteKeys = [
+        'base',
+        'border',
+        'background',
+        'secondary',
+        'foreground',
+        'foregroundMuted',
+        'onPrimary'
+    ];
     const parsePalette = (raw, field) => {
         if (raw === undefined) {
             return undefined;
@@ -463,6 +489,20 @@ function optionalChrome(value) {
         }
         chrome.shadows = value.shadows;
     }
+    for (const key of ['surfaceShadows', 'controlShadows', 'dialogShadows']) {
+        if (value[key] !== undefined) {
+            if (typeof value[key] !== 'boolean') {
+                throw new TypeError(`Invalid theme: chrome.${key} must be a boolean.`);
+            }
+            chrome[key] = value[key];
+        }
+    }
+    if (value.travelingHighlight !== undefined) {
+        if (value.travelingHighlight !== false) {
+            throw new TypeError('Invalid theme: chrome.travelingHighlight only accepts false (the highlight is on by default).');
+        }
+        chrome.travelingHighlight = false;
+    }
     if (value.primaryStroke !== undefined) {
         if (typeof value.primaryStroke !== 'boolean') {
             throw new TypeError('Invalid theme: chrome.primaryStroke must be a boolean.');
@@ -539,6 +579,14 @@ export function parseTheme(value) {
 }
 /** Upgrades a v2 theme to v3 without changing its rendered CSS. */
 export function migrateThemeV2ToV3(theme) {
+    const parsed = parseTheme(theme);
+    return {
+        ...parsed,
+        version: 3
+    };
+}
+/** Upgrades a v3 theme to v4, dropping the removed `foundation.muted` surface. */
+export function migrateThemeV3ToV4(theme) {
     const parsed = parseTheme(theme);
     return {
         ...parsed,

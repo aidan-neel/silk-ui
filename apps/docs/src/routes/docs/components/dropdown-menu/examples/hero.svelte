@@ -10,7 +10,7 @@
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger variant="outline">
+    <DropdownMenu.Trigger variant="outline" size="md">
         My Account
         <ChevronDown size={16} class="text-foreground-muted" />
     </DropdownMenu.Trigger>

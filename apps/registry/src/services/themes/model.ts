@@ -1,7 +1,7 @@
 import { type Static, t } from 'elysia';
 
 export const themeSchema = t.Object({
-    version: t.Union([t.Literal(2), t.Literal(3)]),
+    version: t.Union([t.Literal(2), t.Literal(3), t.Literal(4)]),
     slug: t.String({
         minLength: 1,
         maxLength: 80,

@@ -10,7 +10,7 @@
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger variant="outline" class="h-9 gap-1.5 text-[0.82rem]">
+    <DropdownMenu.Trigger variant="outline" size="md">
         <User size={13} />
         Aidan
         <ChevronDown size={11} class="text-foreground-muted" />

@@ -1,6 +1,6 @@
 export const manifest = {
     name: 'fullscreen-nav',
-    version: '1.0.0',
+    version: '1.1.0',
     visibility: 'public',
     description: 'Mobile-focused full-viewport navigation overlay with grouped links.',
     role: 'dialog',
@@ -16,7 +16,13 @@ export const manifest = {
         'components/fullscreen-nav/manifest.ts'
     ],
     components: ['button', '_internal/overlay'],
-    shared: ['utils.cn', 'utils.createContext', 'utils.visualViewportBounds', 'transition'],
+    shared: [
+        'utils.cn',
+        'utils.createContext',
+        'utils.pressable',
+        'utils.visualViewportBounds',
+        'transition'
+    ],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

@@ -38,7 +38,7 @@ export type { CardContentProps, CardDescriptionProps, CardFooterProps, CardHeade
 export * as Card from './components/card';
 export type { CheckboxProps } from './components/checkbox';
 export { Checkbox } from './components/checkbox';
-export type { CodeBlockActionsProps, CodeBlockContentProps, CodeBlockCopyPlacement, CodeBlockCopyProps, CodeBlockHeaderProps, CodeBlockListProps, CodeBlockProps, CodeBlockTab, CodeBlockTriggerProps } from './components/code-block';
+export type { CodeBlockActionsProps, CodeBlockContentProps, CodeBlockCopyPlacement, CodeBlockCopyProps, CodeBlockHeaderProps, CodeBlockListProps, CodeBlockProps, CodeBlockTab, CodeBlockTheme, CodeBlockTriggerProps } from './components/code-block';
 export { CodeBlock } from './components/code-block';
 export type { CollapsibleContentProps, CollapsibleProps, CollapsibleTriggerProps } from './components/collapsible';
 export * as Collapsible from './components/collapsible';
@@ -56,7 +56,7 @@ export type { CopyButtonProps } from './components/copy-button';
 export { CopyButton } from './components/copy-button';
 export type { DropdownMenuCheckboxItemProps, DropdownMenuItemProps, DropdownMenuProps, DropdownMenuRadioGroupProps, DropdownMenuRadioItemProps } from './components/dropdown-menu';
 export * as DropdownMenu from './components/dropdown-menu';
-export type { FileDiffChangeType, FileDiffContentProps, FileDiffContext, FileDiffLine, FileDiffLineNumberProps, FileDiffRootProps, FileDiffRowProps, FileDiffTopBarProps } from './components/file-diff';
+export type { FileDiffChangeType, FileDiffContentProps, FileDiffContext, FileDiffLine, FileDiffLineNumberProps, FileDiffRootProps, FileDiffRowProps, FileDiffTheme, FileDiffTopBarProps } from './components/file-diff';
 export * as FileDiff from './components/file-diff';
 export type { FullscreenNavCloseProps, FullscreenNavContentProps, FullscreenNavGroupProps, FullscreenNavLinkProps, FullscreenNavProps, FullscreenNavTriggerProps } from './components/fullscreen-nav';
 export * as FullscreenNav from './components/fullscreen-nav';

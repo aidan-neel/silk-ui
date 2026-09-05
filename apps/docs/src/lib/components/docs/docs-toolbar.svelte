@@ -33,6 +33,9 @@
         { title: 'Changelog', href: resolve('/docs/changelog') },
         { title: 'Components', href: resolve('/docs/components') }
     ];
+    const sortedComponents = $derived(
+        [...components].sort((a, b) => sanitizeComponent(a).localeCompare(sanitizeComponent(b)))
+    );
 
     const breadcrumbs = $derived.by(() => {
         const pathnameSegments = page.url.pathname.split('/').filter(Boolean);
@@ -191,7 +194,7 @@
             </FullscreenNav.Group>
 
             <FullscreenNav.Group heading="Components" class="mt-10">
-                {#each components as component (component)}
+                {#each sortedComponents as component (component)}
                     <FullscreenNav.Link href={`/docs/components/${component}`}>
                         {sanitizeComponent(component)}
                     </FullscreenNav.Link>

@@ -12,10 +12,12 @@
  *           Confirm) is stable.
  *   1.3.0 -- nested Modal.Root is first-party: stacked scale, lighter nested
  *           scrim, and one-layer dismiss. Closing a parent clears nested open.
+ *   1.3.1 -- Title reuses the shared typography title classes instead of a
+ *           hardcoded size, so dialog headings match Card titles.
  */
 export const manifest = {
     name: 'modal',
-    version: '1.3.0',
+    version: '1.3.1',
     visibility: 'public',
     description: 'Centered dialog overlay with portal, inert background, focus trap, click-outside, nested stacking, and Svelte transitions. Composes _internal/overlay for shared mechanics.',
     role: 'dialog',

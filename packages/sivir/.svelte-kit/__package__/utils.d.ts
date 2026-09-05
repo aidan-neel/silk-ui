@@ -105,6 +105,8 @@ type TravelingHighlightOptions = {
  * Geometry is written directly so pointer movement never causes a component render.
  */
 export declare function travelingHighlight(node: HTMLElement, options?: TravelingHighlightOptions): {
+    destroy?: undefined;
+} | {
     destroy(): void;
 };
 /** Test isolation for the overlay click-outside gesture lock. */
@@ -132,6 +134,7 @@ export declare function resetClickOutsideForTests(): void;
 export declare function clickOutside(node: Node, callback: () => void, exclude?: Node[]): {
     destroy(): void;
 };
+export declare function submenuPanelOffset(placement: Placement, hoverable: boolean): 8 | -2;
 /**
  * Positions a floating panel while keeping it inside the viewport bounds.
  *
@@ -139,5 +142,5 @@ export declare function clickOutside(node: Node, callback: () => void, exclude?:
  * during an asynchronous layout pass, and teardown is an expected terminal
  * state rather than an error.
  */
-export declare function positionFloatingPanel(reference: ReferenceElement, floating: HTMLElement, placement: Placement): Promise<void>;
+export declare function positionFloatingPanel(reference: ReferenceElement, floating: HTMLElement, placement: Placement, offsetPx?: number): Promise<void>;
 export {};

@@ -223,7 +223,8 @@ src/lib/sivir/components/button/
             <Typography.InlineCode>surfaceShadows</Typography.InlineCode>,
             <Typography.InlineCode>controlShadows</Typography.InlineCode>,
             <Typography.InlineCode>dialogShadows</Typography.InlineCode>,
-            <Typography.InlineCode>travelingHighlight: false</Typography.InlineCode>,
+            <Typography.InlineCode>travelingHighlight: false</Typography.InlineCode>
+            (item fill stays, the slide does not),
             <Typography.InlineCode>primaryStroke</Typography.InlineCode>, and
             <Typography.InlineCode>interactiveCursor</Typography.InlineCode>. Setting
             <Typography.InlineCode>motion: "none"</Typography.InlineCode>

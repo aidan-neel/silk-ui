@@ -557,6 +557,16 @@ export function pressable(node) {
  * Geometry is written directly so pointer movement never causes a component render.
  */
 export function travelingHighlight(node, options = {}) {
+    if (typeof window === 'undefined') {
+        return {};
+    }
+    if (typeof window.matchMedia === 'function' &&
+        window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+        return {};
+    }
+    if (getComputedStyle(node).getPropertyValue('--sivir-traveling-highlight').trim() === 'none') {
+        return {};
+    }
     const itemSelector = options.itemSelector ?? '[data-collection-item]';
     const restingSelector = options.restingSelector ??
         `${itemSelector}[data-collection-active="true"], ${itemSelector}[aria-selected="true"], ${itemSelector}[data-state="open"]`;
@@ -828,6 +838,16 @@ export function clickOutside(node, callback, exclude = []) {
         }
     };
 }
+export function submenuPanelOffset(placement, hoverable) {
+    if (!hoverable) {
+        return 8;
+    }
+    const side = placement.split('-')[0];
+    if (side === 'left' || side === 'right') {
+        return -2;
+    }
+    return 8;
+}
 /**
  * Positions a floating panel while keeping it inside the viewport bounds.
  *
@@ -835,13 +855,13 @@ export function clickOutside(node, callback, exclude = []) {
  * during an asynchronous layout pass, and teardown is an expected terminal
  * state rather than an error.
  */
-export function positionFloatingPanel(reference, floating, placement) {
+export function positionFloatingPanel(reference, floating, placement, offsetPx = 8) {
     floating.dataset.placement ??= placement;
     return computePosition(reference, floating, {
         strategy: 'fixed',
         placement,
         middleware: [
-            offset(8),
+            offset(offsetPx),
             flip({ padding: 8, fallbackAxisSideDirection: 'end', fallbackStrategy: 'bestFit' }),
             shift({ padding: 8, crossAxis: true }),
             size({

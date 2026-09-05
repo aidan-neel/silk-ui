@@ -28,7 +28,7 @@
                     Role
                 </span>
                 <Select.Root value={role}>
-                    <Select.Trigger class="w-full" variant="outline">
+                    <Select.Trigger class="w-full" variant="outline" size="md">
                         {selected?.label ?? 'Select role'}
                     </Select.Trigger>
                     <Select.Content>

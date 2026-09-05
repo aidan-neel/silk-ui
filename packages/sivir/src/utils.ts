@@ -736,9 +736,8 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     ) {
         return {};
     }
-    if (getComputedStyle(node).getPropertyValue('--sivir-traveling-highlight').trim() === 'none') {
-        return {};
-    }
+    const traveling =
+        getComputedStyle(node).getPropertyValue('--sivir-traveling-highlight').trim() !== 'none';
     const itemSelector = options.itemSelector ?? '[data-collection-item]';
     const restingSelector =
         options.restingSelector ??
@@ -818,7 +817,7 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
             observedTarget = target;
             resizeObserver.observe(target);
         }
-        if (!ready) {
+        if (!ready && traveling) {
             cancelAnimationFrame(readyFrame);
             readyFrame = requestAnimationFrame(() => {
                 ready = true;

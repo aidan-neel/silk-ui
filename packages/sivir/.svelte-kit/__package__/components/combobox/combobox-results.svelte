@@ -13,17 +13,7 @@
     let resultsElement = $state<HTMLElement>();
     let highlightStyle = $state('opacity: 0');
     let highlightReady = $state(false);
-    let filtering = $state(false);
     let frame = 0;
-    let restoreFrame = 0;
-    let filteringRevision = 0;
-    let previousSearchContent = '';
-
-    function followActiveTransitions() {
-        if (filtering) {
-            frame = requestAnimationFrame(measureHighlight);
-        }
-    }
 
     function measureHighlight() {
         frame = 0;
@@ -32,7 +22,6 @@
         );
         if (!resultsElement || !activeElement || activeElement.hidden) {
             highlightStyle = 'opacity: 0';
-            followActiveTransitions();
             return;
         }
 
@@ -51,52 +40,11 @@
             `transform: translate3d(${x}px, ${y}px, 0)`,
             'opacity: 1'
         ].join('; ');
-        followActiveTransitions();
     }
 
     function scheduleMeasure() {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(measureHighlight);
-    }
-
-    async function trackFiltering() {
-        const revision = ++filteringRevision;
-        filtering = true;
-        cancelAnimationFrame(restoreFrame);
-        await tick();
-        scheduleMeasure();
-
-        const animations = Array.from(
-            resultsElement?.querySelectorAll<HTMLElement>('[data-collection-item]') ?? []
-        )
-            .flatMap((item) => item.getAnimations())
-            .filter(isFilteringTransition);
-        await Promise.allSettled(animations.map((animation) => animation.finished));
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-        if (revision !== filteringRevision) {
-            return;
-        }
-
-        measureHighlight();
-        restoreFrame = requestAnimationFrame(() => {
-            restoreFrame = 0;
-            filtering = false;
-        });
-    }
-
-    function isFilteringTransition(animation: Animation) {
-        if (!(animation instanceof CSSTransition)) {
-            return false;
-        }
-
-        return [
-            'height',
-            'opacity',
-            'border-top-width',
-            'border-right-width',
-            'border-bottom-width',
-            'border-left-width'
-        ].includes(animation.transitionProperty);
     }
 
     function activateHoveredItem(event: PointerEvent) {
@@ -124,12 +72,8 @@
     }
 
     $effect(() => {
-        const searchContent = comboboxState.searchContent;
+        void comboboxState.searchContent;
         void comboboxState.activeValue;
-        if (searchContent !== previousSearchContent) {
-            previousSearchContent = searchContent;
-            void trackFiltering();
-        }
         void tick().then(scheduleMeasure);
     });
 
@@ -150,9 +94,6 @@
         return () => {
             cancelAnimationFrame(frame);
             cancelAnimationFrame(readyFrame);
-            cancelAnimationFrame(restoreFrame);
-            filteringRevision += 1;
-            filtering = false;
             observer.disconnect();
             window.removeEventListener('resize', scheduleMeasure);
         };
@@ -170,7 +111,7 @@
         class="sivir-collection-surface flex flex-col gap-0 p-1"
     >
         <span
-            class={['sivir-item-highlight', filtering && 'transition-none']}
+            class="sivir-item-highlight"
             data-ready={highlightReady}
             aria-hidden="true"
             style={highlightStyle}

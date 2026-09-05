@@ -1,6 +1,6 @@
-export declare const THEME_VERSION: 3;
-/** Versions accepted by parseTheme. v2 themes keep working; v3 adds optional extensions. */
-export declare const SUPPORTED_THEME_VERSIONS: readonly [2, 3];
+export declare const THEME_VERSION: 4;
+/** Versions accepted by parseTheme. Older theme payloads keep working. */
+export declare const SUPPORTED_THEME_VERSIONS: readonly [2, 3, 4];
 export type SupportedThemeVersion = (typeof SUPPORTED_THEME_VERSIONS)[number];
 export declare const neutralTemperatures: readonly ["cool", "true", "warm"];
 export declare const radiusScales: readonly ["sharp", "default", "rounded"];
@@ -19,7 +19,9 @@ export type ThemeFoundationPalette = {
     border?: string;
     background?: string;
     secondary?: string;
-    muted?: string;
+    foreground?: string;
+    foregroundMuted?: string;
+    onPrimary?: string;
 };
 export type ThemeFoundation = {
     light?: ThemeFoundationPalette;
@@ -44,6 +46,14 @@ export type ThemeTypography = {
 };
 export type ThemeChrome = {
     shadows?: boolean;
+    /** Shadows on cards, floating menus, and other surfaces (`--elevation-1`, `--elevation-float`). */
+    surfaceShadows?: boolean;
+    /** Shadows on inputs, buttons, and similar controls (`--elevation-control`, `--elevation-button-outline`). */
+    controlShadows?: boolean;
+    /** Shadows on dialogs and sheets (`--elevation-modal`). */
+    dialogShadows?: boolean;
+    /** Removes the traveling hover highlight from menus and collections. */
+    travelingHighlight?: false;
     primaryStroke?: boolean;
     interactiveCursor?: InteractiveCursor;
 };
@@ -86,4 +96,6 @@ export declare function themeToCss(themeInput: Theme): string;
 export declare function parseTheme(value: unknown): Theme;
 /** Upgrades a v2 theme to v3 without changing its rendered CSS. */
 export declare function migrateThemeV2ToV3(theme: Theme): Theme;
+/** Upgrades a v3 theme to v4, dropping the removed `foundation.muted` surface. */
+export declare function migrateThemeV3ToV4(theme: Theme): Theme;
 export declare function isTheme(value: unknown): value is Theme;

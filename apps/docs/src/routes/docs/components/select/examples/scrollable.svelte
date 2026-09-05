@@ -37,7 +37,7 @@
 <div class="flex flex-col gap-2">
     <span class="text-sm [font-weight:var(--font-weight-label,500)] text-foreground">Timezone</span>
     <Select.Root value={selectedTimezone}>
-        <Select.Trigger class="min-w-[240px]" variant="outline">
+        <Select.Trigger class="min-w-[240px]" variant="outline" size="md">
             {selected?.label ?? 'Select timezone'}
         </Select.Trigger>
         <Select.Content class="max-h-56">

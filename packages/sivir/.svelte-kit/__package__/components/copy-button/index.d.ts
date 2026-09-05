@@ -1,4 +1,5 @@
 import type { ButtonVariant } from '@sivir-ui/svelte/components/button';
+import type { Snippet } from 'svelte';
 import type { HTMLButtonAttributes } from 'svelte/elements';
 import CopyButton from './copy-button.svelte';
 export type CopyButtonProps = {
@@ -12,9 +13,11 @@ export type CopyButtonProps = {
     duration?: number;
     /** Button variant (defaults to `ghost`). */
     variant?: ButtonVariant;
-    /** Button size (defaults to `icon`). */
+    /** Button size (defaults to `icon`). Pass a text size when rendering children. */
     size?: 'sm' | 'md' | 'lg' | 'icon';
     class?: string;
+    /** Optional visible label rendered after the icon. */
+    children?: Snippet;
     /** Fired after the text is successfully written to the clipboard. */
     oncopy?: (text: string) => void;
 } & Omit<HTMLButtonAttributes, 'class' | 'type'>;

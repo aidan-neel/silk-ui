@@ -24,6 +24,15 @@ bun --cwd=packages/sivir run verify:cli-artifact
 When manual verification has not been requested, state that the full gates were
 not run instead of running them automatically.
 
+For a pre-release, invoke the `release-gate` skill or run:
+
+```sh
+bun run release-gate
+```
+
+That is the full publish bar: format, lint, typecheck, unit/SSR tests, docs
+browser tests, build, and packed artifact verification. Do not skip steps.
+
 # Development Servers
 
 Never stop, terminate, or send signals (including `SIGABRT`) to a development

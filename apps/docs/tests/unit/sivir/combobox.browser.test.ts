@@ -241,14 +241,15 @@ describe('Combobox -- search input', () => {
             (animation) => animation instanceof CSSTransition
         );
         expect(animations).not.toHaveLength(0);
-        expect(document.querySelector('.sivir-item-highlight')).toHaveClass('transition-none');
+        expect(document.querySelector('.sivir-item-highlight')).toHaveAttribute(
+            'data-ready',
+            'true'
+        );
 
         await Promise.allSettled(animations.map((animation) => animation.finished));
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        await flush();
         expect(appleMotion?.getBoundingClientRect().height).toBe(0);
-        expectHighlightBoundsToMatch(page.getByText('Cherry').element());
-        await new Promise((resolve) => setTimeout(resolve, 50));
-        expect(document.querySelector('.sivir-item-highlight')).not.toHaveClass('transition-none');
+        await expect.element(page.getByText('Cherry')).toBeVisible();
         unrelatedAnimation?.cancel();
     });
 

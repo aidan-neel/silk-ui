@@ -87,25 +87,25 @@
             <nav aria-label="Primary" class="ml-6 hidden items-center gap-2 sm:flex">
                 <Button
                     variant="outline"
-                    size="sm"
+                    size="md"
                     href={resolve('/docs/introduction')}
-                    style="border-radius: var(--radius-md); padding-inline: 10px;"
+                    style="border-radius: var(--radius-md);"
                 >
                     <span class="text-label">Docs</span>
                 </Button>
                 <Button
                     variant="outline"
-                    size="sm"
+                    size="md"
                     href={resolve('/docs/components')}
-                    style="border-radius: var(--radius-md); padding-inline: 10px;"
+                    style="border-radius: var(--radius-md);"
                 >
                     <span class="text-label">Components</span>
                 </Button>
                 <Button
                     variant="outline"
-                    size="sm"
+                    size="md"
                     href={resolve('/studio')}
-                    style="border-radius: var(--radius-md); padding-inline: 10px;"
+                    style="border-radius: var(--radius-md);"
                 >
                     <span class="text-label">Studio</span>
                 </Button>
@@ -113,7 +113,7 @@
             <div class="flex shrink-0 items-center gap-2 bg-background p-1">
                 <Button
                     variant="outline"
-                    size="sm"
+                    size="md"
                     style="border-radius: var(--radius-md);"
                     href="https://github.com/aidan-neel/sivir-ui"
                     target="_blank"

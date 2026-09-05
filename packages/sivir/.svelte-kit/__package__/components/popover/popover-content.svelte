@@ -8,6 +8,7 @@
         lockBodyScroll,
         positionFloatingPanel,
         pushEscapeLayer,
+        submenuPanelOffset,
         trapFocus
     } from '@sivir-ui/svelte/utils';
     import { onDestroy, onMount } from 'svelte';
@@ -56,10 +57,13 @@
             popover.style.setProperty('--popover-trigger-width', `${triggerWidth}px`);
         }
 
+        const placement = refElement ? 'right-start' : popoverState.placement;
+
         positionFloatingPanel(
             reference,
             popover,
-            refElement ? 'right-start' : popoverState.placement
+            placement,
+            submenuPanelOffset(placement, popoverState.hoverable)
         );
     }
 

@@ -20,6 +20,12 @@ export type CodeBlockTab = {
 };
 /** Where the built-in copy button sits. */
 export type CodeBlockCopyPlacement = 'actionbar' | 'overlay' | 'inline';
+/**
+ * Syntax paint for the highlighted tokens.
+ * - `sivir`: the built-in GitHub palette (light in light mode, dark in dark mode).
+ * - `custom`: no token colors; load any `highlight.js/styles/*` theme instead.
+ */
+export type CodeBlockTheme = 'sivir' | 'custom';
 /** Context shape shared with the subparts. */
 export type CodeBlockRegistry = {
     /** Raw code per tab value, registered by each `Content` (Copy reads the active one). */
@@ -34,6 +40,8 @@ export type CodeBlockRegistry = {
     contained: boolean;
     /** Set by List: a tab row is present, so language switches roll instead of sliding. */
     tabbed: boolean;
+    /** Token paint; `custom` skips the built-in colors for a stock theme stylesheet. */
+    theme: CodeBlockTheme;
 };
 export type CodeBlockProps = {
     /** Active tab id (bindable). Defaults to the first tab. */
@@ -55,6 +63,12 @@ export type CodeBlockProps = {
     copy?: CodeBlockCopyPlacement;
     /** Extra buttons placed left of the built-in copy button (high-level form). */
     actions?: Snippet;
+    /**
+     * Syntax paint:
+     * - `sivir` (default): the built-in GitHub palette.
+     * - `custom`: no token colors; load any `highlight.js/styles/*` theme instead.
+     */
+    theme?: CodeBlockTheme;
 } & DefaultProps;
 export type CodeBlockHeaderProps = DefaultProps;
 export type CodeBlockListProps = DefaultProps;

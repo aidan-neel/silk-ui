@@ -21,3 +21,4 @@
 - Size the PromptComposer submit button and every button in the docs examples at `md` instead of `sm`, so examples show the default button size.
 - Highlight InstallCommand tabs (runner, subcommand, flags, package) instead of rendering them monochrome, and fix `bun add …` commands generating broken `bunx bun add …` variants for other package managers.
 - Let dropdown and context submenus overlap their parent menu slightly instead of sitting beside it with a gap.
+- Size the remaining docs buttons at `md`: the landing nav, themes list and detail actions, components index clear-search, and the dropdown share/user/sort triggers plus the popover invite button now use the default button size.
