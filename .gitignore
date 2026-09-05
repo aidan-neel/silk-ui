@@ -18,6 +18,7 @@ node_modules/
 .netlify/
 .wrangler/
 .svelte-kit/
+**/.svelte-kit/
 build/
 dist/
 .release/
