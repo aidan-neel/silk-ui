@@ -80,7 +80,7 @@ describe('GET /themes', () => {
         expect(res.status).toBe(200);
         const body = (await res.json()) as { slug: string; name: string }[];
         const slugs = body.map((t) => t.slug).sort();
-        expect(slugs).toEqual(['bitsy', 'default', 'magic']);
+        expect(slugs).toEqual(['bitsy', 'default', 'magic', 'open']);
         // Sorted by display name.
         const names = body.map((t) => t.name);
         expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));

@@ -15,14 +15,14 @@
             <div class="flex items-center gap-1">
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Mention someone"
                     ><AtSign size={14} /></Button
                 >
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Add image"
                     ><ImagePlus size={14} /></Button
@@ -30,7 +30,7 @@
                 <DropdownMenu.Root>
                     <DropdownMenu.Trigger
                         variant="ghost"
-                        size="sm"
+                        size="md"
                         class="size-7 rounded-[var(--radius-md)] p-0"
                         aria-label="Add reaction"
                     >
@@ -44,7 +44,7 @@
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
             </div>
-            <Button type="button" size="sm" class="size-7 rounded-full p-0" aria-label="Reply"
+            <Button type="button" size="md" class="size-7 rounded-full p-0" aria-label="Reply"
                 ><ArrowUp size={14} /></Button
             >
         </Toolbar>

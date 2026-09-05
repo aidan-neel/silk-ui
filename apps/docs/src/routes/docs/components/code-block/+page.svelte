@@ -11,6 +11,10 @@
     import CopyOverlaySrc from './examples/copy-overlay.svelte?raw';
     import CustomActions from './examples/custom-actions.svelte';
     import CustomActionsSrc from './examples/custom-actions.svelte?raw';
+    import CustomThemeStylesheet from './examples/custom-theme-stylesheet.svelte';
+    import CustomThemeStylesheetSrc from './examples/custom-theme-stylesheet.svelte?raw';
+    import CustomThemeVariables from './examples/custom-theme-variables.svelte';
+    import CustomThemeVariablesSrc from './examples/custom-theme-variables.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
     import LineNumbers from './examples/line-numbers.svelte';
@@ -31,6 +35,11 @@
     { label: 'JavaScript', lang: 'javascript', code: jsCode },
   ]}
 />`;
+
+    const customThemeSnippet = `import 'highlight.js/styles/github-dark.css';
+import { CodeBlock } from '$lib/sivir/components/code-block';
+
+<CodeBlock code={code} lang="typescript" theme="custom" />`;
 </script>
 
 <svelte:head>
@@ -83,6 +92,15 @@
             for a single snippet:
         </Typography.Text>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
+        <Typography.Text variant="supporting">
+            The built-in palette is GitHub light in light mode and GitHub dark in dark mode. For any
+            other
+            <Typography.InlineCode>highlight.js</Typography.InlineCode>
+            theme, set
+            <Typography.InlineCode>theme="custom"</Typography.InlineCode>
+            and load its stylesheet — the component skips its own token colors:
+        </Typography.Text>
+        <CodeBlock code={customThemeSnippet} lang="svelte" copy="overlay" />
     </section>
 
     <!-- ─── Examples ──────────────────────────────────────────────── -->
@@ -140,6 +158,36 @@
             <Typography.H3 class="docs-subsection-heading"> Compound API </Typography.H3>
             <ComponentPreview code={CompoundSrc}>
                 <Compound />
+            </ComponentPreview>
+        </div>
+
+        <div id="custom-theme-stylesheet" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading">
+                Custom theme: stylesheet
+            </Typography.H3>
+            <Typography.Text variant="supporting">
+                With
+                <Typography.InlineCode>theme="custom"</Typography.InlineCode>
+                the block paints no token colors itself, so a stock
+                <Typography.InlineCode>highlight.js</Typography.InlineCode>
+                stylesheet — or your own
+                <Typography.InlineCode>hljs-*</Typography.InlineCode>
+                rules, like the One Dark / One Light ones below — takes over.
+            </Typography.Text>
+            <ComponentPreview code={CustomThemeStylesheetSrc}>
+                <CustomThemeStylesheet />
+            </ComponentPreview>
+        </div>
+
+        <div id="custom-theme-variables" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Custom theme: variables </Typography.H3>
+            <Typography.Text variant="supporting">
+                To keep the built-in palette and only shift its hues, override the
+                <Typography.InlineCode>--code-block-token-*</Typography.InlineCode>
+                variables on a wrapper. They inherit into the block per mode.
+            </Typography.Text>
+            <ComponentPreview code={CustomThemeVariablesSrc}>
+                <CustomThemeVariables />
             </ComponentPreview>
         </div>
     </section>

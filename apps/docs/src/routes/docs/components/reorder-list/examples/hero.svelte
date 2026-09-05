@@ -14,7 +14,7 @@
 
 <div class="w-full max-w-md">
     <div class="mb-3 flex justify-end">
-        <Button size="sm" variant="ghost" onclick={() => (items = [...initial])}>Reset</Button>
+        <Button size="md" variant="ghost" onclick={() => (items = [...initial])}>Reset</Button>
     </div>
     <ReorderList
         bind:items

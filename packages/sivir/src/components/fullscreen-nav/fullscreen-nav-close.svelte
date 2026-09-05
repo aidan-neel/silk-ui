@@ -1,6 +1,7 @@
 <script lang="ts">
     import X from '@lucide/svelte/icons/x';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import { cn } from '@sivir-ui/svelte/utils';
     import type { FullscreenNavCloseProps } from '.';
     import { getFullscreenNavContext } from './context.svelte';
 
@@ -21,7 +22,7 @@
         state.open = false;
         userOnclick?.(event);
     }}
-    class={className}
+    class={cn(className, 'min-h-[var(--size-touch)] min-w-[var(--size-touch)] touch-manipulation')}
     {...rest}
 >
     {#if children}

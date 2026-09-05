@@ -34,6 +34,7 @@ export * as ContextMenu from './components/context-menu';
 export * as Conversation from './components/conversation';
 export { CopyButton } from './components/copy-button';
 export * as DropdownMenu from './components/dropdown-menu';
+export * as FileDiff from './components/file-diff';
 export * as FullscreenNav from './components/fullscreen-nav';
 export { Gauge } from './components/gauge';
 export * as HoverCard from './components/hover-card';
@@ -61,6 +62,7 @@ export { Slider } from './components/slider';
 export { Spinner } from './components/spinner';
 export { Switch } from './components/switch';
 export * as Tabs from './components/tabs';
+export * as TagInput from './components/tag-input';
 export { TaskSteps } from './components/task-steps';
 export { Textarea } from './components/textarea';
 // Toast ships a component plus its imperative helpers.

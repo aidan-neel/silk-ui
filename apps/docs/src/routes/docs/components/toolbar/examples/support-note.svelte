@@ -16,20 +16,20 @@
             <div class="flex items-center gap-1">
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Attach a file"
                     ><Paperclip size={14} /></Button
                 >
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Insert an article"
                     ><BookOpen size={14} /></Button
                 >
             </div>
-            <Button type="button" size="sm" class="size-7 rounded-full p-0" aria-label="Send reply"
+            <Button type="button" size="md" class="size-7 rounded-full p-0" aria-label="Send reply"
                 ><ArrowUp size={14} /></Button
             >
         </Toolbar>

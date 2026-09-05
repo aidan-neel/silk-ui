@@ -1,5 +1,5 @@
-import { getContext, setContext } from 'svelte';
 import { clickOutside, getFocusableElements, inertOutside, lockBodyScroll, pushEscapeLayer, trapFocus } from '@sivir-ui/svelte/utils';
+import { getContext, setContext } from 'svelte';
 const OVERLAY_DEPTH = Symbol('sivir-overlay-depth');
 const overlayStack = [];
 function overlayNestingDepth() {
@@ -7,6 +7,18 @@ function overlayNestingDepth() {
     const depth = parentDepth + 1;
     setContext(OVERLAY_DEPTH, depth);
     return depth;
+}
+/**
+ * Depth of the overlay enclosing the caller's component subtree.
+ *
+ * Portaled content (popover menus, select lists) keeps its component-tree
+ * position when its DOM moves to `<body>`, so a menu opened inside a modal
+ * still reads depth 1 here. Floating layers register their Escape handler
+ * one rank above this depth so they peel before their enclosing overlay.
+ * Call during component init; `getContext` is init-scoped.
+ */
+export function parentOverlayDepth() {
+    return getContext(OVERLAY_DEPTH) ?? 0;
 }
 function applyOverlayRootLayer(panel, depth) {
     const root = panel.closest('[data-overlay-root]');

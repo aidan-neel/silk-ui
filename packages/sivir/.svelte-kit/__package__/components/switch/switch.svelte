@@ -22,7 +22,7 @@
     const descriptionId = `${id}-description`;
 
     const buttonClasses =
-        'group relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]';
+        'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0.5 transition-[background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]';
 
     function toggle(event: Event) {
         if (disabled) {
@@ -66,8 +66,7 @@
             data-state={isOn ? 'checked' : 'unchecked'}
             class={cn(
                 'block size-3.5 rounded-full bg-white ring-1 ring-inset ring-black/[0.08] will-change-transform transition-transform [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none',
-                isOn ? 'translate-x-4' : 'translate-x-0',
-                !disabled && 'group-active:scale-x-125 motion-reduce:group-active:scale-x-100'
+                isOn ? 'translate-x-4' : 'translate-x-0'
             )}
         ></span>
     </button>

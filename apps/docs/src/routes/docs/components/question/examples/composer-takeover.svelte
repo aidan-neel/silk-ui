@@ -92,7 +92,7 @@
                     <PromptComposer.Actions>
                         <Button
                             variant="quiet"
-                            size="sm"
+                            size="md"
                             onclick={() => {
                                 shouldFocusQuestion = true;
                                 asking = true;

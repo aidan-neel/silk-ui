@@ -3,6 +3,7 @@
     import Copy from '@lucide/svelte/icons/copy';
     import { Button } from '@sivir-ui/svelte/components/button';
     import * as Tooltip from '@sivir-ui/svelte/components/tooltip';
+    import { cn } from '@sivir-ui/svelte/utils';
     import { onDestroy } from 'svelte';
     import type { CopyButtonProps } from '.';
 
@@ -14,6 +15,7 @@
         variant = 'ghost',
         size = 'icon',
         class: className,
+        children,
         oncopy,
         ...rest
     }: CopyButtonProps = $props();
@@ -66,7 +68,7 @@
     <!-- Positioning/layout lives on the trigger wrapper so the tooltip anchors to
 	     the same box the button actually renders in (e.g. an absolutely-placed
 	     copy button in a code block). -->
-    <Tooltip.Trigger showOnClick class={className}>
+    <Tooltip.Trigger showOnClick class={cn(className, '[&_button]:w-full')}>
         <Button
             {...rest}
             type="button"
@@ -76,21 +78,26 @@
             onclick={copy}
         >
             <!-- Copy ↔ Check morph: the two icons share one grid cell and cross-fade
-			     with a scale + quarter-turn so one twists out as the other twists in. -->
+			     with a scale + quarter-turn so one twists out as the other twists in.
+			     Tailwind v4 animates rotate/scale as their own properties, so they
+			     must be named in the transition alongside transform and opacity. -->
             <span class="relative grid size-4 place-items-center">
                 <Copy
                     size={15}
-                    class={`col-start-1 row-start-1 transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
+                    class={`col-start-1 row-start-1 transition-[transform,translate,scale,rotate,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
                         copied ? '-rotate-90 scale-50 opacity-0' : 'rotate-0 scale-100 opacity-100'
                     }`}
                 />
                 <Check
                     size={15}
-                    class={`col-start-1 row-start-1 text-[var(--color-success)] transition-[transform,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
+                    class={`col-start-1 row-start-1 text-[var(--color-success)] transition-[transform,translate,scale,rotate,opacity] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] ${
                         copied ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-50 opacity-0'
                     }`}
                 />
             </span>
+            {#if children}
+                {@render children()}
+            {/if}
         </Button>
     </Tooltip.Trigger>
     <Tooltip.Content>{copied ? copiedLabel : label}</Tooltip.Content>

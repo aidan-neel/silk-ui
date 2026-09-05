@@ -28,7 +28,7 @@ export const button = tv({
              * concentric frame -- the semantic border outside and the inset surface
              * ring inside read as Panel's double edge.
              */
-            panel: 'border border-border bg-card text-foreground shadow-[var(--elevation-1)] ring-1 ring-inset ring-[color-mix(in_oklab,var(--color-border)_50%,transparent)] hover:bg-muted data-[state=open]:bg-muted focus-visible:shadow-[var(--focus-ring),var(--elevation-1)]'
+            panel: 'border border-border bg-card text-foreground shadow-[var(--elevation-1)] ring-1 ring-inset ring-[color-mix(in_oklab,var(--color-border)_50%,transparent)] hover:bg-secondary data-[state=open]:bg-secondary focus-visible:shadow-[var(--focus-ring),var(--elevation-1)]'
         },
         size: {
             sm: 'h-[calc(var(--size-control-sm)-var(--size-hairline))] px-[calc(var(--spacing)*3+var(--size-hairline)/4)]',

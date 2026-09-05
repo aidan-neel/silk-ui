@@ -30,7 +30,7 @@
         <p class="text-sm text-foreground-muted" role="status">
             {streaming ? `Receiving chunk ${step + 1} of ${chunks.length}` : 'Response complete'}
         </p>
-        <Button variant="ghost" size="sm" onclick={advance}>
+        <Button variant="ghost" size="md" onclick={advance}>
             {#if streaming}
                 Stream next chunk
                 <ArrowRight size={14} aria-hidden="true" />

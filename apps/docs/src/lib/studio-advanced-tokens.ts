@@ -111,13 +111,6 @@ export const colorTokenDefinitions = [
         darkFallback: 'hsl(0 0% 11.5%)'
     },
     {
-        name: '--color-muted',
-        label: 'Muted',
-        group: 'Surfaces',
-        fallback: 'var(--sivir-neutral-50)',
-        darkFallback: 'hsl(0 0% 7%)'
-    },
-    {
         name: '--color-secondary',
         label: 'Secondary',
         group: 'Surfaces',
@@ -135,8 +128,8 @@ export const colorTokenDefinitions = [
         name: '--color-field-hover',
         label: 'Field hover',
         group: 'Surfaces',
-        fallback: 'var(--color-muted)',
-        darkFallback: 'hsl(0 0% 17.5%)'
+        fallback: 'var(--color-secondary)',
+        darkFallback: 'var(--color-secondary)'
     },
     {
         name: '--color-field-foreground',

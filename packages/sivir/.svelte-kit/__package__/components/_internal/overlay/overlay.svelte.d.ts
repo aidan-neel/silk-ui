@@ -1,3 +1,13 @@
+/**
+ * Depth of the overlay enclosing the caller's component subtree.
+ *
+ * Portaled content (popover menus, select lists) keeps its component-tree
+ * position when its DOM moves to `<body>`, so a menu opened inside a modal
+ * still reads depth 1 here. Floating layers register their Escape handler
+ * one rank above this depth so they peel before their enclosing overlay.
+ * Call during component init; `getContext` is init-scoped.
+ */
+export declare function parentOverlayDepth(): number;
 /** Test isolation for the process-local nested overlay stack. */
 export declare function resetOverlayStackForTests(): void;
 /**

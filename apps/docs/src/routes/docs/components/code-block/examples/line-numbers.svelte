@@ -10,6 +10,6 @@
 print([fib(i) for i in range(10)])`;
 </script>
 
-<CodeBlock.Root class="max-w-xl" value="py">
+<CodeBlock.Root value="py">
     <CodeBlock.Content value="py" {code} lang="python" showLineNumbers />
 </CodeBlock.Root>

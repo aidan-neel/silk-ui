@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { parentOverlayDepth } from '@sivir-ui/svelte/components/_internal/overlay';
     import { panelIn, panelOut } from '@sivir-ui/svelte/transition';
     import {
         clickOutside,
@@ -32,6 +33,8 @@
     }: PopoverContentProps = $props();
 
     const { id: key, state: popoverState } = getPopoverContext();
+
+    const escapeRank = parentOverlayDepth() + 1;
 
     let popover = $state<HTMLElement | undefined>();
     let panelEl = $state<HTMLElement | undefined>();
@@ -271,9 +274,13 @@
         if (!popoverState.open) {
             return;
         }
-        return pushEscapeLayer(() => {
-            popoverState.open = false;
-        }, popover);
+        return pushEscapeLayer(
+            () => {
+                popoverState.open = false;
+            },
+            popover,
+            escapeRank
+        );
     });
 
     /**

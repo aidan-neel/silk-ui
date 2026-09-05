@@ -27,6 +27,19 @@ function overlayNestingDepth() {
     return depth;
 }
 
+/**
+ * Depth of the overlay enclosing the caller's component subtree.
+ *
+ * Portaled content (popover menus, select lists) keeps its component-tree
+ * position when its DOM moves to `<body>`, so a menu opened inside a modal
+ * still reads depth 1 here. Floating layers register their Escape handler
+ * one rank above this depth so they peel before their enclosing overlay.
+ * Call during component init; `getContext` is init-scoped.
+ */
+export function parentOverlayDepth() {
+    return getContext<number>(OVERLAY_DEPTH) ?? 0;
+}
+
 function applyOverlayRootLayer(panel: HTMLElement, depth: number) {
     const root = panel.closest('[data-overlay-root]');
     if (!(root instanceof HTMLElement)) {

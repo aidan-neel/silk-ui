@@ -16,7 +16,7 @@ jobs:
       - run: npm test`;
 </script>
 
-<CodeBlock.Root class="max-w-xl" value="shell">
+<CodeBlock.Root value="shell">
     <CodeBlock.Header>
         <CodeBlock.List>
             <CodeBlock.Trigger value="shell">Terminal</CodeBlock.Trigger>

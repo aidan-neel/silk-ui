@@ -7,6 +7,6 @@ index.upsert(vectors=zip(ids, embeddings))`;
 </script>
 
 <!-- copyPlacement="overlay" pins the copy button to the body's top-right (no header). -->
-<CodeBlock.Root class="max-w-xl" value="py">
+<CodeBlock.Root value="py">
     <CodeBlock.Content value="py" {code} lang="python" copyPlacement="overlay" />
 </CodeBlock.Root>

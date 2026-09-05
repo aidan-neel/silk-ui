@@ -25,14 +25,14 @@
             <div class="flex items-center gap-1">
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Add code"
                     ><Code2 size={14} /></Button
                 >
                 <Button
                     variant="ghost"
-                    size="sm"
+                    size="md"
                     class="size-7 rounded-[var(--radius-md)] p-0"
                     aria-label="Improve with AI"
                     ><Sparkles size={14} /></Button
@@ -41,7 +41,7 @@
             <Button
                 type="submit"
                 variant="primary"
-                size="sm"
+                size="md"
                 class="size-7 rounded-full p-0"
                 aria-label="Send message"
                 disabled={!message.trim()}

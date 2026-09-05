@@ -19,7 +19,7 @@
                 <div class="min-w-0 flex-1">
                     <Input placeholder="Add people, emails or groups…" class="h-9 text-sm" />
                 </div>
-                <Button size="sm" class="h-9 flex-shrink-0">Invite</Button>
+                <Button size="md" class="h-9 flex-shrink-0">Invite</Button>
             </div>
 
             <div class="h-px bg-border"></div>
@@ -73,7 +73,7 @@
                     </p>
                     <p class="m-0 text-xs text-foreground-muted">Can view</p>
                 </div>
-                <Button size="sm" variant="ghost" class="flex-shrink-0">
+                <Button size="md" variant="ghost" class="flex-shrink-0">
                     <Link size={14} />
                     Copy link
                 </Button>

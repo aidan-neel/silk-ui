@@ -1,5 +1,6 @@
 import {
     DEFAULT_THEME,
+    migrateThemeV3ToV4,
     parseTheme,
     THEME_VERSION,
     themeToCss
@@ -48,11 +49,42 @@ describe('themeToCss', () => {
         expect(custom).toContain('--color-ring: color-mix(in srgb, #22cc88 30%, transparent)');
         expect(custom).toContain('--sivir-blue-500: #22cc88');
     });
+
+    it('maps the foundation muted-text color to the muted foreground token', () => {
+        const css = themeToCss({
+            ...DEFAULT_THEME,
+            foundation: {
+                light: {
+                    foregroundMuted: '#737373'
+                }
+            }
+        });
+
+        expect(css).toContain('--color-foreground-muted: #737373');
+        expect(css).not.toContain('--color-muted:');
+    });
 });
 
 describe('parseTheme', () => {
     it('normalizes untrusted v2 JSON', () => {
         expect(parseTheme({ ...DEFAULT_THEME, brand: '#AABBCC' }).brand).toBe('#aabbcc');
+    });
+
+    it('drops the removed muted surface when upgrading a v3 theme', () => {
+        const v3Theme = parseTheme({
+            ...DEFAULT_THEME,
+            version: 3,
+            foundation: {
+                light: {
+                    muted: '#f7f7f5'
+                }
+            }
+        });
+
+        expect(migrateThemeV3ToV4(v3Theme)).toMatchObject({
+            version: 4
+        });
+        expect(v3Theme.foundation).toBeUndefined();
     });
 
     it('rejects legacy, unversioned, and malformed payloads', () => {

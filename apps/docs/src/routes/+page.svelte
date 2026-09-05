@@ -162,9 +162,7 @@
             </div>
         </header>
         <FullscreenNav.Content label="Browse Sivir UI" class="p-0 sm:hidden">
-            <header
-                class="flex shrink-0 items-center justify-between border-b border-border/70 px-4 py-3"
-            >
+            <header class="flex shrink-0 items-center justify-between px-3 py-3">
                 <a
                     href={resolve('/')}
                     class="font-semibold tracking-tight text-foreground no-underline"
@@ -173,7 +171,7 @@
                 </a>
                 <FullscreenNav.Close />
             </header>
-            <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
+            <div class="min-h-0 flex-1 overflow-y-auto px-3 py-4">
                 <FullscreenNav.Group heading="Navigate">
                     <FullscreenNav.Link href={resolve('/docs/introduction')}>
                         Docs
@@ -199,7 +197,7 @@
             class="mt-1 max-w-[38rem] motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:80ms]"
             style="font-size: 18px; font-weight: var(--font-weight-label);"
         >
-            Restyle 55 components from a handful of tokens.
+            Restyle 57 components from a handful of tokens.
         </Typography.Description>
         <div
             class="mt-3 flex w-full flex-col justify-start gap-3 sm:w-auto sm:flex-row sm:flex-wrap motion-safe:[animation:docs-block-in_280ms_var(--ease-out)_both] motion-safe:[animation-delay:115ms]"
@@ -209,7 +207,7 @@
                 size="lg"
                 class="w-full justify-center sm:w-auto"
             >
-                Browse all 55 components
+                Browse all 57 components
                 <ArrowRight size={16} />
             </Button>
             <Button

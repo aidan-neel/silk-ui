@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { parseTheme, type Theme } from './theme';
+import { parseTheme, THEME_VERSION, type Theme } from './theme';
 
 const STORAGE_KEY = 'sivir-live-theme-css';
 const STYLE_ID = 'sivir-live-theme-style';
@@ -68,11 +68,18 @@ function randomId() {
     return `local-${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
 }
 
+function currentTheme(value: unknown): Theme {
+    return {
+        ...parseTheme(value),
+        version: THEME_VERSION
+    };
+}
+
 export function saveStudioTheme(theme: Theme) {
     if (!browser) {
         return;
     }
-    localStorage.setItem(STUDIO_THEME_KEY, JSON.stringify(parseTheme(theme)));
+    localStorage.setItem(STUDIO_THEME_KEY, JSON.stringify(currentTheme(theme)));
 }
 
 export function loadStudioTheme(): Theme | null {
@@ -87,7 +94,7 @@ export function loadStudioTheme(): Theme | null {
         return null;
     }
     try {
-        return parseTheme(JSON.parse(stored));
+        return currentTheme(JSON.parse(stored));
     } catch {
         localStorage.removeItem(STUDIO_THEME_KEY);
         return null;
@@ -114,7 +121,7 @@ export function getSavedThemes(): SavedTheme[] {
                 }
                 const record = value as Record<string, unknown>;
                 return {
-                    ...parseTheme(record),
+                    ...currentTheme(record),
                     id: typeof record.id === 'string' ? record.id : randomId(),
                     savedAt:
                         typeof record.savedAt === 'string'
@@ -131,7 +138,7 @@ export function getSavedThemes(): SavedTheme[] {
 
 export function saveLocalTheme(theme: Theme, existingId?: string): SavedTheme {
     const entry = {
-        ...parseTheme(theme),
+        ...currentTheme(theme),
         id: existingId ?? randomId(),
         savedAt: new Date().toISOString()
     };

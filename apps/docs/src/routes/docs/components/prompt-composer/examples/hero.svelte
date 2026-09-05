@@ -2,30 +2,31 @@
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import ShieldCheck from '@lucide/svelte/icons/shield-check';
+    import Square from '@lucide/svelte/icons/square';
     import Workflow from '@lucide/svelte/icons/workflow';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
     import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import { onDestroy } from 'svelte';
 
     const models = ['Sivir 3.1', 'Sivir Mini'];
     const modes = ['Plan', 'Build'];
     const permissions = ['Ask first', 'Auto approve'];
+    const efforts = ['Low', 'Medium', 'High'];
 
     let value = $state('Review the release notes and call out any migration risks.');
     let model = $state(models[0]);
     let mode = $state(modes[0]);
     let permission = $state(permissions[0]);
-    let message = $state('Ready to send');
+    let effort = $state(efforts[2]);
     let timer: ReturnType<typeof setTimeout> | undefined;
     let settle: (() => void) | undefined;
 
-    async function submitPrompt(prompt: string) {
-        message = 'Sending prompt';
+    async function submitPrompt() {
         await new Promise<void>((resolve) => {
             settle = resolve;
             timer = setTimeout(() => {
                 value = '';
-                message = `Sent “${prompt}”`;
                 timer = undefined;
                 settle = undefined;
                 resolve();
@@ -34,40 +35,51 @@
     }
 
     function stopSubmission() {
-        if (timer) clearTimeout(timer);
+        if (timer) {
+            clearTimeout(timer);
+        }
         timer = undefined;
         const resolve = settle;
         settle = undefined;
-        message = 'Stopped before sending';
         resolve?.();
     }
 
     onDestroy(() => {
-        if (timer) clearTimeout(timer);
+        if (timer) {
+            clearTimeout(timer);
+        }
         settle?.();
     });
 </script>
 
-<div class="flex w-full max-w-2xl flex-col gap-3">
+<div class="flex w-full max-w-2xl flex-col">
     <PromptComposer.Root bind:value onSubmit={submitPrompt} onStop={stopSubmission}>
-        <PromptComposer.Input aria-label="Prompt" placeholder="Ask the agent..." />
+        <PromptComposer.Input
+            aria-label="Prompt"
+            placeholder="Ask the agent..."
+            class="!min-h-20"
+        />
 
         <PromptComposer.Toolbar class="!min-h-10 !items-center !gap-2 !px-2 !py-1.5">
             <PromptComposer.Actions class="!flex-none !gap-1">
                 <DropdownMenu.Root>
                     <DropdownMenu.Trigger
                         variant="ghost"
-                        size="sm"
-                        class="!h-8 !gap-1.5 !rounded-lg !px-2 text-xs"
+                        size="md"
+                        class="!h-8 !w-24 !gap-1.5 !rounded-lg !px-2 text-xs"
                     >
                         <Workflow size={14} aria-hidden="true" />
                         {mode}
-                        <ChevronDown size={12} class="text-foreground-muted" aria-hidden="true" />
+                        <ChevronDown
+                            size={12}
+                            class="ml-auto text-foreground-muted"
+                            aria-hidden="true"
+                        />
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Content>
                         <DropdownMenu.Label>Mode</DropdownMenu.Label>
                         {#each modes as option (option)}
-                            <DropdownMenu.Item onclick={() => (mode = option)}>
+                            <DropdownMenu.Item callback={() => (mode = option)}>
                                 <span class="flex-1">{option}</span>
                                 {#if mode === option}
                                     <Check size={13} aria-hidden="true" />
@@ -80,17 +92,21 @@
                 <DropdownMenu.Root>
                     <DropdownMenu.Trigger
                         variant="ghost"
-                        size="sm"
-                        class="!h-8 !gap-1.5 !rounded-lg !px-2 text-xs"
+                        size="md"
+                        class="!h-8 !w-36 !gap-1.5 !rounded-lg !px-2 text-xs"
                     >
                         <ShieldCheck size={14} aria-hidden="true" />
                         {permission}
-                        <ChevronDown size={12} class="text-foreground-muted" aria-hidden="true" />
+                        <ChevronDown
+                            size={12}
+                            class="ml-auto text-foreground-muted"
+                            aria-hidden="true"
+                        />
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Content>
                         <DropdownMenu.Label>Permission</DropdownMenu.Label>
                         {#each permissions as option (option)}
-                            <DropdownMenu.Item onclick={() => (permission = option)}>
+                            <DropdownMenu.Item callback={() => (permission = option)}>
                                 <span class="flex-1">{option}</span>
                                 {#if permission === option}
                                     <Check size={13} aria-hidden="true" />
@@ -105,36 +121,63 @@
                 <DropdownMenu.Root>
                     <DropdownMenu.Trigger
                         variant="ghost"
-                        size="sm"
+                        size="md"
                         class="!h-8 !max-w-52 !gap-1.5 !rounded-lg !px-2 text-xs"
                     >
                         <span class="truncate">{model}</span>
-                        <span class="text-foreground-muted">High</span>
+                        <span class="text-foreground-muted">{effort}</span>
                         <ChevronDown
                             size={12}
-                            class="shrink-0 text-foreground-muted"
+                            class="ml-auto shrink-0 text-foreground-muted"
                             aria-hidden="true"
                         />
                     </DropdownMenu.Trigger>
-                    <DropdownMenu.Content class="!w-48 !min-w-48">
+                    <DropdownMenu.Content>
                         <DropdownMenu.Label>Configuration</DropdownMenu.Label>
-                        {#each models as option (option)}
-                            <DropdownMenu.Item onclick={() => (model = option)}>
-                                <span class="flex-1">{option}</span>
-                                {#if model === option}
-                                    <Check size={13} aria-hidden="true" />
-                                {/if}
-                            </DropdownMenu.Item>
-                        {/each}
+                        <DropdownMenu.Sub>
+                            <DropdownMenu.SubTrigger>Model</DropdownMenu.SubTrigger>
+                            <DropdownMenu.SubContent>
+                                {#each models as option (option)}
+                                    <DropdownMenu.Item callback={() => (model = option)}>
+                                        <span class="flex-1">{option}</span>
+                                        {#if model === option}
+                                            <Check size={13} aria-hidden="true" />
+                                        {/if}
+                                    </DropdownMenu.Item>
+                                {/each}
+                            </DropdownMenu.SubContent>
+                        </DropdownMenu.Sub>
+                        <DropdownMenu.Sub>
+                            <DropdownMenu.SubTrigger>Effort</DropdownMenu.SubTrigger>
+                            <DropdownMenu.SubContent>
+                                {#each efforts as option (option)}
+                                    <DropdownMenu.Item callback={() => (effort = option)}>
+                                        <span class="flex-1">{option}</span>
+                                        {#if effort === option}
+                                            <Check size={13} aria-hidden="true" />
+                                        {/if}
+                                    </DropdownMenu.Item>
+                                {/each}
+                            </DropdownMenu.SubContent>
+                        </DropdownMenu.Sub>
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
 
-                <PromptComposer.Submit label="Send" class="!size-8 !rounded-lg" />
+                <PromptComposer.Submit
+                    label="Send"
+                    class="!aspect-auto !gap-1.5 !rounded-lg !px-3 text-xs"
+                >
+                    {#snippet children({ action })}
+                        {#if action === 'stop'}
+                            <Square size={8} fill="currentColor" aria-hidden="true" />
+                            Stop
+                        {:else}
+                            Send
+                            <Shortcut shortcut="enter" />
+                        {/if}
+                    {/snippet}
+                </PromptComposer.Submit>
             </div>
         </PromptComposer.Toolbar>
     </PromptComposer.Root>
-
-    <p class="px-1 text-xs text-foreground-muted" role="status" aria-live="polite">
-        {message}
-    </p>
 </div>

@@ -100,6 +100,9 @@
     }
 
     function activateHoveredItem(event: PointerEvent) {
+        if (event.pointerType === 'touch') {
+            return;
+        }
         const target = event.target;
         if (!(target instanceof Element)) {
             return;

@@ -2,7 +2,7 @@
     import type { ScrittoProps } from '@scritto/core';
     import { getCssDuration } from '@sivir-ui/svelte/transition';
     import { cn } from '@sivir-ui/svelte/utils';
-    import { onDestroy, type Component } from 'svelte';
+    import { type Component, onDestroy } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import type { ResponseStreamProps } from '.';
 

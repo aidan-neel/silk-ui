@@ -75,6 +75,9 @@
             <li>Page scrolling is locked while the navigation is open.</li>
             <li>Press Escape, use Close, or activate a Link to dismiss the menu.</li>
             <li>
+                Links are sized for touch, scale on press, and give a short haptic pulse on tap.
+            </li>
+            <li>
                 Pass a descriptive label to Content when the default navigation label is not
                 specific enough.
             </li>

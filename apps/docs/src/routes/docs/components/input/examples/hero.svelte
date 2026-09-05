@@ -27,7 +27,7 @@
     </div>
 
     <div class="flex items-center justify-end gap-3">
-        <Button variant="ghost" size="sm">Cancel</Button>
-        <Button size="sm">Deploy</Button>
+        <Button variant="ghost" size="md">Cancel</Button>
+        <Button size="md">Deploy</Button>
     </div>
 </div>

@@ -8,6 +8,6 @@
 console.log(greet('world'));`;
 </script>
 
-<CodeBlock.Root class="max-w-xl" value="ts">
+<CodeBlock.Root value="ts">
     <CodeBlock.Content value="ts" {code} lang="typescript" />
 </CodeBlock.Root>

@@ -560,6 +560,9 @@ export function travelingHighlight(node, options = {}) {
     const itemSelector = options.itemSelector ?? '[data-collection-item]';
     const restingSelector = options.restingSelector ??
         `${itemSelector}[data-collection-active="true"], ${itemSelector}[aria-selected="true"], ${itemSelector}[data-state="open"]`;
+    const coarsePointer = typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(hover: none), (pointer: coarse)').matches;
     const highlight = document.createElement('span');
     highlight.className = 'sivir-item-highlight';
     highlight.setAttribute('aria-hidden', 'true');
@@ -636,12 +639,18 @@ export function travelingHighlight(node, options = {}) {
         frame = requestAnimationFrame(() => measure(target));
     }
     function onPointerMove(event) {
+        if (event.pointerType === 'touch') {
+            return;
+        }
         const item = usableItem(event.target);
         if (item && item !== current) {
             schedule(item);
         }
     }
     function onPointerOver(event) {
+        if (event.pointerType === 'touch') {
+            return;
+        }
         const item = usableItem(event.target);
         if (item && item !== current) {
             schedule(item);
@@ -677,9 +686,11 @@ export function travelingHighlight(node, options = {}) {
             'hidden'
         ]
     });
-    node.addEventListener('pointermove', onPointerMove);
-    node.addEventListener('pointerover', onPointerOver);
-    node.addEventListener('pointerleave', onPointerLeave);
+    if (!coarsePointer) {
+        node.addEventListener('pointermove', onPointerMove);
+        node.addEventListener('pointerover', onPointerOver);
+        node.addEventListener('pointerleave', onPointerLeave);
+    }
     node.addEventListener('focusin', onFocusIn);
     node.addEventListener('focusout', onFocusOut);
     queueMicrotask(() => schedule(restingTarget()));
@@ -689,9 +700,11 @@ export function travelingHighlight(node, options = {}) {
             cancelAnimationFrame(readyFrame);
             resizeObserver.disconnect();
             mutationObserver.disconnect();
-            node.removeEventListener('pointermove', onPointerMove);
-            node.removeEventListener('pointerover', onPointerOver);
-            node.removeEventListener('pointerleave', onPointerLeave);
+            if (!coarsePointer) {
+                node.removeEventListener('pointermove', onPointerMove);
+                node.removeEventListener('pointerover', onPointerOver);
+                node.removeEventListener('pointerleave', onPointerLeave);
+            }
             node.removeEventListener('focusin', onFocusIn);
             node.removeEventListener('focusout', onFocusOut);
             highlight.remove();

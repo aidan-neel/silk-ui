@@ -85,6 +85,7 @@ export type {
     CodeBlockListProps,
     CodeBlockProps,
     CodeBlockTab,
+    CodeBlockTheme,
     CodeBlockTriggerProps
 } from './components/code-block';
 export { CodeBlock } from './components/code-block';
@@ -133,6 +134,18 @@ export type {
     DropdownMenuRadioItemProps
 } from './components/dropdown-menu';
 export * as DropdownMenu from './components/dropdown-menu';
+export type {
+    FileDiffChangeType,
+    FileDiffContentProps,
+    FileDiffContext,
+    FileDiffLine,
+    FileDiffLineNumberProps,
+    FileDiffRootProps,
+    FileDiffRowProps,
+    FileDiffTheme,
+    FileDiffTopBarProps
+} from './components/file-diff';
+export * as FileDiff from './components/file-diff';
 export type {
     FullscreenNavCloseProps,
     FullscreenNavContentProps,
@@ -265,6 +278,16 @@ export type {
     TabsVariant
 } from './components/tabs';
 export * as Tabs from './components/tabs';
+export type {
+    TagInputInputProps,
+    TagInputListProps,
+    TagInputProps,
+    TagInputRejection,
+    TagInputRejectionCode,
+    TagInputTagProps,
+    TagInputVariant
+} from './components/tag-input';
+export * as TagInput from './components/tag-input';
 export type { TaskStep, TaskStepStatus, TaskStepsProps } from './components/task-steps';
 export { TaskSteps } from './components/task-steps';
 export type { TextareaProps } from './components/textarea';

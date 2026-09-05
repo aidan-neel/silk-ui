@@ -56,7 +56,7 @@
     {...rest}
     type={action === 'stop' || action === 'pending' ? 'button' : 'submit'}
     variant="primary"
-    size="sm"
+    size="md"
     data-ui="prompt-composer-submit"
     data-state={action}
     disabled={isDisabled}

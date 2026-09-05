@@ -1,7 +1,7 @@
-export const THEME_VERSION = 3 as const;
+export const THEME_VERSION = 4 as const;
 
-/** Versions accepted by parseTheme. v2 themes keep working; v3 adds optional extensions. */
-export const SUPPORTED_THEME_VERSIONS = [2, 3] as const;
+/** Versions accepted by parseTheme. Older theme payloads keep working. */
+export const SUPPORTED_THEME_VERSIONS = [2, 3, 4] as const;
 
 export type SupportedThemeVersion = (typeof SUPPORTED_THEME_VERSIONS)[number];
 
@@ -24,7 +24,9 @@ export type ThemeFoundationPalette = {
     border?: string;
     background?: string;
     secondary?: string;
-    muted?: string;
+    foreground?: string;
+    foregroundMuted?: string;
+    onPrimary?: string;
 };
 
 export type ThemeFoundation = {
@@ -54,6 +56,14 @@ export type ThemeTypography = {
 
 export type ThemeChrome = {
     shadows?: boolean;
+    /** Shadows on cards, floating menus, and other surfaces (`--elevation-1`, `--elevation-float`). */
+    surfaceShadows?: boolean;
+    /** Shadows on inputs, buttons, and similar controls (`--elevation-control`, `--elevation-button-outline`). */
+    controlShadows?: boolean;
+    /** Shadows on dialogs and sheets (`--elevation-modal`). */
+    dialogShadows?: boolean;
+    /** Removes the traveling hover highlight from menus and collections. */
+    travelingHighlight?: false;
     primaryStroke?: boolean;
     interactiveCursor?: InteractiveCursor;
 };
@@ -285,10 +295,12 @@ function scaleMotionMs(value: string, factor: number): string {
 
 const FOUNDATION_TOKEN_MAP = {
     base: ['--color-card', '--color-panel'],
-    border: ['--color-border'],
+    border: ['--color-border', '--color-input'],
     background: ['--color-background'],
     secondary: ['--color-secondary'],
-    muted: ['--color-muted']
+    foreground: ['--color-foreground'],
+    foregroundMuted: ['--color-foreground-muted'],
+    onPrimary: ['--color-on-primary']
 } as const;
 
 type FoundationPaletteKey = keyof typeof FOUNDATION_TOKEN_MAP;
@@ -345,16 +357,29 @@ function chromeBlocks(chrome: ThemeChrome | undefined): string {
     if (!chrome) {
         return '';
     }
+    const masterShadows = chrome.shadows !== false;
+    const surfaceShadows = masterShadows && chrome.surfaceShadows !== false;
+    const controlShadows = masterShadows && chrome.controlShadows !== false;
+    const dialogShadows = masterShadows && chrome.dialogShadows !== false;
+    const elevationOff: string[] = [];
+    if (!surfaceShadows) {
+        elevationOff.push('--elevation-1: none;', '--elevation-float: none;');
+    }
+    if (!dialogShadows) {
+        elevationOff.push('--elevation-modal: none;');
+    }
+    if (!controlShadows) {
+        elevationOff.push(
+            '--elevation-control: inset 0 0 0 1px var(--color-border);',
+            '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
+        );
+    }
     const shared = [`--ui-cursor-interactive: ${chrome.interactiveCursor ?? 'default'};`];
-    const elevationOff = [
-        '--elevation-1: none;',
-        '--elevation-float: none;',
-        '--elevation-modal: none;',
-        '--elevation-control: inset 0 0 0 1px var(--color-border);',
-        '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
-    ];
+    if (chrome.travelingHighlight === false) {
+        shared.push('--sivir-traveling-highlight: none;');
+    }
     const withElevations = (declarations: string[]) =>
-        chrome.shadows === false ? [...declarations, ...elevationOff] : declarations;
+        elevationOff.length > 0 ? [...declarations, ...elevationOff] : declarations;
     const light = withElevations([
         `--color-primary-stroke: ${
             chrome.primaryStroke ? 'color-mix(in srgb, black 14%, transparent)' : 'transparent'
@@ -368,7 +393,10 @@ function chromeBlocks(chrome: ThemeChrome | undefined): string {
         ...shared
     ]);
     const hasChromeWork =
-        chrome.shadows === false ||
+        !surfaceShadows ||
+        !controlShadows ||
+        !dialogShadows ||
+        chrome.travelingHighlight === false ||
         chrome.primaryStroke === true ||
         chrome.interactiveCursor === 'pointer';
     if (!hasChromeWork) {
@@ -400,6 +428,16 @@ export function themeToCss(themeInput: Theme): string {
         `--motion-duration-toast-in: ${motion.toastIn};`,
         `--motion-duration-toast-out: ${motion.toastOut};`
     ];
+    if (theme.motion === 'none') {
+        shared.push(
+            '--motion-duration-panel-in: 0ms;',
+            '--motion-duration-panel-out: 0ms;',
+            '--motion-duration-modal-in: 0ms;',
+            '--motion-duration-modal-out: 0ms;',
+            '--motion-duration-press: 0ms;',
+            '--motion-duration-item: 0ms;'
+        );
+    }
 
     let css =
         block(':root,\n.dark', shared) +
@@ -518,7 +556,15 @@ function optionalFoundation(value: unknown): ThemeFoundation | undefined {
     if (!isRecord(value)) {
         throw new TypeError('Invalid theme: foundation must be an object.');
     }
-    const paletteKeys = ['base', 'border', 'background', 'secondary', 'muted'] as const;
+    const paletteKeys = [
+        'base',
+        'border',
+        'background',
+        'secondary',
+        'foreground',
+        'foregroundMuted',
+        'onPrimary'
+    ] as const;
     const parsePalette = (raw: unknown, field: string) => {
         if (raw === undefined) {
             return undefined;
@@ -605,6 +651,22 @@ function optionalChrome(value: unknown): ThemeChrome | undefined {
             throw new TypeError('Invalid theme: chrome.shadows must be a boolean.');
         }
         chrome.shadows = value.shadows;
+    }
+    for (const key of ['surfaceShadows', 'controlShadows', 'dialogShadows'] as const) {
+        if (value[key] !== undefined) {
+            if (typeof value[key] !== 'boolean') {
+                throw new TypeError(`Invalid theme: chrome.${key} must be a boolean.`);
+            }
+            chrome[key] = value[key];
+        }
+    }
+    if (value.travelingHighlight !== undefined) {
+        if (value.travelingHighlight !== false) {
+            throw new TypeError(
+                'Invalid theme: chrome.travelingHighlight only accepts false (the highlight is on by default).'
+            );
+        }
+        chrome.travelingHighlight = false;
     }
     if (value.primaryStroke !== undefined) {
         if (typeof value.primaryStroke !== 'boolean') {
@@ -697,6 +759,15 @@ export function parseTheme(value: unknown): Theme {
 
 /** Upgrades a v2 theme to v3 without changing its rendered CSS. */
 export function migrateThemeV2ToV3(theme: Theme): Theme {
+    const parsed = parseTheme(theme);
+    return {
+        ...parsed,
+        version: 3
+    };
+}
+
+/** Upgrades a v3 theme to v4, dropping the removed `foundation.muted` surface. */
+export function migrateThemeV3ToV4(theme: Theme): Theme {
     const parsed = parseTheme(theme);
     return {
         ...parsed,

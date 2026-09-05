@@ -28,5 +28,8 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 3.1.0 -- Content gained `dismissLayer` (default true). Set it false for
  *          triggers that must stay clickable while open; outside pointer
  *          dismissal still applies via `allowClickOutside`.
+ * 3.2.0 -- Content registers its Escape layer one rank above the enclosing
+ *          overlay, so menus opened inside a modal or sheet peel before
+ *          their host instead of closing it.
  */
 export declare const manifest: Manifest;

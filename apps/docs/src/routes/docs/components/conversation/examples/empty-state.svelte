@@ -12,7 +12,7 @@
 {/snippet}
 
 {#snippet startAction()}
-    <Button size="sm" onclick={() => (started = true)}>Draft a release plan</Button>
+    <Button size="md" onclick={() => (started = true)}>Draft a release plan</Button>
 {/snippet}
 
 <Conversation.Root

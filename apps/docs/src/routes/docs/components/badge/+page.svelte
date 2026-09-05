@@ -6,6 +6,8 @@
 
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
+    import Shapes from './examples/shapes.svelte';
+    import ShapesSrc from './examples/shapes.svelte?raw';
     import VariantDestructive from './examples/variant-destructive.svelte';
     import VariantDestructiveSrc from './examples/variant-destructive.svelte?raw';
     import VariantError from './examples/variant-error.svelte';
@@ -76,8 +78,18 @@
         <div>
             <Typography.H2 class="docs-section-heading"> Examples </Typography.H2>
             <Typography.Text variant="supporting" class="mt-2">
-                Explore Badge variants for different use cases.
+                Explore Badge variants and shapes for different use cases.
             </Typography.Text>
+        </div>
+
+        <div id="shapes" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Shapes </Typography.H3>
+            <Typography.Text variant="supporting">
+                Pill, circular, square-ish, and a rounded square with a 1px border.
+            </Typography.Text>
+            <ComponentPreview code={ShapesSrc}>
+                <Shapes />
+            </ComponentPreview>
         </div>
 
         <div id="variant-primary" class="scroll-mt-20 flex flex-col gap-3">

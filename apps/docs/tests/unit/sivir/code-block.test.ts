@@ -20,6 +20,39 @@ describe('CodeBlock highlighting safety', () => {
         expect(html).toContain('&lt;');
         expect(html).toContain('&gt;');
     });
+
+    it('emits tag-name and operator classes for markup and SQL', () => {
+        expect(highlight('<CodeBlock value="x" />', 'xml')).toContain('hljs-name');
+        expect(highlight('SELECT a FROM t WHERE x > 1', 'sql')).toContain('hljs-operator');
+    });
+});
+
+describe('CodeBlock theme', () => {
+    it('paints the built-in token variables by default', () => {
+        const { container } = render(Root, {
+            props: {
+                code: 'const value = 1;',
+                lang: 'ts'
+            }
+        });
+
+        const root = container.querySelector('[data-ui="code-block"]');
+        expect(root?.className).toContain('code-block-token-keyword');
+        expect(root?.className).toContain('code-block-token-entity');
+    });
+
+    it('omits the built-in token variables with theme="custom"', () => {
+        const { container } = render(Root, {
+            props: {
+                code: 'const value = 1;',
+                lang: 'ts',
+                theme: 'custom'
+            }
+        });
+
+        const root = container.querySelector('[data-ui="code-block"]');
+        expect(root?.className).not.toContain('code-block-token-');
+    });
 });
 
 describe('CodeBlock tabbed roll fallback', () => {

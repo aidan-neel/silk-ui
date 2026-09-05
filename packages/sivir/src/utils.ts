@@ -727,10 +727,26 @@ type TravelingHighlightOptions = {
  * Geometry is written directly so pointer movement never causes a component render.
  */
 export function travelingHighlight(node: HTMLElement, options: TravelingHighlightOptions = {}) {
+    if (typeof window === 'undefined') {
+        return {};
+    }
+    if (
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(hover: none), (pointer: coarse)').matches
+    ) {
+        return {};
+    }
+    if (getComputedStyle(node).getPropertyValue('--sivir-traveling-highlight').trim() === 'none') {
+        return {};
+    }
     const itemSelector = options.itemSelector ?? '[data-collection-item]';
     const restingSelector =
         options.restingSelector ??
         `${itemSelector}[data-collection-active="true"], ${itemSelector}[aria-selected="true"], ${itemSelector}[data-state="open"]`;
+    const coarsePointer =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(hover: none), (pointer: coarse)').matches;
     const highlight = document.createElement('span');
     highlight.className = 'sivir-item-highlight';
     highlight.setAttribute('aria-hidden', 'true');
@@ -817,6 +833,9 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     }
 
     function onPointerMove(event: PointerEvent) {
+        if (event.pointerType === 'touch') {
+            return;
+        }
         const item = usableItem(event.target);
         if (item && item !== current) {
             schedule(item);
@@ -824,6 +843,9 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     }
 
     function onPointerOver(event: PointerEvent) {
+        if (event.pointerType === 'touch') {
+            return;
+        }
         const item = usableItem(event.target);
         if (item && item !== current) {
             schedule(item);
@@ -864,9 +886,11 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
         ]
     });
 
-    node.addEventListener('pointermove', onPointerMove);
-    node.addEventListener('pointerover', onPointerOver);
-    node.addEventListener('pointerleave', onPointerLeave);
+    if (!coarsePointer) {
+        node.addEventListener('pointermove', onPointerMove);
+        node.addEventListener('pointerover', onPointerOver);
+        node.addEventListener('pointerleave', onPointerLeave);
+    }
     node.addEventListener('focusin', onFocusIn);
     node.addEventListener('focusout', onFocusOut);
     queueMicrotask(() => schedule(restingTarget()));
@@ -877,9 +901,11 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
             cancelAnimationFrame(readyFrame);
             resizeObserver.disconnect();
             mutationObserver.disconnect();
-            node.removeEventListener('pointermove', onPointerMove);
-            node.removeEventListener('pointerover', onPointerOver);
-            node.removeEventListener('pointerleave', onPointerLeave);
+            if (!coarsePointer) {
+                node.removeEventListener('pointermove', onPointerMove);
+                node.removeEventListener('pointerover', onPointerOver);
+                node.removeEventListener('pointerleave', onPointerLeave);
+            }
             node.removeEventListener('focusin', onFocusIn);
             node.removeEventListener('focusout', onFocusOut);
             highlight.remove();
@@ -1021,6 +1047,19 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
     };
 }
 
+export function submenuPanelOffset(placement: Placement, hoverable: boolean) {
+    if (!hoverable) {
+        return 8;
+    }
+
+    const side = placement.split('-')[0];
+    if (side === 'left' || side === 'right') {
+        return -2;
+    }
+
+    return 8;
+}
+
 /**
  * Positions a floating panel while keeping it inside the viewport bounds.
  *
@@ -1031,14 +1070,15 @@ export function clickOutside(node: Node, callback: () => void, exclude: Node[] =
 export function positionFloatingPanel(
     reference: ReferenceElement,
     floating: HTMLElement,
-    placement: Placement
+    placement: Placement,
+    offsetPx = 8
 ) {
     floating.dataset.placement ??= placement;
     return computePosition(reference, floating, {
         strategy: 'fixed',
         placement,
         middleware: [
-            offset(8),
+            offset(offsetPx),
             flip({ padding: 8, fallbackAxisSideDirection: 'end', fallbackStrategy: 'bestFit' }),
             shift({ padding: 8, crossAxis: true }),
             size({

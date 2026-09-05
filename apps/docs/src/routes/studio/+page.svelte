@@ -95,12 +95,19 @@
         border: string;
         background: string;
         secondary: string;
-        muted: string;
+        foreground: string;
+        foregroundMuted: string;
+        onPrimary: string;
     };
 
     type FoundationColors = {
         light: FoundationPalette;
         dark: FoundationPalette;
+    };
+
+    type BrandColors = {
+        light: string;
+        dark: string;
     };
 
     type InteractiveCursor = 'default' | 'pointer';
@@ -110,9 +117,13 @@
         headerSize: number;
         headerWeight: FontWeight;
         roleWeights: RoleWeights;
+        brandColors: BrandColors;
         foundationColors: FoundationColors;
         advancedTokens: AdvancedTokens;
-        shadows: boolean;
+        surfaceShadows: boolean;
+        controlShadows: boolean;
+        dialogShadows: boolean;
+        travelingHighlight: boolean;
         primaryStroke: boolean;
         interactiveCursor: InteractiveCursor;
     };
@@ -135,14 +146,18 @@
             border: '#e8e8e6',
             background: '#fdfdfc',
             secondary: '#efefee',
-            muted: '#f7f7f5'
+            foreground: '#1c1c1b',
+            foregroundMuted: '#737373',
+            onPrimary: '#ffffff'
         },
         dark: {
             base: '#171717',
             border: '#2a2a2a',
             background: '#0a0a0a',
             secondary: '#252525',
-            muted: '#1a1a1a'
+            foreground: '#ededed',
+            foregroundMuted: '#a3a3a3',
+            onPrimary: '#ffffff'
         }
     };
     const DEFAULT_ROLE_WEIGHTS: RoleWeights = {
@@ -186,11 +201,17 @@
         { label: 'Smoke', value: '#303030' },
         { label: 'Carbon', value: '#252525' }
     ];
-    const mutedSwatches = [
-        { label: 'Whisper', value: '#f7f7f5' },
-        { label: 'Fog', value: '#eeeeec' },
-        { label: 'Ash', value: '#242424' },
-        { label: 'Coal', value: '#1a1a1a' }
+    const foregroundSwatches = [
+        { label: 'Ink', value: '#1c1c1b' },
+        { label: 'Charcoal', value: '#3a3a3a' },
+        { label: 'Mist', value: '#a3a3a3' },
+        { label: 'Snow', value: '#ededed' }
+    ];
+    const onPrimarySwatches = [
+        { label: 'White', value: '#ffffff' },
+        { label: 'Porcelain', value: '#fafaf9' },
+        { label: 'Ink', value: '#1c1c1b' },
+        { label: 'Night', value: '#0a0a0a' }
     ];
 
     type AdvancedTokens = {
@@ -333,7 +354,11 @@
         dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
     });
     let advancedTokens = $state<AdvancedTokens>(emptyAdvancedTokens());
-    let shadows = $state(true);
+    let brandColors = $state<BrandColors>({ light: '#1e78e6', dark: '#1e78e6' });
+    let surfaceShadows = $state(true);
+    let controlShadows = $state(true);
+    let dialogShadows = $state(true);
+    let travelingHighlight = $state(true);
     let primaryStroke = $state(false);
     let interactiveCursor = $state<InteractiveCursor>('default');
     let advancedTab = $state<AdvancedTab>('colors');
@@ -472,18 +497,24 @@
     );
     const changedAxisCount = $derived(
         themeAxes.filter((axis) => theme[axis] !== baseTheme[axis]).length +
+            (brandColors.light !== baseTheme.brand || brandColors.dark !== baseTheme.brand
+                ? 1
+                : 0) +
             foundationColorChanges +
             advancedTokenChanges +
             (headerSize === 16 ? 0 : 1) +
             (headerWeight === '600' ? 0 : 1) +
             roleWeightChanges +
-            (shadows ? 0 : 1) +
+            (surfaceShadows ? 0 : 1) +
+            (controlShadows ? 0 : 1) +
+            (dialogShadows ? 0 : 1) +
+            (travelingHighlight ? 0 : 1) +
             (primaryStroke ? 1 : 0) +
             (interactiveCursor === 'default' ? 0 : 1)
     );
     const dirty = $derived(changedAxisCount > 0);
     const generatedCss = $derived(
-        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${foundationCssBlock(':root:not(.dark)', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root:not(.dark)', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}${chromeCssBlock()}`
+        `${themeToCss(theme)}\n:root,\n.dark {\n\t--font-size-header: ${headerSize}px;\n\t--font-weight-header: ${headerWeight};\n\t--font-weight-body: ${roleWeights.body};\n\t--font-weight-label: ${roleWeights.label};\n\t--font-weight-button: ${roleWeights.button};\n\t--font-weight-badge: ${roleWeights.badge};\n\t--font-weight-description: ${roleWeights.description};\n}\n${brandCssBlock(':root:not(.dark)', brandColors.light)}${brandCssBlock('.dark', brandColors.dark)}${foundationCssBlock(':root:not(.dark)', foundationColors.light)}${foundationCssBlock('.dark', foundationColors.dark)}${tokenOverridesCssBlock(':root:not(.dark)', advancedTokens.colors.light)}${tokenOverridesCssBlock('.dark', advancedTokens.colors.dark)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.spacing)}${tokenOverridesCssBlock(':root,\n.dark', advancedTokens.animation)}${chromeCssBlock()}`
     );
     const generatedJson = $derived(
         JSON.stringify(
@@ -494,9 +525,13 @@
                     headerSize,
                     headerWeight,
                     roleWeights,
+                    brandColors,
                     foundationColors,
                     advancedTokens,
-                    shadows,
+                    surfaceShadows,
+                    controlShadows,
+                    dialogShadows,
+                    travelingHighlight,
                     primaryStroke,
                     interactiveCursor
                 },
@@ -525,9 +560,22 @@
             `--color-card: ${colors.base};`,
             `--color-panel: ${colors.base};`,
             `--color-border: ${colors.border};`,
+            `--color-input: ${colors.border};`,
             `--color-background: ${colors.background};`,
             `--color-secondary: ${colors.secondary};`,
-            `--color-muted: ${colors.muted};`
+            `--color-foreground: ${colors.foreground};`,
+            `--color-foreground-muted: ${colors.foregroundMuted};`,
+            `--color-on-primary: ${colors.onPrimary};`
+        ];
+
+        return `${selector} {\n${declarations.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
+    }
+
+    function brandCssBlock(selector: string, color: string) {
+        const declarations = [
+            `--color-primary: ${color};`,
+            `--color-primary-hover: color-mix(in srgb, ${color} 78%, black);`,
+            `--color-ring: color-mix(in srgb, ${color} 30%, transparent);`
         ];
 
         return `${selector} {\n${declarations.map((declaration) => `\t${declaration}`).join('\n')}\n}\n`;
@@ -535,14 +583,20 @@
 
     function chromeCssBlock() {
         const shared = [`--ui-cursor-interactive: ${interactiveCursor};`];
-        if (!shadows) {
+        if (!surfaceShadows) {
+            shared.push('--elevation-1: none;', '--elevation-float: none;');
+        }
+        if (!dialogShadows) {
+            shared.push('--elevation-modal: none;');
+        }
+        if (!controlShadows) {
             shared.push(
-                '--elevation-1: none;',
-                '--elevation-float: none;',
-                '--elevation-modal: none;',
                 '--elevation-control: inset 0 0 0 1px var(--color-border);',
                 '--elevation-button-outline: inset 0 0 0 1px var(--color-border);'
             );
+        }
+        if (!travelingHighlight) {
+            shared.push('--sivir-traveling-highlight: none;');
         }
         const light = [
             `--color-primary-stroke: ${
@@ -638,29 +692,65 @@
                 roleWeights = { ...DEFAULT_ROLE_WEIGHTS, ...value.roleWeights };
             }
             if (value.foundationColors) {
+                const lightFoundationColors = value.foundationColors.light as FoundationPalette & {
+                    muted?: string;
+                };
+                const darkFoundationColors = value.foundationColors.dark as FoundationPalette & {
+                    muted?: string;
+                };
+                const { muted: _lightMuted, ...light } = lightFoundationColors;
+                const { muted: _darkMuted, ...dark } = darkFoundationColors;
+
                 foundationColors = {
                     light: {
                         ...DEFAULT_FOUNDATION_COLORS.light,
-                        ...value.foundationColors.light
+                        ...light
                     },
                     dark: {
                         ...DEFAULT_FOUNDATION_COLORS.dark,
-                        ...value.foundationColors.dark
+                        ...dark
                     }
                 };
             }
             if (value.advancedTokens) {
+                const { '--color-muted': _lightMuted, ...light } =
+                    value.advancedTokens.colors?.light ?? {};
+                const { '--color-muted': _darkMuted, ...dark } =
+                    value.advancedTokens.colors?.dark ?? {};
+
                 advancedTokens = {
                     colors: {
-                        light: { ...value.advancedTokens.colors?.light },
-                        dark: { ...value.advancedTokens.colors?.dark }
+                        light,
+                        dark
                     },
                     spacing: { ...value.advancedTokens.spacing },
                     animation: { ...value.advancedTokens.animation }
                 };
             }
-            if (typeof value.shadows === 'boolean') {
-                shadows = value.shadows;
+            if (value.brandColors) {
+                brandColors = {
+                    light: value.brandColors.light ?? baseTheme.brand,
+                    dark: value.brandColors.dark ?? baseTheme.brand
+                };
+            }
+            const shadowsOff = (value as { shadows?: unknown }).shadows === false;
+            if (typeof value.surfaceShadows === 'boolean') {
+                surfaceShadows = value.surfaceShadows;
+            } else if (shadowsOff) {
+                surfaceShadows = false;
+            }
+            if (typeof value.controlShadows === 'boolean') {
+                controlShadows = value.controlShadows;
+            } else if (shadowsOff) {
+                controlShadows = false;
+            }
+            if (typeof value.dialogShadows === 'boolean') {
+                dialogShadows = value.dialogShadows;
+            } else if (shadowsOff) {
+                dialogShadows = false;
+            }
+            if (typeof value.travelingHighlight === 'boolean') {
+                travelingHighlight = value.travelingHighlight;
             }
             if (typeof value.primaryStroke === 'boolean') {
                 primaryStroke = value.primaryStroke;
@@ -679,6 +769,7 @@
             headerSize,
             headerWeight,
             roleWeights: { ...roleWeights },
+            brandColors: { ...brandColors },
             foundationColors: {
                 light: { ...foundationColors.light },
                 dark: { ...foundationColors.dark }
@@ -691,7 +782,10 @@
                 spacing: { ...advancedTokens.spacing },
                 animation: { ...advancedTokens.animation }
             },
-            shadows,
+            surfaceShadows,
+            controlShadows,
+            dialogShadows,
+            travelingHighlight,
             primaryStroke,
             interactiveCursor
         };
@@ -717,7 +811,13 @@
             dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
         };
         advancedTokens = emptyAdvancedTokens();
-        shadows = true;
+        brandColors = { light: preset.brand, dark: preset.brand };
+        surfaceShadows =
+            preset.chrome?.shadows !== false && preset.chrome?.surfaceShadows !== false;
+        controlShadows =
+            preset.chrome?.shadows !== false && preset.chrome?.controlShadows !== false;
+        dialogShadows = preset.chrome?.shadows !== false && preset.chrome?.dialogShadows !== false;
+        travelingHighlight = preset.chrome?.travelingHighlight !== false;
         primaryStroke = false;
         interactiveCursor = 'default';
         syncFontSelections(theme);
@@ -738,14 +838,23 @@
             dark: { ...DEFAULT_FOUNDATION_COLORS.dark }
         };
         advancedTokens = emptyAdvancedTokens();
-        shadows = true;
+        brandColors = { light: baseTheme.brand, dark: baseTheme.brand };
+        surfaceShadows =
+            baseTheme.chrome?.shadows !== false && baseTheme.chrome?.surfaceShadows !== false;
+        controlShadows =
+            baseTheme.chrome?.shadows !== false && baseTheme.chrome?.controlShadows !== false;
+        dialogShadows =
+            baseTheme.chrome?.shadows !== false && baseTheme.chrome?.dialogShadows !== false;
+        travelingHighlight = baseTheme.chrome?.travelingHighlight !== false;
         primaryStroke = false;
         interactiveCursor = 'default';
         syncFontSelections(theme);
     }
 
     function updateBrand(value: string) {
-        theme = { ...theme, brand: value.toLowerCase() };
+        const next = value.toLowerCase();
+        brandColors = { ...brandColors, [appMode]: next };
+        theme = { ...theme, brand: brandColors.light };
     }
 
     function updateFoundationColor(key: keyof FoundationPalette, value: string) {
@@ -946,25 +1055,6 @@
         selectedPreset = pendingPreset;
         applyPreset(pendingPreset);
         pendingPreset = null;
-    }
-
-    async function copyValue(value: string, key: 'css' | 'json', label: string) {
-        if (!navigator.clipboard) {
-            toast({ title: `${label} could not be copied`, type: 'error', duration: 1800 });
-            return;
-        }
-
-        await navigator.clipboard.writeText(value);
-        copiedKey = key;
-        toast({
-            title: `${label} copied`,
-            description: 'The draft is ready to paste into your project.',
-            type: 'success',
-            duration: 1600
-        });
-        window.setTimeout(() => {
-            if (copiedKey === key) copiedKey = null;
-        }, 1200);
     }
 
     function runDashboardAction(
@@ -1255,30 +1345,53 @@
     <ScrollArea class="hide-scrollbar-all h-full min-h-0 flex-1 bg-background" showCues={false}>
         <div class="flex min-h-full flex-col gap-8 px-2 py-4">
             <div class="flex shrink-0 flex-col gap-3">
-                <div class="flex min-w-0 items-center gap-2">
-                    <span class="shrink-0 text-sm font-semibold tracking-[-0.015em]"
-                        >Theme studio</span
-                    >
-                    <span class="text-[var(--sivir-neutral-300)]" aria-hidden="true">/</span>
-                    <span class="truncate font-mono text-xs text-foreground-muted"
-                        >{theme.slug}</span
-                    >
-                </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <Button
-                        variant="secondary"
-                        class="h-8"
-                        onclick={() => copyValue(generatedJson, 'json', 'JSON')}
+                    <CopyButton
+                        text={generatedJson}
+                        label="Copy JSON"
+                        variant="outline"
+                        size="md"
+                        class="w-full"
+                        oncopy={() => {
+                            copiedKey = 'json';
+                            toast({
+                                title: 'JSON copied',
+                                description: 'The draft is ready to paste into your project.',
+                                type: 'success',
+                                duration: 1600
+                            });
+                            window.setTimeout(() => {
+                                if (copiedKey === 'json') {
+                                    copiedKey = null;
+                                }
+                            }, 1200);
+                        }}
                     >
                         {copiedKey === 'json' ? 'Copied' : 'Copy JSON'}
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        class="h-8"
-                        onclick={() => copyValue(generatedCss, 'css', 'CSS')}
+                    </CopyButton>
+                    <CopyButton
+                        text={generatedCss}
+                        label="Copy CSS"
+                        variant="outline"
+                        size="md"
+                        class="w-full"
+                        oncopy={() => {
+                            copiedKey = 'css';
+                            toast({
+                                title: 'CSS copied',
+                                description: 'The draft is ready to paste into your project.',
+                                type: 'success',
+                                duration: 1600
+                            });
+                            window.setTimeout(() => {
+                                if (copiedKey === 'css') {
+                                    copiedKey = null;
+                                }
+                            }, 1200);
+                        }}
                     >
                         {copiedKey === 'css' ? 'Copied' : 'Copy CSS'}
-                    </Button>
+                    </CopyButton>
                 </div>
             </div>
 
@@ -1321,7 +1434,22 @@
                     <Typography.Title level={3}>Color</Typography.Title>
                     {@render moreOptionsButton('colors', 'More color options')}
                 </div>
-                {@render colorPickerControl('Brand', theme.brand, brandSwatches, updateBrand)}
+                <div class="grid grid-cols-2 gap-2">
+                    {@render colorPickerControl(
+                        'Brand',
+                        brandColors[appMode],
+                        brandSwatches,
+                        updateBrand
+                    )}
+                    {@render colorPickerControl(
+                        'On brand',
+                        foundationColors[appMode].onPrimary,
+                        onPrimarySwatches,
+                        (value) => {
+                            updateFoundationColor('onPrimary', value);
+                        }
+                    )}
+                </div>
                 <div class="grid grid-cols-2 gap-2">
                     {@render colorPickerControl(
                         'Base',
@@ -1358,14 +1486,24 @@
                         }
                     )}
                 </div>
-                {@render colorPickerControl(
-                    'Muted',
-                    foundationColors[appMode].muted,
-                    mutedSwatches,
-                    (value) => {
-                        updateFoundationColor('muted', value);
-                    }
-                )}
+                <div class="grid grid-cols-2 gap-2">
+                    {@render colorPickerControl(
+                        'Muted text',
+                        foundationColors[appMode].foregroundMuted,
+                        foregroundSwatches,
+                        (value) => {
+                            updateFoundationColor('foregroundMuted', value);
+                        }
+                    )}
+                    {@render colorPickerControl(
+                        'Foreground',
+                        foundationColors[appMode].foreground,
+                        foregroundSwatches,
+                        (value) => {
+                            updateFoundationColor('foreground', value);
+                        }
+                    )}
+                </div>
             </div>
 
             <div class="flex flex-col gap-4">
@@ -1401,9 +1539,24 @@
                     )}
                 </div>
                 <Switch
-                    bind:checked={shadows}
-                    label="Shadows"
-                    description="Lift on cards, menus, and overlays."
+                    bind:checked={surfaceShadows}
+                    label="Card & menu shadows"
+                    description="Lift on cards, selects, dropdowns, and popovers."
+                />
+                <Switch
+                    bind:checked={controlShadows}
+                    label="Control shadows"
+                    description="Depth on inputs, buttons, and alerts."
+                />
+                <Switch
+                    bind:checked={dialogShadows}
+                    label="Dialog shadows"
+                    description="Lift on modals and sheets."
+                />
+                <Switch
+                    bind:checked={travelingHighlight}
+                    label="Traveling highlight"
+                    description="The hover highlight that moves between menu items."
                 />
                 <Switch
                     bind:checked={primaryStroke}

@@ -50,7 +50,7 @@
                     </div>
 
                     <!-- Follow Button -->
-                    <Button variant="secondary" size="sm" class="w-full">Follow</Button>
+                    <Button variant="secondary" size="md" class="w-full">Follow</Button>
                 </div>
             </HoverCard.Content>
         </HoverCard.Root>

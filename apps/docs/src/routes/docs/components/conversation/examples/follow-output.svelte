@@ -38,7 +38,7 @@
             <span class="size-1.5 rounded-full bg-primary" aria-hidden="true"></span>
             {followLabel}
         </p>
-        <Button variant="ghost" size="sm" onclick={appendOutput}>
+        <Button variant="ghost" size="md" onclick={appendOutput}>
             <Plus size={14} aria-hidden="true" />
             Append output
         </Button>

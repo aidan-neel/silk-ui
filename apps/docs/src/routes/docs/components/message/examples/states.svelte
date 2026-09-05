@@ -33,7 +33,7 @@
         </Message.Content>
         {#if !retrying}
             <Message.Actions aria-label="Failed response actions">
-                <Button variant="ghost" size="sm" onclick={() => (retrying = true)}>
+                <Button variant="ghost" size="md" onclick={() => (retrying = true)}>
                     <RotateCcw size={14} aria-hidden="true" />
                     Retry response
                 </Button>

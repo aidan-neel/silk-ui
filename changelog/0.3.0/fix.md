@@ -1,0 +1,23 @@
+- Fix Escape with a Select open inside a Modal: the menu now closes first and the dialog stays open, instead of the dialog closing from under the menu. The Modal docs gain a With Select example covering the nesting.
+- Stop the traveling menu highlight from following touch pointers: on coarse-pointer devices it only tracks keyboard focus, so scrolling a menu no longer flings the highlight between items.
+- Size Modal titles with the shared header token instead of a hardcoded size, so dialog headings match Card titles.
+- Drive the text-entry border token from the Border foundation color, so changing Border in the Theme Studio now recolors Input, Textarea, and Tag Input outlines in both modes.
+- Lighten the modal and code-block inset frame 3% toward white in both modes.
+- Drop the Theme Studio header crumb and restyle the Copy JSON / Copy CSS buttons as full-width outline buttons with copy-to-copied feedback.
+- Size the Color Picker trigger swatch to its container inset and derive its radius as outer radius minus border minus padding, so the preview is exactly concentric at any trigger height.
+- Color the Switch thumb with the on-primary token instead of hardcoded white, so an "On brand" text color restyles the thumb too.
+- Swap the dark-mode Modal layering: the inner dialog surface now uses the card color over a background-toned frame, instead of a darker dialog on a lighter frame.
+- Drop the border on the Code Block and File Diff inner surface in both modes, so it reads as the reference: a bordered frame with a borderless, darker code card inside.
+- Give Code Block and File Diff the GitHub syntax palette (light in light mode, dark in dark mode) instead of monochrome gray, so highlighted code reads against the card in both themes. The docs code previews follow the same palette.
+- Fix the Code Block docs examples rendering bare and width-capped outside the preview card: they render inside the standard preview box again and stretch full width.
+- Let Code Block and File Diff skip the built-in token colors with `theme="custom"`, so any `highlight.js/styles/*` theme stylesheet can paint the tokens instead.
+- Remove the docs site's dead syntax highlighters: the unreferenced Shiki setup with its custom light/dark themes, the regex `tok-*` highlighter nothing rendered, and the `shiki` dependency.
+- Animate the CopyButton icon morph's rotate and scale instead of snapping them: Tailwind v4 drives those as their own properties, so they now join transform and opacity in the transition. Code Block and File Diff copy buttons pick this up automatically.
+- Document Code Block custom themes with two live examples: a `theme="custom"` block painted by stock-style `hljs-*` rules, and a built-in-palette block recolored through `--code-block-token-*` variables on a wrapper.
+- Render the Code Block header for single-snippet blocks with the default `copy="actionbar"`: the copy button no longer silently disappears when there are no language tabs or custom actions.
+- Tighten the Code Block header vertical padding a step so the tab row sits closer to the code surface.
+- Route every docs copy action through CopyButton: the theme detail Copy CSS/JSON buttons, the theme card Copy Code button, and the message example Copy response button now share the morph animation, tooltip feedback, clipboard fallback, and auto-reset instead of hand-rolled copies.
+- Paint the syntax tokens GitHub paints but the mapping missed: tag/component names and selector pseudos get a green entity token, operators and selector ids/classes/attrs join the property token, and doctags join the keyword token — in Code Block and File Diff alike. Brackets, punctuation, and template substitutions stay plain, matching GitHub.
+- Size the PromptComposer submit button and every button in the docs examples at `md` instead of `sm`, so examples show the default button size.
+- Highlight InstallCommand tabs (runner, subcommand, flags, package) instead of rendering them monochrome, and fix `bun add …` commands generating broken `bunx bun add …` variants for other package managers.
+- Let dropdown and context submenus overlap their parent menu slightly instead of sitting beside it with a gap.

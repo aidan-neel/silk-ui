@@ -29,10 +29,13 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
  * 3.1.0 -- Content gained `dismissLayer` (default true). Set it false for
  *          triggers that must stay clickable while open; outside pointer
  *          dismissal still applies via `allowClickOutside`.
+ * 3.2.0 -- Content registers its Escape layer one rank above the enclosing
+ *          overlay, so menus opened inside a modal or sheet peel before
+ *          their host instead of closing it.
  */
 export const manifest: Manifest = {
     name: 'popover',
-    version: '3.1.0',
+    version: '3.2.0',
     visibility: 'public',
     description:
         'Floating content positioned by @floating-ui. Click or hover triggers, Title/Content subparts, inert outside content, click-outside + Escape dismiss, optional portal.',
@@ -47,7 +50,7 @@ export const manifest: Manifest = {
         'components/popover/index.ts',
         'components/popover/manifest.ts'
     ],
-    components: ['button'],
+    components: ['button', '_internal/overlay'],
     shared: [
         'utils.clickOutside',
         'utils.cn',
@@ -56,6 +59,7 @@ export const manifest: Manifest = {
         'utils.lockBodyBackground',
         'utils.lockBodyScroll',
         'utils.positionFloatingPanel',
+        'utils.submenuPanelOffset',
         'utils.pushEscapeLayer',
         'utils.trapFocus',
         'transition'
