@@ -38,6 +38,7 @@ export const manifest: Manifest = {
         'utils.closeMenuLayers',
         'utils.cn',
         'utils.createContext',
+        'utils.dynamicWidth',
         'utils.travelingHighlight'
     ],
     peerDependencies: {

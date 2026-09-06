@@ -71,8 +71,12 @@
             <Typography.InlineCode>TopBar</Typography.InlineCode>,
             <Typography.InlineCode>Content</Typography.InlineCode>, and
             <Typography.InlineCode>Row</Typography.InlineCode>
-            by hand. Addition and deletion counts are derived from the diff unless you pass them
-            explicitly.
+            by hand. A bare
+            <Typography.InlineCode>TopBar</Typography.InlineCode>
+            renders filename and counts; pass children to take over the row with
+            <Typography.InlineCode>Filename</Typography.InlineCode>,
+            <Typography.InlineCode>PlusMinus</Typography.InlineCode>, and your own actions. Addition
+            and deletion counts are derived from the diff unless you pass them explicitly.
         </Typography.Text>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
     </section>
@@ -90,6 +94,11 @@
             <Typography.H3 class="docs-subsection-heading"> Compound API </Typography.H3>
             <Typography.Text variant="supporting">
                 Drop down to rows when you need a custom top-bar action or explicit counts.
+                Recompose the header from
+                <Typography.InlineCode>Filename</Typography.InlineCode>
+                and
+                <Typography.InlineCode>PlusMinus</Typography.InlineCode>
+                parts.
             </Typography.Text>
             <ComponentPreview code={CompoundSrc}>
                 <Compound />

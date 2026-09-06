@@ -14,7 +14,7 @@
     import Submitting from './examples/submitting.svelte';
     import SubmittingSrc from './examples/submitting.svelte?raw';
 
-    const installCommand = 'bunx @sivir-ui/svelte add prompt-composer';
+    const installCommand = 'bunx @sivir-ui/svelte add composer';
 </script>
 
 <svelte:head>
@@ -54,7 +54,7 @@
             handlers and shows its submitting state automatically.
         </Typography.Text>
         <CodeBlock
-            code={`import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
+            code={`import * as Composer from '@sivir-ui/svelte/components/composer';
 
 let value = $state('');
 
@@ -63,15 +63,15 @@ async function sendPrompt(prompt: string) {
   value = '';
 }
 
-<PromptComposer.Root bind:value onSubmit={sendPrompt}>
-  <PromptComposer.Input placeholder="Ask anything..." />
-  <PromptComposer.Toolbar>
-    <PromptComposer.Actions>
+<Composer.Root bind:value onSubmit={sendPrompt}>
+  <Composer.Input placeholder="Ask anything..." />
+  <Composer.Toolbar>
+    <Composer.Actions>
       <!-- Add attachment, model, or permission controls here. -->
-    </PromptComposer.Actions>
-    <PromptComposer.Submit />
-  </PromptComposer.Toolbar>
-</PromptComposer.Root>`}
+    </Composer.Actions>
+    <Composer.Submit />
+  </Composer.Toolbar>
+</Composer.Root>`}
             lang="svelte"
             copy="overlay"
         />

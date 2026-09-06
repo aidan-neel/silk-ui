@@ -4,7 +4,9 @@ import type { HTMLAttributes } from 'svelte/elements';
 
 import Root from './file-diff.svelte';
 import Content from './file-diff-content.svelte';
+import Filename from './file-diff-filename.svelte';
 import LineNumber from './file-diff-line-number.svelte';
+import PlusMinus from './file-diff-plus-minus.svelte';
 import Row from './file-diff-row.svelte';
 import TopBar from './file-diff-top-bar.svelte';
 
@@ -64,8 +66,26 @@ export type FileDiffTopBarProps = {
     additions?: number;
     /** Deletion count. Falls back to the Root count when omitted. */
     deletions?: number;
-    /** Trailing actions, pinned to the right edge. */
+    /**
+     * Trailing actions, pinned to the right edge. Passing children takes
+     * over the row: the default filename and counts are omitted, so compose
+     * them back explicitly with `Filename` and `PlusMinus` as needed.
+     */
     children?: Snippet;
+} & DefaultProps &
+    Omit<HTMLAttributes<HTMLElement>, 'children'>;
+
+export type FileDiffFilenameProps = {
+    /** File path. Falls back to the Root `file` when omitted. */
+    file?: string;
+} & DefaultProps &
+    Omit<HTMLAttributes<HTMLElement>, 'children'>;
+
+export type FileDiffPlusMinusProps = {
+    /** Addition count. Falls back to the Root count when omitted. */
+    additions?: number;
+    /** Deletion count. Falls back to the Root count when omitted. */
+    deletions?: number;
 } & DefaultProps &
     Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
@@ -97,5 +117,5 @@ export type FileDiffLineNumberProps = {
 } & DefaultProps &
     Omit<HTMLAttributes<HTMLSpanElement>, 'children'>;
 
-export { Content, LineNumber, Root, Row, TopBar };
+export { Content, Filename, LineNumber, PlusMinus, Root, Row, TopBar };
 export default Root;

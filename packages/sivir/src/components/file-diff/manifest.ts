@@ -2,7 +2,7 @@ import type { Manifest } from '@sivir-ui/svelte/_manifest/types';
 
 export const manifest: Manifest = {
     name: 'file-diff',
-    version: '1.0.0',
+    version: '1.3.0',
     visibility: 'public',
     description:
         'Unified file diff with a path top bar, addition/deletion counts, dual line-number gutters, and per-row syntax highlighting via highlight.js with a built-in GitHub palette; theme="custom" skips the token colors for any highlight.js theme stylesheet.',
@@ -10,6 +10,8 @@ export const manifest: Manifest = {
     files: [
         'components/file-diff/file-diff.svelte',
         'components/file-diff/file-diff-top-bar.svelte',
+        'components/file-diff/file-diff-filename.svelte',
+        'components/file-diff/file-diff-plus-minus.svelte',
         'components/file-diff/file-diff-content.svelte',
         'components/file-diff/file-diff-row.svelte',
         'components/file-diff/file-diff-line-number.svelte',
@@ -17,7 +19,7 @@ export const manifest: Manifest = {
         'components/file-diff/index.ts',
         'components/file-diff/manifest.ts'
     ],
-    components: [],
+    components: ['_internal/highlight'],
     shared: ['utils.cn'],
     peerDependencies: {
         '@lucide/svelte': '^1.7.0',

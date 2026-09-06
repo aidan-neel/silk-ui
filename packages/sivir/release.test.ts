@@ -141,7 +141,7 @@ describe('publishable package contract', () => {
             ...source.matchAll(/['"](@sivir-ui\/svelte(?:\/[^'"]+)?)['"]/g)
         ].map(([, specifier]) => specifier);
         const exportedPath =
-            /^@sivir-ui\/svelte(?:\/(?:ui\.css|brand-mark|utils|transition|is-dark\.svelte\.ts|_manifest\/types|themes\/[^/]+|components\/(?:input\/variants|_internal\/overlay|[^/]+)))?$/;
+            /^@sivir-ui\/svelte(?:\/(?:ui\.css|brand-mark|utils|transition|is-dark\.svelte\.ts|_manifest\/types|themes\/[^/]+|components\/(?:input\/variants|_internal\/[^/]+|[^/]+)))?$/;
 
         expect(selfReferences.length).toBeGreaterThan(0);
         for (const specifier of selfReferences) expect(specifier).toMatch(exportedPath);

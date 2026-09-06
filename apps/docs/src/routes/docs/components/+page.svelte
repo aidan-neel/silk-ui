@@ -98,7 +98,7 @@
                 'attachment',
                 'conversation',
                 'message',
-                'prompt-composer',
+                'composer',
                 'question',
                 'reasoning',
                 'response-stream',

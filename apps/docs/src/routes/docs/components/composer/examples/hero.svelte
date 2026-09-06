@@ -2,11 +2,10 @@
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import ShieldCheck from '@lucide/svelte/icons/shield-check';
-    import Square from '@lucide/svelte/icons/square';
     import Workflow from '@lucide/svelte/icons/workflow';
+    import * as Composer from '@sivir-ui/svelte/components/composer';
     import * as DropdownMenu from '@sivir-ui/svelte/components/dropdown-menu';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
-    import Shortcut from '@sivir-ui/svelte/components/shortcut';
+    import * as Select from '@sivir-ui/svelte/components/select';
     import { onDestroy } from 'svelte';
 
     const models = ['Sivir 3.1', 'Sivir Mini'];
@@ -53,90 +52,56 @@
 </script>
 
 <div class="flex w-full max-w-2xl flex-col">
-    <PromptComposer.Root bind:value onSubmit={submitPrompt} onStop={stopSubmission}>
-        <PromptComposer.Input
-            aria-label="Prompt"
-            placeholder="Ask the agent..."
-            class="!min-h-20"
-        />
+    <Composer.Root bind:value onSubmit={submitPrompt} onStop={stopSubmission}>
+        <Composer.Input aria-label="Prompt" placeholder="Ask the agent..." />
 
-        <PromptComposer.Toolbar class="!min-h-10 !items-center !gap-2 !px-2 !py-1.5">
-            <PromptComposer.Actions class="!flex-none !gap-1">
-                <DropdownMenu.Root>
-                    <DropdownMenu.Trigger
-                        variant="ghost"
-                        size="md"
-                        class="!w-24 !gap-1.5 !rounded-lg"
-                    >
+        <Composer.Toolbar>
+            <Composer.Actions>
+                <Select.Root bind:value={mode}>
+                    <Select.Trigger variant="ghost" class="w-32">
                         <Workflow size={14} aria-hidden="true" />
-                        {mode}
-                        <ChevronDown
-                            size={12}
-                            class="ml-auto text-foreground-muted"
-                            aria-hidden="true"
-                        />
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                        <DropdownMenu.Label>Mode</DropdownMenu.Label>
+                        <span class="truncate">{mode}</span>
+                    </Select.Trigger>
+                    <Select.Content dynamic>
+                        <Select.Label>Mode</Select.Label>
                         {#each modes as option (option)}
-                            <DropdownMenu.Item callback={() => (mode = option)}>
-                                <span class="flex-1">{option}</span>
-                                {#if mode === option}
-                                    <Check size={13} aria-hidden="true" />
-                                {/if}
-                            </DropdownMenu.Item>
+                            <Select.Item value={option}>{option}</Select.Item>
                         {/each}
-                    </DropdownMenu.Content>
-                </DropdownMenu.Root>
+                    </Select.Content>
+                </Select.Root>
 
-                <DropdownMenu.Root>
-                    <DropdownMenu.Trigger
-                        variant="ghost"
-                        size="md"
-                        class="!w-36 !gap-1.5 !rounded-lg"
-                    >
+                <Select.Root bind:value={permission}>
+                    <Select.Trigger variant="ghost" class="w-44">
                         <ShieldCheck size={14} aria-hidden="true" />
-                        {permission}
-                        <ChevronDown
-                            size={12}
-                            class="ml-auto text-foreground-muted"
-                            aria-hidden="true"
-                        />
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                        <DropdownMenu.Label>Permission</DropdownMenu.Label>
+                        <span class="truncate">{permission}</span>
+                    </Select.Trigger>
+                    <Select.Content dynamic>
+                        <Select.Label>Permission</Select.Label>
                         {#each permissions as option (option)}
-                            <DropdownMenu.Item callback={() => (permission = option)}>
-                                <span class="flex-1">{option}</span>
-                                {#if permission === option}
-                                    <Check size={13} aria-hidden="true" />
-                                {/if}
-                            </DropdownMenu.Item>
+                            <Select.Item value={option}>{option}</Select.Item>
                         {/each}
-                    </DropdownMenu.Content>
-                </DropdownMenu.Root>
-            </PromptComposer.Actions>
+                    </Select.Content>
+                </Select.Root>
+            </Composer.Actions>
 
             <div class="ml-auto flex min-w-0 items-center gap-1">
                 <DropdownMenu.Root>
-                    <DropdownMenu.Trigger
-                        variant="ghost"
-                        size="md"
-                        class="!max-w-52 !gap-1.5 !rounded-lg"
-                    >
-                        <span class="truncate">{model}</span>
-                        <span class="text-foreground-muted">{effort}</span>
+                    <DropdownMenu.Trigger variant="ghost" class="w-52">
+                        <span class="flex min-w-0 flex-1 items-center gap-1.5">
+                            <span class="truncate">{model}</span>
+                            <span class="text-foreground-muted">{effort}</span>
+                        </span>
                         <ChevronDown
                             size={12}
                             class="ml-auto shrink-0 text-foreground-muted"
                             aria-hidden="true"
                         />
                     </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
+                    <DropdownMenu.Content dynamic>
                         <DropdownMenu.Label>Configuration</DropdownMenu.Label>
                         <DropdownMenu.Sub>
                             <DropdownMenu.SubTrigger>Model</DropdownMenu.SubTrigger>
-                            <DropdownMenu.SubContent>
+                            <DropdownMenu.SubContent dynamic>
                                 {#each models as option (option)}
                                     <DropdownMenu.Item callback={() => (model = option)}>
                                         <span class="flex-1">{option}</span>
@@ -149,7 +114,7 @@
                         </DropdownMenu.Sub>
                         <DropdownMenu.Sub>
                             <DropdownMenu.SubTrigger>Effort</DropdownMenu.SubTrigger>
-                            <DropdownMenu.SubContent>
+                            <DropdownMenu.SubContent dynamic>
                                 {#each efforts as option (option)}
                                     <DropdownMenu.Item callback={() => (effort = option)}>
                                         <span class="flex-1">{option}</span>
@@ -163,18 +128,8 @@
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
 
-                <PromptComposer.Submit label="Send" class="!aspect-auto !gap-1.5 !rounded-lg !px-3">
-                    {#snippet children({ action })}
-                        {#if action === 'stop'}
-                            <Square size={8} fill="currentColor" aria-hidden="true" />
-                            Stop
-                        {:else}
-                            Send
-                            <Shortcut shortcut="enter" />
-                        {/if}
-                    {/snippet}
-                </PromptComposer.Submit>
+                <Composer.Submit />
             </div>
-        </PromptComposer.Toolbar>
-    </PromptComposer.Root>
+        </Composer.Toolbar>
+    </Composer.Root>
 </div>

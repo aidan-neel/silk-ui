@@ -322,16 +322,15 @@
     }
 
     .sivir-inset-frame:where(.dark, .dark *) {
-        background-color: color-mix(in oklab, var(--color-muted) 97%, white);
+        background-color: color-mix(in oklab, var(--color-background) 97%, white);
     }
 
     .sivir-modal-frame:where(.dark, .dark *) {
-        border-color: transparent;
         background-color: color-mix(in oklab, var(--color-background) 97%, white);
     }
 
     .sivir-modal-frame > [data-ui='modal-surface'] {
-        border: var(--border-size) solid var(--color-border);
+        border: 0;
         border-radius: calc(
             var(--radius-xl) -
             var(--border-size) -

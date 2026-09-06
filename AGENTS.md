@@ -69,6 +69,23 @@ Components must meet a high quality bar:
   refs only when the approved API requires them.
 - Favor clear, focused components with explicit state and predictable behavior
   over clever abstractions or convenience exports.
+- Sketch the composition before building: list the exported subparts and show
+  one composed usage with a part omitted, reordered, or restyled. If every
+  usage is just Root with props, the API is not composable. Decompose, or
+  justify atomicity for genuinely Button-sized components.
+- Map every visually distinct region (header row, summary counts, code
+  surface, gutters) to an exported subpart or a documented snippet slot.
+  Fusing regions into a single part so consumers cannot omit, reorder, or
+  restyle them is prohibited.
+- Render data-driven (high-level) props through the same public subparts
+  consumers compose with, never a parallel private implementation.
+- Expose computed summaries (counts, totals) as data (context with prop
+  fallbacks) and as a renderable part, so both the high-level form and custom
+  compositions read the same values.
+- Keep the component's docs page in sync with its API. New, changed, or
+  removed subcomponents, props, and behaviors must be reflected in the page's
+  usage prose, examples, and code snippets in the same change — never ship the
+  API without its docs.
 
 # Changelog
 

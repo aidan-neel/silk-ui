@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-svelte';
-import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
+import ComposerFixture from '../../fixtures/ComposerFixture.svelte';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 
 describe('Error banners', () => {
@@ -15,8 +15,8 @@ describe('Error banners', () => {
         expect(animationFilters(alert.element())).toEqual([]);
     });
 
-    it('renders the Prompt Composer error text without blur', async () => {
-        const view = render(PromptComposerFixture, { status: 'idle' });
+    it('renders the Composer error text without blur', async () => {
+        const view = render(ComposerFixture, { status: 'idle' });
         await view.rerender({ status: 'error' });
 
         const alert = page.getByRole('alert');

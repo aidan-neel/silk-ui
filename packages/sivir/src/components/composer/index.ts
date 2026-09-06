@@ -6,17 +6,17 @@ import type {
     HTMLFormAttributes,
     HTMLTextareaAttributes
 } from 'svelte/elements';
-import Root from './prompt-composer.svelte';
-import Actions from './prompt-composer-actions.svelte';
-import Input from './prompt-composer-input.svelte';
-import Submit from './prompt-composer-submit.svelte';
-import Toolbar from './prompt-composer-toolbar.svelte';
+import Root from './composer.svelte';
+import Actions from './composer-actions.svelte';
+import Input from './composer-input.svelte';
+import Submit from './composer-submit.svelte';
+import Toolbar from './composer-toolbar.svelte';
 
-export type PromptComposerStatus = 'idle' | 'submitting' | 'error';
+export type ComposerStatus = 'idle' | 'submitting' | 'error';
 
-export type PromptComposerProps = {
+export type ComposerProps = {
     value?: string;
-    status?: PromptComposerStatus;
+    status?: ComposerStatus;
     /** Whether a response is being generated independently of submission state. */
     generating?: boolean;
     disabled?: boolean;
@@ -30,37 +30,37 @@ export type PromptComposerProps = {
     'children' | 'class' | 'onsubmit' | 'action' | 'method' | 'target' | 'enctype'
 >;
 
-export type PromptComposerInputProps = {
+export type ComposerInputProps = {
     submitOnEnter?: boolean;
     element?: HTMLTextAreaElement;
     class?: string;
 } & Omit<HTMLTextareaAttributes, 'children' | 'class' | 'value'>;
 
-export type PromptComposerToolbarProps = {
+export type ComposerToolbarProps = {
     class?: string;
     children?: Snippet;
 } & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class' | 'role'>;
 
-export type PromptComposerActionsProps = {
+export type ComposerActionsProps = {
     class?: string;
     children?: Snippet;
 } & Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'class'>;
 
-export type PromptComposerSubmitProps = {
+export type ComposerSubmitProps = {
     label?: string;
     queueLabel?: string;
     stopLabel?: string;
-    children?: Snippet<[PromptComposerSubmitState]>;
+    children?: Snippet<[ComposerSubmitState]>;
     element?: HTMLButtonElement | HTMLAnchorElement;
     onclick?: (event: MouseEvent) => void;
     class?: string;
 } & Omit<DefaultProps, 'children'> &
     Omit<HTMLButtonAttributes, 'children' | 'class' | 'type' | 'onclick'>;
 
-export type PromptComposerSubmitAction = 'send' | 'queue' | 'stop' | 'pending';
+export type ComposerSubmitAction = 'send' | 'queue' | 'stop' | 'pending';
 
-export type PromptComposerSubmitState = Readonly<{
-    action: PromptComposerSubmitAction;
+export type ComposerSubmitState = Readonly<{
+    action: ComposerSubmitAction;
     generating: boolean;
     empty: boolean;
 }>;

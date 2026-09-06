@@ -14,6 +14,7 @@ export const components = [
     'color-picker',
     'combobox',
     'command',
+    'composer',
     'context-menu',
     'conversation',
     'copy-button',
@@ -30,7 +31,6 @@ export const components = [
     'pagination',
     'popover',
     'progress',
-    'prompt-composer',
     'question',
     'radio-group',
     'reasoning',
@@ -59,7 +59,7 @@ export const components = [
 ] as const;
 
 export const sanitizeComponent = (name: string) => {
-    if (name === 'prompt-composer') {
+    if (name === 'composer') {
         return 'Composer';
     }
 

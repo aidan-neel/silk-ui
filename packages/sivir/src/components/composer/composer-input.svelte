@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { PromptComposerInputProps } from '.';
-    import { getPromptComposerContext } from './context.svelte';
+    import type { ComposerInputProps } from '.';
+    import { getComposerContext } from './context.svelte';
 
     let {
         submitOnEnter = true,
@@ -17,9 +17,9 @@
         oncompositionstart,
         oncompositionend,
         ...rest
-    }: PromptComposerInputProps = $props();
+    }: ComposerInputProps = $props();
 
-    const context = getPromptComposerContext();
+    const context = getComposerContext();
     let composing = false;
 
     function resize(target = element) {
@@ -59,7 +59,7 @@
     bind:this={element}
     {@attach observeSize}
     {...rest}
-    data-ui="prompt-composer-input"
+    data-ui="composer-input"
     data-state={context.status}
     value={context.value}
     {placeholder}
@@ -99,6 +99,6 @@
     }}
     class={cn(
         className,
-        'min-h-12 max-h-52 w-full resize-none overflow-y-hidden bg-transparent px-3.5 pt-3 pb-2 [font-size:var(--font-size-body)] leading-body text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] read-only:cursor-default'
+        'min-h-20 max-h-52 w-full resize-none overflow-y-hidden bg-transparent px-3.5 pt-3 pb-2 [font-size:var(--font-size-body)] leading-body text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] read-only:cursor-default'
     )}
 ></textarea>

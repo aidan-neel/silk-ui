@@ -3,7 +3,8 @@
     import * as Typography from '@sivir-ui/svelte/components/typography';
     import { ComponentPreview, InstallCommand } from '$lib/components/docs';
     import DocsPager from '$lib/components/docs/docs-pager.svelte';
-
+    import DynamicWidth from './examples/dynamic-width.svelte';
+    import DynamicWidthSrc from './examples/dynamic-width.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
     import Scrollable from './examples/scrollable.svelte';
@@ -78,6 +79,17 @@
             </Typography.Text>
             <ComponentPreview code={ScrollableSrc}>
                 <Scrollable />
+            </ComponentPreview>
+        </div>
+
+        <div id="dynamic-width" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading">Dynamic width</Typography.H3>
+            <Typography.Text variant="supporting">
+                The menu sizes to its longest option plus a buffer, even when the trigger is
+                narrower.
+            </Typography.Text>
+            <ComponentPreview code={DynamicWidthSrc}>
+                <DynamicWidth />
             </ComponentPreview>
         </div>
     </section>

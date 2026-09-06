@@ -108,7 +108,7 @@ const NAMESPACED = {
         'Confirm'
     ],
     popover: ['Root', 'Trigger', 'Content', 'Title'],
-    'prompt-composer': ['Root', 'Input', 'Toolbar', 'Actions', 'Submit'],
+    composer: ['Root', 'Input', 'Toolbar', 'Actions', 'Submit'],
     question: [
         'Root',
         'Title',

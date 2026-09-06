@@ -175,12 +175,12 @@ export const componentAnatomy = {
         { name: 'Popover.Title', description: 'Renders the popover title.' }
     ],
     progress: [{ name: 'Progress', description: 'Displays progress toward a value.' }],
-    'prompt-composer': [
-        { name: 'PromptComposer.Root', description: 'Manages prompt submission.' },
-        { name: 'PromptComposer.Input', description: 'Accepts the prompt text.' },
-        { name: 'PromptComposer.Toolbar', description: 'Groups composer controls.' },
-        { name: 'PromptComposer.Actions', description: 'Groups composer actions.' },
-        { name: 'PromptComposer.Submit', description: 'Submits or stops the prompt.' }
+    composer: [
+        { name: 'Composer.Root', description: 'Manages prompt submission.' },
+        { name: 'Composer.Input', description: 'Accepts the prompt text.' },
+        { name: 'Composer.Toolbar', description: 'Groups composer controls.' },
+        { name: 'Composer.Actions', description: 'Groups composer actions.' },
+        { name: 'Composer.Submit', description: 'Submits or stops the prompt.' }
     ],
     question: [
         { name: 'Question.Root', description: 'Renders a full question form.' },

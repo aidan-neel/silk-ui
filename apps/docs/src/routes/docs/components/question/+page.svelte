@@ -65,8 +65,8 @@ let answer = $state<QuestionAnswer>();
         <Typography.H2 class="docs-section-heading">Usage</Typography.H2>
         <Typography.Text variant="supporting">
             Render <Typography.InlineCode>Question.Root</Typography.InlineCode> in the same layout
-            slot as <Typography.InlineCode>PromptComposer.Root</Typography.InlineCode>. Keep the
-            prompt value in their shared parent so swapping the forms never clears an unsent draft.
+            slot as <Typography.InlineCode>Composer.Root</Typography.InlineCode>. Keep the prompt
+            value in their shared parent so swapping the forms never clears an unsent draft.
         </Typography.Text>
         <CodeBlock code={usageSnippet} lang="svelte" copy="overlay" />
         <Typography.Text variant="supporting">

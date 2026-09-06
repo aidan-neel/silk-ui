@@ -26,6 +26,7 @@ async def get_user(id: str):
 </script>
 
 <CodeBlock
+    class="max-w-xl"
     value="typescript"
     tabs={[
         { label: 'TypeScript', lang: 'typescript', code: ts },

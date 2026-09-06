@@ -1,0 +1,3 @@
+- Refresh the Composer examples to plain usage with no `!` overrides: Mode and Permission are `Select` controls on fixed-width menus, and the model/effort menu, input, toolbar, and Send button render from component defaults.
+- Size the Composer example triggers to their widest option (mode, permission, model/effort) so switching selections never resizes the toolbar.
+- Add Dynamic width examples to Select and Dropdown Menu showing menus and submenus sized to their longest item.

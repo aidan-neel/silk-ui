@@ -1,14 +1,14 @@
 <script lang="ts">
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
     import LoaderCircle from '@lucide/svelte/icons/loader-circle';
     import Square from '@lucide/svelte/icons/square';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import Shortcut from '@sivir-ui/svelte/components/shortcut';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { PromptComposerSubmitProps } from '.';
-    import { getPromptComposerContext } from './context.svelte';
+    import type { ComposerSubmitProps } from '.';
+    import { getComposerContext } from './context.svelte';
 
     let {
-        label = 'Send message',
+        label = 'Send',
         queueLabel = 'Queue message',
         stopLabel = 'Stop response',
         children,
@@ -17,9 +17,9 @@
         class: className,
         onclick,
         ...rest
-    }: PromptComposerSubmitProps = $props();
+    }: ComposerSubmitProps = $props();
 
-    const context = getPromptComposerContext();
+    const context = getComposerContext();
     const empty = $derived(context.value.trim() === '');
     const action = $derived.by(() => {
         if (context.pending) {
@@ -56,13 +56,12 @@
     {...rest}
     type={action === 'stop' || action === 'pending' ? 'button' : 'submit'}
     variant="primary"
-    size="md"
-    data-ui="prompt-composer-submit"
+    data-ui="composer-submit"
     data-state={action}
     disabled={isDisabled}
     aria-label={actionLabel}
     onclick={handleClick}
-    class={cn(className, 'aspect-square shrink-0 rounded-[var(--radius-md)] px-0')}
+    class={cn(className, 'shrink-0 px-3')}
 >
     {#if children}
         {@render children({ action, generating: context.generating ?? false, empty })}
@@ -74,8 +73,10 @@
             aria-hidden="true"
         />
     {:else if action === 'stop'}
-        <Square size={8} strokeWidth={2} fill="currentColor" aria-hidden="true" />
+        <Square size={8} fill="currentColor" aria-hidden="true" />
+        Stop
     {:else}
-        <ArrowUp size={15} strokeWidth={2.25} aria-hidden="true" />
+        Send
+        <Shortcut shortcut="enter" />
     {/if}
 </Button>

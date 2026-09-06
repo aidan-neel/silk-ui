@@ -46,7 +46,7 @@ import { CodeBlock } from '$lib/sivir/components/code-block';
     <title>Sivir · Code Block</title>
     <meta
         name="description"
-        content="Code block with syntax-highlighted snippets, a rolling plain-text multi-language switcher, copy button, and an actions slot. Highlighting via highlight.js."
+        content="Code block with syntax-highlighted snippets, a multi-language tab switcher, copy button, and an actions slot. Highlighting via highlight.js."
     />
 </svelte:head>
 

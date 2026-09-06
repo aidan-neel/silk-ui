@@ -1,8 +1,8 @@
 <script lang="ts">
     import CircleAlert from '@lucide/svelte/icons/circle-alert';
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { PromptComposerProps, PromptComposerStatus } from '.';
-    import { setPromptComposerContext } from './context.svelte';
+    import type { ComposerProps, ComposerStatus } from '.';
+    import { setComposerContext } from './context.svelte';
 
     let {
         value = $bindable(''),
@@ -15,16 +15,16 @@
         class: className,
         children,
         ...rest
-    }: PromptComposerProps = $props();
+    }: ComposerProps = $props();
 
     let form: HTMLFormElement | undefined;
     let pending = $state(false);
-    const effectiveStatus = $derived<PromptComposerStatus>(
+    const effectiveStatus = $derived<ComposerStatus>(
         status === 'submitting' || pending ? 'submitting' : status
     );
     const errorNoticeClass = 'sivir-error-notice';
 
-    const context = setPromptComposerContext({
+    const context = setComposerContext({
         get value() {
             return value;
         },
@@ -81,7 +81,7 @@
 </script>
 
 <div
-    data-ui="prompt-composer"
+    data-ui="composer"
     data-state={effectiveStatus}
     data-disabled={disabled || undefined}
     data-generating={generating || undefined}
@@ -93,7 +93,7 @@
         class="max-h-0 overflow-hidden transition-[max-height] [transition-duration:var(--motion-duration-panel)] ease-[var(--ease-out)] motion-reduce:transition-none data-[state=error]:max-h-24"
     >
         <div
-            data-ui="prompt-composer-error"
+            data-ui="composer-error"
             role={effectiveStatus === 'error' ? 'alert' : undefined}
             aria-hidden={effectiveStatus !== 'error'}
             class={errorNoticeClass}
@@ -107,7 +107,7 @@
     <form
         bind:this={form}
         {...rest}
-        data-ui="prompt-composer-form"
+        data-ui="composer-form"
         data-state={effectiveStatus}
         data-disabled={disabled || undefined}
         data-generating={generating || undefined}

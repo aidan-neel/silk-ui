@@ -71,6 +71,10 @@
             "types": "./dist/svelte/components/_internal/overlay/index.d.ts",
             "default": "./dist/svelte/components/_internal/overlay/index.js"
         },
+        "./components/_internal/highlight": {
+            "types": "./dist/svelte/components/_internal/highlight/index.d.ts",
+            "default": "./dist/svelte/components/_internal/highlight/index.js"
+        },
         "./components/*": {
             "types": "./dist/svelte/components/*/index.d.ts",
             "svelte": "./dist/svelte/components/*/index.js",

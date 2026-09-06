@@ -1,27 +1,27 @@
 <script lang="ts">
     import { cn } from '@sivir-ui/svelte/utils';
-    import type { PromptComposerToolbarProps } from '.';
-    import { getPromptComposerContext } from './context.svelte';
+    import type { ComposerToolbarProps } from '.';
+    import { getComposerContext } from './context.svelte';
 
     let {
         children,
         class: className,
         'aria-label': ariaLabel = 'Message actions',
         ...rest
-    }: PromptComposerToolbarProps = $props();
+    }: ComposerToolbarProps = $props();
 
-    const context = getPromptComposerContext();
+    const context = getComposerContext();
 </script>
 
 <div
     {...rest}
-    data-ui="prompt-composer-toolbar"
+    data-ui="composer-toolbar"
     data-state={context.status}
     role="toolbar"
     aria-label={ariaLabel}
     class={cn(
         className,
-        'flex min-w-0 flex-wrap items-center justify-between gap-1 px-2 pb-2 pt-1'
+        'flex min-h-10 min-w-0 flex-wrap items-center justify-between gap-2 px-2 py-1.5'
     )}
 >
     {@render children?.()}

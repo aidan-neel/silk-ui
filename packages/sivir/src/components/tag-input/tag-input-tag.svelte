@@ -78,7 +78,7 @@
         onclick={handleRemove}
         class={cn(
             className,
-            'group h-auto max-w-full gap-1.5 rounded-[var(--radius-md)] px-0 py-1 pr-1.5 pl-2.5 [font-size:var(--font-size-body)] leading-tight [font-weight:var(--font-weight-badge)] [letter-spacing:var(--tracking-body)]'
+            'group h-auto max-w-full gap-1.5 rounded-[var(--radius-md)] border border-border px-0 py-1 pr-1.5 pl-2.5 [font-size:var(--font-size-body)] leading-tight [font-weight:var(--font-weight-badge)] [letter-spacing:var(--tracking-body)] dark:bg-[color-mix(in_srgb,var(--color-secondary)_80%,white)]'
         )}
     >
         {@render label()}
@@ -90,7 +90,7 @@
         data-disabled={context.disabled || undefined}
         class={cn(
             className,
-            'inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-md)] bg-secondary py-1 pr-2.5 pl-2.5 [font-size:var(--font-size-body)] leading-tight [font-weight:var(--font-weight-badge)] [letter-spacing:var(--tracking-body)] text-foreground'
+            'inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-md)] border border-border bg-secondary py-1 pr-2.5 pl-2.5 [font-size:var(--font-size-body)] leading-tight [font-weight:var(--font-weight-badge)] [letter-spacing:var(--tracking-body)] text-foreground dark:bg-[color-mix(in_srgb,var(--color-secondary)_80%,white)]'
         )}
     >
         {@render label()}

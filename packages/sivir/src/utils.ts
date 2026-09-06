@@ -913,6 +913,151 @@ export function travelingHighlight(node: HTMLElement, options: TravelingHighligh
     };
 }
 
+type DynamicWidthOptions = {
+    enabled?: boolean;
+    itemSelector?: string;
+    buffer?: number;
+};
+
+/**
+ * Sizes a menu panel to its largest item plus a buffer.
+ *
+ * Measures every visible item at its intrinsic width and writes the maximum
+ * plus `buffer` pixels to the closest popover panel, re-measuring as items
+ * mount, change, or resize. Writes are skipped when the width is unchanged.
+ */
+export function dynamicWidth(node: HTMLElement, options: DynamicWidthOptions = {}) {
+    if (typeof window === 'undefined') {
+        return {};
+    }
+    let enabled = options.enabled ?? true;
+    let itemSelector = options.itemSelector ?? '[data-collection-item]';
+    let buffer = options.buffer ?? 16;
+
+    let frame = 0;
+    let applied = '';
+    const observed = new Set<HTMLElement>();
+    const resizeObserver =
+        typeof ResizeObserver === 'function' ? new ResizeObserver(() => schedule()) : undefined;
+    const mutationObserver =
+        typeof MutationObserver === 'function' ? new MutationObserver(() => schedule()) : undefined;
+
+    function panel() {
+        return node.closest<HTMLElement>('[data-ui="popover-content"]') ?? node;
+    }
+
+    function collect() {
+        return Array.from(node.querySelectorAll<HTMLElement>(itemSelector)).filter((item) => {
+            const surface = item.closest('.sivir-collection-surface');
+            if (surface && surface !== node) {
+                return false;
+            }
+            return !item.hidden && item.getClientRects().length > 0;
+        });
+    }
+
+    function syncItemObservers(items: HTMLElement[]) {
+        if (!resizeObserver) {
+            return;
+        }
+        for (const item of observed) {
+            if (!items.includes(item)) {
+                resizeObserver.unobserve(item);
+                observed.delete(item);
+            }
+        }
+        for (const item of items) {
+            if (!observed.has(item)) {
+                observed.add(item);
+                resizeObserver.observe(item);
+            }
+        }
+    }
+
+    function measure() {
+        frame = 0;
+        const target = panel();
+        const items = enabled ? collect() : [];
+        syncItemObservers(items);
+        if (items.length === 0) {
+            if (applied) {
+                target.style.removeProperty('width');
+                applied = '';
+            }
+            return;
+        }
+
+        const previous = new Map<HTMLElement, string>();
+        try {
+            for (const item of items) {
+                previous.set(item, item.style.width);
+                item.style.width = 'max-content';
+            }
+            let max = 0;
+            for (const item of items) {
+                max = Math.max(max, item.offsetWidth);
+            }
+            const width = `${Math.ceil(max + buffer)}px`;
+            if (width !== applied) {
+                target.style.width = width;
+                applied = width;
+            }
+        } finally {
+            for (const item of items) {
+                item.style.width = previous.get(item) ?? '';
+            }
+        }
+    }
+
+    function schedule() {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(measure);
+    }
+
+    function settle() {
+        queueMicrotask(() => {
+            schedule();
+            requestAnimationFrame(() => {
+                schedule();
+                requestAnimationFrame(() => schedule());
+            });
+        });
+    }
+
+    mutationObserver?.observe(node, {
+        subtree: true,
+        childList: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: ['hidden']
+    });
+    settle();
+
+    return {
+        update(next: DynamicWidthOptions = {}) {
+            const wasEnabled = enabled;
+            enabled = next.enabled ?? true;
+            itemSelector = next.itemSelector ?? '[data-collection-item]';
+            buffer = next.buffer ?? 16;
+            if (enabled && !wasEnabled) {
+                settle();
+            } else {
+                schedule();
+            }
+        },
+        destroy() {
+            cancelAnimationFrame(frame);
+            mutationObserver?.disconnect();
+            resizeObserver?.disconnect();
+            observed.clear();
+            if (applied) {
+                panel().style.removeProperty('width');
+                applied = '';
+            }
+        }
+    };
+}
+
 function overlayRootOf(node: Node | null) {
     if (node instanceof Element) {
         return node.closest('[data-overlay-root]');

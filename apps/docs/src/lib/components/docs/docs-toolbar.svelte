@@ -56,7 +56,7 @@
         const labels: Record<string, string> = {
             docs: 'Docs',
             components: 'Components',
-            'prompt-composer': 'Composer'
+            composer: 'Composer'
         };
 
         if (labels[segment]) {

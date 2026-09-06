@@ -27,7 +27,7 @@ export const manifest: Manifest = {
         'components/select/manifest.ts'
     ],
     components: ['popover', 'button', 'scroll-area'],
-    shared: ['utils.cn', 'utils.createContext', 'utils.travelingHighlight'],
+    shared: ['utils.cn', 'utils.createContext', 'utils.dynamicWidth', 'utils.travelingHighlight'],
     peerDependencies: {
         '@lucide/svelte': '^1.0.0',
         cnfast: '^0.0.8',

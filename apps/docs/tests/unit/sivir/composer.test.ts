@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
+import ComposerFixture from '../../fixtures/ComposerFixture.svelte';
 import { required } from '../../test-utils';
 
-describe('PromptComposer', () => {
+describe('Composer', () => {
     it('binds typed input and submits it with Enter', async () => {
-        render(PromptComposerFixture);
+        render(ComposerFixture);
         const input = screen.getByRole('textbox', { name: 'Prompt' });
         const user = userEvent.setup();
 
@@ -18,7 +18,7 @@ describe('PromptComposer', () => {
     });
 
     it('does not submit for Shift+Enter', async () => {
-        render(PromptComposerFixture, { props: { value: 'First line' } });
+        render(ComposerFixture, { props: { value: 'First line' } });
         const input = screen.getByRole('textbox', { name: 'Prompt' });
         const user = userEvent.setup();
         input.focus();
@@ -29,7 +29,7 @@ describe('PromptComposer', () => {
     });
 
     it('does not submit while an IME composition is active', async () => {
-        render(PromptComposerFixture, { props: { value: '編集中' } });
+        render(ComposerFixture, { props: { value: '編集中' } });
         const input = screen.getByRole('textbox', { name: 'Prompt' });
 
         await fireEvent.compositionStart(input);
@@ -40,16 +40,16 @@ describe('PromptComposer', () => {
     });
 
     it('disables empty submission', async () => {
-        render(PromptComposerFixture);
+        render(ComposerFixture);
         const input = screen.getByRole('textbox', { name: 'Prompt' });
 
-        expect(screen.getByRole('button', { name: 'Send message' })).toBeDisabled();
+        expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
         await fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
         expect(screen.getByTestId('submit-count')).toHaveTextContent('0');
     });
 
     it('makes the input readonly and invokes Stop while submitting', async () => {
-        render(PromptComposerFixture, { props: { value: 'Working', status: 'submitting' } });
+        render(ComposerFixture, { props: { value: 'Working', status: 'submitting' } });
         const input = screen.getByRole('textbox', { name: 'Prompt' });
         const stop = screen.getByRole('button', { name: 'Stop response' });
 
@@ -60,7 +60,7 @@ describe('PromptComposer', () => {
     });
 
     it('shows the error alert above the composer', () => {
-        render(PromptComposerFixture, { props: { status: 'error' } });
+        render(ComposerFixture, { props: { status: 'error' } });
 
         const alert = screen.getByRole('alert');
         const composer = alert.parentElement?.parentElement;
@@ -75,7 +75,7 @@ describe('PromptComposer', () => {
     });
 
     it('does not duplicate an unresolved async submission', async () => {
-        render(PromptComposerFixture, { props: { value: 'Ship it', asyncSubmit: true } });
+        render(ComposerFixture, { props: { value: 'Ship it', asyncSubmit: true } });
         const input = screen.getByRole('textbox', { name: 'Prompt' });
 
         await fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
