@@ -12,7 +12,7 @@
     import python from './snippets/quickstart.py.txt?raw';
 </script>
 
-<CodeBlock.Root class="max-w-2xl" value="javascript">
+<CodeBlock.Root value="javascript">
     <CodeBlock.Header>
         <CodeBlock.List>
             <CodeBlock.Trigger value="python">Python</CodeBlock.Trigger>

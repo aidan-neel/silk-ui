@@ -1,5 +1,6 @@
 <script lang="ts">
     import Button from '@sivir-ui/svelte/components/button';
+    import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
     import { mode } from 'mode-watcher';
 
     const { name, css, clicked }: { name: string; css: string; clicked: () => void } = $props();
@@ -55,10 +56,6 @@
 
         return result;
     }
-
-    function copyCode() {
-        navigator.clipboard.writeText(css);
-    }
 </script>
 
 <button type="button" class="flex p-4 border relative rounded-lg flex-col gap-3">
@@ -83,6 +80,15 @@
     </div>
     <div class="flex flex-row gap-3">
         <Button onclick={clicked} variant="primary" class="w-full">Preview</Button>
-        <Button onclick={copyCode} variant="outline" class="w-full">Copy Code</Button>
+        <CopyButton
+            text={css}
+            label="Copy code"
+            copiedLabel="Copied"
+            variant="outline"
+            size="md"
+            class="w-full"
+        >
+            Copy Code
+        </CopyButton>
     </div>
 </button>

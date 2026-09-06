@@ -1,0 +1,8 @@
+- Keep the collection item highlight when `travelingHighlight` is off; only the slide is disabled.
+- Fix Tag Input TypeScript types for forwarded input events and non-removable tags.
+- Accept theme schema v4 in the theme registry API.
+- Default `Attachment.Trigger` to `md` instead of `sm`, so every button-backed trigger (Button, Select, Dropdown Menu, Popover, Modal, Sheet, Alert Dialog, Combobox) renders at the default button size unless a size is passed. The docs examples drop their `sm`-height overrides, including the Prompt Composer Plan, Ask first, model, and Send controls.
+- Fix Theme Studio radius customization going stale: custom corner values no longer pin the radius after switching the Sharp/Default/Rounded scale, and a custom spacing unit no longer pins the density preset. Custom values still persist across reloads until the scale changes.
+- Fix the Code Block frame rendering transparent in dark mode: its background referenced the removed `--color-muted` surface, so the tab strip showed whatever sat behind the block. It now uses the near-background fill from the modal frame, keeping the code body on the card surface.
+- Move the Modal border to the outer frame: the frame keeps its border in dark mode instead of going transparent, and the inner surface drops its border while keeping its background and concentric radius.
+- Make Tag Input tags visible in dark mode: the tag fill matched the field exactly, so tags get a hairline border and a lifted fill in dark mode while light mode keeps its gray-on-white look.

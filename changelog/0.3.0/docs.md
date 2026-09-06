@@ -1,0 +1,1 @@
+- Document Badge shapes: pill, circular, square-ish, and a rounded square with a 1px border.

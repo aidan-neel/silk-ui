@@ -8,6 +8,7 @@
     type Props = {
         children: Snippet;
         class?: string;
+        dynamic?: boolean;
     };
 
     let props: Props = $props();
@@ -65,6 +66,7 @@
     tabindex={-1}
     data-ui="select-content"
     class={props.class}
+    dynamic={props.dynamic ?? false}
     onkeydown={handleKeydown}
 >
     {@render props.children?.()}

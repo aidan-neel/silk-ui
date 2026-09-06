@@ -1,8 +1,7 @@
 <script lang="ts">
-    import Check from '@lucide/svelte/icons/check';
-    import Copy from '@lucide/svelte/icons/copy';
     import ThumbsUp from '@lucide/svelte/icons/thumbs-up';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
     import { Markdown } from '@sivir-ui/svelte/components/markdown';
     import * as Message from '@sivir-ui/svelte/components/message';
     import * as Reasoning from '@sivir-ui/svelte/components/reasoning';
@@ -19,17 +18,8 @@
         '> Main migration risk: consumers that infer payment state from invoice updates.'
     ].join('\n');
 
-    let copied = $state(false);
     let helpful = $state(false);
-
-    async function copyResponse() {
-        try {
-            await navigator.clipboard.writeText(response);
-            copied = true;
-        } catch {
-            copied = false;
-        }
-    }
+    let status = $state('');
 </script>
 
 <div class="w-full max-w-3xl space-y-7">
@@ -53,22 +43,18 @@
             <Markdown content={response} />
         </Message.Content>
         <Message.Actions aria-label="Assistant response actions">
-            <Button
+            <CopyButton
+                text={response}
+                label="Copy response"
+                copiedLabel="Response copied"
                 variant="ghost"
-                size="sm"
+                size="md"
                 class="size-8 rounded-[var(--radius-md)] p-0"
-                aria-label={copied ? 'Response copied' : 'Copy response'}
-                onclick={copyResponse}
-            >
-                {#if copied}
-                    <Check size={15} aria-hidden="true" />
-                {:else}
-                    <Copy size={15} aria-hidden="true" />
-                {/if}
-            </Button>
+                oncopy={() => (status = 'Response copied to clipboard.')}
+            />
             <Button
                 variant="ghost"
-                size="sm"
+                size="md"
                 class="size-8 rounded-[var(--radius-md)] p-0"
                 aria-label={helpful ? 'Remove helpful rating' : 'Mark response as helpful'}
                 aria-pressed={helpful}
@@ -79,5 +65,5 @@
         </Message.Actions>
     </Message.Root>
 
-    <p class="sr-only" role="status">{copied ? 'Response copied to clipboard.' : ''}</p>
+    <p class="sr-only" role="status">{status}</p>
 </div>

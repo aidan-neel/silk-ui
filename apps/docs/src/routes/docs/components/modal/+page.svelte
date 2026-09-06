@@ -15,6 +15,8 @@
     import LargeSrc from './examples/size-large.svelte?raw';
     import Wide from './examples/size-wide.svelte';
     import WideSrc from './examples/size-wide.svelte?raw';
+    import WithSelect from './examples/with-select.svelte';
+    import WithSelectSrc from './examples/with-select.svelte?raw';
 
     const installCommand = 'bunx @sivir-ui/svelte add modal';
 </script>
@@ -85,6 +87,17 @@
             <Typography.H3 class="docs-subsection-heading"> Nested </Typography.H3>
             <ComponentPreview code={NestedSrc}>
                 <Nested />
+            </ComponentPreview>
+        </div>
+
+        <div id="with-select" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> With select </Typography.H3>
+            <Typography.Text variant="supporting">
+                A Select inside a dialog keeps its own layer: Escape closes the menu first and only
+                then the dialog.
+            </Typography.Text>
+            <ComponentPreview code={WithSelectSrc}>
+                <WithSelect />
             </ComponentPreview>
         </div>
 

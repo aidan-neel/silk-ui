@@ -144,7 +144,7 @@
     </div>
 
     <div class="flex items-center gap-3">
-        <Button type="submit" size="sm">Validate fields</Button>
+        <Button type="submit" size="md">Validate fields</Button>
         {#if isValid}
             <p class="text-sm text-success" role="status">Both fields are valid.</p>
         {/if}

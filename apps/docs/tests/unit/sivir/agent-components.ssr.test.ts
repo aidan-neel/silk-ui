@@ -3,9 +3,9 @@ import type { Component } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import AttachmentFixture from '../../fixtures/AttachmentFixture.svelte';
+import ComposerFixture from '../../fixtures/ComposerFixture.svelte';
 import ConversationFixture from '../../fixtures/ConversationFixture.svelte';
 import MessageFixture from '../../fixtures/MessageFixture.svelte';
-import PromptComposerFixture from '../../fixtures/PromptComposerFixture.svelte';
 import QuestionFixture from '../../fixtures/QuestionFixture.svelte';
 
 function renderBody(component: unknown, props: Record<string, unknown> = {}) {
@@ -30,11 +30,9 @@ describe('Sivir agent components SSR', () => {
         expect(renderBody(Markdown, { content })).toContain('Result');
     });
 
-    it('renders PromptComposer without throwing', () => {
-        expect(() => renderBody(PromptComposerFixture, { value: 'Server prompt' })).not.toThrow();
-        expect(renderBody(PromptComposerFixture, { value: 'Server prompt' })).toContain(
-            'Server prompt'
-        );
+    it('renders Composer without throwing', () => {
+        expect(() => renderBody(ComposerFixture, { value: 'Server prompt' })).not.toThrow();
+        expect(renderBody(ComposerFixture, { value: 'Server prompt' })).toContain('Server prompt');
     });
 
     it('renders Question without browser globals', () => {

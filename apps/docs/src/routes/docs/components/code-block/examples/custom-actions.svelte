@@ -12,7 +12,7 @@ ORDER BY created_at DESC
 LIMIT 50;`;
 </script>
 
-<CodeBlock.Root class="max-w-xl" value="sql">
+<CodeBlock.Root value="sql">
     <CodeBlock.Header>
         <CodeBlock.Actions>
             <Tooltip.Root>

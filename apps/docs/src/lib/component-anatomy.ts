@@ -124,6 +124,13 @@ export const componentAnatomy = {
         { name: 'DropdownMenu.SubContent', description: 'Renders a submenu surface.' },
         { name: 'DropdownMenu.SubTrigger', description: 'Opens a submenu.' }
     ],
+    'file-diff': [
+        { name: 'FileDiff.Root', description: 'Provides diff state and layout.' },
+        { name: 'FileDiff.TopBar', description: 'Renders the file path and change counts.' },
+        { name: 'FileDiff.Content', description: 'Contains the scrollable diff rows.' },
+        { name: 'FileDiff.Row', description: 'Renders one highlighted diff row.' },
+        { name: 'FileDiff.LineNumber', description: 'Renders one gutter line number.' }
+    ],
     'fullscreen-nav': [
         { name: 'FullscreenNav.Root', description: 'Controls fullscreen navigation state.' },
         { name: 'FullscreenNav.Trigger', description: 'Opens fullscreen navigation.' },
@@ -168,12 +175,12 @@ export const componentAnatomy = {
         { name: 'Popover.Title', description: 'Renders the popover title.' }
     ],
     progress: [{ name: 'Progress', description: 'Displays progress toward a value.' }],
-    'prompt-composer': [
-        { name: 'PromptComposer.Root', description: 'Manages prompt submission.' },
-        { name: 'PromptComposer.Input', description: 'Accepts the prompt text.' },
-        { name: 'PromptComposer.Toolbar', description: 'Groups composer controls.' },
-        { name: 'PromptComposer.Actions', description: 'Groups composer actions.' },
-        { name: 'PromptComposer.Submit', description: 'Submits or stops the prompt.' }
+    composer: [
+        { name: 'Composer.Root', description: 'Manages prompt submission.' },
+        { name: 'Composer.Input', description: 'Accepts the prompt text.' },
+        { name: 'Composer.Toolbar', description: 'Groups composer controls.' },
+        { name: 'Composer.Actions', description: 'Groups composer actions.' },
+        { name: 'Composer.Submit', description: 'Submits or stops the prompt.' }
     ],
     question: [
         { name: 'Question.Root', description: 'Renders a full question form.' },
@@ -244,6 +251,12 @@ export const componentAnatomy = {
         { name: 'Tabs.List', description: 'Groups tab triggers.' },
         { name: 'Tabs.Trigger', description: 'Selects a tab panel.' },
         { name: 'Tabs.Content', description: 'Renders a tab panel.' }
+    ],
+    'tag-input': [
+        { name: 'TagInput.Root', description: 'Owns tags and draft entry state.' },
+        { name: 'TagInput.List', description: 'Groups the entered tags.' },
+        { name: 'TagInput.Tag', description: 'Renders one tag with its remove control.' },
+        { name: 'TagInput.Input', description: 'Accepts new tag text.' }
     ],
     textarea: [{ name: 'Textarea', description: 'Accepts a multi-line value.' }],
     toast: [

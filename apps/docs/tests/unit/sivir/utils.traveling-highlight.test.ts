@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import { travelingHighlight } from '@sivir-ui/svelte/utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 function rect(left: number, top: number, width = 100, height = 32): DOMRect {
     return {
@@ -21,6 +21,7 @@ async function settle() {
 
 afterEach(() => {
     document.body.replaceChildren();
+    document.documentElement.style.removeProperty('--sivir-traveling-highlight');
     vi.unstubAllGlobals();
 });
 
@@ -43,7 +44,7 @@ describe('travelingHighlight', () => {
         expect(
             surface.querySelector<HTMLElement>('.sivir-item-highlight')?.style.transform
         ).toContain('40px');
-        action.destroy();
+        action.destroy?.();
     });
 
     it('keeps a nested collection from moving its parent highlight', async () => {
@@ -69,8 +70,8 @@ describe('travelingHighlight', () => {
         expect(
             parent.querySelector<HTMLElement>(':scope > .sivir-item-highlight')?.style.transform
         ).toContain('10px');
-        parentAction.destroy();
-        nestedAction.destroy();
+        parentAction.destroy?.();
+        nestedAction.destroy?.();
     });
 
     it('does not re-observe elements after each resize notification', async () => {
@@ -103,6 +104,31 @@ describe('travelingHighlight', () => {
         await settle();
 
         expect(observeCalls).toBe(2);
-        action.destroy();
+        action.destroy?.();
+    });
+
+    it('still highlights the active item when traveling is off', async () => {
+        document.documentElement.style.setProperty('--sivir-traveling-highlight', 'none');
+        const surface = document.createElement('div');
+        const selected = document.createElement('button');
+        const active = document.createElement('button');
+        selected.dataset.collectionItem = '';
+        selected.setAttribute('aria-selected', 'true');
+        active.dataset.collectionItem = '';
+        active.dataset.collectionActive = 'true';
+        Object.defineProperty(surface, 'getBoundingClientRect', { value: () => rect(0, 0) });
+        Object.defineProperty(selected, 'getBoundingClientRect', { value: () => rect(0, 0) });
+        Object.defineProperty(active, 'getBoundingClientRect', { value: () => rect(0, 40) });
+        surface.append(selected, active);
+        document.body.append(surface);
+        const action = travelingHighlight(surface);
+        await settle();
+        const highlight = surface.querySelector<HTMLElement>('.sivir-item-highlight');
+        expect(highlight).toBeTruthy();
+        expect(highlight?.style.opacity).toBe('1');
+        expect(highlight?.style.transform).toContain('40px');
+        expect(highlight?.getAttribute('data-ready')).toBeNull();
+        action.destroy?.();
+        document.documentElement.style.removeProperty('--sivir-traveling-highlight');
     });
 });

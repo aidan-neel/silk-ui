@@ -67,6 +67,27 @@ src/lib/sivir/components/button/
         </Typography.Text>
     </section>
 
+    <section id="theme-studio" class="scroll-mt-20 flex flex-col gap-5">
+        <Typography.H2 class="docs-section-heading">Theme Studio</Typography.H2>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
+            The
+            <a class="text-foreground underline underline-offset-2" href={resolve('/studio')}
+                >Theme Studio</a
+            >
+            is the visual way to build a theme. Start from a built-in preset and adjust the shared
+            axes — brand, neutral temperature, radius, density, motion, and fonts — plus typography
+            (header size and per-role weights for body, label, button, badge, and description),
+            per-mode foundation colors, and chrome flags (surface, control, and dialog shadows, the
+            traveling highlight, primary stroke, and the interactive cursor). The Advanced section
+            overrides individual color, spacing, and animation tokens per light and dark mode.
+        </Typography.Text>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
+            Copy the generated <Typography.InlineCode>theme.css</Typography.InlineCode> to use the
+            theme in your app, or copy the theme JSON to share it. The studio keeps your draft in
+            local storage between visits.
+        </Typography.Text>
+    </section>
+
     <section id="override-tokens" class="scroll-mt-20 flex flex-col gap-5">
         <Typography.H2 class="docs-section-heading">Override tokens</Typography.H2>
         <Typography.Text variant="body" class="m-0 max-w-2xl">
@@ -85,27 +106,48 @@ src/lib/sivir/components/button/
             <li>
                 Color:
                 <Typography.InlineCode>--color-background</Typography.InlineCode>,
+                <Typography.InlineCode>--color-card</Typography.InlineCode>,
+                <Typography.InlineCode>--color-panel</Typography.InlineCode>,
+                <Typography.InlineCode>--color-secondary</Typography.InlineCode>,
                 <Typography.InlineCode>--color-foreground</Typography.InlineCode>,
+                <Typography.InlineCode>--color-foreground-muted</Typography.InlineCode>,
                 <Typography.InlineCode>--color-primary</Typography.InlineCode>,
+                <Typography.InlineCode>--color-on-primary</Typography.InlineCode>,
                 <Typography.InlineCode>--color-border</Typography.InlineCode>,
+                <Typography.InlineCode>--color-input</Typography.InlineCode>,
                 <Typography.InlineCode>--color-ring</Typography.InlineCode>
             </li>
             <li>
                 Type:
                 <Typography.InlineCode>--font-sans</Typography.InlineCode>,
+                <Typography.InlineCode>--font-mono</Typography.InlineCode>,
                 <Typography.InlineCode>--font-header</Typography.InlineCode>,
-                <Typography.InlineCode>--font-mono</Typography.InlineCode>
+                <Typography.InlineCode>--font-size-header</Typography.InlineCode>, and role weights
+                like <Typography.InlineCode>--font-weight-body</Typography.InlineCode>,
+                <Typography.InlineCode>--font-weight-label</Typography.InlineCode>,
+                <Typography.InlineCode>--font-weight-button</Typography.InlineCode>
             </li>
             <li>
-                Radius:
+                Radius and density:
+                <Typography.InlineCode>--radius-sm</Typography.InlineCode>,
                 <Typography.InlineCode>--radius-md</Typography.InlineCode>,
                 <Typography.InlineCode>--radius-lg</Typography.InlineCode>,
-                <Typography.InlineCode>--radius-xl</Typography.InlineCode>
+                <Typography.InlineCode>--radius-xl</Typography.InlineCode>, and the base spacing
+                unit <Typography.InlineCode>--sivir-space-unit</Typography.InlineCode>
             </li>
             <li>
                 Motion:
                 <Typography.InlineCode>--motion-duration-hover</Typography.InlineCode>,
-                <Typography.InlineCode>--motion-duration-panel</Typography.InlineCode>
+                <Typography.InlineCode>--motion-duration-menu</Typography.InlineCode>,
+                <Typography.InlineCode>--motion-duration-panel</Typography.InlineCode>,
+                <Typography.InlineCode>--motion-duration-sheet</Typography.InlineCode>
+            </li>
+            <li>
+                Elevation:
+                <Typography.InlineCode>--elevation-1</Typography.InlineCode>,
+                <Typography.InlineCode>--elevation-float</Typography.InlineCode>,
+                <Typography.InlineCode>--elevation-control</Typography.InlineCode>,
+                <Typography.InlineCode>--elevation-modal</Typography.InlineCode>
             </li>
         </ul>
     </section>
@@ -113,11 +155,20 @@ src/lib/sivir/components/button/
     <section id="built-in-presets" class="scroll-mt-20 flex flex-col gap-5">
         <Typography.H2 class="docs-section-heading">Built-in presets</Typography.H2>
         <Typography.Text variant="body" class="m-0 max-w-2xl">
-            With the CLI, install a built-in preset into
+            Four presets ship with Sivir: <Typography.InlineCode>default</Typography.InlineCode>,
+            <Typography.InlineCode>magic</Typography.InlineCode>,
+            <Typography.InlineCode>bitsy</Typography.InlineCode>, and
+            <Typography.InlineCode>open</Typography.InlineCode>. Preview them live on the
+            <a class="text-foreground underline underline-offset-2" href={resolve('/themes')}
+                >themes page</a
+            >, where you can copy each preset’s CSS or JSON.
+        </Typography.Text>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
+            With the CLI, install a preset into
             <Typography.InlineCode>theme.css</Typography.InlineCode>:
         </Typography.Text>
         <CodeBlock
-            code="bunx --package @sivir-ui/svelte sivir add theme default"
+            code="bunx --package @sivir-ui/svelte sivir add theme open"
             lang="shell"
             copy="overlay"
         />
@@ -138,6 +189,46 @@ src/lib/sivir/components/button/
             Toggle a <Typography.InlineCode>.dark</Typography.InlineCode> class on
             <Typography.InlineCode>&lt;html&gt;</Typography.InlineCode>. Components do not manage
             the class for you.
+        </Typography.Text>
+    </section>
+
+    <section id="theme-json" class="scroll-mt-20 flex flex-col gap-5">
+        <Typography.H2 class="docs-section-heading">Theme JSON</Typography.H2>
+        <Typography.Text variant="body" class="m-0 max-w-2xl">
+            Theme JSON (version 4) captures a theme as data, so the studio, the CLI, and the theme
+            registry all speak the same format. Beyond the shared axes, theme JSON accepts per-mode
+            surfaces in <Typography.InlineCode>foundation.light</Typography.InlineCode>
+            /
+            <Typography.InlineCode>foundation.dark</Typography.InlineCode>
+            (<Typography.InlineCode>base</Typography.InlineCode>,
+            <Typography.InlineCode>border</Typography.InlineCode>,
+            <Typography.InlineCode>background</Typography.InlineCode>,
+            <Typography.InlineCode>secondary</Typography.InlineCode>,
+            <Typography.InlineCode>foreground</Typography.InlineCode>,
+            <Typography.InlineCode>foregroundMuted</Typography.InlineCode>,
+            <Typography.InlineCode>onPrimary</Typography.InlineCode>), typography under
+            <Typography.InlineCode>typography</Typography.InlineCode>
+            (<Typography.InlineCode>headerSize</Typography.InlineCode>,
+            <Typography.InlineCode>headerWeight</Typography.InlineCode>, and
+            <Typography.InlineCode>roleWeights</Typography.InlineCode>
+            for body, label, button, badge, and description), raw token overrides under
+            <Typography.InlineCode>tokens.shared</Typography.InlineCode>
+            /
+            <Typography.InlineCode>tokens.light</Typography.InlineCode>
+            /
+            <Typography.InlineCode>tokens.dark</Typography.InlineCode>
+            (for example per-mode primary colors overriding
+            <Typography.InlineCode>--color-primary</Typography.InlineCode>), and chrome flags under
+            <Typography.InlineCode>chrome</Typography.InlineCode>:
+            <Typography.InlineCode>surfaceShadows</Typography.InlineCode>,
+            <Typography.InlineCode>controlShadows</Typography.InlineCode>,
+            <Typography.InlineCode>dialogShadows</Typography.InlineCode>,
+            <Typography.InlineCode>travelingHighlight: false</Typography.InlineCode>
+            (item fill stays, the slide does not),
+            <Typography.InlineCode>primaryStroke</Typography.InlineCode>, and
+            <Typography.InlineCode>interactiveCursor</Typography.InlineCode>. Setting
+            <Typography.InlineCode>motion: "none"</Typography.InlineCode>
+            disables every animation, including dialogs, menus, and the traveling highlight.
         </Typography.Text>
     </section>
 

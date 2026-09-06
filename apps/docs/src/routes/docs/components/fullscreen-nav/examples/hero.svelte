@@ -5,7 +5,7 @@
 <FullscreenNav.Root>
     <FullscreenNav.Trigger aria-label="Open example navigation" />
     <FullscreenNav.Content label="Example navigation">
-        <header class="flex items-center justify-between">
+        <header class="flex items-center justify-between py-1">
             <span class="font-[var(--font-header)] text-lg font-semibold tracking-tight"
                 >Sivir</span
             >

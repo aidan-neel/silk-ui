@@ -1,2 +1,2 @@
 export type { OverlayOptions } from './overlay.svelte';
-export { resetOverlayStackForTests, useOverlay } from './overlay.svelte';
+export { parentOverlayDepth, resetOverlayStackForTests, useOverlay } from './overlay.svelte';

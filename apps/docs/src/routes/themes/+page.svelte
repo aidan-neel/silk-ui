@@ -1,11 +1,9 @@
 <script lang="ts">
-    import Braces from '@lucide/svelte/icons/braces';
-    import Check from '@lucide/svelte/icons/check';
-    import FileCode from '@lucide/svelte/icons/file-code';
     import Search from '@lucide/svelte/icons/search';
     import Sparkles from '@lucide/svelte/icons/sparkles';
     import X from '@lucide/svelte/icons/x';
     import { Button } from '@sivir-ui/svelte/components/button';
+    import { CopyButton } from '@sivir-ui/svelte/components/copy-button';
     import { Input } from '@sivir-ui/svelte/components/input';
     import { toast } from '@sivir-ui/svelte/components/toast';
     import { builtInThemePresets } from '@sivir-ui/svelte/themes/builtin-presets';
@@ -58,9 +56,7 @@
         detailOpen = true;
     }
 
-    function copyValue(value: string, key: 'css' | 'json', label: string) {
-        if (typeof navigator === 'undefined' || !navigator.clipboard) return;
-        void navigator.clipboard.writeText(value);
+    function notifyCopied(key: 'css' | 'json', label: string) {
         copiedKey = key;
         toast({
             title: `${label} copied`,
@@ -150,7 +146,7 @@
                     </div>
                 {/if}
                 {#if searchQuery.trim()}
-                    <Button variant="ghost" size="sm" onclick={() => (searchQuery = '')}
+                    <Button variant="ghost" size="md" onclick={() => (searchQuery = '')}
                         >Clear search</Button
                     >
                 {/if}
@@ -216,12 +212,7 @@
                                 onkeydown={(e) => e.stopPropagation()}
                                 role="presentation"
                             >
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    class="h-8 text-[0.78rem]"
-                                    onclick={() => applyTheme(theme)}
-                                >
+                                <Button variant="ghost" size="md" onclick={() => applyTheme(theme)}>
                                     Apply
                                 </Button>
                             </div>
@@ -311,42 +302,36 @@
                 <div class="border-t border-border/60 pt-4 mb-4">
                     <p class="m-0 text-[0.78rem] font-[600] text-foreground-muted mb-3">Export</p>
                     <div class="flex flex-col gap-2">
-                        <Button
+                        <CopyButton
+                            text={detailCss}
+                            label="Copy CSS"
+                            copiedLabel="Copied CSS"
                             variant="ghost"
                             class="justify-start gap-2"
-                            onclick={() => copyValue(detailCss, 'css', 'CSS')}
+                            oncopy={() => notifyCopied('css', 'CSS')}
                         >
-                            {#if copiedKey === 'css'}
-                                <Check size={14} class="text-[var(--color-success)]" />
-                                Copied CSS
-                            {:else}
-                                <FileCode size={14} />
-                                Copy CSS
-                            {/if}
-                        </Button>
-                        <Button
+                            {copiedKey === 'css' ? 'Copied CSS' : 'Copy CSS'}
+                        </CopyButton>
+                        <CopyButton
+                            text={detailJson}
+                            label="Copy JSON"
+                            copiedLabel="Copied JSON"
                             variant="ghost"
                             class="justify-start gap-2"
-                            onclick={() => copyValue(detailJson, 'json', 'JSON')}
+                            oncopy={() => notifyCopied('json', 'JSON')}
                         >
-                            {#if copiedKey === 'json'}
-                                <Check size={14} class="text-[var(--color-success)]" />
-                                Copied JSON
-                            {:else}
-                                <Braces size={14} />
-                                Copy JSON
-                            {/if}
-                        </Button>
+                            {copiedKey === 'json' ? 'Copied JSON' : 'Copy JSON'}
+                        </CopyButton>
                     </div>
                 </div>
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm" onclick={() => (detailOpen = false)}
+                    <Button variant="outline" size="md" onclick={() => (detailOpen = false)}
                         >Close</Button
                     >
                     <Button
-                        size="sm"
+                        size="md"
                         onclick={() => {
                             if (detailTheme) {
                                 applyTheme(detailTheme);

@@ -7,6 +7,8 @@
     import BasicMenuSrc from './examples/basic-menu.svelte?raw';
     import Configuration from './examples/configuration.svelte';
     import ConfigurationSrc from './examples/configuration.svelte?raw';
+    import DynamicWidth from './examples/dynamic-width.svelte';
+    import DynamicWidthSrc from './examples/dynamic-width.svelte?raw';
     import Hero from './examples/hero.svelte';
     import HeroSrc from './examples/hero.svelte?raw';
     import RowActions from './examples/row-actions.svelte';
@@ -125,6 +127,17 @@
             </Typography.Text>
             <ComponentPreview code={ConfigurationSrc}>
                 <Configuration />
+            </ComponentPreview>
+        </div>
+
+        <div id="dynamic-width" class="scroll-mt-20 flex flex-col gap-3">
+            <Typography.H3 class="docs-subsection-heading"> Dynamic width </Typography.H3>
+            <Typography.Text variant="supporting">
+                Menus and submenus size to their longest item plus a buffer instead of hugging the
+                trigger.
+            </Typography.Text>
+            <ComponentPreview code={DynamicWidthSrc}>
+                <DynamicWidth />
             </ComponentPreview>
         </div>
     </section>

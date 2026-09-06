@@ -42,6 +42,9 @@
         { title: 'Changelog', href: resolve('/docs/changelog') },
         { title: 'Components', href: resolve('/docs/components') }
     ];
+    const sortedComponents = $derived(
+        [...components].sort((a, b) => sanitizeComponent(a).localeCompare(sanitizeComponent(b)))
+    );
 
     onMount(() => {
         const updateScroll = () => {
@@ -141,16 +144,14 @@
     </nav>
 
     <FullscreenNav.Content label="Browse Sivir UI" class="p-0 md:hidden">
-        <header
-            class="flex shrink-0 items-center justify-between border-b border-border/70 px-4 py-3"
-        >
+        <header class="flex shrink-0 items-center justify-between px-3 py-3">
             <a href={resolve('/')} class="font-semibold tracking-tight text-foreground no-underline"
                 >Sivir UI</a
             >
             <FullscreenNav.Close />
         </header>
 
-        <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
+        <div class="min-h-0 flex-1 overflow-y-auto px-3 py-4">
             <FullscreenNav.Group heading="Navigate">
                 {#each navItems as item (item.href)}
                     <FullscreenNav.Link href={item.href}>{item.label}</FullscreenNav.Link>
@@ -164,7 +165,7 @@
             </FullscreenNav.Group>
 
             <FullscreenNav.Group heading="Components" class="mt-10">
-                {#each components as component (component)}
+                {#each sortedComponents as component (component)}
                     <FullscreenNav.Link href={`/docs/components/${component}`}>
                         {sanitizeComponent(component)}
                     </FullscreenNav.Link>

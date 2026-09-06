@@ -129,7 +129,6 @@
     --color-background: var(--sivir-neutral-10);
     --color-card: var(--sivir-neutral-0);
     --color-panel: var(--sivir-neutral-0);
-    --color-muted: var(--sivir-neutral-50);
     --color-secondary: var(--sivir-neutral-100);
     --color-border: var(--sivir-neutral-150);
     --color-border-strong: var(--sivir-neutral-300);
@@ -154,7 +153,7 @@
     --color-tooltip: var(--sivir-neutral-900);
     --color-tooltip-foreground: var(--sivir-neutral-0);
     --color-field: var(--color-card);
-    --color-field-hover: var(--color-muted);
+    --color-field-hover: var(--color-secondary);
     --color-field-foreground: var(--color-foreground);
 }
 
@@ -173,7 +172,6 @@
     --sivir-warning: hsl(37.3 72.6% 55.7%);
     --sivir-error: hsl(0 66.7% 63.5%);
     --color-background: hsl(0 0% 4%);
-    --color-muted: hsl(0 0% 7%);
     --color-card: hsl(0 0% 9%);
     --color-panel: hsl(0 0% 11.5%);
     --color-secondary: hsl(0 0% 14.5%);
@@ -182,7 +180,6 @@
     --color-input: hsl(0 0% 24%);
     --color-overlay: rgb(0 0 0 / 0.55);
     --color-field: var(--color-secondary);
-    --color-field-hover: hsl(0 0% 17.5%);
     --elevation-1: 0 1px 2px rgb(0 0 0 / 0.4);
     --elevation-control:
         inset 0 0 0 1px var(--color-border), inset 0 -2px 3px -2px rgb(0 0 0 / 0.32),
@@ -269,13 +266,16 @@
         top: 0;
         left: 0;
         z-index: 0;
+        display: block;
         border-radius: var(--radius-lg);
         background-color: color-mix(in oklab, var(--color-foreground) 6%, transparent);
         opacity: 0;
         transition-property: transform, width, height, opacity;
         transition-duration:
-            var(--motion-duration-item), var(--motion-duration-item), var(--motion-duration-item),
-            var(--motion-duration-hover);
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-item)),
+            var(--sivir-traveling-highlight, var(--motion-duration-hover));
         transition-timing-function: var(--ease-out);
         will-change: transform;
     }
@@ -305,7 +305,9 @@
     .sivir-card-surface {
         border-radius: calc(var(--radius-lg) - var(--size-hairline));
         background-color: var(--color-card);
-        box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-border) 50%, transparent);
+        box-shadow:
+            var(--elevation-1),
+            0 0 0 1px color-mix(in oklab, var(--color-border) 50%, transparent);
     }
 
     /* Modal/CodeBlock inset frame. Inner radius = outer − border − inset. */
@@ -316,21 +318,28 @@
         padding: var(--sivir-modal-inset);
         border: var(--border-size) solid var(--color-border);
         border-radius: var(--radius-xl);
-        background-color: var(--color-secondary);
+        background-color: color-mix(in oklab, var(--color-secondary) 97%, white);
     }
 
     .sivir-inset-frame:where(.dark, .dark *) {
-        background-color: var(--color-muted);
+        background-color: color-mix(in oklab, var(--color-background) 97%, white);
     }
 
     .sivir-modal-frame:where(.dark, .dark *) {
-        border-color: transparent;
+        background-color: color-mix(in oklab, var(--color-background) 97%, white);
+    }
+
+    .sivir-modal-frame > [data-ui='modal-surface'] {
+        border: 0;
+        border-radius: calc(
+            var(--radius-xl) -
+            var(--border-size) -
+            var(--sivir-modal-inset, var(--spacing))
+        );
         background-color: var(--color-card);
     }
 
-    .sivir-modal-frame > [data-ui='modal-surface'],
     .sivir-inset-surface {
-        border: var(--border-size) solid var(--color-border);
         border-radius: calc(
             var(--radius-xl) -
             var(--border-size) -
@@ -340,7 +349,7 @@
     }
 
     .sivir-modal-frame:where(.dark, .dark *) > [data-ui='modal-surface'] {
-        background-color: var(--color-muted);
+        background-color: var(--color-card);
     }
 
     /* The single shared tooltip bubble and its off-screen width twin, both built

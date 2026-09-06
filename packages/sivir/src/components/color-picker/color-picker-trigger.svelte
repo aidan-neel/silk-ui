@@ -20,12 +20,9 @@
     );
 </script>
 
-<Popover.Trigger
-    {variant}
-    class={cn(className, 'group w-full justify-start gap-1.5 pl-1.5 pr-2.5')}
->
+<Popover.Trigger {variant} class={cn(className, 'group w-full justify-start gap-2 pl-2.5 pr-2.5')}>
     <span
-        class="size-5 shrink-0 rounded-md ring-1 ring-inset ring-black/10"
+        class="size-5 shrink-0 self-center rounded-full ring-1 ring-inset ring-black/10"
         style:background={isValidHex(ctx.value) ? ctx.value : '#888888'}
     ></span>
     <span class="min-w-0 flex-1 truncate text-left font-mono text-[0.78rem] text-foreground">

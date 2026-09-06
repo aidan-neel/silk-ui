@@ -52,7 +52,7 @@ Conversation.Root
 │       └── Reasoning / Tool / Markdown / CodeBlock
 └── Conversation.ScrollButton
 
-Question.Root or PromptComposer.Root
+Question.Root or Composer.Root
 ```
 
 Render `Question` as a temporary takeover when the agent cannot continue without structured input; preserve an unsent composer draft. Keep `Tool` and `Reasoning` lower emphasis than the answer. Use `Message.Actions` for response-scoped actions such as copy, retry, or feedback.

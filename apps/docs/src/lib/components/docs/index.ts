@@ -1,21 +1,19 @@
-import ComponentPreview from './component-preview.svelte';
-import CodeBlock from './code-block.svelte';
-import CodeSnippet from './code-snippet.svelte';
-import ExportItem from './export-item.svelte';
+import Anatomy from './anatomy.svelte';
 import APIReference from './api-reference.svelte';
 import BreadcrumbNav from './breadcrumb-nav.svelte';
-import Steps from './steps.svelte';
+import CodeSnippet from './code-snippet.svelte';
+import ComponentPreview from './component-preview.svelte';
+import ExportItem from './export-item.svelte';
 import InstallCommand from './install-command.svelte';
-import Anatomy from './anatomy.svelte';
+import Steps from './steps.svelte';
 
 export {
-    ComponentPreview,
-    CodeBlock,
-    CodeSnippet,
-    ExportItem,
+    Anatomy,
     APIReference,
     BreadcrumbNav,
-    Steps,
+    CodeSnippet,
+    ComponentPreview,
+    ExportItem,
     InstallCommand,
-    Anatomy
+    Steps
 };

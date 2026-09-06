@@ -33,6 +33,7 @@
                 'select',
                 'slider',
                 'switch',
+                'tag-input',
                 'textarea',
                 'toggle',
                 'toggle-group'
@@ -88,7 +89,7 @@
         {
             id: 'content',
             heading: 'Content',
-            items: ['code-block', 'copy-button', 'markdown', 'shortcut', 'typography']
+            items: ['code-block', 'copy-button', 'file-diff', 'markdown', 'shortcut', 'typography']
         },
         {
             id: 'ai',
@@ -97,7 +98,7 @@
                 'attachment',
                 'conversation',
                 'message',
-                'prompt-composer',
+                'composer',
                 'question',
                 'reasoning',
                 'response-stream',
@@ -168,7 +169,7 @@
     <title>Sivir · Components</title>
     <meta
         name="description"
-        content="Browse all 55 accessible, themeable Svelte 5 components in Sivir UI."
+        content="Browse all 57 accessible, themeable Svelte 5 components in Sivir UI."
     />
 </svelte:head>
 
@@ -227,7 +228,7 @@
             <Typography.Text variant="supporting">
                 No components match “{query.trim()}”.
             </Typography.Text>
-            <Button variant="outline" size="sm" onclick={() => (query = '')}>Clear search</Button>
+            <Button variant="outline" size="md" onclick={() => (query = '')}>Clear search</Button>
         </section>
     {/if}
 

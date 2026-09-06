@@ -31,6 +31,7 @@
         "test": "turbo run test",
         "format": "biome format --write .",
         "format:check": "biome format .",
+        "release-gate": "bash scripts/release-gate.sh",
         "prepare": "lefthook install"
     },
     "devDependencies": {

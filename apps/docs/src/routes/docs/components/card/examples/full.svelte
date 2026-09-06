@@ -14,7 +14,7 @@
         </p>
     </Card.Content>
     <Card.Footer>
-        <Button variant="outline" size="sm">Cancel</Button>
-        <Button size="sm">Save changes</Button>
+        <Button variant="outline" size="md">Cancel</Button>
+        <Button size="md">Save changes</Button>
     </Card.Footer>
 </Card.Root>

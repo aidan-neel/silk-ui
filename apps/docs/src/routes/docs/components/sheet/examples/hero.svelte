@@ -73,7 +73,7 @@
                     <div class="flex flex-col gap-1.5">
                         <Label>Status</Label>
                         <Select.Root bind:value={status}>
-                            <Select.Trigger class="w-full" variant="outline">
+                            <Select.Trigger class="w-full" variant="outline" size="md">
                                 <span class="flex min-w-0 items-center gap-2">
                                     {#if statusMeta}
                                         <statusMeta.icon
@@ -100,7 +100,7 @@
                     <div class="flex flex-col gap-1.5">
                         <Label>Priority</Label>
                         <Select.Root bind:value={priority}>
-                            <Select.Trigger class="w-full" variant="outline">
+                            <Select.Trigger class="w-full" variant="outline" size="md">
                                 <span class="flex min-w-0 items-center gap-2">
                                     {#if priorityMeta}
                                         <priorityMeta.icon
@@ -127,7 +127,7 @@
                     <div class="flex flex-col gap-1.5">
                         <Label>Assignee</Label>
                         <Select.Root bind:value={assignee}>
-                            <Select.Trigger class="w-full" variant="outline">
+                            <Select.Trigger class="w-full" variant="outline" size="md">
                                 <span class="flex min-w-0 items-center gap-2">
                                     {#if assigneeMeta}
                                         <Avatar.Root size="sm" class="size-5 shrink-0 text-[10px]">

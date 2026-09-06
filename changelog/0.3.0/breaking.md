@@ -1,0 +1,1 @@
+- Remove the `foundation.muted` theme token and Studio Muted surface control. Use `foundation.foregroundMuted` for muted text; controls now use the secondary surface for hover states.

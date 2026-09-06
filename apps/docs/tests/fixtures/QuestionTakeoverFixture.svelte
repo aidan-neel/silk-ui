@@ -1,7 +1,7 @@
 <script lang="ts">
+    import * as Composer from '@sivir-ui/svelte/components/composer';
     import * as Conversation from '@sivir-ui/svelte/components/conversation';
     import * as Message from '@sivir-ui/svelte/components/message';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import * as Question from '@sivir-ui/svelte/components/question';
 
     let asking = $state(true);
@@ -36,12 +36,12 @@
             </Question.Actions>
         </Question.Root>
     {:else}
-        <PromptComposer.Root bind:value={draft} onSubmit={() => undefined}>
-            <PromptComposer.Input aria-label="Prompt" />
-            <PromptComposer.Toolbar>
-                <PromptComposer.Actions />
-                <PromptComposer.Submit />
-            </PromptComposer.Toolbar>
-        </PromptComposer.Root>
+        <Composer.Root bind:value={draft} onSubmit={() => undefined}>
+            <Composer.Input aria-label="Prompt" />
+            <Composer.Toolbar>
+                <Composer.Actions />
+                <Composer.Submit />
+            </Composer.Toolbar>
+        </Composer.Root>
     {/if}
 </div>

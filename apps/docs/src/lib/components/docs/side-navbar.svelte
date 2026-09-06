@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Button } from '@sivir-ui/svelte/components/button';
+    import { travelingHighlight } from '@sivir-ui/svelte/utils';
     import { page } from '$app/stores';
     import { components, sanitizeComponent } from '$lib/components';
     import Logo from '$lib/components/logo.svelte';
@@ -7,6 +8,9 @@
     let { class: classProp = '', onNavigate }: { class?: string; onNavigate?: () => void } =
         $props();
     const pageName = $derived($page.url.pathname);
+    const sortedComponents = $derived(
+        [...components].sort((a, b) => sanitizeComponent(a).localeCompare(sanitizeComponent(b)))
+    );
 
     const gettingStartedItems = [
         { href: '/docs/introduction', label: 'Introduction' },
@@ -33,17 +37,20 @@
         <h3 class="px-2 text-xs text-foreground-muted [font-weight:var(--font-weight-label,500)]">
             Getting Started
         </h3>
-        <div class="ml-2 flex flex-col border-l border-border pl-2">
+        <div use:travelingHighlight class="ml-2 flex flex-col border-l border-border pl-2">
             {#each gettingStartedItems as item (item.href)}
                 {@const active = isActive(item.href)}
                 <Button
                     variant="quiet"
+                    size="md"
                     href={item.href}
                     onclick={onNavigate}
                     aria-current={active ? 'page' : undefined}
-                    class={`h-8 w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
+                    data-collection-item
+                    data-collection-active={active ? 'true' : undefined}
+                    class={`w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
                         active
-                            ? 'bg-secondary text-foreground [font-weight:var(--font-weight-label,500)]'
+                            ? 'text-foreground [font-weight:var(--font-weight-label,500)]'
                             : 'text-foreground-muted hover:bg-secondary/70 hover:text-foreground'
                     }`}
                 >
@@ -62,17 +69,20 @@
                 >{components.length}</span
             >
         </div>
-        <div class="ml-2 flex flex-col border-l border-border pl-2">
-            {#each components as component (component)}
+        <div use:travelingHighlight class="ml-2 flex flex-col border-l border-border pl-2">
+            {#each sortedComponents as component (component)}
                 {@const active = pageName === `/docs/components/${component}`}
                 <Button
                     variant="quiet"
+                    size="md"
                     href={`/docs/components/${component}`}
                     onclick={onNavigate}
                     aria-current={active ? 'page' : undefined}
-                    class={`h-8 w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
+                    data-collection-item
+                    data-collection-active={active ? 'true' : undefined}
+                    class={`w-full justify-start rounded-[var(--radius-md)] px-3 text-left text-sm ${
                         active
-                            ? 'bg-secondary text-foreground [font-weight:var(--font-weight-label,500)]'
+                            ? 'text-foreground [font-weight:var(--font-weight-label,500)]'
                             : 'text-foreground-muted hover:bg-secondary/70 hover:text-foreground'
                     }`}
                 >

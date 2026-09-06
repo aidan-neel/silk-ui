@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Button } from '@sivir-ui/svelte/components/button';
+    import * as Composer from '@sivir-ui/svelte/components/composer';
     import * as Conversation from '@sivir-ui/svelte/components/conversation';
     import * as Message from '@sivir-ui/svelte/components/message';
-    import * as PromptComposer from '@sivir-ui/svelte/components/prompt-composer';
     import type { QuestionAnswer } from '@sivir-ui/svelte/components/question';
     import * as Question from '@sivir-ui/svelte/components/question';
 
@@ -86,13 +86,13 @@
                 </Question.Actions>
             </Question.Root>
         {:else}
-            <PromptComposer.Root bind:value={draft} onSubmit={sendPrompt}>
-                <PromptComposer.Input aria-label="Message the agent" />
-                <PromptComposer.Toolbar>
-                    <PromptComposer.Actions>
+            <Composer.Root bind:value={draft} onSubmit={sendPrompt}>
+                <Composer.Input aria-label="Message the agent" />
+                <Composer.Toolbar>
+                    <Composer.Actions>
                         <Button
                             variant="quiet"
-                            size="sm"
+                            size="md"
                             onclick={() => {
                                 shouldFocusQuestion = true;
                                 asking = true;
@@ -100,10 +100,10 @@
                         >
                             Ask again
                         </Button>
-                    </PromptComposer.Actions>
-                    <PromptComposer.Submit />
-                </PromptComposer.Toolbar>
-            </PromptComposer.Root>
+                    </Composer.Actions>
+                    <Composer.Submit />
+                </Composer.Toolbar>
+            </Composer.Root>
         {/if}
     </div>
 </div>

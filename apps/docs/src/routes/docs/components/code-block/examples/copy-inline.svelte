@@ -3,7 +3,7 @@
 </script>
 
 <!-- copyPlacement="inline": a single-line body with the copy centered on the far right. -->
-<CodeBlock.Root class="max-w-md" value="sh">
+<CodeBlock.Root value="sh">
     <CodeBlock.Content
         value="sh"
         code="bunx @sivir-ui/svelte add code-block"

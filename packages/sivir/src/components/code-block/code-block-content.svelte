@@ -9,7 +9,7 @@
     import { highlight } from './highlight';
 
     const CODE_SURFACE =
-        'flex min-w-full [&_:is(.hljs-comment,.hljs-quote)]:text-[var(--code-block-token-comment)] [&_:is(.hljs-comment,.hljs-quote)]:italic [&_:is(.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-section,.hljs-link)]:text-[var(--code-block-token-keyword)] [&_:is(.hljs-string,.hljs-meta-string,.hljs-regexp,.hljs-template-tag)]:text-[var(--code-block-token-string)] [&_:is(.hljs-number,.hljs-symbol,.hljs-bullet)]:text-[var(--code-block-token-number)] [&_.hljs-title]:text-[var(--code-block-token-function)] [&_:is(.hljs-attr,.hljs-attribute,.hljs-property,.hljs-variable,.hljs-template-variable)]:text-[var(--code-block-token-property)] [&_:is(.hljs-built_in,.hljs-type,.hljs-params)]:text-[var(--code-block-token-builtin)] [&_.hljs-class_.hljs-title]:text-[var(--code-block-token-builtin)] [&_.hljs-title.class\\_]:text-[var(--code-block-token-builtin)] [&_.hljs-meta]:text-[var(--code-block-token-meta)] [&_.hljs-meta_.hljs-keyword]:text-[var(--code-block-token-meta)] [&_.hljs-emphasis]:italic [&_.hljs-strong]:[font-weight:var(--font-weight-header)]';
+        'flex min-w-full [&_:is(.hljs-comment,.hljs-quote)]:text-[var(--code-block-token-comment)] [&_:is(.hljs-comment,.hljs-quote)]:italic [&_:is(.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-section,.hljs-link,.hljs-doctag)]:text-[var(--code-block-token-keyword)] [&_:is(.hljs-string,.hljs-meta-string,.hljs-regexp,.hljs-template-tag)]:text-[var(--code-block-token-string)] [&_:is(.hljs-number,.hljs-symbol,.hljs-bullet)]:text-[var(--code-block-token-number)] [&_.hljs-title]:text-[var(--code-block-token-function)] [&_:is(.hljs-attr,.hljs-attribute,.hljs-property,.hljs-variable,.hljs-template-variable,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id)]:text-[var(--code-block-token-property)] [&_:is(.hljs-built_in,.hljs-type,.hljs-params)]:text-[var(--code-block-token-builtin)] [&_.hljs-class_.hljs-title]:text-[var(--code-block-token-builtin)] [&_.hljs-title.class\\_]:text-[var(--code-block-token-builtin)] [&_:is(.hljs-name,.hljs-selector-pseudo)]:text-[var(--code-block-token-entity)] [&_.hljs-meta]:text-[var(--code-block-token-meta)] [&_.hljs-meta_.hljs-keyword]:text-[var(--code-block-token-meta)] [&_.hljs-emphasis]:italic [&_.hljs-strong]:[font-weight:var(--font-weight-header)] [&_.hljs-addition]:text-success [&_.hljs-deletion]:text-error';
 
     let {
         value = 'default',
@@ -54,6 +54,7 @@
     });
 
     const html = $derived(highlight(code, lang));
+    const themed = $derived(registry?.theme !== 'custom');
     const lineCount = $derived(code.replace(/\n$/, '').split('\n').length);
     const layout = $derived(lineCount === 1 ? 'single-line' : 'multi-line');
 
@@ -73,17 +74,16 @@
     const tabId = $derived(tabs ? `${tabs.id}-trigger-${toTabIdPart(value)}` : undefined);
 </script>
 
-{#if !registry?.tabbed}
-    <div
-        role="tabpanel"
-        id={panelId}
-        aria-labelledby={tabId}
-        data-ui="code-block-content"
-        data-state={isActive ? 'active' : 'inactive'}
-        data-layout={layout}
-        aria-hidden={!isActive}
-        inert={!isActive}
-        class={cn(
+<div
+    role="tabpanel"
+    id={panelId}
+    aria-labelledby={tabId}
+    data-ui="code-block-content"
+    data-state={isActive ? 'active' : 'inactive'}
+    data-layout={layout}
+    aria-hidden={!isActive}
+    inert={!isActive}
+    class={cn(
         className,
         'w-full max-h-[var(--code-block-max-height,32rem)] overflow-auto font-mono font-medium text-foreground',
         !registry?.contained && 'sivir-inset-surface',
@@ -93,45 +93,44 @@
         registry?.contained && isActive && 'relative z-[1]',
         registry?.contained && !isActive && 'pointer-events-none absolute inset-0 block'
     )}
-        style:transform={`translateX(calc(${shift} * var(--code-block-slide)))`}
-        style:opacity={isActive ? '1' : '0'}
-        {...rest}
-    >
-        <div class="relative w-full overflow-x-auto">
-            <!-- Keep the highlighted markup on this element so the descendant Tailwind selectors apply. -->
-            {#if copyPlacement === 'inline'}
-                <div class={cn(CODE_SURFACE, 'w-full items-center')}>
-                    <pre
-                        class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
-                    ><code
+    style:transform={`translateX(calc(${shift} * var(--code-block-slide)))`}
+    style:opacity={isActive ? '1' : '0'}
+    {...rest}
+>
+    <div class="relative w-full overflow-x-auto">
+        <!-- Keep the highlighted markup on this element so the descendant Tailwind selectors apply. -->
+        {#if copyPlacement === 'inline'}
+            <div class={cn(themed && CODE_SURFACE, 'w-full items-center')}>
+                <pre
+                    class="m-0 min-w-0 flex-1 overflow-x-auto whitespace-pre px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
-                    <Copy class="mr-1.5 shrink-0" />
-                </div>
-            {:else}
-                <div class={cn(CODE_SURFACE, 'w-full')}>
-                    {#if showLineNumbers}
-                        <pre
-                            aria-hidden="true"
-                            class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
-                        >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
+                <Copy class="mr-1.5 shrink-0" />
+            </div>
+        {:else}
+            <div class={cn(themed && CODE_SURFACE, 'w-full')}>
+                {#if showLineNumbers}
+                    <pre
+                        aria-hidden="true"
+                        class="m-0 shrink-0 select-none border-r border-border px-3 py-[var(--code-block-padding-y)] text-right text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)] text-[var(--code-block-gutter)]"
+                    >{#each Array.from({ length: lineCount }, (_, i) => i) as i (i)}{i +
                                 1}{newline}{/each}</pre>
-                    {/if}
-                    <pre
-                        class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
-                    ><code
+                {/if}
+                <pre
+                    class="m-0 min-w-0 flex-1 overflow-x-auto px-[var(--code-block-padding-x)] py-[var(--code-block-padding-y)] text-[length:var(--font-size-label)] leading-[var(--code-block-line-height)]"
+                ><code
                         >{@html html}</code
                     ></pre>
-                </div>
-            {/if}
-            {#if copyPlacement === 'overlay'}
-                <Copy
-                    class={cn(
+            </div>
+        {/if}
+        {#if copyPlacement === 'overlay'}
+            <Copy
+                class={cn(
                     'absolute right-2 z-10 bg-card',
                     layout === 'single-line' ? 'top-1/2 -translate-y-1/2' : 'top-2'
                 )}
-                />
-            {/if}
-        </div>
+            />
+        {/if}
     </div>
-{/if}
+</div>

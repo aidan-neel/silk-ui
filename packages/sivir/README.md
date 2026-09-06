@@ -116,7 +116,7 @@ import {Button} from '@sivir-ui/svelte/components/button'; import * as AlertDial
 - **Namespaced:** `Accordion`, `Alert`, `AlertDialog`, `Attachment`, `Avatar`,
   `Breadcrumb`, `Card` (includes `variant="panel"`), `Collapsible`, `ColorPicker`,
   `Combobox`, `Command`, `ContextMenu`, `Conversation`, `DropdownMenu`,
-  `FullscreenNav`, `HoverCard`, `Message`, `Modal`, `Popover`, `PromptComposer`,
+  `FullscreenNav`, `HoverCard`, `Message`, `Modal`, `Popover`, `Composer`,
   `RadioGroup`, `Select`, `Sheet`, `Tabs`, `ToggleGroup`, `Tool`, `Tooltip`.
 
 ## License

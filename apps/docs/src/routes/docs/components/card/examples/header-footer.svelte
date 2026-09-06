@@ -8,7 +8,7 @@
         <Card.Title>Settings</Card.Title>
     </Card.Header>
     <Card.Footer>
-        <Button variant="outline" size="sm">Cancel</Button>
-        <Button size="sm">Apply</Button>
+        <Button variant="outline" size="md">Cancel</Button>
+        <Button size="md">Apply</Button>
     </Card.Footer>
 </Card.Root>

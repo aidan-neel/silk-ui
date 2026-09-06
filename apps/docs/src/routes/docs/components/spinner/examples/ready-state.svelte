@@ -25,5 +25,5 @@
         <Spinner {ready} aria-hidden="true" />
         <span>{ready ? 'Changes saved' : 'Saving changes'}</span>
     </div>
-    <Button size="sm" onclick={save}>Save again</Button>
+    <Button size="md" onclick={save}>Save again</Button>
 </div>

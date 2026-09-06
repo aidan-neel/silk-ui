@@ -85,6 +85,7 @@ export type {
     CodeBlockListProps,
     CodeBlockProps,
     CodeBlockTab,
+    CodeBlockTheme,
     CodeBlockTriggerProps
 } from './components/code-block';
 export { CodeBlock } from './components/code-block';
@@ -104,6 +105,17 @@ export type { ComboboxItem, ComboboxRootProps, ComboboxTriggerProps } from './co
 export * as Combobox from './components/combobox';
 export type { CommandItem, CommandItemProps, CommandProps } from './components/command';
 export * as Command from './components/command';
+export type {
+    ComposerActionsProps,
+    ComposerInputProps,
+    ComposerProps,
+    ComposerStatus,
+    ComposerSubmitAction,
+    ComposerSubmitProps,
+    ComposerSubmitState,
+    ComposerToolbarProps
+} from './components/composer';
+export * as Composer from './components/composer';
 export type {
     ContextMenuCheckboxItemProps,
     ContextMenuContentProps,
@@ -133,6 +145,18 @@ export type {
     DropdownMenuRadioItemProps
 } from './components/dropdown-menu';
 export * as DropdownMenu from './components/dropdown-menu';
+export type {
+    FileDiffChangeType,
+    FileDiffContentProps,
+    FileDiffContext,
+    FileDiffLine,
+    FileDiffLineNumberProps,
+    FileDiffRootProps,
+    FileDiffRowProps,
+    FileDiffTheme,
+    FileDiffTopBarProps
+} from './components/file-diff';
+export * as FileDiff from './components/file-diff';
 export type {
     FullscreenNavCloseProps,
     FullscreenNavContentProps,
@@ -191,17 +215,6 @@ export type {
 export * as Popover from './components/popover';
 export type { ProgressProps } from './components/progress';
 export { Progress } from './components/progress';
-export type {
-    PromptComposerActionsProps,
-    PromptComposerInputProps,
-    PromptComposerProps,
-    PromptComposerStatus,
-    PromptComposerSubmitAction,
-    PromptComposerSubmitProps,
-    PromptComposerSubmitState,
-    PromptComposerToolbarProps
-} from './components/prompt-composer';
-export * as PromptComposer from './components/prompt-composer';
 export type {
     QuestionActionProps,
     QuestionActionsProps,
@@ -265,6 +278,16 @@ export type {
     TabsVariant
 } from './components/tabs';
 export * as Tabs from './components/tabs';
+export type {
+    TagInputInputProps,
+    TagInputListProps,
+    TagInputProps,
+    TagInputRejection,
+    TagInputRejectionCode,
+    TagInputTagProps,
+    TagInputVariant
+} from './components/tag-input';
+export * as TagInput from './components/tag-input';
 export type { TaskStep, TaskStepStatus, TaskStepsProps } from './components/task-steps';
 export { TaskSteps } from './components/task-steps';
 export type { TextareaProps } from './components/textarea';
